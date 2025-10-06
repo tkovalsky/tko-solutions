@@ -17,9 +17,6 @@ export default function Home() {
             <a href="#contact" className="rounded bg-amber-500 px-4 py-2 font-medium text-slate-900">
               Start the Diagnostic
             </a>
-            <a href="#newsletter" className="rounded border border-slate-500 px-4 py-2">
-              Get the Playbook
-            </a>
           </div>
         </div>
       </header>
@@ -61,30 +58,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section id="newsletter" className="mx-auto max-w-5xl px-6 py-12">
-        <h2 className="text-2xl font-semibold">Get the Automation Playbook</h2>
-        <p className="mt-2 text-slate-600">
-          Monthly tactics for CTO/CIO/COO/CPO leaders—what to automate first, and how.
-        </p>
-        <form
-          className="mt-4 flex max-w-lg gap-2"
-          action="https://buttondown.email/api/emails/embed-subscribe/YOUR_HANDLE"
-          method="post"
-          target="popupwindow"
-          onSubmit={() => window.open('https://buttondown.email/YOUR_HANDLE','popupwindow')}
-        >
-          <input type="hidden" name="embed" value="1" />
-          <input
-            required
-            type="email"
-            name="email"
-            placeholder="you@company.com"
-            className="flex-1 rounded border px-3 py-2"
-          />
-          <button className="rounded bg-amber-500 px-4 py-2 font-medium text-slate-900">Subscribe</button>
-        </form>
       </section>
 
       <section id="contact" className="bg-white border-y">
