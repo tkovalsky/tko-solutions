@@ -1,103 +1,113 @@
-import Image from "next/image";
+// src/app/page.tsx
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="min-h-screen bg-slate-50 text-slate-900">
+      <header className="bg-slate-900 text-white">
+        <div className="mx-auto max-w-5xl px-6 py-12">
+          <h1 className="text-3xl md:text-4xl font-semibold">
+            TKO Solutions — Automation Strategy & Workflow Design
+          </h1>
+          <p className="mt-3 text-slate-300">
+            We map messy processes, design clean workflows, and stand up
+            no-code/AI prototypes so your team ships outcomes—without hiring developers.
+          </p>
+          <div className="mt-6 flex gap-3">
+            <a href="#contact" className="rounded bg-amber-500 px-4 py-2 font-medium text-slate-900">
+              Start the Diagnostic
+            </a>
+            <a href="#newsletter" className="rounded border border-slate-500 px-4 py-2">
+              Get the Playbook
+            </a>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </header>
+
+      <section id="what" className="mx-auto max-w-5xl px-6 py-12">
+        <h2 className="text-2xl font-semibold">What we do</h2>
+        <ul className="mt-4 list-disc pl-6 space-y-2">
+          <li>Rapid interviews & current-state mapping</li>
+          <li>Target workflow design (tools, triggers, checks, ownership)</li>
+          <li>Gen-AI/no-code prototype (Zapier/Make/Airtable/Sheets/Notion)</li>
+          <li>Handoff docs + SOPs; optional ongoing advisory</li>
+        </ul>
+      </section>
+
+      <section id="packages" className="bg-white border-y">
+        <div className="mx-auto max-w-5xl px-6 py-12">
+          <h2 className="text-2xl font-semibold">Packages</h2>
+          <div className="mt-6 grid gap-6 md:grid-cols-3">
+            <div className="rounded border p-6">
+              <h3 className="font-semibold">Diagnostic</h3>
+              <p className="mt-2 text-sm text-slate-600">
+                60–90 min discovery, 1–2 page blueprint, 3 quick wins, 30-day plan.
+              </p>
+              <p className="mt-4 font-semibold">$750</p>
+            </div>
+            <div className="rounded border p-6">
+              <h3 className="font-semibold">Prototype Sprint</h3>
+              <p className="mt-2 text-sm text-slate-600">
+                MVP in 2–3 weeks using AI/no-code + SOPs and handoff.
+              </p>
+              <p className="mt-4 font-semibold">$3k–$5k</p>
+            </div>
+            <div className="rounded border p-6">
+              <h3 className="font-semibold">Advisor Retainer</h3>
+              <p className="mt-2 text-sm text-slate-600">
+                Ongoing reviews, prompt engineering, QA, roadmap.
+              </p>
+              <p className="mt-4 font-semibold">$1.5k–$3k/mo</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="newsletter" className="mx-auto max-w-5xl px-6 py-12">
+        <h2 className="text-2xl font-semibold">Get the Automation Playbook</h2>
+        <p className="mt-2 text-slate-600">
+          Monthly tactics for CTO/CIO/COO/CPO leaders—what to automate first, and how.
+        </p>
+        <form
+          className="mt-4 flex max-w-lg gap-2"
+          action="https://buttondown.email/api/emails/embed-subscribe/YOUR_HANDLE"
+          method="post"
+          target="popupwindow"
+          onSubmit={() => window.open('https://buttondown.email/YOUR_HANDLE','popupwindow')}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+          <input type="hidden" name="embed" value="1" />
+          <input
+            required
+            type="email"
+            name="email"
+            placeholder="you@company.com"
+            className="flex-1 rounded border px-3 py-2"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+          <button className="rounded bg-amber-500 px-4 py-2 font-medium text-slate-900">Subscribe</button>
+        </form>
+      </section>
+
+      <section id="contact" className="bg-white border-y">
+        <div className="mx-auto max-w-5xl px-6 py-12">
+          <h2 className="text-2xl font-semibold">Start the Diagnostic</h2>
+          <form className="mt-4 grid gap-3 max-w-xl" action="/api/contact" method="post">
+            <input className="rounded border px-3 py-2" name="name" placeholder="Your name" required />
+            <input className="rounded border px-3 py-2" type="email" name="email" placeholder="you@company.com" required />
+            <input className="rounded border px-3 py-2" name="company" placeholder="Company" />
+            <textarea className="rounded border px-3 py-2" name="message" rows={5} placeholder="What workflow’s hurting the most?"></textarea>
+            <button className="rounded bg-slate-900 px-4 py-2 text-white">Send</button>
+          </form>
+          <p className="mt-3 text-xs text-slate-500">
+            By submitting you agree to our{" "}
+            <Link className="underline" href="/terms">Terms</Link> and{" "}
+            <Link className="underline" href="/privacy">Privacy Policy</Link>.
+          </p>
+        </div>
+      </section>
+
+      <footer className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-500">
+        © {new Date().getFullYear()} TKO Solutions
       </footer>
-    </div>
+    </main>
   );
 }
