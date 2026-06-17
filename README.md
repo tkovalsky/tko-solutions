@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TKO Documentation
 
-## Getting Started
+Last updated: 2026-06-15
 
-First, run the development server:
+This folder is the current TKO documentation set. It supersedes the older root-level TKO positioning reports where those reports describe pre-canonical-queue, pre-RIC, pre-outreach-draft, or pre-referral-intelligence assumptions.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+TKO documentation is grounded in implementation evidence from RachelDelray.com. A capability is described as current only when code, schema, route, content, or documented production validation exists in this repository.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Current Documents
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Document | Purpose |
+|---|---|
+| [Reality Audit](reality-audit-2026-06-15.md) | Inventory, current implementation reality, reusable assets, and strategic recommendations. |
+| [Vision](vision.md) | What TKO exists to do now. |
+| [Capabilities](capabilities.md) | Current reusable capabilities and their implementation status. |
+| [Offerings](offerings.md) | Sellable services grounded in current or near-term implementation. |
+| [Architecture Overview](architecture-overview.md) | Reusable system architecture patterns proven in RachelDelray.com. |
+| [Roadmap](roadmap.md) | 90-day TKO focus, gated by revenue and proof. |
+| [Case Studies](case-studies.md) | Evidence-backed stories TKO can use in sales conversations. |
+| [Competitive Positioning](competitive-positioning.md) | How TKO differs from consultants, agencies, software shops, offshore teams, and large SIs. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Current TKO Position
 
-## Learn More
+TKO builds operational intelligence systems for complex, relationship-driven work. The strongest proof is RachelDelray.com: a production real estate platform that now combines lead capture, relationship memory, canonical next actions, intelligence-gap acquisition, approval-gated AI outreach drafts, content operations, and referral handling.
 
-To learn more about Next.js, take a look at the following resources:
+The most credible commercial wedge remains healthcare transformation recovery and operational intelligence because Todd has healthcare modernization experience and RachelDelray.com proves the same operating pattern in a smaller live environment.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+TKO should not describe itself as a SaaS product company, generic AI agency, CRM vendor, content agency, or autonomous-agent platform today.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

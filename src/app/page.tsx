@@ -1,86 +1,155 @@
-// src/app/page.tsx
-import Link from "next/link";
+import type { Metadata } from "next";
+import { CaseStudyCards, ServiceCards } from "@/components/site/cards";
+import { CtaBand } from "@/components/site/cta-band";
+import { SystemFlow, TruthFramework } from "@/components/site/framework";
+import { JsonLd } from "@/components/site/json-ld";
+import { PageHero } from "@/components/site/page-hero";
+import { Section, SectionHeader } from "@/components/ui/section";
+import { absoluteUrl } from "@/lib/site";
+import { industries, problems, proofNotes } from "@/lib/content";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Operational Intelligence Systems for Complex Organizations",
+  description:
+    "TKO Solutions helps complex organizations see where work is actually failing and build Operational Intelligence Systems that keep work visible, governed, and actionable.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Operational Intelligence Systems for Complex Organizations",
+    description:
+      "See where complex work is actually failing. Establish operational truth. Build systems that continue running after the engagement ends.",
+    url: absoluteUrl("/"),
+  },
+};
+
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="bg-slate-900 text-white">
-        <div className="mx-auto max-w-5xl px-6 py-12">
-          <h1 className="text-3xl md:text-4xl font-semibold">
-            TKO Solutions — Automation Strategy & Workflow Design
-          </h1>
-          <p className="mt-3 text-slate-300">
-            We map messy processes, design clean workflows, and stand up
-            no-code/AI prototypes so your team ships outcomes—without hiring developers.
-          </p>
-          <div className="mt-6 flex gap-3">
-            <a href="#contact" className="rounded bg-amber-500 px-4 py-2 font-medium text-slate-900">
-              Start the Diagnostic
-            </a>
+    <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "TKO Solutions",
+          url: absoluteUrl("/"),
+          description:
+            "Operational Intelligence Systems for complex organizations.",
+        }}
+      />
+      <PageHero
+        eyebrow="TKO Solutions"
+        title="Operational Intelligence Systems for Complex Organizations"
+        description="TKO helps leaders see where work is actually failing, establish operational truth, and build systems that turn scattered signals into governed facts, trusted next actions, human approval, and measurable outcomes."
+        primaryHref="/contact"
+        primaryLabel="Start the Diagnostic"
+        secondaryHref="/case-studies"
+        secondaryLabel="View Case Studies"
+      />
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <SectionHeader
+            eyebrow="Problem Architecture"
+            title="The issue is not effort. It is visibility into actual work."
+            description="TKO organizes expertise around operating problems, not industries. Healthcare is the launch wedge because these problems are urgent and proof-backed there."
+          />
+          <div className="grid gap-3 md:grid-cols-2">
+            {problems.map((problem) => (
+              <article key={problem.title} className="border border-border p-5">
+                <h3 className="text-lg font-semibold">{problem.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {problem.description}
+                </p>
+              </article>
+            ))}
           </div>
         </div>
-      </header>
+      </Section>
 
-      <section id="what" className="mx-auto max-w-5xl px-6 py-12">
-        <h2 className="text-2xl font-semibold">What we do</h2>
-        <ul className="mt-4 list-disc pl-6 space-y-2">
-          <li>Rapid interviews & current-state mapping</li>
-          <li>Target workflow design (tools, triggers, checks, ownership)</li>
-          <li>Gen-AI/no-code prototype (Zapier/Make/Airtable/Sheets/Notion)</li>
-          <li>Handoff docs + SOPs; optional ongoing advisory</li>
-        </ul>
-      </section>
+      <Section className="bg-surface">
+        <SectionHeader
+          eyebrow="Operational Truth Framework"
+          title="A disciplined way to separate reported progress from operational truth."
+          description="The framework identifies the gap between what is supposed to happen and what actually happens, then turns that gap into recovery priorities."
+        />
+        <div className="mt-12">
+          <TruthFramework />
+        </div>
+      </Section>
 
-      <section id="packages" className="bg-white border-y">
-        <div className="mx-auto max-w-5xl px-6 py-12">
-          <h2 className="text-2xl font-semibold">Packages</h2>
-          <div className="mt-6 grid gap-6 md:grid-cols-3">
-            <div className="rounded border p-6">
-              <h3 className="font-semibold">Diagnostic</h3>
-              <p className="mt-2 text-sm text-slate-600">
-                60–90 min discovery, 1–2 page blueprint, 3 quick wins, 30-day plan.
-              </p>
-              <p className="mt-4 font-semibold">$750</p>
-            </div>
-            <div className="rounded border p-6">
-              <h3 className="font-semibold">Prototype Sprint</h3>
-              <p className="mt-2 text-sm text-slate-600">
-                MVP in 2–3 weeks using AI/no-code + SOPs and handoff.
-              </p>
-              <p className="mt-4 font-semibold">$3k–$5k</p>
-            </div>
-            <div className="rounded border p-6">
-              <h3 className="font-semibold">Advisor Retainer</h3>
-              <p className="mt-2 text-sm text-slate-600">
-                Ongoing reviews, prompt engineering, QA, roadmap.
-              </p>
-              <p className="mt-4 font-semibold">$1.5k–$3k/mo</p>
-            </div>
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+          <SectionHeader
+            eyebrow="How TKO Works"
+            title="Signals become memory. Memory becomes facts. Facts become action."
+            description="The RachelOS architecture demonstrates the system pattern: preserve operational signals, extract governed facts, expose current state, surface one trusted next action, and keep a human in approval."
+          />
+          <div>
+            <SystemFlow />
+            <p className="mt-8 max-w-[65ch] text-base leading-7 text-muted">
+              AI is a controlled mechanism inside the operating system. It does not
+              replace human decision authority, and it does not become the category.
+            </p>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section id="contact" className="bg-white border-y">
-        <div className="mx-auto max-w-5xl px-6 py-12">
-          <h2 className="text-2xl font-semibold">Start the Diagnostic</h2>
-          <form className="mt-4 grid gap-3 max-w-xl" action="/api/contact" method="post">
-            <input className="rounded border px-3 py-2" name="name" placeholder="Your name" required />
-            <input className="rounded border px-3 py-2" type="email" name="email" placeholder="you@company.com" required />
-            <input className="rounded border px-3 py-2" name="company" placeholder="Company" />
-            <textarea className="rounded border px-3 py-2" name="message" rows={5} placeholder="What workflow’s hurting the most?"></textarea>
-            <button className="rounded bg-slate-900 px-4 py-2 text-white">Send</button>
-          </form>
-          <p className="mt-3 text-xs text-slate-500">
-            By submitting you agree to our{" "}
-            <Link className="underline" href="/terms">Terms</Link> and{" "}
-            <Link className="underline" href="/privacy">Privacy Policy</Link>.
-          </p>
+      <Section className="bg-surface">
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <SectionHeader
+            eyebrow="Proof"
+            title="Healthcare proof first. Secondary industries support the pattern."
+            description="The proof architecture is intentionally conservative: production system proof, anonymized enterprise healthcare work, and cross-industry pattern recognition."
+          />
+          <div className="space-y-3">
+            {proofNotes.map((note) => (
+              <div key={note} className="border border-border bg-white p-5">
+                <p className="text-base leading-7 text-muted">{note}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </section>
+        <div className="mt-14">
+          <CaseStudyCards />
+        </div>
+      </Section>
 
-      <footer className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-500">
-        © {new Date().getFullYear()} TKO Solutions
-      </footer>
-    </main>
+      <Section>
+        <SectionHeader
+          eyebrow="Service Ladder"
+          title="One entry point. Two downstream paths."
+          description="The Diagnostic is the paid front door. Build and Fractional Advisor engagements follow when operational truth identifies what should be built or governed."
+        />
+        <div className="mt-12">
+          <ServiceCards />
+        </div>
+      </Section>
+
+      <Section className="bg-surface">
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <SectionHeader
+            eyebrow="Founder Credibility"
+            title="Pattern recognition across complex operating environments."
+            description="The same operating failures appear in healthcare, wealth management, asset management, capital markets, and enterprise operations: work crosses boundaries faster than leaders can observe, govern, and act on it."
+          />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {industries.map((industry) => (
+              <article key={industry.title} className="border border-border bg-white p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                  {industry.priority}
+                </p>
+                <h3 className="mt-5 text-xl font-semibold">{industry.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {industry.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <CtaBand />
+    </>
   );
 }
+
