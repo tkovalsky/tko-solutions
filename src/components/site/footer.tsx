@@ -11,11 +11,11 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface">
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-12 md:grid-cols-[1fr_2fr] lg:px-8">
+    <footer className="border-t border-white/10 bg-midnight text-white">
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-14 md:grid-cols-[1fr_2fr] lg:px-8">
         <div>
-          <Logo />
-          <p className="mt-6 max-w-sm text-sm leading-6 text-muted">
+          <Logo inverted />
+          <p className="mt-6 max-w-sm text-sm leading-6 text-white/55">
             Operational Intelligence Systems for complex organizations that need to
             see where work is actually failing.
           </p>
@@ -25,7 +25,7 @@ export function Footer() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted hover:text-foreground"
+              className="text-sm font-medium text-white/60 transition-colors hover:text-white"
             >
               {link.label}
             </Link>

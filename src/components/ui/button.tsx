@@ -8,18 +8,18 @@ type ButtonProps = ComponentPropsWithoutRef<"button"> & {
 
 const variants = {
   primary:
-    "border border-[#111111] bg-[#111111] text-white hover:bg-white hover:text-[#111111]",
+    "border border-primary bg-primary text-white hover:bg-primary-dark hover:border-primary-dark",
   secondary:
-    "border border-[#111111] bg-white text-[#111111] hover:bg-[#111111] hover:text-white",
+    "border border-foreground/20 bg-transparent text-foreground hover:border-foreground/40 hover:bg-foreground/[0.03]",
   ghost:
-    "border border-transparent bg-transparent text-[#111111] hover:border-[#111111]",
+    "border border-transparent bg-transparent text-foreground hover:border-foreground/20",
 };
 
 export function Button({ className, variant = "primary", ...props }: ButtonProps) {
   return (
     <button
       className={cn(
-        "inline-flex min-h-11 items-center justify-center px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors",
+        "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors",
         variants[variant],
         className,
       )}
@@ -45,7 +45,7 @@ export function LinkButton({
     <Link
       href={href}
       className={cn(
-        "inline-flex min-h-11 items-center justify-center px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors",
+        "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors",
         variants[variant],
         className,
       )}

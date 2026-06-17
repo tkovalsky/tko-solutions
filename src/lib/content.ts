@@ -53,6 +53,46 @@ export const truthFramework = [
 
 export const systemFlow = ["Signals", "Memory", "Facts", "State", "Action", "Outcome"];
 
+export const operatingFramework = [
+  {
+    stage: "Signals",
+    description: "Raw activity from email, calls, tickets, systems, and conversations enters the system unfiltered.",
+  },
+  {
+    stage: "Memory",
+    description: "Signals persist across time and source instead of evaporating after a single touchpoint.",
+  },
+  {
+    stage: "Facts",
+    description: "Memory is resolved into source-aware, governed facts that leaders can trust.",
+  },
+  {
+    stage: "State",
+    description: "Facts roll up into a current, accurate view of where every workflow actually stands.",
+  },
+  {
+    stage: "Canonical Actions",
+    description: "State produces one trusted next action instead of competing reports and opinions.",
+  },
+  {
+    stage: "Human Approval",
+    description: "A person reviews and authorizes the action before it executes. AI never acts alone.",
+  },
+  {
+    stage: "Outcomes",
+    description: "Approved actions are measured against real operating results, closing the loop.",
+  },
+];
+
+export const founderCredibility = [
+  "Healthcare",
+  "Financial Services",
+  "Wealth Management",
+  "Capital Markets",
+  "Enterprise Programs",
+  "AI Governance",
+];
+
 export const services = [
   {
     slug: "diagnostic",

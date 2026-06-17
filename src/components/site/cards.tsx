@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { caseStudies, services } from "@/lib/content";
 
@@ -24,9 +25,10 @@ export function ServiceCards() {
           </dl>
           <Link
             href={`/services/${service.slug}`}
-            className="mt-auto pt-8 text-sm font-semibold uppercase tracking-[0.08em]"
+            className="mt-auto inline-flex items-center gap-1.5 pt-8 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
           >
             View service
+            <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </Card>
       ))}
@@ -46,11 +48,16 @@ export function CaseStudyCards() {
           </div>
           <h3 className="mt-6 text-2xl font-semibold">{study.title}</h3>
           <p className="mt-4 text-base leading-7 text-muted">{study.problem}</p>
+          <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
+            <span className="font-semibold text-primary">Outcome — </span>
+            {study.outcome}
+          </p>
           <Link
             href={`/case-studies/${study.slug}`}
-            className="mt-8 inline-flex text-sm font-semibold uppercase tracking-[0.08em]"
+            className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
           >
             Read case study
+            <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </Card>
       ))}

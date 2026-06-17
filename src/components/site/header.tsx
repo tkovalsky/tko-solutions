@@ -13,7 +13,7 @@ const navItems = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-border bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-6 px-6 lg:px-8">
         <Logo />
         <nav aria-label="Primary navigation" className="hidden items-center gap-8 lg:flex">
@@ -32,7 +32,10 @@ export function Header() {
             {site.cta}
           </LinkButton>
         </div>
-        <Link href="/contact" className="text-sm font-semibold uppercase tracking-[0.08em] lg:hidden">
+        <Link
+          href="/contact"
+          className="text-sm font-semibold uppercase tracking-[0.08em] text-primary lg:hidden"
+        >
           Start
         </Link>
       </div>

@@ -2,11 +2,21 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #111111;
-  --muted: #4b5563;
-  --border: #d9d9d6;
-  --navy: #1e293b;
-  --surface: #f7f7f5;
+  --foreground: #0a0e1a;
+  --muted: #51596b;
+  --border: #e2e5eb;
+
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #60a5fa;
+
+  --navy: #0f1729;
+  --midnight: #060a14;
+  --slate-light: #f4f6fa;
+  --surface: #f4f6fa;
+
+  --font-sans: var(--font-geist-sans), "Inter", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "IBM Plex Mono", ui-monospace, monospace;
 }
 
 @theme inline {
@@ -15,8 +25,14 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-navy: var(--navy);
+  --color-midnight: var(--midnight);
   --color-surface: var(--surface);
-  --font-sans: "IBM Plex Sans", Inter, "Source Sans Pro", ui-sans-serif, system-ui, sans-serif;
+  --color-slate-light: var(--slate-light);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 * {
@@ -31,7 +47,7 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: "IBM Plex Sans", Inter, "Source Sans Pro", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -42,13 +58,24 @@ a {
 }
 
 ::selection {
-  background: #111111;
+  background: var(--primary);
   color: #ffffff;
 }
 
 :focus-visible {
-  outline: 2px solid #111111;
+  outline: 2px solid var(--primary);
   outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .prose-tko {

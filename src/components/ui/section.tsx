@@ -31,11 +31,11 @@ export function SectionHeader({
   return (
     <div className={cn("max-w-[65ch]", className)}>
       {eyebrow ? (
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-5xl">
+      <h2 className="text-3xl font-semibold leading-tight tracking-tight text-foreground md:text-5xl">
         {title}
       </h2>
       {description ? (

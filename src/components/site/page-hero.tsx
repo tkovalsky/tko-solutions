@@ -27,11 +27,11 @@ export function PageHero({
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-5xl">
           {eyebrow ? (
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
               {eyebrow}
             </p>
           ) : null}
-          <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] tracking-normal text-foreground md:text-7xl">
+          <h1 className="max-w-4xl text-5xl font-bold leading-[1.03] tracking-tight text-foreground md:text-7xl">
             {title}
           </h1>
           <p className="mt-8 max-w-[65ch] text-xl leading-9 text-muted">
