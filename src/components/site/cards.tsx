@@ -8,7 +8,7 @@ export function ServiceCards() {
     <div className="grid gap-4 lg:grid-cols-3">
       {services.map((service) => (
         <Card key={service.slug} className="flex min-h-80 flex-col">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+          <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
             {service.entry}
           </p>
           <h3 className="mt-6 text-2xl font-semibold">{service.title}</h3>
@@ -41,7 +41,7 @@ export function CaseStudyCards() {
     <div className="grid gap-4 lg:grid-cols-2">
       {caseStudies.map((study) => (
         <Card key={study.slug}>
-          <div className="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+          <div className="flex flex-wrap gap-2 text-sm font-semibold uppercase tracking-[0.1em] text-muted">
             <span>{study.industry}</span>
             <span>/</span>
             <span>{study.proofLevel}</span>

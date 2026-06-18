@@ -1,6 +1,6 @@
 "use client";
 
-import { Compass, Eye, TrendingUp } from "lucide-react";
+import { CheckCircle2, Compass, Eye, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { LinkButton } from "@/components/ui/button";
 import { NetworkVisual } from "@/components/site/network-visual";
@@ -36,14 +36,14 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary-light">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-light">
             Operational Intelligence
           </p>
           <h1 className="mt-6 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
             Operational Intelligence Systems for Complex{" "}
             <span className="text-primary-light">Organizations</span>
           </h1>
-          <p className="mt-7 max-w-[52ch] text-lg leading-8 text-white/65">
+          <p className="mt-7 max-w-[52ch] text-lg leading-8 text-white/75">
             TKO helps leaders see where work is actually failing, establish
             operational truth, and build systems that turn scattered signals
             into governed facts, trusted next actions, human approval, and
@@ -59,13 +59,27 @@ export function Hero() {
               View Case Studies
             </LinkButton>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4">
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/75">
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
+              Healthcare-proven launch wedge
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
+              Production-system proof
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
+              Human-governed AI
+            </li>
+          </ul>
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4">
             {pillars.map((pillar) => (
               <div key={pillar.title} className="flex gap-3">
                 <pillar.icon className="mt-0.5 size-5 shrink-0 text-primary-light" aria-hidden="true" />
                 <div>
                   <p className="text-sm font-semibold text-white">{pillar.title}</p>
-                  <p className="mt-1 text-sm leading-5 text-white/50">{pillar.description}</p>
+                  <p className="mt-1 text-sm leading-5 text-white/70">{pillar.description}</p>
                 </div>
               </div>
             ))}

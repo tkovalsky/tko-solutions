@@ -27,7 +27,7 @@ export function PageHero({
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-5xl">
           {eyebrow ? (
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+            <p className="mb-6 text-sm font-semibold uppercase tracking-[0.1em] text-primary">
               {eyebrow}
             </p>
           ) : null}

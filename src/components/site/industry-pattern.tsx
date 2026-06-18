@@ -9,8 +9,8 @@ export function IndustryPattern() {
             <p
               className={
                 industry.priority === "Launch wedge"
-                  ? "text-xs font-semibold uppercase tracking-[0.14em] text-primary"
-                  : "text-xs font-semibold uppercase tracking-[0.14em] text-muted"
+                  ? "text-sm font-semibold uppercase tracking-[0.1em] text-primary"
+                  : "text-sm font-semibold uppercase tracking-[0.1em] text-muted"
               }
             >
               {industry.priority}
@@ -20,9 +20,10 @@ export function IndustryPattern() {
           </article>
         ))}
       </div>
-      <p className="mt-6 text-sm leading-6 text-muted">
-        Same operating failure, different industries: work crosses boundaries faster than
-        leaders can observe, govern, and act on it.
+      <p className="mt-6 max-w-[80ch] text-sm leading-6 text-muted">
+        These industries share the same operating conditions: complex workflows,
+        regulatory constraints, fragmented ownership, and high-cost operational failure.
+        Work crosses boundaries faster than leaders can observe, govern, and act on it.
       </p>
     </div>
   );

@@ -29,32 +29,27 @@ export default function IndustriesPage() {
       />
       <Section>
         <div className="grid gap-4 lg:grid-cols-4">
-          {industries.map((industry) => (
-            <Card
-              key={industry.title}
-              className={industry.title === "Healthcare" ? "bg-[#111111] text-white" : ""}
-            >
-              <p
-                className={
-                  industry.title === "Healthcare"
-                    ? "text-xs font-semibold uppercase tracking-[0.14em] text-white/60"
-                    : "text-xs font-semibold uppercase tracking-[0.14em] text-muted"
-                }
+          {industries.map((industry) => {
+            const isLaunchWedge = industry.priority === "Launch wedge";
+            return (
+              <Card
+                key={industry.title}
+                className={isLaunchWedge ? "border-primary/40 ring-1 ring-primary/20" : ""}
               >
-                {industry.priority}
-              </p>
-              <h2 className="mt-6 text-2xl font-semibold">{industry.title}</h2>
-              <p
-                className={
-                  industry.title === "Healthcare"
-                    ? "mt-4 text-base leading-7 text-white/70"
-                    : "mt-4 text-base leading-7 text-muted"
-                }
-              >
-                {industry.description}
-              </p>
-            </Card>
-          ))}
+                <p
+                  className={
+                    isLaunchWedge
+                      ? "text-sm font-semibold uppercase tracking-[0.1em] text-primary"
+                      : "text-sm font-semibold uppercase tracking-[0.1em] text-muted"
+                  }
+                >
+                  {industry.priority}
+                </p>
+                <h2 className="mt-6 text-2xl font-semibold text-foreground">{industry.title}</h2>
+                <p className="mt-4 text-base leading-7 text-muted">{industry.description}</p>
+              </Card>
+            );
+          })}
         </div>
       </Section>
       <Section className="bg-surface">

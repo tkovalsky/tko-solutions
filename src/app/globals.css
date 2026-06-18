@@ -3,8 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #0a0e1a;
-  --muted: #51596b;
+  /* Slate-600: ~8:1 on white, comfortably clears WCAG AA for body copy */
+  --muted: #475569;
   --border: #e2e5eb;
+  /* Stronger boundary for interactive controls (Slate-400 / Slate-500) */
+  --input-border: #94a3b8;
+  --input-border-hover: #64748b;
 
   --primary: #2563eb;
   --primary-dark: #1d4ed8;
@@ -39,22 +43,30 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/*
+ * Base element resets must live in @layer base so Tailwind utilities
+ * (which load in @layer utilities) can override them. Unlayered rules
+ * beat layered utilities in v4, which previously let `a { color: inherit }`
+ * silently override `text-white` on every link/button.
+ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-body {
-  margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 ::selection {

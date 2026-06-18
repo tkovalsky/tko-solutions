@@ -17,7 +17,7 @@ export function CtaBand({
       />
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-light">
+          <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
             Diagnostic Entry Point
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">

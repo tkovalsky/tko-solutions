@@ -26,19 +26,19 @@ export function ServiceTemplate({ slug }: { slug: string }) {
       <Section>
         <div className="grid gap-6 md:grid-cols-3">
           <Card>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
               Pricing Position
             </p>
             <p className="mt-4 text-3xl font-semibold">{service.price}</p>
           </Card>
           <Card>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
               Timeline
             </p>
             <p className="mt-4 text-3xl font-semibold">{service.duration}</p>
           </Card>
           <Card>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
               Service Role
             </p>
             <p className="mt-4 text-2xl font-semibold">{service.entry}</p>
@@ -73,7 +73,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
           <ol className="grid gap-3">
             {service.process.map((step, index) => (
               <li key={step} className="grid gap-5 border border-border p-5 sm:grid-cols-[4rem_1fr]">
-                <span className="text-sm font-semibold uppercase tracking-[0.14em] text-muted">
+                <span className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className="text-base leading-7 text-muted">{step}</p>

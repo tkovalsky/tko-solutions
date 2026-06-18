@@ -4,7 +4,7 @@ export function Founder() {
   return (
     <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+        <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
           Founder Credibility
         </p>
         <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-foreground md:text-4xl">

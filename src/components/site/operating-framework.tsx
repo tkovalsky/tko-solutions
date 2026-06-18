@@ -25,11 +25,11 @@ export function OperatingFramework() {
               <div className="flex size-9 items-center justify-center rounded-lg bg-primary/15 text-primary-light">
                 <Icon className="size-5" aria-hidden="true" />
               </div>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-white/40">
+              <p className="mt-4 text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-2 text-base font-semibold text-white">{step.stage}</h3>
-              <p className="mt-2 text-sm leading-6 text-white/50">{step.description}</p>
+              <p className="mt-2 text-sm leading-6 text-white/70">{step.description}</p>
             </div>
             {!isLast ? (
               <ChevronRight
