@@ -13,7 +13,7 @@ export function CtaBand({
     <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-20 text-white md:py-24">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(37,99,235,0.16),_transparent_60%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgb(var(--accent-rgb)/0.16),_transparent_60%)]"
       />
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">

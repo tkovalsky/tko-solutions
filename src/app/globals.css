@@ -1,23 +1,36 @@
 @import "tailwindcss";
 
 :root {
+  /* --- Neutrals: charcoal / slate / muted steel --- */
   --background: #ffffff;
-  --foreground: #0a0e1a;
+  --foreground: #0a0e1a; /* Charcoal near-black for primary text */
   /* Slate-600: ~8:1 on white, comfortably clears WCAG AA for body copy */
   --muted: #475569;
-  --border: #e2e5eb;
+  --border: #e2e5eb; /* Muted steel hairline */
   /* Stronger boundary for interactive controls (Slate-400 / Slate-500) */
   --input-border: #94a3b8;
   --input-border-hover: #64748b;
 
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --primary-light: #60a5fa;
+  /* --- Brand: Intelligence Blue (deep, restrained steel — not cornflower) --- */
+  --primary: #1d4e89; /* Intelligence Blue: accent, links, CTA fill */
+  --primary-dark: #163a66; /* hover / pressed */
+  --primary-light: #7da3c9; /* Steel Blue: restrained accent on dark surfaces */
+  /* Channel forms for arbitrary rgb()/glow/shadow usage so they track the brand */
+  --primary-rgb: 29 78 137;
+  --accent-rgb: 125 163 201;
 
+  /* --- Dark surfaces: charcoal navy --- */
   --navy: #0f1729;
   --midnight: #060a14;
+
+  /* --- Light surfaces --- */
   --slate-light: #f4f6fa;
-  --surface: #f4f6fa;
+  --surface: #f4f6fa; /* Surface */
+  --surface-muted: #e9edf3; /* Muted surface for layering */
+
+  /* --- Status: muted, executive (used sparingly) --- */
+  --success: #15803d;
+  --warning: #b45309;
 
   --font-sans: var(--font-geist-sans), "Inter", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "IBM Plex Mono", ui-monospace, monospace;
@@ -31,10 +44,13 @@
   --color-navy: var(--navy);
   --color-midnight: var(--midnight);
   --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
   --color-slate-light: var(--slate-light);
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
   --color-primary-light: var(--primary-light);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 }

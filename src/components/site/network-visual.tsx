@@ -12,7 +12,9 @@ type Node = {
 
 const NODE_COUNT = 46;
 const LINK_DISTANCE = 150;
-const PRIMARY = "37, 99, 235";
+// Steel Blue accent (mirrors --accent-rgb / --primary-light). Kept restrained
+// so the graphic reads as an operating diagram, not a startup hero animation.
+const PRIMARY = "125, 163, 201";
 
 export function NetworkVisual({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -69,7 +71,7 @@ export function NetworkVisual({ className }: { className?: string }) {
           const dy = a.y - b.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < LINK_DISTANCE) {
-            const alpha = (1 - dist / LINK_DISTANCE) * 0.35;
+            const alpha = (1 - dist / LINK_DISTANCE) * 0.28;
             ctx!.strokeStyle = `rgba(${PRIMARY}, ${alpha})`;
             ctx!.lineWidth = 1;
             ctx!.beginPath();
@@ -83,7 +85,7 @@ export function NetworkVisual({ className }: { className?: string }) {
       for (const node of nodes) {
         ctx!.beginPath();
         ctx!.arc(node.x, node.y, node.r, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(${PRIMARY}, 0.85)`;
+        ctx!.fillStyle = `rgba(${PRIMARY}, 0.7)`;
         ctx!.fill();
       }
 

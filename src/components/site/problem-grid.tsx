@@ -26,7 +26,7 @@ export function ProblemGrid() {
         return (
           <article
             key={problem.title}
-            className="group rounded-xl border border-border bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-[0_12px_30px_-12px_rgba(37,99,235,0.25)]"
+            className="group rounded-xl border border-border bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-[0_12px_30px_-12px_rgb(var(--primary-rgb)/0.20)]"
           >
             <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
               <Icon className="size-5" aria-hidden="true" />
