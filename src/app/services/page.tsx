@@ -9,7 +9,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "The TKO service ladder: Operational Recovery Assessment, Operational Truth Diagnostic, Decision Layer Build Sprint, and Fractional Operational Intelligence Advisor.",
+    "The TKO service ladder for healthcare workflow modernization: Recovery Assessment, Truth Diagnostic, Decision Layer Build Sprint, and Fractional Advisor.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "TKO Services",
@@ -24,8 +24,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="One service ladder for deciding where AI and workflow spend should go."
-        description="TKO offers a narrow engagement model: Recovery Assessment for fast spend clarity, Operational Truth Diagnostic for deeper evidence, Decision Layer Build Sprint for implementation, and Fractional Advisor for ongoing governance."
+        title="One service ladder for healthcare workflow recovery and modernization."
+        description="TKO offers a narrow engagement model: Operational Recovery Assessment for fast workflow clarity, Operational Truth Diagnostic for deeper evidence, Decision Layer Build Sprint for implementation, and Fractional Advisor for ongoing governance."
       />
       <Section>
         <ServiceCards />
@@ -34,7 +34,7 @@ export default function ServicesPage() {
         <SectionHeader
           eyebrow="Engagement Logic"
           title="The ladder is intentionally narrow."
-          description="Workflow orchestration, prioritization systems, operational memory, action queues, escalation detection, intelligence capture, and human-in-the-loop AI are capabilities inside the Build. They are not separate products or disconnected AI experiments."
+          description="Workflow orchestration, prioritization systems, operational memory, action queues, escalation detection, intelligence capture, and human-in-the-loop AI are capabilities inside the Build. They are not separate products, SaaS plans, or disconnected AI experiments."
         />
         <div className="mt-12 grid gap-3 lg:grid-cols-4">
           {services.map((service, index) => (

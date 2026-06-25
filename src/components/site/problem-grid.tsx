@@ -10,10 +10,10 @@ import {
 import { problems } from "@/lib/content";
 
 const icons: Record<string, LucideIcon> = {
-  "AI Budget Without Operating Clarity": EyeOff,
-  "Pilots That Do Not Change Work": RefreshCw,
+  "Administrative Burden": EyeOff,
+  "Transformation Recovery": RefreshCw,
   "Human API Dependence": AlertTriangle,
-  "Dashboards Without Judgment": Clock,
+  "Operational Visibility Gaps": Clock,
   "Workflow Friction": ShieldAlert,
   "AI Without Operational Control": Cpu,
 };

@@ -38,7 +38,7 @@ export default function SelectedWorkPage() {
       </Section>
       <CtaBand
         title="Use the evidence to choose the next move."
-        description="The Diagnostic helps funded teams decide where workflow, governance, or AI spend should go first."
+        description="The Assessment helps teams identify where workflow, governance, human API dependency, or AI adoption risk should be addressed first."
       />
     </>
   );

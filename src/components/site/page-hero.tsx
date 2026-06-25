@@ -17,9 +17,9 @@ export function PageHero({
   title,
   description,
   primaryHref = "/contact",
-  primaryLabel = "Book a 30-Minute Discovery Call",
-  secondaryHref,
-  secondaryLabel,
+  primaryLabel = "Schedule an Operational Recovery Assessment",
+  secondaryHref = "/services/diagnostic",
+  secondaryLabel = "Schedule an Operational Truth Diagnostic",
   className,
 }: PageHeroProps) {
   return (

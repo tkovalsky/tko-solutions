@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "TKO Solutions | Operational Truth and Decision Layers",
+    default: "TKO Solutions | Healthcare Workflow Modernization",
     template: "%s | TKO Solutions",
   },
   description: site.description,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     url: absoluteUrl("/"),
     siteName: site.name,
-    title: "TKO Solutions | Operational Truth and Decision Layers",
+    title: "TKO Solutions | Healthcare Workflow Modernization",
     description: site.description,
   },
   twitter: {
@@ -57,6 +57,11 @@ export default function RootLayout({
       "Operational Intelligence",
       "Operational Truth Diagnostics",
       "Decision Layer Build",
+      "Healthcare Workflow Modernization",
+      "Administrative Burden Reduction",
+      "Prior Authorization",
+      "Utilization Management",
+      "Transformation Recovery",
       "Workflow Optimization",
       "Operational Excellence",
       "Revenue Operations",

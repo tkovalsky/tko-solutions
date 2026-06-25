@@ -8,18 +8,18 @@ import { NetworkVisual } from "@/components/site/network-visual";
 const pillars = [
   {
     icon: Eye,
-    title: "Find The Stall",
-    description: "See where work actually breaks down.",
+    title: "Map The Workflow",
+    description: "See where healthcare work actually stalls.",
   },
   {
     icon: Compass,
-    title: "Rank The Spend",
-    description: "Decide what is worth funding first.",
+    title: "Expose Dependency",
+    description: "Find where the human API carries the operation.",
   },
   {
     icon: TrendingUp,
-    title: "Control The AI",
-    description: "Keep judgment and approval in the workflow.",
+    title: "Modernize Safely",
+    description: "Keep AI governed and human-approved.",
   },
 ];
 
@@ -37,40 +37,39 @@ export function Hero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-light">
-            For Director+ AI and operations budget owners
+            Operational Knowledge Systems
           </p>
           <h1 className="mt-6 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            Know where AI should go before you{" "}
-            <span className="text-primary-light">spend</span>
+            Operational Knowledge Systems for Complex{" "}
+            <span className="text-primary-light">Workflows</span>
           </h1>
           <p className="mt-7 max-w-[52ch] text-lg leading-8 text-white/75">
-            TKO helps healthcare and enterprise operations leaders diagnose
-            where complex work stalls, decide which AI or workflow investment is
-            worth funding, and build the governed decision layer that turns
-            fragmented information into trusted next action.
+            We help organizations identify where critical knowledge, decisions,
+            and workflow context live inside people instead of systems and build
+            the operational layer that turns that knowledge into trusted action.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <LinkButton href="/contact">Book a 30-Minute Discovery Call</LinkButton>
+            <LinkButton href="/contact">Schedule an Operational Recovery Assessment</LinkButton>
             <LinkButton
-              href="/selected-work/from-crm-to-operating-system"
+              href="/services/diagnostic"
               variant="secondary"
               className="border-white/25 text-white hover:border-white/50 hover:bg-white/5"
             >
-              See RachelOS Proof
+              Schedule an Operational Truth Diagnostic
             </LinkButton>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/75">
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              AI spend clarity
+              Prior authorization
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              RachelOS proof
+              Transformation recovery
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              Human-controlled AI
+              Human-in-the-loop AI
             </li>
           </ul>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4">

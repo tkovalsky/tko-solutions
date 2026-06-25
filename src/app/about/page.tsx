@@ -8,7 +8,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About TKO Solutions and Todd: operator-first operational intelligence work grounded in enterprise healthcare leadership, workflow transformation, and RachelOS proof.",
+    "About TKO Solutions and Todd: operator-first Operational Knowledge Systems work grounded in enterprise healthcare leadership, workflow transformation, and RachelOS proof.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About TKO Solutions",
@@ -56,9 +56,9 @@ const phases = [
       "A live system proving that relationship knowledge can become operational memory, priority logic, and human-approved AI action.",
   },
   {
-    title: "Operational intelligence",
+    title: "Operational Knowledge Systems",
     description:
-      "The category conclusion: AI is useful when it is embedded in governed workflow and decision discipline.",
+      "The category conclusion: institutional knowledge becomes operational memory, state, priority, human approval, action, and outcome.",
   },
 ];
 
@@ -75,7 +75,7 @@ export default function AboutPage() {
           <SectionHeader
             eyebrow="Accumulation"
             title="The story runs from healthcare operating complexity to live decision systems."
-            description="Operational intelligence is not the starting claim. It is the conclusion earned from years of modernization, recovery, workflow, governance, and product-building work."
+            description="Operational Knowledge Systems are not a theory-first claim. They are the conclusion earned from modernization, recovery, workflow, governance, and product-building work."
           />
           <ol className="grid gap-3">
             {phases.map((phase, index) => (
@@ -110,7 +110,7 @@ export default function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Method"
-            title="Operational Intelligence starts by asking better operating questions."
+            title="Operational Knowledge Systems start by asking better operating questions."
             description="The method connects executive concern to workflow evidence, decision analysis, prioritization, and implementation."
           />
           <ol className="space-y-3">

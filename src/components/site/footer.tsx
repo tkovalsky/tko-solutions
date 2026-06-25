@@ -16,8 +16,9 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Operational truth and decision-layer builds for leaders with AI or
-            workflow budget who need clearer priorities, governance, and action.
+            Evidence-backed healthcare workflow modernization for organizations
+            that need to reduce administrative burden, recover stalled
+            transformations, and govern AI-assisted work.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 md:justify-self-end">

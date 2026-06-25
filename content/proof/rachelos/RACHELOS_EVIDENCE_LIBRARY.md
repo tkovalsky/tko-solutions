@@ -21,6 +21,22 @@ captured**; this document specifies what to capture, it does not produce images.
 
 ---
 
+## Wave 1 required capability coverage
+
+| Required capability | Library entry | What it proves | Screenshot required | Diagram required | Primary site use |
+|---|---|---|---|---|---|
+| Canonical Queue | #1 Canonical Queue | Priority can be computed into one trusted action list. | `/ops/queue` ranked list with freshness classes. | Signal → scoring → ranked queue → action. | Homepage RachelOS proof, Selected Work, Build page, sales deck, Assessment collateral. |
+| Relationship Memory | #2 Relationship Memory | Institutional knowledge can live in a system instead of one person's head. | Relationship memory detail with situation, facts, open questions, and timeline. | Human API before/after: one head vs governed memory. | Homepage human-API proof, Selected Work, Assessment collateral. |
+| Journey Intelligence | #4 Journey Intelligence | Facts can become state and recommended next step. | Journey/lifecycle state with derived recommendation. | Facts → state → recommendation. | Selected Work and Build page. |
+| Human Approval | #6 Human-Approved AI ("Needs Rachel") | AI can draft or surface action while humans retain approval control. | `/ops/needs-rachel` pending review queue. | AI draft/recommendation → approval gate → action. | Homepage, all service pages, sales deck, Assessment collateral. |
+| Daily Action Engine | #5 Daily Action Engine | Priority can become a daily execution artifact. | Rendered daily digest email. | Cron → queue/context → daily digest → operator action. | Homepage, Selected Work, sales deck, Assessment collateral. |
+| Content Recommendation | #8 Content Recommendation | Facts and state can drive a specific recommended asset. | Recommended content in relationship context. | Facts + state → content selection → governed outreach. | Build page and supporting selected-work detail. |
+| Intelligence Gaps | #10 Intelligence Gaps | The system can identify what it does not know and ask for the highest-value missing fact. | Intelligence-gap prompt in relationship context. | Known facts vs missing facts → next best question. | Homepage differentiator, Selected Work, sales deck, Assessment collateral. |
+
+No screenshots or diagrams are produced in Wave 1. This library defines requirements only.
+
+---
+
 ## How to read each entry
 
 Every capability documents:

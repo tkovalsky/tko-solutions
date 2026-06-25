@@ -3,11 +3,19 @@ import { LinkButton } from "@/components/ui/button";
 type CtaBandProps = {
   title?: string;
   description?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
 };
 
 export function CtaBand({
-  title = "Start with operational truth.",
-  description = "The Diagnostic identifies where work stalls, where AI can safely help, and what action should happen next.",
+  title = "Start with the workflow that is already under pressure.",
+  description = "The Operational Recovery Assessment identifies where work stalls, where dependency risk is building, and where AI can help without taking control.",
+  primaryHref = "/contact",
+  primaryLabel = "Schedule an Operational Recovery Assessment",
+  secondaryHref = "/services/diagnostic",
+  secondaryLabel = "Schedule an Operational Truth Diagnostic",
 }: CtaBandProps) {
   return (
     <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-20 text-white md:py-24">
@@ -18,19 +26,25 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Operational Truth Diagnostic
+            Operational Recovery Assessment
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/65">{description}</p>
         </div>
-        <LinkButton
-          href="/contact"
-          className="bg-primary hover:bg-primary-dark"
-        >
-          Book a 30-Minute Discovery Call
-        </LinkButton>
+        <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+          <LinkButton href={primaryHref} className="bg-primary hover:bg-primary-dark">
+            {primaryLabel}
+          </LinkButton>
+          <LinkButton
+            href={secondaryHref}
+            variant="secondary"
+            className="border-white/25 text-white hover:border-white/50 hover:bg-white/5"
+          >
+            {secondaryLabel}
+          </LinkButton>
+        </div>
       </div>
     </section>
   );

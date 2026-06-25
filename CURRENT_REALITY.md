@@ -44,12 +44,18 @@ information and institutional knowledge into governed, actionable operating syst
 
 The current public-site buyer lens is:
 
-- Director+ healthcare, operations, transformation, product, implementation, customer
-  success, or digital leaders
-- Existing AI, automation, workflow, or modernization budget
-- Pressure to spend, but uncertainty about where AI will actually improve work
+- Company identity: Operational Knowledge Systems for complex workflows
+- Primary market: healthcare workflow modernization
+- Primary offer: Operational Recovery Assessment ($5K-$8K)
+- Primary proof: RachelOS
+- Primary credibility: healthcare transformation experience
+- Target buyer: Director+ healthcare operations, transformation, product, implementation,
+  customer success, consulting partner, or operational leader
+- Active administrative burden, workflow modernization, transformation recovery, or AI
+  adoption pressure
+- Dependence on key people who function as human APIs
 - Need for a senior operator-builder who can diagnose the operating truth before larger
-  spend is committed
+  workflow or AI spend is committed
 
 ---
 
@@ -241,12 +247,14 @@ Evidence:
 
 ### Homepage Order
 
-1. Director+ AI/workflow spend problem
-2. Selected Work evidence
-3. RachelOS proof
-4. Operational Knowledge System pattern
-5. Services
-6. Discovery-call CTA
+1. Hero: Operational Knowledge Systems for Complex Workflows
+2. Primary Market: Healthcare Workflow Modernization
+3. Proof Ladder / 1: Healthcare Transformation Experience
+4. Proof Ladder / 2: RachelOS
+5. Proof Ladder / 3: CRE Intelligence
+6. Proof Ladder / 4: Operating System Methodology
+7. Services
+8. CTA
 
 ### Remove
 

@@ -4,6 +4,7 @@ import { Logo } from "@/components/site/logo";
 import { site } from "@/lib/site";
 
 const navItems = [
+  { href: "/services/recovery-assessment", label: "Assessment" },
   { href: "/services", label: "Services" },
   { href: "/selected-work", label: "Selected Work" },
   { href: "/about", label: "About" },
@@ -26,7 +27,7 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <LinkButton href="/contact" className="min-h-10 px-4 text-xs">
+          <LinkButton href="/contact" className="min-h-10 max-w-56 whitespace-normal px-4 text-center text-xs leading-tight">
             {site.cta}
           </LinkButton>
         </div>
@@ -34,7 +35,7 @@ export function Header() {
           href="/contact"
           className="text-sm font-semibold uppercase tracking-[0.08em] text-primary lg:hidden"
         >
-          Start
+          Assessment
         </Link>
       </div>
       <nav

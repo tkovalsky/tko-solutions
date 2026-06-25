@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Operational Truth Diagnostic",
     description:
-      "A focused diagnostic that produces workflow assessment, decision analysis, AI spend guidance, and an implementation roadmap.",
+      "A focused diagnostic that produces workflow assessment, decision analysis, AI opportunity guidance, and an implementation roadmap.",
     url: absoluteUrl("/services/diagnostic"),
   },
 };

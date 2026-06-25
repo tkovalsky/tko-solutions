@@ -1,13 +1,13 @@
 export const problems = [
   {
-    title: "AI Budget Without Operating Clarity",
+    title: "Administrative Burden",
     description:
-      "Leaders have budget for AI, automation, or modernization, but not a clear view of which workflow problem deserves spend first.",
+      "Prior authorization, utilization management, care management, and provider operations create manual work that slows care and consumes operating capacity.",
   },
   {
-    title: "Pilots That Do Not Change Work",
+    title: "Transformation Recovery",
     description:
-      "Demos look promising, but the output never becomes trusted work because decision rights, exception handling, and approval paths were not designed.",
+      "Modernization programs can report progress while dependency risk, decision latency, and adoption gaps accumulate between teams.",
   },
   {
     title: "Human API Dependence",
@@ -15,9 +15,9 @@ export const problems = [
       "Critical knowledge lives in a few key people. When they are overloaded, unavailable, or leave, execution slows down.",
   },
   {
-    title: "Dashboards Without Judgment",
+    title: "Operational Visibility Gaps",
     description:
-      "Reports show activity and status, but they do not tell teams what matters most, what is at risk, or what action should happen next.",
+      "Reports show activity and status, but they do not show where work is stuck, who owns the next decision, or which risk needs attention.",
   },
   {
     title: "Workflow Friction",
@@ -27,7 +27,7 @@ export const problems = [
   {
     title: "AI Without Operational Control",
     description:
-      "AI can summarize or draft, but it does not become trusted execution unless human approval, workflow fit, and decision rights are designed in.",
+      "AI can summarize or draft, but it does not become trusted healthcare execution unless human approval, workflow fit, and decision rights are designed in.",
   },
   {
     title: "Execution Visibility Failure",
@@ -35,9 +35,9 @@ export const problems = [
       "Work crosses teams, vendors, systems, and business units without a shared layer that shows current state and required action.",
   },
   {
-    title: "Spend Prioritization",
+    title: "Workflow Governance",
     description:
-      "The expensive risk is not choosing the wrong model. It is funding tool work before the operating problem, control model, and next action are understood.",
+      "Exception handling, escalation paths, decision rights, and auditability must be designed before automation can safely improve the work.",
   },
 ];
 
@@ -120,9 +120,9 @@ export const services = [
     duration: "1 week",
     entry: "Low-friction entry point",
     summary:
-      "A one-week assessment for leaders who need fast clarity on where AI, automation, or workflow spend should go next.",
+      "A one-week assessment for healthcare and operations leaders who need fast clarity on where a workflow is stuck and what recovery step comes first.",
     overview:
-      "The Operational Recovery Assessment is a fixed-scope one-week engagement for teams with budget pressure, stalled work, or an AI initiative that needs operational grounding. It maps the workflow, identifies bottlenecks and key-person dependencies, assesses AI readiness, and gives leadership a clear next move.",
+      "The Operational Recovery Assessment is a fixed-scope one-week engagement for teams facing administrative burden, stalled transformation, or an AI initiative that needs operational grounding. It maps the workflow, identifies bottlenecks and key-person dependencies, assesses AI readiness, and gives leadership a clear next move.",
     outcomes: [
       "Evidence-based view of the top places work stalls.",
       "Identification of key-person dependency and the risk it creates.",
@@ -148,7 +148,7 @@ export const services = [
     faqs: [
       {
         q: "When is the Assessment enough?",
-        a: "It is enough when leadership needs a fast, fixed-scope view of the most likely stall, dependency, or AI spend risk before choosing the next move.",
+        a: "It is enough when leadership needs a fast, fixed-scope view of the most likely stall, dependency, or AI adoption risk before choosing the next move.",
       },
       {
         q: "How is this different from the Diagnostic?",
@@ -168,9 +168,9 @@ export const services = [
     duration: "2-3 weeks",
     entry: "Primary entry point",
     summary:
-      "A fixed-scope diagnostic for Director+ leaders who have AI or modernization budget and need to know where it should go first.",
+      "A fixed-scope diagnostic for healthcare and enterprise leaders who need the operating truth behind stalled work before committing to a larger fix.",
     overview:
-      "The Operational Truth Diagnostic studies one or two workflow areas where the organization already has data, tools, meetings, reports, and AI interest but still lacks a trusted decision system. It identifies where work stalls, where ownership breaks down, where AI can safely help, and what should happen next before larger spend is committed.",
+      "The Operational Truth Diagnostic studies one or two workflow areas where the organization already has data, tools, meetings, reports, and modernization pressure but still lacks a trusted decision system. It identifies where work stalls, where ownership breaks down, where AI can safely help, and what should happen next before larger spend is committed.",
     outcomes: [
       "Clear view of where work stalls, why decisions slow down, and what friction is costing the team.",
       "Shared fact base across operations, technology, product, revenue, or governance leaders.",
@@ -191,7 +191,7 @@ export const services = [
       "Decision analysis",
       "Operational bottleneck map",
       "Visibility and prioritization gap review",
-      "AI spend and control model",
+      "AI opportunity and control model",
       "Implementation roadmap",
       "Executive readout",
       "30 days of follow-up Q&A",
@@ -363,7 +363,7 @@ export const caseStudies = [
       "Human approval remains part of the workflow before AI-assisted outreach is used.",
       "Operational outcomes are stated without inflated revenue claims or unverifiable metrics.",
     ],
-    relatedProblems: ["Human API Dependence", "Dashboards Without Judgment", "Spend Prioritization"],
+    relatedProblems: ["Human API Dependence", "Operational Visibility Gaps", "Workflow Governance"],
     relatedService: "Decision Layer Build Sprint",
   },
   {
@@ -432,8 +432,31 @@ export const caseStudies = [
       "Requirements and operating model work connected technical exchange to onboarding, access control, auditability, and governance.",
       "No client names or unverifiable implementation metrics are published.",
     ],
-    relatedProblems: ["Spend Prioritization", "Workflow Friction", "Execution Visibility Failure"],
+    relatedProblems: ["Workflow Governance", "Workflow Friction", "Execution Visibility Failure"],
     relatedService: "Operational Truth Diagnostic",
+  },
+  {
+    slug: "cre-intelligence-model",
+    title: "CRE Intelligence Model",
+    industry: "Method portability",
+    proofLevel: "Internal proof",
+    problem:
+      "Market observations, property context, and analyst judgment existed, but intelligence remained fragmented and hard to reuse.",
+    situation:
+      "Commercial real estate research required turning scattered observations, entity data, and local market knowledge into reusable intelligence assets.",
+    truth:
+      "The operating failure was the same human API pattern in a different domain: the analyst became the system that connected facts, observations, risks, opportunities, and recommendations.",
+    system:
+      "Modeled entity facts, observations, risks, opportunities, recommendations, comparisons, and report outputs as reusable intelligence structures.",
+    outcome:
+      "The work demonstrates that the operational knowledge pattern travels beyond healthcare when domain judgment needs to become structured, reusable decision support.",
+    evidence: [
+      "Demonstrates method portability across a non-healthcare intelligence workflow.",
+      "Supports the Operational Knowledge Systems pattern without becoming a separate TKO service line.",
+      "No commercial outcomes, client names, or market-performance claims are published.",
+    ],
+    relatedProblems: ["Operational Visibility Gaps", "Human API Dependence", "Workflow Governance"],
+    relatedService: "Decision Layer Build Sprint",
   },
 ];
 

@@ -20,7 +20,9 @@ export function ServiceTemplate({ slug }: { slug: string }) {
         title={service.title}
         description={service.overview}
         primaryHref="/contact"
-        primaryLabel="Book a 30-Minute Discovery Call"
+        primaryLabel="Schedule an Operational Recovery Assessment"
+        secondaryHref="/services/diagnostic"
+        secondaryLabel="Schedule an Operational Truth Diagnostic"
       />
 
       <Section>
@@ -51,7 +53,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
           <SectionHeader
             eyebrow="Outcomes"
             title="What the engagement must make possible."
-            description="Each service exists to improve operational visibility, prioritization, execution confidence, and the buyer's ability to decide what deserves spend and what happens next."
+            description="Each service exists to improve operational visibility, prioritization, execution confidence, and the buyer's ability to decide what happens next."
           />
           <ul className="grid gap-3">
             {service.outcomes.map((outcome) => (
@@ -68,7 +70,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
           <SectionHeader
             eyebrow="Process"
             title="Constrained, evidence-led work."
-            description="The work is structured to avoid open-ended consulting drift and keep the buyer focused on workflow evidence, decision points, AI control, and action."
+            description="The work is structured to avoid open-ended consulting drift and keep the buyer focused on workflow evidence, decision points, human approval, and action."
           />
           <ol className="grid gap-3">
             {service.process.map((step, index) => (
@@ -110,7 +112,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
             ? "Use the Assessment to decide what deserves deeper spend."
             : service.slug === "diagnostic"
             ? "Use the Diagnostic to clarify what should happen next."
-            : "The right starting point is still the Operational Truth Diagnostic."
+            : "The right starting point is still the Operational Recovery Assessment."
         }
         description={
           service.slug === "recovery-assessment"

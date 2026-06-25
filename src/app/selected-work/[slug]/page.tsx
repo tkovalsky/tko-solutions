@@ -58,7 +58,9 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         title={study.title}
         description={study.problem}
         primaryHref="/contact"
-        primaryLabel="Book a 30-Minute Discovery Call"
+        primaryLabel="Schedule an Operational Recovery Assessment"
+        secondaryHref="/services/diagnostic"
+        secondaryLabel="Schedule an Operational Truth Diagnostic"
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
