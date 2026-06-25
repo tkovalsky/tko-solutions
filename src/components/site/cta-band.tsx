@@ -6,8 +6,8 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "Start with operational truth.",
-  description = "The Diagnostic establishes where work is actually failing, what should happen next, and which recovery opportunities deserve executive attention.",
+  title = "Start with the decision gap.",
+  description = "The Operational Diagnostic identifies where work stalls, where decisions break down, and what action should happen next.",
 }: CtaBandProps) {
   return (
     <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-20 text-white md:py-24">
@@ -18,7 +18,7 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Diagnostic Entry Point
+            Operational Diagnostic
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}
@@ -29,10 +29,9 @@ export function CtaBand({
           href="/contact"
           className="bg-primary hover:bg-primary-dark"
         >
-          Start the Diagnostic
+          Schedule an Operational Diagnostic
         </LinkButton>
       </div>
     </section>
   );
 }
-

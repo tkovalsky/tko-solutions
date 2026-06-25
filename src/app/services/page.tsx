@@ -9,12 +9,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "The TKO service ladder: Operational Intelligence Diagnostic, Operating System Build, and Fractional Operating System Advisor.",
+    "The TKO service ladder: Operational Diagnostic, Operational Intelligence System Build, and Fractional Operational Intelligence Advisor.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "TKO Services",
     description:
-      "One diagnostic entry point, followed by build and advisory paths when operational truth identifies the right next step.",
+      "One diagnostic entry point, followed by build and advisory paths when workflow evidence identifies the right next step.",
     url: absoluteUrl("/services"),
   },
 };
@@ -24,8 +24,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="One service ladder for establishing operational truth and acting on it."
-        description="TKO sells a three-rung ladder: Diagnostic, Build, and Fractional Advisor. The Diagnostic is the paid entry point. Build and advisory work follow when evidence shows what should happen next."
+        title="One service ladder for turning operational data into action."
+        description="TKO offers a three-rung engagement model: Operational Diagnostic, Operational Intelligence System Build, and Fractional Operational Intelligence Advisor. The Diagnostic is the paid entry point. Build and advisory work follow when evidence shows what should happen next."
       />
       <Section>
         <ServiceCards />
@@ -34,7 +34,7 @@ export default function ServicesPage() {
         <SectionHeader
           eyebrow="Engagement Logic"
           title="The ladder is intentionally narrow."
-          description="Capability modules live inside the Build. They are not separate offers. The site routes qualified buyers to the Diagnostic because that is where operational truth is established."
+          description="Workflow orchestration, prioritization systems, operational memory, action queues, escalation detection, intelligence capture, and human-in-the-loop AI are capabilities inside the Build. They are not separate products."
         />
         <div className="mt-12 grid gap-3 lg:grid-cols-3">
           {services.map((service, index) => (
@@ -52,4 +52,3 @@ export default function ServicesPage() {
     </>
   );
 }
-

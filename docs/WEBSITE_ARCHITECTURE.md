@@ -30,7 +30,7 @@ Healthcare remains the launch wedge because it has the strongest current proof a
 - `/services/fractional-advisor` - Fractional Operating System Advisor
 - `/industries` - Industry architecture overview
 - `/case-studies` - Case study index
-- `/case-studies/racheldelray-operating-system` - RachelDelray Operational Intelligence System
+- `/case-studies/from-crm-to-operating-system` - RachelDelray Operational Intelligence System
 - `/case-studies/prior-authorization-modernization` - Prior Authorization Modernization
 - `/case-studies/enterprise-care-management-modernization` - Enterprise Care Management Modernization
 - `/case-studies/healthcare-interoperability-platform` - Healthcare Interoperability Platform

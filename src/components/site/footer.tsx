@@ -16,8 +16,8 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Operational Intelligence Systems for complex organizations that need to
-            see where work is actually failing.
+            Operational Intelligence Systems for organizations that have data but
+            need clearer priorities, decisions, and action.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 md:justify-self-end">
@@ -35,4 +35,3 @@ export function Footer() {
     </footer>
   );
 }
-

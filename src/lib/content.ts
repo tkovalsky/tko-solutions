@@ -1,13 +1,13 @@
 export const problems = [
   {
-    title: "Transformation Recovery",
+    title: "Data Without Decisions",
     description:
-      "Funded modernization, AI, or operating model programs are active, but leadership cannot see where execution is actually stalling.",
+      "Dashboards, CRMs, reports, and spreadsheets exist, but leaders still cannot see what matters most or what decision is needed next.",
   },
   {
-    title: "Workflow Visibility Failure",
+    title: "Attention Gaps",
     description:
-      "Systems show tasks and reports, but the real handoffs, delays, exceptions, and manual workarounds remain hidden.",
+      "The people, customers, cases, accounts, or workflows that need attention are discovered too late or only through manual follow-up.",
   },
   {
     title: "Decision Latency",
@@ -15,29 +15,29 @@ export const problems = [
       "Work waits because facts, authority, escalation rules, or the trusted next action are unclear.",
   },
   {
-    title: "Program Execution Failure",
+    title: "Institutional Knowledge Loss",
     description:
-      "Milestones slip even while individual teams report progress because cross-team dependencies are not operationally visible.",
+      "Critical context lives in people's heads, inboxes, meetings, and side documents instead of a system the organization can trust.",
   },
   {
-    title: "Governance Breakdown",
+    title: "Workflow Friction",
     description:
-      "Meetings, committees, and dashboards exist, but they do not produce accountability or faster decisions.",
+      "Teams spend time reconciling status, chasing handoffs, and managing work instead of advancing work.",
   },
   {
-    title: "AI Adoption Failure",
+    title: "AI Without Operational Control",
     description:
-      "AI pilots demonstrate capability but do not become trusted workflows because control, governance, and human approval are missing.",
+      "AI can summarize or draft, but it does not become trusted execution unless human approval, workflow fit, and decision rights are designed in.",
   },
   {
-    title: "Cross-Team Coordination Failure",
+    title: "Execution Visibility Failure",
     description:
-      "Work crosses teams, vendors, systems, and business units without a shared operating layer that owns the complete flow.",
+      "Work crosses teams, vendors, systems, and business units without a shared layer that shows current state and required action.",
   },
   {
     title: "Operational Intelligence Design",
     description:
-      "Scattered signals need to become governed facts, visible state, one next action, human approval, and measured outcomes.",
+      "Scattered signals need to become governed facts, visible state, trusted next actions, human approval, and measured outcomes.",
   },
 ];
 
@@ -47,7 +47,7 @@ export const truthFramework = [
   "Where does work stall?",
   "What is known but unused?",
   "What should the next action be?",
-  "Where can AI help without taking control?",
+  "Where can automation or AI help without taking control?",
   "How is success measured?",
 ];
 
@@ -56,85 +56,92 @@ export const systemFlow = ["Signals", "Memory", "Facts", "State", "Action", "Out
 export const operatingFramework = [
   {
     stage: "Signals",
-    description: "Raw activity from email, calls, tickets, systems, and conversations enters the system unfiltered.",
+    description:
+      "Activity from email, calls, tickets, CRMs, reports, meetings, and conversations enters the decision layer.",
   },
   {
     stage: "Memory",
-    description: "Signals persist across time and source instead of evaporating after a single touchpoint.",
+    description:
+      "Operational knowledge persists across time and source instead of disappearing into individual people or one-off meetings.",
   },
   {
     stage: "Facts",
-    description: "Memory is resolved into source-aware, governed facts that leaders can trust.",
+    description:
+      "Signals resolve into source-aware, governed facts that teams can trust.",
   },
   {
     stage: "State",
-    description: "Facts roll up into a current, accurate view of where every workflow actually stands.",
+    description:
+      "Facts roll up into a current view of the workflow, relationship, customer, case, or account.",
   },
   {
-    stage: "Canonical Actions",
-    description: "State produces one trusted next action instead of competing reports and opinions.",
+    stage: "Priority",
+    description:
+      "The system identifies what matters, who needs attention, and where escalation may be required.",
   },
   {
     stage: "Human Approval",
-    description: "A person reviews and authorizes the action before it executes. AI never acts alone.",
+    description:
+      "A person reviews and authorizes important recommendations before action is taken.",
   },
   {
-    stage: "Outcomes",
-    description: "Approved actions are measured against real operating results, closing the loop.",
+    stage: "Action",
+    description:
+      "The team works from trusted next actions and measures whether the decision improved execution.",
   },
 ];
 
 export const founderCredibility = [
-  "Healthcare",
+  "Operator First",
+  "Healthcare Leadership",
+  "Workflow Transformation",
+  "Enterprise Modernization",
   "Financial Services",
   "Wealth Management",
-  "Capital Markets",
-  "Enterprise Programs",
-  "AI Governance",
+  "Operational Execution",
 ];
 
 export const services = [
   {
     slug: "diagnostic",
-    title: "Operational Intelligence Diagnostic",
+    title: "Operational Diagnostic",
     shortTitle: "Diagnostic",
-    price: "$25k-$50k",
-    duration: "3 weeks",
+    price: "Starting at $15K",
+    duration: "2-3 weeks",
     entry: "Primary entry point",
     summary:
-      "A fixed-scope diagnostic for leaders who need to establish where complex work is actually failing and what should be fixed first.",
+      "A focused engagement for leaders who need to find where work stalls, where decisions break down, and which fixes matter first.",
     overview:
-      "The Diagnostic applies the Operational Truth Framework to one or two workflow or program areas. It compares what is supposed to happen with what actually happens, surfaces hidden failure points, ranks recovery opportunities, and gives the sponsor a 90-day recovery roadmap.",
+      "The Operational Diagnostic studies one or two workflow areas where the organization already has data, tools, meetings, and reports but still lacks a trusted decision system. It identifies where work stalls, where ownership breaks down, where AI or automation could help, and what should happen next.",
     outcomes: [
-      "Evidence-based view of where work is actually stalling.",
-      "Shared fact base across operations, transformation, technology, and governance leaders.",
-      "Top 10 recovery opportunities ranked by value, risk, and effort.",
-      "90-day roadmap with owners, gates, and success criteria.",
-      "Decision clarity on whether to build, govern, redesign, or stop work.",
+      "Clear view of where work stalls, why decisions slow down, and what friction is costing the team.",
+      "Shared fact base across operations, technology, product, revenue, or governance leaders.",
+      "Prioritized list of workflow, decision, and visibility improvements.",
+      "Implementation roadmap with owners, gates, and success criteria.",
+      "Decision clarity on whether to redesign workflow, build an Operational Intelligence System, improve governance, or stop low-value work.",
     ],
     process: [
       "Confirm the operating problem, decision needed, workflows involved, and sponsor.",
       "Review workflow documentation, reporting, dashboards, backlogs, and operating artifacts.",
       "Interview up to 6-8 stakeholders close to the work.",
-      "Map intended workflow against actual workflow using the Operational Truth Framework.",
-      "Identify stalls, visibility gaps, manual handoffs, decision latency, and governance breakdown.",
-      "Deliver the executive readout and 90-day recovery roadmap.",
+      "Map intended workflow against actual workflow and identify where decision support is missing.",
+      "Identify stalls, visibility gaps, manual handoffs, decision latency, administrative burden, and AI opportunities.",
+      "Deliver the executive readout and implementation roadmap.",
     ],
     deliverables: [
-      "Operational Truth Assessment",
-      "Failure-Point and Manual-Handoff Inventory",
-      "Visibility Gap Map",
-      "Administrative Burden and Leakage Inventory",
-      "AI Opportunity and Control Model",
-      "Top 10 Recovery Opportunities",
-      "90-Day Recovery Roadmap",
-      "Executive Readout",
+      "Workflow assessment",
+      "Decision analysis",
+      "Operational bottleneck map",
+      "Visibility and prioritization gap review",
+      "AI opportunity review",
+      "Implementation roadmap",
+      "Executive readout",
       "30 days of follow-up Q&A",
     ],
     faqs: [
       {
         q: "What makes this different from a consulting assessment?",
-        a: "The Diagnostic is not a strategy review. It is a constrained evidence exercise that identifies where work stalls, what is invisible, what decision logic is missing, and what recovery actions should happen next.",
+        a: "The Diagnostic is not a broad strategy review. It is a constrained evidence exercise that identifies where work stalls, what is invisible, what decision logic is missing, and what action should happen next.",
       },
       {
         q: "Do we need clean data before starting?",
@@ -142,7 +149,7 @@ export const services = [
       },
       {
         q: "Do we need an AI initiative?",
-        a: "No. AI is examined only where it affects workflow, decision rights, governance, or human approval. The core problem is operational visibility.",
+        a: "No. AI is examined only where it can reduce friction, improve decision support, or support human-approved workflows. The core problem is operational decision-making.",
       },
       {
         q: "What is not included?",
@@ -152,37 +159,39 @@ export const services = [
   },
   {
     slug: "operating-system-build",
-    title: "Operating System Build",
+    title: "Operational Intelligence System Build",
     shortTitle: "Build",
-    price: "$50k-$100k",
+    price: "$50K-$100K",
     duration: "8-12 weeks",
     entry: "Downstream conversion offer",
     summary:
-      "Design and implementation path for turning diagnostic findings into a working Operational Intelligence System.",
+      "Design and implementation support for the decision layer between data and action.",
     overview:
-      "The Build converts operational truth into a system that captures signals, preserves memory, creates source-aware facts, exposes state, surfaces the trusted next action, keeps humans in approval, and measures outcomes.",
+      "The Build converts diagnostic findings into an Operational Intelligence System: the layer that captures operational memory, identifies priorities, surfaces who or what needs attention, recommends trusted next actions, and keeps humans in control.",
     outcomes: [
-      "Working decision system for one or two workflow areas.",
-      "Operator workflow designed around attention, approval, and action.",
-      "Visibility into gaps, stalls, and failure points before they become hidden risk.",
-      "Measurement model and operating handoff for the internal team.",
+      "Working decision layer for one or two workflow areas.",
+      "Team workflow designed around prioritization, approval, and action.",
+      "Better visibility into gaps, stalls, and escalation risk before opportunities are missed.",
+      "Operational memory that preserves institutional knowledge beyond individual people.",
+      "Measurement model and handoff for the internal team.",
     ],
     process: [
       "Validate diagnostic findings and current-state constraints.",
-      "Design the target operating model and decision system.",
-      "Define source authority, operational state, action logic, and human approval points.",
-      "Create the operator workflow, alerting model, and measurement loop.",
+      "Design the target workflow, decision rules, and action model.",
+      "Define source authority, operational state, priority logic, escalation triggers, and human approval points.",
+      "Create the action queue, alerting model, and measurement loop.",
       "Oversee build, testing, adoption, and handoff.",
     ],
     deliverables: [
       "Workflow redesign",
-      "Decision-system design",
-      "Relationship or work memory model",
-      "Intelligence gap acquisition model",
-      "Operator workflow",
-      "Operational alerting and reliability model",
+      "Decision layer design",
+      "Operational memory model",
+      "Prioritization and action model",
+      "Human-in-the-loop AI review model",
+      "Action queues and escalation detection",
+      "Intelligence capture workflow",
       "Measurement model",
-      "Handoff documentation and operator training",
+      "Handoff documentation and team training",
     ],
     faqs: [
       {
@@ -191,7 +200,7 @@ export const services = [
       },
       {
         q: "Is this software development?",
-        a: "It is operating-system design and build oversight. Direct development, integration, or vendor management must be explicitly scoped.",
+        a: "It is decision-layer design and build oversight. Direct development, integration, or vendor management must be explicitly scoped.",
       },
       {
         q: "Where does AI fit?",
@@ -201,39 +210,40 @@ export const services = [
   },
   {
     slug: "fractional-advisor",
-    title: "Fractional Operating System Advisor",
+    title: "Fractional Operational Intelligence Advisor",
     shortTitle: "Fractional",
-    price: "$12k-$25k / month",
+    price: "$12K-$25K / month",
     duration: "3-6 months",
     entry: "Post-diagnostic or post-build retainer",
     summary:
-      "Advisory support for sustaining operating cadence, governance, and transformation momentum after the initial work.",
+      "Strategic advisory support for leadership teams that need to continuously improve execution.",
     overview:
-      "The Fractional Advisor engagement protects the momentum created by a diagnostic or build. It keeps the operating cadence alive, governs the backlog, maintains sponsor visibility, and keeps AI governance honest.",
+      "The Fractional Operational Intelligence Advisor engagement helps leadership teams keep operational reviews, prioritization, workflow governance, AI adoption, and execution oversight tied to real operating evidence.",
     outcomes: [
-      "Transformation momentum maintained between major milestones.",
-      "Sponsor has a trusted monthly view of program health.",
-      "Backlog, governance, and AI control model stay aligned with operational reality.",
-      "Internal team develops stronger operating discipline over time.",
+      "Leadership has a trusted operating view of priorities, risks, and required decisions.",
+      "Workflow governance and prioritization stay aligned with operational reality.",
+      "AI adoption remains grounded in human-approved workflow and business value.",
+      "Internal teams develop stronger execution discipline over time.",
     ],
     process: [
-      "Establish the operating cadence and sponsor reporting rhythm.",
+      "Establish the operational review cadence and sponsor reporting rhythm.",
       "Review progress, risks, blockers, and dependency health weekly.",
-      "Maintain backlog and priority discipline.",
-      "Provide monthly operating-system review and sponsor brief.",
-      "Guide AI governance and decision-rights evolution as work changes.",
+      "Maintain workflow governance, backlog discipline, and prioritization reviews.",
+      "Provide monthly operational intelligence review and sponsor brief.",
+      "Guide AI adoption and decision-rights evolution as work changes.",
     ],
     deliverables: [
-      "Weekly operating cadence",
-      "Monthly operating-system review",
+      "Operational reviews",
+      "Workflow governance",
+      "AI adoption guidance",
+      "Prioritization reviews",
+      "Execution oversight",
       "Monthly executive status brief",
-      "Backlog and priority guidance",
-      "AI governance guidance",
     ],
     faqs: [
       {
         q: "Is this staff augmentation?",
-        a: "No. The role is senior operating-system advisory, governance discipline, and sponsor visibility after a diagnostic or build.",
+        a: "No. The role is senior operational intelligence advisory, governance discipline, and sponsor visibility after a diagnostic or build.",
       },
       {
         q: "Can it start without prior TKO work?",
@@ -250,53 +260,53 @@ export const services = [
 export const industries = [
   {
     title: "Healthcare",
-    priority: "Launch wedge",
+    priority: "Operations focus",
     description:
-      "Prior authorization, care management, interoperability, administrative burden, healthcare AI governance, and payer/provider operating complexity.",
+      "Operational efficiency, administrative burden, workflow modernization, AI adoption, process visibility, and care operations.",
   },
   {
     title: "Financial Services",
-    priority: "Secondary market",
+    priority: "Relationship focus",
     description:
-      "Regulated operating environments where reporting, workflow, decision rights, and platform modernization intersect.",
+      "Client engagement, advisor productivity, operational scale, relationship visibility, and workflow consistency.",
   },
   {
-    title: "Wealth and Asset Management",
-    priority: "Secondary market",
+    title: "Technology",
+    priority: "Execution focus",
     description:
-      "Advisor workflows, relationship context, portfolio operations, platform adoption, and client service handoffs.",
+      "Customer success, revenue operations, adoption, operational execution, and workflow automation.",
   },
   {
-    title: "Capital Markets Operations",
-    priority: "Secondary market",
+    title: "Private Equity",
+    priority: "Value creation focus",
     description:
-      "Trade support, settlement, exception handling, institutional workflow, and operational control in high-dependency environments.",
+      "Value creation, operating models, portfolio performance, execution visibility, and operational leverage.",
   },
 ];
 
 export const caseStudies = [
   {
-    slug: "racheldelray-operating-system",
-    title: "RachelDelray Operational Intelligence System",
-    industry: "Relationship-intensive operating environment",
-    proofLevel: "Production system proof",
+    slug: "from-crm-to-operating-system",
+    title: "RachelOS Operational Intelligence System",
+    industry: "Live operating environment",
+    proofLevel: "Featured proof",
     problem:
-      "Leads and relationship context were scattered across channels, leaving the operator without one trusted view of who needed attention and what action should happen next.",
+      "A relationship-driven business had data, notes, messages, and activity, but no trusted decision system for who needed attention and what action should happen next.",
     situation:
-      "A relationship-driven business had demand and lead capture, but execution depended on manual reconstruction of context from messages, memory, and disconnected tools.",
+      "The business managed 100+ relationships across fragmented information, inconsistent follow-up, and knowledge trapped in one person's head.",
     truth:
-      "The invisible failure was the gap between available relationship signals and a canonical next action. AI summaries were not enough; the operator needed source-aware facts, state, and approval-gated action.",
+      "The invisible failure was the gap between available relationship signals and a trusted next action. Information existed, but priorities, attention, and decision logic were not operationalized.",
     system:
-      "TKO built a relationship memory layer, fact extraction, source authority rules, intelligence gap acquisition, canonical next-action queue, daily action engine, approval-gated outreach drafts, and operational reliability monitoring.",
+      "TKO built an Operational Intelligence System that captured relationship knowledge, preserved institutional memory, surfaced priorities, recommended actions, and supported execution with human-approved AI.",
     outcome:
-      "The platform operates as a relationship intelligence and action system with one daily view of priorities, structured facts, gap detection, and human approval before any AI-assisted outreach.",
+      "RachelOS now provides one trusted next action, improved relationship visibility, reduced manual tracking, persistent relationship knowledge, and scalable decision support.",
     evidence: [
-      "Full source-code evidence for relationship memory, canonical queue, intelligence gaps, outreach drafts, and daily action engine.",
-      "Database migrations documenting capability evolution.",
-      "Operational capabilities confirmed; commercial outcome metrics remain unconfirmed.",
+      "Live operating environment with relationship memory, priority surfacing, action queues, intelligence gaps, outreach drafts, and daily execution support.",
+      "Human approval remains part of the workflow before AI-assisted outreach is used.",
+      "Operational outcomes are stated without inflated revenue claims or unverifiable metrics.",
     ],
-    relatedProblems: ["Workflow Visibility Failure", "Operational Intelligence Design", "Human-Controlled AI"],
-    relatedService: "Operating System Build",
+    relatedProblems: ["Data Without Decisions", "Attention Gaps", "Operational Intelligence Design"],
+    relatedService: "Operational Intelligence System Build",
   },
   {
     slug: "prior-authorization-modernization",
@@ -312,14 +322,14 @@ export const caseStudies = [
     system:
       "Designed machine-assisted prior authorization workflow tiers, compliance integration, audit trail, exception handling, and adoption model.",
     outcome:
-      "Resume-attributed outcomes include 40-60% reduction in manual review effort, $200M+ annualized operational value, and 15-25% productivity improvement. Publication remains subject to attribution confirmation.",
+      "Workflow modernization supported clearer review tiers, auditability, exception handling, and more practical AI adoption. Specific commercial metrics remain gated.",
     evidence: [
       "Resume-cited metrics pending founder confirmation of publishability.",
       "Deep functional knowledge of CMS prior authorization requirements and payer/provider workflow complexity.",
       "Named client and internal documentation are gated.",
     ],
-    relatedProblems: ["Transformation Recovery", "Workflow Visibility Failure", "AI Adoption Failure"],
-    relatedService: "Operational Intelligence Diagnostic",
+    relatedProblems: ["Workflow Friction", "Execution Visibility Failure", "AI Without Operational Control"],
+    relatedService: "Operational Diagnostic",
   },
   {
     slug: "enterprise-care-management-modernization",
@@ -329,63 +339,65 @@ export const caseStudies = [
     problem:
       "A large modernization program risked execution failure because dependency complexity and executive visibility gaps were not fully exposed.",
     situation:
-      "A $20M+ modernization program spanned approximately 24 critical enterprise applications across claims, care management, provider experience, clinical workflows, eligibility, and member operations.",
+      "A large modernization program spanned critical enterprise applications across claims, care management, provider experience, clinical workflows, eligibility, and member operations.",
     truth:
       "The hard problem was the operating model at the dependency layer. Individual teams could show progress while enterprise delivery risk accumulated between teams.",
     system:
-      "Led platform strategy, dependency risk management, cross-functional coordination, executive visibility, and operating cadence design across the modernization scope.",
+      "Led modernization strategy, dependency risk management, cross-functional coordination, executive visibility, and operating cadence design across the scope.",
     outcome:
-      "Program risk was managed across approximately 24 application areas with stronger dependency visibility and executive confidence. Specific delivery metrics are gated.",
+      "Program risk was managed across many application areas with stronger dependency visibility and executive confidence. Specific delivery metrics are gated.",
     evidence: [
       "Resume documentation of program scope and scale.",
       "Functional knowledge of claims, care management, eligibility, and provider operations.",
       "Named organization and detailed milestones are gated.",
     ],
-    relatedProblems: ["Program Execution Failure", "Governance Breakdown", "Cross-Team Coordination Failure"],
-    relatedService: "Operational Intelligence Diagnostic",
+    relatedProblems: ["Execution Visibility Failure", "Workflow Friction", "Decision Latency"],
+    relatedService: "Operational Diagnostic",
   },
   {
     slug: "healthcare-interoperability-platform",
-    title: "Healthcare Interoperability Platform",
+    title: "Healthcare Interoperability Modernization",
     industry: "Healthcare",
     proofLevel: "Anonymized enterprise proof",
     problem:
       "CMS interoperability requirements were being treated as a technical compliance project instead of an operating model change.",
     situation:
-      "Healthcare payers needed scalable FHIR/HL7 data exchange with access control, auditability, and governance across provider networks.",
+      "Healthcare payers needed scalable data exchange with access control, auditability, and governance across provider networks.",
     truth:
-      "Each integration created operational drag because requirements, onboarding, access control, and governance were not standardized as platform behavior.",
+      "Each integration created operational drag because requirements, onboarding, access control, and governance were not standardized as operational behavior.",
     system:
       "Defined requirements and functional specifications for scalable data exchange, compliance integration, access control, standardized onboarding, and delivery coordination.",
     outcome:
-      "Resume-attributed outcomes include 20-30% faster integration timelines and support for exchange across dozens of provider organizations. Attribution remains gated.",
+      "The work supported process modernization, clearer integration workflows, and stronger governance across healthcare operations. Specific delivery metrics remain gated.",
     evidence: [
       "Resume-cited metrics pending confirmation.",
-      "Experience with CMS requirements and FHIR/HL7 data exchange.",
+      "Experience with CMS requirements and healthcare data exchange.",
       "Named client, artifacts, and internal implementation details are gated.",
     ],
-    relatedProblems: ["Operational Intelligence Design", "Governance Breakdown", "Transformation Recovery"],
-    relatedService: "Operational Intelligence Diagnostic",
+    relatedProblems: ["Operational Intelligence Design", "Workflow Friction", "Execution Visibility Failure"],
+    relatedService: "Operational Diagnostic",
   },
 ];
 
 export const contentPillars = [
   "Operational Intelligence",
-  "Operating Models",
-  "Transformation Recovery",
-  "Decision Systems",
-  "Enterprise Program Recovery",
-  "Workflow Visibility",
-  "Governance & Accountability",
-  "Human-Controlled AI",
+  "Workflow Optimization",
+  "Operational Excellence",
+  "Revenue Operations",
+  "Customer Lifecycle Management",
   "Healthcare Operations",
-  "Financial Services Operations",
+  "AI Workflow Automation",
+  "Operational Strategy",
+  "Process Modernization",
+  "Human-in-the-Loop AI",
+  "Operating Model Design",
+  "Operational Decision Making",
 ];
 
 export const proofNotes = [
-  "Healthcare proof leads the launch site.",
-  "Financial Services, Wealth Management, and Capital Markets support the category through pattern recognition.",
-  "RachelDelray proves production system capability; commercial outcomes remain gated until measured.",
+  "The first claim is the problem: organizations have data but lack a decision system.",
+  "RachelOS is the featured case study because it proves TKO has solved that problem in a live operating environment.",
+  "Healthcare, Financial Services, Technology, and Private Equity content should map back to workflow, attention, prioritization, and execution visibility.",
   "Employment-period healthcare metrics remain anonymized or gated unless attribution is confirmed.",
 ];
 
@@ -396,4 +408,3 @@ export function getService(slug: string) {
 export function getCaseStudy(slug: string) {
   return caseStudies.find((study) => study.slug === slug);
 }
-

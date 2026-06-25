@@ -58,7 +58,7 @@ export default async function CaseStudyPage({ params }: Params) {
         title={study.title}
         description={study.problem}
         primaryHref="/contact"
-        primaryLabel="Start the Diagnostic"
+        primaryLabel="Schedule an Operational Diagnostic"
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
@@ -82,9 +82,9 @@ export default async function CaseStudyPage({ params }: Params) {
           </aside>
           <div className="space-y-12">
             <CaseSection title="Situation" body={study.situation} />
-            <CaseSection title="What Was Invisible" body={study.truth} />
-            <CaseSection title="System Built" body={study.system} />
-            <CaseSection title="Outcome" body={study.outcome} />
+            <CaseSection title="Problem" body={study.truth} />
+            <CaseSection title="Solution" body={study.system} />
+            <CaseSection title="Results" body={study.outcome} />
           </div>
         </div>
       </Section>
@@ -111,4 +111,3 @@ function CaseSection({ title, body }: { title: string; body: string }) {
     </section>
   );
 }
-

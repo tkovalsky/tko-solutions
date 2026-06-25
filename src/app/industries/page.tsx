@@ -9,12 +9,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "TKO applies Operational Intelligence to healthcare first, with Financial Services, Wealth and Asset Management, and Capital Markets as secondary contexts.",
+    "TKO applies Operational Intelligence to healthcare operations, financial services, technology operations, and private equity value creation.",
   alternates: { canonical: "/industries" },
   openGraph: {
     title: "Industries",
     description:
-      "Healthcare leads the launch site. Secondary regulated industries support the same operational complexity pattern.",
+      "Operational Intelligence for healthcare efficiency, client engagement, revenue operations, and portfolio execution visibility.",
     url: absoluteUrl("/industries"),
   },
 };
@@ -24,13 +24,13 @@ export default function IndustriesPage() {
     <>
       <PageHero
         eyebrow="Industries"
-        title="Different industries. The same invisible operating failure."
-        description="TKO is organized around Operational Intelligence problems, not vertical sprawl. Healthcare is the launch wedge because proof is strongest there. Financial Services, Wealth and Asset Management, and Capital Markets support the broader category."
+        title="Different industries. The same gap between data and action."
+        description="TKO is organized around operational problems, not vertical sprawl. Healthcare, Financial Services, Technology, and Private Equity each face the same decision-system gap in different operating contexts."
       />
       <Section>
         <div className="grid gap-4 lg:grid-cols-4">
           {industries.map((industry) => {
-            const isLaunchWedge = industry.priority === "Launch wedge";
+            const isLaunchWedge = industry.title === "Healthcare";
             return (
               <Card
                 key={industry.title}
@@ -56,7 +56,7 @@ export default function IndustriesPage() {
         <SectionHeader
           eyebrow="Operating Problems"
           title="Industry relevance is proven through shared operational complexity."
-          description="The website should not create empty industry pages. These problems are the architecture that lets future proof fit without redesign."
+          description="These problems explain why operational intelligence matters across healthcare operations, revenue operations, customer lifecycle management, client engagement, and portfolio value creation."
         />
         <div className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           {problems.map((problem) => (
@@ -73,4 +73,3 @@ export default function IndustriesPage() {
     </>
   );
 }
-

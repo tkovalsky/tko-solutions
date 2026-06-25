@@ -9,24 +9,25 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "TKO's About page frames founder credibility through pattern recognition across healthcare, wealth management, asset management, capital markets, and enterprise operations.",
+    "About TKO Solutions and Todd: operator-first operational intelligence work grounded in enterprise healthcare leadership, workflow transformation, and RachelOS proof.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About TKO Solutions",
     description:
-      "Pattern recognition across complex operating environments, not autobiography.",
+      "Todd builds systems that help organizations make better operational decisions.",
     url: absoluteUrl("/about"),
   },
 };
 
 const credibility = [
-  "Healthcare transformation and modernization",
+  "Enterprise healthcare leadership",
+  "Large-scale modernization programs",
+  "Workflow transformation",
+  "Operational execution",
   "Prior authorization and administrative burden",
-  "Care management and enterprise healthcare operations",
+  "Care management and healthcare operations",
   "Interoperability and compliance-driven operating change",
-  "Wealth management, asset management, and capital markets operations",
-  "Product ownership, program leadership, PMO transformation, and operating model design",
-  "Operational Intelligence System design and production system-building",
+  "RachelOS as a real-world proof point",
 ];
 
 export default function AboutPage() {
@@ -34,15 +35,15 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title="Pattern recognition across complex operating environments."
-        description="TKO is built on a repeatable observation: complex organizations rarely fail because no one is working. They fail because work crosses teams, systems, and governance structures faster than leaders can see, govern, and act."
+        title="I build systems that help organizations make better operational decisions."
+        description="TKO is led from an operator's point of view. The work starts with how decisions actually get made, where workflow breaks down, what knowledge is trapped in people, and what action should happen next."
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
-            eyebrow="Category Thesis"
-            title="Operational Intelligence is the missing layer between activity and execution truth."
-            description="Healthcare is the launch wedge because proof is strongest there. The same failure pattern appears in wealth management, asset management, capital markets, and enterprise operations."
+            eyebrow="Operator First"
+            title="The credibility is operational before it is technical."
+            description="Todd's background spans enterprise healthcare leadership, modernization programs, workflow transformation, and operational execution. Technology matters, but only after the operating problem is understood."
           />
           <div className="grid gap-3 sm:grid-cols-2">
             {industries.map((industry) => (
@@ -60,10 +61,10 @@ export default function AboutPage() {
         </div>
       </Section>
       <Section className="bg-surface">
-        <SectionHeader
-          eyebrow="Founder Credibility Architecture"
-          title="Credibility organized by operating problem, not chronology."
-          description="The relevant credential is the ability to recognize the same hidden failure pattern across regulated, workflow-heavy environments."
+          <SectionHeader
+            eyebrow="Credibility"
+            title="Experience in environments where decisions, workflows, and accountability matter."
+            description="The relevant credential is not generic consulting language. It is direct experience helping complex organizations modernize work, reduce operational friction, and improve execution visibility."
         />
         <div className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {credibility.map((item) => (
@@ -77,8 +78,8 @@ export default function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Method"
-            title="Pattern recognition becomes useful only when it becomes operational truth."
-            description="The Operational Truth Framework is the bridge between executive concern and system design."
+            title="Operational Intelligence starts by asking better operating questions."
+            description="The method connects executive concern to workflow evidence, decision analysis, prioritization, and implementation."
           />
           <ol className="space-y-3">
             {truthFramework.map((item, index) => (
@@ -94,13 +95,12 @@ export default function AboutPage() {
       </Section>
       <Section className="bg-surface">
         <SectionHeader
-          eyebrow="Proof Architecture"
-          title="The site names proof according to what is actually evidenced."
-          description="Production system proof, anonymized enterprise healthcare work, career credibility, and gated attribution each have a specific role. This protects credibility while the public proof base matures."
+          eyebrow="Proof"
+          title="RachelOS shows the work in a live operating environment."
+          description="RachelOS proves the same principle outside a slide deck: capture operational knowledge, preserve memory, surface priorities, recommend actions, and keep humans in approval."
         />
       </Section>
       <CtaBand />
     </>
   );
 }
-

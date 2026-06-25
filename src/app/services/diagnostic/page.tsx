@@ -4,14 +4,14 @@ import { ServiceTemplate } from "@/components/site/service-template";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Operational Intelligence Diagnostic",
+  title: "Operational Diagnostic",
   description:
-    "A $25k-$50k diagnostic for leaders who need to see where complex work is actually failing and what should be fixed first.",
+    "A 2-3 week Operational Diagnostic, starting at $15K, for leaders who need to find where work stalls and what action should happen next.",
   alternates: { canonical: "/services/diagnostic" },
   openGraph: {
-    title: "Operational Intelligence Diagnostic",
+    title: "Operational Diagnostic",
     description:
-      "A fixed-scope diagnostic that produces operational truth, ranked recovery opportunities, and a 90-day roadmap.",
+      "A focused diagnostic that produces workflow assessment, decision analysis, AI opportunity review, and an implementation roadmap.",
     url: absoluteUrl("/services/diagnostic"),
   },
 };
@@ -23,17 +23,16 @@ export default function DiagnosticPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "Service",
-          name: "Operational Intelligence Diagnostic",
+          name: "Operational Diagnostic",
           provider: { "@type": "Organization", name: "TKO Solutions" },
-          serviceType: "Operational Intelligence Diagnostic",
+          serviceType: "Operational Diagnostic",
           areaServed: "United States",
           offers: {
             "@type": "Offer",
             priceSpecification: {
               "@type": "PriceSpecification",
               priceCurrency: "USD",
-              minPrice: 25000,
-              maxPrice: 50000,
+              minPrice: 15000,
             },
           },
         }}
@@ -42,4 +41,3 @@ export default function DiagnosticPage() {
     </>
   );
 }
-

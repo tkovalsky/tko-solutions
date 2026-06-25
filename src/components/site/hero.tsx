@@ -8,18 +8,18 @@ import { NetworkVisual } from "@/components/site/network-visual";
 const pillars = [
   {
     icon: Eye,
-    title: "See the Truth",
-    description: "Surface what's actually happening.",
+    title: "See What Matters",
+    description: "Separate signal from noise.",
   },
   {
     icon: Compass,
-    title: "Drive Alignment",
-    description: "Turn insight into trusted next actions.",
+    title: "Know Who Needs Attention",
+    description: "Surface the right cases, accounts, and relationships.",
   },
   {
     icon: TrendingUp,
-    title: "Deliver Outcomes",
-    description: "Improve performance that compounds.",
+    title: "Act With Confidence",
+    description: "Move from status review to next action.",
   },
 ];
 
@@ -40,37 +40,37 @@ export function Hero() {
             Operational Intelligence
           </p>
           <h1 className="mt-6 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            Operational Intelligence Systems for Complex{" "}
-            <span className="text-primary-light">Organizations</span>
+            The Missing Layer Between Data and{" "}
+            <span className="text-primary-light">Action</span>
           </h1>
           <p className="mt-7 max-w-[52ch] text-lg leading-8 text-white/75">
-            TKO helps leaders see where work is actually failing, establish
-            operational truth, and build systems that turn scattered signals
-            into governed facts, trusted next actions, human approval, and
-            measurable outcomes.
+            Most organizations collect information. Few can consistently turn
+            that information into priorities, decisions, and action. TKO builds
+            Operational Intelligence Systems that help teams identify what
+            matters, who needs attention, and what should happen next.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <LinkButton href="/contact">Start the Diagnostic</LinkButton>
+            <LinkButton href="/contact">Schedule an Operational Diagnostic</LinkButton>
             <LinkButton
-              href="/case-studies"
+              href="/case-studies/from-crm-to-operating-system"
               variant="secondary"
               className="border-white/25 text-white hover:border-white/50 hover:bg-white/5"
             >
-              View Case Studies
+              See How RachelOS Works
             </LinkButton>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/75">
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              Healthcare-proven launch wedge
+              Data to decision
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              Production-system proof
+              RachelOS proof
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              Human-governed AI
+              Human-approved AI
             </li>
           </ul>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4">

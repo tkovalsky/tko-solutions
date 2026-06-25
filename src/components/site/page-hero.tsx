@@ -17,7 +17,7 @@ export function PageHero({
   title,
   description,
   primaryHref = "/contact",
-  primaryLabel = "Start the Diagnostic",
+  primaryLabel = "Schedule an Operational Diagnostic",
   secondaryHref,
   secondaryLabel,
   className,
@@ -50,4 +50,3 @@ export function PageHero({
     </section>
   );
 }
-

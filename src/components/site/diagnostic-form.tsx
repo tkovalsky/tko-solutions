@@ -51,27 +51,27 @@ export function DiagnosticForm({
       <Field
         id="problem"
         index={1}
-        label="What operational problem are you trying to solve?"
+        label="Where do people have data but still lack a clear decision or next action?"
         textarea
         onValue={track}
       />
       <Field
         id="systems"
         index={2}
-        label="Which systems are involved?"
+        label="Which dashboards, CRMs, reports, workflows, meetings, or spreadsheets are involved?"
         textarea
         onValue={track}
       />
       <Field
         id="notWorking"
         index={3}
-        label="What is not working today?"
+        label="Who or what is not getting the right attention today?"
         textarea
         onValue={track}
       />
       <div>
         <Label htmlFor="aiDeployed" index={4}>
-          Have you deployed AI already?
+          Is AI or automation already involved?
         </Label>
         <select
           id="aiDeployed"
@@ -89,7 +89,7 @@ export function DiagnosticForm({
       <Field
         id="decision"
         index={5}
-        label="What decision must be made in the next 90 days?"
+        label="What operational decision or execution improvement must happen in the next 90 days?"
         textarea
         onValue={track}
       />
@@ -100,7 +100,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Start the Diagnostic
+        Schedule an Operational Diagnostic
       </Button>
     </form>
   );

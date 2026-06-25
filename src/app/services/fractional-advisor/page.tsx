@@ -3,14 +3,14 @@ import { ServiceTemplate } from "@/components/site/service-template";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Fractional Operating System Advisor",
+  title: "Fractional Operational Intelligence Advisor",
   description:
-    "Advisory support for sustaining operating cadence, governance, and transformation momentum after diagnostic or build work.",
+    "Strategic advisory support for operational reviews, workflow governance, AI adoption guidance, prioritization reviews, and execution oversight.",
   alternates: { canonical: "/services/fractional-advisor" },
   openGraph: {
-    title: "Fractional Operating System Advisor",
+    title: "Fractional Operational Intelligence Advisor",
     description:
-      "A post-diagnostic or post-build advisory engagement for maintaining operational discipline and sponsor visibility.",
+      "A strategic advisory engagement for leadership teams that need stronger operational decision making and execution visibility.",
     url: absoluteUrl("/services/fractional-advisor"),
   },
 };
@@ -18,4 +18,3 @@ export const metadata: Metadata = {
 export default function FractionalAdvisorPage() {
   return <ServiceTemplate slug="fractional-advisor" />;
 }
-

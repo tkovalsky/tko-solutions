@@ -4,14 +4,14 @@ import { DiagnosticForm } from "@/components/site/diagnostic-form";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Start the Diagnostic",
+  title: "Schedule an Operational Diagnostic",
   description:
-    "Submit the five-question intake for the TKO Operational Intelligence Diagnostic.",
+    "Submit the five-question intake for the TKO Operational Diagnostic.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Start the Diagnostic",
+    title: "Schedule an Operational Diagnostic",
     description:
-      "Diagnostic intake for leaders with active operational visibility, transformation recovery, governance, or AI adoption problems.",
+      "Diagnostic intake for leaders with active workflow, prioritization, operational visibility, or AI adoption problems.",
     url: absoluteUrl("/contact"),
   },
 };
@@ -31,12 +31,13 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             Diagnostic Intake
           </p>
           <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-foreground md:text-5xl">
-            Start with the operating problem.
+            Start with the decision problem.
           </h1>
           <p className="mt-5 text-lg leading-8 text-muted">
-            Five questions. The intake qualifies whether the Operational Intelligence
-            Diagnostic is the right next step for leaders with an active, funded
-            operational problem.
+            Five questions. The intake qualifies whether the Operational
+            Diagnostic is the right next step for leaders whose teams have data,
+            reports, and workflows but still lack clear priorities and trusted
+            next actions.
           </p>
         </div>
 
@@ -47,7 +48,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             </h2>
             <p className="mt-3 text-base leading-7 text-muted">
               Answer as specifically as you can. Each response should describe a real
-              operating problem, not a general interest.
+              operating problem, not a general AI or automation interest.
             </p>
           </aside>
 
@@ -57,7 +58,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
                 <p className="font-semibold text-foreground">Intake received.</p>
                 <p className="mt-2 text-sm leading-6 text-muted">
                   The submission has been captured by the server action. Connect
-                  this action to email, CRM, or database storage before production launch.
+                  this action to email or database storage before production launch.
                 </p>
               </div>
             ) : null}
@@ -76,4 +77,3 @@ export default async function ContactPage({ searchParams }: SearchParams) {
     </section>
   );
 }
-

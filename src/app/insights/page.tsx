@@ -9,12 +9,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Insights",
   description:
-    "TKO authority content architecture for Operational Intelligence, transformation recovery, workflow visibility, governance, and human-controlled AI.",
+    "TKO authority content architecture for Operational Intelligence, workflow optimization, operational excellence, revenue operations, healthcare operations, and human-in-the-loop AI.",
   alternates: { canonical: "/insights" },
   openGraph: {
     title: "Insights",
     description:
-      "Executive operating pain, not generic AI content. The insights architecture supports future MDX articles.",
+      "Executive operating pain, not generic AI content. The insights architecture supports future MDX articles on operational decision making.",
     url: absoluteUrl("/insights"),
   },
 };
@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 const funnelNotes = [
   {
     title: "Problem-Aware",
-    text: "Articles help leaders recognize visibility failure, stalled transformation, governance breakdown, and AI adoption failure.",
+    text: "Articles help leaders recognize the gap between available data and trusted operational decisions.",
   },
   {
     title: "Solution-Aware",
-    text: "Framework pieces explain Operational Intelligence as the method for turning scattered work into governed action.",
+    text: "Articles explain Operational Intelligence as the layer that turns workflow evidence into priorities, attention, and action.",
   },
   {
     title: "Vendor-Aware",
@@ -40,13 +40,13 @@ export default function InsightsPage() {
       <PageHero
         eyebrow="Insights"
         title="Authority content around executive operating pain."
-        description="TKO insights are designed around operational complexity, stalled transformation, workflow visibility, governance failure, and AI adoption failure. Articles are MDX-ready, but no empty article inventory is published."
+        description="TKO insights are designed around operational intelligence, workflow optimization, operational excellence, revenue operations, healthcare operations, process modernization, and human-in-the-loop AI. Articles are MDX-ready, but no empty article inventory is published."
       />
       <Section>
         <SectionHeader
           eyebrow="Content Pillars"
           title="The category architecture for future articles."
-          description="Each pillar routes back to the Diagnostic when the reader has an active operating problem."
+          description="Each pillar routes back to the Operational Diagnostic when the reader has an active operating problem."
         />
         <div className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-5">
           {contentPillars.map((pillar) => (
@@ -81,4 +81,3 @@ export default function InsightsPage() {
     </>
   );
 }
-

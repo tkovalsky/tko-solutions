@@ -54,12 +54,18 @@ export default function RootLayout({
     url: site.url,
     description: site.description,
     knowsAbout: [
-      "Operational Intelligence Systems",
-      "Transformation Recovery",
-      "Workflow Visibility",
+      "Operational Intelligence",
+      "Workflow Optimization",
+      "Operational Excellence",
+      "Revenue Operations",
+      "Customer Lifecycle Management",
       "Healthcare Operations",
-      "Enterprise Program Recovery",
-      "Human-Controlled AI",
+      "AI Workflow Automation",
+      "Operational Strategy",
+      "Process Modernization",
+      "Human-in-the-Loop AI",
+      "Operating Model Design",
+      "Operational Decision Making",
     ],
   };
 
@@ -74,4 +80,3 @@ export default function RootLayout({
     </html>
   );
 }
-

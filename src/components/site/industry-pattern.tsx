@@ -8,7 +8,7 @@ export function IndustryPattern() {
           <article key={industry.title} className="bg-white p-6">
             <p
               className={
-                industry.priority === "Launch wedge"
+                industry.title === "Healthcare"
                   ? "text-sm font-semibold uppercase tracking-[0.1em] text-primary"
                   : "text-sm font-semibold uppercase tracking-[0.1em] text-muted"
               }
@@ -21,9 +21,10 @@ export function IndustryPattern() {
         ))}
       </div>
       <p className="mt-6 max-w-[80ch] text-sm leading-6 text-muted">
-        These industries share the same operating conditions: complex workflows,
-        regulatory constraints, fragmented ownership, and high-cost operational failure.
-        Work crosses boundaries faster than leaders can observe, govern, and act on it.
+        These industries share a practical operating condition: information is
+        available, but priorities, attention, and next actions are still resolved
+        manually. Operational Intelligence turns that unresolved work into a
+        repeatable execution system.
       </p>
     </div>
   );

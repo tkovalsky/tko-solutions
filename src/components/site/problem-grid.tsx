@@ -10,12 +10,12 @@ import {
 import { problems } from "@/lib/content";
 
 const icons: Record<string, LucideIcon> = {
-  "Transformation Recovery": RefreshCw,
-  "Workflow Visibility Failure": EyeOff,
+  "Data Without Decisions": EyeOff,
+  "Attention Gaps": RefreshCw,
   "Decision Latency": Clock,
-  "Program Execution Failure": AlertTriangle,
-  "Governance Breakdown": ShieldAlert,
-  "AI Adoption Failure": Cpu,
+  "Institutional Knowledge Loss": AlertTriangle,
+  "Workflow Friction": ShieldAlert,
+  "AI Without Operational Control": Cpu,
 };
 
 export function ProblemGrid() {

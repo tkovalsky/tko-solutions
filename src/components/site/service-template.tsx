@@ -20,14 +20,14 @@ export function ServiceTemplate({ slug }: { slug: string }) {
         title={service.title}
         description={service.overview}
         primaryHref="/contact"
-        primaryLabel="Start the Diagnostic"
+        primaryLabel="Schedule an Operational Diagnostic"
       />
 
       <Section>
         <div className="grid gap-6 md:grid-cols-3">
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-              Pricing Position
+              Investment
             </p>
             <p className="mt-4 text-3xl font-semibold">{service.price}</p>
           </Card>
@@ -51,7 +51,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
           <SectionHeader
             eyebrow="Outcomes"
             title="What the engagement must make possible."
-            description="Each service exists to improve operational truth, execution confidence, and the buyer's ability to decide what happens next."
+            description="Each service exists to improve operational visibility, prioritization, execution confidence, and the buyer's ability to decide what happens next."
           />
           <ul className="grid gap-3">
             {service.outcomes.map((outcome) => (
@@ -68,7 +68,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
           <SectionHeader
             eyebrow="Process"
             title="Constrained, evidence-led work."
-            description="The work is structured to avoid open-ended consulting drift and keep the buyer focused on operational evidence."
+            description="The work is structured to avoid open-ended consulting drift and keep the buyer focused on workflow evidence, decision points, and action."
           />
           <ol className="grid gap-3">
             {service.process.map((step, index) => (
@@ -107,16 +107,15 @@ export function ServiceTemplate({ slug }: { slug: string }) {
       <CtaBand
         title={
           service.slug === "diagnostic"
-            ? "Use the Diagnostic to establish operational truth."
-            : "The right starting point is still the Diagnostic."
+            ? "Use the Diagnostic to clarify what should happen next."
+            : "The right starting point is still the Operational Diagnostic."
         }
         description={
           service.slug === "diagnostic"
-            ? "The engagement is designed for leaders with an urgent, funded operating problem who need evidence, prioritization, and a 90-day recovery roadmap."
+            ? "The engagement is designed for leaders with an active operating problem who need evidence, prioritization, and an implementation roadmap."
             : "Build and advisory work follow when the operating problem is already visible. The Diagnostic creates the evidence base for that decision."
         }
       />
     </>
   );
 }
-

@@ -3,6 +3,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  async redirects() {
+    return [
+      {
+        source: "/case-studies/racheldelray-operating-system",
+        destination: "/case-studies/from-crm-to-operating-system",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({
@@ -10,4 +19,3 @@ const withMDX = createMDX({
 });
 
 export default withMDX(nextConfig);
-

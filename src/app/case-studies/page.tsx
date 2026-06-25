@@ -8,12 +8,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "TKO case studies organized by operational complexity pattern, proof level, related problem, and related service.",
+    "TKO case studies led by RachelOS, a live proof point for Operational Intelligence Systems that turn data into decisions and action.",
   alternates: { canonical: "/case-studies" },
   openGraph: {
     title: "Case Studies",
     description:
-      "Production system proof and anonymized enterprise healthcare work for Operational Intelligence Systems.",
+      "RachelOS featured proof, plus anonymized enterprise healthcare work that supports the Operational Intelligence pattern.",
     url: absoluteUrl("/case-studies"),
   },
 };
@@ -23,8 +23,8 @@ export default function CaseStudiesPage() {
     <>
       <PageHero
         eyebrow="Case Studies"
-        title="Proof organized by operating problem, not only by industry."
-        description="Each case study follows the same structure: situation, operational complexity pattern, what was invisible, what was stalled, the Operational Truth Framework application, system built, outcome, and evidence status."
+        title="Proof that the decision-system gap can be solved."
+        description="Start with the problem: organizations have data but lack a trusted way to decide what matters, who needs attention, and what happens next. RachelOS is the featured case study because it proves TKO has solved that problem in a live operating environment."
       />
       <Section>
         <CaseStudyCards />
@@ -32,12 +32,11 @@ export default function CaseStudiesPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Proof Governance"
-          title="Evidence status is part of the architecture."
-          description="Production system proof, anonymized enterprise proof, and gated attribution are handled deliberately so the site can build credibility without overclaiming."
+          title="Evidence is stated carefully."
+          description="RachelOS is framed as live operating proof. Enterprise healthcare examples are anonymized and avoid inflated or unverifiable metrics unless attribution is confirmed."
         />
       </Section>
       <CtaBand />
     </>
   );
 }
-

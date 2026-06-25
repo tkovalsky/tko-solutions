@@ -8,14 +8,14 @@ export function Founder() {
           Founder Credibility
         </p>
         <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-foreground md:text-4xl">
-          Operational complexity looks different.{" "}
-          <span className="text-primary">The failure patterns do not.</span>
+          Operator first.{" "}
+          <span className="text-primary">Technologist second.</span>
         </h2>
         <p className="mt-6 max-w-[60ch] text-base leading-7 text-muted">
-          The same operating failures appear in healthcare, wealth management, asset
-          management, capital markets, and enterprise programs: work crosses boundaries
-          faster than leaders can observe, govern, and act on it. TKO is built on
-          recognizing that pattern, not on industry tenure alone.
+          Todd has led enterprise healthcare modernization, workflow
+          transformation, and operational execution work where the hard problem was
+          rarely the tool itself. The hard problem was helping leaders see what
+          mattered, preserve knowledge, and move teams toward the right next action.
         </p>
       </div>
       <div className="flex flex-wrap gap-3">

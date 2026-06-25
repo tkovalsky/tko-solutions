@@ -15,7 +15,7 @@ export function ServiceCards() {
           <p className="mt-4 text-base leading-7 text-muted">{service.summary}</p>
           <dl className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-6 text-sm">
             <div>
-              <dt className="text-muted">Position</dt>
+              <dt className="text-muted">Investment</dt>
               <dd className="mt-1 font-semibold">{service.price}</dd>
             </div>
             <div>
@@ -64,4 +64,3 @@ export function CaseStudyCards() {
     </div>
   );
 }
-
