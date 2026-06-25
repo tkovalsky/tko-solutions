@@ -180,6 +180,11 @@ Lead with problems executives already feel:
 5. "Why can't anyone tell me what is actually happening?"
 6. "Why are manual reviews, handoffs, and workarounds still growing?"
 7. "Why do we have strategy decks but no executable operating system?"
+8. "Why is the business less transferable than leadership believes?"
+9. "What operational dependency would a buyer, investor, or acquirer discount immediately?"
+10. "Why are prior authorizations getting denied?"
+11. "Why does authorization take so long?"
+12. "Why does this work depend on one or two authorization experts?"
 
 ## Executive Outcomes
 
@@ -195,6 +200,8 @@ Use these phrases everywhere because they map to executive scorecards:
 - Fewer manual workarounds
 - Faster decision cycles
 - Better governance without slowing execution
+- Reduced founder/key-employee dependency
+- Better operational transferability for sale, succession, investment, or acquisition
 
 ## Buyer Trigger Events
 
@@ -203,6 +210,7 @@ Call me when:
 - Your AI initiative is not producing measurable value.
 - Your transformation program is behind schedule.
 - Administrative burden keeps increasing despite investment.
+- Prior authorization denials, delays, payer friction, or exception handling are visible and urgent.
 - Teams are using workarounds, spreadsheets, and manual side processes.
 - Leadership cannot explain where work is actually stalling.
 - Operational metrics are being debated instead of trusted.
@@ -210,6 +218,7 @@ Call me when:
 - A board, executive sponsor, or client is asking why results are not showing up.
 - Costs are rising faster than throughput.
 - A regulatory, client, or operating deadline is creating pressure.
+- A founder, owner, healthcare practice group, PE sponsor, search fund, broker, or M&A advisor is preparing for diligence and needs operational dependency risk documented.
 
 ---
 

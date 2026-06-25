@@ -430,7 +430,7 @@ Easiest offer to sell: **Healthcare Transformation Recovery Diagnostic** for sta
 
 Highest value offer: **Healthcare Transformation Recovery Engagement**.
 
-Shortest path to first client: **Administrative Burden Reduction Diagnostic** for a payer, provider group, health-tech vendor, or consulting partner. PA can be used as a wedge when relevant.
+Shortest path to first client: **Administrative Burden Reduction Diagnostic** or **Prior Authorization Operational Assessment** for a payer, provider group, practice administrator, health-tech vendor, or consulting partner. PA should be used as an operational quality wedge, not a platform wedge.
 
 Strongest long-term positioning: **Healthcare Transformation Recovery & Operational Intelligence Advisor**.
 
@@ -468,6 +468,30 @@ Ranked by credibility, executive relevance, and marketability.
 | 18 | Referral Intelligence | Out-of-service-area lead handling | Referral stage, flags, digest section | Lead #201 classified as referral | Prevents bad queue pollution, captures partner opportunity |
 | 19 | Commission leakage audit | CTA pages hidden and underlinked | Source audit by revenue impact | 10 fixes ranked; several sub-hour fixes | Fast revenue unlock |
 | 20 | Content authority platform | Agents rent leads from portals | SEO content, funnels, tracking | 30 guides, 7 areas, 15 neighborhoods, 31 developments | Owned acquisition infrastructure |
+
+### Prior Authorization Assessment Reframe
+
+The Gold Card proof points should be used as evidence of operational quality improvement, not as a reason to market Gold Card software.
+
+TKO should initially market:
+
+- Prior Authorization Operational Assessment.
+- Administrative Burden Assessment.
+- Human API Risk Assessment.
+
+TKO should not initially market:
+
+- Gold Card Platform.
+- Prior Authorization Platform.
+- Claims Platform.
+- Payer Technology Product.
+- FHIR infrastructure product.
+
+Reason:
+
+Practice administrators and healthcare operations leaders usually ask why they are getting denied, why authorization takes so long, why staff spend hours on manual work, why certain payers create friction, and why work depends on specific people. They do not start by asking for Gold Card programs, FHIR integrations, or PA platforms.
+
+Gold Card readiness is an output of operational quality. It is not the product.
 | 21 | SaaS pricing strategy | Product unclear | ICP, offer, deployment model | Founding/standard/premium tiers defined | Commercialization path |
 | 22 | WBI CRM modernization | Underperforming delivery team | Requirements/process cadence | Predictability improved | Stabilized modernization |
 | 23 | WBI trading ops workflow | Trading/settlement processes | Workflow mapping and system alignment | Operational support without disruption | Lower operational risk |

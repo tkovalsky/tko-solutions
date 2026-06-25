@@ -37,6 +37,7 @@ What they care about:
 - AI readiness
 - Regulatory and audit exposure
 - Sponsor confidence
+- Enterprise value and exit readiness when founder or key-employee dependency affects transferability.
 
 ### Champion
 
@@ -74,9 +75,11 @@ What they care about:
 - An AI initiative cannot move beyond pilots because workflow reality is unclear.
 - A transformation program is reporting progress but leaders do not trust the status.
 - Administrative burden persists despite automation or vendor investment.
+- Prior authorization denials, delays, payer friction, and staff dependency are creating operational quality pressure.
 - Prior authorization, UM, or care management operations depend on undocumented exception handling.
 - Work relies on spreadsheets, email chains, meetings, and personal routing.
 - A new executive inherits a messy operating environment and needs the truth fast.
+- A founder, owner, healthcare practice group, PE sponsor, search fund, broker, or M&A advisor needs to understand whether tribal knowledge, undocumented workflows, or missing organizational memory will reduce business value.
 
 ## Disqualifiers
 
@@ -112,6 +115,19 @@ Use case:
 
 - TKO as a specialist partner for workflow dependency, decision-layer, and operating intelligence assessments.
 
+### Enterprise Value & Exit Readiness Adjacency
+
+Best fit:
+
+- Business owners and founders preparing for sale, succession, or scale.
+- Healthcare practice owners and multi-location healthcare groups.
+- Private equity operating partners and portfolio company COOs.
+- Search funds, business brokers, M&A advisors, and fractional operators.
+
+Use case:
+
+- Future-state assessment of Human API risk, organizational dependency, operational memory, workflow scalability, AI readiness, and enterprise value risk. This is not the primary wedge today.
+
 ## Message-Market Fit
 
 Strongest message:
@@ -126,3 +142,6 @@ AI-specific message:
 
 "AI cannot improve a workflow that the organization cannot describe, govern, or route without a Human API."
 
+Prior authorization-specific message:
+
+"Gold Card eligibility is not the problem. Operational quality is the problem. The assessment shows why requests are denied, why authorization takes too long, where staff effort is consumed, which payer patterns repeat, and where the workflow depends on specific people."

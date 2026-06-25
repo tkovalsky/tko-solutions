@@ -33,6 +33,12 @@ Current website offerings (`src/lib/content.ts` `services[]`):
 2. **A productized "AI-Assisted Operations (human-in-the-loop)" offer.** This is the live, differentiated proof. Package it explicitly: "AI that drafts and surfaces; your people approve and act."
 3. **A low-cost entry product below the $15K diagnostic** — e.g. a fixed-fee "Decision-Gap Assessment" or a paid teardown/workshop. The current cheapest front door is $15K; for a new consultancy with one public proof, that is a steep first commitment (see GTM report, fastest-paths).
 
+## Future-state service opportunity
+
+**Enterprise Value & Exit Readiness Assessment** belongs as a future packaging opportunity, not an added current service. It would apply the same dependency, operational memory, workflow scalability, and AI readiness analysis to founders, business owners, healthcare practice groups, PE, search funds, business brokers, and M&A advisors.
+
+Do not add it to the current service list until the diagnostic method has proof and the buyer language has been validated.
+
 ## Services that should be REMOVED / softened
 
 1. **Nothing should be removed outright** — all three offerings map to real expertise.

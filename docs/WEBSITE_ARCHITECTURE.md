@@ -72,6 +72,8 @@ TKO organizes expertise around operational problems, not industries.
 - Program Execution Failure.
 - Governance Breakdown.
 - AI Adoption Failure.
+- Prior Authorization Operational Quality Failure.
+- Enterprise Value & Exit Readiness.
 - Cross-Team Coordination Failure.
 - Operational Intelligence Design.
 
@@ -137,6 +139,7 @@ The About page should demonstrate cross-industry pattern recognition, not positi
 ### Healthcare
 
 - Prior Authorization.
+- Prior Authorization Operational Assessment.
 - Care Management.
 - Enterprise Transformation.
 - AI Governance.
@@ -172,6 +175,7 @@ The About page should demonstrate cross-industry pattern recognition, not positi
 
 - RachelDelray Operational Intelligence System.
 - Prior Authorization Modernization.
+- Prior Authorization Operational Assessment.
 - Enterprise Care Management Modernization.
 - Healthcare Interoperability Platform.
 
@@ -212,6 +216,8 @@ The About page should demonstrate cross-industry pattern recognition, not positi
 - Transformation Recovery.
 - Decision Systems.
 - Human-Controlled AI.
+- Prior Authorization Operational Assessment.
+- Enterprise Value & Exit Readiness.
 - Healthcare Operations.
 - Financial Services Operations.
 - Wealth Management Technology.
@@ -225,8 +231,10 @@ The About page should demonstrate cross-industry pattern recognition, not positi
 - Lead with the category: Operational Intelligence Systems.
 - Use operating models as a first-class intellectual pillar.
 - Use healthcare as the first proof-backed market.
+- Treat Prior Authorization Operational Assessment as a Tier-1 healthcare content and assessment wedge, not as Gold Card, PA platform, FHIR, claims, or payer technology positioning.
 - Use financial services, wealth, asset management, and capital markets as credible secondary markets from Todd's career history.
 - Use RachelOS as proof of system-building capability.
+- Place Enterprise Value & Exit Readiness as an insight category and future service path, not as a launch navigation item or primary CTA.
 - Avoid presenting TKO as healthcare-only, AI consulting, PMO consulting, or generic transformation consulting.
 
 ---
@@ -239,10 +247,15 @@ The About page should demonstrate cross-industry pattern recognition, not positi
 - Healthcare operational intelligence consulting.
 - Healthcare transformation recovery.
 - Prior authorization workflow modernization.
+- Prior authorization operational assessment.
+- Gold Card readiness operational quality.
 - Healthcare AI governance.
 - Administrative burden reduction.
 - Enterprise program recovery.
 - Operating model design consulting.
+- Enterprise value exit readiness operational risk.
+- Founder dependency business valuation.
+- Key person dependency acquisition risk.
 
 ### Secondary Scaffolded SEO
 

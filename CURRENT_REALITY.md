@@ -152,6 +152,24 @@ Focus areas:
 - AI Adoption
 - Transformation Recovery
 
+### Tier-1 Opportunity — Prior Authorization Operational Assessment
+
+Prior Authorization Operational Assessment is a Tier-1 TKO opportunity because it sits directly at the intersection of Human APIs, Administrative Burden, Healthcare Transformation, AI Adoption, and Operational Assessments.
+
+TKO should not initially pursue Gold Card platforms, prior authorization automation products, payer technology products, FHIR infrastructure products, or claims adjudication platforms. Those are large-market product categories with significant implementation complexity and long sales cycles.
+
+TKO's wedge is operational quality improvement.
+
+Core GTM insight:
+
+> Gold Card eligibility is not the problem. Operational quality is the problem.
+
+Practice administrators do not wake up asking for Gold Card programs, FHIR integrations, or prior authorization platforms. They ask why requests are denied, why authorization takes so long, why staff spend hours on manual work, why some providers are approved while others are not, why certain payers create constant friction, and why work depends on specific people.
+
+The assessment should focus on administrative burden, denial reduction, workflow quality, operational consistency, and human dependency risk. Gold Card readiness is an output of operational quality; it is not the product.
+
+Canonical strategy note: [Prior Authorization Operational Assessment](docs/strategy/PRIOR_AUTHORIZATION_OPERATIONAL_ASSESSMENT.md).
+
 ### Secondary Position — Operational Knowledge Systems
 
 Systems that capture institutional knowledge, operational context, workflow state, and
@@ -179,6 +197,14 @@ Lead externally with:
 - **Price:** $5K–$8K
 - **Deliverables:** workflow map · bottleneck analysis · dependency analysis · AI readiness assessment · operational risk assessment · executive briefing
 - **Purpose:** Low-friction entry point.
+
+### Offer 0A — Prior Authorization Operational Assessment
+
+- **Status:** Tier-1 healthcare assessment wedge.
+- **Inputs:** PA submissions · denial reasons · specialty · payer mix · workflow documentation · staffing model.
+- **Outputs:** administrative burden analysis · denial analysis · exception analysis · Human API risk analysis · Gold Card readiness assessment.
+- **Purpose:** Diagnose operational quality before automation, AI, Gold Card, FHIR, or platform work.
+- **Constraint:** Assessment only. Not a Gold Card platform, prior authorization platform, claims platform, FHIR product, or payer technology product.
 
 ### Offer 1 — Operational Truth Diagnostic
 

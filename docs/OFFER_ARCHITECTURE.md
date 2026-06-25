@@ -52,6 +52,65 @@ $25,000 to $45,000.
 - Hidden human routing and shadow processes become explicit.
 - A follow-on decision layer, operating truth, or advisory engagement is clearly scoped.
 
+## 1A. Prior Authorization Operational Assessment
+
+### Status
+
+Tier-1 TKO opportunity.
+
+This is a healthcare workflow modernization assessment focused on administrative burden, denial reduction, workflow quality, operational consistency, and human dependency risk.
+
+It is not automation software, an AI platform, Gold Card software, a prior authorization platform, a claims platform, a payer technology product, or FHIR infrastructure.
+
+### Audience
+
+Healthcare operations leaders, practice administrators, provider groups, payer/provider operations teams, health-tech operators, and consulting partners dealing with prior authorization burden.
+
+### Core Problem
+
+Gold Card eligibility is not the problem. Operational quality is the problem.
+
+Organizations become Gold Card eligible because requests are complete, workflows are consistent, documentation quality is high, denial rates are low, and operational variation is controlled. The business opportunity exists before Gold Card eligibility.
+
+### Inputs
+
+- PA submissions
+- Denial reasons
+- Specialty
+- Payer mix
+- Workflow documentation
+- Staffing model
+
+### Outputs
+
+#### Administrative Burden Analysis
+
+Measures volume, effort, turnaround time, and exception frequency.
+
+#### Denial Analysis
+
+Measures documentation issues, coding issues, eligibility issues, and medical necessity issues.
+
+#### Exception Analysis
+
+Measures repeat patterns, recurring bottlenecks, and recurring escalation paths.
+
+#### Human API Risk Analysis
+
+Answers:
+
+- Who knows payer-specific rules?
+- Who handles exceptions?
+- Who performs escalations?
+- Who trains staff?
+- What happens if they leave?
+
+#### Gold Card Readiness Assessment
+
+Measures estimated approval quality, workflow standardization, documentation quality, and operational maturity.
+
+Gold Card readiness is an output of operational quality. It is not the product.
+
 ## 2. Operational Truth Diagnostic
 
 ### Audience
@@ -200,3 +259,36 @@ Partner path:
 2. Decision Layer Build Sprint supporting implementation team
 3. Fractional advisory for governance and adoption
 
+## Future Opportunity: Enterprise Value & Exit Readiness Assessment
+
+This should be documented as a future-state opportunity only. It is not a primary offer today and should not displace Healthcare Operational Recovery as the wedge.
+
+### Audience
+
+- Business owners.
+- Founders.
+- Operators.
+- Healthcare practice owners.
+- Multi-location healthcare groups.
+- Private equity.
+- Search funds.
+- Business brokers.
+- M&A advisors.
+- Fractional operators.
+
+### Core Problem
+
+The business may be worth less than leadership believes because operational knowledge, decision-making, workflow routing, customer relationship context, and execution capability are trapped inside a founder or a small number of key people.
+
+### Potential Scope
+
+- Human API Risk Assessment.
+- Organizational Dependency Analysis.
+- Operational Memory Assessment.
+- Workflow Scalability Assessment.
+- AI Readiness Assessment.
+- Enterprise Value Risk Review.
+
+### Positioning Constraint
+
+This future assessment is the business and valuation consequence of Human API dependency, administrative burden, transformation breakdown, failed AI adoption, and missing organizational memory. It should not be sold as generic exit planning, valuation advisory, or M&A consulting.

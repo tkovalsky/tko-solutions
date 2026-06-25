@@ -103,6 +103,7 @@ Validation focus:
 - Complete 2 to 3 assessments.
 - Standardize deliverable templates.
 - Refine risk scoring language and weighting.
+- Package Prior Authorization Operational Assessment as a Tier-1 healthcare wedge, focused on administrative burden, denial reduction, workflow quality, operational consistency, Human API risk, and Gold Card readiness as an output.
 - Build a small anonymized finding and recommendation library.
 - Create a partner version for consulting firms.
 - Publish a flagship Human API essay or report.
@@ -129,6 +130,7 @@ Validation focus:
 - Establish Human API Risk Assessment as a repeatable TKO diagnostic.
 - Build a pipeline from assessment to decision-layer sprint to fractional advisory.
 - Develop industry-specific variants for prior authorization, UM, care management, and transformation offices.
+- Explore Enterprise Value & Exit Readiness as a future assessment variant for founders, healthcare practice owners, PE, search funds, business brokers, M&A advisors, and fractional operators.
 - Create a benchmark-informed assessment model if enough client data exists.
 
 ### Product Exploration
@@ -142,6 +144,28 @@ Only consider software exploration if:
 
 Potential software should start as internal tooling, not a client-facing platform.
 
+### Prior Authorization Assessment Prototype
+
+Future opportunity only. No application, schema, integration, or AI implementation should start before the assessment has manual proof.
+
+Phase 1:
+
+- Spreadsheet plus lightweight web application.
+- Conceptual entities: Provider, Payer, Authorization, Denial Reason, Exception, Staff Member.
+- Capabilities: track denials, categorize denials, identify repeat patterns, identify Human APIs.
+- Explicit exclusions: no AI, no FHIR, no claims integration.
+
+Phase 2:
+
+- Add workflow mapping.
+- Add bottleneck analysis.
+- Add administrative burden scoring.
+
+Phase 3:
+
+- Add Gold Card Readiness Score.
+- Example dimensions: Documentation Quality, Approval Rate, Exception Dependency, Workflow Standardization.
+
 ### Long-Term Strategic Option
 
 Human API Risk Assessment could become the front door to a broader Operational Intelligence platform, but only if the advisory work proves:
@@ -152,3 +176,4 @@ Human API Risk Assessment could become the front door to a broader Operational I
 - Data can be captured consistently.
 - Ongoing monitoring has budget and operational value.
 
+Enterprise Value & Exit Readiness should remain a future advisory path until the diagnostic method has proof. It should document founder dependency, key-employee dependency, operational memory, workflow scalability, and AI readiness as value risks; it should not become generic valuation, broker, or M&A advisory work.

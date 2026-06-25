@@ -8,11 +8,13 @@ Purpose: Define TKO's authority content strategy around executive operating pain
 
 ## Strategy
 
-TKO authority content should help executive and senior operational buyers recognize hidden operating failure: stalled transformation, invisible workflows, governance breakdown, decision latency, cross-team coordination failure, and AI adoption failure.
+TKO authority content should help executive and senior operational buyers recognize hidden operating failure: stalled transformation, invisible workflows, governance breakdown, decision latency, cross-team coordination failure, AI adoption failure, and enterprise value risk created by founder/key-person dependency.
 
 The content strategy must not become generic AI content. TKO should not publish AI trends, AI tools roundups, prompt engineering advice, ChatGPT tutorials, or thought leadership that positions the firm as AI consulting.
 
 The content should make one point repeatedly from different operating angles: organizations cannot see where work is actually failing.
+
+For healthcare, Prior Authorization Operational Assessment is a Tier-1 opportunity and should be treated as a concrete content wedge. The argument is operational, not product-led: Gold Card eligibility is an output of operational quality; it is not the product.
 
 ---
 
@@ -34,6 +36,7 @@ Secondary readers:
 - Chief Transformation Officer.
 - Chief Digital Officer.
 - SVP Operations.
+- Business owners, founders, healthcare practice owners, private equity, search funds, business brokers, M&A advisors, and fractional operators evaluating transferability or exit readiness.
 
 Healthcare examples should dominate early content. Financial Services examples can support pattern recognition where relevant.
 
@@ -67,6 +70,9 @@ Every authority article should avoid:
 - Tool comparisons.
 - Prompt engineering.
 - AI productivity tips.
+- Gold Card platform positioning.
+- Prior authorization platform positioning.
+- FHIR or claims-integration product framing as the initial wedge.
 - Generic digital transformation advice.
 - PMO templates as the core artifact.
 - Unsupported claims of client outcomes.
@@ -87,7 +93,9 @@ Every authority article should avoid:
 | Governance & Accountability | Director PMO, Chief Transformation Officer, COO, VP Operations | Improve governance that does not produce decisions, accountability, or execution movement. | Problem-Aware / Solution-Aware | Diagnostic page. |
 | Human-Controlled AI | CIO, CDO, VP Transformation, healthcare operations leaders | Understand why AI pilots fail without workflow, control, and human approval design. | Problem-Aware / Solution-Aware | Diagnostic page. |
 | Healthcare Operations | Healthcare VP Operations, VP UM, VP Provider Operations, health-tech COO | Solve administrative burden, prior authorization, care management, and modernization execution problems. | Problem-Aware / Conversion-Ready | Diagnostic page. |
+| Prior Authorization Operational Assessment | Practice administrators, healthcare operations leaders, VP UM, provider operations leaders | Understand why denials, delays, manual work, payer friction, and staff dependency are operational quality problems before they are platform problems. | Problem-Aware / Conversion-Ready | Diagnostic page. |
 | Financial Services Operations | COO, CIO, SVP Operations, operations and platform leaders | Understand how Operational Intelligence applies to regulated financial workflows. | Solution-Aware / Vendor-Aware | About page or Diagnostic page. |
+| Enterprise Value & Exit Readiness | Business owners, founders, healthcare practice owners, PE, search funds, M&A advisors | Understand why founder dependency, key-employee dependency, tribal knowledge, undocumented workflows, and missing organizational memory reduce valuation and buyer confidence. | Problem-Aware / Vendor-Aware | Diagnostic page; future assessment only after validation. |
 
 ---
 
@@ -157,7 +165,8 @@ Priority order:
 4. Governance breakdown.
 5. AI adoption failure through workflow/control lens.
 6. Healthcare operations examples.
-7. Financial Services support pieces.
+7. Prior Authorization Operational Assessment articles.
+8. Financial Services support pieces.
+9. Enterprise value and exit readiness as the valuation consequence of Human API dependency and operational opacity.
 
 The first 90 days should build enough authority for warm leads, referral partners, and skeptical buyers to validate TKO before starting a diagnostic conversation.
-

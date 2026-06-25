@@ -77,3 +77,47 @@ Each article should link to:
 
 Do not link to empty future industry pages.
 
+## Enterprise Value & Exit Readiness Backlog
+
+These concepts extend the existing Human API, administrative burden, transformation recovery, and AI adoption reality pillars into their business-value consequence. They should enter the roadmap after the healthcare recovery wedge is supported by enough proof, or earlier when outreach targets business owners, healthcare practice owners, PE, search funds, business brokers, or M&A advisors.
+
+| Title | Target Audience | Problem Addressed | Funnel Stage | Related Service | CTA |
+|---|---|---|---|---|---|
+| Why Buyers Discount Founder-Dependent Businesses | Business owners, founders, PE, search funds, M&A advisors | Buyer confidence drops when the business depends on the founder to explain and run critical operations. | Problem-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+| The Human API Discount | Business owners, healthcare practice owners, multi-location operators | Key-person operational dependency becomes a valuation discount. | Problem-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+| The Hidden Risk Lowering Your Company's Value | Founders, operators, healthcare practice groups | Operational opacity and tribal knowledge reduce transferability even when revenue looks healthy. | Problem-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+| Why Good Businesses Become Bad Acquisitions | PE, search funds, acquirers, M&A advisors | Businesses with strong financials can fail diligence or integration because workflows are undocumented and hard to scale. | Solution-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+| The Operational Debt Buyers See Immediately | Business owners, operators, business brokers | Manual workarounds, undocumented decisions, and key-employee dependency signal integration and scale risk. | Problem-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+| The Business Still Runs Because Susan Hasn't Quit Yet | Founders, healthcare practice owners, multi-location operators | One trusted operator carries organizational memory and execution continuity. | Problem-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+| How Organizational Memory Impacts Valuation | Founders, PE, search funds, M&A advisors | Transferable knowledge, documented workflow, and governed decision rights improve buyer confidence. | Solution-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+
+## Prior Authorization Operational Assessment Roadmap
+
+Prior Authorization Operational Assessment is a Tier-1 TKO opportunity because it sits directly at the intersection of Human APIs, Administrative Burden, Healthcare Transformation, AI Adoption, and Operational Assessments. These articles should frame PAOA as operational quality improvement, not Gold Card software, PA automation software, FHIR infrastructure, claims integration, or a payer technology product.
+
+### Human API Healthcare Series
+
+| Title | Target Audience | Problem Addressed | Funnel Stage | Related Service | CTA |
+|---|---|---|---|---|---|
+| The Human API Behind Prior Authorization | Practice administrators, VP UM, healthcare operations leaders | Authorization work depends on one or two people who know payer rules, exception paths, and documentation requirements. | Problem-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+| What Happens When Your Authorization Expert Leaves? | Practice administrators, provider operations leaders | Critical payer-specific knowledge is not transferable when the expert is unavailable or leaves. | Problem-Aware | Human API Risk Assessment | Diagnostic page |
+| Why Prior Authorization Knowledge Lives In People's Heads | Healthcare operations leaders, VP UM | Workflows appear documented but real authorization behavior lives in staff judgment and informal routing. | Problem-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+| The Operational Risk Hidden Inside Every Authorization Team | COO, VP Operations, practice administrators | Denials, delays, and exceptions reveal dependency risk inside the team. | Solution-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+
+### Administrative Burden Series
+
+| Title | Target Audience | Problem Addressed | Funnel Stage | Related Service | CTA |
+|---|---|---|---|---|---|
+| Prior Authorization Is A Workflow Problem, Not An Automation Problem | Healthcare operations leaders, VP UM, CIO | Automation fails when requests, documentation, exception handling, and decision rights are inconsistent. | Problem-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+| Why More Staff Doesn't Reduce Administrative Burden | Practice administrators, healthcare operations leaders | Staffing alone does not fix denial patterns, payer variation, exception loops, or workflow quality. | Problem-Aware | Administrative Burden Assessment | Diagnostic page |
+| Where Healthcare Work Actually Stalls | Healthcare operations leaders, transformation leaders | Work stalls in missing facts, payer-specific rules, escalation paths, documentation gaps, and human routing. | Problem-Aware | Operational Intelligence Diagnostic | Diagnostic page |
+| The Hidden Cost Of Exception Handling | Practice administrators, provider operations leaders | Exceptions consume time, create variation, and concentrate knowledge in a few people. | Solution-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+
+### Gold Card Readiness Series
+
+| Title | Target Audience | Problem Addressed | Funnel Stage | Related Service | CTA |
+|---|---|---|---|---|---|
+| Why Some Providers Become Gold Card Eligible | Practice administrators, provider operations leaders | Eligibility follows complete requests, consistent workflows, high documentation quality, low denials, and controlled variation. | Solution-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+| Operational Quality Before Automation | Healthcare operations leaders, CIO, VP UM | Operational maturity should come before platform, AI, FHIR, or claims integration work. | Solution-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+| The Workflow Foundations Of Gold Card Programs | Provider operations leaders, practice administrators | Gold Card readiness depends on workflow standardization, documentation quality, approval quality, and exception control. | Solution-Aware | Prior Authorization Operational Assessment | Diagnostic page |
+| What Gold Card Programs Actually Measure | Healthcare operations leaders, VP UM | Gold Card programs reflect operational quality; they are not the first thing to buy or build. | Vendor-Aware | Prior Authorization Operational Assessment | Diagnostic page |

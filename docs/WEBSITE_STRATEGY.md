@@ -30,6 +30,8 @@ Suggested interim hero (pending positioning confirmation):
 
 **Primary market:** Healthcare transformation recovery and operational intelligence.
 
+**Tier-1 healthcare wedge:** Prior Authorization Operational Assessment. Position this as operational quality improvement before Gold Card, automation, AI, FHIR, claims, or payer technology work. Gold Card readiness is an output of operational quality, not the product.
+
 **Brand character:** Precise. Evidence-led. Operator perspective. Confident without grandiosity. Uses the language executives use — not vendor buzzwords.
 
 **What TKO is not (must not appear anywhere on the site):**
@@ -166,6 +168,7 @@ The site should never be the primary lead source in the first 90 days. The site 
 - healthcare transformation recovery consultant
 - healthcare operational intelligence consulting
 - prior authorization workflow modernization
+- prior authorization operational assessment
 - healthcare AI governance consulting
 - stalled transformation recovery
 

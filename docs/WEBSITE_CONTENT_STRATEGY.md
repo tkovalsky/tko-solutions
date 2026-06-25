@@ -16,6 +16,8 @@ Healthcare is the launch wedge and should dominate examples, proof, and buyer co
 
 TKO is not AI consulting, PMO consulting, transformation consulting, or healthcare consulting. AI, program governance, transformation recovery, and healthcare operations are contexts where Operational Intelligence failures become visible.
 
+Enterprise Value & Exit Readiness is the business consequence of the same failure pattern, not a separate launch identity. It should appear in authority content and selected proof framing for founders, owners, healthcare practice groups, PE, search funds, business brokers, and M&A advisors, while Healthcare Operational Recovery remains the primary wedge.
+
 ---
 
 ## Audience Hierarchy
@@ -62,6 +64,10 @@ Use examples from:
 - Healthcare AI adoption and governance.
 - Administrative burden reduction.
 - Health-tech customer operations and implementation risk.
+
+Tier-1 healthcare opportunity:
+
+- Prior Authorization Operational Assessment. This should be framed as operational quality improvement before Gold Card, automation, AI, FHIR, claims, or payer technology products.
 
 ### Financial Services Supports
 
@@ -185,6 +191,24 @@ Why buyers search for help:
 - They need to show value without surrendering decision authority to autonomous tools.
 - They need to identify where AI reduces burden versus where it adds risk.
 
+### 6A. Prior Authorization Operational Quality Failure
+
+Prior Authorization Operational Quality Failure occurs when denials, delays, manual work, exception handling, payer variation, and staff dependency are treated as platform problems before the operating model is understood.
+
+Buyer symptoms:
+
+- Authorization requests are denied for repeatable documentation, coding, eligibility, or medical necessity issues.
+- Authorization cycle time varies by payer, specialty, provider, or staff member.
+- Exceptions depend on one or two people who know payer-specific behavior.
+- Leaders are discussing Gold Card, automation, AI, FHIR, or PA platforms before workflow quality is stable.
+
+Why buyers search for help:
+
+- They need to reduce denials and administrative burden before investing in larger platforms.
+- They need to understand where authorization work actually stalls.
+- They need to identify Human APIs inside the authorization team.
+- They need Gold Card readiness as an output of operational quality, not as the starting product.
+
 ### 7. Cross-Team Coordination Failure
 
 Cross-Team Coordination Failure occurs when work depends on multiple teams, systems, vendors, or business units, but no operating layer owns the complete flow.
@@ -219,6 +243,23 @@ Why buyers search for help:
 - They need operational truth, not another strategy artifact.
 - They need the bridge between workflow reality, governance, AI, and measurable execution.
 
+### 9. Enterprise Value & Exit Readiness
+
+Enterprise Value & Exit Readiness occurs when operational knowledge, customer relationship context, decision-making, and execution capability are too concentrated in founders or key employees for the business to transfer, scale, or withstand diligence cleanly.
+
+Buyer symptoms:
+
+- The business depends on a founder, office manager, senior operator, or relationship owner to explain how work actually gets done.
+- Key customer, workflow, exception, or decision context is not documented in a system that others can operate.
+- Growth has exposed dependency on tribal knowledge and manual coordination.
+- Leadership believes the business is more transferable than the operating evidence supports.
+
+Why buyers search for help:
+
+- They are preparing for sale, succession, investment, acquisition, or multi-location expansion.
+- They need to reduce key-person and founder-dependency risk before diligence.
+- They need to document operational memory, workflow scalability, and AI readiness without turning the work into a generic knowledge-management project.
+
 ---
 
 ## Content Pillars
@@ -236,7 +277,9 @@ Each pillar must reinforce the same category logic: Operational Intelligence mak
 | Governance & Accountability | Director PMO, COO, Chief Transformation Officer, VP Operations | Improve governance that is meeting-heavy but decision-light. | Differentiate TKO from PMO consulting by focusing on decision rights, evidence, and accountability design. | Insight -> Diagnostic -> Contact. |
 | Human-Controlled AI | CIO, CDO, VP Transformation, healthcare operations leaders | Understand how to use AI without removing human approval or governance. | Avoid AI consulting positioning while capturing AI adoption failure demand. | Insight -> Diagnostic or Operating System Build -> Contact. |
 | Healthcare Operations | Healthcare VP Operations, VP UM, VP Provider Operations, health-tech COO | Solve workflow, burden, modernization, and AI adoption issues in healthcare operations. | Make healthcare the dominant launch proof context. | Healthcare-relevant insight or case study -> Diagnostic. |
+| Prior Authorization Operational Assessment | Practice administrators, VP UM, healthcare operations leaders, provider operations leaders | Diagnose denials, delays, exception handling, payer friction, staff dependency, and Gold Card readiness as operational quality issues. | Treat PAOA as a Tier-1 assessment wedge, not a platform or automation product. | Insight -> Diagnostic page -> Contact. |
 | Financial Services Operations | COO, CIO, SVP Operations, operations and platform leaders | Understand how Operational Intelligence applies to regulated financial workflows. | Support secondary credibility without diluting healthcare launch focus. | Supporting insight -> About or Industries -> Diagnostic. |
+| Enterprise Value & Exit Readiness | Business owners, founders, healthcare practice owners, PE, search funds, M&A advisors | Understand how founder dependency, key-employee dependency, tribal knowledge, and undocumented workflows reduce transferability and valuation. | Extend the Human API thesis into a buyer-value consequence without making it the primary offer. | Insight -> Diagnostic page; future assessment page only after validation. |
 
 ---
 
@@ -253,4 +296,3 @@ Primary conversion sequence:
 5. Submit the diagnostic intake.
 
 CTA rule: one primary CTA per page, site-wide, directed to diagnostic intake.
-

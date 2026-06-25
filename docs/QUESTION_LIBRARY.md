@@ -38,6 +38,21 @@ Use follow-up prompts to ask for examples, artifacts, and specific recent cases.
 
 ## Director Questions
 
+### Prior Authorization Operational Assessment
+
+- Why are authorization requests most often denied?
+- Why does authorization take longer than leadership expects?
+- Which specialties, payers, or authorization types create the most friction?
+- Which denial reasons repeat?
+- Which payer-specific rules are known by staff but not captured in workflow documentation?
+- Where do incomplete documentation, coding issues, eligibility issues, or medical necessity issues appear most often?
+- Which exceptions follow a repeatable pattern?
+- Which exceptions require personal escalation?
+- Who knows how to get difficult authorizations unstuck?
+- Who trains new staff on payer-specific authorization behavior?
+- What happens if the most experienced authorization specialist leaves?
+- What would need to be true operationally before Gold Card readiness was credible?
+
 ### Workflow Reality
 
 - Walk me through what is supposed to happen in this workflow.
@@ -172,4 +187,3 @@ During synthesis, tag evidence by pattern:
 - Decision clarity gap
 - Governance readiness gap
 - AI readiness gap
-

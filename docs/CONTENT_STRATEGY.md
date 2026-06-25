@@ -38,6 +38,8 @@ Angles:
 - Administrative burden is hidden decision latency.
 - Prior authorization burden is not only volume. It is routing, missing facts, exceptions, and approvals.
 - Reducing burden requires making the operating model explicit.
+- Gold Card readiness is an output of operational quality, not a product category to lead with.
+- Prior Authorization Operational Assessment is a Tier-1 TKO opportunity because it joins Human APIs, administrative burden, healthcare transformation, AI adoption, and operational assessments.
 
 ### Transformation Recovery
 
@@ -55,6 +57,15 @@ Angles:
 - AI readiness is operational readiness.
 - Human approval is not a limitation. It is the control model.
 - Before prompts, fix facts, decisions, and escalation.
+
+### Enterprise Value & Exit Readiness
+
+Angles:
+
+- Buyers discount businesses that depend on a founder, key employee, or undocumented workflow to keep operating.
+- The Human API problem becomes a valuation problem when critical knowledge cannot transfer to a buyer, successor, or management team.
+- Administrative burden, transformation failure, and failed AI adoption are symptoms of the same operational opacity buyers notice in diligence.
+- Exit readiness starts with making organizational memory, workflow ownership, decision rights, and customer relationship context visible and governed.
 
 ### Decision Latency
 
@@ -107,6 +118,25 @@ Initial topics:
 - "Why AI Pilots Fail When Workflow Knowledge Lives In People"
 - "The Dashboard Was Green, But The Work Was Stuck"
 - "Ask Sarah Is Not A Workflow"
+- "The Human API Behind Prior Authorization"
+- "What Happens When Your Authorization Expert Leaves?"
+- "Why Prior Authorization Knowledge Lives In People's Heads"
+- "The Operational Risk Hidden Inside Every Authorization Team"
+- "Prior Authorization Is A Workflow Problem, Not An Automation Problem"
+- "Why More Staff Doesn't Reduce Administrative Burden"
+- "Where Healthcare Work Actually Stalls"
+- "The Hidden Cost Of Exception Handling"
+- "Why Some Providers Become Gold Card Eligible"
+- "Operational Quality Before Automation"
+- "The Workflow Foundations Of Gold Card Programs"
+- "What Gold Card Programs Actually Measure"
+- "Why Buyers Discount Founder-Dependent Businesses"
+- "The Human API Discount"
+- "The Hidden Risk Lowering Your Company's Value"
+- "Why Good Businesses Become Bad Acquisitions"
+- "The Operational Debt Buyers See Immediately"
+- "The Business Still Runs Because Susan Hasn't Quit Yet"
+- "How Organizational Memory Impacts Valuation"
 
 ### Sales Enablement
 
@@ -124,6 +154,7 @@ Assets:
 Topics:
 
 - Human API dependency in payer operations
+- Prior Authorization Operational Assessment as a Tier-1 assessment wedge
 - AI readiness before AI investment
 - Operational truth for transformation recovery
 - Prior authorization and UM decision latency
@@ -144,4 +175,4 @@ Topics:
 3. AI readiness depends on operational readiness.
 4. Decision latency is a measurable operating problem.
 5. Transformation recovery starts with operational truth.
-
+6. Enterprise value depends on whether the business can run, scale, and transfer without hidden dependence on a few people.

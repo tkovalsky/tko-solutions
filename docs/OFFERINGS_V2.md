@@ -6,6 +6,8 @@ Status: Working document. Founder interview answers required before finalizing p
 
 These offers reflect capabilities that exist in code, in the founder's documented experience, or in proven methodology — not aspirational capabilities.
 
+Enterprise Value & Exit Readiness is a future-state packaging opportunity, not a current primary offer. The current offer ladder remains Healthcare Operational Recovery / Operational Intelligence Diagnostic -> Operating System Build -> Fractional Operating System Advisor.
+
 ---
 
 ## Offer 1 — Fastest to Sell
@@ -15,8 +17,34 @@ These offers reflect capabilities that exist in code, in the founder's documente
 
 Healthcare framing: **Healthcare Transformation Recovery Diagnostic**
 Administrative burden framing: **Administrative Burden Reduction Diagnostic**
+Prior authorization framing: **Prior Authorization Operational Assessment**
 
 Use the framing that matches the buyer's stated problem. The underlying method is identical.
+
+### Tier-1 Healthcare Wedge: Prior Authorization Operational Assessment
+
+Classify this as a Tier-1 TKO opportunity because it sits directly at the intersection of Human APIs, Administrative Burden, Healthcare Transformation, AI Adoption, and Operational Assessments.
+
+Position it as an assessment of operational quality before Gold Card, automation, AI, FHIR, claims, or payer technology work.
+
+Inputs:
+
+- PA submissions
+- Denial reasons
+- Specialty
+- Payer mix
+- Workflow documentation
+- Staffing model
+
+Outputs:
+
+- Administrative Burden Analysis: volume, effort, turnaround time, exception frequency.
+- Denial Analysis: documentation issues, coding issues, eligibility issues, medical necessity issues.
+- Exception Analysis: repeat patterns, recurring bottlenecks, recurring escalation paths.
+- Human API Risk Analysis: payer-specific rules, exception owners, escalations, training dependency, departure risk.
+- Gold Card Readiness Assessment: estimated approval quality, workflow standardization, documentation quality, operational maturity.
+
+Gold Card readiness is an output of operational quality. It is not the product.
 
 ### Customer
 Healthcare operations leader who cannot explain where work is actually stalling.
@@ -268,3 +296,32 @@ Do not price below $12k/month. Below that, the engagement cannot be delivered at
 ### Proof Still Needed
 - A completed TKO diagnostic or build engagement that converted to fractional advisory — this is the cleanest proof story
 - Published case study showing transformation momentum maintained over a 3–6 month engagement
+
+---
+
+## Future Opportunity — Enterprise Value & Exit Readiness Assessment
+
+### Status
+
+Future-state opportunity only. Do not sell as the primary front door today.
+
+### Why It Belongs
+
+The same operational conditions that create Human API risk, administrative burden, transformation failure, and failed AI adoption also reduce enterprise value. Buyers, investors, private equity firms, search funds, and acquirers discount businesses that are founder dependent, key-employee dependent, operationally opaque, difficult to scale, dependent on tribal knowledge, or dependent on undocumented workflows.
+
+### Potential Customer
+
+Business owners, founders, operators, healthcare practice owners, multi-location healthcare groups, private equity, search funds, business brokers, M&A advisors, and fractional operators.
+
+### Potential Scope
+
+1. **Human API Risk Assessment** — where the business depends on specific people to remember, route, decide, approve, or recover work.
+2. **Organizational Dependency Analysis** — founder, key-employee, customer relationship, and workflow dependency risk.
+3. **Operational Memory Assessment** — whether critical knowledge is visible, governed, transferable, and reusable.
+4. **Workflow Scalability Assessment** — whether the operating model can scale beyond current people and informal coordination.
+5. **AI Readiness Assessment** — whether workflow, facts, decisions, approval paths, and feedback loops are explicit enough for AI support.
+6. **Enterprise Value Risk Review** — how operational opacity, tribal knowledge, and dependency risk would appear to a buyer, investor, or acquirer.
+
+### Sales Constraint
+
+Use this as a content and referral angle until the diagnostic method has proof in Healthcare Operational Recovery or another paid assessment. Do not present TKO as an M&A advisor, valuation firm, or exit-planning consultancy.

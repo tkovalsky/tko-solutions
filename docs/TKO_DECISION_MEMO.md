@@ -47,7 +47,9 @@ This is the right first offer because:
 **In the next 90 days:**
 - Multi-tenant SaaS. There is no product, no multi-tenant infrastructure, no pricing model, and no sales motion for this. Don't describe TKO as a SaaS company.
 - Autonomous AI agent solutions. The entire TKO value proposition is human-controlled AI. Selling autonomous AI would contradict the positioning and the proof.
+- Gold Card platforms, prior authorization platforms, payer technology products, FHIR infrastructure, or claims adjudication platforms. The wedge is Prior Authorization Operational Assessment: denials, delays, manual work, payer friction, exception patterns, and Human API risk.
 - CRE intelligence reports. No evidence exists in this repository. No data, no client, no template. If this becomes real, document the evidence first.
+- Enterprise Value & Exit Readiness Assessment as a primary offer. The thesis is valid, but it should stay a content/referral angle until the diagnostic method has proof and buyer language is validated.
 - The "Fractional Advisor" offer cold. This offer is the most difficult to sell without a prior engagement or referral. It requires the buyer to trust TKO's judgment before seeing it demonstrated. Don't lead with it.
 
 **Structural risk to watch:**
@@ -102,6 +104,7 @@ The first engagement will be sold on the strength of personal credibility, a cle
 |---|---|
 | One-page launch site update (full hero swap, services, proof) | Convert visitors; stop bleeding credibility |
 | RachelDelray case study with business outcomes | Strongest proof of pattern once outcomes are measured |
+| Enterprise Value & Exit Readiness article backlog | Useful for founder/PE/search fund conversations once the core diagnostic proof is in place |
 | LinkedIn posts: 2–3/week for 8 weeks | Build inbound credibility; create referral surface area |
 
 **Do not build in the next 90 days:**

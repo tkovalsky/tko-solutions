@@ -492,6 +492,8 @@ Transformation Recovery Library
 
 Administrative Burden Library
 
+Enterprise Value & Exit Readiness Library
+
 Offer Generation
 
 Assessment Report Generation
@@ -787,6 +789,8 @@ Workflow Modernization
 
 Operational Visibility
 
+Enterprise Value & Exit Readiness
+
 ⸻
 
 Deliverables
@@ -821,11 +825,15 @@ Transformation Recovery
 
 Administrative Burden
 
+Prior Authorization Operational Assessment
+
 AI Readiness
 
 Workflow Maturity
 
 Operational Visibility
+
+Enterprise Value & Exit Readiness
 
 ⸻
 
@@ -915,6 +923,8 @@ AI Adoption Library
 
 Governance Failure Library
 
+Enterprise Value & Exit Readiness Library
+
 RachelOS Experience Library
 
 Healthcare Transformation Library
@@ -940,4 +950,3 @@ TIF is successful when it produces:
 directly from captured operational knowledge.
 
 The repository should optimize for intellectual property creation, not application complexity.
-

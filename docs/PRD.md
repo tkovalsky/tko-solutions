@@ -23,6 +23,8 @@ In complex operating environments, especially healthcare payer operations, work 
 
 These Human APIs are valuable, but unmanaged dependency on them creates operational risk.
 
+They also create enterprise value risk. A business that depends on a founder, key employee, undocumented workflow, or tribal knowledge to keep operating is harder to transfer, scale, acquire, or underwrite. This PRD treats enterprise value and exit readiness as a downstream business consequence of Human API dependency, not as a separate software product.
+
 ## Target Customers
 
 ### Primary ICP
@@ -54,6 +56,14 @@ Likely buyers:
 - Health tech companies whose product success depends on client workflow adoption.
 - Consulting firms that need a diagnostic layer before transformation, modernization, or AI implementation.
 
+### Tier-1 Healthcare Use Case
+
+Prior Authorization Operational Assessment belongs inside the assessment baseline as a Tier-1 use case because it directly combines Human API dependency, administrative burden, healthcare transformation, AI adoption constraints, and operational assessment work.
+
+It should assess operational quality before platform work: why requests are denied, why authorization takes too long, where staff effort is consumed, which payer patterns repeat, and where the workflow depends on specific people.
+
+It should not be defined as Gold Card software, prior authorization software, payer technology, FHIR infrastructure, claims adjudication, or an AI platform.
+
 ## Core Hypothesis
 
 Organizations cannot improve workflows if critical workflow knowledge lives inside people rather than systems.
@@ -66,6 +76,8 @@ AI, automation, reporting, and modernization programs fail when the operating mo
 - Measure operational dependency risk by workflow, business function, and role.
 - Surface hidden bottlenecks, decision delays, escalation gaps, and shadow processes.
 - Evaluate AI readiness based on workflow visibility, decision clarity, and knowledge transferability.
+- Identify enterprise value and exit-readiness risks created by founder dependency, key-employee dependency, operational opacity, undocumented workflows, and missing organizational memory.
+- Support Prior Authorization Operational Assessment as a healthcare workflow modernization assessment for administrative burden, denial reduction, workflow quality, operational consistency, Human API risk, and Gold Card readiness as an output.
 - Produce a prioritized 90-day action plan to reduce dependency risk.
 - Create a repeatable assessment method that can later guide implementation, content, GTM, and product development.
 
@@ -170,6 +182,7 @@ The assessment must produce:
 - Knowledge Concentration Analysis
 - Bottleneck Analysis
 - Operational Risk Assessment
+- Enterprise Value Risk Narrative
 - Modernization Opportunities
 - AI Readiness Assessment
 - Governance Readiness Assessment
@@ -217,4 +230,3 @@ AI Readiness Assessment:
 - Prefer evidence over anecdotes, but use interviews to discover hidden reality.
 - Separate current state, hypothesis, and validation.
 - Keep human authority explicit in any AI-related recommendation.
-

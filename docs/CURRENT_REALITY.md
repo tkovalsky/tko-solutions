@@ -47,6 +47,22 @@ TKO already has the foundations to define and sell this offering as a diagnostic
 - Existing offer architecture around diagnostics, decision layers, and fractional operational intelligence advisory.
 - Existing content themes around administrative burden, AI readiness, workflow modernization, and decision latency.
 
+## Enterprise Value Implication
+
+Human API dependency is also an enterprise value and exit readiness risk.
+
+Many organizations are worth less than leadership believes when critical operational knowledge, customer relationships, workflow routing, decision logic, and execution capability are trapped inside a small number of people. The same conditions that make work hard to scale, modernize, or automate also make a business harder for buyers, investors, private equity firms, search funds, and acquirers to trust.
+
+This does not create a separate near-term offer. It is the valuation consequence of the existing Human API thesis:
+
+- Founder or key-employee dependency reduces transferability.
+- Operational opacity increases buyer diligence risk.
+- Tribal knowledge makes scale and integration harder.
+- Undocumented workflows make performance harder to verify.
+- Missing organizational memory weakens continuity after a sale, leadership change, or acquisition.
+
+Healthcare Operational Recovery remains the primary wedge. Enterprise Value & Exit Readiness should be treated as a future extension for business owners, founders, healthcare practice owners, multi-location healthcare groups, private equity, search funds, business brokers, M&A advisors, and fractional operators.
+
 ## What Does Not Exist Yet
 
 The Human API Risk Assessment is not yet a software product and should not be presented as one.
@@ -71,6 +87,21 @@ The strongest initial market is healthcare payer operations because the pain is 
 - Transformation offices
 - Administrative burden reduction initiatives
 - AI adoption programs that are stalled by workflow reality
+
+## Tier-1 Healthcare Use Case: Prior Authorization Operational Assessment
+
+Prior Authorization Operational Assessment is a Tier-1 TKO opportunity because it sits directly at the intersection of Human APIs, Administrative Burden, Healthcare Transformation, AI Adoption, and Operational Assessments.
+
+The wedge is operational quality improvement, not Gold Card software, prior authorization automation software, payer technology, FHIR infrastructure, or claims adjudication.
+
+Core market observation:
+
+- Practice administrators do not wake up asking for Gold Card programs, FHIR integrations, or prior authorization platforms.
+- They ask why they are getting denied, why authorization takes so long, why staff spend hours on manual work, why some providers get approved and others do not, why certain payers create friction, and why work depends on specific people.
+
+Gold Card readiness is an output of operational quality. It is not the product.
+
+Related strategy note: [Prior Authorization Operational Assessment](strategy/PRIOR_AUTHORIZATION_OPERATIONAL_ASSESSMENT.md).
 
 ## Secondary Market Assumption
 
@@ -114,4 +145,3 @@ Not acceptable:
 - ROI claims without an assessed client baseline.
 - Claims that a software product exists.
 - Claims that the scoring model is validated across a large dataset.
-

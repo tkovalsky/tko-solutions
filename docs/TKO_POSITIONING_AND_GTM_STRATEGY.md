@@ -54,6 +54,7 @@ So the underlying capability is not "AI," not "automation," not "consulting." It
 - **Secondary positioning:** *Senior, hands-on operational diagnostics and fractional advisory* for leaders who need execution visibility without hiring a firm or a full-time exec.
 - **Umbrella category (what you say in the room):** Operational Intelligence — "the missing layer between data and action." Keep it. It frames the work; it does not acquire the customer.
 - **Go-to-market wedge (what actually sells in 90 days):** Use a *symptom + vertical* entry, not the category. The beachhead is **healthcare / health-tech operations** (where credibility is deepest) plus **PE-backed mid-market companies** (where the budget and urgency are highest).
+- **Tier-1 healthcare assessment wedge:** Prior Authorization Operational Assessment. This is operational quality improvement before Gold Card, automation, AI, FHIR, claims, or payer technology work. It sits at the intersection of Human APIs, Administrative Burden, Healthcare Transformation, AI Adoption, and Operational Assessments.
 
 ### Ideal Customer Profiles (ranked by revenue realism)
 
@@ -74,6 +75,7 @@ COO · VP/Head of Operations · Chief of Staff · PE Operating Partner · VP Cus
 - A botched or underused CRM/system rollout.
 - Revenue growing but margins/throughput flat (operational leverage pressure).
 - Board/PE pressure on a specific operational KPI.
+- Owner, founder, healthcare practice group, PE sponsor, search fund, or advisor preparing for sale, succession, acquisition, or post-acquisition integration and worried the business depends too heavily on a few people.
 
 ---
 
@@ -118,22 +120,26 @@ Lead generation comes from **symptom and vertical searches**, not the category n
 - "AI pilot failed" / "why most AI projects fail" / "how to get value from AI in operations"
 - "prioritize accounts in CRM" / "customer success accounts falling through cracks" / "relationship intelligence"
 - "prior authorization automation" / "reduce administrative burden healthcare"
+- "prior authorization operational assessment" / "why prior authorizations get denied" / "Gold Card readiness operational quality"
 - "PE value creation operational" / "portfolio company operational visibility"
+- "founder dependent business valuation" / "key person risk acquisition" / "exit readiness operational risk"
 - "operational bottlenecks" / "where work stalls" / "execution visibility"
 - "human in the loop AI workflow" / "AI with human approval"
 
 These map cleanly onto the existing 12 content pillars in `content.ts` — the pillars are fine; what's missing is *published articles* hitting these long-tail phrases.
 
-### Content pillars (consolidated from 12 → 4 to focus effort)
+### Content pillars (consolidated from 12 → 5 to focus effort)
 1. **The Decision Layer** (category-defining POV): dashboards→decisions, data→action, the missing layer, human-approved AI.
 2. **Why AI Projects Fail (and what works instead)**: the highest-intent, highest-traffic, most credible-given-skepticism theme.
 3. **Operational Leverage / Execution Visibility**: aimed at PE + COO buyers and scaling pain.
 4. **Healthcare Operations**: the credibility vertical — prior auth, administrative burden, care ops, CMS-driven change.
+5. **Enterprise Value & Exit Readiness**: the valuation consequence of Human API dependency, operational opacity, tribal knowledge, undocumented workflows, and missing organizational memory.
 
 ### Authority content (publish, don't just architect)
 - **Flagship case study:** RachelOS — *From CRM to Operating System* — with a visual walkthrough of memory, prioritization, trusted next action, and human approval. This is the single highest-leverage page on the site.
 - **Conversion essays:** "Why Dashboards Don't Drive Decisions" · "The Missing Layer Between Data and Action" · "Why Most AI Projects Fail (It's Not the Model)."
 - **Vertical essays:** "Administrative Burden Is a Workflow Decision Problem" (healthcare) · "Operational Leverage Requires Execution Visibility" (PE) · "Why Customer Success Teams Miss Accounts Even When the CRM Is Updated" (RevOps).
+- **Enterprise value essays:** "Why Buyers Discount Founder-Dependent Businesses" · "The Human API Discount" · "How Organizational Memory Impacts Valuation."
 - **Intelligence reports** (only if pursuing the reporting niche — see Asset Audit): comparison / relocation / corridor / market intelligence reports as *productized lead magnets*, kept off the core consultancy narrative so they don't fragment it.
 
 ### Prioritized content roadmap
@@ -142,7 +148,7 @@ These map cleanly onto the existing 12 content pillars in `content.ts` — the p
 3. "Why Dashboards Don't Drive Decisions" (category POV + conversion).
 4. Diagnostic one-pager PDF (sales asset).
 5. One healthcare + one PE essay (vertical credibility).
-6. Then cadence: one essay every 2 weeks rotating across the 4 pillars.
+6. Then cadence: one essay every 2 weeks rotating across the 5 pillars, with healthcare recovery still weighted first until the wedge is validated.
 
 ---
 
@@ -186,6 +192,7 @@ The three offers in `content.ts` are well-constructed. Below they are sharpened,
 - **Problem:** Data and tools exist; priorities, attention, and next actions don't.
 - **Deliverables:** Workflow assessment, decision analysis, bottleneck map, visibility/prioritization gap review, AI opportunity review, implementation roadmap, executive readout, 30 days follow-up.
 - **Timeline:** 2–3 weeks. **Price:** $15–25K. **Outcome:** A prioritized, owner-assigned roadmap and a clear build/don't-build decision. **This is the primary entry point.**
+- **Prior authorization packaging:** Prior Authorization Operational Assessment applies the same entry motion to PA-specific pain: administrative burden, denial reduction, workflow quality, operational consistency, Human API risk, and Gold Card readiness as an operational-quality output. It is not a Gold Card platform, PA platform, FHIR product, claims product, or AI platform.
 
 ### Offer 2 (Core) — Operational Intelligence System Build
 - **Buyer:** A diagnostic client (or warm referral with a known problem) ready to act.
@@ -200,6 +207,21 @@ The three offers in `content.ts` are well-constructed. Below they are sharpened,
 - **Timeline:** 3–6 months. **Price:** $12–25K/month. **Outcome:** A trusted operating view of priorities, risks, and decisions; recurring revenue base. **This is the retention layer.**
 
 All three are deliverable by one senior operator. None requires a bench. AI/automation is used *inside* delivery to multiply the founder's output — never sold as the headline.
+
+### Future-state opportunity — Enterprise Value & Exit Readiness Assessment
+
+Do not make this a primary offer today. Treat it as a later packaging of the same diagnostic method for owners, founders, healthcare practice groups, PE, search funds, business brokers, M&A advisors, and fractional operators.
+
+Potential scope:
+
+- Human API Risk Assessment.
+- Organizational Dependency Analysis.
+- Operational Memory Assessment.
+- Workflow Scalability Assessment.
+- AI Readiness Assessment.
+- Enterprise Value Risk Review.
+
+The offer should become sellable only after the Healthcare Operational Recovery wedge has proof and the diagnostic method has produced repeatable artifacts. Until then, use the pillar for content, referral conversations, and buyer education.
 
 ---
 
@@ -255,7 +277,7 @@ One person · three offers · one proof point · one credibility spine. Everythi
 2. **Category strategy:** Own "the decision layer / operational intelligence" as the umbrella POV; acquire via symptom + vertical search and warm network. Don't fund category education you can't afford.
 3. **ICPs:** PE operating partners/portfolio COOs (revenue) · healthcare/health-tech ops leaders (credibility) · scaling relationship-led founders (proof).
 4. **Offers:** Decision Audit (wedge) → Operational Diagnostic (entry) → System Build (core) → Fractional Advisor (retain).
-5. **Content pillars:** The Decision Layer · Why AI Projects Fail · Operational Leverage/Execution Visibility · Healthcare Operations.
+5. **Content pillars:** The Decision Layer · Why AI Projects Fail · Operational Leverage/Execution Visibility · Healthcare Operations · Enterprise Value & Exit Readiness.
 6. **SEO:** Symptom/vertical long-tail for acquisition; category POV for authority; RachelOS case study as the conversion hub.
 7. **Homepage narrative:** Symptom → "the missing layer" → RachelOS proof → three offers → senior-operator credibility.
 8. **Case study strategy:** RachelOS flagship (shippable proof) + anonymized healthcare + first client → compounding referral engine.

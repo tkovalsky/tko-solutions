@@ -210,6 +210,23 @@ Recommended action:
 
 ## Example Findings
 
+Finding: Prior authorization operational quality depends on one or two experienced authorization specialists.
+
+Evidence:
+
+- Staff describe the same people as the source for payer-specific rules, escalation paths, exception handling, and documentation requirements.
+- Denials and delays cluster around incomplete documentation, inconsistent routing, or payer-specific knowledge not captured in the workflow.
+- Managers believe the workflow is documented, but ambiguous cases still route through named people.
+
+Risk:
+
+- High concentration, escalation fragility, transferability, and administrative burden risk.
+
+Recommendation:
+
+- Run a Prior Authorization Operational Assessment focused on administrative burden, denial analysis, exception patterns, Human API risk, and Gold Card readiness as an operational-quality output.
+- Do not begin with Gold Card software, PA automation software, FHIR integration, claims integration, or AI.
+
 Finding: Prior authorization exception routing depends on two senior operators.
 
 Evidence:
@@ -294,4 +311,3 @@ Track progress using dependency-reduction indicators:
 - Increase in workflow state visibility.
 - AI readiness prerequisites completed.
 - Human API risk tier reduced after reassessment.
-

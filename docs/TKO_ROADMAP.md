@@ -75,12 +75,15 @@ A consulting engagement.
 
 - [ ] One-page Operational Intelligence Diagnostic
 - [ ] One-page Transformation Recovery Assessment
+- [ ] One-page Prior Authorization Operational Assessment
+- [ ] Enterprise Value & Exit Readiness angle documented as future-state only
 - [ ] Rachel case study
 
 ### Outreach
 
 - [ ] Build target list (20–30 people)
 - [ ] Healthcare leaders
+- [ ] Practice administrators / prior authorization operators
 - [ ] Health-tech operators
 - [ ] Consulting contacts
 

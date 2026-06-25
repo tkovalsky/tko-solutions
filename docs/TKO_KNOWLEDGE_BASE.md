@@ -32,11 +32,13 @@ Proven architecture pattern:
 |---|---|---|---|
 | Operational Intelligence Diagnostic | Sellable now | $20k–$35k | 3 weeks |
 | Healthcare Transformation Recovery Diagnostic | Sellable now | $25k | 3 weeks |
+| Prior Authorization Operational Assessment | Tier-1 opportunity | TBD | TBD |
 | Relationship Intelligence System | Sellable now | $35k–$75k | 4–8 weeks |
 | Lead Recovery & Follow-Up Intelligence | Sellable now | $25k–$50k | 3–6 weeks |
 | Human-Controlled AI Workflow Automation | Sellable now | $35k–$60k | 4–6 weeks |
 | Healthcare Transformation Recovery Engagement | Sell after diagnostic | $60k–$100k | 8–10 weeks |
 | Fractional Operational Transformation Advisor | Sell after engagement | $15k–$25k/month | 3–6 months |
+| Enterprise Value & Exit Readiness Assessment | Future opportunity only | TBD | TBD |
 | Reporting Workflow Modernization | Sell with caveats | $15k–$30k | 3–5 weeks |
 | CRE Intelligence Reporting | Do not sell yet | — | No evidence |
 | Multi-tenant SaaS / autonomous AI / CRM product | Do not sell | — | Not built |
@@ -82,6 +84,7 @@ Proven architecture pattern:
 - Financial services operations
 - Regulated enterprise service operations
 - B2B services with high-value relationship management
+- Business owners, founders, healthcare practice groups, PE, search funds, business brokers, M&A advisors, and fractional operators evaluating operational dependency as an enterprise value or exit-readiness risk.
 
 **Avoid as first market:**
 - Generic SMB automation
@@ -113,6 +116,12 @@ Proven architecture pattern:
 
 **Contrarian idea to own:**
 > Most AI transformation failures are not AI failures. They are operational visibility and workflow failures.
+
+**Healthcare wedge idea to own:**
+> Gold Card eligibility is not the problem. Operational quality is the problem. Prior authorization leaders buy help with denials, delays, burden, variation, and staff dependency before they buy platforms.
+
+**Enterprise value extension:**
+> The same operational visibility failures that break transformation and AI adoption also reduce enterprise value when buyers see founder dependency, key-employee dependency, tribal knowledge, undocumented workflows, and missing organizational memory.
 
 ---
 
@@ -146,6 +155,7 @@ Named and usable now:
 - Deterministic recommendation layer (queue not AI-decided)
 - Canonical queue with decision explainability
 - Approval-gated AI drafting pattern
+- Enterprise Value & Exit Readiness framing as a future application of Human API dependency, organizational memory, workflow scalability, and AI readiness analysis.
 
 Not yet created:
 - No published framework PDF

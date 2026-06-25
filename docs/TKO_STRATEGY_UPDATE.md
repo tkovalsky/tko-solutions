@@ -175,6 +175,8 @@ A productized consulting model means: a named, packaged implementation with fixe
 
 **Risk:** Longest path to first revenue. If no warm contacts exist, this ICP produces zero revenue in 90 days.
 
+**Tier-1 use case:** Prior Authorization Operational Assessment. This is a concrete healthcare wedge for denials, authorization delays, manual work, payer friction, exception patterns, and Human API risk. It should be sold as operational quality assessment, not Gold Card, PA platform, FHIR, claims, or AI product work.
+
 ---
 
 ### ICP 2: Relationship-Intensive Professional Service Team (new)
@@ -211,6 +213,16 @@ A productized consulting model means: a named, packaged implementation with fixe
 **Revenue timeline:** Possible within 45 days.
 
 **Why this ICP:** Shorter path than health plan enterprise. Still in healthcare ecosystem (supports the brand). The founder's healthcare credibility is relevant to this buyer. Deal sizes are meaningful. Path to referral into the health plan they're selling to is real.
+
+---
+
+### Future adjacency: Enterprise Value & Exit Readiness
+
+**Who:** Business owners, founders, healthcare practice owners, multi-location healthcare groups, private equity, search funds, business brokers, M&A advisors, and fractional operators.
+
+**Problem:** The business may be worth less than leadership believes because customer relationships, operational memory, workflow routing, decision rights, and execution capability are trapped inside a founder or a few key people.
+
+**Status:** Content/referral angle and future assessment opportunity only. Do not make this the primary offer while Healthcare Operational Recovery and Operational Intelligence Diagnostic proof is still being established.
 
 ---
 
@@ -351,6 +363,7 @@ Run paths 1 and 2 simultaneously. Path 3 is secondary. Do not wait for path 1 to
 | TKO_DECISION_MEMO.md | Revise "do not sell to SMBs" constraint to allow ICP 2 deployments | High |
 | TKO_DECISION_MEMO.md | Add Track 2 parallel path to Section 4 (30-day revenue) | High |
 | OFFERINGS_V2.md | Add Offer 4: Operational Intelligence System Implementation for professional service teams ($10k–$20k, 4–6 weeks) | High |
+| Offer architecture docs | Add Enterprise Value & Exit Readiness Assessment as future-state only; keep Healthcare Operational Recovery as wedge | High |
 | CASE_STUDIES_V2.md | Reframe RachelDelray as "operational intelligence system for a professional service business" not "proof-of-method in real estate" | Medium |
 | WEBSITE_STRATEGY.md | Add ICP 2 buyer language to the problems section and services section | Medium |
 | EXECUTIVE_SUMMARY.md | Update "state of proof" and "recommended first offer" to reflect two-track strategy | Medium |

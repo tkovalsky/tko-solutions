@@ -68,6 +68,18 @@ Pick one: $5k–$15k (lower barrier, different buyer) or $25k (enterprise positi
 
 Reason: It is the clearest, most specific, most credible offer relative to the founder's background. It is budgetable without executive committee approval at most healthcare organizations. It creates proof, creates a natural expansion path, and does not require a completed website, published case study, or LinkedIn following before the first conversation.
 
+## Tier-1 Healthcare Assessment Wedge
+
+Prior Authorization Operational Assessment should be treated as a Tier-1 TKO opportunity because it sits at the intersection of Human APIs, Administrative Burden, Healthcare Transformation, AI Adoption, and Operational Assessments.
+
+The GTM insight is: Gold Card eligibility is not the problem; operational quality is the problem. Practice administrators ask why authorizations are denied, why work takes so long, why manual burden persists, why payer friction repeats, and why the process depends on specific people.
+
+Do not market Gold Card platforms, PA platforms, claims platforms, payer technology products, FHIR infrastructure, or AI platforms as the initial wedge.
+
+## Future Opportunity
+
+Enterprise Value & Exit Readiness belongs as a future application of the same operating-risk thesis. It should be developed through content and referral conversations for owners, founders, healthcare practice groups, PE, search funds, business brokers, M&A advisors, and fractional operators, but it should not replace the Healthcare Transformation Recovery Diagnostic as the first offer.
+
 ---
 
 ## Recommended First Actions (Before Phase 2)

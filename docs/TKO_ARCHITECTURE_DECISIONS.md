@@ -146,7 +146,7 @@ Binding usage rules:
 | **Company size** | Health plans / payer operations groups and provider organizations large enough to run a funded transformation or AI program (≈1,000+ employees), plus funded enterprise health-tech vendors selling into them. |
 | **Buyer title** | VP Operations · VP Utilization Management · VP Provider Operations · Chief Transformation Officer · CIO / VP Technology · Head of AI/Automation · Health-tech COO. Budget owner exists; a $25k diagnostic needs no committee. |
 | **Business pain** | Investing in transformation/AI but cannot see where work stalls. Administrative burden grows despite spend; AI pilots demo well but don't get adopted; operational metrics are debated, not trusted; many systems, no workflow owner. |
-| **Buying trigger** | Sponsor/board/client asking why transformation isn't producing results; AI initiative 12+ months with no adoption; new leader inheriting a stalled program; a regulatory deadline (CMS Interoperability & Prior Authorization, pressure toward 1 Jan 2027) forcing accountability. |
+| **Buying trigger** | Sponsor/board/client asking why transformation isn't producing results; AI initiative 12+ months with no adoption; new leader inheriting a stalled program; a regulatory deadline (CMS Interoperability & Prior Authorization, pressure toward 1 Jan 2027) forcing accountability; prior authorization denials, delays, payer friction, staff dependency, or administrative burden creating urgent operational-quality pressure. |
 
 Why primary: highest credibility, highest deal value, strongest brand. Accepted cost: 45–120 day cycle — may not close in 30 days without a warm contact (which is why the 30-day motion is network-led, Part 8).
 
@@ -177,7 +177,7 @@ Narrow carve-out (not an ICP, a tactic): **one** named, warm professional-servic
 Nine-plus names collapse to three. Each has one job. (AD-5)
 
 ### Rung 1 — Operational Intelligence Diagnostic *(the only cold-sellable offer; the 30-day product)*
-- **Healthcare framing:** Healthcare Transformation Recovery Diagnostic · **Burden framing:** Administrative Burden Reduction Diagnostic (same method, frame to trigger).
+- **Healthcare framing:** Healthcare Transformation Recovery Diagnostic · **Burden framing:** Administrative Burden Reduction Diagnostic · **PA framing:** Prior Authorization Operational Assessment (same method, frame to trigger).
 - **Purpose:** Establish operational truth, produce the proof asset, open the expansion path. This is the front door of the entire business.
 - **Price:** **$25,000 fixed** (band $20k–$35k by scope/access). 50% start, 50% readout. **Nothing below $20k.**
 - **Duration:** 3 weeks. Max 6–8 interviews, max 2 workflow areas.
