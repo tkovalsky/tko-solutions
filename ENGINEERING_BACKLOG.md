@@ -3,6 +3,13 @@
 Status: Approved for Implementation
 Owner: Todd Kovalsky
 
+> **North star:** This backlog builds toward the future state defined in
+> [`CURRENT_REALITY.md`](CURRENT_REALITY.md). TIF is the internal engine that produces the
+> proof, content, and assessment assets that document requires — not a product TKO sells.
+> **Domain-model authority:** [`docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md`](docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md)
+> supersedes the Knowledge Core schema in this backlog (FailureMode collapses into
+> `Pattern.kind`; Concept, Claim, Asset, and Evidence move into the MVP).
+
 ---
 
 # IMPLEMENTATION PRINCIPLES

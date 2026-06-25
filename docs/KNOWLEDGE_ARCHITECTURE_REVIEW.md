@@ -317,3 +317,48 @@ Goal of MVP: **produce one publishable Asset, end to end, from real captured Exp
 
 Keep the discipline of the backlog (structured, tested, phased, anti-CMS) but **re-shape the core from a 4-entity input chain into an 8-entity value graph that can actually emit a product.** Specifically: collapse `FailureMode` into `Pattern.kind`; add `Concept`, `Claim`, and `Asset` (and `Audience`) to the MVP; pull `Evidence` forward from Epic 6; make `Observation↔Pattern` and `Evidence↔Claim` many-to-many; put `confidentiality`/`anonymization` on everything; and move the Gate Checkpoint from "four entities exist" to "one publishable asset generated from real experience with linked proof." Defer Framework/Capability/Offer/Assessment to expansion, and define — now — the `Assessment → Finding → Experience` bridge that connects this factory to the existing `DATA_MODEL.md` and lets delivery feed the IP back into itself.
 ```
+
+---
+
+## 12. Addendum — Registry & Artifact Engine alignment (TIF v2)
+
+Added 2026-06-25 to align this data-model authority with the v2 architecture in
+[`/TKO_INTELLIGENCE_FACTORY_PRD.md`](../TKO_INTELLIGENCE_FACTORY_PRD.md). **The 8-entity MVP
+knowledge graph (§5, §9) does not change.** v2 adds a runtime delivery spine and a
+configuration layer *around* it, and renames one term.
+
+**1. `Asset` → `Artifact` (terminology).** The Zone C product node this review calls `Asset`
+is renamed **`Artifact`** to match the Artifact Registry. Same node, same `type` facet
+(`article | case_study | one_pager | diagram | …`); "Story = `Asset{type: case_study}`"
+becomes "Story = `Artifact{type: case_study}`." `Diagram` is simply `Artifact{type: diagram}`.
+
+**2. Runtime delivery spine (new layer — operationalizes the §6 `Assessment→Finding→Experience`
+bridge).** These are per-engagement runtime records, distinct from the durable knowledge graph:
+
+| Entity | Traces to | Notes |
+|---|---|---|
+| `Run` | — | engagement/job container: `{framework, subject, voice, inputs}` |
+| `Question` | Framework | from `docs/QUESTION_LIBRARY.md`, owned by a framework |
+| `Answer` | Question, Run | captured response |
+| `Evidence` | Answer · Experience · external | **already MVP** (§5); now also sourced from Answers |
+| `Finding` | Evidence[] | carries `confidence`, optional `risk_tier` |
+| `Recommendation` | Finding[] | carries priority/effort |
+| `Artifact` | Findings/Recommendations/Evidence/Claims | **already MVP** as Asset |
+
+Mandatory traceability chain (enforced, blocks generation if broken):
+`Question → Answer → Evidence → Finding → Recommendation → Artifact`, plus the existing
+`Finding → Experience` feedback edge. This is the §2/§6 "load-bearing relationships" extended
+through delivery. **Confidence** is mandatory on `Finding` and `Artifact` (aggregated from
+Evidence `verifiability`) — the concrete implementation of the §5 "credibility is the product."
+
+**3. Configuration registries (new — config, NOT graph nodes).** `FrameworkDefinition`,
+`ArtifactType`, `VoiceProfile` are versioned configuration (repo files → tables), consumed by
+one `compose()` engine. They are the anti-`per-output-generator` mechanism: new businesses
+(Rachel relocation, CRE) are new `FrameworkDefinition`/`VoiceProfile` rows, not new schemas.
+The §3 ontology's `Framework`/`Capability`/`Offer` expansion entities remain the *knowledge*
+representations; the registries are their *runtime configuration* counterparts.
+
+**4. No conflict with §8 risks.** This addendum directly satisfies R1 (gate = produced artifact
+with traceability), R4 (Evidence in MVP), R6 (Concept/Claim reusable), and R7 (factory graph
+meets the delivery graph). It introduces no new peer to `Pattern`/`FailureMode` (R3 holds:
+`FailureMode` stays collapsed into `Pattern.kind`).

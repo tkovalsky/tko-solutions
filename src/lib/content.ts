@@ -345,7 +345,7 @@ export const industries = [
 export const caseStudies = [
   {
     slug: "from-crm-to-operating-system",
-    title: "RachelOS Operational Intelligence System",
+    title: "RachelOS Operational Knowledge System",
     industry: "Live operating environment",
     proofLevel: "Featured proof",
     problem:
@@ -355,7 +355,7 @@ export const caseStudies = [
     truth:
       "The invisible failure was the human API pattern: available relationship signals existed, but priority, timing, missing context, and next action still depended on one person.",
     system:
-      "TKO built an Operational Intelligence System that captured relationship knowledge, preserved institutional memory, surfaced priorities, recommended actions, and supported execution with human-approved AI.",
+      "TKO built an Operational Knowledge System that captured relationship knowledge, preserved institutional memory, surfaced priorities, recommended actions, and supported execution with human-approved AI.",
     outcome:
       "RachelOS now provides one trusted next action, improved relationship visibility, reduced manual tracking, persistent relationship knowledge, and scalable decision support.",
     evidence: [

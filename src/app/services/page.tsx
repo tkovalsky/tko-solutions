@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { ServiceCards } from "@/components/site/cards";
 import { CtaBand } from "@/components/site/cta-band";
 import { PageHero } from "@/components/site/page-hero";
@@ -46,6 +48,31 @@ export default function ServicesPage() {
               <p className="mt-4 text-base leading-7 text-muted">{service.summary}</p>
             </div>
           ))}
+        </div>
+      </Section>
+      <Section>
+        <div className="grid gap-8 border border-border bg-surface p-8 md:grid-cols-[1.2fr_auto] md:items-center md:p-12">
+          <div className="max-w-[60ch]">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+              Healthcare Wedge
+            </p>
+            <h2 className="mt-4 text-2xl font-semibold md:text-3xl">
+              Prior Authorization Operational Assessment
+            </h2>
+            <p className="mt-4 text-base leading-7 text-muted">
+              A Tier-1 healthcare specialization of the Recovery Assessment. It diagnoses
+              administrative burden, denial drivers, exception handling, and human
+              dependency risk in prior authorization — before automation, AI, FHIR, or
+              Gold Card work.
+            </p>
+          </div>
+          <Link
+            href="/services/prior-authorization-assessment"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+          >
+            View the Prior Authorization assessment
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
         </div>
       </Section>
       <CtaBand />

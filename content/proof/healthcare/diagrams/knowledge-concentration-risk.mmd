@@ -1,0 +1,18 @@
+flowchart TB
+    demand["Operational demand"]
+    few["Critical process knowledge held by a few people"]
+    unavailable["Key resource unavailable or overloaded"]
+    unclear["Ownership and routing become unclear"]
+    delay["Issue resolution slows"]
+    variance["Work is handled inconsistently"]
+    risk["Operational risk accumulates"]
+
+    memory["Shared operational memory"]
+    rights["Explicit decision rights"]
+    paths["Defined escalation paths"]
+    continuity["Continuity no longer depends on one person"]
+    resilience["More resilient execution"]
+
+    demand --> few --> unavailable --> unclear --> delay --> risk
+    unclear --> variance --> risk
+    risk --> memory --> rights --> paths --> continuity --> resilience

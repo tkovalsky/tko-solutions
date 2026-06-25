@@ -1,0 +1,23 @@
+# Prior Auth Waiver State
+
+```mermaid
+flowchart LR
+    qualification["Qualification decision produced"]
+    relationships["Qualified provider and code relationships maintained"]
+    provider["Provider identifies service"]
+    eligibility["Eligibility and benefits verified"]
+    requirement["Authorization requirement identified"]
+    match["Provider and code checked against waiver eligibility"]
+    qualified{"Qualified combination?"}
+    notification["No PA required: create Advanced Notification"]
+    record["Operational record available downstream"]
+    claims["Claims adjudication continues"]
+    traditional["Traditional authorization review"]
+    decision["Approval or denial decision"]
+
+    qualification --> relationships
+    relationships --> match
+    provider --> eligibility --> requirement --> match --> qualified
+    qualified -->|Yes| notification --> record --> claims
+    qualified -->|No| traditional --> decision --> record
+```

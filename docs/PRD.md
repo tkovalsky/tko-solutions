@@ -1,5 +1,12 @@
 # Product Requirements Document: Human API Risk Assessment
 
+> **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
+> diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers are
+> the **Operational Recovery Assessment** and the **Prior Authorization Operational Assessment**
+> (see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md)). Retained as assessment
+> methodology / IP and TIF seed content; the "product" framing below describes the assessment
+> capability, not a separate Human API product.
+
 ## Product Definition
 
 Human API Risk Assessment is a diagnostic and advisory offering that identifies operational dependency on individuals who function as memory, routing, escalation, decision translation, and institutional knowledge layers for the organization.

@@ -1,5 +1,12 @@
 # Human API Risk Assessment Framework
 
+> **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
+> diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers are
+> the **Operational Recovery Assessment** and the **Prior Authorization Operational Assessment**
+> (see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md)). This scoring model is
+> retained as the **knowledge-concentration / dependency sub-module** of the Operational Recovery
+> Assessment — one of its evaluation dimensions, not a separate scored product.
+
 ## Framework Overview
 
 The framework has five stages:

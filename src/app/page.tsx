@@ -52,17 +52,24 @@ export default function HomePage() {
               description="Healthcare is the primary market wedge because the work is complex, regulated, cross-functional, and full of human API dependency."
             />
             <ul className="mt-6 space-y-2 text-base leading-7 text-muted">
-              <li>Prior Authorization</li>
+              <li>
+                <Link
+                  href="/services/prior-authorization-assessment"
+                  className="font-medium text-foreground hover:text-primary hover:underline"
+                >
+                  Prior Authorization
+                </Link>
+              </li>
               <li>Utilization Management</li>
               <li>Administrative Burden</li>
               <li>AI Adoption</li>
               <li>Transformation Recovery</li>
             </ul>
             <Link
-              href="/services/recovery-assessment"
+              href="/services/prior-authorization-assessment"
               className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
             >
-              Start with the assessment
+              Start with the Prior Authorization assessment
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>

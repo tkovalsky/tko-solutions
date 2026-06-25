@@ -1,5 +1,11 @@
 # Roadmap: Human API Risk Assessment
 
+> **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
+> diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers are
+> the **Operational Recovery Assessment** and the **Prior Authorization Operational Assessment**
+> (see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md)). Read the sequencing below
+> as roadmap input for those assessments, not for a separate Human API product.
+
 ## Roadmap Principle
 
 This roadmap separates current reality, hypothesis, validation work, and possible future software. The immediate objective is a coherent advisory offering, not application development.

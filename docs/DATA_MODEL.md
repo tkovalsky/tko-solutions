@@ -1,5 +1,11 @@
 # Logical Data Model: Human API Risk Assessment
 
+> **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
+> diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers are
+> the **Operational Recovery Assessment** and the **Prior Authorization Operational Assessment**
+> (see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md)). `Human API` is one entity
+> in this assessment-delivery model — a dependency/finding node, not the product.
+
 ## Purpose
 
 This document defines a future-state logical data model for Human API Risk Assessment. It is conceptual only. It does not define tables, fields, APIs, schemas, storage, infrastructure, or implementation.

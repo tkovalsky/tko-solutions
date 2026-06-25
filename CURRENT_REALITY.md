@@ -187,6 +187,21 @@ Lead externally with:
 - Operational Visibility
 - Transformation Recovery
 
+### Diagnostic Lens — Human API Dependency (a finding type, not an offer)
+
+"Human API" is a **diagnostic lens and finding type**, not a product, offer, separate
+assessment, or pricing tier. It names a person who has become the undocumented integration
+layer between teams, systems, decisions, approvals, or workflows — for example, the one
+manager everyone calls because no one knows how a process actually works, the analyst who
+manually reconciles data between systems, the operations lead who owns all the exceptions,
+or the PA specialist who knows payer-specific rules that exist nowhere else.
+
+Treat Human API dependency as one possible **output** of an assessment — a dependency
+pattern, risk indicator, and knowledge-concentration signal — surfaced alongside the other
+evaluation dimensions below. It never becomes the thing the customer buys. The customer buys
+the **Operational Recovery Assessment** (and, in healthcare, the **Prior Authorization
+Operational Assessment**).
+
 ---
 
 ## Service Architecture
@@ -195,6 +210,7 @@ Lead externally with:
 
 - **Duration:** 1 week
 - **Price:** $5K–$8K
+- **Evaluation dimensions:** workflow visibility · ownership clarity · process adherence · decision latency · reporting quality · automation opportunities · AI readiness · knowledge concentration (incl. Human API dependency as a finding).
 - **Deliverables:** workflow map · bottleneck analysis · dependency analysis · AI readiness assessment · operational risk assessment · executive briefing
 - **Purpose:** Low-friction entry point.
 
@@ -321,12 +337,31 @@ Evidence:
 
 ---
 
+## Future State
+
+The 90-day focus is proof and revenue (above). The future state TKO builds toward adds an
+internal **operational knowledge engine** — the TKO Intelligence Factory (TIF) — that converts
+captured experience into reusable intellectual property and revenue assets: articles, case
+studies, assessment instruments, diagnostic content, and consulting offers, for TKO and
+RachelDelray. **TIF is internal tooling, not a product TKO sells.**
+
+The build path to this future state is defined in
+[`ENGINEERING_BACKLOG.md`](ENGINEERING_BACKLOG.md); the authoritative data model is in
+[`docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md`](docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md), and the
+component spec is [`TKO_INTELLIGENCE_FACTORY_PRD.md`](TKO_INTELLIGENCE_FACTORY_PRD.md).
+
+---
+
 ## Strategic Constraint
 
-For the next 90 days:
+For the next 90 days, the GTM business optimizes for proof and revenue:
 
-- Build proof. Not software.
+- Build proof. Not client-facing software or platforms.
 - Publish evidence. Not frameworks.
 - Sell assessments. Not platforms.
 
-The software already demonstrates the capability. The market now needs to see it.
+"Not software" means TKO does not build or sell a **client-facing** platform or SaaS product.
+It does **not** prohibit the internal TIF tooling above: TIF is the sanctioned engineering path
+precisely because it *produces* the proof, content, and assessment assets this constraint
+demands. The consulting capability is already demonstrated (RachelOS); the market now needs to
+see it.
