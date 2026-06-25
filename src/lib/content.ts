@@ -1,23 +1,23 @@
 export const problems = [
   {
-    title: "Data Without Decisions",
+    title: "AI Budget Without Operating Clarity",
     description:
-      "Dashboards, CRMs, reports, and spreadsheets exist, but leaders still cannot see what matters most or what decision is needed next.",
+      "Leaders have budget for AI, automation, or modernization, but not a clear view of which workflow problem deserves spend first.",
   },
   {
-    title: "Attention Gaps",
+    title: "Pilots That Do Not Change Work",
     description:
-      "The people, customers, cases, accounts, or workflows that need attention are discovered too late or only through manual follow-up.",
+      "Demos look promising, but the output never becomes trusted work because decision rights, exception handling, and approval paths were not designed.",
   },
   {
-    title: "Decision Latency",
+    title: "Human API Dependence",
     description:
-      "Work waits because facts, authority, escalation rules, or the trusted next action are unclear.",
+      "Critical knowledge lives in a few key people. When they are overloaded, unavailable, or leave, execution slows down.",
   },
   {
-    title: "Institutional Knowledge Loss",
+    title: "Dashboards Without Judgment",
     description:
-      "Critical context lives in people's heads, inboxes, meetings, and side documents instead of a system the organization can trust.",
+      "Reports show activity and status, but they do not tell teams what matters most, what is at risk, or what action should happen next.",
   },
   {
     title: "Workflow Friction",
@@ -35,9 +35,9 @@ export const problems = [
       "Work crosses teams, vendors, systems, and business units without a shared layer that shows current state and required action.",
   },
   {
-    title: "Operational Intelligence Design",
+    title: "Spend Prioritization",
     description:
-      "Scattered signals need to become governed facts, visible state, trusted next actions, human approval, and measured outcomes.",
+      "The expensive risk is not choosing the wrong model. It is funding tool work before the operating problem, control model, and next action are understood.",
   },
 ];
 
@@ -51,7 +51,17 @@ export const truthFramework = [
   "How is success measured?",
 ];
 
-export const systemFlow = ["Signals", "Memory", "Facts", "State", "Action", "Outcome"];
+export const systemFlow = [
+  "Signals",
+  "Memory",
+  "Facts",
+  "State",
+  "Priority",
+  "Recommendation",
+  "Human Approval",
+  "Action",
+  "Outcome",
+];
 
 export const operatingFramework = [
   {
@@ -103,37 +113,85 @@ export const founderCredibility = [
 
 export const services = [
   {
+    slug: "recovery-assessment",
+    title: "Operational Recovery Assessment",
+    shortTitle: "Assessment",
+    price: "$5K-$8K",
+    duration: "1 week",
+    entry: "Low-friction entry point",
+    summary:
+      "A one-week assessment for leaders who need fast clarity on where AI, automation, or workflow spend should go next.",
+    overview:
+      "The Operational Recovery Assessment is a fixed-scope one-week engagement for teams with budget pressure, stalled work, or an AI initiative that needs operational grounding. It maps the workflow, identifies bottlenecks and key-person dependencies, assesses AI readiness, and gives leadership a clear next move.",
+    outcomes: [
+      "Evidence-based view of the top places work stalls.",
+      "Identification of key-person dependency and the risk it creates.",
+      "Honest read on where AI can safely help and where it cannot yet.",
+      "Single highest-leverage next move before larger spend is committed.",
+      "Clear path to stop, deepen into a Diagnostic, or move toward a focused build.",
+    ],
+    process: [
+      "Confirm the trigger, workflow area, sponsor, and assessment scope.",
+      "Review existing workflow artifacts, reports, dashboards, and operating signals.",
+      "Interview the people closest to the stalled work.",
+      "Map bottlenecks, dependencies, AI readiness, and operational risk.",
+      "Deliver the executive briefing and recommended next move.",
+    ],
+    deliverables: [
+      "Workflow map",
+      "Bottleneck analysis",
+      "Dependency analysis",
+      "AI readiness assessment",
+      "Operational risk assessment",
+      "Executive briefing",
+    ],
+    faqs: [
+      {
+        q: "When is the Assessment enough?",
+        a: "It is enough when leadership needs a fast, fixed-scope view of the most likely stall, dependency, or AI spend risk before choosing the next move.",
+      },
+      {
+        q: "How is this different from the Diagnostic?",
+        a: "The Assessment is a one-week triage. The Diagnostic is deeper evidence work across stakeholder interviews, governance, escalation, operating model, and a 90-day roadmap.",
+      },
+      {
+        q: "Is this an AI tool recommendation?",
+        a: "No. The Assessment determines where AI can safely help inside the workflow and where the operating model needs to be fixed first.",
+      },
+    ],
+  },
+  {
     slug: "diagnostic",
-    title: "Operational Diagnostic",
+    title: "Operational Truth Diagnostic",
     shortTitle: "Diagnostic",
-    price: "Starting at $15K",
+    price: "$15K-$30K",
     duration: "2-3 weeks",
     entry: "Primary entry point",
     summary:
-      "A focused engagement for leaders who need to find where work stalls, where decisions break down, and which fixes matter first.",
+      "A fixed-scope diagnostic for Director+ leaders who have AI or modernization budget and need to know where it should go first.",
     overview:
-      "The Operational Diagnostic studies one or two workflow areas where the organization already has data, tools, meetings, and reports but still lacks a trusted decision system. It identifies where work stalls, where ownership breaks down, where AI or automation could help, and what should happen next.",
+      "The Operational Truth Diagnostic studies one or two workflow areas where the organization already has data, tools, meetings, reports, and AI interest but still lacks a trusted decision system. It identifies where work stalls, where ownership breaks down, where AI can safely help, and what should happen next before larger spend is committed.",
     outcomes: [
       "Clear view of where work stalls, why decisions slow down, and what friction is costing the team.",
       "Shared fact base across operations, technology, product, revenue, or governance leaders.",
-      "Prioritized list of workflow, decision, and visibility improvements.",
+      "Prioritized list of workflow, decision, AI, and visibility improvements.",
       "Implementation roadmap with owners, gates, and success criteria.",
-      "Decision clarity on whether to redesign workflow, build an Operational Intelligence System, improve governance, or stop low-value work.",
+      "Decision clarity on where to spend, where to wait, and where AI would create more risk than leverage.",
     ],
     process: [
-      "Confirm the operating problem, decision needed, workflows involved, and sponsor.",
+      "Confirm the operating problem, decision needed, AI or modernization budget context, workflows involved, and sponsor.",
       "Review workflow documentation, reporting, dashboards, backlogs, and operating artifacts.",
       "Interview up to 6-8 stakeholders close to the work.",
       "Map intended workflow against actual workflow and identify where decision support is missing.",
       "Identify stalls, visibility gaps, manual handoffs, decision latency, administrative burden, and AI opportunities.",
-      "Deliver the executive readout and implementation roadmap.",
+      "Deliver the executive readout, spend guidance, and implementation roadmap.",
     ],
     deliverables: [
       "Workflow assessment",
       "Decision analysis",
       "Operational bottleneck map",
       "Visibility and prioritization gap review",
-      "AI opportunity review",
+      "AI spend and control model",
       "Implementation roadmap",
       "Executive readout",
       "30 days of follow-up Q&A",
@@ -141,7 +199,7 @@ export const services = [
     faqs: [
       {
         q: "What makes this different from a consulting assessment?",
-        a: "The Diagnostic is not a broad strategy review. It is a constrained evidence exercise that identifies where work stalls, what is invisible, what decision logic is missing, and what action should happen next.",
+        a: "The Diagnostic is not a broad strategy review or tool recommendation exercise. It is a constrained evidence exercise that identifies where work stalls, what is invisible, what decision logic is missing, and what action should happen next.",
       },
       {
         q: "Do we need clean data before starting?",
@@ -149,7 +207,7 @@ export const services = [
       },
       {
         q: "Do we need an AI initiative?",
-        a: "No. AI is examined only where it can reduce friction, improve decision support, or support human-approved workflows. The core problem is operational decision-making.",
+        a: "No. Many buyers arrive with AI budget or AI pressure, but the Diagnostic starts with operational truth. AI is examined only where it can reduce friction, improve decision support, or support human-approved workflows.",
       },
       {
         q: "What is not included?",
@@ -159,15 +217,15 @@ export const services = [
   },
   {
     slug: "operating-system-build",
-    title: "Operational Intelligence System Build",
+    title: "Decision Layer Build Sprint",
     shortTitle: "Build",
-    price: "$50K-$100K",
-    duration: "8-12 weeks",
+    price: "$45K-$150K",
+    duration: "6-12 weeks",
     entry: "Downstream conversion offer",
     summary:
-      "Design and implementation support for the decision layer between data and action.",
+      "Design and implementation support for the operating layer that turns workflow signals into governed next action.",
     overview:
-      "The Build converts diagnostic findings into an Operational Intelligence System: the layer that captures operational memory, identifies priorities, surfaces who or what needs attention, recommends trusted next actions, and keeps humans in control.",
+      "The Build converts diagnostic findings into a decision layer: the operating system that captures memory, resolves facts, identifies priorities, recommends trusted next actions, and keeps humans in control of AI-assisted work.",
     outcomes: [
       "Working decision layer for one or two workflow areas.",
       "Team workflow designed around prioritization, approval, and action.",
@@ -204,7 +262,7 @@ export const services = [
       },
       {
         q: "Where does AI fit?",
-        a: "AI can extract facts, draft recommendations, or reduce burden only where governance and human approval are designed into the workflow.",
+        a: "AI can extract facts, draft recommendations, or reduce burden only where governance, exception handling, and human approval are designed into the workflow.",
       },
     ],
   },
@@ -295,7 +353,7 @@ export const caseStudies = [
     situation:
       "The business managed 100+ relationships across fragmented information, inconsistent follow-up, and knowledge trapped in one person's head.",
     truth:
-      "The invisible failure was the gap between available relationship signals and a trusted next action. Information existed, but priorities, attention, and decision logic were not operationalized.",
+      "The invisible failure was the human API pattern: available relationship signals existed, but priority, timing, missing context, and next action still depended on one person.",
     system:
       "TKO built an Operational Intelligence System that captured relationship knowledge, preserved institutional memory, surfaced priorities, recommended actions, and supported execution with human-approved AI.",
     outcome:
@@ -305,8 +363,8 @@ export const caseStudies = [
       "Human approval remains part of the workflow before AI-assisted outreach is used.",
       "Operational outcomes are stated without inflated revenue claims or unverifiable metrics.",
     ],
-    relatedProblems: ["Data Without Decisions", "Attention Gaps", "Operational Intelligence Design"],
-    relatedService: "Operational Intelligence System Build",
+    relatedProblems: ["Human API Dependence", "Dashboards Without Judgment", "Spend Prioritization"],
+    relatedService: "Decision Layer Build Sprint",
   },
   {
     slug: "prior-authorization-modernization",
@@ -322,18 +380,18 @@ export const caseStudies = [
     system:
       "Designed machine-assisted prior authorization workflow tiers, compliance integration, audit trail, exception handling, and adoption model.",
     outcome:
-      "Workflow modernization supported clearer review tiers, auditability, exception handling, and more practical AI adoption. Specific commercial metrics remain gated.",
+      "Workflow modernization supported clearer review tiers, auditability, exception handling, and more practical AI adoption.",
     evidence: [
-      "Resume-cited metrics pending founder confirmation of publishability.",
-      "Deep functional knowledge of CMS prior authorization requirements and payer/provider workflow complexity.",
-      "Named client and internal documentation are gated.",
+      "Healthcare operating experience across prior authorization, utilization management, compliance logic, and payer/provider workflow complexity.",
+      "Machine-assisted review was framed around workflow tiers, human escalation, audit trail, and exception handling.",
+      "No client names or unverifiable commercial metrics are published.",
     ],
     relatedProblems: ["Workflow Friction", "Execution Visibility Failure", "AI Without Operational Control"],
-    relatedService: "Operational Diagnostic",
+    relatedService: "Operational Truth Diagnostic",
   },
   {
     slug: "enterprise-care-management-modernization",
-    title: "Enterprise Care Management Modernization",
+    title: "Enterprise Program Recovery",
     industry: "Healthcare",
     proofLevel: "Anonymized enterprise proof",
     problem:
@@ -345,14 +403,14 @@ export const caseStudies = [
     system:
       "Led modernization strategy, dependency risk management, cross-functional coordination, executive visibility, and operating cadence design across the scope.",
     outcome:
-      "Program risk was managed across many application areas with stronger dependency visibility and executive confidence. Specific delivery metrics are gated.",
+      "Program risk was managed across many application areas with stronger dependency visibility, operating cadence, and executive confidence.",
     evidence: [
-      "Resume documentation of program scope and scale.",
+      "Program scope included claims, care management, eligibility, provider operations, and clinical workflow dependencies.",
       "Functional knowledge of claims, care management, eligibility, and provider operations.",
-      "Named organization and detailed milestones are gated.",
+      "No client names or unverifiable delivery metrics are published.",
     ],
-    relatedProblems: ["Execution Visibility Failure", "Workflow Friction", "Decision Latency"],
-    relatedService: "Operational Diagnostic",
+    relatedProblems: ["Execution Visibility Failure", "Workflow Friction", "Human API Dependence"],
+    relatedService: "Operational Truth Diagnostic",
   },
   {
     slug: "healthcare-interoperability-platform",
@@ -368,14 +426,14 @@ export const caseStudies = [
     system:
       "Defined requirements and functional specifications for scalable data exchange, compliance integration, access control, standardized onboarding, and delivery coordination.",
     outcome:
-      "The work supported process modernization, clearer integration workflows, and stronger governance across healthcare operations. Specific delivery metrics remain gated.",
+      "The work supported process modernization, clearer integration workflows, and stronger governance across healthcare operations.",
     evidence: [
-      "Resume-cited metrics pending confirmation.",
       "Experience with CMS requirements and healthcare data exchange.",
-      "Named client, artifacts, and internal implementation details are gated.",
+      "Requirements and operating model work connected technical exchange to onboarding, access control, auditability, and governance.",
+      "No client names or unverifiable implementation metrics are published.",
     ],
-    relatedProblems: ["Operational Intelligence Design", "Workflow Friction", "Execution Visibility Failure"],
-    relatedService: "Operational Diagnostic",
+    relatedProblems: ["Spend Prioritization", "Workflow Friction", "Execution Visibility Failure"],
+    relatedService: "Operational Truth Diagnostic",
   },
 ];
 

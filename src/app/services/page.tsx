@@ -9,7 +9,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "The TKO service ladder: Operational Diagnostic, Operational Intelligence System Build, and Fractional Operational Intelligence Advisor.",
+    "The TKO service ladder: Operational Recovery Assessment, Operational Truth Diagnostic, Decision Layer Build Sprint, and Fractional Operational Intelligence Advisor.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "TKO Services",
@@ -24,8 +24,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="One service ladder for turning operational data into action."
-        description="TKO offers a three-rung engagement model: Operational Diagnostic, Operational Intelligence System Build, and Fractional Operational Intelligence Advisor. The Diagnostic is the paid entry point. Build and advisory work follow when evidence shows what should happen next."
+        title="One service ladder for deciding where AI and workflow spend should go."
+        description="TKO offers a narrow engagement model: Recovery Assessment for fast spend clarity, Operational Truth Diagnostic for deeper evidence, Decision Layer Build Sprint for implementation, and Fractional Advisor for ongoing governance."
       />
       <Section>
         <ServiceCards />
@@ -34,9 +34,9 @@ export default function ServicesPage() {
         <SectionHeader
           eyebrow="Engagement Logic"
           title="The ladder is intentionally narrow."
-          description="Workflow orchestration, prioritization systems, operational memory, action queues, escalation detection, intelligence capture, and human-in-the-loop AI are capabilities inside the Build. They are not separate products."
+          description="Workflow orchestration, prioritization systems, operational memory, action queues, escalation detection, intelligence capture, and human-in-the-loop AI are capabilities inside the Build. They are not separate products or disconnected AI experiments."
         />
-        <div className="mt-12 grid gap-3 lg:grid-cols-3">
+        <div className="mt-12 grid gap-3 lg:grid-cols-4">
           {services.map((service, index) => (
             <div key={service.slug} className="border border-border bg-white p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">

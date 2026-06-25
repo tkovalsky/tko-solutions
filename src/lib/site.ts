@@ -2,8 +2,8 @@ export const site = {
   name: "TKO Solutions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tkosolutions.com",
   description:
-    "Operational Intelligence Systems that help organizations turn existing data into priorities, decisions, and action.",
-  cta: "Schedule a Diagnostic",
+    "Operational Truth Diagnostics and decision-layer builds for healthcare and enterprise leaders with AI or workflow budget.",
+  cta: "Book Discovery",
 };
 
 export function absoluteUrl(path = "/") {

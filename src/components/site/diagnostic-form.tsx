@@ -51,7 +51,7 @@ export function DiagnosticForm({
       <Field
         id="problem"
         index={1}
-        label="Where do people have data but still lack a clear decision or next action?"
+        label="What AI, automation, or workflow investment are you trying to decide how to spend?"
         textarea
         onValue={track}
       />
@@ -65,7 +65,7 @@ export function DiagnosticForm({
       <Field
         id="notWorking"
         index={3}
-        label="Who or what is not getting the right attention today?"
+        label="Where does work stall today, and who becomes the human workaround?"
         textarea
         onValue={track}
       />
@@ -89,7 +89,7 @@ export function DiagnosticForm({
       <Field
         id="decision"
         index={5}
-        label="What operational decision or execution improvement must happen in the next 90 days?"
+        label="What decision do you need leadership to make in the next 90 days?"
         textarea
         onValue={track}
       />
@@ -100,7 +100,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Schedule an Operational Diagnostic
+        Book a 30-Minute Discovery Call
       </Button>
     </form>
   );

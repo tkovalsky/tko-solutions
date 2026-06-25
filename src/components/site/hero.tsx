@@ -8,18 +8,18 @@ import { NetworkVisual } from "@/components/site/network-visual";
 const pillars = [
   {
     icon: Eye,
-    title: "See What Matters",
-    description: "Separate signal from noise.",
+    title: "Find The Stall",
+    description: "See where work actually breaks down.",
   },
   {
     icon: Compass,
-    title: "Know Who Needs Attention",
-    description: "Surface the right cases, accounts, and relationships.",
+    title: "Rank The Spend",
+    description: "Decide what is worth funding first.",
   },
   {
     icon: TrendingUp,
-    title: "Act With Confidence",
-    description: "Move from status review to next action.",
+    title: "Control The AI",
+    description: "Keep judgment and approval in the workflow.",
   },
 ];
 
@@ -37,32 +37,32 @@ export function Hero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-light">
-            Operational Intelligence
+            For Director+ AI and operations budget owners
           </p>
           <h1 className="mt-6 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            The Missing Layer Between Data and{" "}
-            <span className="text-primary-light">Action</span>
+            Know where AI should go before you{" "}
+            <span className="text-primary-light">spend</span>
           </h1>
           <p className="mt-7 max-w-[52ch] text-lg leading-8 text-white/75">
-            Most organizations collect information. Few can consistently turn
-            that information into priorities, decisions, and action. TKO builds
-            Operational Intelligence Systems that help teams identify what
-            matters, who needs attention, and what should happen next.
+            TKO helps healthcare and enterprise operations leaders diagnose
+            where complex work stalls, decide which AI or workflow investment is
+            worth funding, and build the governed decision layer that turns
+            fragmented information into trusted next action.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <LinkButton href="/contact">Schedule an Operational Diagnostic</LinkButton>
+            <LinkButton href="/contact">Book a 30-Minute Discovery Call</LinkButton>
             <LinkButton
-              href="/case-studies/from-crm-to-operating-system"
+              href="/selected-work/from-crm-to-operating-system"
               variant="secondary"
               className="border-white/25 text-white hover:border-white/50 hover:bg-white/5"
             >
-              See How RachelOS Works
+              See RachelOS Proof
             </LinkButton>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/75">
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              Data to decision
+              AI spend clarity
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
@@ -70,7 +70,7 @@ export function Hero() {
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-              Human-approved AI
+              Human-controlled AI
             </li>
           </ul>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4">

@@ -17,7 +17,7 @@ export function PageHero({
   title,
   description,
   primaryHref = "/contact",
-  primaryLabel = "Schedule an Operational Diagnostic",
+  primaryLabel = "Book a 30-Minute Discovery Call",
   secondaryHref,
   secondaryLabel,
   className,

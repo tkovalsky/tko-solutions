@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/site/cta-band";
 import { PageHero } from "@/components/site/page-hero";
-import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { industries, truthFramework } from "@/lib/content";
+import { truthFramework } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -30,34 +29,67 @@ const credibility = [
   "RachelOS as a real-world proof point",
 ];
 
+const phases = [
+  {
+    title: "Enterprise healthcare transformation",
+    description:
+      "Complex payer and provider workflows where operational burden, compliance, and adoption all matter.",
+  },
+  {
+    title: "Program recovery and governance",
+    description:
+      "Modernization work where teams can report progress while risk accumulates between dependencies.",
+  },
+  {
+    title: "Workflow modernization",
+    description:
+      "Prior authorization, care management, interoperability, escalation, and exception-heavy operating models.",
+  },
+  {
+    title: "Decision systems",
+    description:
+      "Operating models that turn signals, facts, state, priority, and human approval into trusted next action.",
+  },
+  {
+    title: "RachelOS",
+    description:
+      "A live system proving that relationship knowledge can become operational memory, priority logic, and human-approved AI action.",
+  },
+  {
+    title: "Operational intelligence",
+    description:
+      "The category conclusion: AI is useful when it is embedded in governed workflow and decision discipline.",
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
       <PageHero
         eyebrow="About"
-        title="I build systems that help organizations make better operational decisions."
-        description="TKO is led from an operator's point of view. The work starts with how decisions actually get made, where workflow breaks down, what knowledge is trapped in people, and what action should happen next."
+        title="The category came after the operating work."
+        description="TKO is led from an operator's point of view. The work starts with how decisions actually get made, where workflow breaks down, what knowledge is trapped in people, and where AI can help without taking control."
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
-            eyebrow="Operator First"
-            title="The credibility is operational before it is technical."
-            description="Todd's background spans enterprise healthcare leadership, modernization programs, workflow transformation, and operational execution. Technology matters, but only after the operating problem is understood."
+            eyebrow="Accumulation"
+            title="The story runs from healthcare operating complexity to live decision systems."
+            description="Operational intelligence is not the starting claim. It is the conclusion earned from years of modernization, recovery, workflow, governance, and product-building work."
           />
-          <div className="grid gap-3 sm:grid-cols-2">
-            {industries.map((industry) => (
-              <Card key={industry.title}>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
-                  {industry.priority}
-                </p>
-                <h2 className="mt-5 text-xl font-semibold">{industry.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-muted">
-                  {industry.description}
-                </p>
-              </Card>
+          <ol className="grid gap-3">
+            {phases.map((phase, index) => (
+              <li key={phase.title} className="grid gap-5 border border-border p-5 sm:grid-cols-[4rem_1fr]">
+                <span className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h2 className="text-xl font-semibold">{phase.title}</h2>
+                  <p className="mt-2 text-sm leading-6 text-muted">{phase.description}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </Section>
       <Section className="bg-surface">

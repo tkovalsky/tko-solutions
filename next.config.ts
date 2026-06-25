@@ -7,7 +7,27 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/case-studies/racheldelray-operating-system",
-        destination: "/case-studies/from-crm-to-operating-system",
+        destination: "/selected-work/from-crm-to-operating-system",
+        permanent: true,
+      },
+      {
+        source: "/case-studies",
+        destination: "/selected-work",
+        permanent: true,
+      },
+      {
+        source: "/case-studies/:slug",
+        destination: "/selected-work/:slug",
+        permanent: true,
+      },
+      {
+        source: "/industries",
+        destination: "/selected-work",
+        permanent: true,
+      },
+      {
+        source: "/insights",
+        destination: "/selected-work",
         permanent: true,
       },
     ];

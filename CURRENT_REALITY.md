@@ -2,7 +2,7 @@
 
 **Version:** 2.0
 **Status:** Baseline Strategy & Execution Document (authoritative `CURRENT_REALITY.md`)
-**Last Updated:** 2026-06-24
+**Last Updated:** 2026-06-25
 
 > This document reconciles the healthcare history, RachelOS, CRE Intelligence, the
 > capability audits in [`docs/capability-audit/`](docs/capability-audit/), and the
@@ -41,6 +41,15 @@ When those people become unavailable, overloaded, or leave, execution degrades r
 
 TKO designs and builds **Operational Knowledge Systems** that transform fragmented
 information and institutional knowledge into governed, actionable operating systems.
+
+The current public-site buyer lens is:
+
+- Director+ healthcare, operations, transformation, product, implementation, customer
+  success, or digital leaders
+- Existing AI, automation, workflow, or modernization budget
+- Pressure to spend, but uncertainty about where AI will actually improve work
+- Need for a senior operator-builder who can diagnose the operating truth before larger
+  spend is committed
 
 ---
 
@@ -232,13 +241,12 @@ Evidence:
 
 ### Homepage Order
 
-1. Healthcare Workflow Problems
-2. Healthcare Experience
-3. RachelOS Evidence
-4. CRE Evidence
-5. Operational Knowledge System Pattern
-6. Services
-7. CTA
+1. Director+ AI/workflow spend problem
+2. Selected Work evidence
+3. RachelOS proof
+4. Operational Knowledge System pattern
+5. Services
+6. Discovery-call CTA
 
 ### Remove
 
@@ -250,6 +258,8 @@ Evidence:
 ### Add
 
 - Operational Recovery Assessment
+- `/selected-work` replacement for `/case-studies`
+- Discovery-call intake as the shared conversion path
 - RachelOS screenshots
 - Daily Digest screenshots
 - Queue screenshots

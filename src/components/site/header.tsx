@@ -5,9 +5,7 @@ import { site } from "@/lib/site";
 
 const navItems = [
   { href: "/services", label: "Services" },
-  { href: "/industries", label: "Industries" },
-  { href: "/case-studies", label: "Case Studies" },
-  { href: "/insights", label: "Insights" },
+  { href: "/selected-work", label: "Selected Work" },
   { href: "/about", label: "About" },
 ];
 
@@ -52,4 +50,3 @@ export function Header() {
     </header>
   );
 }
-

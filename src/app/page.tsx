@@ -5,7 +5,6 @@ import { CaseStudyCards, ServiceCards } from "@/components/site/cards";
 import { CtaBand } from "@/components/site/cta-band";
 import { Founder } from "@/components/site/founder";
 import { Hero } from "@/components/site/hero";
-import { IndustryPattern } from "@/components/site/industry-pattern";
 import { JsonLd } from "@/components/site/json-ld";
 import { OperatingFramework } from "@/components/site/operating-framework";
 import { ProblemGrid } from "@/components/site/problem-grid";
@@ -15,14 +14,14 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "The Missing Layer Between Data and Action",
   description:
-    "TKO Solutions builds Operational Intelligence Systems that help teams turn existing data into priorities, decisions, and trusted next actions.",
+    "TKO helps Director+ healthcare and enterprise operations leaders decide where AI and workflow spend should go, then build governed decision layers.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "The Missing Layer Between Data and Action",
     description:
-      "Most organizations collect information. TKO helps them identify what matters, who needs attention, and what should happen next.",
+      "For leaders with AI budgets and unclear spend paths: diagnose where complex work stalls, then build the governed decision layer.",
     url: absoluteUrl("/"),
   },
 };
@@ -37,7 +36,7 @@ export default function HomePage() {
           name: "TKO Solutions",
           url: absoluteUrl("/"),
           description:
-            "Operational Intelligence Systems that turn existing data into priorities, decisions, and action.",
+            "Operational Truth Diagnostics and decision-layer builds for healthcare and enterprise operations leaders with AI or workflow budget.",
         }}
       />
 
@@ -48,14 +47,14 @@ export default function HomePage() {
           <div>
             <SectionHeader
               eyebrow="The Business Problem"
-              title="Your organization has data. It lacks a decision system."
-              description="Dashboards show activity. CRMs store history. Reports summarize what happened. The missing layer is the one that tells leaders what matters, who needs attention, and what action should happen next."
+              title="Your organization has AI budget. It still may not know what to fix."
+              description="Most teams do not fail because they lack tools. They fail because work stalls between systems, meetings, dashboards, and a few key people. TKO starts by finding the workflow truth before larger AI spend is committed."
             />
             <Link
-              href="/industries"
+              href="/services/diagnostic"
               className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
             >
-              See where this shows up
+              See the diagnostic
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
@@ -63,12 +62,23 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <Section>
+        <SectionHeader
+          eyebrow="Selected Work"
+          title="The point of view is earned from work across healthcare, program recovery, and RachelOS."
+          description="The evidence starts with real operating problems: prior authorization complexity, enterprise dependency risk, interoperability governance, and a live relationship operating system that proves the pattern travels."
+        />
+        <div className="mt-12">
+          <CaseStudyCards />
+        </div>
+      </Section>
+
       <Section className="bg-surface">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
             eyebrow="Featured Proof"
-            title="RachelOS proves the decision-system problem in a live operating environment."
-            description="RachelOS is evidence that TKO has built the layer between relationship data and action in a live operating environment: operational memory, priority surfacing, action queues, and human-approved AI support."
+            title="RachelOS proves the human-API problem in a live operating environment."
+            description="RachelOS is evidence that TKO has built the layer between scattered signals and action: operational memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human-approved AI support."
           />
           <div className="border border-border bg-white p-7">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
@@ -83,13 +93,13 @@ export default function HomePage() {
               System
             </p>
             <p className="mt-3 text-base leading-7 text-muted">
-              TKO built an Operational Intelligence System that captures
+              TKO built a decision layer that captures
               relationship knowledge, preserves institutional memory, surfaces
               priorities, recommends actions, and supports execution with
               human-approved AI.
             </p>
             <Link
-              href="/case-studies/from-crm-to-operating-system"
+              href="/selected-work/from-crm-to-operating-system"
               className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
             >
               See how RachelOS works
@@ -126,31 +136,9 @@ export default function HomePage() {
 
       <Section className="bg-surface">
         <SectionHeader
-          eyebrow="Industries"
-          title="Different industries. The same gap between information and action."
-          description="Healthcare, Financial Services, Technology, and Private Equity all face the same operating problem when workflow complexity outruns decision visibility."
-        />
-        <div className="mt-12">
-          <IndustryPattern />
-        </div>
-      </Section>
-
-      <Section>
-        <SectionHeader
-          eyebrow="Proof"
-          title="RachelOS is featured proof. Enterprise work supports the pattern."
-          description="The case studies are sequenced to show the problem first, RachelOS as live proof second, and anonymized enterprise healthcare work as supporting credibility."
-        />
-        <div className="mt-12">
-          <CaseStudyCards />
-        </div>
-      </Section>
-
-      <Section className="bg-surface">
-        <SectionHeader
           eyebrow="Services"
-          title="Diagnose the decision gap. Then build or govern the system."
-          description="The Operational Diagnostic is the paid front door. Build and Fractional Advisor engagements follow when evidence shows what should be built, governed, or improved."
+          title="Diagnose where to spend. Then build or govern the system."
+          description="The Recovery Assessment gives fast spend clarity. The Operational Truth Diagnostic goes deeper when the workflow needs more evidence. Build and Fractional Advisor engagements follow when the next system or governance model is clear."
         />
         <div className="mt-12">
           <ServiceCards />
@@ -162,8 +150,8 @@ export default function HomePage() {
       </Section>
 
       <CtaBand
-        title="Data does not create decisions by itself."
-        description="TKO helps leadership teams identify what matters, who needs attention, and what action should happen next."
+        title="Do not spend the AI budget before the operating truth is visible."
+        description="TKO helps leadership teams identify where work stalls, where AI can safely help, and what action should happen next."
       />
     </>
   );

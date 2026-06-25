@@ -2,9 +2,9 @@ import Link from "next/link";
 import { Logo } from "@/components/site/logo";
 
 const footerLinks = [
+  { href: "/services/recovery-assessment", label: "Assessment" },
   { href: "/services/diagnostic", label: "Diagnostic" },
-  { href: "/case-studies", label: "Case Studies" },
-  { href: "/insights", label: "Insights" },
+  { href: "/selected-work", label: "Selected Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -16,8 +16,8 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Operational Intelligence Systems for organizations that have data but
-            need clearer priorities, decisions, and action.
+            Operational truth and decision-layer builds for leaders with AI or
+            workflow budget who need clearer priorities, governance, and action.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 md:justify-self-end">

@@ -5,7 +5,7 @@ import { caseStudies, services } from "@/lib/content";
 
 export function ServiceCards() {
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       {services.map((service) => (
         <Card key={service.slug} className="flex min-h-80 flex-col">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
@@ -53,10 +53,10 @@ export function CaseStudyCards() {
             {study.outcome}
           </p>
           <Link
-            href={`/case-studies/${study.slug}`}
+            href={`/selected-work/${study.slug}`}
             className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
           >
-            Read case study
+            View selected work
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </Card>
