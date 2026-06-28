@@ -8,6 +8,13 @@ Owner: Todd Kovalsky
 
 North star: This PRD builds toward the future state in [`CURRENT_REALITY.md`](CURRENT_REALITY.md). Data-model authority: [`docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md`](docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md) (see its §12 addendum for the v2 alignment).
 
+**Reality check (2026-06-28):** this document describes the speculative v2 Registry & Artifact
+Engine, which is **DEFERRED** per `GOVERNANCE.md` §2. What is actually built and live today is
+the narrow v0.1 Asset Production Spine plus the v0.2 Operator Console (EPIC 13 in
+`ENGINEERING_BACKLOG.md`): Evidence/Opportunity/Asset registries in Neon, an Asset Composer, a
+`/tif` console, a Capture Inbox (`/tif/inbox`), and a Content Inventory (`/tif/inventory`). Read
+this PRD as the long-range v2 reference, not the current state.
+
 Purpose:
 Create a structured operational knowledge system that captures experiences, extracts patterns, generates reusable intelligence assets, and powers TKO content, assessments, case studies, and consulting offers.
 

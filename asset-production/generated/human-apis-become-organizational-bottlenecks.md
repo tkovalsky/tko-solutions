@@ -11,6 +11,7 @@ title: "Human APIs Become Organizational Bottlenecks"
 slug: human-apis-become-organizational-bottlenecks
 type: insight
 asset_type: article
+business_unit: tko
 status: draft
 summary: >-
   When operational knowledge lives in a person instead of a system, that person becomes a single point of failure for the organization — a Human API.
@@ -20,6 +21,8 @@ evidence_basis: >-
 sources:
   - healthcare:ev-healthcare-human-api-dependency
   - rachelos:ev-rachelos-relationship-memory
+source_opportunity: null  # authored directly from a brief, predates the Asset Opportunity Registry
+voice: tko-advisory
 authority: /CURRENT_REALITY.md
 ---
 

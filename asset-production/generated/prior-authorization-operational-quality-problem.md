@@ -12,6 +12,7 @@ title: "Prior Authorization Is An Operational Quality Problem"
 slug: prior-authorization-operational-quality-problem
 type: offer
 asset_type: assessment
+business_unit: tko
 status: draft
 summary: >-
   Gold Card eligibility is not the problem. Operational quality — denial reduction, exception routing, dependency risk — is the problem Gold Card readiness is an output of.
@@ -21,6 +22,8 @@ evidence_basis: >-
 sources:
   - healthcare:ev-healthcare-pa-operational-burden
   - healthcare:ev-healthcare-human-api-dependency
+source_opportunity: null  # authored directly from a brief, predates the Asset Opportunity Registry
+voice: tko-advisory
 authority: /CURRENT_REALITY.md
 ---
 

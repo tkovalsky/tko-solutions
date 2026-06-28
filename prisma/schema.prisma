@@ -56,12 +56,14 @@ enum CaptureStatus {
   archived
 }
 
-// Capture Inbox (EPIC 11 TIF-1101): lightweight intake, ahead of a normalized Evidence record.
+// Capture Inbox (EPIC 11 TIF-1101 / TIF v0.2 Priority 1): lightweight intake, ahead of a
+// normalized Evidence record. Capture-only — no edit endpoint is implemented (TIF v0.2 P1).
 model CaptureItem {
   id           String        @id @default(cuid())
   slug         String        @unique
   title        String
-  note         String?
+  observation  String
+  tags         String[]      @default([])
   source       CaptureSource
   status       CaptureStatus @default(inbox)
   businessUnit BusinessUnit?
@@ -71,6 +73,27 @@ model CaptureItem {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+// Content Inventory (TIF v0.2 Priority 2 / EPIC 12 TIF-1201): a flat record of existing
+// intellectual property across tko-site, rachel-realestate, and cre-intelligence, captured
+// for awareness before producing more content. Not linked into Evidence/Opportunity/Asset
+// traceability — that mapping is a separate, future EPIC 12 deliverable.
+model ContentInventoryItem {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  title        String
+  location     String // path or route within its repo
+  repo         String // tko-site | rachel-realestate | cre-intelligence
+  assetType    String // freeform: broader than AssetType (e.g. service_page, guide, proof_asset)
+  businessUnit BusinessUnit
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([repo])
 }
 
 // Evidence Registry (TIF-604 / content/proof/*/evidence.yaml pattern, DB-backed).

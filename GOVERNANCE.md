@@ -106,6 +106,10 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
   only when it directly supports Rachel, CRE, or TKO asset production.
 - **Explicitly out of v0.1 (stays DEFERRED):** knowledge graph, vector search, agent framework,
   generic platform infrastructure.
+- **Built (2026-06-28):** Neon-backed Evidence/Opportunity/Asset registries, Asset Composer, and
+  the v0.1/v0.2 Operator Console (`/tif`, `/tif/inbox`, `/tif/inventory`) — see `ENGINEERING_BACKLOG.md`
+  EPIC 13. EPIC 13 Priority 3–5 (Asset Health, manual-edit-overwrite protection, deeper
+  traceability) are documented there as planned, not built.
 
 ### BACKLOG (real, not started)
 - Rachel case study as a polished sales asset.

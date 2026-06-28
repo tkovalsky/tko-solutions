@@ -12,6 +12,7 @@ title: "[Assessment title]"
 slug: [kebab-slug]
 type: offer
 asset_type: assessment
+business_unit: [rachel | cre | tko]
 status: draft
 summary: >-
   [What this assessment diagnoses and what the buyer receives.]
@@ -20,6 +21,8 @@ evidence_basis: >-
   organizations, or unverifiable outcomes. Patterns, not measured results.
 sources:
   - [domain:record-id]
+source_opportunity: [asset_opportunity id, or omit if authored directly from a brief]
+voice: [tko-advisory | rachelos-product | cre-intelligence]
 authority: /CURRENT_REALITY.md
 ---
 

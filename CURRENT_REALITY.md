@@ -360,6 +360,13 @@ Approval → Publish` flywheel (recorded as **EPIC 11 — Content Intelligence P
 `ENGINEERING_BACKLOG.md`) shared across Rachel Delray, CRE Intelligence, and TKO from one evidence
 base, with human approval still mandatory and nothing auto-published.
 
+**Built 2026-06-28:** the v0.1 spine is live in Neon (Evidence/Opportunity/Asset registries +
+Asset Composer), with a v0.2 Operator Console at `/tif` — read-only visibility, a Capture Inbox
+(`/tif/inbox`), and a 156-item Content Inventory (`/tif/inventory`) across `tko-site`,
+`rachel-realestate`, and `cre-intelligence`. See `ENGINEERING_BACKLOG.md` EPIC 13 for what's
+shipped versus still-planned (Asset Health, manual-edit-overwrite protection, deeper
+traceability).
+
 **Reclassified 2026-06-28:** the v0.1 spine is no longer deferred-behind-revenue. It is a
 **production accelerator** — a multiplier for the revenue work across Rachel / CRE / TKO (more
 published proof → more conversations → more pipeline). It is classified **SANCTIONED NEXT**: it may

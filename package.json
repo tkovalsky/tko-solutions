@@ -7,9 +7,12 @@
     "build": "prisma generate && next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "tif:push": "node --env-file=.env.local node_modules/.bin/prisma db push",
+    "tif:migrate": "node --env-file=.env.local node_modules/.bin/prisma migrate dev",
+    "tif:migrate:status": "node --env-file=.env.local node_modules/.bin/prisma migrate status",
+    "tif:migrate:deploy": "node --env-file=.env.local node_modules/.bin/prisma migrate deploy",
     "tif:seed": "node --env-file=.env.local scripts/tif/seed.mjs",
-    "tif:compose": "node --env-file=.env.local scripts/tif/compose-asset.mjs"
+    "tif:compose": "node --env-file=.env.local scripts/tif/compose-asset.mjs",
+    "tif:inventory": "node --env-file=.env.local scripts/tif/inventory-scan.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

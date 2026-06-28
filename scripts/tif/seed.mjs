@@ -11,7 +11,7 @@ const captureItems = [
   {
     slug: "market-signal-001",
     title: "Represented seller called Rachel despite existing representation",
-    note: "Seller already had a listing agent and still called Rachel for a second opinion before acting.",
+    observation: "Seller already had a listing agent and still called Rachel for a second opinion before acting.",
     source: "rachel",
     status: "promoted",
     businessUnit: "rachel",
@@ -19,7 +19,7 @@ const captureItems = [
   {
     slug: "inbox-buyer-strategy-citation",
     title: "Lead cited buyer strategy over listings",
-    note: "A buyer lead referenced strategy/positioning content, not property listings, as the reason for engaging.",
+    observation: "A buyer lead referenced strategy/positioning content, not property listings, as the reason for engaging.",
     source: "rachel",
     status: "promoted",
     businessUnit: "rachel",
@@ -27,7 +27,7 @@ const captureItems = [
   {
     slug: "inbox-lead-lost-job-to-ai",
     title: "Lead lost job twice to AI",
-    note: "Prospect conversation: lead described being displaced from a role twice by AI-driven changes.",
+    observation: "Prospect conversation: lead described being displaced from a role twice by AI-driven changes.",
     source: "conversation",
     status: "inbox",
     businessUnit: null,
@@ -35,7 +35,7 @@ const captureItems = [
   {
     slug: "inbox-ai-content-consumption",
     title: "Lead consumed AI-generated content Rachel did not author",
-    note: "A lead referenced content attributed to Rachel that Rachel had not personally written.",
+    observation: "A lead referenced content attributed to Rachel that Rachel had not personally written.",
     source: "rachel",
     status: "promoted",
     businessUnit: "rachel",
@@ -43,7 +43,7 @@ const captureItems = [
   {
     slug: "inbox-healthcare-workflow-dependency",
     title: "Healthcare workflow dependency on a single specialist",
-    note: "PA exception routing observed to depend on one person knowing payer-specific rules.",
+    observation: "PA exception routing observed to depend on one person knowing payer-specific rules.",
     source: "healthcare",
     status: "promoted",
     businessUnit: "tko",
@@ -51,7 +51,7 @@ const captureItems = [
   {
     slug: "inbox-cre-market-observation",
     title: "CRE market observation: reporting fragmented across sources",
-    note: "Market intelligence exists across multiple CRE sources but is not consolidated into reusable findings.",
+    observation: "Market intelligence exists across multiple CRE sources but is not consolidated into reusable findings.",
     source: "cre",
     status: "promoted",
     businessUnit: "cre",

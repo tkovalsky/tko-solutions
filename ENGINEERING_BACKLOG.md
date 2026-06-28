@@ -1137,6 +1137,16 @@ article, case-study, assessment, intelligence-report — plus the newly scoped `
 sections, optional sections, evidence requirements, and CTA requirements. Extend existing
 templates before authoring new ones.
 
+**Status (2026-06-28): 4 of 5 originally-scoped gaps authored.** `templates/landing-page.md`,
+`templates/comparison-guide.md`, and `templates/executive-brief.md` are now live, extending the
+existing four with the same comment-header + frontmatter + section convention (no new mechanism).
+`templates/one-pager.md` was added in addition to the original five (covers the "finalize
+one-page offers" deliverable under `GOVERNANCE.md` ACTIVE A1). `thought_piece` and `proof_asset`
+remain un-authored — still real gaps. All eight templates now also carry normalized frontmatter:
+`business_unit`, `source_opportunity`, `voice` (see `asset-production/METHOD.md` §2). A worked
+executive-brief example exists at
+`asset-production/generated/prior-authorization-is-a-decision-rights-problem.md`.
+
 ## TIF-1206 — Phase 6: Migration Strategy
 
 Per existing asset, assign a disposition: **Keep As-Is** (already aligned), **Normalize** (minor
@@ -1172,6 +1182,55 @@ what evidence supports it, where it should live, what template it should use, an
 should be kept, normalized, rewritten, decomposed, or archived — and a legacy asset can be
 migrated into the TIF asset model with traceability preserved. **Implementation of migration
 tooling is explicitly out of scope for this epic.**
+
+---
+
+# EPIC 13 — TIF OPERATOR CONSOLE v0.2 (OBSERVATION CAPTURE & CONTENT INVENTORY)
+
+> **Status (2026-06-28):** Priority 1 and Priority 2 **shipped**. Priority 3–5 below are
+> **planned, not implemented** — documented here per the standing-rule that new scope gets
+> recorded in the docs of record before (not instead of) building it. Do not build P3–5 until
+> separately instructed.
+>
+> Naming note: this is the *software* counterpart to EPIC 12's TIF v0.2 — EPIC 12 was the
+> markdown audit/analysis deliverable (`archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md`); EPIC 13
+> is the DB-backed Operator Console that implements TIF-1101 (Capture Inbox) and a Neon-backed
+> counterpart to TIF-1201 (Repository Content Inventory).
+
+## Shipped
+
+**Priority 1 — Capture Inbox.** `/tif/inbox` — a capture-only form (title, observation,
+business unit, source, tags; status defaults to `inbox`) writing to the `CaptureItem` model,
+plus a read-only list of everything captured. No edit endpoint exists. Schema: `CaptureItem.note`
+renamed to `observation` (data backfilled, not dropped) and `tags: String[]` added.
+
+**Priority 2 — Content Inventory.** `scripts/tif/inventory-scan.mjs` (`npm run tif:inventory`)
+walks `tko-site`, `rachel-realestate`, and `cre-intelligence` and upserts `ContentInventoryItem`
+rows (title, location, repo, assetType, businessUnit) — 156 items as of the first run. `/tif/inventory`
+renders them grouped by repo. Not linked into Evidence/Opportunity/Asset traceability — see EPIC 12
+TIF-1203/1204 for that mapping, which remains a separate, not-yet-built deliverable.
+
+## Planned, not implemented (do not build without explicit instruction)
+
+**Priority 3 — Asset Health.** Summary counts on the console: total Evidence/Opportunities/Assets,
+Unconverted Evidence (Evidence with zero linked Assets), Opportunities Without Assets (status
+still `opportunity`), Draft Assets, Published Assets. Read-only, no charts.
+
+**Priority 4 — Manual Edit Protection.** A confirmation dialog before "Regenerate Asset" warning
+that the action overwrites manual edits (see the Operator Console v0.1 finding: regenerating
+`why-buyers-choose-rachel-delray.md` reverted its hand-filled `business_unit`/`voice`/
+`source_opportunity` to template placeholders). No versioning, no approval engine — a confirm
+dialog is the minimum acceptable fix.
+
+**Priority 5 — Traceability Improvements.** Better in-console visibility of Evidence → Opportunity
+→ Asset counts and links than the v0.1 console's anchor-link approach. Read-only, no graph
+visualization.
+
+## Explicitly out of scope (unchanged from v0.1)
+
+Approval workflow, publishing workflow, email notifications, cron jobs, scheduled generation, AI
+generation, research agents, vector search, knowledge graph, framework registry, voice registry,
+diagram engine, workflow orchestration.
 
 ---
 

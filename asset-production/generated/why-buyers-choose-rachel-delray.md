@@ -11,6 +11,7 @@ title: "Why Buyers Choose Rachel Delray"
 slug: why-buyers-choose-rachel-delray
 type: insight
 asset_type: article
+business_unit: rachel
 status: draft
 summary: >-
   Buyers and sellers are not choosing Rachel for inventory access — they are choosing her judgment, even when they already have representation elsewhere.
@@ -22,6 +23,8 @@ sources:
   - rachelos:ev-buyer-strategy-citation
   - rachelos:ev-ai-content-consumption
   - rachelos:ev-rachelos-human-approved-ai
+source_opportunity: null  # authored directly from a brief, predates the Asset Opportunity Registry
+voice: rachelos-product
 authority: /CURRENT_REALITY.md
 ---
 

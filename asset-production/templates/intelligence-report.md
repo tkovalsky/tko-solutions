@@ -10,6 +10,7 @@ title: "[Report title — names the market and the signal]"
 slug: [kebab-slug]
 type: intelligence-report
 asset_type: intelligence-report
+business_unit: [rachel | cre | tko]
 status: draft
 period: "[reporting period / as-of date]"
 summary: >-
@@ -19,6 +20,8 @@ evidence_basis: >-
   separate from fact.
 sources:
   - [cre:record-id]
+source_opportunity: [asset_opportunity id, or omit if authored directly from a brief]
+voice: [tko-advisory | rachelos-product | cre-intelligence]
 authority: /CURRENT_REALITY.md
 ---
 

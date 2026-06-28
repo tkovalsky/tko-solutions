@@ -14,6 +14,13 @@
 # Standing claim guard (all records): cite only implemented code, migrations, and deployed
 #                  wiring; claim no business-outcome metrics; screenshots prove capability,
 #                  not results.
+# confidence:      high | medium | low — strength of the proof_ref (code/migration = high;
+#                  documented experience pattern with no artifact beyond the library = medium)
+# maturity:        validated | emerging — validated = cited into a published asset at least
+#                  once (the 8 records used in RACHELOS_FLAGSHIP_CASE_STUDY.md); emerging =
+#                  admitted evidence, allowed_use narrower (service-pages/deck), not yet cited
+# capture_source:  client_work | healthcare | rachel | cre | personal_observation | conversation
+# capture_status:  inbox | reviewed | promoted — promoted = live in this registry
 
 domain: rachelos
 library: ./RACHELOS_EVIDENCE_LIBRARY.md
@@ -28,6 +35,10 @@ records:
     framework_stage: Priority
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Code-backed priority layer. No volume or conversion metric implied."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted
 
   - id: relationship-memory
     observation: >-
@@ -39,6 +50,10 @@ records:
     framework_stage: Memory
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Proves memory can live in the system, not in a person. No outcome metric."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted
 
   - id: lead-facts-rie
     observation: >-
@@ -48,6 +63,10 @@ records:
     framework_stage: Facts
     allowed_use: [case-study, service-pages, deck]
     claim_guard: "Governed fact layer with provenance. Authority model is human > AI; state this as design, not measured accuracy."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted
 
   - id: journey-intelligence
     observation: >-
@@ -57,6 +76,10 @@ records:
     framework_stage: State
     allowed_use: [case-study, service-pages]
     claim_guard: "Deterministic state layer. No claim about predictive accuracy."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted
 
   - id: daily-action-engine
     observation: >-
@@ -67,6 +90,10 @@ records:
     framework_stage: Action
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Deployed and running daily — that cadence is the proof. No business result claimed."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted
 
   - id: human-approved-ai
     observation: >-
@@ -77,6 +104,10 @@ records:
     framework_stage: Human Approval
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "The defining differentiator — AI drafts/surfaces, people approve/act. Enforced in code, not promised."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted
 
   - id: outreach-intelligence
     observation: >-
@@ -87,6 +118,10 @@ records:
     framework_stage: Recommendation
     allowed_use: [case-study, service-pages, deck]
     claim_guard: "Recommendation with built-in safety and lifecycle governance. No send-rate metric."
+    confidence: high
+    maturity: emerging
+    capture_source: rachel
+    capture_status: promoted
 
   - id: content-recommendation
     observation: >-
@@ -96,6 +131,10 @@ records:
     framework_stage: Recommendation
     allowed_use: [service-pages]
     claim_guard: "Facts + state -> specific next asset. Supporting detail, not headline proof."
+    confidence: high
+    maturity: emerging
+    capture_source: rachel
+    capture_status: promoted
 
   - id: referral-intelligence
     observation: >-
@@ -105,6 +144,10 @@ records:
     framework_stage: Priority
     allowed_use: [service-pages, deck]
     claim_guard: "Captures value-leakage at workflow edges. No referral-value metric claimed."
+    confidence: high
+    maturity: emerging
+    capture_source: rachel
+    capture_status: promoted
 
   - id: intelligence-gaps
     observation: >-
@@ -115,6 +158,10 @@ records:
     framework_stage: Facts
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Rare differentiator — 'knows its blind spots.' Proven by code, no accuracy metric."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted
 
   - id: operational-visibility
     observation: >-
@@ -125,3 +172,7 @@ records:
     framework_stage: Outcome
     allowed_use: [case-study, assessment, service-pages, deck]
     claim_guard: "Proves 'trusted execution' via observability. Not a separate product/SKU."
+    confidence: high
+    maturity: validated
+    capture_source: rachel
+    capture_status: promoted

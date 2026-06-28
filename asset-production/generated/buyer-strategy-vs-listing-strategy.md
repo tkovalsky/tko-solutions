@@ -11,6 +11,7 @@ title: "Buyer Strategy vs Listing Strategy"
 slug: buyer-strategy-vs-listing-strategy
 type: insight
 asset_type: article
+business_unit: rachel
 status: draft
 summary: >-
   Buyers increasingly choose an agent for strategic judgment about the deal, not access to listings they can already see themselves.
@@ -20,6 +21,8 @@ evidence_basis: >-
 sources:
   - rachelos:ev-buyer-strategy-citation
   - rachelos:market-signal-001
+source_opportunity: null  # authored directly from a brief, predates the Asset Opportunity Registry
+voice: rachelos-product
 authority: /CURRENT_REALITY.md
 ---
 

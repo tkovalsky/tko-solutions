@@ -15,6 +15,12 @@
 #
 # framework_stage: TKO operating spine — the stage of the decision layer the experience argues for.
 # allowed_use:     assessment | advisory-background | article | deck
+# confidence:      high | medium | low — strength of the proof_ref (code/migration = high;
+#                  documented experience pattern with no artifact beyond the library = medium)
+# maturity:        validated | emerging — validated = cited into a published asset at least
+#                  once; emerging = admitted evidence, not yet used
+# capture_source:  client_work | healthcare | rachel | cre | personal_observation | conversation
+# capture_status:  inbox | reviewed | promoted — promoted = live in this registry
 # Diagrams: ./diagrams/*.mmd (current-state and pattern diagrams, no metrics).
 
 domain: healthcare
@@ -30,6 +36,10 @@ records:
     framework_stage: Facts
     allowed_use: [assessment, advisory-background, article, deck]
     claim_guard: "Advisory experience; pattern not metric; no orgs named; PA is decision-latency, not a model-quality problem."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: prior-auth-exception-routing
     observation: >-
@@ -40,6 +50,10 @@ records:
     framework_stage: Human Approval
     allowed_use: [assessment, advisory-background, article]
     claim_guard: "Advisory experience; pattern not metric; no orgs named."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: um-prioritization
     observation: >-
@@ -50,6 +64,10 @@ records:
     framework_stage: Priority
     allowed_use: [assessment, advisory-background, article, deck]
     claim_guard: "Advisory experience; pattern not metric; no orgs named. Direct analog to the RachelOS canonical queue."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: um-missing-information
     observation: >-
@@ -59,6 +77,10 @@ records:
     framework_stage: Facts
     allowed_use: [assessment, advisory-background, article]
     claim_guard: "Advisory experience; pattern not metric; no orgs named. Analog to RachelOS intelligence gaps."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: care-management-memory
     observation: >-
@@ -69,6 +91,10 @@ records:
     framework_stage: Memory
     allowed_use: [assessment, advisory-background, article, deck]
     claim_guard: "Advisory experience; pattern not metric; no orgs named, no member detail."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: care-rising-risk
     observation: >-
@@ -78,6 +104,10 @@ records:
     framework_stage: Priority
     allowed_use: [assessment, advisory-background, article]
     claim_guard: "Advisory experience; pattern not metric; no orgs named."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: interoperability-provenance
     observation: >-
@@ -88,6 +118,10 @@ records:
     framework_stage: Facts
     allowed_use: [assessment, advisory-background, article]
     claim_guard: "Advisory experience; pattern not metric; no orgs named. 'Information != understanding != decision.'"
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: regulatory-auditability
     observation: >-
@@ -98,6 +132,10 @@ records:
     framework_stage: Human Approval
     allowed_use: [assessment, advisory-background, article, deck]
     claim_guard: "Advisory experience; pattern not metric; no orgs named. Argues human review must be designed in, not bolted on."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: workflow-modernization-operating-model
     observation: >-
@@ -108,6 +146,10 @@ records:
     framework_stage: State
     allowed_use: [assessment, advisory-background, article, deck]
     claim_guard: "Advisory experience; pattern not metric; no orgs named. The 'Transformation Recovery' wedge."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: transformation-dashboard-green
     observation: >-
@@ -118,6 +160,10 @@ records:
     framework_stage: Outcome
     allowed_use: [assessment, advisory-background, article, deck]
     claim_guard: "Advisory experience; pattern not metric; no orgs named. Strongest enterprise narrative — human-API failure at program scale."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted
 
   - id: human-api-root-pattern
     observation: >-
@@ -128,3 +174,7 @@ records:
     framework_stage: Memory
     allowed_use: [assessment, advisory-background, article, deck]
     claim_guard: "Advisory experience; the through-line for all healthcare proof. Pattern not metric; no orgs named."
+    confidence: medium
+    maturity: emerging
+    capture_source: healthcare
+    capture_status: promoted

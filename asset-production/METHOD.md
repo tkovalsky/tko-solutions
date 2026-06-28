@@ -35,7 +35,7 @@ operating-framework `framework_stage`, but it travels through the production cha
 | **Recommendation** | What the reader should do about the finding. The shape depends on asset type: the offer (case study / assessment), the action (intelligence report), or the thesis-action (article). | written by Claude into the asset |
 | **Asset** | The published artifact in its house style, produced by filling a template. | `templates/*.md` → an output home |
 
-**One pipeline, four output skins.** The five stages are identical for all four asset types.
+**One pipeline, many output skins.** The five stages are identical for every asset type.
 Only the template and the framing of the Recommendation change.
 
 | Asset type | Template | Recommendation frame | Output home |
@@ -44,6 +44,10 @@ Only the template and the framing of the Recommendation change.
 | Healthcare assessment | `templates/assessment.md` | remediation roadmap = the offer | `content/offers/` |
 | CRE intelligence report | `templates/intelligence-report.md` | action for owner / investor | `cre-intelligence` repo *(cross-repo)* |
 | Thought-leadership article | `templates/article.md` | what leaders should do | `src/content/insights/` |
+| Landing page | `templates/landing-page.md` | single primary CTA for a named segment | `src/content/landing-pages/` (rachel-realestate) or `content/offers/` (tko-site) |
+| Comparison guide | `templates/comparison-guide.md` | who fits which option | `src/content/guides/` (rachel-realestate); cross-repo for `cre-intelligence` |
+| Executive brief | `templates/executive-brief.md` | schedule the assessment | `content/offers/` |
+| One-pager | `templates/one-pager.md` | book a discovery call | `content/offers/` |
 
 ---
 
@@ -53,16 +57,29 @@ To produce any asset, a human writes **one** `briefs/<id>.brief.yaml` file and r
 this METHOD. The brief is the only control surface. Its fields:
 
 ```yaml
-id:           # kebab-case unique id for this asset
-asset_type:   # case-study | assessment | intelligence-report | article
-template:     # path to the template this asset fills
-status:       # lifecycle state (see §6)
-sources:      # evidence record ids consumed, as <domain>:<record-id>
-angle:        # the single controlling idea of the asset
-audience:     # who it is written for
-output:       # destination path for the finished asset
-constraints:  # explicit guardrails (claim guards, anti-slop notes) that apply to THIS asset
+id:                # kebab-case unique id for this asset
+asset_type:        # case-study | assessment | intelligence-report | article | landing-page |
+                    # comparison-guide | executive-brief | one-pager
+template:           # path to the template this asset fills
+status:             # lifecycle state (see §6)
+sources:            # evidence record ids consumed, as <domain>:<record-id>
+angle:              # the single controlling idea of the asset
+audience:           # who it is written for
+output:             # destination path for the finished asset
+constraints:        # explicit guardrails (claim guards, anti-slop notes) that apply to THIS asset
+business_unit:      # rachel | cre | tko — which proof domain the asset serves (TIF-1103 taxonomy)
+voice:              # tko-advisory | rachelos-product | cre-intelligence — house tone for this
+                    # asset. A plain per-asset field, not a Voice Registry (Voice Registry stays
+                    # DEFERRED per GOVERNANCE.md).
+source_opportunity: # the asset_opportunity id this asset was produced from, if one exists.
+                    # Omit for assets authored directly from a brief without going through the
+                    # Asset Opportunity Registry.
 ```
+
+Every generated asset's frontmatter carries `business_unit`, `voice`, and `source_opportunity` in
+addition to `sources` (the existing evidence-citation field — it already serves the role
+"source_evidence" would; no duplicate field was added). These three are plain frontmatter values
+filled per-asset; they do not require or imply a registry, config table, or new entity.
 
 A worked example is in [`briefs/example-rachelos-case-study.brief.yaml`](briefs/example-rachelos-case-study.brief.yaml).
 
@@ -80,6 +97,26 @@ captured screenshot/diagram, or a documented experience pattern in a proof libra
 - **No metric is asserted unless a `proof_ref` backs it.** No revenue, lead volume, conversion,
   ROI, adoption, percentage, dollar, or timeline figure may appear in an asset unless evidence
   proves it. The honest non-claim is itself a credibility asset — preserve it deliberately.
+
+### Evidence record fields (normalized)
+
+Every record in a `content/proof/<domain>/evidence.yaml` carries, in addition to `observation`,
+`proof_ref`, `framework_stage`, `allowed_use`, `claim_guard`, and (where applicable) `visual`:
+
+```yaml
+confidence:      # high | medium | low — strength of the proof_ref (code/migration = high;
+                 # documented experience pattern with no artifact beyond the library = medium)
+maturity:        # validated | emerging — validated = cited into a published asset at least
+                 # once; emerging = admitted evidence, not yet used
+capture_source:  # client_work | healthcare | rachel | cre | personal_observation | conversation
+                 # — same source vocabulary as the Capture Inbox (EPIC 11 TIF-1101)
+capture_status:  # inbox | reviewed | promoted — promoted means the record is live in this
+                 # registry; inbox/reviewed apply to not-yet-admitted candidates
+```
+
+These fields classify evidence already in the registry — they introduce no new entity, table, or
+mechanism; they reuse the Capture Inbox's existing source/status vocabulary so a future capture
+flow and the evidence registry stay consistent.
 
 ---
 

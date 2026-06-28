@@ -11,6 +11,7 @@ title: "Operational Intelligence vs Reporting"
 slug: operational-intelligence-vs-reporting
 type: insight
 asset_type: article
+business_unit: tko
 status: draft
 summary: >-
   Reporting tells you what happened; operational intelligence tells you what to do next. Most organizations have built the former and call it the latter.
@@ -20,6 +21,8 @@ evidence_basis: >-
 sources:
   - cre:ev-cre-intelligence-reporting
   - tko:ev-operational-intelligence-vs-reporting
+source_opportunity: null  # authored directly from a brief, predates the Asset Opportunity Registry
+voice: tko-advisory
 authority: /CURRENT_REALITY.md
 ---
 

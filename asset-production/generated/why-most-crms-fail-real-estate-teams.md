@@ -11,6 +11,7 @@ title: "Why Most CRMs Fail Real Estate Teams"
 slug: why-most-crms-fail-real-estate-teams
 type: insight
 asset_type: article
+business_unit: rachel
 status: draft
 summary: >-
   A CRM stores records; it does not decide who needs attention today and why. That gap is where most real estate teams lose the relationship.
@@ -20,6 +21,8 @@ evidence_basis: >-
 sources:
   - rachelos:ev-rachelos-canonical-queue
   - rachelos:ev-rachelos-relationship-memory
+source_opportunity: null  # authored directly from a brief, predates the Asset Opportunity Registry
+voice: rachelos-product
 authority: /CURRENT_REALITY.md
 ---
 

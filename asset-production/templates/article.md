@@ -11,6 +11,7 @@ title: "[Article title — states or implies the thesis]"
 slug: [kebab-slug]
 type: insight
 asset_type: article
+business_unit: [rachel | cre | tko]
 status: draft
 summary: >-
   [The thesis and why it matters, in 1–2 sentences.]
@@ -19,6 +20,8 @@ evidence_basis: >-
   metric without a resolving proof_ref; healthcare examples stay advisory, not named.
 sources:
   - [domain:record-id]
+source_opportunity: [asset_opportunity id, or omit if authored directly from a brief]
+voice: [tko-advisory | rachelos-product | cre-intelligence]
 authority: /CURRENT_REALITY.md
 ---
 

@@ -11,6 +11,7 @@ title: "[Asset title — names the operating pattern, not the product]"
 slug: [kebab-slug]
 type: selected-work
 asset_type: case-study
+business_unit: [rachel | cre | tko]
 status: draft
 summary: >-
   [2–4 sentence executive summary. Verifiable facts only.]
@@ -19,6 +20,8 @@ evidence_basis: >-
   asserted unless a proof_ref backs it.
 sources:
   - [domain:record-id]   # every record this asset draws on (the audit trail)
+source_opportunity: [asset_opportunity id, or omit if authored directly from a brief]
+voice: [tko-advisory | rachelos-product | cre-intelligence]
 authority: /CURRENT_REALITY.md
 ---
 
