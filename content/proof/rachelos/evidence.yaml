@@ -1,0 +1,127 @@
+# RachelOS Evidence Index
+#
+# Machine-citable companion to RACHELOS_EVIDENCE_LIBRARY.md. Each record is one citable
+# observation backed by a verifiable artifact in the rachel-realestate repo. Asset briefs
+# reference these by `rachelos:<id>`. See ../../../asset-production/METHOD.md for the rules.
+#
+# Source repo:     rachel-realestate (Next.js, Postgres via @/lib/db, Anthropic Claude)
+# Deployment fact: Vercel prod cron /api/cron/run-all daily at `0 11 * * *` (vercel.json);
+#                  59 SQL migrations; ~20K LOC in src/lib/leads/; 57 *.test.ts files;
+#                  live Anthropic (claude-haiku-4-5-20251001) via src/lib/ai/provider.ts.
+# framework_stage: TKO operating spine — Signals/Memory/Facts/State/Priority/Recommendation/
+#                  Human Approval/Action/Outcome.
+# allowed_use:     homepage | case-study | assessment | service-pages | deck | article
+# Standing claim guard (all records): cite only implemented code, migrations, and deployed
+#                  wiring; claim no business-outcome metrics; screenshots prove capability,
+#                  not results.
+
+domain: rachelos
+library: ./RACHELOS_EVIDENCE_LIBRARY.md
+
+records:
+  - id: canonical-queue
+    observation: >-
+      The morning no longer begins with reconstruction across four tools — one ranked,
+      freshness-classified list of who needs attention now and why, recomputed on every signal.
+    proof_ref: "rachel-realestate: src/lib/leads/canonicalQueue.ts, queueReadModel.ts, canonicalQueueRows.test.ts, src/app/ops/queue"
+    visual: content/proof/rachelos/01-canonical-queue.png.jpg
+    framework_stage: Priority
+    allowed_use: [homepage, case-study, assessment, service-pages, deck]
+    claim_guard: "Code-backed priority layer. No volume or conversion metric implied."
+
+  - id: relationship-memory
+    observation: >-
+      Knowledge that lived in one person's head became a persistent, timeline-based
+      per-relationship snapshot — situation, known facts, open questions — that survives
+      outside any individual.
+    proof_ref: "rachel-realestate: src/lib/leads/relationshipMemory.ts (+.test), migrations/055_relationship_memory.sql, migrations/042_relationship_updates.sql"
+    visual: "content/proof/rachelos/04-Relationship Memory detail.png"
+    framework_stage: Memory
+    allowed_use: [homepage, case-study, assessment, service-pages, deck]
+    claim_guard: "Proves memory can live in the system, not in a person. No outcome metric."
+
+  - id: lead-facts-rie
+    observation: >-
+      Unstructured notes, emails, and texts became governed, queryable facts with a
+      source-authority model where human updates supersede AI.
+    proof_ref: "rachel-realestate: src/lib/leads/rie.ts (+.test), migrations/045_lead_facts.sql, 046_lead_journey_state.sql, 044_lead_questions.sql"
+    framework_stage: Facts
+    allowed_use: [case-study, service-pages, deck]
+    claim_guard: "Governed fact layer with provenance. Authority model is human > AI; state this as design, not measured accuracy."
+
+  - id: journey-intelligence
+    observation: >-
+      Resolved facts roll into a current interpreted state via a deterministic
+      stage-to-recommendation map, where facts override stage.
+    proof_ref: "rachel-realestate: src/lib/leads/journeyIntelligence.ts, journeyView.ts (+.test), lifecycleState.ts, pipelineStage.ts"
+    framework_stage: State
+    allowed_use: [case-study, service-pages]
+    claim_guard: "Deterministic state layer. No claim about predictive accuracy."
+
+  - id: daily-action-engine
+    observation: >-
+      The whole book is operationalized into ONE daily email — today's focus, do-these-today,
+      next-up — composed by a deployed cron; it never emails the leads themselves.
+    proof_ref: "rachel-realestate: src/lib/leads/dailyActionEngine.ts (+.test), src/app/api/cron/daily-action, src/app/api/cron/run-all, vercel.json (`0 11 * * *`)"
+    visual: content/proof/rachelos/02-daily-digest-daily-action-engine.png
+    framework_stage: Action
+    allowed_use: [homepage, case-study, assessment, service-pages, deck]
+    claim_guard: "Deployed and running daily — that cadence is the proof. No business result claimed."
+
+  - id: human-approved-ai
+    observation: >-
+      AI drafts and recommendations wait in a dedicated operator queue ("Needs Rachel") for
+      human review before anything is sent.
+    proof_ref: "rachel-realestate: src/app/ops/needs-rachel, src/app/api/ops/needs-rachel/queue, src/app/api/ops/relationship-updates, approval-gated states in src/lib/leads/outreachDrafts.ts"
+    visual: content/proof/rachelos/03-human-approval-surface-needs-rachel.png
+    framework_stage: Human Approval
+    allowed_use: [homepage, case-study, assessment, service-pages, deck]
+    claim_guard: "The defining differentiator — AI drafts/surfaces, people approve/act. Enforced in code, not promised."
+
+  - id: outreach-intelligence
+    observation: >-
+      AI drafts contextual outreach with copy-safety validation and an explicit lifecycle
+      (pending/sent/skipped/superseded/expired/failed); every send is a governed state
+      transition and the queue recalculates on send.
+    proof_ref: "rachel-realestate: src/lib/leads/outreachDrafts.ts (+.test), draftMessageGenerator.ts, migrations/050_outreach_drafts.sql, 054_draft_message_columns.sql, src/app/api/ops/outreach-send"
+    framework_stage: Recommendation
+    allowed_use: [case-study, service-pages, deck]
+    claim_guard: "Recommendation with built-in safety and lifecycle governance. No send-rate metric."
+
+  - id: content-recommendation
+    observation: >-
+      The next-best content for a relationship is selected from journey state plus facts —
+      content as a governed recommendation, not a marketing blast.
+    proof_ref: "rachel-realestate: src/lib/leads/contentRecommendation.ts (+.test), consumed by src/lib/leads/outreachDrafts.ts"
+    framework_stage: Recommendation
+    allowed_use: [service-pages]
+    claim_guard: "Facts + state -> specific next asset. Supporting detail, not headline proof."
+
+  - id: referral-intelligence
+    observation: >-
+      Out-of-area or non-fit relationships are detected and surfaced as a first-class "refer"
+      action instead of being dropped, capturing value at the edges of the workflow.
+    proof_ref: "rachel-realestate: migrations/051_referral_partner_opportunity.sql, src/app/api/referral, src/app/agent-referral-partners, referral handling in canonicalQueue.ts and rie.ts"
+    framework_stage: Priority
+    allowed_use: [service-pages, deck]
+    claim_guard: "Captures value-leakage at workflow edges. No referral-value metric claimed."
+
+  - id: intelligence-gaps
+    observation: >-
+      The system decides the single highest-value missing fact to ask next (buy-vs-rent,
+      budget, timeline), scored by freshness and confidence — it surfaces what it does not know.
+    proof_ref: "rachel-realestate: src/lib/leads/intelligenceGaps.ts, qualificationGaps.test.ts, nextMissingField.ts, guideFacts.ts"
+    visual: content/proof/rachelos/05-intelligence-gaps-1.png
+    framework_stage: Facts
+    allowed_use: [homepage, case-study, assessment, service-pages, deck]
+    claim_guard: "Rare differentiator — 'knows its blind spots.' Proven by code, no accuracy metric."
+
+  - id: operational-visibility
+    observation: >-
+      The operating system is self-monitoring — a system-health dashboard, smoke tests,
+      cron-run tracking, ops alerts, and failure logging show the system itself is running.
+    proof_ref: "rachel-realestate: src/app/ops/system-health, src/lib/ops/runSmokeTest.ts, migrations/015_cron_runs.sql, 030_smoke_test_runs.sql, 024_system_failures.sql, src/lib/leads/leadOpsAlerts.ts"
+    visual: content/proof/rachelos/06-system-health.png
+    framework_stage: Outcome
+    allowed_use: [case-study, assessment, service-pages, deck]
+    claim_guard: "Proves 'trusted execution' via observability. Not a separate product/SKU."

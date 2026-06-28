@@ -1,11 +1,36 @@
 # TKO Intelligence Factory (TIF)
 ## Engineering Backlog v1
-Status: Approved for Implementation
+Status: **SPLIT** — TIF **v0.1 Asset Production Spine = SANCTIONED NEXT**; the speculative platform tail (knowledge graph, vectors, agents) **stays DEFERRED** (see [`GOVERNANCE.md`](GOVERNANCE.md) §2 and `/dev/PORTFOLIO_GOVERNANCE.md`)
 Owner: Todd Kovalsky
+
+> **⚠️ Governance status (updated 2026-06-28): RECLASSIFIED.** This backlog is no longer DEFERRED
+> as a whole. TIF has materially changed: it is now a **production accelerator** — a multiplier for
+> the revenue-producing initiatives across **Rachel Delray · CRE Intelligence · TKO Solutions**,
+> not a speculative platform. The old framing ("build TIF *after* revenue; not software") is
+> **removed**. New framing: **TIF is a multiplier for revenue-producing initiatives and may advance
+> in parallel when it directly supports Rachel, CRE, or TKO asset production.**
+>
+> The reclassification is **scoped**, not a blanket reopen:
+> - **TIF v0.1 — Asset Production Spine = SANCTIONED NEXT.** Scope: **Evidence Registry · Asset
+>   Opportunity Registry · Asset Composer · Traceability · Capture Inbox.** Un-gated; may consume
+>   *excess* capacity. It does **not** jump ahead of active revenue work and does **not** raise the
+>   active-work limits (≤3 active / ≤5 portfolio still hold).
+> - **Still DEFERRED (original concerns remain valid):** Knowledge Graph, Vector Search (pgvector),
+>   Agent Framework, and any generic platform / client-facing SaaS infrastructure. The full
+>   relational Knowledge Core (Epics 1/5/6) and Vector Intelligence (Epic 10) below are this tail.
+>
+> See the [TIF v0.1 — Asset Production Spine](#tif-v01--asset-production-spine-sanctioned-next)
+> scope block below for the authoritative in/out list.
 
 > **North star:** This backlog builds toward the future state defined in
 > [`CURRENT_REALITY.md`](CURRENT_REALITY.md). TIF is the internal engine that produces the
 > proof, content, and assessment assets that document requires — not a product TKO sells.
+> **Content flywheel:** EPIC 11 (Content Intelligence Pipeline) is the canonical spec for the
+> `Observation → … → Publish` flywheel across Rachel / CRE / TKO. Its **Capture Inbox** and **Asset
+> Opportunity Registry** are part of the SANCTIONED-NEXT v0.1 spine; the full cron-driven automation
+> (state machine, refinement cycles, Rachel GPT) is the sanctioned *direction* sequenced after the
+> spine. It automates the already-real manual method in
+> [`asset-production/METHOD.md`](asset-production/METHOD.md).
 > **Domain-model authority:** [`docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md`](docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md)
 > supersedes the Knowledge Core schema in this backlog (FailureMode collapses into
 > `Pattern.kind`; Concept, Claim, Asset, and Evidence move into the MVP).
@@ -34,6 +59,33 @@ Every feature must support at least one of:
 - Consulting Offer Creation
 - Thought Leadership
 - Revenue Generation
+
+---
+
+# TIF v0.1 — Asset Production Spine (SANCTIONED NEXT)
+
+**This is the only part of TIF that is sanctioned to advance now.** It is the narrow, non-speculative
+production accelerator: it turns admitted evidence into trust assets with full traceability, for
+Rachel Delray, CRE Intelligence, and TKO Solutions. It automates the manual
+[`asset-production/METHOD.md`](asset-production/METHOD.md) spine — it does not replace its human
+approval gate.
+
+**Governance:** SANCTIONED NEXT — un-gated, but *behind* active revenue work and bound by the
+portfolio's ≤3-active / ≤5-total limits. It may consume **excess** capacity; it may **not** displace
+a revenue-producing initiative. Advance it only when it directly supports Rachel / CRE / TKO asset
+production.
+
+| v0.1 scope (IN) | Maps to | Explicitly EXCLUDED from v0.1 (stays DEFERRED) |
+|---|---|---|
+| **Evidence Registry** — admitted evidence records with resolving `proof_ref` + `claim_guard` | `content/proof/*/evidence.yaml`, EPIC 6 TIF-604 | **Knowledge Graph** — full relational Experience→Observation→Pattern→FailureMode core (Epics 1/5/6) |
+| **Asset Opportunity Registry** — `asset_opportunity` records | EPIC 11 TIF-1103 | **Vector Search / pgvector** (Epic 10) |
+| **Asset Composer** — template-fill generation of articles / case studies / assessments / reports / comparison guides | EPIC 7 (TIF-701…706) + `asset-production/templates/` | **Agent Framework** / autonomous multi-agent orchestration |
+| **Traceability** — every claim cites an evidence `id`; evidence rule + claim guards enforced | METHOD.md §3–§5 | **Generic platform infrastructure** / any client-facing SaaS |
+| **Capture Inbox** — lightweight idea intake | EPIC 11 TIF-1101 | |
+
+The numbered Epics below remain the design of record. Read them through this scope block: Epics
+1/5/6 (relational Knowledge Core) and Epic 10 (Vector Intelligence) are the **deferred tail**, not
+part of v0.1.
 
 ---
 
@@ -860,6 +912,174 @@ Generate:
 - related assessments
 
 Coverage: 85%
+
+---
+
+# EPIC 11 — CONTENT INTELLIGENCE PIPELINE
+
+> **Status:** Planned · **Priority:** P1 (mid-term) · **Owner:** TKO Solutions ·
+> **Governance:** **partly SANCTIONED NEXT.** The **Capture Inbox** (TIF-1101) and **Asset
+> Opportunity Registry** (TIF-1103) are part of the v0.1 spine and may advance now on excess
+> capacity. The full cron-driven automation (state machine, refinement cycles, approval queue,
+> Rachel GPT) is the sanctioned *direction*, sequenced **after** the spine — it is not deferred
+> platform work, but it does not run ahead of active revenue work either. This is the canonical,
+> single-source spec for the content flywheel; governance and `CURRENT_REALITY.md` point here.
+
+## Where this fits
+
+The **v0.1 Asset Production Spine already exists as a manual method** —
+[`asset-production/METHOD.md`](asset-production/METHOD.md) walks
+`Observation → Evidence → Finding → Recommendation → Asset` with markdown + YAML + Claude and a
+hard human gate. EPIC 11 is *not* knowledge-graph or vector infrastructure (those stay DEFERRED).
+It is the **automation and capture front-end** that turns the manual spine into a repeatable,
+multi-business content production system shared across **Rachel Delray · CRE Intelligence · TKO
+Solutions** from one evidence base — the production accelerator, not a speculative platform.
+
+It advances under the portfolio's standing discipline: behind active revenue work, within the
+≤3-active / ≤5-total limits, consuming excess capacity, only when it directly supports Rachel /
+CRE / TKO asset production.
+
+## The problem (today)
+
+```
+Observation → Todd remembers it → Todd manually writes something → maybe becomes content
+```
+
+Most valuable observations never become assets. Examples that should have become assets and
+didn't: a represented seller calling Rachel anyway; a lead citing buyer strategy over listings;
+a prospect who lost a job twice to AI; prior-auth operational bottlenecks; healthcare
+transformation lessons; CRE market observations. Asset production depends entirely on manual
+effort.
+
+## The target state
+
+```
+Observation → Evidence → Opportunity → Research → Draft → Refinement → Approval → Publish
+```
+
+A scalable content + marketing flywheel across all three proof domains. **Human approval stays
+mandatory; nothing auto-publishes and nothing auto-distributes.**
+
+## Goal
+
+Transform Ideas / Observations / Market Signals / Client Conversations / Research into Articles /
+Case Studies / Landing Pages / Assessments / Comparison Guides / Executive Briefs / Intelligence
+Reports through a structured, governed workflow.
+
+## Core workflow
+
+```
+Capture → Classification → Research → Asset Recommendation → Draft → Refinement → Review → Approval → Publish
+```
+
+## TIF-1101 — Phase 1: Capture Inbox
+
+A lightweight capture layer so ideas enter the system immediately, without requiring a fully
+normalized evidence record first.
+
+- **Sources:** `conversation`, `phone_call`, `client_work`, `healthcare`, `cre`, `rachel`,
+  `personal_observation`, `reddit`, `linkedin`, `web_research`.
+- **Capture status:** `inbox` → `reviewed` → `promoted` → `archived`.
+- **Record example:**
+  ```yaml
+  id: inbox-001
+  title: Lead lost job twice to AI
+  source: conversation
+  status: inbox
+  ```
+
+## TIF-1102 — Phase 2: Content Work Queue
+
+A `content_work_item` entity that tracks content through its production lifecycle.
+
+- **Schema:** `id`, `title`, `business_unit`, `asset_type`, `source_evidence`, `stage`, `owner`,
+  `priority`, `next_action`, `generated_assets`, `notes`.
+- **Stages:** `inbox` → `research` → `drafting` → `refining` → `review` → `approved` →
+  `published` → `archived`.
+
+## TIF-1103 — Phase 3: Classification
+
+Daily processing assigns:
+
+- `business_unit`: `rachel` | `cre` | `tko`
+- `asset_type`: `article` | `landing-page` | `case-study` | `assessment` | `executive-brief` |
+  `comparison-guide` | `intelligence-report`
+
+Output: `asset_opportunity` records.
+
+## TIF-1104 — Phase 4: Research Layer
+
+Gather supporting evidence before drafting: web research, market intelligence, supporting data,
+counterarguments, related observations. Output stored alongside the work item:
+`supporting_sources`, `related_patterns`, `counter_arguments`.
+
+## TIF-1105 — Phase 5: Asset Recommendation
+
+Determine and rank `recommended_assets` (`primary_asset`, `secondary_asset`).
+
+> Observation: *Represented seller called Rachel despite existing representation* →
+> 1. Landing Page  2. Article  3. Case Study
+
+## TIF-1106 — Phase 6: Draft Generation
+
+Generate **Draft v1**. Store it. Do not publish. Drafts remain reviewable and editable.
+
+## TIF-1107 — Phase 7: Refinement Workflow
+
+Subsequent cycles improve title, structure, evidence support, and asset completeness. Store
+**Draft v2, v3, …** with full revision history.
+
+## TIF-1108 — Phase 8: Approval Queue
+
+Ensure all content stays human-approved. Reviewer: **Todd**. Actions: **Approve / Reject /
+Request Revision**. Example queue: *"3 Assets Ready For Review — Why Buyers Choose Rachel Delray ·
+Operational Intelligence vs Reporting · How Human APIs Become Organizational Bottlenecks."*
+
+## TIF-1109 — Phase 9: Publishing
+
+Publishing occurs **only after approval**. No automatic publishing. No automatic distribution.
+Every published asset still passes the [`asset-production/METHOD.md`](asset-production/METHOD.md)
+evidence rule, claim guards, and §5 anti-slop checklist — the pipeline automates the *motion*,
+not the *gate*.
+
+## TIF-1110 — Cron strategy (single Vercel cron, state machine)
+
+Constraint: **one** Vercel cron. Drive the lifecycle with a state machine, one transition per day:
+
+| Day | Transition |
+|---|---|
+| Day 1 | Inbox → Opportunity |
+| Day 2 | Opportunity → Research |
+| Day 3 | Research → Draft |
+| Day 4 | Draft → Review Queue |
+| Day 5+ | Review reminder |
+
+No additional cron infrastructure required.
+
+## TIF-1111 — Rachel GPT integration (future, gated within this epic)
+
+Rachel's ChatGPT environment can participate in *refinement* only:
+
+```
+Capture → Research → Draft → Rachel GPT Refinement → Review Queue → Todd Approval → Publish
+```
+
+Rachel GPT becomes a drafting participant. **Rachel GPT does not become the publisher.** Human
+approval remains mandatory.
+
+## Success criteria
+
+A new observation can travel `Captured → Classified → Researched → Drafted → Refined → Reviewed →
+Approved → Published` through a repeatable workflow **without manual orchestration** — e.g.
+represented-seller second-opinion, lead-cites-buyer-strategy, AI-displacement conversation,
+prior-authorization insight, CRE market observation.
+
+## Strategic outcome
+
+TIF evolves from `Evidence → Asset` to
+`Observation → Evidence → Opportunity → Research → Draft → Refinement → Approval → Publish`,
+creating a scalable content + marketing flywheel across Rachel Delray, CRE Intelligence, and TKO
+Solutions — one shared evidence base, three proof domains, one production system.
 
 ---
 

@@ -116,7 +116,7 @@ Recommended baseline: **6 (P0 + P1)**. Full set: **9**.
 
 ### 8. Outreach Draft detail (lifecycle + copy-safety)
 - **Screen / source:** `/ops/needs-rachel` or `/ops/messages` → draft detail — `outreachDrafts.ts`
-- **Why it matters:** shows recommendation depth and governance — a context-aware draft with an
+
   explicit lifecycle (pending / sent / skipped / superseded) and a copy-safety check before
   approval.
 - **Capability demonstrated:** Governed recommendation → approval → action *(Recommendation

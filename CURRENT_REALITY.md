@@ -350,18 +350,42 @@ The build path to this future state is defined in
 [`docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md`](docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md), and the
 component spec is [`TKO_INTELLIGENCE_FACTORY_PRD.md`](TKO_INTELLIGENCE_FACTORY_PRD.md).
 
+**Today the asset production spine is already real and manual** —
+[`asset-production/METHOD.md`](asset-production/METHOD.md) manufactures every asset via
+`Observation → Evidence → Finding → Recommendation → Asset` with markdown/YAML/Claude and a hard
+human gate. The next step is to **automate that spine** — the **TIF v0.1 Asset Production Spine**
+(Evidence Registry · Asset Opportunity Registry · Asset Composer · Traceability · Capture Inbox),
+which builds toward the `Observation → Evidence → Opportunity → Research → Draft → Refinement →
+Approval → Publish` flywheel (recorded as **EPIC 11 — Content Intelligence Pipeline** in
+`ENGINEERING_BACKLOG.md`) shared across Rachel Delray, CRE Intelligence, and TKO from one evidence
+base, with human approval still mandatory and nothing auto-published.
+
+**Reclassified 2026-06-28:** the v0.1 spine is no longer deferred-behind-revenue. It is a
+**production accelerator** — a multiplier for the revenue work across Rachel / CRE / TKO (more
+published proof → more conversations → more pipeline). It is classified **SANCTIONED NEXT**: it may
+advance on excess capacity, behind active revenue work, within the ≤3-active / ≤5-portfolio caps.
+The speculative tail — knowledge graph, vector search, agent framework, generic platform — **stays
+DEFERRED**. See [`GOVERNANCE.md`](GOVERNANCE.md) §2 and §4.
+
 ---
 
-## Strategic Constraint
+## Strategic Constraint (revised 2026-06-28)
 
-For the next 90 days, the GTM business optimizes for proof and revenue:
+The GTM business optimizes for proof and revenue:
 
 - Build proof. Not client-facing software or platforms.
 - Publish evidence. Not frameworks.
 - Sell assessments. Not platforms.
 
-"Not software" means TKO does not build or sell a **client-facing** platform or SaaS product.
-It does **not** prohibit the internal TIF tooling above: TIF is the sanctioned engineering path
-precisely because it *produces* the proof, content, and assessment assets this constraint
-demands. The consulting capability is already demonstrated (RachelOS); the market now needs to
-see it.
+"Not software" means TKO does not build or sell a **client-facing** platform or SaaS product. It
+does **not** prohibit the internal TIF v0.1 Asset Production Spine — that spine is now a
+**SANCTIONED-NEXT production accelerator** precisely because it *produces* the proof, content, and
+assessment assets this constraint demands, faster, across Rachel / CRE / TKO. The old "build TIF
+after revenue" gate is removed; the new rule is **"TIF is a multiplier for revenue-producing
+initiatives and may advance in parallel when it directly supports Rachel, CRE, or TKO asset
+production."**
+
+What is retained: ≤3 active / ≤5 portfolio; revenue work ships first (TIF uses excess capacity
+only); no client-facing SaaS ever; the speculative tail (knowledge graph, vectors, agents, generic
+platform) stays DEFERRED; human approval on every published asset. Full removed/retained lists and
+classification live in [`GOVERNANCE.md`](GOVERNANCE.md) §2 and §4.

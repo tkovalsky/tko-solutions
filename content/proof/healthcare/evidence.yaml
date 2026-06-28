@@ -1,0 +1,130 @@
+# Healthcare Evidence Index
+#
+# Machine-citable companion to HEALTHCARE_EXPERIENCE_LIBRARY.md. Each record is one citable
+# observation grounded in the founder's healthcare transformation experience. Asset briefs
+# reference these by `healthcare:<id>`. See ../../../asset-production/METHOD.md for the rules.
+#
+# IMPORTANT — these are ADVISORY EXPERIENCE / DOMAIN CREDENTIALS (Tier 2 proof), NOT
+# deployed-product proof and NOT named case studies. The product-proof weight is carried by
+# RachelOS; healthcare carries domain-credibility weight. Keep the roles distinct.
+#
+# Standing claim guard (all records): advisory experience, not product proof; never paired
+# with a metric; no employer, payer, provider, vendor, or program named; impact described as
+# a pattern, never a measured result. Present on the website as "Advisory Experience" /
+# "Background," not "Case Studies."
+#
+# framework_stage: TKO operating spine — the stage of the decision layer the experience argues for.
+# allowed_use:     assessment | advisory-background | article | deck
+# Diagrams: ./diagrams/*.mmd (current-state and pattern diagrams, no metrics).
+
+domain: healthcare
+library: ./HEALTHCARE_EXPERIENCE_LIBRARY.md
+
+records:
+  - id: prior-auth-decision-rights
+    observation: >-
+      Prior authorization is treated as a technology problem when it is a decision-rights,
+      exception, auditability, and human-review problem; the same case is handled differently
+      depending on who touches it because the authority model lives in individual heads.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #1 Prior Authorization; diagrams/prior-auth-current-state.mmd"
+    framework_stage: Facts
+    allowed_use: [assessment, advisory-background, article, deck]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named; PA is decision-latency, not a model-quality problem."
+
+  - id: prior-auth-exception-routing
+    observation: >-
+      Authorization exceptions depend on specific individuals knowing where to route a case;
+      when those individuals are unavailable the case waits and administrative burden and risk
+      accumulate silently.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #1 Prior Authorization (Escalation Challenges); diagrams/prior-auth-waiver-state.mmd"
+    framework_stage: Human Approval
+    allowed_use: [assessment, advisory-background, article]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named."
+
+  - id: um-prioritization
+    observation: >-
+      In utilization management the prioritization of what to review next and why depends on
+      experienced staff rather than a system, so consistency and throughput vary with who is
+      working.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #2 Utilization Management; diagrams/decision-latency-pattern.mmd"
+    framework_stage: Priority
+    allowed_use: [assessment, advisory-background, article, deck]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named. Direct analog to the RachelOS canonical queue."
+
+  - id: um-missing-information
+    observation: >-
+      Required review information is frequently missing, and detecting the highest-value
+      missing fact is itself a high-value capability buried under queue mechanics.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #2 Utilization Management (Lessons Learned)"
+    framework_stage: Facts
+    allowed_use: [assessment, advisory-background, article]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named. Analog to RachelOS intelligence gaps."
+
+  - id: care-management-memory
+    observation: >-
+      In care management the integrated picture of a member's situation and next right action
+      tends to live with one coordinator rather than in a shared operating system, so members
+      fall through the cracks between roles and systems.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #3 Care Management; diagrams/operational-memory-pattern.mmd"
+    framework_stage: Memory
+    allowed_use: [assessment, advisory-background, article, deck]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named, no member detail."
+
+  - id: care-rising-risk
+    observation: >-
+      Rising-risk situations are not consistently surfaced; the system rarely says "this
+      person needs attention now" before a situation deteriorates.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #3 Care Management (Escalation Challenges)"
+    framework_stage: Priority
+    allowed_use: [assessment, advisory-background, article]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named."
+
+  - id: interoperability-provenance
+    observation: >-
+      Interoperability programs move data between systems, but moving data is not the same as
+      creating governed action on top of it; consumers lack a clear model for which source
+      wins and how confident to be.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #4 Interoperability Programs"
+    framework_stage: Facts
+    allowed_use: [assessment, advisory-background, article]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named. 'Information != understanding != decision.'"
+
+  - id: regulatory-auditability
+    observation: >-
+      Compliance is often demonstrated through documentation and reporting rather than through
+      workflows that are actually governed and auditable in practice; governance that depends
+      on individuals drifts after the deadline passes.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #5 Regulatory Initiatives"
+    framework_stage: Human Approval
+    allowed_use: [assessment, advisory-background, article, deck]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named. Argues human review must be designed in, not bolted on."
+
+  - id: workflow-modernization-operating-model
+    observation: >-
+      Modernization programs replace the tool but leave the operating model — decision rights,
+      escalation logic, prioritization — unchanged, producing motion without improvement; the
+      durable asset is the captured operating model, not the new interface.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #6 Workflow Modernization Efforts"
+    framework_stage: State
+    allowed_use: [assessment, advisory-background, article, deck]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named. The 'Transformation Recovery' wedge."
+
+  - id: transformation-dashboard-green
+    observation: >-
+      In large modernization programs status reporting can show green across teams while
+      enterprise delivery risk accumulates in the dependencies between teams — risk no single
+      dashboard owns. Local green is not enterprise truth.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md #7 Transformation Governance Experience; ../stories/TRANSFORMATION_STORY_LIBRARY.md (Dashboard Was Green)"
+    framework_stage: Outcome
+    allowed_use: [assessment, advisory-background, article, deck]
+    claim_guard: "Advisory experience; pattern not metric; no orgs named. Strongest enterprise narrative — human-API failure at program scale."
+
+  - id: human-api-root-pattern
+    observation: >-
+      Across prior auth, UM, care management, interoperability, regulatory, and transformation
+      work, the same root cause recurs: critical operational knowledge and decision-making live
+      inside individuals instead of governed systems — the person becomes the operating system.
+    proof_ref: "HEALTHCARE_EXPERIENCE_LIBRARY.md (Cross-cutting pattern / one-line credibility statement); diagrams/knowledge-concentration-risk.mmd"
+    framework_stage: Memory
+    allowed_use: [assessment, advisory-background, article, deck]
+    claim_guard: "Advisory experience; the through-line for all healthcare proof. Pattern not metric; no orgs named."

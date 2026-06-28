@@ -1,0 +1,61 @@
+# EXAMPLE BRIEF — RachelOS flagship case study
+#
+# A completed, worked example of the single control file described in ../METHOD.md §2.
+# It reverse-engineers the already-published flagship case study
+# (../../content/selected-work/RACHELOS_FLAGSHIP_CASE_STUDY.md) back into a brief, so a human
+# can see exactly how evidence selection -> brief -> Claude -> asset is meant to read.
+#
+# To produce a NEW asset: copy this file, change the id/sources/angle/output, set status: brief,
+# and run Claude against ../METHOD.md with the chosen template and cited evidence records.
+
+id: rachelos-flagship-case-study
+asset_type: case-study
+template: asset-production/templates/case-study.md
+status: published          # lifecycle: brief -> evidence -> findings -> draft -> review -> published
+
+# Evidence selected from content/proof/rachelos/evidence.yaml, cited as rachelos:<id>.
+# These are the records whose observations the case study is built on.
+sources:
+  - rachelos:relationship-memory     # Memory  — knowledge left one person's head
+  - rachelos:lead-facts-rie          # Facts   — governed facts with human > AI authority
+  - rachelos:journey-intelligence    # State   — facts become interpreted state + recommendation
+  - rachelos:canonical-queue         # Priority — one ranked "who needs you now and why"
+  - rachelos:intelligence-gaps       # Facts   — the system surfaces what it does not know
+  - rachelos:human-approved-ai       # Human Approval — "Needs Rachel" gate
+  - rachelos:daily-action-engine     # Action  — one deployed daily digest runs the book
+  - rachelos:operational-visibility  # Outcome — self-monitoring proves trusted execution
+
+angle: >-
+  An organization had every system of record it was supposed to have and still ran on one
+  person's memory. The constraint was attention and memory, not storage. RachelOS turned that
+  operational knowledge into durable, governed, human-approved operational memory — a system of
+  action on top of the system of record.
+
+audience: >-
+  Healthcare operations, technology, and transformation leaders who recognize critical operating
+  knowledge living inside a person instead of a system.
+
+output: content/selected-work/RACHELOS_FLAGSHIP_CASE_STUDY.md
+
+# Guardrails for THIS asset — stack on top of each record's claim_guard (METHOD §4).
+constraints:
+  - "Verifiable facts only — drawn from the rachel-realestate repo, its docs, audits, and deployed implementation."
+  - "Claim NO revenue, lead volume, conversion rate, ROI, or adoption metric. The honest non-claim is the credibility asset."
+  - "Deployment facts in the appendix must be code- or configuration-backed (cron schedule, migrations, LOC, test count, live model id)."
+  - "Anti-slop: no generic AI-consultancy language; lead with the operating pattern, not the product."
+  - "Positioning must agree with /CURRENT_REALITY.md (Proof Tier 1); that document wins on conflict."
+
+# How the five-stage chain (METHOD §1) resolved for this asset, for reference:
+production_notes:
+  observation: "Every system of record existed; the work still ran on perishable facts in one person's head."
+  evidence:    "The 8 cited rachelos records — code, migrations, deployed cron, and captured screenshots."
+  finding:     "A system of record is not a system of action; institutional memory must live in the system, governed and human-approved."
+  recommendation: "Build the decision layer — governed facts, prioritized attention, human-approved action — transferable beyond real estate."
+  asset:       "content/selected-work/RACHELOS_FLAGSHIP_CASE_STUDY.md (template: case-study)."
+
+# Review gate (METHOD §5/§7) — must pass before published; recorded here as the worked example.
+review:
+  anti_slop_checklist: passed
+  evidence_rule: "honored — no metric asserted without a resolving proof_ref"
+  claim_guards: "honored — all citations code-backed; no business-outcome metrics"
+  human_approval: "Todd (required for review -> published)"

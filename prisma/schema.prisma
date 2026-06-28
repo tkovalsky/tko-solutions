@@ -1,0 +1,152 @@
+// TIF v0.1 — Asset Production Spine
+// Scope: Evidence Registry · Asset Opportunity Registry · Asset Composer · Traceability · Capture Inbox
+// Explicitly excluded (stays DEFERRED per GOVERNANCE.md): knowledge graph, vector search, agent framework.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum BusinessUnit {
+  rachel
+  cre
+  tko
+}
+
+enum AssetType {
+  article
+  landing_page
+  case_study
+  assessment
+  executive_brief
+  comparison_guide
+  intelligence_report
+}
+
+// Human Approved AI: every generated artifact starts at draft. Future statuses
+// (review/approved/published) are modeled now so the pipeline isn't blocked later,
+// but only draft is produced by v0.1 — no publishing/approval workflow is implemented.
+enum AssetStatus {
+  draft
+  review
+  approved
+  published
+}
+
+enum CaptureSource {
+  conversation
+  phone_call
+  client_work
+  healthcare
+  cre
+  rachel
+  personal_observation
+  reddit
+  linkedin
+  web_research
+}
+
+enum CaptureStatus {
+  inbox
+  reviewed
+  promoted
+  archived
+}
+
+// Capture Inbox (EPIC 11 TIF-1101): lightweight intake, ahead of a normalized Evidence record.
+model CaptureItem {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  title        String
+  note         String?
+  source       CaptureSource
+  status       CaptureStatus @default(inbox)
+  businessUnit BusinessUnit?
+
+  promotedToEvidenceId String?
+  promotedToEvidence   Evidence? @relation(fields: [promotedToEvidenceId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Evidence Registry (TIF-604 / content/proof/*/evidence.yaml pattern, DB-backed).
+// proofRef is a citation, not a foreign key — it may point at a code/migration ref,
+// a screenshot, or an existing content/proof/*/evidence.yaml record id, per
+// asset-production/METHOD.md §3's evidence rule.
+model Evidence {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  domain       String // healthcare | rachelos | cre | tko
+  businessUnit BusinessUnit
+  observation  String
+  proofRef     String
+  claimGuard   String
+
+  capturedFrom  CaptureItem[]
+  opportunities AssetOpportunityEvidence[]
+  assets        AssetEvidence[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Asset Opportunity Registry (EPIC 11 TIF-1103).
+model AssetOpportunity {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  title        String
+  businessUnit BusinessUnit
+  assetType    AssetType
+  angle        String
+  audience     String?
+  status       String       @default("opportunity") // opportunity -> composed
+
+  evidenceLinks AssetOpportunityEvidence[]
+  assets        Asset[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AssetOpportunityEvidence {
+  opportunityId String
+  opportunity   AssetOpportunity @relation(fields: [opportunityId], references: [id])
+  evidenceId    String
+  evidence      Evidence         @relation(fields: [evidenceId], references: [id])
+
+  @@id([opportunityId, evidenceId])
+}
+
+// Asset Composer output (TIF-701..706, template-fill only — no AI/workflow engine).
+model Asset {
+  id             String      @id @default(cuid())
+  slug           String      @unique
+  title          String
+  assetType      AssetType
+  status         AssetStatus @default(draft)
+  businessUnit   BusinessUnit
+  outputPath     String
+
+  opportunityId  String?
+  opportunity    AssetOpportunity? @relation(fields: [opportunityId], references: [id])
+
+  evidenceLinks  AssetEvidence[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Traceability (mandatory): every Asset cites the Evidence it was composed from,
+// and every Evidence record can resolve its derived Assets via the same join table.
+model AssetEvidence {
+  assetId    String
+  asset      Asset    @relation(fields: [assetId], references: [id])
+  evidenceId String
+  evidence   Evidence @relation(fields: [evidenceId], references: [id])
+
+  @@id([assetId, evidenceId])
+}
