@@ -77,6 +77,20 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 
 ### SANCTIONED NEXT (un-gated; advances on excess capacity, behind ACTIVE revenue work)
 
+**N2 — TIF v0.2 Asset Normalization & Content Migration Framework** *(analysis/planning, not software)*
+- **Objective:** Inventory and classify existing content across `tko-site`, `rachel-realestate`, and
+  `cre-intelligence`; map it to the v0.1 Evidence/Opportunity/Asset model; produce a migration plan
+  (keep / normalize / rewrite / decompose / archive) and canonical template definitions
+  (`ENGINEERING_BACKLOG.md` → "EPIC 12 — Asset Normalization & Content Migration Framework").
+- **Depends on:** N1 (TIF v0.1 spine — Evidence Registry, Opportunity Registry, Asset Composer,
+  Traceability) must exist first; it does.
+- **Scope discipline:** **This is analysis and migration planning, not implementation.** It produces
+  documents (content inventory, classification matrix, evidence coverage matrix, opportunity
+  backlog, migration strategy, publication ownership model) — no migration scripts, no new schema,
+  no cross-repo automation. Building those, if ever justified, is separately gated.
+- **Rule:** Same as N1 — un-gated but does not jump ahead of ACTIVE revenue work and does not raise
+  the ≤3-active / ≤5-portfolio caps.
+
 **N1 — TIF v0.1 Asset Production Spine** *(production accelerator)*
 - **Objective:** Build the narrow asset engine that turns admitted evidence into trust assets with
   full traceability — **Evidence Registry · Asset Opportunity Registry · Asset Composer ·
@@ -119,7 +133,7 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 | `CURRENT_REALITY.md` | Authority | Live — v2.0 positioning + strategy baseline |
 | `GOVERNANCE.md` (this) | Authority | Live — classification |
 | `asset-production/METHOD.md` (+ templates, briefs) | Method | **Live** — manual asset spine; canonical way assets are made today |
-| `ENGINEERING_BACKLOG.md` (TIF) | Plan | **SPLIT** — v0.1 Asset Production Spine = **SANCTIONED NEXT**; speculative tail (graph/vectors/agents/platform) = **DEFERRED**. EPIC 11 = Content Intelligence Pipeline spec |
+| `ENGINEERING_BACKLOG.md` (TIF) | Plan | **SPLIT** — v0.1 Asset Production Spine = **SANCTIONED NEXT**; speculative tail (graph/vectors/agents/platform) = **DEFERRED**. EPIC 11 = Content Intelligence Pipeline spec; EPIC 12 = v0.2 Asset Normalization & Content Migration Framework (**SANCTIONED NEXT**, analysis/planning only) |
 | `docs/TKO_ROADMAP.md` | Plan | **Superseded** — stale June phases; banner added → see this doc |
 | `docs/ROADMAP.md` | Reference | Reframed (Human-API as finding type); read as input, not a separate offer |
 | `docs/TKO_DECISION_MEMO.md`, `docs/TKO_ARCHITECTURE_DECISIONS.md` | Decisions | Reference |
@@ -128,6 +142,7 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 | `TKO_INTELLIGENCE_FACTORY_PRD.md`, `docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md` | Spec | Reference — read scoped to the v0.1 spine; their graph/vector sections are the deferred tail |
 | Positioning/strategy docs in `docs/` (`TKO_POSITIONING_*`, `TKO_STRATEGIC_*`, `WEBSITE_*`, etc.) | Reference | Inputs to `CURRENT_REALITY.md`; that doc wins on conflict |
 | `reality-audit-2026-06-15.md`, `TKO_*_AUDIT_*` | Audit | Reference/evidence |
+| [`archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md`](archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md) | Audit | EPIC 12 deliverable — content inventory/classification/migration plan across `tko-site`, `rachel-realestate`, `cre-intelligence` |
 
 **Standing rule:** new audits/reports go in a dated `archive/<date>/` folder. Do not add new
 PRDs/roadmaps at the repo root.

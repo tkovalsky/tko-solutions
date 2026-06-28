@@ -1083,6 +1083,98 @@ Solutions — one shared evidence base, three proof domains, one production syst
 
 ---
 
+# EPIC 12 — ASSET NORMALIZATION & CONTENT MIGRATION FRAMEWORK (TIF v0.2)
+
+> **Status:** SANCTIONED NEXT — **analysis and migration planning only, not software.** Depends on
+> the TIF v0.1 spine (Evidence Registry, Opportunity Registry, Asset Composer, Traceability), which
+> exists. This epic produces documents (inventory, classification, evidence coverage, opportunity
+> backlog, migration plan, template definitions, publication ownership model) — it does not build
+> migration scripts, new schema, or cross-repo automation. See `GOVERNANCE.md` §2 (N2).
+
+## Objective
+
+Create a repeatable process for auditing, classifying, and mapping **existing** content across
+`tko-site`, `rachel-realestate`, and `cre-intelligence` onto the v0.1 asset model
+(`Evidence → Opportunity → Asset → Publication`), and a migration plan to bring it under TIF
+governance with traceability preserved. The goal is normalization, not new content generation.
+
+## Problem
+
+Content exists across three repos with no unified taxonomy, no standard asset model, and no
+migration strategy: duplication, evidence disconnected from outputs, and automation blocked.
+
+## TIF-1201 — Phase 1: Repository Content Audit
+
+Inventory content in `tko-site` (pages, articles, case studies, service pages, assessments,
+reports, thought pieces), `rachel-realestate` (guides, relocation, comparison, buyer/neighborhood/
+development resources), and `cre-intelligence` (market/intelligence reports, tenant-rep content,
+healthcare-RE content, opportunity assessments). For every item: title, location, repo, current
+format, current purpose.
+
+## TIF-1202 — Phase 2: Asset Classification
+
+Classify every item into exactly one primary type (secondary optional): `article`,
+`landing_page`, `service_page`, `case_study`, `assessment`, `comparison_guide`,
+`intelligence_report`, `executive_brief`, `thought_piece`, `proof_asset`.
+
+## TIF-1203 — Phase 3: Evidence Mapping
+
+For each asset, determine what evidence (existing `evidence.yaml` records, capture inbox items,
+or undocumented support) backs it. Output: evidence coverage matrix — assets with evidence,
+assets missing evidence, evidence without assets.
+
+## TIF-1204 — Phase 4: Asset Opportunity Detection
+
+Identify evidence with no corresponding asset (the inverse of TIF-1203). Output: ranked
+(high/medium/low) opportunity backlog by business value — feeds the existing Asset Opportunity
+Registry (EPIC 11 TIF-1103), it does not replace it.
+
+## TIF-1205 — Phase 5: Canonical Template Definitions
+
+For each asset type (including the four already templated in `asset-production/templates/` —
+article, case-study, assessment, intelligence-report — plus the newly scoped `landing_page`,
+`comparison_guide`, `executive_brief`, `thought_piece`, `proof_asset`), define purpose, required
+sections, optional sections, evidence requirements, and CTA requirements. Extend existing
+templates before authoring new ones.
+
+## TIF-1206 — Phase 6: Migration Strategy
+
+Per existing asset, assign a disposition: **Keep As-Is** (already aligned), **Normalize** (minor
+structural change), **Rewrite** (wrong structure), **Decompose** (contains multiple assets), or
+**Archive** (no longer useful).
+
+## TIF-1207 — Phase 7: Publication Architecture
+
+Define ownership: TIF owns evidence, opportunities, templates, and generated assets (the spine).
+Publication layers own placement and voice — `tko-site` (consulting, healthcare, operational
+intelligence), Rachel (relocation, real estate, comparisons, developments), CRE (market
+intelligence, tenant representation, opportunity reports).
+
+## TIF-1208 — Phase 8: Content Work Queue Integration (forward-compatibility only)
+
+Migrated assets must be representable with `status: draft | review | approved | published |
+archived` — the same lifecycle as `Asset.status` in the v0.1 spine (`prisma/schema.prisma`) and
+the future Content Work Queue (EPIC 11 TIF-1102). No new workflow is implemented in this epic.
+
+## Deliverables
+
+A. Repository Content Inventory · B. Asset Classification Matrix · C. Evidence Coverage Matrix ·
+D. Opportunity Backlog · E. Canonical Template Definitions · F. Migration Strategy ·
+G. Publication Ownership Model · H. Recommended First 25 Assets To Normalize
+
+**Completed:** [`archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md`](archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md)
+delivers A–H across `tko-site`, `rachel-realestate`, `cre-intelligence`.
+
+## Success criteria
+
+Claude (or a human) can answer, for any piece of existing content: what it is, what type it is,
+what evidence supports it, where it should live, what template it should use, and whether it
+should be kept, normalized, rewritten, decomposed, or archived — and a legacy asset can be
+migrated into the TIF asset model with traceability preserved. **Implementation of migration
+tooling is explicitly out of scope for this epic.**
+
+---
+
 # BUSINESS SUCCESS CRITERIA
 
 TIF is NOT successful because software exists.
