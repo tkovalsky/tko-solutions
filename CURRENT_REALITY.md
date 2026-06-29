@@ -374,6 +374,14 @@ advance on excess capacity, behind active revenue work, within the ≤3-active /
 The speculative tail — knowledge graph, vector search, agent framework, generic platform — **stays
 DEFERRED**. See [`GOVERNANCE.md`](GOVERNANCE.md) §2 and §4.
 
+**Candidate future report type (BACKLOG · Discovery only):** a **Community Intelligence Assessment** —
+a RachelDelray-facing gamified assessment widget (lead capture) whose back end is the TKO report
+writer (Asset Composer) generating a personalized neighborhood/community **comparison guide** for
+4–5 matched developments/areas/neighborhoods. This is a new *report type* for the existing Asset
+Composer, not a new platform or sold product. Discovery/design only — do not build. Spec:
+[`ENGINEERING_BACKLOG.md`](ENGINEERING_BACKLOG.md) **EPIC 14**; classified in
+[`GOVERNANCE.md`](GOVERNANCE.md) §2 BACKLOG; mirrored in RachelOS (ROS §0E / DEC-49).
+
 ---
 
 ## Strategic Constraint (revised 2026-06-28)

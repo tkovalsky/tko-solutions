@@ -117,6 +117,13 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 - Target account list build-out (healthcare ops / practice admins / health-tech / consulting).
 - `/selected-work` content depth; CRE proof tier on site.
 - Partner/referral motion for assessments.
+- **Community Intelligence Assessment** *(Discovery/Design — DO NOT BUILD)* — a RachelDelray-facing
+  gamified assessment widget (lead capture) whose back end is the TKO report writer (Asset Composer)
+  generating a personalized neighborhood/community **comparison guide** for 4–5 matched developments/
+  areas/neighborhoods. A candidate **report type** for the existing Asset Composer, not a new
+  platform or sold product. Research and architecture only; respects ≤3/≤5 caps and the
+  human-approval + no-client-SaaS constraints. Spec: `ENGINEERING_BACKLOG.md` **EPIC 14**. Mirrored
+  in RachelOS at ROS §0E / DEC-49.
 
 ### DEFERRED (do not build until the gate is met)
 | Item | Gate |

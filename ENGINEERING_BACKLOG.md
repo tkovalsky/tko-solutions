@@ -1234,6 +1234,117 @@ diagram engine, workflow orchestration.
 
 ---
 
+# EPIC 14 — COMMUNITY INTELLIGENCE ASSESSMENT (BACKLOG · DISCOVERY/DESIGN · DO NOT BUILD)
+
+> **Status:** Discovery / Design · **Classification:** BACKLOG (research and architecture only) ·
+> **Do Not Build.** Research and architecture only — no implementation during this phase.
+> **Governance:** This is a candidate **report type for the existing Asset Composer** (EPIC 7 /
+> TIF v0.1 comparison-guide template), *not* a new platform or product. The split is: the
+> **front end is a RachelDelray lead-capture surface** (an extension of the existing guide-download
+> lead capture in `rachel-realestate`, governed by RachelOS — ROS §0E), and the **back end is the
+> TKO report writer** — the Asset Composer filling the **neighborhood/community comparison
+> template** with full traceability. It must respect the standing constraints: ≤3-active /
+> ≤5-portfolio caps, revenue work ships first, human approval gate on every generated report
+> (`asset-production/METHOD.md` §7), and **no client-facing SaaS** — a RachelDelray lead-gen widget
+> producing an internally-generated asset is consistent with that line; a sold assessment platform
+> is not. Mirrored in RachelOS at ROS §0E and DEC-49.
+
+## Where this fits
+
+This is the **cross-repo expression** of three pieces TKO already has specs for:
+
+- **Front end (RachelDelray):** a gamified, guided assessment widget where a visitor identifies
+  their development/area, enters criteria + email, and the data is captured to the DB. This is an
+  extension of RachelOS lead capture (`rachel-realestate`) — see ROS §0E — not new TKO surface.
+- **Scoring/matching (algo):** ranks and returns 4–5 matching developments / areas / neighborhoods.
+  Conceptually adjacent to EPIC 9 (Assessment Engine: questions → scoring → findings) but applied to
+  community match rather than the consulting assessments.
+- **Back end (TKO report writer):** the **Asset Composer** (EPIC 7, TIF v0.1) invokes the
+  **neighborhood/community comparison template** (`asset-production/templates/`) to generate a
+  **personalized comparison guide** for the matched set, with Evidence → Opportunity → Asset
+  traceability.
+
+It is **adaptable across altitudes** — the same flow should produce a developments comparison, an
+areas comparison, or a neighborhoods comparison from the same template family.
+
+## Problem
+
+Most real estate websites force users to search listings before helping them determine *where* they
+should live. The actual decision process is usually: (1) identify lifestyle goals, (2) identify
+budget constraints, (3) identify community requirements, (4) narrow to a set of communities, (5)
+search listings within those communities. Current guide downloads and IDX search support steps 4–5
+but give little support for steps 1–3 — leaving a higher-value lead-capture experience on the table.
+
+## Hypothesis
+
+Users are more interested in "Where should we live?", "Which communities fit us?", and "What are the
+tradeoffs?" than in browsing listings. A guided assessment that generates a personalized community
+report may produce higher engagement, richer qualification data, stronger lead intelligence, and
+more differentiated marketing assets than a traditional home-search experience.
+
+## Vision
+
+A **Community Intelligence Assessment**: the user answers a short set of questions; the system
+generates a personalized report. Examples: Best 55+ Communities for Active Retirees · Boca vs Delray
+Comparison · Non-Mandatory Country Club Assessment · Pet-Friendly Communities Report · Snowbird
+Community Assessment · Relocation Assessment. The report is simultaneously a **lead-generation
+asset** and a **structured intelligence artifact**.
+
+## Core concept
+
+Not a Community Directory and not a Community Search. Instead:
+`Assessment → Structured Inputs → Framework → Generated Report`.
+
+## Candidate inputs
+
+Location interest (Boca Raton · Delray Beach · Boynton Beach · Palm Beach County · Broward County) ·
+Budget · Timeline · Age range · Household type · Pets · Golf interest · Mandatory-membership
+preference · Pickleball interest · Walkability preference · Beach-access preference · Condo vs single
+family · Seasonal vs full-time · Investment vs primary residence · HOA tolerance.
+
+## Candidate outputs
+
+Recommended communities (4–5 matches) · Why they fit · Potential tradeoffs · Lifestyle alignment ·
+Community comparison · Relevant guides · Suggested next questions · Recommended Rachel conversation.
+
+## TIF integration opportunity
+
+`Assessment results → Evidence` · `Assessment framework → Opportunity` · `Generated report → Asset`.
+This makes Community Intelligence another **report type produced by the Intelligence Factory**.
+Potential future report types: Relocation Assessment · Community Comparison · HOA Assessment ·
+Country Club Assessment · 55+ Assessment · Neighborhood Match Report.
+
+## Gamification (research only)
+
+Explore lightweight experiences that increase engagement without reducing credibility — Community
+Match Score · Lifestyle Compatibility Score · Community Fit Ranking · Top 5 Matches · "You are most
+similar to…" community profiles. **Avoid gimmicks.** The assessment must feel useful and trustworthy,
+not entertainment-focused.
+
+## Strategic alignment
+
+Connects RachelOS (lead capture → qualification → follow-up personalization), TIF (evidence →
+framework → asset generation), the Guide Library (supporting content, community references,
+cross-links), CRE Intelligence (future report-generation architecture), and TKO (a reusable
+intelligence-production pattern).
+
+## Deliverables (Discovery Phase only — no implementation)
+
+1. Inventory existing community-related content.
+2. Inventory guide coverage by community.
+3. Define the minimum viable community data model.
+4. Define the assessment question set.
+5. Define the report framework (the comparison template).
+6. Evaluate the TIF integration path (Asset Composer comparison-guide template).
+7. Estimate effort and ROI.
+
+## Explicitly out of scope for now
+
+No build. No new schema, no scoring system, no widget, no new service, no vector/graph/agent
+infrastructure. Discovery produces documents only.
+
+---
+
 # BUSINESS SUCCESS CRITERIA
 
 TIF is NOT successful because software exists.
