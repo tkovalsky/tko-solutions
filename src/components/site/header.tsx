@@ -27,7 +27,7 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <LinkButton href="/contact" className="min-h-10 max-w-56 whitespace-normal px-4 text-center text-xs leading-tight">
+          <LinkButton href="/contact" className="whitespace-nowrap">
             {site.cta}
           </LinkButton>
         </div>

@@ -7,6 +7,7 @@ import { Hero } from "@/components/site/hero";
 import { JsonLd } from "@/components/site/json-ld";
 import { OperatingFramework } from "@/components/site/operating-framework";
 import { ProblemGrid } from "@/components/site/problem-grid";
+import { ArrowLink } from "@/components/ui/arrow-link";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { caseStudies } from "@/lib/content";
@@ -93,13 +94,13 @@ export default function HomePage() {
                 </p>
                 <h3 className="mt-5 text-2xl font-semibold">{study.title}</h3>
                 <p className="mt-4 text-base leading-7 text-muted">{study.problem}</p>
-                <Link
-                  href={`/selected-work/${study.slug}`}
-                  className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
-                >
+                <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
+                  <span className="font-semibold text-primary">Outcome — </span>
+                  {study.outcome}
+                </p>
+                <ArrowLink href={`/selected-work/${study.slug}`} className="mt-8">
                   View selected work
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+                </ArrowLink>
               </Card>
             ))}
         </div>
@@ -112,7 +113,7 @@ export default function HomePage() {
             title="RachelOS proves TKO can build the operating layer."
             description="RachelOS is evidence that TKO has built the layer between scattered signals and action: operational memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human-approved AI support."
           />
-          <div className="border border-border bg-white p-7">
+          <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
               Problem
             </p>
@@ -129,14 +130,10 @@ export default function HomePage() {
               knowledge, preserves institutional memory, surfaces priorities,
               recommends actions, and supports execution with human-approved AI.
             </p>
-            <Link
-              href="/selected-work/from-crm-to-operating-system"
-              className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
-            >
+            <ArrowLink href="/selected-work/from-crm-to-operating-system" className="mt-8">
               See how RachelOS works
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
+            </ArrowLink>
+          </Card>
         </div>
       </Section>
 
@@ -158,13 +155,9 @@ export default function HomePage() {
               becomes structured facts, state, recommendations, comparisons, and
               reusable decision assets.
             </p>
-            <Link
-              href="/selected-work/cre-intelligence-model"
-              className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
-            >
+            <ArrowLink href="/selected-work/cre-intelligence-model" className="mt-8">
               View CRE proof
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            </ArrowLink>
           </Card>
         </div>
       </Section>

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowLink } from "@/components/ui/arrow-link";
 import { Card } from "@/components/ui/card";
 import { caseStudies, services } from "@/lib/content";
 
@@ -23,13 +22,9 @@ export function ServiceCards() {
               <dd className="mt-1 font-semibold">{service.duration}</dd>
             </div>
           </dl>
-          <Link
-            href={`/services/${service.slug}`}
-            className="mt-auto inline-flex items-center gap-1.5 pt-8 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
-          >
+          <ArrowLink href={`/services/${service.slug}`} className="mt-auto pt-8">
             View service
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
+          </ArrowLink>
         </Card>
       ))}
     </div>
@@ -52,13 +47,9 @@ export function CaseStudyCards() {
             <span className="font-semibold text-primary">Outcome — </span>
             {study.outcome}
           </p>
-          <Link
-            href={`/selected-work/${study.slug}`}
-            className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.08em] text-primary"
-          >
+          <ArrowLink href={`/selected-work/${study.slug}`} className="mt-8">
             View selected work
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
+          </ArrowLink>
         </Card>
       ))}
     </div>
