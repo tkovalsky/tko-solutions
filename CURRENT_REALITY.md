@@ -367,6 +367,14 @@ Asset Composer), with a v0.2 Operator Console at `/tif` — read-only visibility
 shipped versus still-planned (Asset Health, manual-edit-overwrite protection, deeper
 traceability).
 
+**TIF v0.3 Execution Layer (architecture, not new product):** the next documentation layer
+formalizes how the registries execute. The canonical generation model is
+`Payload → Validation → Framework → Artifact → Fact Resolution → Template Population → Draft
+Generation → Voice Refinement → Review → Approval → Publish`. This bridges the Framework Registry,
+Artifact Registry, Voice Registry, Prompt Registry, and Asset Composer through one deterministic
+composer contract. It does not create a client-facing platform, new CRM, autonomous agent system,
+or alternate generator family.
+
 **Reclassified 2026-06-28:** the v0.1 spine is no longer deferred-behind-revenue. It is a
 **production accelerator** — a multiplier for the revenue work across Rachel / CRE / TKO (more
 published proof → more conversations → more pipeline). It is classified **SANCTIONED NEXT**: it may
@@ -374,13 +382,24 @@ advance on excess capacity, behind active revenue work, within the ≤3-active /
 The speculative tail — knowledge graph, vector search, agent framework, generic platform — **stays
 DEFERRED**. See [`GOVERNANCE.md`](GOVERNANCE.md) §2 and §4.
 
-**Candidate future report type (BACKLOG · Discovery only):** a **Community Intelligence Assessment** —
-a RachelDelray-facing gamified assessment widget (lead capture) whose back end is the TKO report
-writer (Asset Composer) generating a personalized neighborhood/community **comparison guide** for
-4–5 matched developments/areas/neighborhoods. This is a new *report type* for the existing Asset
-Composer, not a new platform or sold product. Discovery/design only — do not build. Spec:
-[`ENGINEERING_BACKLOG.md`](ENGINEERING_BACKLOG.md) **EPIC 14**; classified in
-[`GOVERNANCE.md`](GOVERNANCE.md) §2 BACKLOG; mirrored in RachelOS (ROS §0E / DEC-49).
+**Rachel interactive content backlog:** EPIC 14 defines the Interactive Content Engine & Page
+Template System, starting with Community Pages, Comparison Pages, and Relocation Guides. These are
+new `Framework x Artifact x Voice` compositions using the existing Asset Composer and future
+Execution Layer contract, not a new platform or sold product. Spec:
+[`ENGINEERING_BACKLOG.md`](ENGINEERING_BACKLOG.md) **EPIC 14** and
+[`docs/INTERACTIVE_CONTENT_ENGINE_REQUIREMENTS.md`](docs/INTERACTIVE_CONTENT_ENGINE_REQUIREMENTS.md).
+
+**Publication Layer:** TIF *generates* assets; publication layers *publish* them. The three
+publication targets are **RachelDelray** (`rachel-realestate` — community/comparison/relocation/
+buyer/seller/lifestyle pages), **TKO Site** (this repo's public site — articles/assessments/
+executive briefs/case studies/one-pagers), and **CRE Intelligence** (`cre-intelligence` —
+intelligence/market/opportunity reports). TIF owns generation, fact resolution, and traceability;
+publication layers own placement, presentation, and the human approval/publish gate. The only live
+integration boundary today is the TKO→Rachel draft contract
+([`docs/TIF_RACHEL_DRAFT_API.md`](docs/TIF_RACHEL_DRAFT_API.md)). Downstream distribution
+(Google/Facebook/Email/YouTube) stays DEFERRED behind the no-auto-publish gate. Full boundary in
+[`GOVERNANCE.md`](GOVERNANCE.md) §5; the end-to-end sequence is in
+[`docs/CONTENT_PIPELINE_ROADMAP.md`](docs/CONTENT_PIPELINE_ROADMAP.md).
 
 ---
 

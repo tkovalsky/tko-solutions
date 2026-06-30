@@ -20,7 +20,7 @@ Create a structured operational knowledge system that captures experiences, extr
 
 ⸻
 
-# TIF v2 ARCHITECTURE — REGISTRY & ARTIFACT ENGINE (CANONICAL)
+# TIF v2 ARCHITECTURE — REGISTRY, ARTIFACT & EXECUTION ENGINE (CANONICAL)
 
 This section supersedes any v1 framing that implies per-output generators or a `Questions → Report` pipeline. Where v1 sections below (Asset Generation, Phase 3 Asset Factory, Phase 5 Assessment Engine) describe "Article Generation / Assessment Generation / Case Study Generation" as distinct pipelines, read them as **entries in a registry consumed by one engine**, not as separate generators.
 
@@ -28,13 +28,137 @@ This section supersedes any v1 framing that implies per-output generators or a `
 
 TIF must never contain `RachelReportGenerator`, `PAReportGenerator`, `RecoveryAssessmentGenerator`, `CaseStudyGenerator`, or any other per-output generator class.
 
-TIF contains exactly **one** generation pathway and **three configuration registries**:
+TIF contains exactly **one** generation pathway, **three business registries**, and **one execution
+registry**:
 
 - **Framework Registry** — what to ask, find, recommend, score, and diagram (the domain logic).
 - **Artifact Registry** — what to emit and how it must be shaped/approved (the output contract).
 - **Voice Registry** — how the output reads (tone/terminology/level/format — configuration only).
+- **Prompt Registry** — versioned prompt definitions used by the execution layer. Prompts are
+  configuration, not business logic.
 
 Every output TKO or Rachel Delray needs is a **composition**: `Framework × Artifact × Voice`, run through the same engine. New businesses, assessments, reports, and content types are **new registry rows, not new applications.**
+
+## TIF v0.3 Execution Layer — canonical runtime model
+
+The registries define what may be produced. The **Execution Layer** defines how a request becomes a
+reviewable draft.
+
+The canonical execution model is:
+
+```
+Payload
+→ Validation
+→ Framework
+→ Artifact
+→ Fact Resolution
+→ Template Population
+→ Draft Generation
+→ Voice Refinement
+→ Review
+→ Approval
+→ Publish
+```
+
+The Execution Layer bridges the Framework Registry, Artifact Registry, Voice Registry, Prompt
+Registry, and Asset Composer through a deterministic workflow. It is not a new product, not a new
+platform, and not client-facing SaaS. It is the runtime orchestration contract required to make the
+existing registries operational.
+
+### Future execution endpoint
+
+Future TIF software may expose a single composition endpoint:
+
+```http
+POST /api/tif/compose
+```
+
+Example payload:
+
+```json
+{
+  "framework": "rachel_community",
+  "artifact": "comparison_guide",
+  "voice": "rachel",
+  "inputs": {
+    "communities": ["Valencia Sound", "Valencia Grand"],
+    "county": "Palm Beach County",
+    "budget": "750000-1200000"
+  }
+}
+```
+
+Request structure:
+
+- `framework`: Framework Registry key.
+- `artifact`: Artifact Registry key.
+- `voice`: Voice Registry key.
+- `inputs`: payload-specific values to validate and resolve into facts.
+
+Validation expectations:
+
+- The `framework`, `artifact`, and `voice` keys must exist.
+- The framework must allow the requested artifact.
+- Required framework inputs must be present.
+- Required artifact facts must be resolvable.
+- Unsupported facts, missing source material, or unapproved claims block generation.
+
+Execution flow:
+
+1. Validate payload shape and registry eligibility.
+2. Load framework, artifact, voice, and prompt definitions.
+3. Resolve payload values into structured facts.
+4. Populate the artifact's required sections from facts and source material.
+5. Generate a draft using versioned prompt configuration.
+6. Apply voice refinement using the selected VoiceProfile.
+7. Persist an immutable draft version for human review.
+8. Move through review, revision, approval, and publishing states.
+
+### Composer contract
+
+The composer contract is:
+
+```ts
+compose(framework, artifact, voice, facts)
+```
+
+TIF must not introduce `CommunityPageGenerator`, `ComparisonGuideGenerator`,
+`AssessmentGenerator`, `CaseStudyGenerator`, or equivalent per-output generators. Community pages,
+comparison guides, relocation guides, assessments, case studies, reports, and articles are all
+`Framework x Artifact x Voice` compositions through one composer.
+
+### Fact Resolution Layer
+
+The **Fact Resolution Layer** normalizes payloads, resolves structured facts, prepares generation
+context, and prevents unsupported content generation.
+
+Conceptual interface:
+
+```ts
+resolveFacts(payload, framework, artifact)
+```
+
+Facts become the source of truth for generation. The composer must not invent unsupported claims,
+fill missing pricing/community details, or treat unresolved assumptions as facts. If a required fact
+cannot be resolved, execution stops before draft generation.
+
+### Template population
+
+Artifacts are structured outputs, not freeform text blobs. The composer populates named sections
+from the artifact contract. Required sections must be present before a draft can move to review.
+
+### LLM abstraction
+
+The execution layer may use model-backed interfaces in the future:
+
+```ts
+generateDraft(context)
+refineDraft(draft, voice)
+```
+
+These interfaces are model-agnostic. This PRD makes no commitment to Anthropic, OpenAI, local
+models, or any specific provider. Model calls are implementation details behind the composer
+contract.
 
 ## The universal pipeline (replaces `Questions → Report`)
 
@@ -85,7 +209,7 @@ Experience · Evidence · Observation · Concept · Pattern *(kind: insight|fail
 Mandatory edges (traceability): `Answer→Question`, `Evidence→Answer`, `Finding→Evidence`, `Recommendation→Finding`, `Artifact→{Finding,Recommendation,Evidence,Claim}`, and `Finding→Experience` (feedback loop; delivery refines the corpus).
 
 **C. Configuration registries** *(new — data/config, not graph nodes; versioned in repo)*
-`FrameworkDefinition` · `ArtifactType` · `VoiceProfile` (defined below).
+`FrameworkDefinition` · `ArtifactType` · `VoiceProfile` · `PromptDefinition` (defined below).
 
 ## Deliverable 3 — Registry design
 
@@ -95,6 +219,9 @@ Each `FrameworkDefinition` is configuration (YAML/JSON in repo, mirrored to a `f
 | Field | Meaning |
 |---|---|
 | `key` | `operational_recovery`, `prior_authorization`, `rachel_relocation`, `commercial_expansion`, `case_study`, `authority_content`, … |
+| `required_inputs` | Inputs that must be present before execution may begin |
+| `optional_inputs` | Inputs that improve output quality but do not block execution |
+| `validation_rules` | Completeness and eligibility rules evaluated before composition |
 | `question_sets` | ordered questions by dimension (sourced from `docs/QUESTION_LIBRARY.md`) |
 | `finding_rules` | how Evidence → Findings; reference Concepts/Patterns (e.g. `Pattern{kind:failure}` "Human API") |
 | `recommendation_rules` | how Findings → Recommendations (priority/effort) |
@@ -111,8 +238,71 @@ Example rows:
 | `prior_authorization` | PA submissions, denials, exceptions, payer mix, staffing, dependency | optional (Gold Card readiness) | pa_workflow, current_state, future_state | assessment, one_pager, diagram, report, executive_brief |
 | `case_study` | — (uses Experience + Findings) | none | optional architecture/flow | case_study, article |
 | `authority_content` | — (uses Concept + Claim + Pattern) | none | optional explainer | article, newsletter, landing_page |
-| `rachel_relocation` *(future)* | buyer/relocation intake | none | optional area/journey | article, landing_page, newsletter |
+| `rachel_relocation` | buyer/relocation intake | readiness scoring | optional area/journey | relocation_guide, landing_page, newsletter |
+| `rachel_community` | community fit, budget, lifestyle, seasonal/full-time, golf/social/new-construction preferences | fit scoring | optional community comparison | community_page, comparison_page, landing_page |
+| `rachel_buyer` | financing status, budget confidence, property type, timeline | readiness scoring | optional buyer journey | buyer_guide, landing_page |
+| `rachel_seller` | home condition, equity expectations, timeline, relocation plan | readiness scoring | optional seller journey | seller_guide, landing_page |
+| `rachel_lifestyle` | lifestyle goals, activity preferences, relocation goals, budget | match scoring | optional community/lifestyle map | lifestyle_page, landing_page |
+| `rachel_development` | builder/community/floorplan metadata, budget, household size, lifestyle preferences | recommendation scoring | optional floorplan/community comparison | development_page, comparison_page |
 | `commercial_expansion` *(future CRE)* | market/entity/opportunity intake | optional | market/comparison | report, diagram, article |
+
+Example input contracts:
+
+```yaml
+rachel_community:
+  required_inputs:
+    - communities
+    - county
+  optional_inputs:
+    - budget
+    - age_range
+    - timeline
+    - full_time_or_seasonal
+    - golf_interest
+    - pickleball_interest
+    - social_preferences
+    - new_construction_preference
+  validation_rules:
+    - communities must contain at least one known community
+    - county must resolve to a known county record
+    - requested artifact must be eligible for rachel_community
+
+rachel_relocation:
+  required_inputs:
+    - origin_market
+    - destination_market
+  optional_inputs:
+    - timeline
+    - budget
+    - home_sale_dependency
+    - visit_history
+  validation_rules:
+    - destination_market must resolve to a known city, county, or region
+    - relocation guide must include timeline and CTA sections
+
+rachel_buyer:
+  required_inputs:
+    - destination_market
+    - property_type
+  optional_inputs:
+    - financing_status
+    - budget_confidence
+    - timeline
+  validation_rules:
+    - buyer guide must resolve market facts before competition or pricing sections are generated
+
+rachel_seller:
+  required_inputs:
+    - property_market
+    - selling_context
+  optional_inputs:
+    - home_condition
+    - equity_expectations
+    - timeline
+    - relocation_plan
+  validation_rules:
+    - seller guide must resolve market facts before pricing strategy sections are generated
+```
 
 ### Artifact Registry
 Each `ArtifactType` defines the output contract:
@@ -127,30 +317,103 @@ Each `ArtifactType` defines the output contract:
 | `one_pager` | Offer/Framework summary + proof | any | problem → who → deliverables → outcome → CTA | review |
 | `diagram` | Findings / workflow / process description | frameworks with `diagram_rules` | nodes/edges (see Diagram Generation) | review |
 | `landing_page` | article/offer blocks + CTA | content frameworks | conversion sections | review |
+| `community_page` | Community facts + fit criteria + related communities | rachel_community, rachel_development | hero → overview → lifestyle fit → pricing → amenities → pros/cons → similar communities → FAQ → CTA | review |
+| `comparison_page` | Two or more places/communities + comparison criteria | rachel_community, rachel_development | hero → quick table → cost → lifestyle → amenities → buyer recommendations → FAQ → CTA | review |
+| `relocation_guide` | Origin market + relocation criteria + buyer journey inputs | rachel_relocation | why move → costs → taxes → healthcare → housing → mistakes → timeline → FAQ → CTA | review |
+| `buyer_guide` | Market + buyer criteria + readiness inputs | rachel_buyer | market overview → budget → financing → competition → mistakes → FAQ → CTA | review |
+| `seller_guide` | Market + seller criteria + relocation inputs | rachel_seller | market conditions → pricing strategy → prep checklist → timing → mistakes → FAQ → CTA | review |
+| `development_page` | Builder/development facts + model criteria | rachel_development | builder overview → community overview → floorplans → amenities → pricing → timelines → FAQ → CTA | review |
+| `lifestyle_page` | Lifestyle profile + community/content recommendations | rachel_lifestyle | overview → benefits → drawbacks → recommended communities → cost expectations → FAQ → CTA | review |
 | `newsletter` | ≥1 Claim/Pattern/Asset | content frameworks | issue sections + links | review |
 
 `required_inputs` are enforced by the engine before `compose()` runs (an `article` with no Claim fails fast; an `assessment` with no Findings fails fast).
 
+Artifact definitions also include:
+
+- `required_sections`: sections that must be populated before review.
+- `optional_sections`: sections that may be populated when facts are available.
+- `required_facts`: facts that must resolve before the artifact may be drafted.
+
+Example:
+
+```yaml
+comparison_guide:
+  required_sections:
+    - hero
+    - quick_comparison
+    - pricing
+    - lifestyle
+    - amenities
+    - recommendations
+    - faq
+    - cta
+  optional_sections:
+    - similar_communities
+    - relocation_notes
+    - market_context
+  required_facts:
+    - compared_entities
+    - location_context
+    - pricing_context
+```
+
 ### Voice Registry
 Each `VoiceProfile` is **configuration only** — applied at Generate, never a separate generator:
 
-| key | tone | terminology | reading level | formatting / narrative |
-|---|---|---|---|---|
-| `todd` | operator-to-operator, skeptical-of-hype | "Operational Knowledge Systems"; avoid "Operational Intelligence" externally; "Human API" = a finding | senior/exec | concrete, evidence-led, first-person practitioner |
-| `executive` | crisp, decision-oriented | risk, dependency, next move | exec | short, scannable, no jargon |
-| `rachel` *(future)* | warm, relational | consumer real-estate language | general consumer | story-led, reassuring |
-| `consumer` | plain, friendly | no operator jargon | general public | short paragraphs, approachable |
+| key | tone | avoid | prefers | cta_style | faq_style | perspective |
+|---|---|---|---|---|---|---|
+| `todd` | operator-to-operator, skeptical-of-hype | generic AI language, unsupported ROI claims | evidence-led claims, concrete operating examples | direct | concise, executive | senior operator-builder |
+| `executive` | crisp, decision-oriented | jargon, hype, vague transformation language | risk, dependency, next move | decision-oriented | short, practical | executive advisor |
+| `rachel` | warm, practical | corporate language, hype, pressure tactics | relocation guidance, local observations, tradeoffs | consultative | conversational | experienced local advisor |
+| `consumer` | plain, friendly | operator jargon, technical architecture | short paragraphs, direct guidance | helpful | approachable | informed guide |
 
 Switching `todd → rachel` changes a config reference on the Run. It does not touch the engine.
 
+Example voice profile:
+
+```yaml
+voice: rachel
+tone:
+  - warm
+  - practical
+avoid:
+  - corporate language
+  - hype
+prefers:
+  - relocation guidance
+  - local observations
+cta_style: consultative
+faq_style: conversational
+perspective: experienced local advisor
+```
+
+### Prompt Registry
+
+Each `PromptDefinition` is versioned execution configuration:
+
+| Field | Meaning |
+|---|---|
+| `key` | Stable prompt identifier |
+| `framework` | Framework key the prompt supports |
+| `artifact` | Artifact key the prompt supports |
+| `voice` | Voice key or `any` |
+| `version` | Immutable prompt version |
+
+Prompts are not business logic. Business rules live in frameworks, artifact contracts, validation
+rules, facts, and approval gates.
+
 ## Deliverable 4 — Artifact lifecycle
 
-States: `draft → review → approved → published → retired` (+ `superseded`).
+States: `draft → review → revision_requested → approved → published` (+ `retired` and
+`superseded`).
 
 - **Approval gating** is set by `ArtifactType.approval` × `confidentiality`: any artifact derived from `client_confidential` evidence requires human approval before `approved` (mirrors RachelOS's human-in-the-loop principle). Public content requires `review`.
 - **Confidence is exposed** on every artifact, derived from the aggregate verifiability of its source Findings/Evidence (`verified > self_reported > anecdotal`). Low-confidence artifacts cannot reach `published` without explicit override.
 - **Full traceability** is stored on every artifact via `source_refs`, enabling the audit chain `Question → Answer → Evidence → Finding → Recommendation → Artifact`. A Finding with no Evidence, or a Recommendation with no Finding, is invalid and blocks generation.
-- **Versioning:** artifacts are immutable per version; regeneration (new voice, new framework revision) creates a new version linked to the same Run.
+- **Versioning:** drafts and artifacts are immutable per version; regeneration (new facts, new
+  voice, new framework revision, or revision request) creates a new version linked to the same Run.
+- **Revision history:** every revision preserves the prior draft, prompt version, facts, source
+  refs, reviewer action, and approval state.
 
 ## Deliverable 5 — Migration recommendations (no code in this task)
 
@@ -186,7 +449,7 @@ Diagrams are `ArtifactType{key: diagram}`, produced by the same engine from stru
 | 7 | Executive briefs | any assessment framework | executive_brief | executive |
 | 8 | Workflow diagrams | framework `diagram_rules` | diagram (mermaid/svg/png) | — |
 | 9 | One-pagers | `operational_recovery` / `prior_authorization` | one_pager | executive |
-| 10 | Future Rachel relocation content | `rachel_relocation` *(new row)* | article / landing_page / newsletter | rachel/consumer |
+| 10 | Rachel interactive content engine | `rachel_relocation` / `rachel_community` / `rachel_buyer` / `rachel_seller` / `rachel_lifestyle` / `rachel_development` | community_page / comparison_page / relocation_guide / buyer_guide / seller_guide / lifestyle_page / development_page | rachel/consumer |
 | 11 | Future CRE intelligence reports | `commercial_expansion` *(new row)* | report + diagram | executive |
 
 Every priority is a `{Framework × Artifact × Voice}` composition over the single pipeline. #10 and #11 — entirely different businesses — are **new registry rows, not new applications.** This is the proof the architecture meets the brief.

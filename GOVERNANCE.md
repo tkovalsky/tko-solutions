@@ -19,8 +19,9 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 > Production Spine** (Evidence Registry · Asset Opportunity Registry · Asset Composer · Traceability ·
 > Capture Inbox) is now a **production accelerator** — a multiplier for the revenue work across
 > Rachel / CRE / TKO — and is classified **SANCTIONED NEXT**. The speculative tail (knowledge graph,
-> vectors, agents, generic platform) **stays DEFERRED**. The website + assessment GTM remain ACTIVE
-> and still ship first.
+> vectors, agents, generic platform) **stays DEFERRED**. The v0.3 Execution Layer is the documented
+> runtime contract that makes the existing registries operational; it is not a new product, platform,
+> or scope expansion. The website + assessment GTM remain ACTIVE and still ship first.
 
 ---
 
@@ -110,6 +111,10 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
   the v0.1/v0.2 Operator Console (`/tif`, `/tif/inbox`, `/tif/inventory`) — see `ENGINEERING_BACKLOG.md`
   EPIC 13. EPIC 13 Priority 3–5 (Asset Health, manual-edit-overwrite protection, deeper
   traceability) are documented there as planned, not built.
+- **Architecture update (v0.3):** the Execution Layer formalizes the runtime path
+  `Payload → Validation → Framework → Artifact → Fact Resolution → Template Population → Draft →
+  Voice Refinement → Review → Approval → Publish`. It bridges the existing registries and Asset
+  Composer; it does not authorize client-facing SaaS, autonomous agents, or generic platform work.
 
 ### BACKLOG (real, not started)
 - Rachel case study as a polished sales asset.
@@ -117,13 +122,26 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 - Target account list build-out (healthcare ops / practice admins / health-tech / consulting).
 - `/selected-work` content depth; CRE proof tier on site.
 - Partner/referral motion for assessments.
-- **Community Intelligence Assessment** *(Discovery/Design — DO NOT BUILD)* — a RachelDelray-facing
-  gamified assessment widget (lead capture) whose back end is the TKO report writer (Asset Composer)
-  generating a personalized neighborhood/community **comparison guide** for 4–5 matched developments/
-  areas/neighborhoods. A candidate **report type** for the existing Asset Composer, not a new
-  platform or sold product. Research and architecture only; respects ≤3/≤5 caps and the
-  human-approval + no-client-SaaS constraints. Spec: `ENGINEERING_BACKLOG.md` **EPIC 14**. Mirrored
-  in RachelOS at ROS §0E / DEC-49.
+- **Interactive Content Engine & Page Template System** *(BACKLOG)* — a RachelDelray growth
+  extension of the existing Asset Composer and v0.3 Execution Layer. Recommended first slice:
+  Community Pages, Comparison Pages, and Relocation Guides. This is configuration-driven page and
+  module production, not a client-facing platform or sold product. Spec: `ENGINEERING_BACKLOG.md`
+  **EPIC 14** and `docs/INTERACTIVE_CONTENT_ENGINE_REQUIREMENTS.md`.
+- **Community Intelligence Assessment (Community-Match framework)** *(BACKLOG / Discovery)* — the
+  named flagship of EPIC 14 Phase 1. A guided RachelDelray assessment (`rachel_community`
+  framework) whose inputs are age, budget, timeline, lifestyle, golf, pickleball, social
+  preferences, full-time/seasonal, and new-construction preference, and whose outputs are
+  recommended communities, a comparison guide, a personalized report, and lead intelligence.
+  **Documentation-grade promotion only** — it is fully specified but **not** reclassified ACTIVE
+  (that would violate the ≤3-active / ≤5-portfolio caps) and remains gated on revenue validation +
+  a new operator approval (rachel `DECISIONS.md` DEC-49). The RachelOS completion contract is
+  `TIF-1409`. Spec: `ENGINEERING_BACKLOG.md` **EPIC 14**.
+- **TIF Fact Registry** *(BACKLOG / future capability — `ENGINEERING_BACKLOG.md` **EPIC 16**)* —
+  canonical structured records for communities, developments, neighborhoods, cities, counties,
+  guides, lifestyle profiles, and buyer personas so all generated assets share one fact base
+  (SEO pages, reports, assessments, emails, social, comparison guides). Distinct from the runtime
+  **Fact Resolution Layer** (which *consumes* the registry). Future capability only; implementation
+  design is not authorized here. Sequenced after EPIC 15 (Execution Layer).
 
 ### DEFERRED (do not build until the gate is met)
 | Item | Gate |
@@ -144,7 +162,7 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 | `CURRENT_REALITY.md` | Authority | Live — v2.0 positioning + strategy baseline |
 | `GOVERNANCE.md` (this) | Authority | Live — classification |
 | `asset-production/METHOD.md` (+ templates, briefs) | Method | **Live** — manual asset spine; canonical way assets are made today |
-| `ENGINEERING_BACKLOG.md` (TIF) | Plan | **SPLIT** — v0.1 Asset Production Spine = **SANCTIONED NEXT**; speculative tail (graph/vectors/agents/platform) = **DEFERRED**. EPIC 11 = Content Intelligence Pipeline spec; EPIC 12 = v0.2 Asset Normalization & Content Migration Framework (**SANCTIONED NEXT**, analysis/planning only) |
+| `ENGINEERING_BACKLOG.md` (TIF) | Plan | **SPLIT** — v0.1 Asset Production Spine = **SANCTIONED NEXT**; v0.3 Execution Layer = runtime contract for the existing composer/registries; speculative tail (graph/vectors/agents/platform) = **DEFERRED**. EPIC 11 = Content Intelligence Pipeline spec; EPIC 12 = v0.2 Asset Normalization & Content Migration Framework (**SANCTIONED NEXT**, analysis/planning only) |
 | `docs/TKO_ROADMAP.md` | Plan | **Superseded** — stale June phases; banner added → see this doc |
 | `docs/ROADMAP.md` | Reference | Reframed (Human-API as finding type); read as input, not a separate offer |
 | `docs/TKO_DECISION_MEMO.md`, `docs/TKO_ARCHITECTURE_DECISIONS.md` | Decisions | Reference |
@@ -155,8 +173,35 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 | `reality-audit-2026-06-15.md`, `TKO_*_AUDIT_*` | Audit | Reference/evidence |
 | [`archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md`](archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md) | Audit | EPIC 12 deliverable — content inventory/classification/migration plan across `tko-site`, `rachel-realestate`, `cre-intelligence` |
 
+| `docs/CONTENT_PIPELINE_ROADMAP.md` | Plan | **Live** — the unified cross-repo content & intelligence pipeline roadmap (7 phases) spanning RachelOS, TIF, and the publication layers |
+| `docs/TIF_RACHEL_DRAFT_API.md` | Contract | **Live** — the TKO-side `POST /api/tif/compose` draft contract; the single TKO↔Rachel boundary |
+
 **Standing rule:** new audits/reports go in a dated `archive/<date>/` folder. Do not add new
 PRDs/roadmaps at the repo root.
+
+---
+
+## 5. Publication Layer (architecture boundary)
+
+**TIF generates assets. Publication layers publish them.** This separation is canonical: TIF owns
+generation, fact resolution, and traceability through the single `Framework × Artifact × Voice`
+composer; publication layers own placement, presentation, lead handling, and the human
+approval/publish gate. **No publication layer contains a generator, and TIF never publishes or
+writes into a publication repo.**
+
+There are three publication targets:
+
+| Publication target | Repo | Asset types TIF produces for it |
+|---|---|---|
+| **RachelDelray** | `rachel-realestate` | community pages · comparison guides · relocation guides · buyer guides · seller guides · lifestyle pages |
+| **TKO Site** | `tko-site` (public site) | articles · assessments · executive briefs · case studies · one-pagers |
+| **CRE Intelligence** | `cre-intelligence` | intelligence reports · market reports · opportunity reports |
+
+The same source facts (EPIC 16 Fact Registry, when built) power outputs across all three targets.
+Downstream distribution (Google, Facebook, Email, YouTube, landing/community pages) is **DEFERRED**
+and sits behind the standing no-auto-publish gate — see `ENGINEERING_BACKLOG.md` EPIC 17 and
+`docs/CONTENT_PIPELINE_ROADMAP.md` Phases 6–7. The only live integration boundary today is the
+TKO→Rachel draft contract in `docs/TIF_RACHEL_DRAFT_API.md`.
 
 ---
 

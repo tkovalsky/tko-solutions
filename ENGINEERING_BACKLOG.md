@@ -34,6 +34,11 @@ Owner: Todd Kovalsky
 > **Domain-model authority:** [`docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md`](docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md)
 > supersedes the Knowledge Core schema in this backlog (FailureMode collapses into
 > `Pattern.kind`; Concept, Claim, Asset, and Evidence move into the MVP).
+> **Execution authority:** TIF v0.3 adds the runtime execution contract:
+> `Payload → Validation → Framework → Artifact → Fact Resolution → Template Population → Draft
+> Generation → Voice Refinement → Review → Approval → Publish`. This operationalizes the existing
+> registries and Asset Composer. It is not a new product, not client-facing SaaS, and not an agent
+> framework.
 
 ---
 
@@ -80,6 +85,7 @@ production.
 | **Evidence Registry** — admitted evidence records with resolving `proof_ref` + `claim_guard` | `content/proof/*/evidence.yaml`, EPIC 6 TIF-604 | **Knowledge Graph** — full relational Experience→Observation→Pattern→FailureMode core (Epics 1/5/6) |
 | **Asset Opportunity Registry** — `asset_opportunity` records | EPIC 11 TIF-1103 | **Vector Search / pgvector** (Epic 10) |
 | **Asset Composer** — template-fill generation of articles / case studies / assessments / reports / comparison guides | EPIC 7 (TIF-701…706) + `asset-production/templates/` | **Agent Framework** / autonomous multi-agent orchestration |
+| **Execution Layer contract** — deterministic runtime path from payload validation through facts, template population, draft, voice refinement, and human review | EPIC 15 (TIF v0.3) + `TKO_INTELLIGENCE_FACTORY_PRD.md` | **Generic workflow platform** / autonomous publishing |
 | **Traceability** — every claim cites an evidence `id`; evidence rule + claim guards enforced | METHOD.md §3–§5 | **Generic platform infrastructure** / any client-facing SaaS |
 | **Capture Inbox** — lightweight idea intake | EPIC 11 TIF-1101 | |
 
@@ -1234,114 +1240,611 @@ diagram engine, workflow orchestration.
 
 ---
 
-# EPIC 14 — COMMUNITY INTELLIGENCE ASSESSMENT (BACKLOG · DISCOVERY/DESIGN · DO NOT BUILD)
+# EPIC 14 — INTERACTIVE CONTENT ENGINE & PAGE TEMPLATE SYSTEM
 
-> **Status:** Discovery / Design · **Classification:** BACKLOG (research and architecture only) ·
-> **Do Not Build.** Research and architecture only — no implementation during this phase.
-> **Governance:** This is a candidate **report type for the existing Asset Composer** (EPIC 7 /
-> TIF v0.1 comparison-guide template), *not* a new platform or product. The split is: the
-> **front end is a RachelDelray lead-capture surface** (an extension of the existing guide-download
-> lead capture in `rachel-realestate`, governed by RachelOS — ROS §0E), and the **back end is the
-> TKO report writer** — the Asset Composer filling the **neighborhood/community comparison
-> template** with full traceability. It must respect the standing constraints: ≤3-active /
-> ≤5-portfolio caps, revenue work ships first, human approval gate on every generated report
-> (`asset-production/METHOD.md` §7), and **no client-facing SaaS** — a RachelDelray lead-gen widget
-> producing an internally-generated asset is consistent with that line; a sold assessment platform
-> is not. Mirrored in RachelOS at ROS §0E and DEC-49.
+> **Status:** Proposed · **Priority:** P1 — Growth & Lead Qualification ·
+> **Classification:** BACKLOG (Phase 1 may be implemented when explicitly selected) ·
+> **Requirements:** [`docs/INTERACTIVE_CONTENT_ENGINE_REQUIREMENTS.md`](docs/INTERACTIVE_CONTENT_ENGINE_REQUIREMENTS.md)
+>
+> **Governance:** This is a RachelDelray growth extension of the existing TIF Asset Composer and
+> registry architecture, not a new product or client-facing SaaS. The split remains: Rachel-owned
+> pages and lead-capture surfaces live in `rachel-realestate`; TIF owns the template definitions,
+> module contracts, generated page artifacts, and traceability. No auto-publishing, no new CRM,
+> no new lead routing system, no autonomous agents, and no per-page generators.
 
-## Where this fits
+## Objective
 
-This is the **cross-repo expression** of three pieces TKO already has specs for:
+Transform the TKO Report Tool from a report generator into a reusable content production and
+qualification platform that can generate structured SEO pages and attach reusable interactive
+modules. The engine should support community pages, comparison pages, relocation guides, buyer
+guides, seller guides, lifestyle pages, and development pages while capturing representation-ready
+lead signals.
 
-- **Front end (RachelDelray):** a gamified, guided assessment widget where a visitor identifies
-  their development/area, enters criteria + email, and the data is captured to the DB. This is an
-  extension of RachelOS lead capture (`rachel-realestate`) — see ROS §0E — not new TKO surface.
-- **Scoring/matching (algo):** ranks and returns 4–5 matching developments / areas / neighborhoods.
-  Conceptually adjacent to EPIC 9 (Assessment Engine: questions → scoring → findings) but applied to
-  community match rather than the consulting assessments.
-- **Back end (TKO report writer):** the **Asset Composer** (EPIC 7, TIF v0.1) invokes the
-  **neighborhood/community comparison template** (`asset-production/templates/`) to generate a
-  **personalized comparison guide** for the matched set, with Evidence → Opportunity → Asset
-  traceability.
+## Flagship — Community Intelligence Assessment (Community-Match framework)
 
-It is **adaptable across altitudes** — the same flow should produce a developments comparison, an
-areas comparison, or a neighborhoods comparison from the same template family.
+The named flagship of EPIC 14 Phase 1 is the **Community Intelligence Assessment**, a guided
+RachelDelray experience built on the `rachel_community` **Community-Match** framework. It is the
+first concrete RachelOS consumer of a TIF-composed asset (rachel `DECISIONS.md` DEC-49 / DEC-56;
+ROS §0E.11).
 
-## Problem
+**Community-Match framework contract:**
 
-Most real estate websites force users to search listings before helping them determine *where* they
-should live. The actual decision process is usually: (1) identify lifestyle goals, (2) identify
-budget constraints, (3) identify community requirements, (4) narrow to a set of communities, (5)
-search listings within those communities. Current guide downloads and IDX search support steps 4–5
-but give little support for steps 1–3 — leaving a higher-value lead-capture experience on the table.
+- **Inputs:** age · budget · timeline · lifestyle · golf · pickleball · social preferences ·
+  full-time vs seasonal · new-construction preference.
+- **Outputs:** recommended communities (4–5) · comparison guide · personalized report ·
+  lead intelligence.
 
-## Hypothesis
+**Classification:** documentation-grade promotion only. The framework is fully specified here but is
+**not** reclassified ACTIVE — doing so would breach the ≤3-active / ≤5-portfolio caps in
+`GOVERNANCE.md`. A build requires **revenue validation + a new operator approval** (DEC-49). The
+front end (lead-capture widget) is owned by `rachel-realestate`; TIF owns generation of the
+comparison guide/report and its traceability. The RachelOS completion contract is **TIF-1409**.
 
-Users are more interested in "Where should we live?", "Which communities fit us?", and "What are the
-tradeoffs?" than in browsing listings. A guided assessment that generates a personalized community
-report may produce higher engagement, richer qualification data, stronger lead intelligence, and
-more differentiated marketing assets than a traditional home-search experience.
+## Product principles
 
-## Vision
+- Page types are `ArtifactType` or template definitions, not bespoke generators.
+- Interactive modules are reusable configuration-driven components, not page-specific logic.
+- Assessment answers become structured lead intelligence, not just form submissions.
+- Every generated page remains human-reviewable before publication.
+- This extends the existing `Framework x Artifact x Voice` TIF model.
 
-A **Community Intelligence Assessment**: the user answers a short set of questions; the system
-generates a personalized report. Examples: Best 55+ Communities for Active Retirees · Boca vs Delray
-Comparison · Non-Mandatory Country Club Assessment · Pet-Friendly Communities Report · Snowbird
-Community Assessment · Relocation Assessment. The report is simultaneously a **lead-generation
-asset** and a **structured intelligence artifact**.
+## TIF-1401 — Page Type Registry
 
-## Core concept
+Create canonical page type definitions for:
 
-Not a Community Directory and not a Community Search. Instead:
-`Assessment → Structured Inputs → Framework → Generated Report`.
+- `community_page`
+- `comparison_page`
+- `relocation_guide`
+- `buyer_guide`
+- `seller_guide`
+- `development_page`
+- `lifestyle_page`
 
-## Candidate inputs
+Each page type must define required sections, optional sections, SEO fields, CTA rules, FAQ rules,
+internal link rules, related content rules, supported interactive modules, and supported voice
+profiles.
 
-Location interest (Boca Raton · Delray Beach · Boynton Beach · Palm Beach County · Broward County) ·
-Budget · Timeline · Age range · Household type · Pets · Golf interest · Mandatory-membership
-preference · Pickleball interest · Walkability preference · Beach-access preference · Condo vs single
-family · Seasonal vs full-time · Investment vs primary residence · HOA tolerance.
+Acceptance criteria:
 
-## Candidate outputs
+- Operators can select a page type before generation.
+- The selected page type determines the required page structure.
+- Missing required sections fail validation before approval.
+- Page type definitions are reusable across multiple pages.
 
-Recommended communities (4–5 matches) · Why they fit · Potential tradeoffs · Lifestyle alignment ·
-Community comparison · Relevant guides · Suggested next questions · Recommended Rachel conversation.
+## TIF-1402 — Page Template Contracts
 
-## TIF integration opportunity
+Extend the template system so each page type has a canonical output contract:
 
-`Assessment results → Evidence` · `Assessment framework → Opportunity` · `Generated report → Asset`.
-This makes Community Intelligence another **report type produced by the Intelligence Factory**.
-Potential future report types: Relocation Assessment · Community Comparison · HOA Assessment ·
-Country Club Assessment · 55+ Assessment · Neighborhood Match Report.
+- Community Pages: Hero, Community Overview, Lifestyle Fit, Homes & Pricing, Amenities, Pros,
+  Cons, Similar Communities, FAQ, CTA.
+- Comparison Pages: Hero, Quick Comparison Table, Cost Comparison, Lifestyle Comparison,
+  Amenities Comparison, Buyer Recommendations, FAQ, CTA.
+- Relocation Guides: Why People Move, Cost Differences, Taxes, Healthcare, Housing, Common
+  Mistakes, Relocation Timeline, FAQ, CTA.
+- Buyer Guides: Market Overview, Budget Expectations, Financing, Competition, Common Buyer
+  Mistakes, FAQ, CTA.
+- Seller Guides: Market Conditions, Pricing Strategy, Preparation Checklist, Timing
+  Considerations, Common Seller Mistakes, FAQ, CTA.
+- Development Pages: Builder Overview, Community Overview, Floorplans, Amenities, Pricing,
+  Construction Timelines, FAQ, CTA.
+- Lifestyle Pages: Lifestyle Overview, Benefits, Drawbacks, Recommended Communities, Cost
+  Expectations, FAQ, CTA.
 
-## Gamification (research only)
+Acceptance criteria:
 
-Explore lightweight experiences that increase engagement without reducing credibility — Community
-Match Score · Lifestyle Compatibility Score · Community Fit Ranking · Top 5 Matches · "You are most
-similar to…" community profiles. **Avoid gimmicks.** The assessment must feel useful and trustworthy,
-not entertainment-focused.
+- Existing templates are extended before new mechanisms are introduced.
+- Each template includes metadata for business unit, page type, module assignment, source
+  opportunity, voice, and approval status.
+- Templates support internal links, FAQ blocks, related content, and CTA variants.
 
-## Strategic alignment
+## TIF-1403 — Interactive Module Registry
 
-Connects RachelOS (lead capture → qualification → follow-up personalization), TIF (evidence →
-framework → asset generation), the Guide Library (supporting content, community references,
-cross-links), CRE Intelligence (future report-generation architecture), and TKO (a reusable
-intelligence-production pattern).
+Define reusable interactive module contracts:
 
-## Deliverables (Discovery Phase only — no implementation)
+- `community_fit_assessment`
+- `comparison_match_tool`
+- `relocation_readiness_assessment`
+- `buyer_readiness_assessment`
+- `seller_readiness_assessment`
+- `model_recommendation_tool`
+- `lifestyle_match_assessment`
 
-1. Inventory existing community-related content.
-2. Inventory guide coverage by community.
-3. Define the minimum viable community data model.
-4. Define the assessment question set.
-5. Define the report framework (the comparison template).
-6. Evaluate the TIF integration path (Asset Composer comparison-guide template).
-7. Estimate effort and ROI.
+Each module definition must include supported page types, questions, input schema, scoring rules,
+recommendation rules, output schema, lead-signal mapping, and CTA rules.
 
-## Explicitly out of scope for now
+Acceptance criteria:
 
-No build. No new schema, no scoring system, no widget, no new service, no vector/graph/agent
-infrastructure. Discovery produces documents only.
+- The same module can be reused across multiple pages.
+- Module logic is not hardcoded to a single community, city, or guide.
+- Modules support radio selections, multi-select options, budget ranges, timeline ranges, and
+  lifestyle preferences.
+- Modules can output match scores, readiness scores, recommended communities, recommended
+  content, and recommended next steps.
+
+## TIF-1404 — Phase 1 Page Types
+
+Implement the recommended first slice:
+
+1. Community Pages.
+2. Comparison Pages.
+3. Relocation Guides.
+
+Rationale: this sequence prioritizes the highest-value Rachel growth intents first. Community pages
+capture specific neighborhood/development demand, comparison pages capture active decision-making,
+and relocation guides capture timeline and readiness signals from out-of-state movers. Together
+they prove the reusable page template system, interactive module assignment, and lead intelligence
+capture model before expanding to buyer, seller, lifestyle, and development pages.
+
+Acceptance criteria:
+
+- Community pages can attach the Community Fit Assessment.
+- Comparison pages can attach the Comparison Match Tool.
+- Relocation guides can attach the Relocation Readiness Assessment.
+- Generated artifacts include FAQ, CTA, internal link recommendations, and related content
+  recommendations.
+
+## TIF-1405 — Lead Intelligence Capture
+
+Capture structured visitor signals from completed modules.
+
+Required fields:
+
+- Assessment type.
+- Completion date.
+- Page URL and page type.
+- Timeline.
+- Budget range.
+- Preferred communities.
+- Match scores.
+- Readiness scores.
+- Recommended communities.
+- Recommended content.
+- Recommended next step.
+- Contact/consent fields where collected.
+
+Acceptance criteria:
+
+- Completed assessments persist as structured records.
+- Captured data can be exported or consumed by future CRM/routing integrations.
+- This story does not implement new CRM, outreach automation, or lead routing.
+
+## TIF-1406 — Operator Workflow Enhancements
+
+Add TKO Report Tool support for:
+
+- Page type selection.
+- Section generation.
+- Interactive module assignment.
+- FAQ generation.
+- CTA generation.
+- Internal link recommendations.
+- Related content recommendations.
+
+Acceptance criteria:
+
+- Operators can generate a complete page structure from a selected page type.
+- The tool recommends a default interactive module based on page type.
+- Operators can review and override CTA and related content recommendations before approval.
+
+## TIF-1407 — Phase 2 Page Types
+
+Add:
+
+- Buyer Guides.
+- Seller Guides.
+- Lifestyle Pages.
+
+Acceptance criteria:
+
+- Buyer guides attach Buyer Readiness Assessment.
+- Seller guides attach Seller Readiness Assessment.
+- Lifestyle pages attach Lifestyle Match Assessment.
+- Phase 2 modules write to the same lead intelligence capture model as Phase 1.
+
+## TIF-1408 — Phase 3 Page Types & Personalization
+
+Add:
+
+- Development Pages.
+- Model Recommendation Tool.
+- Personalized recommendations.
+- Dynamic content linking.
+
+Acceptance criteria:
+
+- Development pages attach Model Recommendation Tool.
+- Recommendations can use available community/development metadata without creating a new search
+  product.
+- Dynamic linking remains reviewable and does not auto-publish.
+
+## TIF-1409 — RachelOS Assessment Integration Contract
+
+> **Status:** Specification (Discovery) · gated with the Community Intelligence Assessment on
+> revenue validation + new operator approval (DEC-49). This story defines the eventual cross-repo
+> contract; it does not authorize a build.
+
+When a visitor completes the Community Intelligence Assessment, the flow must — with **no manual
+copy/paste** — perform the following. Steps 1–4, 6–7 are owned by `rachel-realestate`; step 5 calls
+TIF (this repo):
+
+1. **Create / match a lead** via RachelDelray's existing guide-download capture (`leads` UPSERT — no
+   new CRM or capture surface).
+2. **Store the assessment answers** as structured signals on the lead (existing fact/event capture;
+   no new scoring model, no new state machine).
+3. **Generate an assessment summary** of the visitor's normalized inputs.
+4. **Generate recommended communities** (4–5) via deterministic match — recommendations only; does
+   not touch scoring, queue ranking, lifecycle, or relationship-state derivation.
+5. **Create a TIF compose request:** `POST /api/tif/compose` with framework `rachel_community`,
+   artifact `comparison_guide` (or `community_page`), voice `rachel`. TIF returns a reviewable
+   draft only — it does not publish, write into `rachel-realestate`, or create CRM records
+   (`docs/TIF_RACHEL_DRAFT_API.md`).
+6. **Attach the generated report** to the lead as a content asset (existing `content_versions`
+   pattern); the human-approval gate is retained — nothing auto-publishes.
+7. **Surface the results in RachelOS** — matched communities, the report, and qualification signals
+   appear on the lead and feed follow-up personalization (existing RIE/queue).
+
+Acceptance criteria:
+
+- The TKO side exposes the documented compose contract and returns a draft + `VERIFY` markers.
+- No step in this contract publishes content or mutates RachelOS scoring/queue/lifecycle.
+- The mirror of this contract lives in `rachel-realestate` ROS §0E.11.
+
+## Success metrics
+
+- Assessment completion rate.
+- Lead conversion rate.
+- Time on page.
+- Pages per session.
+- Consultation requests.
+- Community page coverage.
+- Comparison page coverage.
+
+## Explicitly out of scope
+
+New CRM, new predictive scoring models, new AI agent systems, new lead routing systems, outreach
+automation, client-facing SaaS, vector search, knowledge graph expansion, and automatic publishing.
+
+---
+
+# EPIC 15 — TIF v0.3 EXECUTION LAYER
+
+> **Status:** Proposed · **Priority:** P1 architecture alignment · **Classification:** BACKLOG /
+> runtime contract · **Do not implement without separate instruction.**
+>
+> **Governance:** The Execution Layer is the deterministic runtime contract that makes the existing
+> registries operational. It is not a new product, not a new platform, not client-facing SaaS, and
+> not an autonomous agent system. It preserves the one-composer rule and the human approval gate.
+
+## Objective
+
+Formalize how a composition request becomes a reviewable draft:
+
+```
+Payload
+→ Validation
+→ Framework
+→ Artifact
+→ Fact Resolution
+→ Template Population
+→ Draft Generation
+→ Voice Refinement
+→ Review
+→ Approval
+→ Publish
+```
+
+This layer bridges the Framework Registry, Artifact Registry, Voice Registry, Prompt Registry, and
+Asset Composer.
+
+## TIF-1501 — Execution API Contract
+
+Document the future composition endpoint:
+
+```http
+POST /api/tif/compose
+```
+
+Example payload:
+
+```json
+{
+  "framework": "rachel_community",
+  "artifact": "comparison_guide",
+  "voice": "rachel",
+  "inputs": {
+    "communities": ["Valencia Sound", "Valencia Grand"],
+    "county": "Palm Beach County",
+    "budget": "750000-1200000"
+  }
+}
+```
+
+Request structure:
+
+- `framework`: Framework Registry key.
+- `artifact`: Artifact Registry key.
+- `voice`: Voice Registry key.
+- `inputs`: structured payload values to validate and resolve into facts.
+
+Validation expectations:
+
+- Registry keys exist.
+- Framework allows the requested artifact.
+- Required framework inputs are present.
+- Required artifact facts can be resolved.
+- Unsupported or unresolved claims block generation.
+
+## TIF-1502 — Framework Registry Execution Fields
+
+Extend framework definitions with:
+
+- `required_inputs`
+- `optional_inputs`
+- `validation_rules`
+
+Purpose: the execution engine must know whether a request is complete before generation begins.
+
+Required examples:
+
+- `rachel_community`
+- `rachel_relocation`
+- `rachel_buyer`
+- `rachel_seller`
+
+## TIF-1503 — Artifact Registry Section Contracts
+
+Extend artifact definitions with:
+
+- `required_sections`
+- `optional_sections`
+- `required_facts`
+
+Example:
+
+```yaml
+comparison_guide:
+  required_sections:
+    - hero
+    - quick_comparison
+    - pricing
+    - lifestyle
+    - amenities
+    - recommendations
+    - faq
+    - cta
+```
+
+Artifacts are structured outputs, not freeform text blobs. The composer populates sections.
+
+## TIF-1504 — Fact Resolution Layer
+
+Introduce a conceptual Fact Resolution Layer:
+
+```ts
+resolveFacts(payload, framework, artifact)
+```
+
+Responsibilities:
+
+- Normalize payloads.
+- Resolve structured facts.
+- Prepare generation context.
+- Prevent unsupported content generation.
+
+Facts become the source of truth. The composer must not generate unsupported claims.
+
+## TIF-1505 — Voice Registry Expansion
+
+Extend voice profiles with:
+
+- `tone`
+- `avoid`
+- `prefers`
+- `cta_style`
+- `faq_style`
+- `perspective`
+
+Voice remains configuration. Voice is not a generator.
+
+## TIF-1506 — Prompt Registry
+
+Create a documented Prompt Registry with:
+
+- `key`
+- `framework`
+- `artifact`
+- `voice`
+- `version`
+
+Prompts are versioned configuration. Prompts are not business logic.
+
+## TIF-1507 — Draft Lifecycle
+
+Document and eventually support:
+
+```
+draft → review → revision_requested → approved → published
+```
+
+Acceptance criteria:
+
+- Revision history is preserved.
+- Drafts are immutable versions.
+- Review and approval remain human-controlled.
+
+## TIF-1508 — Composer Architecture
+
+Canonical composer contract:
+
+```ts
+compose(framework, artifact, voice, facts)
+```
+
+Explicitly prohibited:
+
+- `CommunityPageGenerator`
+- `ComparisonGuideGenerator`
+- `AssessmentGenerator`
+- `CaseStudyGenerator`
+- Any equivalent per-output generator family.
+
+All outputs are `Framework x Artifact x Voice` compositions through one composer.
+
+## TIF-1509 — LLM Abstraction Layer
+
+Document future model-agnostic interfaces:
+
+```ts
+generateDraft(context)
+refineDraft(draft, voice)
+```
+
+No commitment is made to Anthropic, OpenAI, local models, or any specific provider.
+
+## TIF-1510 — TIF Fact Registry (promoted to EPIC 16)
+
+> **Status:** Future capability · **Do not design implementation in this phase.**
+> **Promoted:** the Fact Registry is now a first-class initiative — see **EPIC 16** below. This
+> story remains as the Execution-Layer touchpoint: the Fact Resolution Layer *consumes* the
+> Fact Registry. EPIC 16 is the canonical definition.
+
+Purpose: create canonical structured records for Rachel content facts:
+
+- Communities.
+- Developments.
+- Neighborhoods.
+- Cities.
+- Counties.
+- Guides.
+- Lifestyle profiles.
+
+Goal: allow all future Rachel assets to share the same fact base and prevent unsupported content
+generation. The Fact Registry is a future capability supporting Fact Resolution; it is not part of
+the current implementation scope.
+
+## Success criteria
+
+- TIF documentation can explain how a payload becomes a draft.
+- Registries define eligibility, sections, facts, voice, and prompts.
+- The composer remains singular and model-agnostic.
+- Human review and approval remain mandatory before publication.
+
+## Explicitly out of scope
+
+Implementation, new infrastructure, production functionality changes, client-facing SaaS,
+autonomous agents, new CRM, lead routing, outreach automation, vector search, knowledge graph
+expansion, and automatic publishing.
+
+---
+
+# EPIC 16 — TIF FACT REGISTRY
+
+> **Status:** Proposed · **Classification:** BACKLOG / future capability ·
+> **Do not design implementation in this phase.** · **Sequenced after EPIC 15 (Execution Layer).**
+>
+> **Governance:** The Fact Registry is internal TIF data infrastructure, not a product, platform,
+> client-facing SaaS, knowledge graph, or vector store. It is the canonical *source of truth* that
+> the runtime **Fact Resolution Layer** (EPIC 15 / TIF-1510) consumes — the two are distinct: the
+> Registry *stores* canonical facts; Fact Resolution *resolves a payload against them*. Building it
+> is not authorized here; this epic defines the initiative.
+
+## Objective
+
+Create canonical, reusable, structured records that become the single source of truth for every
+generated asset, so the same facts power SEO pages, reports, assessments, emails, social content,
+and comparison guides — and so the composer can never invent unsupported pricing, community, or
+market claims.
+
+## Canonical record types
+
+- Communities.
+- Developments.
+- Neighborhoods.
+- Cities.
+- Counties.
+- Lifestyle profiles.
+- Buyer personas.
+
+(Supersedes the narrower TIF-1510 list by adding lifestyle profiles and buyer personas as
+first-class record types.)
+
+## Principles
+
+- One fact, one canonical record — assets reference facts, they do not restate them.
+- Facts carry verifiability/confidence so the approval and confidence gates (PRD Deliverable 4) can
+  use them.
+- The Fact Registry feeds **all three publication targets** (RachelDelray, TKO, CRE — `GOVERNANCE.md`
+  §5), not only Rachel.
+- No knowledge graph, no embeddings, no vector search (those remain DEFERRED).
+
+## TIF-1601 — Fact record type definitions
+
+Define the schema/contract for each canonical record type (fields, identity/slug, source refs,
+verifiability, relationships to other facts). Configuration/spec only in this phase.
+
+Acceptance criteria:
+
+- Each record type has a documented field contract and identity rule.
+- Records can express relationships (e.g. a community belongs to a city/county; a development sits
+  in a community).
+- Every fact can carry a source ref and verifiability tier.
+
+## TIF-1602 — Fact Resolution binding
+
+Document how the Execution Layer's Fact Resolution (TIF-1510) reads the registry: required-fact
+resolution, fail-fast when a required fact is missing, and the rule that unresolved facts block
+draft generation.
+
+Acceptance criteria:
+
+- The compose contract's `required_facts` resolve against registry records.
+- A missing required fact stops execution before draft generation (no invented claims).
+
+## Explicitly out of scope
+
+Implementation, schema/migrations, new infrastructure, knowledge graph, vector search, embeddings,
+client-facing SaaS, and automatic publishing.
+
+---
+
+# EPIC 17 — PUBLICATION INTEGRATION (DEFERRED)
+
+> **Status:** Proposed · **Classification:** DEFERRED · **Do not build.**
+>
+> **Governance:** Documents the placement/distribution layer that sits *downstream* of TIF
+> generation. It is DEFERRED because it touches the standing **no-auto-publish** gate and depends on
+> the Execution Layer (EPIC 15), Fact Registry (EPIC 16), and the assessment integration (TIF-1409)
+> shipping first. No autonomous distribution, ever, without a human approval gate.
+
+## Objective
+
+Define how generated, approved assets reach each publication target and, later, external channels —
+while preserving the rule that **TIF generates and publication layers place/present**, and that a
+human approves every publication.
+
+## Publication targets and asset types
+
+| Target | Repo | Asset types |
+|---|---|---|
+| RachelDelray | `rachel-realestate` | community/comparison/relocation/buyer/seller/lifestyle pages |
+| TKO Site | `tko-site` | articles · assessments · executive briefs · case studies · one-pagers |
+| CRE Intelligence | `cre-intelligence` | intelligence · market · opportunity reports |
+
+## TIF-1701 — Publication adapters (deferred)
+
+Per-target adapters that accept an approved asset and hand it to the target's own publishing
+pipeline. TIF never writes into a publication repo directly; it exposes drafts/approved assets and
+the target pulls them (today: `POST /api/tif/compose`, drafts only — `docs/TIF_RACHEL_DRAFT_API.md`).
+
+## TIF-1702 — External distribution (deferred)
+
+Google, Facebook, Email, YouTube, landing/community pages. **DEFERRED** behind the no-auto-publish
+gate; every distribution requires explicit human approval. Roadmap Phases 6–7 in
+`docs/CONTENT_PIPELINE_ROADMAP.md`.
+
+## Explicitly out of scope
+
+Any auto-publishing, autonomous distribution, client-facing SaaS, new CRM, or outreach automation.
 
 ---
 
