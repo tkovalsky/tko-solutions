@@ -1508,12 +1508,22 @@ automation, client-facing SaaS, vector search, knowledge graph expansion, and au
 
 # EPIC 15 — TIF v0.3 EXECUTION LAYER
 
-> **Status:** Proposed · **Priority:** P1 architecture alignment · **Classification:** BACKLOG /
-> runtime contract · **Do not implement without separate instruction.**
+> **Status:** v0.1 scaffold AUTHORIZED & BUILT (2026-06-30) · **Priority:** P1 architecture
+> alignment · **Classification:** SANCTIONED (integration boundary) — the operator lifted the build
+> gate (`GOVERNANCE.md` §6).
+>
+> **Built (v0.1 scaffold):** `Payload → Validation → Run → Draft → Response` via
+> `src/lib/tif/execution.ts` (`runCompose`), the shared `src/lib/tif/contract.ts`, and
+> `POST /api/tif/compose` (now returns `{ runId, draftId, status, … }` alongside the existing
+> markdown draft). Run/Draft identifiers are generated per request; **durable Run/Draft persistence
+> is the next step** (the PRD runtime delivery spine — Run/Draft tables) and layers on top of this
+> contract without changing it.
 >
 > **Governance:** The Execution Layer is the deterministic runtime contract that makes the existing
 > registries operational. It is not a new product, not a new platform, not client-facing SaaS, and
 > not an autonomous agent system. It preserves the one-composer rule and the human approval gate.
+> Fact Resolution / Voice Refinement / Review→Publish remain documented future stages, not yet
+> built.
 
 ## Objective
 

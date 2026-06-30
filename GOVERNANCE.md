@@ -115,6 +115,14 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
   `Payload → Validation → Framework → Artifact → Fact Resolution → Template Population → Draft →
   Voice Refinement → Review → Approval → Publish`. It bridges the existing registries and Asset
   Composer; it does not authorize client-facing SaaS, autonomous agents, or generic platform work.
+- **Operator authorization (2026-06-30) — TIF↔RachelOS integration scaffold UNBLOCKED:** the
+  operator has lifted the build gate for the **cross-site integration boundary** (see §6). The
+  TIF v0.3 **Execution Layer v0.1 scaffold** and the **TKO↔Rachel compose contract** are authorized
+  and built: `POST /api/tif/compose` now runs `Payload → Validation → Run → Draft → Response`
+  (`src/lib/tif/execution.ts` + `contract.ts`), and RachelOS has a consumer client
+  (`rachel-realestate/src/lib/tif/client.ts`). This is the integration boundary only — **not** the
+  full assessment engine, content engine, publishing automation, or AI generation. All retained
+  constraints in §6 still hold.
 
 ### BACKLOG (real, not started)
 - Rachel case study as a polished sales asset.
@@ -239,3 +247,42 @@ TKO→Rachel draft contract in `docs/TIF_RACHEL_DRAFT_API.md`.
 
 ACTIVE work (§2) still serves the same two outcomes: **a credible proof surface (A2)** and **a
 first paid assessment (A1)** — now accelerated by the SANCTIONED-NEXT v0.1 spine (N1).
+
+---
+
+## 6. Operator Authorization — TIF↔RachelOS Integration (2026-06-30)
+
+The operator has **lifted the build gate** that previously kept the cross-site TIF integration in
+BACKLOG/DEFERRED/Discovery. Both repos may now **implement, enhance, and integrate** the TIF compose
+boundary between `tko-site` and `rachel-realestate`.
+
+### UNBLOCKED (authorized to build now)
+- **TIF v0.3 Execution Layer — v0.1 scaffold** (EPIC 15): `Payload → Validation → Run → Draft →
+  Response`. Built: `src/lib/tif/execution.ts`, `src/lib/tif/contract.ts`, and
+  `POST /api/tif/compose` now returns `{ runId, draftId, status, … }`.
+- **TKO↔Rachel compose contract** (`docs/TIF_RACHEL_DRAFT_API.md`): the stable request/response
+  boundary; mirrored type contract in both repos (`src/lib/tif/contract.ts`).
+- **RachelOS consumer client** (`rachel-realestate/src/lib/tif/client.ts`):
+  `composeAssessmentReport`, `composeCommunityGuide`, `composeComparisonGuide`.
+- **EPIC 14 Phase-1 page types** and the **Community-Match framework** may be built incrementally on
+  top of this contract (community/comparison/relocation first).
+- **EPIC 16 Fact Registry** may proceed when the composer needs a shared fact base.
+
+### RETAINED (still binding — NOT lifted by this authorization)
+- **≤3 active / ≤5 portfolio caps** and **revenue work ships first** — integration advances on
+  excess capacity; this authorization does not raise the caps.
+- **No client-facing SaaS / sold product, ever.** TIF stays internal tooling.
+- **Speculative tail stays DEFERRED:** knowledge graph, vector search, agent framework, generic
+  platform.
+- **Human approval gate on every published asset** — TIF returns drafts only; nothing auto-publishes
+  or auto-distributes. Downstream distribution (EPIC 17 / Roadmap Phases 6–7) stays DEFERRED.
+- **RachelOS internals are protected:** no integration work touches RachelOS scoring, queue ranking,
+  lifecycle, or relationship-state derivation (`rachel-realestate/CLAUDE.md` rules).
+- **Boundary discipline:** TKO owns composition; Rachel owns saving/editing/review/approval/
+  publishing (DEC-56). TIF never publishes, writes into `rachel-realestate`, sends outreach, or
+  creates CRM records.
+
+### NOT authorized by this entry
+The **full Community Intelligence Assessment** build (scoring, widget, lead-automation wiring) still
+requires its own operator approval + revenue validation per `rachel-realestate` DEC-49/DEC-57. This
+entry authorizes the **integration boundary/scaffold**, not the end-to-end assessment product.
