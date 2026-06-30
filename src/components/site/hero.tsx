@@ -26,14 +26,11 @@ const pillars = [
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-midnight text-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-      >
-        <NetworkVisual className="absolute inset-0 opacity-70" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgb(var(--accent-rgb)/0.18),_transparent_62%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,_rgba(6,10,20,0.98)_0%,_rgba(6,10,20,0.9)_38%,_rgba(6,10,20,0.68)_68%,_rgba(6,10,20,0.34)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-midnight/20 via-transparent to-midnight/70" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <NetworkVisual className="absolute inset-0 opacity-45 sm:opacity-55 lg:opacity-70" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgb(var(--accent-rgb)/0.2),_transparent_62%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,_rgba(6,10,20,0.98)_0%,_rgba(6,10,20,0.92)_36%,_rgba(6,10,20,0.72)_68%,_rgba(6,10,20,0.42)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,_rgba(6,10,20,0.46)_0%,_rgba(6,10,20,0.16)_42%,_rgba(6,10,20,0.82)_100%)]" />
       </div>
       <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8 lg:py-28">
         <motion.div
@@ -42,10 +39,6 @@ export function Hero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative z-10"
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 bg-[radial-gradient(ellipse_at_left,_rgba(6,10,20,0.95),_rgba(6,10,20,0.8)_42%,_transparent_74%)] sm:-inset-x-10 lg:-inset-y-12"
-          />
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-light">
             Operational Knowledge Systems
           </p>
@@ -53,7 +46,7 @@ export function Hero() {
             Operational Knowledge Systems for Complex{" "}
             <span className="text-primary-light">Workflows</span>
           </h1>
-          <p className="mt-6 max-w-[52ch] text-lg leading-8 text-white/75">
+          <p className="mt-6 max-w-[52ch] text-lg leading-8 text-white/80">
             We help organizations identify where critical knowledge, decisions,
             and workflow context live inside people instead of systems and build
             the operational layer that turns that knowledge into trusted action.
@@ -61,7 +54,7 @@ export function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <LinkButton
               href="/contact"
-              className="shadow-[0_18px_38px_-18px_rgb(var(--accent-rgb)/0.95)] ring-1 ring-white/10 transition-[background-color,border-color,box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_22px_44px_-18px_rgb(var(--accent-rgb)/1)]"
+              className="shadow-[0_18px_38px_-16px_rgb(var(--accent-rgb)/0.95),0_10px_24px_-16px_rgba(0,0,0,0.9)] ring-1 ring-white/15 transition-[background-color,border-color,box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-16px_rgb(var(--accent-rgb)/1),0_16px_32px_-18px_rgba(0,0,0,0.95)]"
             >
               Schedule an Operational Recovery Assessment
             </LinkButton>
@@ -73,7 +66,7 @@ export function Hero() {
               Schedule an Operational Truth Diagnostic
             </LinkButton>
           </div>
-          <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/75">
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/75">
             <li className="flex items-center gap-2">
               <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
               Prior authorization
@@ -87,7 +80,7 @@ export function Hero() {
               Human-in-the-loop AI
             </li>
           </ul>
-          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-4">
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-4">
             {pillars.map((pillar) => (
               <div key={pillar.title} className="flex gap-3">
                 <pillar.icon className="mt-0.5 size-5 shrink-0 text-primary-light" aria-hidden="true" />
