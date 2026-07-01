@@ -50,7 +50,12 @@ export default async function TifDeliverablesPage() {
     }),
     tifDb.asset.findMany({
       orderBy: [{ assetType: "asc" }, { title: "asc" }],
-      include: {
+      select: {
+        slug: true,
+        title: true,
+        businessUnit: true,
+        assetType: true,
+        status: true,
         opportunity: { select: { slug: true, title: true, angle: true, audience: true } },
         evidenceLinks: { include: { evidence: true } },
       },
