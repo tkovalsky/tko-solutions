@@ -17,9 +17,26 @@ export const DELIVERABLE_TYPES = [
 ] as const;
 
 export const DELIVERABLE_STATUSES = ["ready", "in_progress", "blocked", "published"] as const;
+export const CHANNEL_PACKAGE_TYPES = [
+  "seo_page",
+  "pdf",
+  "linkedin_post",
+  "linkedin_carousel",
+  "facebook_post",
+  "facebook_ad",
+  "reddit_post",
+  "email_sequence",
+  "crm_next_touch_asset",
+  "sales_one_pager",
+] as const;
+export const CHANNEL_PACKAGE_READINESS_STATUSES = ["ready", "partial", "blocked"] as const;
 
 export type DeliverableType = (typeof DELIVERABLE_TYPES)[number];
 export type DeliverableStatus = (typeof DELIVERABLE_STATUSES)[number];
+export type ChannelPackageType = (typeof CHANNEL_PACKAGE_TYPES)[number];
+export type ChannelPackageReadinessStatus = (typeof CHANNEL_PACKAGE_READINESS_STATUSES)[number];
+export type ChannelPackageReadiness = Record<ChannelPackageType, ChannelPackageReadinessStatus>;
+export type ChannelPackageReadinessCounts = Record<ChannelPackageReadinessStatus, number>;
 
 type SourceRecord = {
   kind: "asset" | "opportunity" | "evidence";
@@ -45,6 +62,19 @@ type DeliverableEvaluationInput = {
   evidence: EvidenceInput[];
 };
 
+type ChannelReadinessSignals = {
+  title_exists: boolean;
+  topic_exists: boolean;
+  audience_exists: boolean;
+  body_content_exists: boolean;
+  draft_exists: boolean;
+  source_insight_exists: boolean;
+  source_deliverable_exists: boolean;
+  cta_exists: boolean;
+  offer_exists: boolean;
+  next_action_exists: boolean;
+};
+
 export type Deliverable = {
   id: string;
   title: string;
@@ -66,7 +96,11 @@ export type Deliverable = {
   asset_slug: string | null;
   opportunity_slug: string | null;
   business_unit: string;
+  channel_signals: ChannelReadinessSignals;
+  channel_readiness: ChannelPackageReadiness;
+  channel_readiness_counts: ChannelPackageReadinessCounts;
 };
+type DeliverableBeforeChannelReadiness = Omit<Deliverable, "channel_readiness" | "channel_readiness_counts">;
 
 export type BlockerDetail = {
   kind: "missing_evidence" | "missing_proof" | "missing_recommendation" | "missing_outcome_metric" | "missing_component";
@@ -118,6 +152,19 @@ const TYPE_LABELS: Record<DeliverableType, string> = {
   facebook_ad: "Facebook Ads",
   reddit_post: "Reddit Posts",
   crm_next_touch_asset: "CRM Next Touch Assets",
+};
+
+export const CHANNEL_PACKAGE_LABELS: Record<ChannelPackageType, string> = {
+  seo_page: "SEO Page",
+  pdf: "PDF",
+  linkedin_post: "LinkedIn Post",
+  linkedin_carousel: "LinkedIn Carousel",
+  facebook_post: "Facebook Post",
+  facebook_ad: "Facebook Ad",
+  reddit_post: "Reddit Post",
+  email_sequence: "Email Sequence",
+  crm_next_touch_asset: "CRM Next Touch Asset",
+  sales_one_pager: "Sales One Pager",
 };
 
 const ASSET_TYPE_TO_DELIVERABLE: Record<string, DeliverableType | undefined> = {
@@ -238,6 +285,7 @@ const BUSINESS_VALUE_BY_TYPE: Record<DeliverableType, number> = {
   reddit_post: 62,
   crm_next_touch_asset: 74,
 };
+const SALES_ONE_PAGER_BUSINESS_VALUE_THRESHOLD = 85;
 
 const COMPONENT_RULES: Record<DeliverableType, ComponentRule[]> = {
   executive_brief: [
@@ -375,6 +423,15 @@ export function buildDeliverableRegistry({ opportunities, assets }: BuildDeliver
       assetType: opportunity.assetType,
       evidence,
     });
+    const channelSignals = getChannelReadinessSignals({
+      type,
+      title: opportunity.title,
+      angle: opportunity.angle,
+      audience: opportunity.audience,
+      assetStatus: asset?.status ?? null,
+      assetType: opportunity.assetType,
+      evidence,
+    });
 
     deliverables.set(opportunity.slug, enrichDeliverable({
       id: opportunity.slug,
@@ -401,6 +458,7 @@ export function buildDeliverableRegistry({ opportunities, assets }: BuildDeliver
       asset_slug: asset?.slug ?? null,
       opportunity_slug: opportunity.slug,
       business_unit: opportunity.businessUnit,
+      channel_signals: channelSignals,
     }));
   }
 
@@ -412,6 +470,15 @@ export function buildDeliverableRegistry({ opportunities, assets }: BuildDeliver
 
     const evidence = asset.evidenceLinks.map((link) => link.evidence);
     const evaluation = evaluateDeliverableReadiness({
+      type,
+      title: asset.title,
+      angle: asset.opportunity?.angle ?? null,
+      audience: asset.opportunity?.audience ?? null,
+      assetStatus: asset.status,
+      assetType: asset.assetType,
+      evidence,
+    });
+    const channelSignals = getChannelReadinessSignals({
       type,
       title: asset.title,
       angle: asset.opportunity?.angle ?? null,
@@ -448,6 +515,7 @@ export function buildDeliverableRegistry({ opportunities, assets }: BuildDeliver
       asset_slug: asset.slug,
       opportunity_slug: asset.opportunity?.slug ?? null,
       business_unit: asset.businessUnit,
+      channel_signals: channelSignals,
     }));
   }
 
@@ -498,6 +566,84 @@ export function evaluateDeliverableReadiness(input: DeliverableEvaluationInput) 
   return { readiness, missing_components, blocking_gaps };
 }
 
+export function getChannelPackageReadiness(deliverable: Pick<
+  Deliverable,
+  "type" | "status" | "business_value_score" | "channel_signals"
+>): ChannelPackageReadiness {
+  const isDeliverableReady = isReadyForChannels(deliverable.status);
+  const isDeliverableIncomplete = !isDeliverableReady;
+  const isCarouselType = ["comparison", "guide", "report"].includes(deliverable.type);
+  const signals = deliverable.channel_signals;
+
+  return {
+    seo_page:
+      signals.title_exists && signals.topic_exists && isDeliverableReady
+        ? "ready"
+        : signals.title_exists && isDeliverableIncomplete
+          ? "partial"
+          : "blocked",
+    pdf:
+      isDeliverableReady && signals.body_content_exists
+        ? "ready"
+        : signals.draft_exists
+          ? "partial"
+          : "blocked",
+    linkedin_post:
+      signals.source_insight_exists || isDeliverableReady
+        ? "ready"
+        : "blocked",
+    linkedin_carousel:
+      isCarouselType && isDeliverableReady
+        ? "ready"
+        : signals.draft_exists
+          ? "partial"
+          : "blocked",
+    facebook_post:
+      signals.audience_exists && isDeliverableReady
+        ? "ready"
+        : "blocked",
+    facebook_ad:
+      signals.audience_exists
+        && signals.cta_exists
+        && (signals.offer_exists || signals.source_deliverable_exists || isDeliverableReady)
+        ? "ready"
+        : signals.audience_exists && !signals.cta_exists
+          ? "partial"
+          : "blocked",
+    reddit_post:
+      signals.topic_exists && signals.source_insight_exists
+        ? "ready"
+        : "blocked",
+    email_sequence:
+      signals.audience_exists && isDeliverableReady
+        ? "ready"
+        : signals.draft_exists
+          ? "partial"
+          : "blocked",
+    crm_next_touch_asset:
+      signals.audience_exists && signals.next_action_exists && isDeliverableReady
+        ? "ready"
+        : "blocked",
+    sales_one_pager:
+      (isDeliverableReady && signals.offer_exists)
+        || deliverable.business_value_score > SALES_ONE_PAGER_BUSINESS_VALUE_THRESHOLD
+        ? "ready"
+        : signals.draft_exists
+          ? "partial"
+          : "blocked",
+  };
+}
+
+export function summarizeChannelPackageReadiness(readiness: ChannelPackageReadiness): ChannelPackageReadinessCounts {
+  return CHANNEL_PACKAGE_TYPES.reduce<ChannelPackageReadinessCounts>(
+    (counts, type) => {
+      counts[readiness[type]] += 1;
+      return counts;
+    },
+    { ready: 0, partial: 0, blocked: 0 },
+  );
+}
+
 function classifyDeliverableStatus(
   evaluation: ReturnType<typeof evaluateDeliverableReadiness>,
   assetStatus: string | null,
@@ -508,13 +654,14 @@ function classifyDeliverableStatus(
   return "in_progress";
 }
 
-function enrichDeliverable(deliverable: Deliverable): Deliverable {
+function enrichDeliverable(
+  deliverable: DeliverableBeforeChannelReadiness,
+): Deliverable {
   const businessValueScore = scoreBusinessValue(deliverable.type, deliverable.business_unit);
   const priorityScore = scorePriority(deliverable);
   const completionProbability = scoreCompletionProbability(deliverable);
   const estimatedEffortMinutes = estimateEffortMinutes(deliverable);
-
-  return {
+  const enriched = {
     ...deliverable,
     priority_score: priorityScore,
     business_value_score: businessValueScore,
@@ -523,9 +670,16 @@ function enrichDeliverable(deliverable: Deliverable): Deliverable {
     next_action: getNextAction(deliverable),
     ignore_reason: getIgnoreReason(deliverable, priorityScore, completionProbability, estimatedEffortMinutes),
   };
+  const channelReadiness = getChannelPackageReadiness(enriched);
+
+  return {
+    ...enriched,
+    channel_readiness: channelReadiness,
+    channel_readiness_counts: summarizeChannelPackageReadiness(channelReadiness),
+  };
 }
 
-function scorePriority(deliverable: Deliverable) {
+function scorePriority(deliverable: DeliverableBeforeChannelReadiness) {
   const evidenceScore = Math.min(deliverable.evidence_count, 4) * 4;
   const statusScore: Record<DeliverableStatus, number> = {
     ready: 20,
@@ -549,7 +703,7 @@ function scoreBusinessValue(type: DeliverableType, businessUnit: string) {
   return clamp(BUSINESS_VALUE_BY_TYPE[type] + businessUnitBonus, 0, 100);
 }
 
-function scoreCompletionProbability(deliverable: Deliverable) {
+function scoreCompletionProbability(deliverable: DeliverableBeforeChannelReadiness) {
   const assetBonus = deliverable.has_asset ? 8 : 0;
   const evidenceBonus = Math.min(deliverable.evidence_count, 3) * 3;
   return clamp(
@@ -559,7 +713,7 @@ function scoreCompletionProbability(deliverable: Deliverable) {
   );
 }
 
-function estimateEffortMinutes(deliverable: Deliverable) {
+function estimateEffortMinutes(deliverable: DeliverableBeforeChannelReadiness) {
   if (deliverable.status === "published") return 0;
   if (deliverable.status === "ready" && deliverable.has_asset) return 15;
 
@@ -569,7 +723,7 @@ function estimateEffortMinutes(deliverable: Deliverable) {
   return clamp(base + missingWork + blockerWork, 15, 180);
 }
 
-function getNextAction(deliverable: Deliverable) {
+function getNextAction(deliverable: DeliverableBeforeChannelReadiness) {
   if (deliverable.status === "published") return "Ignore for now: already published.";
   if (deliverable.status === "ready" && deliverable.has_asset) return "Review final asset and publish manually.";
   if (deliverable.status === "ready") return "Produce the deliverable from the existing opportunity and evidence.";
@@ -583,7 +737,7 @@ function getNextAction(deliverable: Deliverable) {
 }
 
 function getIgnoreReason(
-  deliverable: Deliverable,
+  deliverable: DeliverableBeforeChannelReadiness,
   priorityScore: number,
   completionProbability: number,
   estimatedEffortMinutes: number,
@@ -632,12 +786,51 @@ function sourceRecordsFromEvidence(evidence: EvidenceInput[]): SourceRecord[] {
   }));
 }
 
+function getChannelReadinessSignals(input: DeliverableEvaluationInput): ChannelReadinessSignals {
+  const assetStatus = input.assetStatus?.toLowerCase() ?? null;
+
+  return {
+    title_exists: hasMeaningfulText(input.title),
+    topic_exists: hasTopic(input),
+    audience_exists: hasMeaningfulText(input.audience),
+    body_content_exists: input.assetStatus != null,
+    draft_exists: assetStatus != null && assetStatus !== "published",
+    source_insight_exists: hasSourceInsight(input),
+    source_deliverable_exists: hasSourceDeliverable(input),
+    cta_exists: hasCta(input),
+    offer_exists: hasOffer(input),
+    next_action_exists: hasNextAction(input),
+  };
+}
+
+function isReadyForChannels(status: DeliverableStatus) {
+  return status === "ready" || status === "published";
+}
+
 function allText(input: DeliverableEvaluationInput) {
   return [
     input.title,
     input.angle,
     input.audience,
     input.assetType,
+    ...input.evidence.flatMap((record) => [
+      record.observation,
+      record.proofRef,
+      record.claimGuard,
+      record.domain,
+      record.slug,
+    ]),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
+
+function descriptiveText(input: DeliverableEvaluationInput) {
+  return [
+    input.title,
+    input.angle,
+    input.audience,
     ...input.evidence.flatMap((record) => [
       record.observation,
       record.proofRef,
@@ -684,7 +877,7 @@ function hasCta(input: DeliverableEvaluationInput) {
 }
 
 function hasNextAction(input: DeliverableEvaluationInput) {
-  return hasSignal(allText(input), NEXT_ACTION_SIGNALS);
+  return hasSignal(descriptiveText(input), NEXT_ACTION_SIGNALS);
 }
 
 function comparedEntityCount(input: DeliverableEvaluationInput) {

@@ -418,6 +418,14 @@ to the core deliverable taxonomy for read-only planning. The taxonomy expansion 
 readiness and queue visibility only. It does not add schema changes, stored-record mutations,
 generation support, publishing support, or channel automation.
 
+**Built 2026-07-01:** TIF deliverables now include Channel Package Readiness as computed metadata
+inside the existing `/tif/deliverables` read model. Operators can answer "what could this
+deliverable become?" without creating a channel package record. The readiness layer evaluates SEO
+page, PDF, LinkedIn post, LinkedIn carousel, Facebook post, Facebook ad, Reddit post, email
+sequence, CRM next-touch asset, and sales one-pager as `ready`, `partial`, or `blocked` from
+existing deliverable metadata only. It is read-only and runtime-derived. It adds no schema changes,
+no persistence, no publication logic, no generation logic, no AI scoring, and no automation.
+
 **TIF v0.3 Execution Layer (architecture, not new product):** the next documentation layer
 formalizes how the registries execute. The canonical generation model is
 `Payload → Validation → Framework → Artifact → Fact Resolution → Template Population → Draft

@@ -1286,7 +1286,7 @@ regeneration of edited assets. Files changed: `prisma/schema.prisma`, `scripts/t
 `src/app/tif/regenerate-asset-form.test.tsx`.
 
 **Priority 6 — Deliverable-Centric Production View.** **Implemented 2026-07-01; taxonomy expanded
-2026-07-01.** `/tif/deliverables`
+2026-07-01; channel readiness metadata added 2026-07-01.** `/tif/deliverables`
 adds a deterministic production-management layer over the existing Evidence, Asset Opportunity, and
 Asset records. It implements the missing operator answer to "what can be shipped?" without changing
 storage or introducing content generation. Supported deliverable types: `article`, `assessment`,
@@ -1299,10 +1299,16 @@ record fields and text/evidence signals. Status is computed as `ready`, `in_prog
 or `published`; `published` still comes only from the existing `Asset` status. The dashboard reports
 Ready to Produce, Ready to Publish, Blocked, Published, and per-type queue eligibility. Queue
 buckets remain one shared deterministic queue: Next Best Deliverables, Ready To Produce, Publish
-Today, Blocked, and Ignore For Now. No migrations, schema changes, stored-record mutations,
-publishing support, channel automation, or generation support are part of this layer. Files changed:
-`src/lib/tif/deliverables.ts`, `src/app/tif/deliverables/page.tsx`, and `src/app/tif/page.tsx`.
-Tests added: `src/lib/tif/deliverables.test.ts`.
+Today, Blocked, and Ignore For Now. Channel Package Readiness is now computed in the same read
+model for SEO page, PDF, LinkedIn post, LinkedIn carousel, Facebook post, Facebook ad, Reddit post,
+email sequence, CRM next-touch asset, and sales one-pager. It returns `ready`, `partial`, or
+`blocked` from existing deliverable metadata only and answers "what could this deliverable become?"
+without creating packages. Queue rows show Potential Channels counts; deliverable rows show the
+ready/partial/blocked channel lists. No migrations, schema changes, stored-record mutations,
+persisted readiness values, publishing support, channel automation, AI scoring, or generation
+support are part of this layer. Files changed: `src/lib/tif/deliverables.ts`,
+`src/app/tif/deliverables/page.tsx`, and `src/app/tif/page.tsx`. Tests added:
+`src/lib/tif/deliverables.test.ts`.
 
 ## Planned, not implemented (do not build without explicit instruction)
 

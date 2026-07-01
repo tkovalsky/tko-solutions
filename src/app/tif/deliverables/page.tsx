@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  CHANNEL_PACKAGE_LABELS,
+  CHANNEL_PACKAGE_TYPES,
   DELIVERABLE_STATUSES,
   DELIVERABLE_TYPES,
+  type ChannelPackageReadinessStatus,
   type Deliverable,
   type DeliverableStatus,
   type DeliverableType,
@@ -76,8 +79,8 @@ export default async function TifDeliverablesPage() {
         <h1 className="mt-2 text-3xl font-semibold">Evidence → Finding → Payload → Deliverable</h1>
         <p className="mt-3 max-w-[72ch] text-sm leading-6 text-muted">
           A production-management readout over existing Evidence, Opportunity, and Asset rows. It
-          uses deterministic readiness rules only. No drafting, publishing, AI scoring, or storage
-          redesign happens here.
+          uses deterministic readiness rules only, including computed channel package readiness.
+          No drafting, publishing, AI scoring, or storage redesign happens here.
         </p>
       </header>
 
@@ -190,6 +193,12 @@ function QueueRow({ deliverable, rank }: { deliverable: Deliverable; rank: numbe
           </span>
         </div>
         <p className="mt-2 text-sm text-muted">{deliverable.next_action}</p>
+        <p className="mt-2 text-xs text-muted">
+          <span className="font-semibold text-foreground/70">Potential Channels:</span>{" "}
+          {deliverable.channel_readiness_counts.ready} Ready ·{" "}
+          {deliverable.channel_readiness_counts.partial} Partial ·{" "}
+          {deliverable.channel_readiness_counts.blocked} Blocked
+        </p>
         {deliverable.missing_components.length > 0 && (
           <p className="mt-2 text-xs text-muted">
             <span className="font-semibold text-foreground/70">Missing:</span>{" "}
@@ -390,6 +399,8 @@ function DeliverableRow({ deliverable }: { deliverable: Deliverable }) {
         </div>
       )}
 
+      <ChannelReadinessSection deliverable={deliverable} />
+
       <details className="mt-3 text-xs text-muted">
         <summary className="cursor-pointer font-semibold text-foreground/70">Source records</summary>
         <ul className="mt-2 space-y-1">
@@ -401,6 +412,44 @@ function DeliverableRow({ deliverable }: { deliverable: Deliverable }) {
         </ul>
       </details>
     </article>
+  );
+}
+
+function ChannelReadinessSection({ deliverable }: { deliverable: Deliverable }) {
+  return (
+    <div className="mt-4 border-t border-border pt-3 text-xs text-muted">
+      <p className="font-semibold text-foreground/70">Channel Readiness:</p>
+      <div className="mt-2 grid gap-2 sm:grid-cols-3">
+        <ChannelReadinessGroup deliverable={deliverable} status="ready" />
+        <ChannelReadinessGroup deliverable={deliverable} status="partial" />
+        <ChannelReadinessGroup deliverable={deliverable} status="blocked" />
+      </div>
+    </div>
+  );
+}
+
+function ChannelReadinessGroup({
+  deliverable,
+  status,
+}: {
+  deliverable: Deliverable;
+  status: ChannelPackageReadinessStatus;
+}) {
+  const channels = CHANNEL_PACKAGE_TYPES.filter((type) => deliverable.channel_readiness[type] === status);
+  const label = status === "ready" ? "Ready" : status === "partial" ? "Partial" : "Blocked";
+
+  return (
+    <div>
+      <p className="font-semibold text-foreground/70">
+        {label} ({channels.length})
+      </p>
+      <ul className="mt-1 space-y-1">
+        {channels.map((type) => (
+          <li key={`${deliverable.id}-${status}-${type}`}>{CHANNEL_PACKAGE_LABELS[type]}</li>
+        ))}
+        {channels.length === 0 && <li>None</li>}
+      </ul>
+    </div>
   );
 }
 

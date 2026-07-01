@@ -118,3 +118,27 @@ Next Best Deliverables, Ready To Produce, Publish Today, Blocked, and Ignore For
 support, channel automation, or production workflow changes are authorized by this decision.
 Deliverables remain read-only planning objects over existing Evidence, Asset Opportunity, and Asset
 records.
+
+## DEC-2026-07-01-TIF-Channel-Package-Readiness
+
+**Status:** Ratified and implemented
+
+**Context:** The content operating model says deliverables can become channel packages, but the
+implemented registry intentionally does not create channel package entities yet. Operators still
+need a fast answer to "this deliverable exists; what channels could it support?"
+
+**Decision:** Add Channel Package Readiness as computed metadata layered onto the existing
+Deliverable Registry read model.
+
+**Implementation:** `getChannelPackageReadiness(deliverable)` evaluates SEO page, PDF, LinkedIn
+post, LinkedIn carousel, Facebook post, Facebook ad, Reddit post, email sequence, CRM next-touch
+asset, and sales one-pager as `ready`, `partial`, or `blocked`. The rules are deterministic and
+use only current deliverable metadata: title, topic/insight, audience, asset/draft presence, CTA,
+offer, next action, deliverable type, status, and existing business value score.
+
+**UI:** `/tif/deliverables` now shows Potential Channels counts in the queue and a Channel
+Readiness section on deliverable rows.
+
+**Constraints:** No Channel Package entity, table, migration, stored readiness value, database
+write, publishing workflow, generation workflow, AI scoring, or automation is introduced. This is
+operator visibility only.
