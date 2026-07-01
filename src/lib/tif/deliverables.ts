@@ -1,11 +1,19 @@
 export const DELIVERABLE_TYPES = [
-  "executive_brief",
-  "assessment",
-  "case_study",
   "article",
+  "assessment",
   "report",
+  "executive_brief",
+  "case_study",
   "offer_asset",
   "sales_asset",
+  "comparison",
+  "guide",
+  "email_sequence",
+  "landing_page",
+  "linkedin_post",
+  "facebook_ad",
+  "reddit_post",
+  "crm_next_touch_asset",
 ] as const;
 
 export const DELIVERABLE_STATUSES = ["ready", "in_progress", "blocked", "published"] as const;
@@ -68,6 +76,7 @@ export type BlockerDetail = {
 type ComponentRule = {
   key: string;
   label: string;
+  blocksReadiness?: boolean;
   isPresent: (input: DeliverableEvaluationInput) => boolean;
 };
 
@@ -94,24 +103,45 @@ type BuildDeliverablesInput = {
 };
 
 const TYPE_LABELS: Record<DeliverableType, string> = {
-  executive_brief: "Executive Briefs",
-  assessment: "Assessments",
-  case_study: "Case Studies",
   article: "Articles",
+  assessment: "Assessments",
   report: "Reports",
+  executive_brief: "Executive Briefs",
+  case_study: "Case Studies",
   offer_asset: "Offer Assets",
   sales_asset: "Sales Assets",
+  comparison: "Comparisons",
+  guide: "Guides",
+  email_sequence: "Email Sequences",
+  landing_page: "Landing Pages",
+  linkedin_post: "LinkedIn Posts",
+  facebook_ad: "Facebook Ads",
+  reddit_post: "Reddit Posts",
+  crm_next_touch_asset: "CRM Next Touch Assets",
 };
 
 const ASSET_TYPE_TO_DELIVERABLE: Record<string, DeliverableType | undefined> = {
-  executive_brief: "executive_brief",
-  assessment: "assessment",
-  case_study: "case_study",
   article: "article",
-  intelligence_report: "report",
+  assessment: "assessment",
   report: "report",
+  executive_brief: "executive_brief",
+  case_study: "case_study",
+  intelligence_report: "report",
   offer_asset: "offer_asset",
   sales_asset: "sales_asset",
+  comparison: "comparison",
+  comparison_page: "comparison",
+  comparison_guide: "comparison",
+  guide: "guide",
+  buyer_guide: "guide",
+  relocation_guide: "guide",
+  seller_guide: "guide",
+  email_sequence: "email_sequence",
+  landing_page: "landing_page",
+  linkedin_post: "linkedin_post",
+  facebook_ad: "facebook_ad",
+  reddit_post: "reddit_post",
+  crm_next_touch_asset: "crm_next_touch_asset",
 };
 
 const PROBLEM_SIGNALS = [
@@ -180,15 +210,33 @@ const DIFFERENTIATION_SIGNALS = [" vs ", "different", "not just", "instead", "re
 const CTA_SIGNALS = ["schedule", "contact", "book", "next step", "cta", "buyer receives", "gets"];
 const DELIVERABLE_SIGNALS = ["deliverable", "scope", "roadmap", "readout", "receives", "gets"];
 const QUESTION_SIGNALS = ["question", "dimension", "scored", "score", "assessment", "diagnose"];
+const OFFER_SIGNALS = ["offer", "assessment", "diagnostic", "service"];
+const SOURCE_DELIVERABLE_SIGNALS = [
+  "source deliverable",
+  "approved deliverable",
+  "source asset",
+  "existing deliverable",
+  "deliverable",
+];
+const NEXT_ACTION_SIGNALS = ["next action", "next touch", "follow up", "follow-up", "call", "email", ...CTA_SIGNALS];
+const BLOCKING_COMPONENTS = new Set(["evidence", "proof", "assessment_questions"]);
 
 const BUSINESS_VALUE_BY_TYPE: Record<DeliverableType, number> = {
-  executive_brief: 90,
-  assessment: 95,
-  case_study: 85,
   article: 70,
+  assessment: 95,
   report: 75,
+  executive_brief: 90,
+  case_study: 85,
   offer_asset: 88,
   sales_asset: 80,
+  comparison: 82,
+  guide: 78,
+  email_sequence: 76,
+  landing_page: 86,
+  linkedin_post: 65,
+  facebook_ad: 72,
+  reddit_post: 62,
+  crm_next_touch_asset: 74,
 };
 
 const COMPONENT_RULES: Record<DeliverableType, ComponentRule[]> = {
@@ -255,6 +303,49 @@ const COMPONENT_RULES: Record<DeliverableType, ComponentRule[]> = {
     component("next_step", "next_step", (input) =>
       hasSignal(allText(input), [...CTA_SIGNALS, ...RECOMMENDATION_SIGNALS]),
     ),
+  ],
+  comparison: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("audience", "audience", (input) => hasMeaningfulText(input.audience), true),
+    component("compared_entities", "compared_entities", (input) => comparedEntityCount(input) >= 2, true),
+    component("supporting_material", "supporting_material", (input) => hasSupportingMaterial(input), true),
+  ],
+  guide: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("audience", "audience", (input) => hasMeaningfulText(input.audience), true),
+    component("topic", "topic", (input) => hasTopic(input), true),
+    component("supporting_material", "supporting_material", (input) => hasSupportingMaterial(input)),
+  ],
+  email_sequence: [
+    component("audience", "audience", (input) => hasMeaningfulText(input.audience), true),
+    component("primary_topic", "primary_topic", (input) => hasTopic(input)),
+    component("source_deliverable", "source_deliverable", (input) => hasSourceDeliverable(input), true),
+  ],
+  landing_page: [
+    component("audience", "audience", (input) => hasMeaningfulText(input.audience)),
+    component("offer", "offer", (input) => hasOffer(input), true),
+    component("cta", "cta", (input) => hasCta(input), true),
+  ],
+  linkedin_post: [
+    component("source", "source_insight_or_deliverable", (input) =>
+      hasSourceInsight(input) || hasSourceDeliverable(input),
+    true),
+  ],
+  facebook_ad: [
+    component("audience", "audience", (input) => hasMeaningfulText(input.audience), true),
+    component("cta", "cta", (input) => hasCta(input), true),
+    component("offer_or_deliverable", "offer_or_deliverable", (input) =>
+      hasOffer(input) || hasSourceDeliverable(input),
+    ),
+  ],
+  reddit_post: [
+    component("source_insight", "source_insight", (input) => hasSourceInsight(input), true),
+    component("topic", "topic", (input) => hasTopic(input), true),
+  ],
+  crm_next_touch_asset: [
+    component("audience", "audience", (input) => hasMeaningfulText(input.audience)),
+    component("source_deliverable", "source_deliverable", (input) => hasSourceDeliverable(input), true),
+    component("next_action", "next_action", (input) => hasNextAction(input), true),
   ],
 };
 
@@ -381,6 +472,13 @@ export function getPublishableDeliverables(deliverables: Deliverable[]) {
     .sort((a, b) => b.priority_score - a.priority_score);
 }
 
+export function getReadyToProduceDeliverables(deliverables: Deliverable[]) {
+  return deliverables
+    .filter((deliverable) => deliverable.status === "ready" && !deliverable.has_asset)
+    .filter((deliverable) => deliverable.ignore_reason == null)
+    .sort((a, b) => b.priority_score - a.priority_score);
+}
+
 export function getIgnoredDeliverables(deliverables: Deliverable[], limit = 6) {
   return deliverables
     .filter((deliverable) => deliverable.ignore_reason != null)
@@ -390,11 +488,12 @@ export function getIgnoredDeliverables(deliverables: Deliverable[], limit = 6) {
 
 export function evaluateDeliverableReadiness(input: DeliverableEvaluationInput) {
   const rules = COMPONENT_RULES[input.type];
-  const missing_components = rules.filter((rule) => !rule.isPresent(input)).map((rule) => rule.label);
+  const missingRules = rules.filter((rule) => !rule.isPresent(input));
+  const missing_components = missingRules.map((rule) => rule.label);
   const readiness = Math.round(((rules.length - missing_components.length) / rules.length) * 100);
-  const blocking_gaps = missing_components.filter((componentName) =>
-    ["evidence", "proof", "assessment_questions"].includes(componentName),
-  );
+  const blocking_gaps = missingRules
+    .filter((rule) => rule.blocksReadiness ?? BLOCKING_COMPONENTS.has(rule.label))
+    .map((rule) => rule.label);
 
   return { readiness, missing_components, blocking_gaps };
 }
@@ -516,8 +615,13 @@ function classifyBlockers(missingComponents: string[]): BlockerDetail[] {
   });
 }
 
-function component(key: string, label: string, isPresent: ComponentRule["isPresent"]): ComponentRule {
-  return { key, label, isPresent };
+function component(
+  key: string,
+  label: string,
+  isPresent: ComponentRule["isPresent"],
+  blocksReadiness?: boolean,
+): ComponentRule {
+  return { key, label, isPresent, blocksReadiness };
 }
 
 function sourceRecordsFromEvidence(evidence: EvidenceInput[]): SourceRecord[] {
@@ -553,6 +657,44 @@ function hasProblem(input: DeliverableEvaluationInput) {
 
 function hasProof(input: DeliverableEvaluationInput) {
   return input.evidence.some((record) => hasMeaningfulText(record.proofRef));
+}
+
+function hasSupportingMaterial(input: DeliverableEvaluationInput) {
+  return input.evidence.length > 0;
+}
+
+function hasTopic(input: DeliverableEvaluationInput) {
+  return hasMeaningfulText(input.angle);
+}
+
+function hasSourceInsight(input: DeliverableEvaluationInput) {
+  return hasMeaningfulText(input.angle);
+}
+
+function hasSourceDeliverable(input: DeliverableEvaluationInput) {
+  return input.assetStatus != null || hasSignal(allText(input), SOURCE_DELIVERABLE_SIGNALS);
+}
+
+function hasOffer(input: DeliverableEvaluationInput) {
+  return hasSignal(allText(input), OFFER_SIGNALS);
+}
+
+function hasCta(input: DeliverableEvaluationInput) {
+  return hasSignal(allText(input), CTA_SIGNALS);
+}
+
+function hasNextAction(input: DeliverableEvaluationInput) {
+  return hasSignal(allText(input), NEXT_ACTION_SIGNALS);
+}
+
+function comparedEntityCount(input: DeliverableEvaluationInput) {
+  const comparisonText = [input.title, input.angle, ...input.evidence.map((record) => record.observation)]
+    .filter(Boolean)
+    .join(" ");
+
+  if (/\b(vs\.?|versus)\b/i.test(comparisonText)) return 2;
+  if (/\bcompare(s|d)?\b/i.test(comparisonText) && /\b(and|with|against)\b/i.test(comparisonText)) return 2;
+  return 0;
 }
 
 function hasSignal(text: string, signals: string[]) {

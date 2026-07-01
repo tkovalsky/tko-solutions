@@ -11,6 +11,7 @@ import {
   getIgnoredDeliverables,
   getNextBestDeliverables,
   getPublishableDeliverables,
+  getReadyToProduceDeliverables,
 } from "@/lib/tif/deliverables";
 import { tifDb } from "@/lib/tif/db";
 
@@ -54,7 +55,7 @@ export default async function TifDeliverablesPage() {
   ]);
 
   const deliverables = buildDeliverableRegistry({ opportunities, assets });
-  const readyToProduce = deliverables.filter((item) => item.status === "ready" && !item.has_asset);
+  const readyToProduce = getReadyToProduceDeliverables(deliverables);
   const readyToPublish = deliverables.filter((item) => item.status === "ready" && item.has_asset);
   const blocked = deliverables.filter((item) => item.status === "blocked");
   const published = deliverables.filter((item) => item.status === "published");
@@ -103,7 +104,12 @@ export default async function TifDeliverablesPage() {
         </div>
       </section>
 
-      <section className="mb-10 grid gap-4 lg:grid-cols-3">
+      <section className="mb-10 grid gap-4 lg:grid-cols-4">
+        <ActionPanel title="Ready To Produce" emptyLabel="Nothing is ready to produce.">
+          {readyToProduce.map((deliverable) => (
+            <ActionItem key={deliverable.id} deliverable={deliverable} />
+          ))}
+        </ActionPanel>
         <ActionPanel title="Publish Today" emptyLabel="Nothing is ready to publish.">
           {publishableDeliverables.map((deliverable) => (
             <ActionItem key={deliverable.id} deliverable={deliverable} />
@@ -134,11 +140,18 @@ export default async function TifDeliverablesPage() {
         </h2>
         <div className="mt-4 grid gap-2 md:grid-cols-2">
           {DELIVERABLE_TYPES.map((type) => {
-            const readyCount = deliverables.filter((item) => item.type === type && item.status === "ready").length;
+            const typedDeliverables = deliverables.filter((item) => item.type === type);
+            const readyCount = typedDeliverables.filter((item) => item.status === "ready").length;
+            const blockedCount = typedDeliverables.filter((item) => item.status === "blocked").length;
+            const publishedCount = typedDeliverables.filter((item) => item.status === "published").length;
+            const queueEligibleCount = typedDeliverables.filter(
+              (item) => item.status !== "published" && item.ignore_reason == null,
+            ).length;
             return (
               <p key={type} className="text-sm text-muted">
                 <span className="font-medium text-foreground">{deliverableTypeLabel(type)}:</span>{" "}
-                {readyCount} ready
+                {typedDeliverables.length} total · {readyCount} ready · {blockedCount} blocked ·{" "}
+                {publishedCount} published · {queueEligibleCount} queue eligible
               </p>
             );
           })}
@@ -228,6 +241,11 @@ function ActionItem({ deliverable }: { deliverable: Deliverable }) {
           <Link href={`/tif/assets/${deliverable.asset_slug}`} className="text-xs font-semibold text-primary hover:underline">
             Asset
           </Link>
+        )}
+        {!deliverable.asset_slug && deliverable.opportunity_slug && (
+          <a href={`/tif#opportunity-${deliverable.opportunity_slug}`} className="text-xs font-semibold text-primary hover:underline">
+            Opportunity
+          </a>
         )}
       </div>
     </article>

@@ -56,8 +56,9 @@ storage architecture.
 LLM scoring, drafting workflow, content generation, approval workflow, publishing workflow, or
 schema migration is introduced.
 
-**Supported deliverable types:** `executive_brief`, `assessment`, `case_study`, `article`,
-`report`, `offer_asset`, `sales_asset`.
+**Supported deliverable types:** `article`, `assessment`, `report`, `executive_brief`,
+`case_study`, `offer_asset`, `sales_asset`, `comparison`, `guide`, `email_sequence`,
+`landing_page`, `linkedin_post`, `facebook_ad`, `reddit_post`, `crm_next_touch_asset`.
 
 **Current reality after implementation:**
 - `article`: exists in live TIF opportunities/assets.
@@ -94,3 +95,26 @@ separate deterministic type/business-unit score; it does not call AI and does no
 **Anti-pattern removed:** The page no longer opens with "we know things" dashboard reporting. Counts
 and type snapshots remain available below the queue, but the first operator decision is now "do this
 next."
+
+## DEC-2026-07-01-TIF-Deliverable-Taxonomy-Expansion
+
+**Status:** Ratified and implemented
+
+**Context:** The content operating model recognizes additional deliverable categories beyond the
+initial seven supported by the Deliverable-Centric production view. Operators need these categories
+to appear in readiness and queue planning without adding generators, publishing integrations, or
+new storage.
+
+**Decision:** Expand the deterministic Deliverable Registry taxonomy to include `comparison`,
+`guide`, `email_sequence`, `landing_page`, `linkedin_post`, `facebook_ad`, `reddit_post`, and
+`crm_next_touch_asset` alongside the legacy `article`, `assessment`, `report`, `executive_brief`,
+`case_study`, `offer_asset`, and `sales_asset` types.
+
+**Implementation:** Readiness remains rule-based and in memory. New types use deterministic
+title/audience/topic/evidence/source/CTA/offer/next-action checks and flow through the existing
+Next Best Deliverables, Ready To Produce, Publish Today, Blocked, and Ignore For Now queue logic.
+
+**Constraints:** No migrations, schema changes, database writes, generation logic, publishing
+support, channel automation, or production workflow changes are authorized by this decision.
+Deliverables remain read-only planning objects over existing Evidence, Asset Opportunity, and Asset
+records.

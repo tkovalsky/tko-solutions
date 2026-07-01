@@ -1285,17 +1285,24 @@ regeneration of edited assets. Files changed: `prisma/schema.prisma`, `scripts/t
 `src/lib/tif/manual-edit-protection.test.ts` and
 `src/app/tif/regenerate-asset-form.test.tsx`.
 
-**Priority 6 — Deliverable-Centric Production View.** **Implemented 2026-07-01.** `/tif/deliverables`
+**Priority 6 — Deliverable-Centric Production View.** **Implemented 2026-07-01; taxonomy expanded
+2026-07-01.** `/tif/deliverables`
 adds a deterministic production-management layer over the existing Evidence, Asset Opportunity, and
 Asset records. It implements the missing operator answer to "what can be shipped?" without changing
-storage or introducing content generation. Supported deliverable types: `executive_brief`,
-`assessment`, `case_study`, `article`, `report`, `offer_asset`, and `sales_asset`. Readiness is
-rules-only and returns a percentage plus missing components. Status is computed as `ready`,
-`in_progress`, `blocked`, or `published`; `published` still comes only from the existing `Asset`
-status. The dashboard reports Ready to Produce, Ready to Publish, Blocked, and Published, grouped by
-deliverable type. Files changed: `src/lib/tif/deliverables.ts`,
-`src/app/tif/deliverables/page.tsx`, and `src/app/tif/page.tsx`. Tests added:
-`src/lib/tif/deliverables.test.ts`.
+storage or introducing content generation. Supported deliverable types: `article`, `assessment`,
+`report`, `executive_brief`, `case_study`, `offer_asset`, `sales_asset`, `comparison`, `guide`,
+`email_sequence`, `landing_page`, `linkedin_post`, `facebook_ad`, `reddit_post`, and
+`crm_next_touch_asset`. Readiness is rules-only and returns a percentage plus missing components.
+New taxonomy readiness checks cover comparison entities/supporting material, guide topics, source
+deliverables, source insights, offers, CTAs, and CRM next actions using existing deterministic
+record fields and text/evidence signals. Status is computed as `ready`, `in_progress`, `blocked`,
+or `published`; `published` still comes only from the existing `Asset` status. The dashboard reports
+Ready to Produce, Ready to Publish, Blocked, Published, and per-type queue eligibility. Queue
+buckets remain one shared deterministic queue: Next Best Deliverables, Ready To Produce, Publish
+Today, Blocked, and Ignore For Now. No migrations, schema changes, stored-record mutations,
+publishing support, channel automation, or generation support are part of this layer. Files changed:
+`src/lib/tif/deliverables.ts`, `src/app/tif/deliverables/page.tsx`, and `src/app/tif/page.tsx`.
+Tests added: `src/lib/tif/deliverables.test.ts`.
 
 ## Planned, not implemented (do not build without explicit instruction)
 

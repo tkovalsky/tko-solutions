@@ -409,13 +409,14 @@ This closes the audit gap between the documented Artifact/Asset architecture and
 day-to-day question: "what can be shipped?" The view does not add a new storage model, content
 generation, LLM scoring, drafting workflow, or publishing workflow. It is a deterministic read model
 over the existing Evidence, Asset Opportunity, and Asset rows. Supported deliverable types are
-executive brief, assessment, case study, article, report, offer asset, and sales asset. The current
-implemented content surface is partial: articles and assessments exist in live TIF records; reports
-are mapped from `intelligence_report`; executive briefs, case studies, offer assets, and sales assets
-are supported in the registry but currently have no live rows. Future backlog now expands the target
-deliverable taxonomy to include first-class Comparison, guides, email sequences, landing pages, ad
-concepts, social posts, Reddit posts, LinkedIn posts/carousels, Facebook posts/ads, and CRM
-next-touch assets; this is documentation/backlog scope, not a production behavior change.
+article, assessment, report, executive brief, case study, offer asset, sales asset, comparison,
+guide, email sequence, landing page, LinkedIn post, Facebook ad, Reddit post, and CRM next-touch
+asset. The current implemented content surface is partial: articles and assessments exist in live
+TIF records; reports are mapped from `intelligence_report`; comparison/channel-package aliases such
+as `comparison_page`, `comparison_guide`, and relocation/buyer/seller guide asset types normalize
+to the core deliverable taxonomy for read-only planning. The taxonomy expansion adds deterministic
+readiness and queue visibility only. It does not add schema changes, stored-record mutations,
+generation support, publishing support, or channel automation.
 
 **TIF v0.3 Execution Layer (architecture, not new product):** the next documentation layer
 formalizes how the registries execute. The canonical generation model is

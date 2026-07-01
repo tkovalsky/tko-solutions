@@ -1,9 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  DELIVERABLE_TYPES,
+  type DeliverableType,
   buildDeliverableRegistry,
   evaluateDeliverableReadiness,
   getIgnoredDeliverables,
   getNextBestDeliverables,
+  getPublishableDeliverables,
+  getReadyToProduceDeliverables,
+  toDeliverableType,
 } from "./deliverables";
 
 const evidence = {
@@ -15,7 +20,42 @@ const evidence = {
   claimGuard: "Pattern-level advisory evidence. No named organization or metric.",
 };
 
+const newDeliverableTypes = [
+  "comparison",
+  "guide",
+  "email_sequence",
+  "landing_page",
+  "linkedin_post",
+  "facebook_ad",
+  "reddit_post",
+  "crm_next_touch_asset",
+] satisfies DeliverableType[];
+
+const legacyDeliverableTypes = [
+  "article",
+  "assessment",
+  "report",
+  "executive_brief",
+  "case_study",
+  "offer_asset",
+  "sales_asset",
+] satisfies DeliverableType[];
+
+type ReadinessCaseInput = Omit<Parameters<typeof evaluateDeliverableReadiness>[0], "type">;
+
 describe("TIF deliverable readiness", () => {
+  it("recognizes new deliverable types without dropping legacy types", () => {
+    expect(DELIVERABLE_TYPES).toEqual([...legacyDeliverableTypes, ...newDeliverableTypes]);
+
+    for (const type of [...legacyDeliverableTypes, ...newDeliverableTypes]) {
+      expect(toDeliverableType(type)).toBe(type);
+    }
+
+    expect(toDeliverableType("intelligence_report")).toBe("report");
+    expect(toDeliverableType("comparison_page")).toBe("comparison");
+    expect(toDeliverableType("relocation_guide")).toBe("guide");
+  });
+
   it("scores article readiness from problem, evidence, and insight only", () => {
     const result = evaluateDeliverableReadiness({
       type: "article",
@@ -26,6 +66,180 @@ describe("TIF deliverable readiness", () => {
 
     expect(result.readiness).toBe(100);
     expect(result.missing_components).toEqual([]);
+  });
+
+  it.each([
+    [
+      "comparison",
+      {
+        title: "Boca vs Delray",
+        angle: "Compare Boca versus Delray for relocation buyers.",
+        audience: "Relocation buyers.",
+        evidence: [evidence],
+      },
+    ],
+    [
+      "guide",
+      {
+        title: "Relocation Buyer Guide",
+        angle: "Relocation buyers need decision support before choosing a community.",
+        audience: "Relocation buyers.",
+        evidence: [evidence],
+      },
+    ],
+    [
+      "email_sequence",
+      {
+        title: "Operational Recovery Follow-Up Sequence",
+        angle: "Primary topic: operational recovery assessment follow-up.",
+        audience: "Healthcare operations leaders.",
+        assetStatus: "draft",
+        evidence: [],
+      },
+    ],
+    [
+      "landing_page",
+      {
+        title: "Operational Recovery Assessment",
+        angle: "Offer: Operational Recovery Assessment. CTA: schedule a diagnostic.",
+        audience: "Healthcare operations leaders.",
+        evidence: [],
+      },
+    ],
+    [
+      "linkedin_post",
+      {
+        title: "Human API Insight",
+        angle: "Insight: operational knowledge trapped in one person creates execution risk.",
+        evidence: [],
+      },
+    ],
+    [
+      "facebook_ad",
+      {
+        title: "Relocation Guide Ad",
+        angle: "Offer: relocation guide. CTA: book a buyer consultation.",
+        audience: "Relocation buyers.",
+        evidence: [],
+      },
+    ],
+    [
+      "reddit_post",
+      {
+        title: "Relocation Topic",
+        angle: "Insight: relocation buyers need local decision criteria before touring homes.",
+        evidence: [],
+      },
+    ],
+    [
+      "crm_next_touch_asset",
+      {
+        title: "Buyer Next Touch",
+        angle: "Next action: send a follow-up email with the approved guide.",
+        audience: "Relocation buyers.",
+        assetStatus: "draft",
+        evidence: [],
+      },
+    ],
+  ] satisfies Array<[DeliverableType, ReadinessCaseInput]>)(
+    "marks %s ready when deterministic inputs are present",
+    (type, input) => {
+      const result = evaluateDeliverableReadiness({ type, ...input });
+
+      expect(result.readiness).toBe(100);
+      expect(result.missing_components).toEqual([]);
+      expect(result.blocking_gaps).toEqual([]);
+    },
+  );
+
+  it.each([
+    [
+      "comparison",
+      {
+        title: "Community Comparison",
+        angle: "",
+        audience: null,
+        evidence: [],
+      },
+      ["audience", "compared_entities", "supporting_material"],
+    ],
+    [
+      "guide",
+      {
+        title: "Relocation Buyer Guide",
+        angle: "",
+        audience: null,
+        evidence: [evidence],
+      },
+      ["audience", "topic"],
+    ],
+    [
+      "email_sequence",
+      {
+        title: "Follow-Up Sequence",
+        angle: "Primary topic: operational recovery.",
+        audience: null,
+        evidence: [],
+      },
+      ["audience", "source_deliverable"],
+    ],
+    [
+      "landing_page",
+      {
+        title: "Conversion Page",
+        angle: "",
+        audience: "Healthcare operations leaders.",
+        evidence: [],
+      },
+      ["offer", "cta"],
+    ],
+    [
+      "linkedin_post",
+      {
+        title: "Post",
+        angle: "",
+        evidence: [],
+      },
+      ["source_insight_or_deliverable"],
+    ],
+    [
+      "facebook_ad",
+      {
+        title: "Ad",
+        angle: "",
+        audience: null,
+        evidence: [],
+      },
+      ["audience", "cta"],
+    ],
+    [
+      "reddit_post",
+      {
+        title: "Post",
+        angle: "",
+        evidence: [],
+      },
+      ["source_insight", "topic"],
+    ],
+    [
+      "crm_next_touch_asset",
+      {
+        title: "CRM Asset",
+        angle: "",
+        audience: "Relocation buyers.",
+        evidence: [],
+      },
+      ["source_deliverable", "next_action"],
+    ],
+  ] satisfies Array<[
+    DeliverableType,
+    ReadinessCaseInput,
+    string[],
+  ]>)("blocks %s when required deterministic inputs are missing", (type, input, blockingGaps) => {
+    const result = evaluateDeliverableReadiness({ type, ...input });
+
+    expect(result.readiness).toBeLessThan(100);
+    expect(result.blocking_gaps).toEqual(blockingGaps);
   });
 
   it("blocks a case study without proof even when other fields have signals", () => {
@@ -107,6 +321,72 @@ describe("TIF deliverable readiness", () => {
       estimated_effort_minutes: 15,
       next_action: "Review final asset and publish manually.",
     });
+  });
+
+  it("surfaces new deliverable types in queue calculations while preserving legacy deliverables", () => {
+    const deliverables = buildDeliverableRegistry({
+      opportunities: [
+        {
+          slug: "boca-vs-delray",
+          title: "Boca vs Delray",
+          businessUnit: "rachel",
+          assetType: "comparison",
+          angle: "Compare Boca versus Delray for relocation buyers.",
+          audience: "Relocation buyers.",
+          evidenceLinks: [{ evidence }],
+          assets: [],
+        },
+        {
+          slug: "ready-article",
+          title: "Operational Intelligence vs Reporting",
+          businessUnit: "tko",
+          assetType: "article",
+          angle: "Reporting is not operational intelligence because leaders still need a next move.",
+          audience: "Operations leaders.",
+          evidenceLinks: [{ evidence }],
+          assets: [],
+        },
+        {
+          slug: "blocked-reddit-post",
+          title: "Reddit Post",
+          businessUnit: "rachel",
+          assetType: "reddit_post",
+          angle: "",
+          audience: null,
+          evidenceLinks: [],
+          assets: [],
+        },
+      ],
+      assets: [
+        {
+          slug: "recovery-follow-up-sequence",
+          title: "Operational Recovery Follow-Up Sequence",
+          businessUnit: "tko",
+          assetType: "email_sequence",
+          status: "draft",
+          opportunity: {
+            slug: "source-recovery-assessment",
+            title: "Operational Recovery Assessment",
+            angle: "Primary topic: operational recovery follow-up.",
+            audience: "Healthcare operations leaders.",
+          },
+          evidenceLinks: [],
+        },
+      ],
+    });
+
+    expect(getReadyToProduceDeliverables(deliverables).map((item) => item.type)).toEqual(
+      expect.arrayContaining(["comparison", "article"]),
+    );
+    expect(getPublishableDeliverables(deliverables).map((item) => item.type)).toEqual(["email_sequence"]);
+    expect(getIgnoredDeliverables(deliverables).map((item) => item.type)).toEqual(["reddit_post"]);
+
+    const nextBest = getNextBestDeliverables(deliverables, 3);
+    const priorityScores = nextBest.map((item) => item.priority_score);
+    expect(priorityScores).toEqual([...priorityScores].sort((a, b) => b - a));
+    expect(nextBest.map((item) => item.type)).toEqual(
+      expect.arrayContaining(["email_sequence", "comparison", "article"]),
+    );
   });
 
   it("surfaces blocker details and ignores work outside a 2-hour window", () => {
