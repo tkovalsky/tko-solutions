@@ -109,8 +109,10 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
   generic platform infrastructure.
 - **Built (2026-06-28):** Neon-backed Evidence/Opportunity/Asset registries, Asset Composer, and
   the v0.1/v0.2 Operator Console (`/tif`, `/tif/inbox`, `/tif/inventory`) — see `ENGINEERING_BACKLOG.md`
-  EPIC 13. EPIC 13 Priority 3–5 (Asset Health, manual-edit-overwrite protection, deeper
-  traceability) are documented there as planned, not built.
+  EPIC 13. EPIC 13 Priority 4 manual-edit-overwrite protection is implemented: generated assets
+  store generated metadata, edited files are detected before regeneration, and an explicit
+  confirmation is required before overwrite. EPIC 13 Priority 3 (Asset Health) and Priority 5
+  (deeper traceability) remain planned, not built.
 - **Architecture update (v0.3):** the Execution Layer formalizes the runtime path
   `Payload → Validation → Framework → Artifact → Fact Resolution → Template Population → Draft →
   Voice Refinement → Review → Approval → Publish`. It bridges the existing registries and Asset

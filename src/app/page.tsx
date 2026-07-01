@@ -57,13 +57,13 @@ export default function HomePage() {
 
       <Hero />
 
-      <Section>
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <Section className="!py-16 md:!py-20">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <SectionHeader
-              eyebrow="Primary Market"
-              title="Healthcare Workflow Modernization"
-              description="Healthcare is the primary market wedge because the work is complex, regulated, cross-functional, and full of human API dependency."
+              eyebrow="Healthcare Credibility"
+              title="Healthcare workflow modernization, grounded in operating reality."
+              description="Healthcare is the primary market wedge because the work is complex, regulated, cross-functional, and full of human API dependency. TKO's credibility sits in prior authorization, utilization management, care management, interoperability, regulatory programs, multi-team governance, and transformation recovery."
             />
             <ul className="mt-6 space-y-2 text-base leading-7 text-muted">
               <li>
@@ -85,15 +85,8 @@ export default function HomePage() {
           </div>
           <ProblemGrid />
         </div>
-      </Section>
 
-      <Section className="bg-surface">
-        <SectionHeader
-          eyebrow="Proof Ladder / 1"
-          title="Healthcare Transformation Experience"
-          description="TKO's healthcare credibility sits in prior authorization, utilization management, care management, interoperability, regulatory programs, multi-team governance, and transformation recovery."
-        />
-        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {caseStudies
             .filter((study) => study.industry === "Healthcare")
             .map((study) => (
@@ -115,10 +108,10 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section>
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+      <Section className="bg-surface !py-16 md:!py-20">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
-            eyebrow="Proof Ladder / 2"
+            eyebrow="Proof Ladder / 1"
             title="RachelOS proves TKO can build the operating layer."
             description="RachelOS is evidence that TKO has built the layer between scattered signals and action: operational memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human-approved AI support."
           />
@@ -150,10 +143,10 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="bg-surface">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+      <Section className="!py-16 md:!py-20">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
-            eyebrow="Proof Ladder / 3"
+            eyebrow="Proof Ladder / 2"
             title="The operating-knowledge pattern travels beyond healthcare."
             description="CRE Intelligence demonstrates method portability: market observations, entity facts, analyst judgment, risks, opportunities, recommendations, and reports can become reusable decision assets instead of staying trapped in one analyst."
           />
@@ -179,10 +172,10 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="border-t-0 bg-midnight text-white">
+      <Section className="border-t-0 bg-midnight text-white !py-16 md:!py-20">
         <div className="max-w-[65ch]">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-primary-light">
-            Proof Ladder / 4
+            Methodology
           </p>
           <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
             Operating System Methodology
@@ -194,23 +187,23 @@ export default function HomePage() {
             and records outcomes.
           </p>
         </div>
-        <div className="mt-14">
+        <div className="mt-10">
           <OperatingFramework />
         </div>
-        <p className="mt-10 flex max-w-[65ch] items-start gap-3 text-sm leading-6 text-white/50">
+        <p className="mt-8 flex max-w-[65ch] items-start gap-3 text-sm leading-6 text-white/50">
           <Zap className="mt-0.5 size-4 shrink-0 text-primary-light" aria-hidden="true" />
           AI is useful only when it is tied to workflow, decision rights, and
           human approval. It supports the system; it is not the category.
         </p>
       </Section>
 
-      <Section className="bg-surface">
+      <Section className="bg-surface !py-16 md:!py-20">
         <SectionHeader
           eyebrow="Services"
           title="Start with recovery. Build only when the workflow truth is visible."
           description="The Operational Recovery Assessment is the low-friction entry point. The Operational Truth Diagnostic goes deeper when the workflow needs more evidence. Build and advisory work follow only when the operating problem is clear."
         />
-        <div className="mt-12">
+        <div className="mt-10">
           <ServiceCards />
         </div>
       </Section>

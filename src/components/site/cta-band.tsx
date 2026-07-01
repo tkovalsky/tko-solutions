@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
 
 type CtaBandProps = {
@@ -18,7 +20,7 @@ export function CtaBand({
   secondaryLabel = "Schedule an Operational Truth Diagnostic",
 }: CtaBandProps) {
   return (
-    <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-20 text-white md:py-24">
+    <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-16 text-white md:py-20">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgb(var(--accent-rgb)/0.16),_transparent_60%)]"
@@ -33,17 +35,20 @@ export function CtaBand({
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/65">{description}</p>
         </div>
-        <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center md:flex-col md:items-stretch">
           <LinkButton href={primaryHref} className="bg-primary hover:bg-primary-dark">
             {primaryLabel}
           </LinkButton>
-          <LinkButton
+          <Link
             href={secondaryHref}
-            variant="secondary"
-            className="border-white/25 text-white hover:border-white/50 hover:bg-white/5"
+            className="group inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline md:justify-start"
           >
             {secondaryLabel}
-          </LinkButton>
+            <ArrowRight
+              className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </Link>
         </div>
       </div>
     </section>

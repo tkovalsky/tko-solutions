@@ -153,6 +153,8 @@ model Asset {
   status         AssetStatus @default(draft)
   businessUnit   BusinessUnit
   outputPath     String
+  generatedAt    DateTime?
+  generatedHash  String?
 
   opportunityId  String?
   opportunity    AssetOpportunity? @relation(fields: [opportunityId], references: [id])

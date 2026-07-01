@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getAssetManualEditState, formatAssetDate } from "@/lib/tif/manual-edit-protection";
 import { tifDb } from "@/lib/tif/db";
-import { generateAsset } from "./actions";
+import { AssetGenerationStatus, RegenerateAssetForm } from "./regenerate-asset-form";
 
 export const metadata: Metadata = {
   title: "TIF Operator Console",
@@ -56,6 +57,12 @@ export default async function TifConsolePage() {
     }),
   ]);
 
+  const assetEditStateBySlug = new Map(
+    await Promise.all(
+      assets.map(async (asset) => [asset.slug, await getAssetManualEditState(asset)] as const),
+    ),
+  );
+
   const evidenceByUnit = countByUnit(evidence);
   const opportunitiesByUnit = countByUnit(opportunities);
   const assetsByUnit = countByUnit(assets);
@@ -71,7 +78,10 @@ export default async function TifConsolePage() {
           Read-only visibility into the live TIF Asset Production Spine. No editing, search, or
           workflow here — see <code>ENGINEERING_BACKLOG.md</code> EPIC 11/12 for scope.
         </p>
-        <div className="mt-4 flex gap-4 text-sm">
+        <div className="mt-4 flex flex-wrap gap-4 text-sm">
+          <Link href="/tif/deliverables" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Deliverables →
+          </Link>
           <Link href="/tif/inbox" className="font-semibold text-primary underline-offset-2 hover:underline">
             Capture Inbox →
           </Link>
@@ -131,15 +141,11 @@ export default async function TifConsolePage() {
               <div className="flex shrink-0 items-center gap-2">
                 <BusinessUnitBadge unit={opp.businessUnit} />
                 <StatusBadge status={opp.status} />
-                <form action={generateAsset}>
-                  <input type="hidden" name="opportunitySlug" value={opp.slug} />
-                  <button
-                    type="submit"
-                    className="rounded-lg border border-primary px-3 py-1.5 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
-                  >
-                    {opp.status === "composed" ? "Regenerate Asset" : "Generate Asset"}
-                  </button>
-                </form>
+                <RegenerateAssetForm
+                  opportunitySlug={opp.slug}
+                  label={opp.status === "composed" ? "Regenerate Asset" : "Generate Asset"}
+                  hasManualEdits={assetEditStateBySlug.get(opp.slug)?.isManuallyEdited ?? false}
+                />
               </div>
             </div>
           ))}
@@ -160,6 +166,14 @@ export default async function TifConsolePage() {
               <p className="mt-1 text-xs text-muted">
                 {asset.assetType} · <StatusBadge status={asset.status} />
               </p>
+
+              <div className="mt-3">
+                <AssetGenerationStatus
+                  isManuallyEdited={assetEditStateBySlug.get(asset.slug)?.isManuallyEdited ?? false}
+                  generatedAtLabel={formatAssetDate(assetEditStateBySlug.get(asset.slug)?.generatedAt ?? null)}
+                  lastEditedAtLabel={formatAssetDate(assetEditStateBySlug.get(asset.slug)?.lastEditedAt ?? null)}
+                />
+              </div>
 
               <div className="mt-4 space-y-1 text-xs text-muted">
                 <p className="font-semibold uppercase tracking-wide text-foreground/70">Traceability</p>

@@ -1,6 +1,7 @@
 // TIF v0.1 Asset Composer — template-fill only. No AI, no workflow engine, no automation.
 // Input: an AssetOpportunity (+ its linked Evidence) + a template file.
 // Output: a draft markdown asset on disk, plus an Asset + AssetEvidence trace in the DB.
+import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -25,6 +26,10 @@ const OUTPUT_DIR = "asset-production/generated";
 
 function frontMatterDomainPrefix(domain) {
   return domain;
+}
+
+function hashAssetContent(content) {
+  return createHash("sha256").update(content, "utf8").digest("hex");
 }
 
 async function composeOpportunity(slug) {
@@ -74,6 +79,8 @@ async function composeOpportunity(slug) {
   await mkdir(OUTPUT_DIR, { recursive: true });
   const outputPath = path.join(OUTPUT_DIR, `${opportunity.slug}.md`);
   await writeFile(outputPath, filled, "utf8");
+  const generatedAt = new Date();
+  const generatedHash = hashAssetContent(filled);
 
   const asset = await prisma.asset.upsert({
     where: { slug: opportunity.slug },
@@ -82,6 +89,8 @@ async function composeOpportunity(slug) {
       assetType: opportunity.assetType,
       businessUnit: opportunity.businessUnit,
       outputPath,
+      generatedAt,
+      generatedHash,
       opportunityId: opportunity.id,
     },
     create: {
@@ -91,6 +100,8 @@ async function composeOpportunity(slug) {
       businessUnit: opportunity.businessUnit,
       status: "draft",
       outputPath,
+      generatedAt,
+      generatedHash,
       opportunityId: opportunity.id,
     },
   });

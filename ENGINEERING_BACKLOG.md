@@ -1193,9 +1193,9 @@ tooling is explicitly out of scope for this epic.**
 
 # EPIC 13 — TIF OPERATOR CONSOLE v0.2 (OBSERVATION CAPTURE & CONTENT INVENTORY)
 
-> **Status (2026-06-28):** Priority 1 and Priority 2 **shipped**. Priority 3–5 below are
-> **planned, not implemented** — documented here per the standing-rule that new scope gets
-> recorded in the docs of record before (not instead of) building it. Do not build P3–5 until
+> **Status (2026-07-01):** Priority 1, Priority 2, Priority 4, and Priority 6 **shipped**. Priority 3 and
+> Priority 5 below are **planned, not implemented** — documented here per the standing-rule that new scope gets
+> recorded in the docs of record before (not instead of) building it. Do not build P3 or P5 until
 > separately instructed.
 >
 > Naming note: this is the *software* counterpart to EPIC 12's TIF v0.2 — EPIC 12 was the
@@ -1216,17 +1216,37 @@ rows (title, location, repo, assetType, businessUnit) — 156 items as of the fi
 renders them grouped by repo. Not linked into Evidence/Opportunity/Asset traceability — see EPIC 12
 TIF-1203/1204 for that mapping, which remains a separate, not-yet-built deliverable.
 
+**Priority 4 — Manual Edit Protection.** **Implemented 2026-07-01.** TIF-generated assets now
+record `generatedAt` and `generatedHash` on the `Asset` row when composed. The console computes the
+current markdown file hash before regeneration; if it differs from `generatedHash`, the asset is
+treated as manually edited. For legacy rows without `generatedHash`, the console falls back to the
+existing `Asset.updatedAt` timestamp and file mtime. Edited assets show a "Manual Edits Detected"
+confirmation dialog with Cancel as the default action. The server action also blocks unconfirmed
+regeneration of edited assets. Files changed: `prisma/schema.prisma`, `scripts/tif/compose-asset.mjs`,
+`src/lib/tif/manual-edit-protection.ts`, `src/app/tif/actions.ts`, `src/app/tif/page.tsx`,
+`src/app/tif/assets/[slug]/page.tsx`, `src/app/tif/regenerate-asset-form.tsx`,
+`package.json`, `vitest.config.ts`, `vitest.setup.ts`, and migration
+`prisma/migrations/20260701120000_add_asset_manual_edit_protection/migration.sql`. Tests added:
+`src/lib/tif/manual-edit-protection.test.ts` and
+`src/app/tif/regenerate-asset-form.test.tsx`.
+
+**Priority 6 — Deliverable-Centric Production View.** **Implemented 2026-07-01.** `/tif/deliverables`
+adds a deterministic production-management layer over the existing Evidence, Asset Opportunity, and
+Asset records. It implements the missing operator answer to "what can be shipped?" without changing
+storage or introducing content generation. Supported deliverable types: `executive_brief`,
+`assessment`, `case_study`, `article`, `report`, `offer_asset`, and `sales_asset`. Readiness is
+rules-only and returns a percentage plus missing components. Status is computed as `ready`,
+`in_progress`, `blocked`, or `published`; `published` still comes only from the existing `Asset`
+status. The dashboard reports Ready to Produce, Ready to Publish, Blocked, and Published, grouped by
+deliverable type. Files changed: `src/lib/tif/deliverables.ts`,
+`src/app/tif/deliverables/page.tsx`, and `src/app/tif/page.tsx`. Tests added:
+`src/lib/tif/deliverables.test.ts`.
+
 ## Planned, not implemented (do not build without explicit instruction)
 
 **Priority 3 — Asset Health.** Summary counts on the console: total Evidence/Opportunities/Assets,
 Unconverted Evidence (Evidence with zero linked Assets), Opportunities Without Assets (status
 still `opportunity`), Draft Assets, Published Assets. Read-only, no charts.
-
-**Priority 4 — Manual Edit Protection.** A confirmation dialog before "Regenerate Asset" warning
-that the action overwrites manual edits (see the Operator Console v0.1 finding: regenerating
-`why-buyers-choose-rachel-delray.md` reverted its hand-filled `business_unit`/`voice`/
-`source_opportunity` to template placeholders). No versioning, no approval engine — a confirm
-dialog is the minimum acceptable fix.
 
 **Priority 5 — Traceability Improvements.** Better in-console visibility of Evidence → Opportunity
 → Asset counts and links than the v0.1 console's anchor-link approach. Read-only, no graph

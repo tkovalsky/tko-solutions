@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getAssetManualEditState, formatAssetDate } from "@/lib/tif/manual-edit-protection";
 import { tifDb } from "@/lib/tif/db";
 
 export const metadata: Metadata = {
@@ -27,6 +28,8 @@ export default async function TifAssetDetailPage({ params }: Params) {
   if (!asset) {
     notFound();
   }
+
+  const editState = await getAssetManualEditState(asset);
 
   let markdown: string;
   try {
@@ -56,6 +59,15 @@ export default async function TifAssetDetailPage({ params }: Params) {
           ))}
           {" · "}Opportunity: {asset.opportunity ? asset.opportunity.title : "—"}
         </p>
+        <div className="mt-4 rounded-lg border border-border bg-surface p-4 text-sm">
+          <p className={`font-semibold ${editState.isManuallyEdited ? "text-warning" : "text-success"}`}>
+            {editState.isManuallyEdited ? "Manually Edited" : "Generated"}
+          </p>
+          <p className="mt-1 text-xs text-muted">Last Generated: {formatAssetDate(editState.generatedAt)}</p>
+          {editState.isManuallyEdited && (
+            <p className="text-xs text-muted">Last Edited: {formatAssetDate(editState.lastEditedAt)}</p>
+          )}
+        </div>
       </header>
 
       <article className="whitespace-pre-wrap rounded-xl border border-border bg-white p-6 font-mono text-sm leading-6">

@@ -12,7 +12,8 @@
     "tif:migrate:deploy": "node --env-file=.env.local node_modules/.bin/prisma migrate deploy",
     "tif:seed": "node --env-file=.env.local scripts/tif/seed.mjs",
     "tif:compose": "node --env-file=.env.local scripts/tif/compose-asset.mjs",
-    "tif:inventory": "node --env-file=.env.local scripts/tif/inventory-scan.mjs"
+    "tif:inventory": "node --env-file=.env.local scripts/tif/inventory-scan.mjs",
+    "test": "vitest run"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

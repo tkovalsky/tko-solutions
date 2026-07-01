@@ -290,13 +290,12 @@ Evidence:
 ### Homepage Order
 
 1. Hero: Operational Knowledge Systems for Complex Workflows
-2. Primary Market: Healthcare Workflow Modernization
-3. Proof Ladder / 1: Healthcare Transformation Experience
-4. Proof Ladder / 2: RachelOS
-5. Proof Ladder / 3: CRE Intelligence
-6. Proof Ladder / 4: Operating System Methodology
-7. Services
-8. CTA
+2. Healthcare Credibility: healthcare workflow modernization, operating problems, and transformation experience
+3. Proof Ladder / 1: RachelOS
+4. Proof Ladder / 2: CRE Intelligence
+5. Methodology: Operating System Methodology
+6. Services
+7. CTA
 
 ### Remove
 
@@ -360,12 +359,25 @@ Approval → Publish` flywheel (recorded as **EPIC 11 — Content Intelligence P
 `ENGINEERING_BACKLOG.md`) shared across Rachel Delray, CRE Intelligence, and TKO from one evidence
 base, with human approval still mandatory and nothing auto-published.
 
-**Built 2026-06-28:** the v0.1 spine is live in Neon (Evidence/Opportunity/Asset registries +
-Asset Composer), with a v0.2 Operator Console at `/tif` — read-only visibility, a Capture Inbox
-(`/tif/inbox`), and a 156-item Content Inventory (`/tif/inventory`) across `tko-site`,
-`rachel-realestate`, and `cre-intelligence`. See `ENGINEERING_BACKLOG.md` EPIC 13 for what's
-shipped versus still-planned (Asset Health, manual-edit-overwrite protection, deeper
-traceability).
+**Built 2026-06-28; updated 2026-07-01:** the v0.1 spine is live in Neon
+(Evidence/Opportunity/Asset registries + Asset Composer), with a v0.2 Operator Console at `/tif` —
+read-only visibility, a Capture Inbox (`/tif/inbox`), and a 156-item Content Inventory
+(`/tif/inventory`) across `tko-site`, `rachel-realestate`, and `cre-intelligence`. Generated assets
+are now protected from accidental overwrite: TIF records the generated content hash, detects manual
+markdown edits before regeneration, uses the asset timestamp as a fallback for older rows, and
+requires an explicit "Regenerate Anyway" confirmation when manual edits exist. See
+`ENGINEERING_BACKLOG.md` EPIC 13 for what's shipped versus still-planned (Asset Health and deeper
+traceability remain planned).
+
+**Built 2026-07-01:** TIF now has a Deliverable-Centric production view at `/tif/deliverables`.
+This closes the audit gap between the documented Artifact/Asset architecture and the operator's
+day-to-day question: "what can be shipped?" The view does not add a new storage model, content
+generation, LLM scoring, drafting workflow, or publishing workflow. It is a deterministic read model
+over the existing Evidence, Asset Opportunity, and Asset rows. Supported deliverable types are
+executive brief, assessment, case study, article, report, offer asset, and sales asset. The current
+implemented content surface is partial: articles and assessments exist in live TIF records; reports
+are mapped from `intelligence_report`; executive briefs, case studies, offer assets, and sales assets
+are supported in the registry but currently have no live rows.
 
 **TIF v0.3 Execution Layer (architecture, not new product):** the next documentation layer
 formalizes how the registries execute. The canonical generation model is
