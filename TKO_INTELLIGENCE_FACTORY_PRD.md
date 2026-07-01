@@ -20,6 +20,51 @@ Create a structured operational knowledge system that captures experiences, extr
 
 ⸻
 
+# TIF CONTENT OPERATING MODEL — STRATEGY LAYER
+
+This PRD's Registry & Artifact Engine remains the runtime architecture. The content strategy layer
+above it is now:
+
+```text
+Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement
+```
+
+Definitions:
+
+- **Knowledge:** reusable source material: CRM notes, lead conversations, call transcripts,
+  research findings, market intelligence, project findings, screenshots, metrics, outcomes,
+  testimonials, existing guides, existing comparison pages, case studies, and reports. Existing
+  `Evidence` is the proof-grade subset of Knowledge admitted for traceable use.
+- **Insight:** reusable conclusions derived from Knowledge. Existing findings, claims, patterns,
+  and recommendations map into this layer depending on whether they are run-specific or reusable.
+- **Deliverable:** the core producible content or intelligence artifact. Deliverable is the operator
+  and backlog term for what should be produced.
+- **Channel Package:** channel-specific adaptation of a deliverable: SEO page, PDF, LinkedIn post,
+  LinkedIn carousel, Facebook post, Facebook ad, Reddit post, email sequence, CRM next-touch asset,
+  sales one-pager, or landing page.
+- **Publication:** rendered or deployed output of a channel package: website URL, PDF, email draft,
+  CRM asset, social draft, ad creative, sales collateral, or internal console item.
+- **Measurement:** performance and coverage feedback that informs future priorities.
+
+Terminology migration:
+
+- Keep **Evidence** where the document means proof-grade cited Knowledge.
+- Keep **Artifact** where the document means registry/output contract consumed by the composer.
+- Keep **Asset** where the document describes existing v0.1 storage or historical decisions.
+- Use **Deliverable** for content strategy and backlog planning.
+- Use **Channel Package** and **Publication** separately; do not collapse both into "asset."
+
+Supported future deliverable types include guide, comparison, report, assessment, executive brief,
+article, case study, sales asset, offer asset, email sequence, landing page, ad concept, social
+post, Reddit post, LinkedIn post, LinkedIn carousel, Facebook post, Facebook ad, and CRM next-touch
+asset. **Comparison is first-class**, not an article subtype. Examples: Boca vs Delray, Delray vs
+Boynton, Valencia Sound vs Valencia Bay, GL Homes vs Toll Brothers, and 55+ vs All-Age Communities.
+
+Canonical detail lives in
+[`docs/TIF_CONTENT_OPERATING_MODEL.md`](docs/TIF_CONTENT_OPERATING_MODEL.md).
+
+⸻
+
 # TIF v2 ARCHITECTURE — REGISTRY, ARTIFACT & EXECUTION ENGINE (CANONICAL)
 
 This section supersedes any v1 framing that implies per-output generators or a `Questions → Report` pipeline. Where v1 sections below (Asset Generation, Phase 3 Asset Factory, Phase 5 Assessment Engine) describe "Article Generation / Assessment Generation / Case Study Generation" as distinct pipelines, read them as **entries in a registry consumed by one engine**, not as separate generators.
@@ -305,7 +350,10 @@ rachel_seller:
 ```
 
 ### Artifact Registry
-Each `ArtifactType` defines the output contract:
+Each `ArtifactType` defines the output contract for a deliverable or a channel package. The
+strategic deliverable may be broader than the runtime artifact key. Example: `comparison` is the
+deliverable; `comparison_page`, `comparison_guide`, `linkedin_carousel`, `facebook_ad`, and
+`email_sequence` are channel/package artifacts derived from it.
 
 | key | required inputs | supported frameworks | output structure | approval |
 |---|---|---|---|---|
@@ -317,14 +365,24 @@ Each `ArtifactType` defines the output contract:
 | `one_pager` | Offer/Framework summary + proof | any | problem → who → deliverables → outcome → CTA | review |
 | `diagram` | Findings / workflow / process description | frameworks with `diagram_rules` | nodes/edges (see Diagram Generation) | review |
 | `landing_page` | article/offer blocks + CTA | content frameworks | conversion sections | review |
+| `comparison` | Two or more entities + decision criteria + source knowledge | rachel_community, rachel_development, commercial_expansion | decision frame → criteria → tradeoffs → recommendation → package plan | review |
 | `community_page` | Community facts + fit criteria + related communities | rachel_community, rachel_development | hero → overview → lifestyle fit → pricing → amenities → pros/cons → similar communities → FAQ → CTA | review |
-| `comparison_page` | Two or more places/communities + comparison criteria | rachel_community, rachel_development | hero → quick table → cost → lifestyle → amenities → buyer recommendations → FAQ → CTA | review |
+| `comparison_page` | Comparison deliverable + SEO/page requirements | rachel_community, rachel_development | hero → quick table → cost → lifestyle → amenities → buyer recommendations → FAQ → CTA | review |
+| `comparison_guide` | Comparison deliverable + guide/PDF requirements | rachel_community, rachel_development | decision frame → table → criteria → tradeoffs → FAQ → CTA | review |
 | `relocation_guide` | Origin market + relocation criteria + buyer journey inputs | rachel_relocation | why move → costs → taxes → healthcare → housing → mistakes → timeline → FAQ → CTA | review |
 | `buyer_guide` | Market + buyer criteria + readiness inputs | rachel_buyer | market overview → budget → financing → competition → mistakes → FAQ → CTA | review |
 | `seller_guide` | Market + seller criteria + relocation inputs | rachel_seller | market conditions → pricing strategy → prep checklist → timing → mistakes → FAQ → CTA | review |
 | `development_page` | Builder/development facts + model criteria | rachel_development | builder overview → community overview → floorplans → amenities → pricing → timelines → FAQ → CTA | review |
 | `lifestyle_page` | Lifestyle profile + community/content recommendations | rachel_lifestyle | overview → benefits → drawbacks → recommended communities → cost expectations → FAQ → CTA | review |
 | `newsletter` | ≥1 Claim/Pattern/Asset | content frameworks | issue sections + links | review |
+| `email_sequence` | Deliverable + audience + CTA + sequence goal | content frameworks | trigger → emails → CTA → CRM note | review |
+| `linkedin_post` | Deliverable + audience + POV | content frameworks | hook → point → proof → CTA | review |
+| `linkedin_carousel` | Deliverable + audience + slide thesis | content frameworks | slide sequence → proof → CTA | review |
+| `facebook_post` | Deliverable + audience + CTA | rachel/content frameworks | short copy → local proof → CTA | review |
+| `facebook_ad` | Deliverable + audience + offer + claim guard | rachel/content frameworks | primary text → headline → description → creative brief | human |
+| `reddit_post` | Deliverable + community context + non-promotional angle | rachel/content frameworks | question/context → useful guidance → soft CTA | human |
+| `crm_next_touch_asset` | Lead/account context + approved deliverable | rachel/content frameworks | next-touch copy → reason → source refs | human |
+| `sales_one_pager` | Offer/proof deliverable + audience | any | problem → proof → scope → outcome → CTA | review |
 
 `required_inputs` are enforced by the engine before `compose()` runs (an `article` with no Claim fails fast; an `assessment` with no Findings fails fast).
 
@@ -356,6 +414,10 @@ comparison_guide:
     - location_context
     - pricing_context
 ```
+
+Channel package definitions additionally include channel-specific constraints: SEO fields, PDF
+layout needs, social platform copy limits, ad claim guards, email sequence count, CRM next-touch
+context, sales collateral format, publication target, and measurement hooks.
 
 ### Voice Registry
 Each `VoiceProfile` is **configuration only** — applied at Generate, never a separate generator:
@@ -415,6 +477,15 @@ States: `draft → review → revision_requested → approved → published` (+ 
 - **Revision history:** every revision preserves the prior draft, prompt version, facts, source
   refs, reviewer action, and approval state.
 
+Operating-model readiness stages sit above lifecycle state:
+
+```text
+Knowledge Ready → Insight Ready → Deliverable Draft Ready → Channel Package Ready → Publication Ready → Measurement Active
+```
+
+Blocked states should explain the missing layer: missing knowledge, unsupported insight, undefined
+deliverable, missing channel requirements, publication ownership blocked, or measurement unavailable.
+
 ## Deliverable 5 — Migration recommendations (no code in this task)
 
 Pre-implementation, so "migration" = how the documented plan and the eventual schema evolve from v1:
@@ -426,6 +497,9 @@ Pre-implementation, so "migration" = how the documented plan and the eventual sc
 5. **Add Diagram as `ArtifactType{key: diagram}`** plus a renderer (Mermaid first; SVG/PNG/markdown export) — **not** a new generator.
 6. **Confirm `FailureMode` is collapsed into `Pattern.kind`** (Review §4); framework `finding_rules` reference `Pattern{kind: failure}`.
 7. **Keep phase-gating discipline**, but the gate for the generation phase becomes: *one artifact of two different types produced from one Run with full traceability and a confidence score* — proving the composer, not a generator.
+8. **Adopt the operating-model planning terms** without renaming shipped records: Knowledge
+   includes Evidence; Deliverable is the strategy object; Artifact remains the runtime contract;
+   Channel Package and Publication are tracked separately; Measurement feeds future prioritization.
 
 ## Diagram generation (first-class artifact)
 
@@ -449,7 +523,7 @@ Diagrams are `ArtifactType{key: diagram}`, produced by the same engine from stru
 | 7 | Executive briefs | any assessment framework | executive_brief | executive |
 | 8 | Workflow diagrams | framework `diagram_rules` | diagram (mermaid/svg/png) | — |
 | 9 | One-pagers | `operational_recovery` / `prior_authorization` | one_pager | executive |
-| 10 | Rachel interactive content engine | `rachel_relocation` / `rachel_community` / `rachel_buyer` / `rachel_seller` / `rachel_lifestyle` / `rachel_development` | community_page / comparison_page / relocation_guide / buyer_guide / seller_guide / lifestyle_page / development_page | rachel/consumer |
+| 10 | Rachel interactive content engine | `rachel_relocation` / `rachel_community` / `rachel_buyer` / `rachel_seller` / `rachel_lifestyle` / `rachel_development` | comparison deliverable + community_page / comparison_page / comparison_guide / relocation_guide / buyer_guide / seller_guide / lifestyle_page / development_page | rachel/consumer |
 | 11 | Future CRE intelligence reports | `commercial_expansion` *(new row)* | report + diagram | executive |
 
 Every priority is a `{Framework × Artifact × Voice}` composition over the single pipeline. #10 and #11 — entirely different businesses — are **new registry rows, not new applications.** This is the proof the architecture meets the brief.

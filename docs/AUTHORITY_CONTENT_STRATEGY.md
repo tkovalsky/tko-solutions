@@ -101,6 +101,36 @@ Every authority article should avoid:
 
 ## Content Formats
 
+## TIF Content Operating Model
+
+TKO authority content should be planned through the TIF operating model:
+
+```text
+Knowledge -> Insight -> Deliverable -> Channel Package -> Publication -> Measurement
+```
+
+Every planned deliverable should carry a content archetype:
+
+- Educational.
+- Comparison.
+- Decision Support.
+- Proof.
+- Authority.
+- Conversion.
+
+For TKO / consulting content, prioritize:
+
+1. Case Study.
+2. Assessment.
+3. Report.
+4. Executive Brief.
+5. Authority Article.
+6. Sales Asset.
+
+Reason: executive buyers need proof, diagnosis, and business relevance before they care about
+thought leadership. Authority articles still matter, but they should usually follow or support
+proof assets, assessments, reports, and executive briefs.
+
 ### Primary Formats
 
 - Executive problem articles.

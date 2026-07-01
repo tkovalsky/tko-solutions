@@ -25,6 +25,12 @@ Owner: Todd Kovalsky
 > **North star:** This backlog builds toward the future state defined in
 > [`CURRENT_REALITY.md`](CURRENT_REALITY.md). TIF is the internal engine that produces the
 > proof, content, and assessment assets that document requires — not a product TKO sells.
+> **Content operating model authority:** TIF is now documented as
+> `Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement` in
+> [`docs/TIF_CONTENT_OPERATING_MODEL.md`](docs/TIF_CONTENT_OPERATING_MODEL.md). Existing
+> `Evidence`, `Asset`, and `Artifact` language remains valid where it describes shipped records,
+> proof-grade source material, or registry contracts. New planning should distinguish the core
+> deliverable from channel packages and publications.
 > **Content flywheel:** EPIC 11 (Content Intelligence Pipeline) is the canonical spec for the
 > `Observation → … → Publish` flywheel across Rachel / CRE / TKO. Its **Capture Inbox** and **Asset
 > Opportunity Registry** are part of the SANCTIONED-NEXT v0.1 spine; the full cron-driven automation
@@ -84,7 +90,7 @@ production.
 |---|---|---|
 | **Evidence Registry** — admitted evidence records with resolving `proof_ref` + `claim_guard` | `content/proof/*/evidence.yaml`, EPIC 6 TIF-604 | **Knowledge Graph** — full relational Experience→Observation→Pattern→FailureMode core (Epics 1/5/6) |
 | **Asset Opportunity Registry** — `asset_opportunity` records | EPIC 11 TIF-1103 | **Vector Search / pgvector** (Epic 10) |
-| **Asset Composer** — template-fill generation of articles / case studies / assessments / reports / comparison guides | EPIC 7 (TIF-701…706) + `asset-production/templates/` | **Agent Framework** / autonomous multi-agent orchestration |
+| **Asset Composer** — template-fill generation of current assets and future deliverables such as articles / case studies / assessments / reports / comparison guides | EPIC 7 (TIF-701…706), EPIC 18 + `asset-production/templates/` | **Agent Framework** / autonomous multi-agent orchestration |
 | **Execution Layer contract** — deterministic runtime path from payload validation through facts, template population, draft, voice refinement, and human review | EPIC 15 (TIF v0.3) + `TKO_INTELLIGENCE_FACTORY_PRD.md` | **Generic workflow platform** / autonomous publishing |
 | **Traceability** — every claim cites an evidence `id`; evidence rule + claim guards enforced | METHOD.md §3–§5 | **Generic platform infrastructure** / any client-facing SaaS |
 | **Capture Inbox** — lightweight idea intake | EPIC 11 TIF-1101 | |
@@ -960,22 +966,27 @@ effort.
 ## The target state
 
 ```
-Observation → Evidence → Opportunity → Research → Draft → Refinement → Approval → Publish
+Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement
 ```
 
-A scalable content + marketing flywheel across all three proof domains. **Human approval stays
-mandatory; nothing auto-publishes and nothing auto-distributes.**
+The earlier `Observation → Evidence → Opportunity → Research → Draft → Refinement → Approval →
+Publish` path remains the current v0.1/v0.2 implementation spine. The strategic operating model is
+broader: a single insight can support multiple deliverables; one deliverable can produce multiple
+channel packages; each channel package can produce one or more publications; measurement feeds the
+next priority decision. This creates a scalable content + demand-generation flywheel across all
+three proof domains. **Human approval stays mandatory; nothing auto-publishes and nothing
+auto-distributes.**
 
 ## Goal
 
-Transform Ideas / Observations / Market Signals / Client Conversations / Research into Articles /
-Case Studies / Landing Pages / Assessments / Comparison Guides / Executive Briefs / Intelligence
-Reports through a structured, governed workflow.
+Transform Ideas / Observations / Market Signals / Client Conversations / Research into reusable
+Knowledge and Insights, then into Deliverables, Channel Packages, Publications, and Measurement
+feedback through a structured, governed workflow.
 
 ## Core workflow
 
 ```
-Capture → Classification → Research → Asset Recommendation → Draft → Refinement → Review → Approval → Publish
+Capture → Classification → Research → Deliverable Recommendation → Draft → Channel Package → Review → Approval → Publication → Measurement
 ```
 
 ## TIF-1101 — Phase 1: Capture Inbox
@@ -996,35 +1007,51 @@ normalized evidence record first.
 
 ## TIF-1102 — Phase 2: Content Work Queue
 
-A `content_work_item` entity that tracks content through its production lifecycle.
+A future `content_work_item` entity that tracks content through its production lifecycle. Do not
+implement this entity in the documentation rebaseline.
 
-- **Schema:** `id`, `title`, `business_unit`, `asset_type`, `source_evidence`, `stage`, `owner`,
-  `priority`, `next_action`, `generated_assets`, `notes`.
-- **Stages:** `inbox` → `research` → `drafting` → `refining` → `review` → `approved` →
-  `published` → `archived`.
+- **Planning fields:** `id`, `title`, `business_unit`, `deliverable_type`, `content_archetype`,
+  `source_knowledge`, `source_evidence`, `readiness_stage`, `owner`, `priority`, `next_action`,
+  `channel_packages`, `publications`, `measurement_status`, `notes`.
+- **Readiness stages:** `knowledge_ready` → `insight_ready` → `deliverable_draft_ready` →
+  `channel_package_ready` → `publication_ready` → `measurement_active`.
 
 ## TIF-1103 — Phase 3: Classification
 
 Daily processing assigns:
 
 - `business_unit`: `rachel` | `cre` | `tko`
-- `asset_type`: `article` | `landing-page` | `case-study` | `assessment` | `executive-brief` |
-  `comparison-guide` | `intelligence-report`
+- `deliverable_type`: `guide` | `comparison` | `report` | `assessment` | `executive_brief` |
+  `article` | `case_study` | `sales_asset` | `offer_asset` | `email_sequence` |
+  `landing_page` | `ad_concept` | `social_post` | `reddit_post` | `linkedin_post` |
+  `linkedin_carousel` | `facebook_post` | `facebook_ad` | `crm_next_touch_asset`
+- `content_archetype`: `educational` | `comparison` | `decision_support` | `proof` |
+  `authority` | `conversion`
 
 Output: `asset_opportunity` records.
 
-## TIF-1104 — Phase 4: Research Layer
+Migration note: the existing `asset_opportunity` storage term is retained. Future planning should
+classify deliverables and archetypes even if the current implementation stores those as asset
+opportunity metadata.
 
-Gather supporting evidence before drafting: web research, market intelligence, supporting data,
-counterarguments, related observations. Output stored alongside the work item:
+## TIF-1104 — Phase 4: Research / Knowledge Layer
+
+Gather supporting knowledge before drafting: web research, market intelligence, supporting data,
+counterarguments, related observations, CRM notes, conversations, transcripts, screenshots, metrics,
+existing guides, case studies, reports, and proof records. Evidence remains the proof-grade subset
+of this knowledge. Output stored alongside the work item:
 `supporting_sources`, `related_patterns`, `counter_arguments`.
 
-## TIF-1105 — Phase 5: Asset Recommendation
+## TIF-1105 — Phase 5: Deliverable Recommendation
 
-Determine and rank `recommended_assets` (`primary_asset`, `secondary_asset`).
+Determine and rank `recommended_deliverables` (`primary_deliverable`, `secondary_deliverables`) and
+potential channel packages.
 
 > Observation: *Represented seller called Rachel despite existing representation* →
-> 1. Landing Page  2. Article  3. Case Study
+> 1. Case Study  2. Sales Asset  3. LinkedIn Post
+
+> Insight: *NJ retirees compare Boca and Delray before choosing where to buy* →
+> 1. Comparison  2. SEO Page package  3. Email Sequence package  4. Facebook Ad package
 
 ## TIF-1106 — Phase 6: Draft Generation
 
@@ -1047,6 +1074,10 @@ Publishing occurs **only after approval**. No automatic publishing. No automatic
 Every published asset still passes the [`asset-production/METHOD.md`](asset-production/METHOD.md)
 evidence rule, claim guards, and §5 anti-slop checklist — the pipeline automates the *motion*,
 not the *gate*.
+
+Publication is distinct from channel packaging. A channel package is the reviewed adaptation for a
+target channel; a publication is the rendered or deployed output such as a website URL, PDF, email
+draft, CRM item, social draft, or ad creative.
 
 ## TIF-1110 — Cron strategy (single Vercel cron, state machine)
 
@@ -1083,9 +1114,9 @@ prior-authorization insight, CRE market observation.
 ## Strategic outcome
 
 TIF evolves from `Evidence → Asset` to
-`Observation → Evidence → Opportunity → Research → Draft → Refinement → Approval → Publish`,
-creating a scalable content + marketing flywheel across Rachel Delray, CRE Intelligence, and TKO
-Solutions — one shared evidence base, three proof domains, one production system.
+`Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement`, creating a
+scalable content + demand-generation flywheel across Rachel Delray, CRE Intelligence, and TKO
+Solutions — one shared knowledge base, three proof domains, one production system.
 
 ---
 
@@ -1100,9 +1131,10 @@ Solutions — one shared evidence base, three proof domains, one production syst
 ## Objective
 
 Create a repeatable process for auditing, classifying, and mapping **existing** content across
-`tko-site`, `rachel-realestate`, and `cre-intelligence` onto the v0.1 asset model
-(`Evidence → Opportunity → Asset → Publication`), and a migration plan to bring it under TIF
-governance with traceability preserved. The goal is normalization, not new content generation.
+`tko-site`, `rachel-realestate`, and `cre-intelligence` onto the content operating model
+(`Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement`), while
+preserving the current v0.1 implementation model (`Evidence → Opportunity → Asset → Publication`)
+where it reflects shipped records. The goal is normalization, not new content generation.
 
 ## Problem
 
@@ -1117,11 +1149,21 @@ development resources), and `cre-intelligence` (market/intelligence reports, ten
 healthcare-RE content, opportunity assessments). For every item: title, location, repo, current
 format, current purpose.
 
-## TIF-1202 — Phase 2: Asset Classification
+## TIF-1202 — Phase 2: Deliverable Classification
 
-Classify every item into exactly one primary type (secondary optional): `article`,
-`landing_page`, `service_page`, `case_study`, `assessment`, `comparison_guide`,
-`intelligence_report`, `executive_brief`, `thought_piece`, `proof_asset`.
+Classify every item into:
+
+- A primary deliverable type: `guide`, `comparison`, `report`, `assessment`, `executive_brief`,
+  `article`, `case_study`, `sales_asset`, `offer_asset`, `email_sequence`, `landing_page`,
+  `ad_concept`, `social_post`, `reddit_post`, `linkedin_post`, `linkedin_carousel`,
+  `facebook_post`, `facebook_ad`, `crm_next_touch_asset`.
+- A content archetype: `educational`, `comparison`, `decision_support`, `proof`, `authority`,
+  `conversion`.
+- Optional current implementation alias: `asset_type` / `artifact_type` where needed for existing
+  TIF records.
+
+Comparison is classified as a first-class deliverable. `comparison_page` and `comparison_guide` are
+channel/package or publication formats of the comparison deliverable, not the only comparison model.
 
 ## TIF-1203 — Phase 3: Evidence Mapping
 
@@ -1135,13 +1177,16 @@ Identify evidence with no corresponding asset (the inverse of TIF-1203). Output:
 (high/medium/low) opportunity backlog by business value — feeds the existing Asset Opportunity
 Registry (EPIC 11 TIF-1103), it does not replace it.
 
-## TIF-1205 — Phase 5: Canonical Template Definitions
+## TIF-1205 — Phase 5: Canonical Deliverable and Channel Package Definitions
 
-For each asset type (including the four already templated in `asset-production/templates/` —
+For each deliverable type and channel package type (including the four already templated in
+`asset-production/templates/` —
 article, case-study, assessment, intelligence-report — plus the newly scoped `landing_page`,
 `comparison_guide`, `executive_brief`, `thought_piece`, `proof_asset`), define purpose, required
 sections, optional sections, evidence requirements, and CTA requirements. Extend existing
-templates before authoring new ones.
+templates before authoring new ones. The definition must distinguish core deliverable structure
+from channel-specific requirements such as SEO metadata, PDF layout, social copy constraints, ad
+creative requirements, email sequence steps, CRM next-touch usage, and sales collateral format.
 
 **Status (2026-06-28): 4 of 5 originally-scoped gaps authored.** `templates/landing-page.md`,
 `templates/comparison-guide.md`, and `templates/executive-brief.md` are now live, extending the
@@ -1166,17 +1211,27 @@ Publication layers own placement and voice — `tko-site` (consulting, healthcar
 intelligence), Rachel (relocation, real estate, comparisons, developments), CRE (market
 intelligence, tenant representation, opportunity reports).
 
+Publication architecture must explicitly separate:
+
+- Deliverable: core producible artifact.
+- Channel Package: channel-specific adaptation.
+- Publication: rendered/deployed output.
+- Measurement: performance and coverage feedback.
+
 ## TIF-1208 — Phase 8: Content Work Queue Integration (forward-compatibility only)
 
 Migrated assets must be representable with `status: draft | review | approved | published |
 archived` — the same lifecycle as `Asset.status` in the v0.1 spine (`prisma/schema.prisma`) and
-the future Content Work Queue (EPIC 11 TIF-1102). No new workflow is implemented in this epic.
+the future Content Work Queue (EPIC 11 TIF-1102). They must also be mappable to staged readiness:
+Knowledge Ready, Insight Ready, Deliverable Draft Ready, Channel Package Ready, Publication Ready,
+and Measurement Active. No new workflow is implemented in this epic.
 
 ## Deliverables
 
-A. Repository Content Inventory · B. Asset Classification Matrix · C. Evidence Coverage Matrix ·
-D. Opportunity Backlog · E. Canonical Template Definitions · F. Migration Strategy ·
-G. Publication Ownership Model · H. Recommended First 25 Assets To Normalize
+A. Repository Content Inventory · B. Deliverable Classification Matrix · C. Evidence/Knowledge
+Coverage Matrix · D. Opportunity Backlog · E. Canonical Deliverable and Channel Package
+Definitions · F. Migration Strategy · G. Publication Ownership Model · H. Measurement Readiness
+Map · I. Recommended First 25 Assets To Normalize
 
 **Completed:** [`archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md`](archive/2026-06-28/TIF_V0.2_CONTENT_AUDIT.md)
 delivers A–H across `tko-site`, `rachel-realestate`, `cre-intelligence`.
@@ -1280,6 +1335,11 @@ modules. The engine should support community pages, comparison pages, relocation
 guides, seller guides, lifestyle pages, and development pages while capturing representation-ready
 lead signals.
 
+Rebaseline note: EPIC 14 is a Rachel channel-package/publication initiative over core TIF
+deliverables. **Comparison is the first-class deliverable.** Comparison pages, comparison guides,
+PDFs, email sequences, social posts, and ads are channel packages or publications derived from the
+same comparison deliverable.
+
 ## Flagship — Community Intelligence Assessment (Community-Match framework)
 
 The named flagship of EPIC 14 Phase 1 is the **Community Intelligence Assessment**, a guided
@@ -1303,6 +1363,7 @@ comparison guide/report and its traceability. The RachelOS completion contract i
 ## Product principles
 
 - Page types are `ArtifactType` or template definitions, not bespoke generators.
+- Comparison is a first-class deliverable type, not a subtype of article or only a page template.
 - Interactive modules are reusable configuration-driven components, not page-specific logic.
 - Assessment answers become structured lead intelligence, not just form submissions.
 - Every generated page remains human-reviewable before publication.
@@ -1310,7 +1371,7 @@ comparison guide/report and its traceability. The RachelOS completion contract i
 
 ## TIF-1401 — Page Type Registry
 
-Create canonical page type definitions for:
+Create canonical page/channel package definitions for:
 
 - `community_page`
 - `comparison_page`
@@ -1323,6 +1384,10 @@ Create canonical page type definitions for:
 Each page type must define required sections, optional sections, SEO fields, CTA rules, FAQ rules,
 internal link rules, related content rules, supported interactive modules, and supported voice
 profiles.
+
+For `comparison_page`, the registry must link back to the core `comparison` deliverable and preserve
+the compared entities, decision criteria, source knowledge, claim guards, and recommended channel
+packages.
 
 Acceptance criteria:
 
@@ -1386,7 +1451,7 @@ Acceptance criteria:
 Implement the recommended first slice:
 
 1. Community Pages.
-2. Comparison Pages.
+2. Comparison Deliverables and Comparison Pages.
 3. Relocation Guides.
 
 Rationale: this sequence prioritizes the highest-value Rachel growth intents first. Community pages
@@ -1398,7 +1463,11 @@ capture model before expanding to buyer, seller, lifestyle, and development page
 Acceptance criteria:
 
 - Community pages can attach the Community Fit Assessment.
+- Comparison deliverables can support Boca vs Delray, Delray vs Boynton, Valencia Sound vs Valencia
+  Bay, GL Homes vs Toll Brothers, and 55+ vs All-Age Communities.
 - Comparison pages can attach the Comparison Match Tool.
+- Comparison channel packages can include SEO page, PDF, LinkedIn post, LinkedIn carousel, Facebook
+  post, Facebook ad, Reddit post, email sequence, CRM next-touch asset, and sales one-pager.
 - Relocation guides can attach the Relocation Readiness Assessment.
 - Generated artifacts include FAQ, CTA, internal link recommendations, and related content
   recommendations.
@@ -1848,13 +1917,16 @@ client-facing SaaS, and automatic publishing.
 
 ## Objective
 
-Define how generated, approved assets reach each publication target and, later, external channels —
+Define how generated, approved channel packages reach each publication target and, later, external channels —
 while preserving the rule that **TIF generates and publication layers place/present**, and that a
 human approves every publication.
 
-## Publication targets and asset types
+This epic is downstream of EPIC 18's channel package model. TIF may prepare a channel package; the
+publication layer owns the rendered/deployed publication.
 
-| Target | Repo | Asset types |
+## Publication targets and publication formats
+
+| Target | Repo | Publication formats |
 |---|---|---|
 | RachelDelray | `rachel-realestate` | community/comparison/relocation/buyer/seller/lifestyle pages |
 | TKO Site | `tko-site` | articles · assessments · executive briefs · case studies · one-pagers |
@@ -1869,12 +1941,252 @@ the target pulls them (today: `POST /api/tif/compose`, drafts only — `docs/TIF
 ## TIF-1702 — External distribution (deferred)
 
 Google, Facebook, Email, YouTube, landing/community pages. **DEFERRED** behind the no-auto-publish
-gate; every distribution requires explicit human approval. Roadmap Phases 6–7 in
+gate; every distribution requires explicit human approval. Roadmap Phases 8–10 in
 `docs/CONTENT_PIPELINE_ROADMAP.md`.
 
 ## Explicitly out of scope
 
 Any auto-publishing, autonomous distribution, client-facing SaaS, new CRM, or outreach automation.
+
+---
+
+# EPIC 18 — TIF CONTENT OPERATING MODEL REBASELINE
+
+> **Status:** Documentation/backlog alignment · **Classification:** BACKLOG / docs only ·
+> **Do not build.**
+>
+> **Authority:** [`docs/TIF_CONTENT_OPERATING_MODEL.md`](docs/TIF_CONTENT_OPERATING_MODEL.md)
+> defines the model. This epic records the future backlog items created by the rebaseline. It does
+> not authorize feature work, migrations, schema changes, new routes, production behavior changes,
+> analytics integrations, or publishing automation.
+
+## Objective
+
+Rebaseline TIF as a complete content operating system:
+
+```text
+Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement
+```
+
+## TIF-1801 — Complete Content Operating Model
+
+Document the full operating model and its terminology.
+
+Acceptance criteria:
+
+- Docs define Knowledge, Insight, Deliverable, Channel Package, Publication, and Measurement.
+- Docs explain how a deliverable differs from a channel package.
+- Docs explain how a channel package differs from a publication.
+- Docs include Rachel examples.
+- Docs include TKO examples.
+
+## TIF-1802 — Comparison Deliverable Support
+
+Document future support for comparison deliverables.
+
+Requirements:
+
+- Comparison is a first-class deliverable type.
+- Comparison readiness calculation is defined.
+- Comparison production workflow is defined.
+- Comparison publication support is defined.
+- Comparison channel packages are defined.
+
+Example comparisons:
+
+- Boca vs Delray.
+- Delray vs Boynton.
+- Valencia Sound vs Valencia Bay.
+- GL Homes vs Toll Brothers.
+- 55+ vs All-Age Communities.
+
+Acceptance criteria:
+
+- Docs do not treat Comparison as an article subtype.
+- Docs distinguish `comparison` deliverable from SEO page, PDF, social, email, ad, and CRM packages.
+- Docs define readiness inputs: compared entities, decision criteria, source knowledge, proof/claim
+  guards, audience, CTA, and publication target.
+
+## TIF-1803 — Channel Package System
+
+Document future support for generating channel-specific packages from a core deliverable.
+
+Supported channel package types:
+
+- SEO Page.
+- PDF.
+- LinkedIn Post.
+- LinkedIn Carousel.
+- Facebook Post.
+- Facebook Ad.
+- Reddit Post.
+- Email Sequence.
+- CRM Next-Touch Asset.
+- Sales One-Pager.
+- Landing Page.
+
+Acceptance criteria:
+
+- One deliverable can produce many channel packages.
+- Each channel package has channel-specific requirements.
+- Channel packages can be drafted, reviewed, approved, or published.
+- Publications are tracked separately from packages.
+
+## TIF-1804 — Content Coverage Intelligence
+
+Document future coverage visibility.
+
+Example:
+
+```text
+Topic: Delray
+
+Guides: 12
+Comparisons: 8
+Reports: 2
+Assessments: 0
+Case Studies: 0
+Email Sequences: 4
+Facebook Ads: 3
+LinkedIn Posts: 5
+
+Coverage: 55%
+```
+
+Acceptance criteria:
+
+- Coverage can be viewed by topic.
+- Coverage can be viewed by funnel stage.
+- Coverage can be viewed by archetype.
+- Coverage can be viewed by channel.
+- Coverage can identify missing deliverables.
+
+## TIF-1805 — Deliverable Readiness Model
+
+Replace binary readiness thinking with staged readiness.
+
+Readiness stages:
+
+- Knowledge Ready.
+- Insight Ready.
+- Deliverable Draft Ready.
+- Channel Package Ready.
+- Publication Ready.
+- Measurement Active.
+
+Acceptance criteria:
+
+- Docs define each readiness stage.
+- Docs explain blocked states.
+- Docs include examples of ready, partially ready, and blocked deliverables.
+
+## TIF-1806 — Scenario-Based Validation Framework
+
+Document future validation around realistic business scenarios, not only synthetic records.
+
+Example scenario:
+
+```text
+Scenario:
+NJ Couple Relocating
+
+Knowledge:
+- Current location
+- Budget
+- Timeline
+- Preferred lifestyle
+- Tax concerns
+- Community preferences
+
+Expected Deliverables:
+- Delray Relocation Guide
+- Boca vs Delray Comparison
+- Rent Before Buying Decision Guide
+- Florida Tax Explainer
+- Relocation Consultation CTA
+
+Expected Channel Packages:
+- SEO page
+- Email sequence
+- Facebook ad
+- LinkedIn post
+- CRM next-touch asset
+```
+
+Another scenario:
+
+```text
+Scenario:
+Healthcare Governance Assessment
+
+Knowledge:
+- Fragmented ownership
+- Manual status reporting
+- Defect aging
+- Intake confusion
+- Executive visibility gaps
+
+Expected Deliverables:
+- Assessment
+- Executive Brief
+- Case Study
+- Sales Asset
+- LinkedIn Post
+```
+
+Acceptance criteria:
+
+- Docs define scenario-based validation.
+- Docs identify expected outputs.
+- Docs distinguish validation from implementation.
+- No test framework implementation yet.
+
+## TIF-1807 — Measurement Feedback Loop
+
+Document future measurement integration.
+
+Measurement inputs:
+
+- Google Search Console.
+- GA4.
+- Meta Ads.
+- CRM usage.
+- Email engagement.
+- Guide downloads.
+- Lead conversion.
+- Manual operator feedback.
+
+Acceptance criteria:
+
+- Docs explain how measurement informs future deliverables.
+- Docs explain how stale content should be flagged.
+- Docs explain how high-performing topics should trigger expansion.
+
+## Strategy Priorities
+
+Rachel / relocation content priority:
+
+1. Comparison.
+2. Decision Support.
+3. Proof.
+4. Educational.
+5. Authority.
+6. Conversion.
+
+TKO / consulting content priority:
+
+1. Case Study.
+2. Assessment.
+3. Report.
+4. Executive Brief.
+5. Authority Article.
+6. Sales Asset.
+
+## Explicitly out of scope
+
+Feature implementation, schema changes, migrations, new database tables, new routes, production
+behavior changes, automated publishing, autonomous distribution, analytics integration, CRM
+integration, or a new test framework.
 
 ---
 

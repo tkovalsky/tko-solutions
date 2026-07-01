@@ -8,6 +8,15 @@ The next 90 days should optimize for revenue, marketability, proof of value, and
 
 Do not build platform infrastructure before paid demand proves a repeated need.
 
+TIF content work should use the documented operating model:
+
+```text
+Knowledge -> Insight -> Deliverable -> Channel Package -> Publication -> Measurement
+```
+
+This is a planning rule, not a build authorization. Prioritize proof and revenue-producing
+deliverables before generic content infrastructure.
+
 ## 0-30 Days
 
 | Priority | Work | Why | Exit Criteria |
@@ -18,6 +27,7 @@ Do not build platform infrastructure before paid demand proves a repeated need.
 | P0 | Activate Rachel outreach drafts if operator-approved. | Turns built capability into proof. | First batch reviewed; approval/send metrics tracked. |
 | P1 | Create weekly Rachel outcome scorecard. | Revenue proof needs outcomes. | Leads, contacted, replies, appointments, showings, contracts, closings, revenue, drafts. |
 | P1 | Rewrite shared intelligence vocabulary. | Needed before any platform reuse discussion. | Definitions with Rachel examples for Observation, Fact, Recommendation, Source, Confidence, Comparison. |
+| P1 | Rebaseline TIF content vocabulary. | Prevents asset-only thinking and supports demand generation. | Docs distinguish Knowledge, Insight, Deliverable, Channel Package, Publication, and Measurement. |
 
 ## 31-60 Days
 
@@ -50,4 +60,3 @@ Do not build in the next 90 days unless a paying customer requires it:
 - Generic content engine.
 - Autonomous outreach.
 - Marketplace/channel integrations.
-

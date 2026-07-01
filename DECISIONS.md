@@ -1,5 +1,44 @@
 # Decisions
 
+## DEC-2026-07-01-TIF-Content-Operating-Model
+
+**Status:** Ratified as documentation/backlog baseline
+
+**Context:** TIF documentation had evolved from the original knowledge architecture into a live
+v0.1 Evidence/Opportunity/Asset spine, a v0.2 operator console, a deliverable-centric production
+view, and a future Registry & Artifact Execution Layer. The remaining strategic gap was that TIF
+was still framed mainly as an evidence-to-asset generator. That framing did not fully cover content
+strategy, demand generation, channel adaptation, publication ownership, or measurement feedback.
+
+**Decision:** Adopt the complete TIF content operating model:
+
+```text
+Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement
+```
+
+**Terminology:** Existing implementation terms remain valid where precise:
+
+- `Evidence` = proof-grade admitted Knowledge.
+- `Asset` = current v0.1 storage and historical implementation term.
+- `Artifact` = registry/output contract term in the PRD.
+- `Deliverable` = strategy/backlog term for the core producible content or intelligence artifact.
+- `Channel Package` = channel-specific adaptation of a deliverable.
+- `Publication` = rendered or deployed output of a channel package.
+- `Measurement` = performance and coverage feedback loop.
+
+**Comparison:** Comparison is a first-class deliverable type, not an article subtype and not only a
+`comparison_page` or `comparison_guide` format. Examples include Boca vs Delray, Delray vs Boynton,
+Valencia Sound vs Valencia Bay, GL Homes vs Toll Brothers, and 55+ vs All-Age Communities.
+
+**Implementation constraint:** This decision is documentation/backlog alignment only. It does not
+authorize feature implementation, migrations, schema changes, new tables, new routes, production
+behavior changes, auto-publishing, analytics integrations, or CRM integrations.
+
+**Rationale:** TIF's business value is not only generating a draft from evidence. It is operating a
+content and demand-generation system where reusable knowledge becomes insights, insights become
+deliverables, deliverables become channel packages, packages become approved publications, and
+measurement informs the next production priority.
+
 ## DEC-2026-07-01-TIF-Deliverable-Centric-View
 
 **Status:** Ratified and implemented

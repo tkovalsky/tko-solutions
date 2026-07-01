@@ -10,6 +10,27 @@
 
 Establish Human APIs as a clear category of operational risk and position TKO as the advisor that helps healthcare and transformation leaders identify, measure, and reduce that risk.
 
+## TIF Operating Model
+
+This content strategy should feed the TIF content operating model:
+
+```text
+Knowledge -> Insight -> Deliverable -> Channel Package -> Publication -> Measurement
+```
+
+Human API, administrative burden, transformation recovery, AI readiness, and decision latency are
+Insight sources. They should be turned into the highest-leverage TKO deliverables first:
+
+1. Case Study.
+2. Assessment.
+3. Report.
+4. Executive Brief.
+5. Authority Article.
+6. Sales Asset.
+
+Every deliverable should also carry a content archetype: Educational, Comparison, Decision Support,
+Proof, Authority, or Conversion.
+
 ## Core Narrative
 
 Most organizations do not fail because people lack knowledge. They fail because critical knowledge, routing, and decision logic live only inside people.

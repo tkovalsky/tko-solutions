@@ -347,12 +347,47 @@ RachelDelray. **TIF is internal tooling, not a product TKO sells.**
 The build path to this future state is defined in
 [`ENGINEERING_BACKLOG.md`](ENGINEERING_BACKLOG.md); the authoritative data model is in
 [`docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md`](docs/KNOWLEDGE_ARCHITECTURE_REVIEW.md), and the
-component spec is [`TKO_INTELLIGENCE_FACTORY_PRD.md`](TKO_INTELLIGENCE_FACTORY_PRD.md).
+component spec is [`TKO_INTELLIGENCE_FACTORY_PRD.md`](TKO_INTELLIGENCE_FACTORY_PRD.md). The
+canonical content-strategy operating model is
+[`docs/TIF_CONTENT_OPERATING_MODEL.md`](docs/TIF_CONTENT_OPERATING_MODEL.md).
+
+**Rebaselined 2026-07-01:** TIF should be understood as a complete content operating system, not
+only an evidence-to-asset generator. The strategic model is:
+
+```text
+Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement
+```
+
+- **Knowledge:** reusable source material such as CRM notes, lead conversations, call transcripts,
+  research findings, market intelligence, screenshots, metrics, implementations, outcomes,
+  testimonials, existing guides, existing comparison pages, case studies, and reports.
+- **Insight:** reusable conclusions derived from knowledge, such as "relocation buyers need
+  decision support, not generic area content" or "executive buyers need proof, not abstract AI
+  thought leadership."
+- **Deliverable:** the core producible content or intelligence artifact. Supported future planning
+  types include guide, comparison, report, assessment, executive brief, article, case study, sales
+  asset, offer asset, email sequence, landing page, ad concept, social post, Reddit post, LinkedIn
+  post, LinkedIn carousel, Facebook post, Facebook ad, and CRM next-touch asset. **Comparison is a
+  first-class deliverable type**, not an article subtype.
+- **Channel Package:** a channel-specific adaptation of a deliverable, such as SEO page, PDF,
+  LinkedIn carousel, Facebook ad, Reddit post, email sequence, CRM next-touch asset, or sales
+  one-pager.
+- **Publication:** the rendered or deployed output of a channel package: website URL, PDF, email
+  draft, CRM asset, sales collateral, social draft, ad creative, or internal console item.
+- **Measurement:** performance and coverage feedback: page views, search impressions, guide
+  downloads, lead conversion, email clicks, ad CTR, CRM usage, topic/funnel/channel coverage,
+  publication status, and refresh age.
+
+Migration note: keep historical and implemented terms where precise. Existing `Evidence` records
+are proof-grade admitted Knowledge, not a synonym to replace everywhere. Existing `Asset` rows and
+`Artifact` registry contracts remain implementation terms. Future strategy and backlog language
+should distinguish Deliverable, Channel Package, Publication, and Measurement.
 
 **Today the asset production spine is already real and manual** —
 [`asset-production/METHOD.md`](asset-production/METHOD.md) manufactures every asset via
 `Observation → Evidence → Finding → Recommendation → Asset` with markdown/YAML/Claude and a hard
-human gate. The next step is to **automate that spine** — the **TIF v0.1 Asset Production Spine**
+human gate. In the rebaselined model, that path is the current implementation spine beneath
+`Knowledge → Insight → Deliverable`. The next step is to **automate that spine** — the **TIF v0.1 Asset Production Spine**
 (Evidence Registry · Asset Opportunity Registry · Asset Composer · Traceability · Capture Inbox),
 which builds toward the `Observation → Evidence → Opportunity → Research → Draft → Refinement →
 Approval → Publish` flywheel (recorded as **EPIC 11 — Content Intelligence Pipeline** in
@@ -377,7 +412,10 @@ over the existing Evidence, Asset Opportunity, and Asset rows. Supported deliver
 executive brief, assessment, case study, article, report, offer asset, and sales asset. The current
 implemented content surface is partial: articles and assessments exist in live TIF records; reports
 are mapped from `intelligence_report`; executive briefs, case studies, offer assets, and sales assets
-are supported in the registry but currently have no live rows.
+are supported in the registry but currently have no live rows. Future backlog now expands the target
+deliverable taxonomy to include first-class Comparison, guides, email sequences, landing pages, ad
+concepts, social posts, Reddit posts, LinkedIn posts/carousels, Facebook posts/ads, and CRM
+next-touch assets; this is documentation/backlog scope, not a production behavior change.
 
 **TIF v0.3 Execution Layer (architecture, not new product):** the next documentation layer
 formalizes how the registries execute. The canonical generation model is
@@ -395,18 +433,23 @@ The speculative tail — knowledge graph, vector search, agent framework, generi
 DEFERRED**. See [`GOVERNANCE.md`](GOVERNANCE.md) §2 and §4.
 
 **Rachel interactive content backlog:** EPIC 14 defines the Interactive Content Engine & Page
-Template System, starting with Community Pages, Comparison Pages, and Relocation Guides. These are
-new `Framework x Artifact x Voice` compositions using the existing Asset Composer and future
+Template System, starting with Community Pages, first-class Comparison deliverables/pages, and
+Relocation Guides. These are new `Framework x Artifact x Voice` compositions using the existing Asset Composer and future
 Execution Layer contract, not a new platform or sold product. Spec:
 [`ENGINEERING_BACKLOG.md`](ENGINEERING_BACKLOG.md) **EPIC 14** and
 [`docs/INTERACTIVE_CONTENT_ENGINE_REQUIREMENTS.md`](docs/INTERACTIVE_CONTENT_ENGINE_REQUIREMENTS.md).
 
-**Publication Layer:** TIF *generates* assets; publication layers *publish* them. The three
+**Publication Layer:** TIF *generates* deliverables and channel packages; publication layers
+*publish* them. The three
 publication targets are **RachelDelray** (`rachel-realestate` — community/comparison/relocation/
 buyer/seller/lifestyle pages), **TKO Site** (this repo's public site — articles/assessments/
 executive briefs/case studies/one-pagers), and **CRE Intelligence** (`cre-intelligence` —
 intelligence/market/opportunity reports). TIF owns generation, fact resolution, and traceability;
-publication layers own placement, presentation, and the human approval/publish gate. The only live
+publication layers own placement, presentation, and the human approval/publish gate. Channel
+packages sit between deliverables and publications: one Boca vs Delray Comparison can become an SEO
+page, PDF guide, LinkedIn post, Facebook ad, email sequence, CRM next-touch asset, and sales
+one-pager before any one of those becomes a website URL, ad creative, email draft, or CRM item. The
+only live
 integration boundary today is the TKO→Rachel draft contract
 ([`docs/TIF_RACHEL_DRAFT_API.md`](docs/TIF_RACHEL_DRAFT_API.md)). Downstream distribution
 (Google/Facebook/Email/YouTube) stays DEFERRED behind the no-auto-publish gate. Full boundary in

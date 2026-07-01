@@ -18,6 +18,12 @@ configuration-driven page/module definitions, and the v0.3 Execution Layer:
 Generation → Voice Refinement → Review → Approval → Publish`. It must not introduce per-page
 generators such as `CommunityPageGenerator`, `RelocationGuideGenerator`, or `BuyerGuideGenerator`.
 
+Content operating model note: this requirement set now sits under
+`Knowledge → Insight → Deliverable → Channel Package → Publication → Measurement`. Page types are
+channel packages/publications, not always the core deliverable. **Comparison is a first-class
+deliverable**; comparison pages, guides, PDFs, email sequences, social posts, ads, and CRM
+next-touch assets are channel packages or publications derived from that deliverable.
+
 ## Problem
 
 The current content library is heavily guide-oriented and lacks:
@@ -98,9 +104,13 @@ Outputs:
 - Personalized comparison report (composed by TIF).
 - Lead intelligence signals (captured per TIF-1405 / TIF-1409).
 
-### 2. Comparison Pages
+### 2. Comparison Deliverables And Pages
 
 Examples: Delray vs Boca, Valencia Sound vs Valencia Grand.
+
+Core deliverable:
+
+- Comparison.
 
 Required sections:
 
@@ -127,6 +137,8 @@ Outputs:
 - Best Match.
 - Match Percentage.
 - Recommended Alternative.
+- Channel package recommendations such as SEO page, PDF guide, LinkedIn post, LinkedIn carousel,
+  Facebook post, Facebook ad, Reddit post, email sequence, CRM next-touch asset, or sales one-pager.
 
 ### 3. Relocation Guides
 
@@ -345,7 +357,7 @@ requires human approval.
 Recommended first implementation slice:
 
 1. Community Pages.
-2. Comparison Pages.
+2. Comparison Deliverables and Pages.
 3. Relocation Guides.
 
 Rationale: these three page types cover the highest-value Rachel search intents first: specific
@@ -357,7 +369,7 @@ patterns before adding buyer, seller, lifestyle, and development variants.
 Phase 1:
 
 - Community Pages.
-- Comparison Pages.
+- Comparison Deliverables and Pages.
 - Relocation Guides.
 
 Phase 2:

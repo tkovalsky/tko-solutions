@@ -8,6 +8,11 @@ publishing ownership into TKO.
 
 TKO owns draft composition. Rachel owns saving, editing, review, approval, and publishing.
 
+Terminology note: this API still uses `artifact` because it is the current runtime contract. In the
+content operating model, the core item is a **Deliverable** and this endpoint returns a draft
+**Channel Package** such as `comparison_page`, `comparison_guide`, `community_page`, or
+`relocation_guide`. Rachel owns the eventual **Publication**.
+
 This endpoint does not:
 
 - Publish content.
@@ -47,6 +52,13 @@ Artifacts:
 - `comparison_page`
 - `comparison_guide`
 - `relocation_guide`
+
+Deliverable mapping:
+
+- `comparison_page` and `comparison_guide` are packages of the first-class `comparison`
+  deliverable.
+- `community_page` is a Rachel page package around a community guide/profile deliverable.
+- `relocation_guide` is both a deliverable and its first supported Rachel channel package.
 
 Voices:
 

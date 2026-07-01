@@ -266,6 +266,17 @@ Why buyers search for help:
 
 Each pillar must reinforce the same category logic: Operational Intelligence makes hidden execution failure visible and actionable.
 
+TIF planning model for all content pillars:
+
+```text
+Knowledge -> Insight -> Deliverable -> Channel Package -> Publication -> Measurement
+```
+
+Each deliverable should be tagged with one archetype: Educational, Comparison, Decision Support,
+Proof, Authority, or Conversion. For TKO consulting content, the production priority is Case Study,
+Assessment, Report, Executive Brief, Authority Article, then Sales Asset. This keeps the website
+oriented around proof, diagnosis, and executive relevance before generic thought leadership.
+
 | Pillar | Audience | Search Intent | Business Objective | Conversion Path |
 |---|---|---|---|---|
 | Operational Intelligence | COO, VP Operations, VP Transformation, CIO | Understand what Operational Intelligence is and how it differs from BI, reporting, PMO, and AI tools. | Establish category ownership and explain why visibility into actual work is the core constraint. | Article or homepage section -> Diagnostic page -> Contact. |
