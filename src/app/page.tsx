@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import { ServiceCards } from "@/components/site/cards";
 import { CtaBand } from "@/components/site/cta-band";
 import { Hero } from "@/components/site/hero";
@@ -10,7 +10,7 @@ import { ProblemGrid } from "@/components/site/problem-grid";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { caseStudies } from "@/lib/content";
+import { caseStudies, getCaseStudy } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -27,6 +27,19 @@ export const metadata: Metadata = {
     url: absoluteUrl("/"),
   },
 };
+
+function requireCaseStudy(slug: string) {
+  const study = getCaseStudy(slug);
+
+  if (!study) {
+    throw new Error(`Missing case study: ${slug}`);
+  }
+
+  return study;
+}
+
+const rachelProof = requireCaseStudy("from-crm-to-operating-system");
+const creProof = requireCaseStudy("cre-intelligence-model");
 
 export default function HomePage() {
   return (
@@ -66,13 +79,9 @@ export default function HomePage() {
               <li>AI Adoption</li>
               <li>Transformation Recovery</li>
             </ul>
-            <Link
-              href="/services/prior-authorization-assessment"
-              className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-            >
+            <ArrowLink href="/services/prior-authorization-assessment" className="mt-8">
               Start with the Prior Authorization assessment
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            </ArrowLink>
           </div>
           <ProblemGrid />
         </div>
@@ -113,7 +122,7 @@ export default function HomePage() {
             title="RachelOS proves TKO can build the operating layer."
             description="RachelOS is evidence that TKO has built the layer between scattered signals and action: operational memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human-approved AI support."
           />
-          <Card>
+          <Card className="w-full max-w-2xl justify-self-start">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
               Problem
             </p>
@@ -130,6 +139,10 @@ export default function HomePage() {
               knowledge, preserves institutional memory, surfaces priorities,
               recommends actions, and supports execution with human-approved AI.
             </p>
+            <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
+              <span className="font-semibold text-primary">Outcome — </span>
+              {rachelProof.outcome}
+            </p>
             <ArrowLink href="/selected-work/from-crm-to-operating-system" className="mt-8">
               See how RachelOS works
             </ArrowLink>
@@ -144,7 +157,7 @@ export default function HomePage() {
             title="The operating-knowledge pattern travels beyond healthcare."
             description="CRE Intelligence demonstrates method portability: market observations, entity facts, analyst judgment, risks, opportunities, recommendations, and reports can become reusable decision assets instead of staying trapped in one analyst."
           />
-          <Card>
+          <Card className="w-full max-w-2xl justify-self-start">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
               Method portability
             </p>
@@ -154,6 +167,10 @@ export default function HomePage() {
               same human API pattern in a different domain: expert judgment
               becomes structured facts, state, recommendations, comparisons, and
               reusable decision assets.
+            </p>
+            <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
+              <span className="font-semibold text-primary">Outcome — </span>
+              {creProof.outcome}
             </p>
             <ArrowLink href="/selected-work/cre-intelligence-model" className="mt-8">
               View CRE proof

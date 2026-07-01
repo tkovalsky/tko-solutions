@@ -352,11 +352,24 @@ through delivery. **Confidence** is mandatory on `Finding` and `Artifact` (aggre
 Evidence `verifiability`) — the concrete implementation of the §5 "credibility is the product."
 
 **3. Configuration registries (new — config, NOT graph nodes).** `FrameworkDefinition`,
-`ArtifactType`, `VoiceProfile` are versioned configuration (repo files → tables), consumed by
-one `compose()` engine. They are the anti-`per-output-generator` mechanism: new businesses
-(Rachel relocation, CRE) are new `FrameworkDefinition`/`VoiceProfile` rows, not new schemas.
-The §3 ontology's `Framework`/`Capability`/`Offer` expansion entities remain the *knowledge*
-representations; the registries are their *runtime configuration* counterparts.
+`ArtifactType`, `VoiceProfile`, and `PromptDefinition` are versioned configuration (repo files →
+tables), consumed by one `compose()` engine. They are the anti-`per-output-generator` mechanism:
+new businesses (Rachel relocation, CRE) are new `FrameworkDefinition`/`VoiceProfile` rows, not new
+schemas. The §3 ontology's `Framework`/`Capability`/`Offer` expansion entities remain the
+*knowledge* representations; the registries are their *runtime configuration* counterparts.
+
+**3A. Execution Layer (v0.3 — runtime contract, NOT graph nodes).** The registries are executed
+through:
+
+```
+Payload → Validation → Framework → Artifact → Fact Resolution → Template Population → Draft
+Generation → Voice Refinement → Review → Approval → Publish
+```
+
+This layer introduces a deterministic contract around `compose(framework, artifact, voice, facts)`.
+It does not add a peer to the durable knowledge graph and does not authorize per-output generators.
+The conceptual Fact Resolution Layer prepares generation context and blocks unsupported claims
+before draft generation.
 
 **4. No conflict with §8 risks.** This addendum directly satisfies R1 (gate = produced artifact
 with traceability), R4 (Evidence in MVP), R6 (Concept/Claim reusable), and R7 (factory graph

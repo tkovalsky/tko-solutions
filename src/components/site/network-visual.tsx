@@ -130,7 +130,7 @@ export function NetworkVisual({ className }: { className?: string }) {
       ref={canvasRef}
       aria-hidden="true"
       className={className}
-      style={{ width: "100%", height: "100%", display: "block" }}
+      style={{ display: "block" }}
     />
   );
 }

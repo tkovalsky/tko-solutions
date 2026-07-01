@@ -3,9 +3,9 @@
 **Status:** Authoritative method for producing TKO intelligence assets.
 **Owner:** Todd Kovalsky
 **What this is:** A manual, repeatable workflow — markdown + YAML + Claude. **Not software.**
-There is no database, API, generation engine, or automation here, and none is sanctioned by
-this document (see [`/GOVERNANCE.md`](../GOVERNANCE.md): TIF is DEFERRED). The workflow itself
-is the product.
+There is no database, API, generation engine, or automation in this method. TIF v0.1 is now
+sanctioned as internal asset-production tooling and TIF v0.3 documents the future Execution Layer,
+but this document remains the manual production method and does not itself authorize new software.
 
 **Portfolio context:** This is the "Intelligence Asset Production" method referenced in
 `/dev/PORTFOLIO_GOVERNANCE.md`. TKO owns the method; each proof repo supplies evidence; Claude
@@ -69,8 +69,8 @@ output:             # destination path for the finished asset
 constraints:        # explicit guardrails (claim guards, anti-slop notes) that apply to THIS asset
 business_unit:      # rachel | cre | tko — which proof domain the asset serves (TIF-1103 taxonomy)
 voice:              # tko-advisory | rachelos-product | cre-intelligence — house tone for this
-                    # asset. A plain per-asset field, not a Voice Registry (Voice Registry stays
-                    # DEFERRED per GOVERNANCE.md).
+                    # asset. A plain per-asset field in the manual method; the formal Voice
+                    # Registry belongs to the TIF runtime architecture.
 source_opportunity: # the asset_opportunity id this asset was produced from, if one exists.
                     # Omit for assets authored directly from a brief without going through the
                     # Asset Opportunity Registry.
