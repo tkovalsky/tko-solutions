@@ -25,11 +25,6 @@ const nextConfig: NextConfig = {
         destination: "/selected-work",
         permanent: true,
       },
-      {
-        source: "/insights",
-        destination: "/selected-work",
-        permanent: true,
-      },
     ];
   },
 };
