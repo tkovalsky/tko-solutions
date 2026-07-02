@@ -7,8 +7,8 @@ type CtaBandProps = {
   description?: string;
   primaryHref?: string;
   primaryLabel?: string;
-  secondaryHref?: string;
-  secondaryLabel?: string;
+  secondaryHref?: string | null;
+  secondaryLabel?: string | null;
 };
 
 export function CtaBand({
@@ -16,9 +16,16 @@ export function CtaBand({
   description = "The Operational Recovery Assessment identifies where work stalls, where dependency risk is building, and where AI can help without taking control.",
   primaryHref = "/contact",
   primaryLabel = "Schedule an Operational Recovery Assessment",
-  secondaryHref = "/services/diagnostic",
-  secondaryLabel = "Schedule an Operational Truth Diagnostic",
+  secondaryHref,
+  secondaryLabel,
 }: CtaBandProps) {
+  const resolvedSecondaryHref =
+    secondaryHref === undefined ? "/services/diagnostic" : secondaryHref;
+  const resolvedSecondaryLabel =
+    secondaryLabel === undefined
+      ? "Schedule an Operational Truth Diagnostic"
+      : secondaryLabel;
+
   return (
     <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-16 text-white md:py-20">
       <div
@@ -39,16 +46,18 @@ export function CtaBand({
           <LinkButton href={primaryHref} className="bg-primary hover:bg-primary-dark">
             {primaryLabel}
           </LinkButton>
-          <Link
-            href={secondaryHref}
-            className="group inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline md:justify-start"
-          >
-            {secondaryLabel}
-            <ArrowRight
-              className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </Link>
+          {resolvedSecondaryHref && resolvedSecondaryLabel ? (
+            <Link
+              href={resolvedSecondaryHref}
+              className="group inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline md:justify-start"
+            >
+              {resolvedSecondaryLabel}
+              <ArrowRight
+                className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </Link>
+          ) : null}
         </div>
       </div>
     </section>
