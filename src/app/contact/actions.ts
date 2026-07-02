@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { notifyLead } from "@/lib/leads/notify";
+import { persistInboundLead } from "@/lib/leads/persist";
 
 const intakeSchema = z.object({
   problem: z.string().min(10),
@@ -28,7 +30,25 @@ export async function submitDiagnosticIntake(formData: FormData) {
     redirect("/contact?status=invalid");
   }
 
-  console.info("Diagnostic intake submitted", parsed.data);
+  const submittedAt = new Date();
+  const source = getFormString(formData, "source") || "contact_form";
+  const landingPage = getFormString(formData, "landingPage") || "/contact";
+
+  const lead = await persistInboundLead({
+    name: parsed.data.name,
+    email: parsed.data.email,
+    source,
+    landingPage,
+    payload: parsed.data,
+    submittedAt,
+  });
+
+  await notifyLead(lead);
+
   redirect("/contact?status=submitted");
 }
 
+function getFormString(formData: FormData, key: string) {
+  const value = formData.get(key);
+  return typeof value === "string" && value.trim().length > 0 ? value.trim() : undefined;
+}

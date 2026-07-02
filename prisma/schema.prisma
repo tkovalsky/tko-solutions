@@ -77,6 +77,27 @@ model CaptureItem {
   @@index([status])
 }
 
+// Inbound Lead Submission: durable capture for website contact and assessment forms.
+// Duplicate awareness is intentionally lightweight: email is the stable key, while
+// lastSubmittedAt records repeat submissions without creating unnecessary rows.
+model InboundLead {
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  company         String?
+  role            String?
+  source          String?
+  landingPage     String?
+  payload         Json
+  notifiedAt      DateTime?
+  lastSubmittedAt DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([source])
+  @@index([createdAt])
+}
+
 // Content Inventory (TIF v0.2 Priority 2 / EPIC 12 TIF-1201): a flat record of existing
 // intellectual property across tko-site, rachel-realestate, and cre-intelligence, captured
 // for awareness before producing more content. Not linked into Evidence/Opportunity/Asset
