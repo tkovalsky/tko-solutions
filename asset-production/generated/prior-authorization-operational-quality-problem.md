@@ -10,6 +10,7 @@ never paired with a metric, no orgs named. Fill every [BRACKET]; delete guidance
 ---
 title: "Prior Authorization Is An Operational Quality Problem"
 slug: prior-authorization-operational-quality-problem
+published_url: https://tkosolutions.com/insights/prior-authorization-operational-quality-problem
 type: offer
 asset_type: assessment
 business_unit: tko

@@ -11,6 +11,7 @@ case study or assessment does. Fill every [BRACKET]; delete guidance before publ
 ---
 title: "Prior Authorization Is A Decision-Rights Problem, Not A Technology Problem"
 slug: prior-authorization-is-a-decision-rights-problem
+published_url: https://tkosolutions.com/insights/prior-authorization-is-a-decision-rights-problem
 type: offer
 asset_type: executive-brief
 business_unit: tko

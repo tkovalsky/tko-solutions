@@ -9,6 +9,7 @@ Fill every [BRACKET]; delete guidance before publishing.
 ---
 title: "Human APIs Become Organizational Bottlenecks"
 slug: human-apis-become-organizational-bottlenecks
+published_url: https://tkosolutions.com/insights/human-apis-become-organizational-bottlenecks
 type: insight
 asset_type: article
 business_unit: tko

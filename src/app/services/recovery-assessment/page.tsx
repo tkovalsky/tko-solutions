@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image, { type StaticImageData } from "next/image";
+import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
 import { Faq } from "@/components/site/faq";
@@ -130,6 +131,21 @@ const path = [
     title: "Advisory",
     description:
       "Ongoing operator-to-operator support when leadership needs help keeping the work governed.",
+  },
+];
+
+const relatedReadings = [
+  {
+    title: "Operational Intelligence vs. Reporting",
+    href: "/insights/operational-intelligence-vs-reporting",
+    description:
+      "Why dashboards often describe work after the decision should already have been made.",
+  },
+  {
+    title: "Human APIs Become Organizational Bottlenecks",
+    href: "/insights/human-apis-become-organizational-bottlenecks",
+    description:
+      "How critical judgment trapped in one person becomes the hidden operating constraint.",
   },
 ];
 
@@ -420,6 +436,32 @@ export default function RecoveryAssessmentPage() {
         <SectionHeader eyebrow="FAQ" title="Questions buyers should resolve before intake." />
         <div className="mt-10">
           <Faq items={faqs} />
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeader
+          eyebrow="Related Reading"
+          title="Operating patterns behind the assessment."
+          description="These articles explain the two common signals the assessment is designed to surface: reporting that does not produce action, and critical knowledge trapped in individual people."
+        />
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {relatedReadings.map((reading) => (
+            <Card key={reading.href} className="rounded-lg">
+              <h2 className="text-2xl font-semibold">{reading.title}</h2>
+              <p className="mt-4 text-base leading-7 text-muted">{reading.description}</p>
+              <Link
+                href={reading.href}
+                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:text-primary-dark"
+              >
+                Read insight
+                <ArrowRight
+                  className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Card>
+          ))}
         </div>
       </Section>
 

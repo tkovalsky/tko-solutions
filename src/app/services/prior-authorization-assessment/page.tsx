@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
 import { Faq } from "@/components/site/faq";
 import { JsonLd } from "@/components/site/json-ld";
@@ -62,6 +64,21 @@ const humanApiSignals = [
   "Know escalation paths",
   "Know exception handling",
   "Know documentation requirements",
+];
+
+const relatedReadings = [
+  {
+    title: "Prior Authorization Is a Decision-Rights Problem",
+    href: "/insights/prior-authorization-is-a-decision-rights-problem",
+    description:
+      "Why exception authority and escalation logic must be mapped before automation can help.",
+  },
+  {
+    title: "Prior Authorization Is an Operational Quality Problem",
+    href: "/insights/prior-authorization-operational-quality-problem",
+    description:
+      "Why Gold Card readiness follows from cleaner workflow quality, not the other way around.",
+  },
 ];
 
 const buyerQuestions = [
@@ -233,6 +250,32 @@ export default function PriorAuthorizationAssessmentPage() {
         <SectionHeader eyebrow="FAQ" title="Questions buyers should resolve before intake." />
         <div className="mt-10">
           <Faq items={faqs} />
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeader
+          eyebrow="Related Reading"
+          title="Prior authorization operating patterns."
+          description="These articles explain the decision-rights and operational-quality issues the assessment is designed to make visible."
+        />
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {relatedReadings.map((reading) => (
+            <Card key={reading.href}>
+              <h2 className="text-2xl font-semibold">{reading.title}</h2>
+              <p className="mt-4 text-base leading-7 text-muted">{reading.description}</p>
+              <Link
+                href={reading.href}
+                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:text-primary-dark"
+              >
+                Read insight
+                <ArrowRight
+                  className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Card>
+          ))}
         </div>
       </Section>
 
