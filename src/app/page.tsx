@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Zap } from "lucide-react";
 import { ServiceCards } from "@/components/site/cards";
@@ -40,6 +41,24 @@ function requireCaseStudy(slug: string) {
 
 const rachelProof = requireCaseStudy("from-crm-to-operating-system");
 const creProof = requireCaseStudy("cre-intelligence-model");
+
+const rachelosProofStrip = [
+  {
+    title: "Queue",
+    image: "/proof/rachelos/canonical-queue.png",
+    alt: "RachelOS queue showing ranked leads, action counts, and queue sections.",
+  },
+  {
+    title: "Approval",
+    image: "/proof/rachelos/human-approval.png",
+    alt: "RachelOS human approval surface for relationship updates and recommended questions.",
+  },
+  {
+    title: "Memory",
+    image: "/proof/rachelos/relationship-memory.png",
+    alt: "RachelOS relationship memory workspace showing current reality and next action.",
+  },
+];
 
 export default function HomePage() {
   return (
@@ -140,6 +159,27 @@ export default function HomePage() {
               See how RachelOS works
             </ArrowLink>
           </Card>
+        </div>
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          {rachelosProofStrip.map((asset) => (
+            <figure
+              key={asset.title}
+              className="overflow-hidden border border-border bg-white"
+            >
+              <div className="relative aspect-[4/3] bg-background">
+                <Image
+                  src={asset.image}
+                  alt={asset.alt}
+                  fill
+                  className="object-cover object-top"
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                />
+              </div>
+              <figcaption className="border-t border-border px-5 py-4 text-sm font-semibold text-foreground">
+                RachelOS {asset.title}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </Section>
 

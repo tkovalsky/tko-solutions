@@ -31,7 +31,7 @@ records:
       The morning no longer begins with reconstruction across four tools — one ranked,
       freshness-classified list of who needs attention now and why, recomputed on every signal.
     proof_ref: "rachel-realestate: src/lib/leads/canonicalQueue.ts, queueReadModel.ts, canonicalQueueRows.test.ts, src/app/ops/queue"
-    visual: content/proof/rachelos/01-canonical-queue.png.jpg
+    visual: public/proof/rachelos/canonical-queue.png
     framework_stage: Priority
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Code-backed priority layer. No volume or conversion metric implied."
@@ -46,7 +46,7 @@ records:
       per-relationship snapshot — situation, known facts, open questions — that survives
       outside any individual.
     proof_ref: "rachel-realestate: src/lib/leads/relationshipMemory.ts (+.test), migrations/055_relationship_memory.sql, migrations/042_relationship_updates.sql"
-    visual: "content/proof/rachelos/04-Relationship Memory detail.png"
+    visual: public/proof/rachelos/relationship-memory.png
     framework_stage: Memory
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Proves memory can live in the system, not in a person. No outcome metric."
@@ -86,7 +86,7 @@ records:
       The whole book is operationalized into ONE daily email — today's focus, do-these-today,
       next-up — composed by a deployed cron; it never emails the leads themselves.
     proof_ref: "rachel-realestate: src/lib/leads/dailyActionEngine.ts (+.test), src/app/api/cron/daily-action, src/app/api/cron/run-all, vercel.json (`0 11 * * *`)"
-    visual: content/proof/rachelos/02-daily-digest-daily-action-engine.png
+    visual: public/proof/rachelos/today-work.png
     framework_stage: Action
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Deployed and running daily — that cadence is the proof. No business result claimed."
@@ -100,7 +100,7 @@ records:
       AI drafts and recommendations wait in a dedicated operator queue ("Needs Rachel") for
       human review before anything is sent.
     proof_ref: "rachel-realestate: src/app/ops/needs-rachel, src/app/api/ops/needs-rachel/queue, src/app/api/ops/relationship-updates, approval-gated states in src/lib/leads/outreachDrafts.ts"
-    visual: content/proof/rachelos/03-human-approval-surface-needs-rachel.png
+    visual: public/proof/rachelos/human-approval.png
     framework_stage: Human Approval
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "The defining differentiator — AI drafts/surfaces, people approve/act. Enforced in code, not promised."
@@ -154,7 +154,7 @@ records:
       The system decides the single highest-value missing fact to ask next (buy-vs-rent,
       budget, timeline), scored by freshness and confidence — it surfaces what it does not know.
     proof_ref: "rachel-realestate: src/lib/leads/intelligenceGaps.ts, qualificationGaps.test.ts, nextMissingField.ts, guideFacts.ts"
-    visual: content/proof/rachelos/05-intelligence-gaps-1.png
+    visual: public/proof/rachelos/today-work.png
     framework_stage: Facts
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Rare differentiator — 'knows its blind spots.' Proven by code, no accuracy metric."
@@ -168,7 +168,7 @@ records:
       The operating system is self-monitoring — a system-health dashboard, smoke tests,
       cron-run tracking, ops alerts, and failure logging show the system itself is running.
     proof_ref: "rachel-realestate: src/app/ops/system-health, src/lib/ops/runSmokeTest.ts, migrations/015_cron_runs.sql, 030_smoke_test_runs.sql, 024_system_failures.sql, src/lib/leads/leadOpsAlerts.ts"
-    visual: content/proof/rachelos/06-system-health.png
+    visual: public/proof/rachelos/system-health.png
     framework_stage: Outcome
     allowed_use: [case-study, assessment, service-pages, deck]
     claim_guard: "Proves 'trusted execution' via observability. Not a separate product/SKU."

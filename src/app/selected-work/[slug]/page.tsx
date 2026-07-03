@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
@@ -11,6 +12,44 @@ import { absoluteUrl } from "@/lib/site";
 type Params = {
   params: Promise<{ slug: string }>;
 };
+
+const rachelosProofAssets = [
+  {
+    title: "Canonical Queue",
+    description:
+      "RachelOS ranks active leads into operating lanes with visible action counts, queue sections, and next actions.",
+    image: "/proof/rachelos/canonical-queue.png",
+    alt: "RachelOS canonical queue showing active leads, queue sections, action counts, and next actions.",
+  },
+  {
+    title: "Human Approval",
+    description:
+      "Relationship updates and recommended questions wait for review before the system moves the work forward.",
+    image: "/proof/rachelos/human-approval.png",
+    alt: "RachelOS human approval surface showing review controls before relationship updates move forward.",
+  },
+  {
+    title: "Relationship Memory",
+    description:
+      "The lead workspace keeps current reality, recent activity, relationship state, timeline, budget, market, and next action in one place.",
+    image: "/proof/rachelos/relationship-memory.png",
+    alt: "RachelOS relationship memory workspace showing current reality, recent activity, and next recommended action.",
+  },
+  {
+    title: "Today Work",
+    description:
+      "The daily work surface turns queue state into ranked items, missing facts, recommended asks, and action context.",
+    image: "/proof/rachelos/today-work.png",
+    alt: "RachelOS Today work surface showing ranked work, missing facts, and recommended ask context.",
+  },
+  {
+    title: "System Health",
+    description:
+      "Operational health is visible through system checks, queue metrics, and execution status.",
+    image: "/proof/rachelos/system-health.png",
+    alt: "RachelOS system health dashboard showing operational checks and system status.",
+  },
+];
 
 export function generateStaticParams() {
   return caseStudies.map((study) => ({ slug: study.slug }));
@@ -100,6 +139,39 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           ))}
         </div>
       </Section>
+      {study.slug === "from-crm-to-operating-system" ? (
+        <Section>
+          <SectionHeader
+            eyebrow="Product Proof"
+            title="RachelOS is visible operating software, not a slideware example."
+            description="These current screenshots are redacted and anonymized, but they come from the live RachelOS ops UI: queue, daily work, human approval, relationship memory, and system health."
+          />
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            {rachelosProofAssets.map((asset) => (
+              <article
+                key={asset.title}
+                className="overflow-hidden border border-border bg-white"
+              >
+                <div className="relative aspect-[16/10] border-b border-border bg-surface">
+                  <Image
+                    src={asset.image}
+                    alt={asset.alt}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                  />
+                </div>
+                <div className="p-6">
+                  <h2 className="text-xl font-semibold">{asset.title}</h2>
+                  <p className="mt-3 text-base leading-7 text-muted">
+                    {asset.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Section>
+      ) : null}
       <CtaBand />
     </>
   );

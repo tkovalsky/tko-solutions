@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
@@ -9,9 +9,6 @@ import { LinkButton } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl } from "@/lib/site";
-import queueImage from "../../../../content/proof/rachelos/01-canonical-queue-send-text.png.jpg";
-import digestImage from "../../../../content/proof/rachelos/02-daily-digest-daily-action-engine.png";
-import approvalImage from "../../../../content/proof/rachelos/03-human-approval-surface-needs-rachel.png";
 
 export const metadata: Metadata = {
   title: "Operational Recovery Assessment",
@@ -85,29 +82,29 @@ const outcomes = [
 const proofItems: {
   title: string;
   description: string;
-  image: StaticImageData;
+  image: string;
   alt: string;
 }[] = [
   {
     title: "Canonical Queue",
     description:
-      "A daily view of who needs attention, why they matter, and what action should happen next.",
-    image: queueImage,
-    alt: "RachelOS canonical queue showing prioritized contacts and next actions.",
+      "A live queue ranks active leads, work lanes, attention counts, and what should happen next.",
+    image: "/proof/rachelos/canonical-queue.png",
+    alt: "RachelOS canonical queue showing active leads, queue sections, action counts, and next actions.",
   },
   {
-    title: "Daily Digest",
+    title: "Relationship Memory",
     description:
-      "A working operating rhythm that turns signals into a concise daily action surface.",
-    image: digestImage,
-    alt: "RachelOS daily digest screen showing relationship and follow-up priorities.",
+      "A lead workspace preserves current reality, recent activity, known facts, and the recommended next action.",
+    image: "/proof/rachelos/relationship-memory.png",
+    alt: "RachelOS relationship memory workspace showing current reality, recent activity, and next recommended action.",
   },
   {
     title: "Human Approval",
     description:
-      "Recommendations stop at the human approval gate before any sensitive action goes out.",
-    image: approvalImage,
-    alt: "RachelOS Needs Rachel approval surface showing review before action.",
+      "Recommended questions and relationship updates stop at the human approval surface before work moves forward.",
+    image: "/proof/rachelos/human-approval.png",
+    alt: "RachelOS human approval surface showing review controls before relationship updates move forward.",
   },
 ];
 
