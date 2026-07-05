@@ -30,6 +30,13 @@ const newDeliverableTypes = [
   "facebook_ad",
   "reddit_post",
   "crm_next_touch_asset",
+  "feature_documentation",
+  "decision_record",
+  "proof_page",
+  "architecture_page",
+  "changelog_page",
+  "workflow_guide",
+  "system_overview",
 ] satisfies DeliverableType[];
 
 const legacyDeliverableTypes = [
@@ -55,6 +62,8 @@ describe("TIF deliverable readiness", () => {
     expect(toDeliverableType("intelligence_report")).toBe("report");
     expect(toDeliverableType("comparison_page")).toBe("comparison");
     expect(toDeliverableType("relocation_guide")).toBe("guide");
+    expect(toDeliverableType("feature_documentation")).toBe("feature_documentation");
+    expect(toDeliverableType("proof_page")).toBe("proof_page");
   });
 
   it("scores article readiness from problem, evidence, and insight only", () => {

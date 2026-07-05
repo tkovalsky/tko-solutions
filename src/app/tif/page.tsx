@@ -82,6 +82,9 @@ export default async function TifConsolePage() {
           <Link href="/tif/deliverables" className="font-semibold text-primary underline-offset-2 hover:underline">
             Deliverables →
           </Link>
+          <Link href="/tif/proof" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Proof Hub →
+          </Link>
           <Link href="/tif/inbox" className="font-semibold text-primary underline-offset-2 hover:underline">
             Capture Inbox →
           </Link>

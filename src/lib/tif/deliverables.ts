@@ -14,6 +14,13 @@ export const DELIVERABLE_TYPES = [
   "facebook_ad",
   "reddit_post",
   "crm_next_touch_asset",
+  "feature_documentation",
+  "decision_record",
+  "proof_page",
+  "architecture_page",
+  "changelog_page",
+  "workflow_guide",
+  "system_overview",
 ] as const;
 
 export const DELIVERABLE_STATUSES = ["ready", "in_progress", "blocked", "published"] as const;
@@ -152,6 +159,13 @@ const TYPE_LABELS: Record<DeliverableType, string> = {
   facebook_ad: "Facebook Ads",
   reddit_post: "Reddit Posts",
   crm_next_touch_asset: "CRM Next Touch Assets",
+  feature_documentation: "Feature Documentation",
+  decision_record: "Decision Records",
+  proof_page: "Proof Pages",
+  architecture_page: "Architecture Pages",
+  changelog_page: "Changelog Pages",
+  workflow_guide: "Workflow Guides",
+  system_overview: "System Overviews",
 };
 
 export const CHANNEL_PACKAGE_LABELS: Record<ChannelPackageType, string> = {
@@ -189,6 +203,13 @@ const ASSET_TYPE_TO_DELIVERABLE: Record<string, DeliverableType | undefined> = {
   facebook_ad: "facebook_ad",
   reddit_post: "reddit_post",
   crm_next_touch_asset: "crm_next_touch_asset",
+  feature_documentation: "feature_documentation",
+  decision_record: "decision_record",
+  proof_page: "proof_page",
+  architecture_page: "architecture_page",
+  changelog_page: "changelog_page",
+  workflow_guide: "workflow_guide",
+  system_overview: "system_overview",
 };
 
 const PROBLEM_SIGNALS = [
@@ -284,6 +305,13 @@ const BUSINESS_VALUE_BY_TYPE: Record<DeliverableType, number> = {
   facebook_ad: 72,
   reddit_post: 62,
   crm_next_touch_asset: 74,
+  feature_documentation: 86,
+  decision_record: 82,
+  proof_page: 88,
+  architecture_page: 84,
+  changelog_page: 78,
+  workflow_guide: 80,
+  system_overview: 86,
 };
 const SALES_ONE_PAGER_BUSINESS_VALUE_THRESHOLD = 85;
 
@@ -394,6 +422,54 @@ const COMPONENT_RULES: Record<DeliverableType, ComponentRule[]> = {
     component("audience", "audience", (input) => hasMeaningfulText(input.audience)),
     component("source_deliverable", "source_deliverable", (input) => hasSourceDeliverable(input), true),
     component("next_action", "next_action", (input) => hasNextAction(input), true),
+  ],
+  feature_documentation: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("problem", "problem", (input) => hasProblem(input)),
+    component("proof", "proof", (input) => hasProof(input), true),
+    component("architecture", "architecture", (input) =>
+      hasSignal(allText(input), ["architecture", "framework", "system", "model", "layer"]),
+    ),
+  ],
+  decision_record: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("decision", "decision", (input) => hasSignal(allText(input), ["decision", "decide", "adopt"])),
+    component("source", "source_insight_or_evidence", (input) => hasSourceInsight(input) || input.evidence.length > 0, true),
+  ],
+  proof_page: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("proof", "proof", (input) => hasProof(input), true),
+    component("demonstration", "demonstration", (input) =>
+      hasSignal(allText(input), ["screenshot", "proof", "demonstrate", "evidence"]),
+    ),
+  ],
+  architecture_page: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("architecture", "architecture", (input) =>
+      hasSignal(allText(input), ["architecture", "diagram", "flow", "lifecycle", "system"]),
+    true),
+    component("supporting_material", "supporting_material", (input) => hasSupportingMaterial(input)),
+  ],
+  changelog_page: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("change_history", "change_history", (input) =>
+      hasSignal(allText(input), ["release", "changelog", "changed", "built", "implemented"]),
+    true),
+    component("source", "source_insight_or_evidence", (input) => hasSourceInsight(input) || input.evidence.length > 0),
+  ],
+  workflow_guide: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("workflow", "workflow", (input) =>
+      hasSignal(allText(input), ["workflow", "process", "step", "operator", "guide"]),
+    true),
+    component("supporting_material", "supporting_material", (input) => hasSupportingMaterial(input)),
+  ],
+  system_overview: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("system", "system", (input) =>
+      hasSignal(allText(input), ["system", "architecture", "framework", "operating model"]),
+    true),
+    component("proof", "proof", (input) => hasProof(input), true),
   ],
 };
 
