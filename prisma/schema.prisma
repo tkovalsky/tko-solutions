@@ -16,6 +16,12 @@ enum BusinessUnit {
   tko
 }
 
+enum ContentTenant {
+  tko
+  boundos
+  rachel_delray
+}
+
 enum AssetType {
   article
   landing_page
@@ -54,6 +60,34 @@ enum CaptureStatus {
   reviewed
   promoted
   archived
+}
+
+enum OpportunitySourceType {
+  content_gap
+  keyword
+  title_idea
+  competitor_url
+  reddit_thread_url
+  forum_discussion
+  pasted_notes
+  pasted_transcript
+  existing_page_url
+  existing_guide
+}
+
+enum RevisionRequestStatus {
+  open
+  applied
+  dismissed
+}
+
+enum DerivativeAssetType {
+  linkedin_post
+  facebook_post
+  email_draft
+  ad_concept
+  summary
+  executive_brief
 }
 
 // Capture Inbox (EPIC 11 TIF-1101 / TIF v0.2 Priority 1): lightweight intake, ahead of a
@@ -143,10 +177,14 @@ model AssetOpportunity {
   id           String       @id @default(cuid())
   slug         String       @unique
   title        String
+  tenant       ContentTenant @default(tko)
   businessUnit BusinessUnit
   assetType    AssetType
   angle        String
   audience     String?
+  sourceType   OpportunitySourceType @default(title_idea)
+  sourceUrl    String?
+  contextNotes String?
   status       String       @default("opportunity") // opportunity -> composed
 
   evidenceLinks AssetOpportunityEvidence[]
@@ -170,20 +208,66 @@ model Asset {
   id             String      @id @default(cuid())
   slug           String      @unique
   title          String
+  tenant         ContentTenant @default(tko)
   assetType      AssetType
   status         AssetStatus @default(draft)
   businessUnit   BusinessUnit
   outputPath     String
   generatedAt    DateTime?
   generatedHash  String?
+  currentVersionNumber Int    @default(0)
 
   opportunityId  String?
   opportunity    AssetOpportunity? @relation(fields: [opportunityId], references: [id])
 
   evidenceLinks  AssetEvidence[]
+  versions        AssetVersion[]
+  revisionRequests RevisionRequest[]
+  derivativeAssets DerivativeAsset[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model AssetVersion {
+  id            String   @id @default(cuid())
+  assetId       String
+  asset         Asset    @relation(fields: [assetId], references: [id])
+  versionNumber Int
+  title         String
+  body          String
+  revisionNotes String?
+  createdBy     String   @default("operator")
+  createdAt      DateTime @default(now())
+
+  @@unique([assetId, versionNumber])
+  @@index([assetId, createdAt])
+}
+
+model RevisionRequest {
+  id            String                @id @default(cuid())
+  assetId       String
+  asset         Asset                 @relation(fields: [assetId], references: [id])
+  versionNumber Int?
+  notes         String
+  status        RevisionRequestStatus @default(open)
+  requestedBy   String?
+  createdAt     DateTime              @default(now())
+  appliedAt     DateTime?
+
+  @@index([assetId, status])
+}
+
+model DerivativeAsset {
+  id                  String              @id @default(cuid())
+  assetId             String
+  asset               Asset               @relation(fields: [assetId], references: [id])
+  type                DerivativeAssetType
+  body                String
+  sourceVersionNumber Int?
+  createdAt           DateTime            @default(now())
+
+  @@index([assetId, type])
 }
 
 // Traceability (mandatory): every Asset cites the Evidence it was composed from,

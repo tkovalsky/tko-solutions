@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  CONTENT_TENANT_LABELS,
+  OPPORTUNITY_SOURCE_LABELS,
+} from "@/lib/tif/content-workflow";
 import { getAssetManualEditState, formatAssetDate } from "@/lib/tif/manual-edit-protection";
 import { tifDb } from "@/lib/tif/db";
+import { createContentOpportunity } from "./actions";
 import { AssetGenerationStatus, RegenerateAssetForm } from "./regenerate-asset-form";
 
 export const metadata: Metadata = {
@@ -45,14 +50,15 @@ export default async function TifConsolePage() {
     }),
     tifDb.assetOpportunity.findMany({
       orderBy: { createdAt: "desc" },
-      include: { _count: { select: { evidenceLinks: true } } },
+      include: { _count: { select: { evidenceLinks: true, assets: true } } },
     }),
     tifDb.asset.findMany({
       orderBy: { createdAt: "desc" },
       include: {
         opportunity: { select: { slug: true, title: true } },
         evidenceLinks: { include: { evidence: { select: { slug: true, domain: true } } } },
-        _count: { select: { evidenceLinks: true } },
+        revisionRequests: { where: { status: "open" }, orderBy: { createdAt: "desc" } },
+        _count: { select: { evidenceLinks: true, versions: true, derivativeAssets: true } },
       },
     }),
   ]);
@@ -66,6 +72,13 @@ export default async function TifConsolePage() {
   const evidenceByUnit = countByUnit(evidence);
   const opportunitiesByUnit = countByUnit(opportunities);
   const assetsByUnit = countByUnit(assets);
+  const unstartedOpportunities = opportunities.filter((opp) => opp._count.assets === 0);
+  const inProgressAssets = assets.filter((asset) =>
+    asset.status === "draft" || asset.revisionRequests.length > 0,
+  );
+  const needsReviewAssets = assets.filter((asset) => asset.status === "review");
+  const rejectedAssets = assets.filter((asset) => asset.revisionRequests.length > 0);
+  const publishedAssets = assets.filter((asset) => asset.status === "published");
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-16">
@@ -73,10 +86,10 @@ export default async function TifConsolePage() {
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
           TIF v0.1 Operator Console
         </p>
-        <h1 className="mt-2 text-3xl font-semibold">Evidence → Opportunity → Asset</h1>
+        <h1 className="mt-2 text-3xl font-semibold">Content Factory Workflow</h1>
         <p className="mt-3 max-w-[65ch] text-muted">
-          Read-only visibility into the live TIF Asset Production Spine. No editing, search, or
-          workflow here — see <code>ENGINEERING_BACKLOG.md</code> EPIC 11/12 for scope.
+          Operator workflow across TKO, BoundOS, and RachelDelray: Opportunity → Context → Draft →
+          Review → Revision → Approval → Publish → Derivatives.
         </p>
         <div className="mt-4 flex flex-wrap gap-4 text-sm">
           <Link href="/tif/deliverables" className="font-semibold text-primary underline-offset-2 hover:underline">
@@ -93,6 +106,107 @@ export default async function TifConsolePage() {
           </Link>
         </div>
       </header>
+
+      <section className="mb-10 grid gap-3 md:grid-cols-5">
+        <WorkflowMetric label="Create Next" value={unstartedOpportunities.length} />
+        <WorkflowMetric label="In Progress" value={inProgressAssets.length} />
+        <WorkflowMetric label="Needs Review" value={needsReviewAssets.length} />
+        <WorkflowMetric label="Rejected" value={rejectedAssets.length} />
+        <WorkflowMetric label="Published" value={publishedAssets.length} />
+      </section>
+
+      <section className="mb-12 rounded-lg border border-border bg-white p-5">
+        <h2 className="text-lg font-semibold">Create Opportunity</h2>
+        <form action={createContentOpportunity} className="mt-4 grid gap-4 md:grid-cols-2">
+          <label className="grid gap-1 text-sm">
+            <span className="font-semibold">Title idea</span>
+            <input name="title" required className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span className="font-semibold">Tenant</span>
+            <select name="tenant" className="rounded-md border border-input-border px-3 py-2" defaultValue="tko">
+              {Object.entries(CONTENT_TENANT_LABELS).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span className="font-semibold">Business unit</span>
+            <select name="businessUnit" className="rounded-md border border-input-border px-3 py-2" defaultValue="tko">
+              <option value="tko">TKO</option>
+              <option value="rachel">Rachel</option>
+              <option value="cre">CRE</option>
+            </select>
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span className="font-semibold">Asset type</span>
+            <select name="assetType" className="rounded-md border border-input-border px-3 py-2" defaultValue="article">
+              <option value="article">Article</option>
+              <option value="landing_page">Landing page</option>
+              <option value="case_study">Case study</option>
+              <option value="assessment">Assessment</option>
+              <option value="executive_brief">Executive brief</option>
+              <option value="comparison_guide">Comparison guide</option>
+              <option value="intelligence_report">Intelligence report</option>
+            </select>
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span className="font-semibold">Source type</span>
+            <select name="sourceType" className="rounded-md border border-input-border px-3 py-2" defaultValue="title_idea">
+              {Object.entries(OPPORTUNITY_SOURCE_LABELS).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span className="font-semibold">Source URL</span>
+            <input name="sourceUrl" type="url" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1 text-sm md:col-span-2">
+            <span className="font-semibold">Angle</span>
+            <textarea name="angle" required rows={2} className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span className="font-semibold">Audience</span>
+            <input name="audience" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1 text-sm md:col-span-2">
+            <span className="font-semibold">Research inputs / operator context</span>
+            <textarea name="contextNotes" rows={5} className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <div className="md:col-span-2">
+            <button type="submit" className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white">
+              Create Opportunity
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="mb-4 text-xl font-semibold">Workflow Queue</h2>
+        <div className="grid gap-4 lg:grid-cols-2">
+          <QueuePanel title="What should I create next?" emptyLabel="No unstarted opportunities.">
+            {unstartedOpportunities.slice(0, 6).map((opp) => (
+              <QueueOpportunity key={opp.id} opportunity={opp} />
+            ))}
+          </QueuePanel>
+          <QueuePanel title="What needs review?" emptyLabel="No assets in review.">
+            {needsReviewAssets.slice(0, 6).map((asset) => (
+              <QueueAsset key={asset.id} asset={asset} />
+            ))}
+          </QueuePanel>
+          <QueuePanel title="What was rejected?" emptyLabel="No open revision requests.">
+            {rejectedAssets.slice(0, 6).map((asset) => (
+              <QueueAsset key={asset.id} asset={asset} />
+            ))}
+          </QueuePanel>
+          <QueuePanel title="What was published?" emptyLabel="No published assets.">
+            {publishedAssets.slice(0, 6).map((asset) => (
+              <QueueAsset key={asset.id} asset={asset} />
+            ))}
+          </QueuePanel>
+        </div>
+      </section>
 
       <Section
         id="evidence"
@@ -138,8 +252,9 @@ export default async function TifConsolePage() {
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium">{opp.title}</p>
                 <p className="mt-1 text-xs text-muted">
-                  {opp.assetType} · {opp._count.evidenceLinks} linked evidence record(s)
+                  {opp.tenant} · {opp.sourceType} · {opp.assetType} · {opp._count.evidenceLinks} linked evidence record(s)
                 </p>
+                {opp.contextNotes && <p className="mt-1 line-clamp-2 text-xs text-muted">{opp.contextNotes}</p>}
               </div>
               <div className="flex shrink-0 items-center gap-2">
                 <BusinessUnitBadge unit={opp.businessUnit} />
@@ -168,6 +283,9 @@ export default async function TifConsolePage() {
               </div>
               <p className="mt-1 text-xs text-muted">
                 {asset.assetType} · <StatusBadge status={asset.status} />
+              </p>
+              <p className="mt-1 text-xs text-muted">
+                {asset.tenant} · v{asset.currentVersionNumber || "—"} · {asset._count.derivativeAssets} derivative(s)
               </p>
 
               <div className="mt-3">
@@ -245,6 +363,95 @@ function Section({
       </div>
       {children}
     </section>
+  );
+}
+
+function WorkflowMetric({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-lg border border-border bg-white p-4">
+      <p className="text-2xl font-semibold">{value}</p>
+      <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-muted">{label}</p>
+    </div>
+  );
+}
+
+function QueuePanel({
+  title,
+  emptyLabel,
+  children,
+}: {
+  title: string;
+  emptyLabel: string;
+  children: React.ReactNode;
+}) {
+  const childArray = Array.isArray(children) ? children : [children];
+  const hasChildren = childArray.some(Boolean);
+
+  return (
+    <section className="rounded-lg border border-border bg-white">
+      <h3 className="border-b border-border px-4 py-3 text-sm font-semibold">{title}</h3>
+      <div className="divide-y divide-border">
+        {hasChildren ? children : <p className="p-4 text-sm text-muted">{emptyLabel}</p>}
+      </div>
+    </section>
+  );
+}
+
+function QueueOpportunity({
+  opportunity,
+}: {
+  opportunity: {
+    slug: string;
+    title: string;
+    tenant: string;
+    assetType: string;
+    sourceType: string;
+  };
+}) {
+  return (
+    <article className="flex items-start justify-between gap-3 p-4 text-sm">
+      <div>
+        <h4 className="font-semibold">{opportunity.title}</h4>
+        <p className="mt-1 text-xs text-muted">
+          {opportunity.tenant} · {opportunity.sourceType} · {opportunity.assetType}
+        </p>
+      </div>
+      <a href={`/tif#opportunity-${opportunity.slug}`} className="shrink-0 text-xs font-semibold text-primary hover:underline">
+        Open
+      </a>
+    </article>
+  );
+}
+
+function QueueAsset({
+  asset,
+}: {
+  asset: {
+    slug: string;
+    title: string;
+    status: string;
+    tenant: string;
+    currentVersionNumber: number;
+    revisionRequests: { notes: string }[];
+  };
+}) {
+  return (
+    <article className="p-4 text-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h4 className="font-semibold">{asset.title}</h4>
+          <p className="mt-1 text-xs text-muted">
+            {asset.tenant} · {asset.status} · v{asset.currentVersionNumber || "—"}
+          </p>
+        </div>
+        <Link href={`/tif/assets/${asset.slug}`} className="shrink-0 text-xs font-semibold text-primary hover:underline">
+          Asset
+        </Link>
+      </div>
+      {asset.revisionRequests[0] && (
+        <p className="mt-2 text-xs text-muted">Revision: {asset.revisionRequests[0].notes}</p>
+      )}
+    </article>
   );
 }
 

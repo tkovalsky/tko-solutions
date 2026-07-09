@@ -41,20 +41,28 @@ async function composeOpportunity(slug) {
   if (!opportunity) {
     throw new Error(`No AssetOpportunity found for slug "${slug}"`);
   }
-  if (opportunity.evidenceLinks.length === 0) {
-    throw new Error(`Opportunity "${slug}" has no linked evidence — cannot compose (traceability requires >=1).`);
-  }
 
   const templatePath = TEMPLATE_BY_ASSET_TYPE[opportunity.assetType];
   const templateRaw = await readFile(templatePath, "utf8");
 
-  const sourcesList = opportunity.evidenceLinks
-    .map(({ evidence }) => `  - ${frontMatterDomainPrefix(evidence.domain)}:${evidence.slug}`)
-    .join("\n");
+  const sourcesList =
+    opportunity.evidenceLinks.length > 0
+      ? opportunity.evidenceLinks
+          .map(({ evidence }) => `  - ${frontMatterDomainPrefix(evidence.domain)}:${evidence.slug}`)
+          .join("\n")
+      : "  - operator:opportunity-context";
 
   const evidenceTrailRows = opportunity.evidenceLinks
     .map(({ evidence }) => `| [...] | ${evidence.domain}:${evidence.slug} | ${evidence.proofRef} | ${evidence.claimGuard} |`)
     .join("\n");
+  const openRevisionRequests = await prisma.revisionRequest.findMany({
+    where: {
+      asset: { slug: opportunity.slug },
+      status: "open",
+    },
+    orderBy: { createdAt: "asc" },
+  });
+  const revisionContext = formatRevisionContext(openRevisionRequests.map((request) => request.notes));
 
   let filled = templateRaw
     .replace(/title:\s*"\[.*?\]"/, `title: "${opportunity.title}"`)
@@ -70,11 +78,18 @@ async function composeOpportunity(slug) {
     /(\*\[Hook:.*?\]\*|\*\[One-line framing.*?\]\*)/,
     `$1\n\n> **Composer note.** Opportunity angle: ${opportunity.angle}${
       opportunity.audience ? `\n> Audience: ${opportunity.audience}` : ""
+    }${opportunity.contextNotes ? `\n> Operator context: ${opportunity.contextNotes}` : ""}${
+      opportunity.sourceUrl ? `\n> Source URL: ${opportunity.sourceUrl}` : ""
     }`,
   );
 
   // Append a filled evidence trail (in addition to the template's own placeholder table).
-  filled += `\n\n<!-- TIF v0.1 composed evidence trail (traceability) -->\n| Claim | Evidence record | proof_ref | Claim guard |\n|---|---|---|---|\n${evidenceTrailRows}\n`;
+  if (revisionContext) {
+    filled += `\n\n${revisionContext}\n`;
+  }
+  filled += `\n\n<!-- TIF v0.1 composed evidence trail (traceability) -->\n| Claim | Evidence record | proof_ref | Claim guard |\n|---|---|---|---|\n${
+    evidenceTrailRows || "| [...] | operator:opportunity-context | Operator-provided context only. | Verify before publishing. |"
+  }\n`;
 
   await mkdir(OUTPUT_DIR, { recursive: true });
   const outputPath = path.join(OUTPUT_DIR, `${opportunity.slug}.md`);
@@ -86,6 +101,7 @@ async function composeOpportunity(slug) {
     where: { slug: opportunity.slug },
     update: {
       title: opportunity.title,
+      tenant: opportunity.tenant,
       assetType: opportunity.assetType,
       businessUnit: opportunity.businessUnit,
       outputPath,
@@ -96,6 +112,7 @@ async function composeOpportunity(slug) {
     create: {
       slug: opportunity.slug,
       title: opportunity.title,
+      tenant: opportunity.tenant,
       assetType: opportunity.assetType,
       businessUnit: opportunity.businessUnit,
       status: "draft",
@@ -104,6 +121,28 @@ async function composeOpportunity(slug) {
       generatedHash,
       opportunityId: opportunity.id,
     },
+  });
+
+  const latestVersion = await prisma.assetVersion.aggregate({
+    where: { assetId: asset.id },
+    _max: { versionNumber: true },
+  });
+  const versionNumber = (latestVersion._max.versionNumber ?? 0) + 1;
+
+  await prisma.assetVersion.create({
+    data: {
+      assetId: asset.id,
+      versionNumber,
+      title: opportunity.title,
+      body: filled,
+      revisionNotes: openRevisionRequests.map((request) => request.notes).join("\n\n") || null,
+      createdBy: "composer",
+    },
+  });
+
+  await prisma.asset.update({
+    where: { id: asset.id },
+    data: { currentVersionNumber: versionNumber },
   });
 
   for (const { evidence } of opportunity.evidenceLinks) {
@@ -119,8 +158,27 @@ async function composeOpportunity(slug) {
     data: { status: "composed" },
   });
 
-  console.log(`Composed "${opportunity.title}" -> ${outputPath} (status: draft)`);
+  if (openRevisionRequests.length > 0) {
+    await prisma.revisionRequest.updateMany({
+      where: { id: { in: openRevisionRequests.map((request) => request.id) } },
+      data: { status: "applied", appliedAt: new Date() },
+    });
+  }
+
+  console.log(`Composed "${opportunity.title}" -> ${outputPath} (draft v${versionNumber})`);
   return outputPath;
+}
+
+function formatRevisionContext(notes) {
+  const cleaned = notes.map((note) => note.trim()).filter(Boolean);
+  if (cleaned.length === 0) return "";
+
+  return [
+    "<!-- Content Factory revision inputs -->",
+    "REVISION REQUESTS TO ADDRESS:",
+    ...cleaned.map((note, index) => `${index + 1}. ${note}`),
+    "<!-- End revision inputs -->",
+  ].join("\n");
 }
 
 const targetSlug = process.argv[2];
