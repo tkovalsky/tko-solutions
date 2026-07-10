@@ -10,12 +10,12 @@ import { problems } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Operational Bottlenecks and Workflow Recovery",
+  title: "Where Complex Workflows Stall",
   description:
-    "TKO helps leaders diagnose hidden work, decision latency, human API dependency, workflow friction, and operational visibility gaps before larger transformation spend.",
+    "See the hidden-work, decision-latency, dependency, and workflow-visibility problems that keep complex operations from moving with confidence.",
   alternates: { canonical: "/problems" },
   openGraph: {
-    title: "Operational Bottlenecks and Workflow Recovery",
+    title: "Where Complex Workflows Stall",
     description:
       "Executive operating problems that keep work hidden, decisions slow, and accountability unclear.",
     url: absoluteUrl("/problems"),
@@ -47,7 +47,7 @@ export default function ProblemsPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "Operational Bottlenecks and Workflow Recovery",
+          name: "Where Complex Workflows Stall",
           url: absoluteUrl("/problems"),
           description:
             "Executive operating problems that TKO diagnoses before recommending a system, tool, or automation.",
@@ -55,19 +55,19 @@ export default function ProblemsPage() {
       />
       <PageHero
         eyebrow="Executive Discoverability"
-        title="The work is moving. The operating truth is hidden."
-        description="Leaders rarely need another status report. They need to see where work stalls, why decisions slow down, which person has become the undocumented system, and what should happen next."
+        title="Your teams are working. Leadership still cannot see where the work is stuck."
+        description="The issue is rarely effort or another dashboard. It is the hidden work between systems, handoffs, exceptions, and decisions that no one owns clearly enough to fix."
         primaryHref="/assessment"
-        primaryLabel="Explore the Operational Recovery Assessment"
+        primaryLabel="Start the recovery assessment"
         secondaryHref="/proof"
-        secondaryLabel="Review the evidence"
+        secondaryLabel="See the built proof"
       />
 
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="The Problems"
-          title="The failures are different on the surface. The operating pattern is the same."
-          description="Information is captured, but the path from signal to accountable action is not designed, governed, or visible. These are the problem types TKO investigates."
+          title="Different symptoms. One missing operating layer."
+          description="These problems look separate in a status meeting. In the workflow, they are usually connected: important context is scattered, decisions slow down, and action depends on manual reconstruction."
         />
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {problems.map((problem) => (
@@ -82,15 +82,15 @@ export default function ProblemsPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
-            eyebrow="What TKO Looks For"
-            title="A visible symptom is not always the operating constraint."
-            description="The assessment starts with the real workflow: what is supposed to happen, what actually happens, where work waits, who supplies missing context, and which decision no system currently produces."
+          eyebrow="What TKO Looks For"
+          title="A visible symptom is not always the constraint."
+          description="The assessment compares the intended workflow with the work people actually do, then identifies where context, authority, or a trusted next decision is missing."
           />
           <ol className="grid gap-3">
             {[
               "Work that requires manual reconstruction before someone can act.",
               "Handoffs, exceptions, or escalation paths that depend on specific people.",
-              "Status reporting that describes activity but not current operational risk.",
+              "Status reporting that describes activity but not current operational risk or required decision.",
               "Priorities that change by meeting, inbox, or the loudest request.",
               "AI or automation pressure without a clear authority, approval, or measurement model.",
             ].map((finding, index) => (
@@ -108,8 +108,8 @@ export default function ProblemsPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Guides"
-          title="Existing guidance for leaders diagnosing the problem."
-          description="These evidence-led guides provide operating context without creating unsupported claims or prematurely packaging an unfinished capability."
+          title="Read the pattern before choosing the fix."
+          description="These guides explain the operating patterns behind the hub. They are not separate services or P1 problem pages."
         />
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {relatedGuides.map((guide) => (
@@ -129,8 +129,8 @@ export default function ProblemsPage() {
       </Section>
 
       <CtaBand
-        title="Start with the workflow that is already under pressure."
-        description="The Operational Recovery Assessment identifies the bottleneck, the decision-latency pattern, the dependency risk, and the next highest-leverage move."
+        title="Bring the workflow that is already under pressure."
+        description="The recovery assessment identifies the hidden constraint, the decision-latency pattern, the dependency risk, and the next highest-leverage move."
       />
     </>
   );
