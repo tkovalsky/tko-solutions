@@ -8,12 +8,12 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "RachelOS: Operational Memory to Governed Action",
+  title: "RachelOS: A Founder-Built System of Action",
   description:
-    "RachelOS is TKO's direct built-system proof: relationship memory, governed facts, a canonical next-action queue, human approval, and operational health visibility.",
+    "Inspect RachelOS, TKO's founder-built system in daily use for relationship memory, governed facts, trusted next actions, human approval, and operational health visibility.",
   alternates: { canonical: "/proof/rachelos" },
   openGraph: {
-    title: "RachelOS: Operational Memory to Governed Action",
+    title: "RachelOS: A Founder-Built System of Action",
     description:
       "Evidence-backed proof of a system that turns fragmented relationship signals into governed next actions.",
     url: absoluteUrl("/proof/rachelos"),
@@ -77,7 +77,7 @@ export default function RachelOSProofPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "Article",
-          headline: "RachelOS: Operational Memory to Governed Action",
+          headline: "RachelOS: A Founder-Built System of Action",
           description:
             "Evidence-backed account of a system that turns fragmented relationship signals into governed next actions.",
           url: absoluteUrl("/proof/rachelos"),
@@ -86,10 +86,10 @@ export default function RachelOSProofPage() {
       />
       <PageHero
         eyebrow="Built System / Direct Proof"
-        title="RachelOS turned operational knowledge into a system of action."
-        description="A relationship-driven business had records, messages, notes, and activity. What it lacked was a trusted operating layer that could preserve context, surface priority, and tell the operator what deserved attention next."
+        title="A founder-built system that turns relationship knowledge into today's work."
+        description="RachelOS is in daily use in a relationship-driven business. It replaced manual reconstruction across records, messages, notes, and activity with durable context, a trusted priority queue, and human-governed action."
         primaryHref="/assessment"
-        primaryLabel="Explore the Operational Recovery Assessment"
+        primaryLabel="Start with the assessment"
         secondaryHref="/proof"
         secondaryLabel="Back to proof registry"
       />
@@ -98,11 +98,11 @@ export default function RachelOSProofPage() {
         <div className="space-y-12">
           <ProofSection
             title="Executive Problem"
-            body="The business had information across a CRM, email, text threads, notes, calendar, and spreadsheets. The hard question—who needs attention now, why, and what should happen next—still required a person to reconstruct the answer each day."
+            body="The business had information across a CRM, email, text threads, notes, calendar, and spreadsheets. The hard question—who needs attention now, why, and what should happen next—still required the operator to reconstruct the answer each day."
           />
           <ProofSection
             title="Constraint"
-            body="Critical relationship context, prioritization, and exception handling lived in one person. The organization had a system of record, but not a system of action. Attention, rather than information storage, was the constraint."
+            body="Critical relationship context, prioritization, and exception handling lived in one person. The business had systems of record, but not a system of action. Attention, rather than information storage, was the constraint."
           />
           <ProofSection
             title="Investigation"
@@ -115,7 +115,7 @@ export default function RachelOSProofPage() {
         <SectionHeader
           eyebrow="System Design"
           title="Each layer exists to close a specific operating gap."
-          description="The implemented pattern is signals to memory to facts to state to priority to human approval to action. It is a workflow and decision design, not an autonomous-agent claim."
+          description="The implemented pattern is signals to memory to facts to state to priority to human approval to action. It is a workflow and decision design, not an autonomous-agent claim or a real-estate software offer."
         />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           {systemLayers.map((layer) => (
@@ -130,7 +130,7 @@ export default function RachelOSProofPage() {
       <Section>
         <ProofSection
           title="Current State"
-          body="RachelOS has implemented lead capture reliability, relationship updates, source-aware fact extraction, journey and relationship state, intelligence-gap detection, a canonical next-action queue, a daily action engine, approval-gated outreach drafting, content workflow controls, referral handling, and operational health checks. The implementation evidence is code-, schema-, route-, and documentation-backed."
+          body="RachelOS has implemented lead capture reliability, relationship updates, source-aware fact extraction, journey and relationship state, intelligence-gap detection, a canonical next-action queue, a daily action engine, approval-gated outreach drafting, content workflow controls, referral handling, and operational health checks. The evidence is code-, schema-, route-, and documentation-backed."
         />
       </Section>
 
@@ -139,15 +139,15 @@ export default function RachelOSProofPage() {
           <div>
             <SectionHeader
               eyebrow="What It Proves"
-              title="The operating layer can be built."
+              title="A working decision system can be built and operated."
               description="RachelOS demonstrates that fragmented signals can become durable operational memory, source-aware facts, a prioritized action queue, and human-governed execution in a live operating environment."
             />
           </div>
           <div>
             <SectionHeader
               eyebrow="What It Does Not Yet Prove"
-              title="The limits are part of the evidence."
-              description="RachelOS does not provide a published revenue, conversion, ROI, or adoption result. Behavioral engagement is only partially consumed; outcome attribution, reporting, and referral close-loop measurement remain incomplete. It is not a healthcare product or proof of healthcare compliance."
+              title="Capability proof is not commercial outcome proof."
+              description="RachelOS does not provide a published revenue, conversion, ROI, or adoption result. Outcome attribution, reporting, and referral close-loop measurement remain incomplete. It is not a healthcare product or proof of healthcare compliance."
             />
           </div>
         </div>
