@@ -10,12 +10,12 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Operational Recovery and Workflow Proof",
+  title: "Proof You Can Inspect",
   description:
-    "Evidence-first TKO proof: RachelOS as a built system, operational recovery patterns, healthcare transformation background, and supporting methods.",
+    "Inspect TKO's direct built-system proof, bounded healthcare operating background, and supporting methods without unsupported outcome claims.",
   alternates: { canonical: "/proof" },
   openGraph: {
-    title: "Operational Recovery and Workflow Proof",
+    title: "Proof You Can Inspect",
     description:
       "Evidence-first proof for operational bottlenecks, workflow recovery, and systems of action.",
     url: absoluteUrl("/proof"),
@@ -34,28 +34,28 @@ const proofSections = [
     alt: "RachelOS canonical queue showing ranked work and next actions.",
   },
   {
-    eyebrow: "Operational Recovery",
-    title: "Silent failure recovery",
+    eyebrow: "Operational Reliability",
+    title: "The system can make its own failure visible",
     description:
-      "RachelOS also demonstrates the recovery pattern: expose a failure that was previously discovered by feel, repair the constraint, and install a visible validation loop.",
+      "RachelOS includes visible system-health checks, cron logging, smoke tests, and alerts so execution does not depend on discovering failures by feel.",
     href: "/proof/rachelos",
     linkLabel: "See the current-state evidence",
     image: "/proof/rachelos/system-health.png",
     alt: "RachelOS system health view showing operational checks and execution status.",
   },
   {
-    eyebrow: "Healthcare Transformation Background",
+    eyebrow: "Healthcare Operating Background",
     title: "Complex workflow and governance experience",
     description:
-      "Prior authorization, utilization management, care management, interoperability, regulatory initiatives, and transformation programs supply advisory background—not a claimed deployed healthcare product or quantified case result.",
+      "Prior authorization, utilization management, care management, interoperability, regulatory initiatives, and transformation programs supply relevant operating context—not a claimed deployed healthcare product or quantified case result.",
     href: "/selected-work",
     linkLabel: "Review selected healthcare work",
   },
   {
-    eyebrow: "Supporting Methods",
-    title: "Method portability",
+    eyebrow: "Supporting Method Proof",
+    title: "The pattern travels without becoming a second offer",
     description:
-      "CRE intelligence and governed content operations demonstrate the same design discipline: capture knowledge, establish source authority, surface priority, and preserve human judgment where it matters.",
+      "CRE intelligence and governed content operations demonstrate the same design discipline: capture knowledge, establish source authority, surface priority, and retain human judgment where it matters.",
     href: "/selected-work/cre-intelligence-model",
     linkLabel: "Review supporting method proof",
   },
@@ -68,7 +68,7 @@ export default function ProofPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "TKO Proof Registry",
+          name: "TKO Proof You Can Inspect",
           url: absoluteUrl("/proof"),
           description:
             "Evidence-first proof registry for TKO operational recovery and systems-of-action work.",
@@ -76,12 +76,12 @@ export default function ProofPage() {
       />
       <PageHero
         eyebrow="Proof Registry"
-        title="Evidence before category."
-        description="TKO separates direct built-system proof from healthcare advisory background and supporting methods. Each asset is clear about what it demonstrates—and what it does not claim."
+        title="Proof you can inspect, not claims you have to accept."
+        description="TKO separates direct built-system proof from healthcare operating background and supporting methods. Each asset states the operating pattern it demonstrates and the evidence boundary around it."
         primaryHref="/proof/rachelos"
-        primaryLabel="Review RachelOS proof"
+        primaryLabel="Inspect RachelOS"
         secondaryHref="/assessment"
-        secondaryLabel="Explore the Assessment"
+        secondaryLabel="Start with the assessment"
       />
 
       <Section className="bg-surface">
@@ -115,8 +115,8 @@ export default function ProofPage() {
       <Section>
         <SectionHeader
           eyebrow="Evidence Standard"
-          title="A system, an operating pattern, and a background credential are not the same claim."
-          description="RachelOS is the direct product proof. Healthcare transformation work establishes relevant operating context. Supporting methods demonstrate portability. TKO does not turn unmeasured outcomes into marketing claims."
+          title="A built system, an operating pattern, and a background credential are not the same claim."
+          description="RachelOS is direct built-system proof. Healthcare work establishes relevant operating context. Supporting methods demonstrate portability. Measured commercial outcomes belong only where they can be substantiated."
         />
       </Section>
 
