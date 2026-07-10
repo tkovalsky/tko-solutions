@@ -95,6 +95,47 @@
   outline-offset: 3px;
 }
 
+/* Explicit hero tokens keep critical homepage copy above WCAG AA contrast on midnight. */
+.hero-readable {
+  color: #ffffff;
+}
+
+.hero-readable .hero-title,
+.hero-readable .hero-label {
+  color: #ffffff;
+}
+
+.hero-readable .hero-lead {
+  color: #e7edf6;
+}
+
+.hero-readable .hero-kicker,
+.hero-readable .hero-icon {
+  color: #b9d1eb;
+}
+
+.hero-readable .hero-muted {
+  color: #d5deeb;
+}
+
+.hero-readable .hero-divider {
+  border-color: #4b6079;
+}
+
+.hero-readable .hero-icon {
+  background: #20344d;
+}
+
+.hero-readable .hero-proof-panel {
+  border-color: #536a85;
+  background: #142033;
+}
+
+.hero-readable .hero-proof-row {
+  border-color: #435874;
+  background: #0d1625;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -136,4 +177,3 @@
   color: var(--muted);
   line-height: 1.8;
 }
-
