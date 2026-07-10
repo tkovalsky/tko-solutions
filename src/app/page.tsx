@@ -11,35 +11,23 @@ import { ProblemGrid } from "@/components/site/problem-grid";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { caseStudies, getCaseStudy } from "@/lib/content";
+import { caseStudies } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Operational Recovery for Complex Workflows",
+  title: "Where Complex Workflows Stall",
   description:
-    "TKO helps leaders expose operational bottlenecks, reduce decision latency, and build systems of action when critical work depends on people instead of reliable workflows.",
+    "TKO helps healthcare and complex-operations leaders identify hidden work, recover stalled workflows, and decide what to fix before committing to the next solution.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Operational Recovery for Complex Workflows",
+    title: "Where Complex Workflows Stall",
     description:
       "Make hidden work visible, recover stalled workflows, and build systems of action from evidence.",
     url: absoluteUrl("/"),
   },
 };
-
-function requireCaseStudy(slug: string) {
-  const study = getCaseStudy(slug);
-
-  if (!study) {
-    throw new Error(`Missing case study: ${slug}`);
-  }
-
-  return study;
-}
-
-const rachelProof = requireCaseStudy("from-crm-to-operating-system");
 
 const rachelosProofStrip = [
   {
@@ -79,9 +67,9 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <SectionHeader
-              eyebrow="The Problem"
-              title="What would you hire Todd to solve?"
-              description="Work is moving, but the truth about where it stalls lives in people, side conversations, status meetings, and manual reconstruction. TKO finds the constraint, makes the hidden work visible, and gives leadership a governed path from what is known to what should happen next."
+              eyebrow="The Operating Problem"
+              title="Work crosses systems. The decision does not."
+              description="Teams are busy, dashboards are current, and governance meetings are happening. The real problem is the work between handoffs, exceptions, and disputed facts—where leadership cannot see the constraint clearly enough to act."
             />
             <ul className="mt-6 space-y-2 text-base leading-7 text-muted">
               <li>
@@ -116,8 +104,8 @@ export default function HomePage() {
                 <h3 className="mt-5 text-2xl font-semibold">{study.title}</h3>
                 <p className="mt-4 text-base leading-7 text-muted">{study.problem}</p>
                 <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-                  <span className="font-semibold text-primary">Outcome — </span>
-                  {study.outcome}
+                  <span className="font-semibold text-primary">Evidence scope — </span>
+                  {study.evidence[0]}
                 </p>
                 <ArrowLink href={`/selected-work/${study.slug}`} className="mt-8">
                   View selected work
@@ -132,14 +120,14 @@ export default function HomePage() {
           <SectionHeader
             eyebrow="Built Proof"
             title="RachelOS proves the operating pattern in a live environment."
-            description="RachelOS is evidence that TKO has built the layer between scattered signals and action: operational memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human-approved AI support."
+            description="It is a founder-built system in daily use: relationship memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human approval before AI-assisted action."
           />
           <Card className="w-full max-w-2xl justify-self-start">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
               Problem
             </p>
             <p className="mt-3 text-base leading-7 text-muted">
-              A business had 100+ relationships, fragmented information,
+              A relationship-driven business had fragmented information,
               inconsistent follow-up, knowledge trapped in one person&apos;s head,
               and no trusted next action.
             </p>
@@ -147,13 +135,13 @@ export default function HomePage() {
               System
             </p>
             <p className="mt-3 text-base leading-7 text-muted">
-              TKO built a governed operating layer that captures relationship
-              knowledge, preserves institutional memory, surfaces priorities,
-              recommends actions, and supports execution with human-approved AI.
+              TKO built a governed operating layer that preserves relationship
+              knowledge, surfaces priority, produces a trusted action queue, and
+              keeps AI-assisted recommendations behind human approval.
             </p>
             <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-              <span className="font-semibold text-primary">Outcome — </span>
-              {rachelProof.outcome}
+              <span className="font-semibold text-primary">Direct proof — </span>
+              Durable memory, a canonical queue, and a human approval gate are visible in the built system.
             </p>
             <ArrowLink href="/proof/rachelos" className="mt-8">
               Review the RachelOS evidence
@@ -187,7 +175,7 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
             eyebrow="Healthcare Background"
-            title="The operating failure repeats across complex, high-stakes work."
+            title="The operating failure repeats across high-stakes work."
             description="Healthcare transformation experience supplies the operating context: prior authorization, utilization management, care management, interoperability, regulatory programs, and multi-team governance all expose the same hidden-work and decision-latency pattern."
           />
           <Card className="w-full max-w-2xl justify-self-start">
@@ -196,15 +184,15 @@ export default function HomePage() {
             </p>
             <h3 className="mt-5 text-2xl font-semibold">Healthcare Transformation</h3>
             <p className="mt-4 text-base leading-7 text-muted">
-              The current public proof is advisory background, not a claimed deployed
-              healthcare product. It shows why the same operating pattern matters where
-              administrative burden, exception handling, auditability, and multi-team
-              dependencies are real constraints.
+              Prior authorization redesign, care-management modernization, and
+              interoperability work show why the same operating pattern matters
+              where administrative burden, exception handling, auditability, and
+              multi-team dependencies are real constraints.
             </p>
             <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
               <span className="font-semibold text-primary">Operating lesson — </span>
-              The work informs TKO&apos;s diagnostic lens: identify the dependency, make the
-              decision path explicit, and build only after the operating truth is visible.
+              Identify the dependency, make the decision path explicit, and build
+              only after the operating truth is visible.
             </p>
             <ArrowLink href="/proof" className="mt-8">
               Review the proof registry
@@ -219,7 +207,7 @@ export default function HomePage() {
             Methodology
           </p>
           <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-            Operating System Methodology
+            Start with operating truth, not a platform.
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/60">
             Existing tools already capture signals. An Operational Knowledge
@@ -242,7 +230,7 @@ export default function HomePage() {
         <SectionHeader
           eyebrow="Engagement Path"
           title="Start with recovery. Build only when the workflow truth is visible."
-          description="The Operational Recovery Assessment is the fixed-scope first step. It identifies the operating constraint, the decision leadership needs to make, and whether a deeper diagnostic or build is justified."
+          description="The one-week Operational Recovery Assessment is the fixed-scope first step. It identifies the operating constraint, the decision leadership needs to make, and whether a deeper diagnostic or build is justified."
         />
         <div className="mt-10">
           <ServiceCards />
@@ -250,7 +238,7 @@ export default function HomePage() {
       </Section>
       <CtaBand
         title="If execution depends on hidden work, start with the recovery assessment."
-        description="In one fixed-scope week, TKO maps the workflow, identifies bottlenecks and decision latency, assesses dependency risk, and gives leadership the next highest-leverage move."
+        description="In one fixed-scope week, TKO maps the workflow, identifies the decision-latency pattern, assesses dependency risk, and gives leadership the next highest-leverage move."
       />
     </>
   );

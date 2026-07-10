@@ -1,52 +1,40 @@
 "use client";
 
-import { ArrowRight, CheckCircle2, Compass, Eye, TrendingUp } from "lucide-react";
+import { CheckCircle2, Compass, Eye, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { LinkButton } from "@/components/ui/button";
 import { NetworkVisual } from "@/components/site/network-visual";
-
-const proofStrip = [
-  "Operational bottlenecks",
-  "Decision latency",
-  "Human API dependency",
-  "Systems of action",
-];
 
 const pillars = [
   {
     icon: Eye,
-    title: "Make hidden work visible",
+    title: "Find the hidden work",
     description: "See the handoffs, exceptions, and risks that reports miss.",
   },
   {
     icon: Compass,
-    title: "Find the constraint",
+    title: "Name the constraint",
     description: "Identify where work, ownership, and decisions actually stall.",
   },
   {
     icon: TrendingUp,
-    title: "Build a system of action",
-    description: "Turn operational knowledge into trusted next actions.",
+    title: "Ship the smallest fix",
+    description: "Build a decision system only when the evidence calls for one.",
   },
 ];
 
-const proofLadder = [
+const rachelosProof = [
   {
-    label: "Executive problem",
-    proof: "Hidden work and slow decisions",
+    label: "Memory",
+    proof: "Relationship context survives outside one person's head.",
   },
   {
-    label: "Diagnosis",
-    proof: "Bottlenecks, dependencies, and decision rights",
+    label: "Priority",
+    proof: "A ranked queue surfaces the next action that deserves attention.",
   },
   {
-    label: "System of action",
-    proof: "Memory, priority, approval, and accountable action",
-  },
-  {
-    label: "Proof",
-    proof: "RachelOS and healthcare transformation experience",
+    label: "Control",
+    proof: "AI-assisted recommendations wait for human approval before action.",
   },
 ];
 
@@ -72,41 +60,26 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-light">
-            Operational Recovery for Complex Workflows
+            Healthcare transformation recovery
           </p>
           <h1 className="mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            When hidden work slows decisions, execution starts to break.
+            You have the data. You still do not know where work is stuck.
           </h1>
           <p className="mt-6 max-w-[52ch] text-lg leading-8 text-white/80">
-            TKO identifies operational bottlenecks, makes hidden work visible,
-            and builds the systems of action that turn fragmented knowledge into
-            trusted priorities, accountable decisions, and governed execution.
+            TKO helps healthcare and complex-operations leaders diagnose stalled
+            workflows, make the constraint visible, and decide whether a focused
+            recovery, deeper diagnostic, or build is warranted.
           </p>
-          <ul className="mt-7 grid gap-2 border-y border-white/10 py-4 text-sm font-medium text-white/75 sm:grid-cols-2">
-            {proofStrip.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <CheckCircle2 className="size-4 shrink-0 text-primary-light" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
+          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
+            Fixed-scope recovery assessment · one week · $5K–$8K
+          </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
               href="/assessment"
               className="shadow-[0_10px_30px_-10px_rgb(var(--primary-rgb)/0.6)]"
             >
-              Explore the Operational Recovery Assessment
+              Start the recovery assessment
             </LinkButton>
-            <Link
-              href="/services/diagnostic"
-              className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline"
-            >
-              See the diagnostic approach
-              <ArrowRight
-                className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
-                aria-hidden="true"
-              />
-            </Link>
           </div>
           <div className="mt-10 grid grid-cols-1 gap-5 border-t border-white/10 pt-7 sm:grid-cols-3 sm:gap-4">
             {pillars.map((pillar) => (
@@ -130,35 +103,26 @@ export function Hero() {
           aria-label="TKO proof ladder"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-light">
-            The operating problem
+            Built and running
           </p>
           <h2 className="mt-4 text-2xl font-semibold leading-tight text-white md:text-3xl">
-            What would you hire Todd to solve?
+            RachelOS turns fragmented relationship data into daily operating work.
           </h2>
           <div className="mt-6 space-y-3">
-            {proofLadder.map((item, index) => (
+            {rachelosProof.map((item) => (
               <div
                 key={item.label}
                 className="grid gap-3 rounded-lg border border-white/10 bg-midnight/45 p-4 sm:grid-cols-[1fr_auto_1.1fr] sm:items-center"
               >
                 <p className="text-sm font-semibold text-white">{item.label}</p>
-                <ArrowRight
-                  className="hidden size-4 text-primary-light sm:block"
-                  aria-hidden="true"
-                />
+                <CheckCircle2 className="hidden size-4 text-primary-light sm:block" aria-hidden="true" />
                 <p className="text-sm leading-6 text-white/70">{item.proof}</p>
-                {index === proofLadder.length - 1 ? (
-                  <span className="mt-1 inline-flex w-fit rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-primary-light sm:col-span-3">
-                    The path from hidden work to accountable action
-                  </span>
-                ) : null}
               </div>
             ))}
           </div>
           <p className="mt-6 border-t border-white/10 pt-5 text-sm leading-6 text-white/65">
-            TKO starts with the operating failure—not a tool, a dashboard, or an
-            AI implementation—and then designs the smallest system that improves
-            the work.
+            RachelOS is direct system proof. It demonstrates operating capability,
+            not an unmeasured revenue or adoption claim.
           </p>
         </motion.aside>
       </div>
