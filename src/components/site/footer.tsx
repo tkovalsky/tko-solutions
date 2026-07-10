@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Logo } from "@/components/site/logo";
 
 const footerLinks = [
-  { href: "/services/recovery-assessment", label: "Assessment" },
-  { href: "/services/diagnostic", label: "Diagnostic" },
-  { href: "/selected-work", label: "Selected Work" },
+  { href: "/problems", label: "Problems" },
+  { href: "/proof", label: "Proof" },
+  { href: "/insights", label: "Guides" },
   { href: "/about", label: "About" },
+  { href: "/assessment", label: "Assessment" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -16,9 +17,9 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Evidence-backed healthcare workflow modernization for organizations
-            that need to reduce administrative burden, recover stalled
-            transformations, and govern AI-assisted work.
+            Evidence-backed operational recovery for organizations that need to
+            make hidden work visible, recover stalled workflows, and turn what
+            they know into accountable action.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 md:justify-self-end">

@@ -7,46 +7,46 @@ import { LinkButton } from "@/components/ui/button";
 import { NetworkVisual } from "@/components/site/network-visual";
 
 const proofStrip = [
-  "Healthcare transformation",
-  "RachelOS operational knowledge system",
-  "Workflow modernization",
-  "Governed recovery expertise",
+  "Operational bottlenecks",
+  "Decision latency",
+  "Human API dependency",
+  "Systems of action",
 ];
 
 const pillars = [
   {
     icon: Eye,
-    title: "Reduce Dependency",
-    description: "Move critical operating knowledge out of individual heads.",
+    title: "Make hidden work visible",
+    description: "See the handoffs, exceptions, and risks that reports miss.",
   },
   {
     icon: Compass,
-    title: "Expose Bottlenecks",
-    description: "Find where handoffs, ownership, and decisions slow down.",
+    title: "Find the constraint",
+    description: "Identify where work, ownership, and decisions actually stall.",
   },
   {
     icon: TrendingUp,
-    title: "Create AI-Ready Processes",
-    description: "Make workflow, approval, and visibility explicit first.",
+    title: "Build a system of action",
+    description: "Turn operational knowledge into trusted next actions.",
   },
 ];
 
 const proofLadder = [
   {
-    label: "Healthcare Transformation",
-    proof: "Multi-team governance",
+    label: "Executive problem",
+    proof: "Hidden work and slow decisions",
   },
   {
-    label: "RachelOS",
-    proof: "Relationship intelligence operating system",
+    label: "Diagnosis",
+    proof: "Bottlenecks, dependencies, and decision rights",
   },
   {
-    label: "CRE Intelligence",
-    proof: "Intelligence and recommendation engine",
+    label: "System of action",
+    proof: "Memory, priority, approval, and accountable action",
   },
   {
-    label: "Outcome",
-    proof: "Operational Recovery Assessment",
+    label: "Proof",
+    proof: "RachelOS and healthcare transformation experience",
   },
 ];
 
@@ -72,16 +72,15 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-light">
-            Operational Knowledge Systems
+            Operational Recovery for Complex Workflows
           </p>
           <h1 className="mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            Operational Knowledge Systems for Complex{" "}
-            <span className="text-primary-light">Workflows</span>
+            When hidden work slows decisions, execution starts to break.
           </h1>
           <p className="mt-6 max-w-[52ch] text-lg leading-8 text-white/80">
-            We help organizations identify where critical knowledge, decisions,
-            and workflow context live inside people instead of systems and build
-            the operational layer that turns that knowledge into trusted action.
+            TKO identifies operational bottlenecks, makes hidden work visible,
+            and builds the systems of action that turn fragmented knowledge into
+            trusted priorities, accountable decisions, and governed execution.
           </p>
           <ul className="mt-7 grid gap-2 border-y border-white/10 py-4 text-sm font-medium text-white/75 sm:grid-cols-2">
             {proofStrip.map((item) => (
@@ -93,16 +92,16 @@ export function Hero() {
           </ul>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
-              href="/contact"
+              href="/assessment"
               className="shadow-[0_10px_30px_-10px_rgb(var(--primary-rgb)/0.6)]"
             >
-              Schedule an Operational Recovery Assessment
+              Explore the Operational Recovery Assessment
             </LinkButton>
             <Link
               href="/services/diagnostic"
               className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline"
             >
-              Operational Truth Diagnostic
+              See the diagnostic approach
               <ArrowRight
                 className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
                 aria-hidden="true"
@@ -131,10 +130,10 @@ export function Hero() {
           aria-label="TKO proof ladder"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-light">
-            Proof Ladder
+            The operating problem
           </p>
           <h2 className="mt-4 text-2xl font-semibold leading-tight text-white md:text-3xl">
-            Existing proof, ordered by credibility.
+            What would you hire Todd to solve?
           </h2>
           <div className="mt-6 space-y-3">
             {proofLadder.map((item, index) => (
@@ -150,16 +149,16 @@ export function Hero() {
                 <p className="text-sm leading-6 text-white/70">{item.proof}</p>
                 {index === proofLadder.length - 1 ? (
                   <span className="mt-1 inline-flex w-fit rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-primary-light sm:col-span-3">
-                    Primary conversion path
+                    The path from hidden work to accountable action
                   </span>
                 ) : null}
               </div>
             ))}
           </div>
           <p className="mt-6 border-t border-white/10 pt-5 text-sm leading-6 text-white/65">
-            The page moves from healthcare credibility to built-system proof to
-            second-domain portability, then asks leaders to start with a fixed-scope
-            recovery assessment.
+            TKO starts with the operating failure—not a tool, a dashboard, or an
+            AI implementation—and then designs the smallest system that improves
+            the work.
           </p>
         </motion.aside>
       </div>

@@ -15,16 +15,16 @@ import { caseStudies, getCaseStudy } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Operational Knowledge Systems for Complex Workflows",
+  title: "Operational Recovery for Complex Workflows",
   description:
-    "TKO builds Operational Knowledge Systems for complex workflows where critical knowledge, decisions, and context live inside people instead of systems.",
+    "TKO helps leaders expose operational bottlenecks, reduce decision latency, and build systems of action when critical work depends on people instead of reliable workflows.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Operational Knowledge Systems for Complex Workflows",
+    title: "Operational Recovery for Complex Workflows",
     description:
-      "Healthcare workflow modernization is the primary market wedge, backed by RachelOS proof and transferable operating-system methodology.",
+      "Make hidden work visible, recover stalled workflows, and build systems of action from evidence.",
     url: absoluteUrl("/"),
   },
 };
@@ -40,7 +40,6 @@ function requireCaseStudy(slug: string) {
 }
 
 const rachelProof = requireCaseStudy("from-crm-to-operating-system");
-const creProof = requireCaseStudy("cre-intelligence-model");
 
 const rachelosProofStrip = [
   {
@@ -70,7 +69,7 @@ export default function HomePage() {
           name: "TKO Solutions",
           url: absoluteUrl("/"),
           description:
-            "Operational Knowledge Systems for complex workflows where critical knowledge, decisions, and context live inside people instead of systems.",
+            "Operational recovery for complex workflows where critical knowledge, decisions, and context live inside people instead of systems.",
         }}
       />
 
@@ -80,26 +79,26 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <SectionHeader
-              eyebrow="Healthcare Credibility"
-              title="Healthcare workflow modernization, grounded in operating reality."
-              description="Healthcare is the primary market wedge because the work is complex, regulated, cross-functional, and full of human API dependency. TKO's credibility sits in prior authorization, utilization management, care management, interoperability, regulatory programs, multi-team governance, and transformation recovery."
+              eyebrow="The Problem"
+              title="What would you hire Todd to solve?"
+              description="Work is moving, but the truth about where it stalls lives in people, side conversations, status meetings, and manual reconstruction. TKO finds the constraint, makes the hidden work visible, and gives leadership a governed path from what is known to what should happen next."
             />
             <ul className="mt-6 space-y-2 text-base leading-7 text-muted">
               <li>
                 <Link
-                  href="/services/prior-authorization-assessment"
+                  href="/problems"
                   className="font-medium text-foreground hover:text-primary hover:underline"
                 >
-                  Prior Authorization
+                  Operational bottlenecks
                 </Link>
               </li>
-              <li>Utilization Management</li>
-              <li>Administrative Burden</li>
-              <li>AI Adoption</li>
-              <li>Transformation Recovery</li>
+              <li>Decision latency</li>
+              <li>Human API dependency</li>
+              <li>Workflow recovery</li>
+              <li>Systems of action</li>
             </ul>
-            <ArrowLink href="/services/prior-authorization-assessment" className="mt-8">
-              Start with the Prior Authorization assessment
+            <ArrowLink href="/problems" className="mt-8">
+              Explore the operating problems
             </ArrowLink>
           </div>
           <ProblemGrid />
@@ -108,6 +107,7 @@ export default function HomePage() {
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {caseStudies
             .filter((study) => study.industry === "Healthcare")
+            .slice(0, 2)
             .map((study) => (
               <Card key={study.slug}>
                 <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
@@ -130,8 +130,8 @@ export default function HomePage() {
       <Section className="bg-surface !py-16 md:!py-20">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
-            eyebrow="Proof Ladder / 1"
-            title="RachelOS proves TKO can build the operating layer."
+            eyebrow="Built Proof"
+            title="RachelOS proves the operating pattern in a live environment."
             description="RachelOS is evidence that TKO has built the layer between scattered signals and action: operational memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human-approved AI support."
           />
           <Card className="w-full max-w-2xl justify-self-start">
@@ -155,8 +155,8 @@ export default function HomePage() {
               <span className="font-semibold text-primary">Outcome — </span>
               {rachelProof.outcome}
             </p>
-            <ArrowLink href="/selected-work/from-crm-to-operating-system" className="mt-8">
-              See how RachelOS works
+            <ArrowLink href="/proof/rachelos" className="mt-8">
+              Review the RachelOS evidence
             </ArrowLink>
           </Card>
         </div>
@@ -186,27 +186,28 @@ export default function HomePage() {
       <Section className="!py-16 md:!py-20">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
-            eyebrow="Proof Ladder / 2"
-            title="The operating-knowledge pattern travels beyond healthcare."
-            description="CRE Intelligence demonstrates method portability: market observations, entity facts, analyst judgment, risks, opportunities, recommendations, and reports can become reusable decision assets instead of staying trapped in one analyst."
+            eyebrow="Healthcare Background"
+            title="The operating failure repeats across complex, high-stakes work."
+            description="Healthcare transformation experience supplies the operating context: prior authorization, utilization management, care management, interoperability, regulatory programs, and multi-team governance all expose the same hidden-work and decision-latency pattern."
           />
           <Card className="w-full max-w-2xl justify-self-start">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-              Method portability
+              Advisory background
             </p>
-            <h3 className="mt-5 text-2xl font-semibold">CRE Intelligence Model</h3>
+            <h3 className="mt-5 text-2xl font-semibold">Healthcare Transformation</h3>
             <p className="mt-4 text-base leading-7 text-muted">
-              This is supporting proof, not a separate service line. It shows the
-              same human API pattern in a different domain: expert judgment
-              becomes structured facts, state, recommendations, comparisons, and
-              reusable decision assets.
+              The current public proof is advisory background, not a claimed deployed
+              healthcare product. It shows why the same operating pattern matters where
+              administrative burden, exception handling, auditability, and multi-team
+              dependencies are real constraints.
             </p>
             <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-              <span className="font-semibold text-primary">Outcome — </span>
-              {creProof.outcome}
+              <span className="font-semibold text-primary">Operating lesson — </span>
+              The work informs TKO&apos;s diagnostic lens: identify the dependency, make the
+              decision path explicit, and build only after the operating truth is visible.
             </p>
-            <ArrowLink href="/selected-work/cre-intelligence-model" className="mt-8">
-              View CRE proof
+            <ArrowLink href="/proof" className="mt-8">
+              Review the proof registry
             </ArrowLink>
           </Card>
         </div>
@@ -239,17 +240,17 @@ export default function HomePage() {
 
       <Section className="bg-surface !py-16 md:!py-20">
         <SectionHeader
-          eyebrow="Services"
+          eyebrow="Engagement Path"
           title="Start with recovery. Build only when the workflow truth is visible."
-          description="The Operational Recovery Assessment is the low-friction entry point. The Operational Truth Diagnostic goes deeper when the workflow needs more evidence. Build and advisory work follow only when the operating problem is clear."
+          description="The Operational Recovery Assessment is the fixed-scope first step. It identifies the operating constraint, the decision leadership needs to make, and whether a deeper diagnostic or build is justified."
         />
         <div className="mt-10">
           <ServiceCards />
         </div>
       </Section>
       <CtaBand
-        title="If critical work depends on human APIs, start with the recovery assessment."
-        description="In one fixed-scope week, TKO maps the workflow, identifies bottlenecks and dependency risk, assesses AI readiness, and gives leadership the next highest-leverage move."
+        title="If execution depends on hidden work, start with the recovery assessment."
+        description="In one fixed-scope week, TKO maps the workflow, identifies bottlenecks and decision latency, assesses dependency risk, and gives leadership the next highest-leverage move."
       />
     </>
   );

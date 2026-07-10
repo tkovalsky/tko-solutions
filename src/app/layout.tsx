@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "TKO Solutions | Healthcare Workflow Modernization",
+    default: "TKO Solutions | Operational Recovery for Complex Workflows",
     template: "%s | TKO Solutions",
   },
   description: site.description,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     url: absoluteUrl("/"),
     siteName: site.name,
-    title: "TKO Solutions | Healthcare Workflow Modernization",
+    title: "TKO Solutions | Operational Recovery for Complex Workflows",
     description: site.description,
   },
   twitter: {

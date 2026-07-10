@@ -14,8 +14,8 @@ type CtaBandProps = {
 export function CtaBand({
   title = "Start with the workflow that is already under pressure.",
   description = "The Operational Recovery Assessment identifies where work stalls, where dependency risk is building, and where AI can help without taking control.",
-  primaryHref = "/contact",
-  primaryLabel = "Schedule an Operational Recovery Assessment",
+  primaryHref = "/assessment",
+  primaryLabel = "Explore the Operational Recovery Assessment",
   secondaryHref,
   secondaryLabel,
 }: CtaBandProps) {

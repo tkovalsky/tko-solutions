@@ -4,10 +4,12 @@ import { Logo } from "@/components/site/logo";
 import { site } from "@/lib/site";
 
 const navItems = [
-  { href: "/services/recovery-assessment", label: "Assessment" },
-  { href: "/services", label: "Services" },
-  { href: "/selected-work", label: "Selected Work" },
+  { href: "/", label: "Home" },
+  { href: "/problems", label: "Problems" },
+  { href: "/proof", label: "Proof" },
+  { href: "/insights", label: "Guides" },
   { href: "/about", label: "About" },
+  { href: "/assessment", label: "Assessment" },
 ];
 
 export function Header() {
@@ -27,12 +29,12 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <LinkButton href="/contact" className="whitespace-nowrap">
+          <LinkButton href="/assessment" className="whitespace-nowrap">
             {site.cta}
           </LinkButton>
         </div>
         <Link
-          href="/contact"
+          href="/assessment"
           className="text-sm font-semibold uppercase tracking-[0.08em] text-primary lg:hidden"
         >
           Assessment

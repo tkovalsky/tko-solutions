@@ -6,6 +6,10 @@ import { absoluteUrl } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "/",
+    "/problems",
+    "/proof",
+    "/proof/rachelos",
+    "/assessment",
     "/services",
     "/services/prior-authorization-assessment",
     "/selected-work",
