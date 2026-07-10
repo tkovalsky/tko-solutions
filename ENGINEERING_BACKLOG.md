@@ -2203,6 +2203,440 @@ integration, or a new test framework.
 
 ---
 
+# EPIC 19 — TIF HUMAN-GOVERNED CONTENT PRODUCTION LOOP
+
+> **Status:** Audit complete; implementation backlog approved for sequencing · **Date:** 2026-07-10
+> **Classification:** P0/P1/P2 backlog only — no implementation is authorized by this audit pass.
+>
+> **Objective:** Connect the existing TIF origination/composition capabilities to the existing
+> RachelOS content item, review, approval, derivative, email, and publishing workflow. This is an
+> integration of existing systems, not a new content platform, content database, scheduler, or
+> autonomous publisher.
+>
+> **First-slice decision:** Use `rachel-realestate` as the first publication consumer because it
+> already has the complete durable content-item/version/review/approval/publish path. TKO remains
+> the owner of source intake, strategy, evidence traceability, primary composition, and derivative
+> package generation. TKO-target publication and the three TKO-native templates are expanded after
+> the first Rachel approval loop proves the seam.
+
+## Audit findings and boundary
+
+### Reuse
+
+- TIF Capture Inbox (`src/app/tif/inbox/*`, `CaptureItem`) for lightweight source capture.
+- TIF Evidence, Asset Opportunity, Asset, AssetVersion, RevisionRequest, and DerivativeAsset
+  records for existing traceability, draft history, revisions, and generated derivatives.
+- TIF generic template-fill composer (`scripts/tif/compose-asset.mjs`) and existing
+  `asset-production/templates/*` for TKO-native assets.
+- TIF Rachel compose contract (`POST /api/tif/compose`, `src/lib/tif/draft-composer.ts`) for the
+  current Rachel guide slice; it already preserves `VERIFY` warnings and draft-only behavior.
+- RachelOS `content_items`, append-only `content_versions`, `content_tasks`, `known_facts`,
+  `approval_notes`, `approved_at`, `approved_by`, `last_reviewed_at`, and `content_health_flags`.
+- RachelOS `/ops/publishing` review surface and status guards; `/api/ops/publishing/[id]/versions`
+  for immutable version snapshots; `/api/ops/publishing/[id]/publish` for the existing publish
+  action and GitHub PR path.
+- RachelOS derivative route and `src/lib/content/derivatives.ts`, with derivatives sourced from
+  the latest parent version rather than an independent content generator.
+- RachelOS `sendEmailWithResult` / Resend integration and `outbound_messages` audit trail.
+
+### Connect
+
+- TIF source intake → one normalized source package → one RachelOS `content_items` row.
+- TIF strategy brief → RachelOS `content_tasks` strategy record and operator-visible summary; no
+  new database table in Phase 1.
+- TIF primary draft → RachelOS `content_versions` through the existing `src/app/api/ops/content/generate`
+  seam and `src/lib/tif/client.ts` contract.
+- TIF derivative package → RachelOS derivative route, constrained to exactly three outputs in the
+  first slice: LinkedIn post, executive email, and short summary/social post.
+- Complete package → existing RachelOS email infrastructure, with `content_item_id` and
+  `version_id` in task metadata and outbound attribution.
+- Approval decision → existing RachelOS status transition plus an append-only
+  `content_tasks` decision record, until a dedicated approval-history record is justified.
+
+### Repair
+
+- TIF execution IDs (`runId`, `draftId`) are currently generated per request and not persisted.
+- TIF Capture Inbox is capture-only: it does not promote a capture into Evidence or an Asset
+  Opportunity, and it lacks required target-site/source-material fields.
+- TIF generic Asset status values exist, but TIF has no complete approval action, immutable
+  approval record, secure email action links, or approval email trigger.
+- RachelOS generation currently validates only a Rachel guide brief (title plus community), not a
+  persisted strategy brief with persona, executive problem, consequence, search intent, proof,
+  unsupported claims, CTA, and link plan.
+- RachelOS derivative creation is individually triggered and permits more types than the Phase 1
+  contract; it needs package-level exactly-three behavior and source-version attribution.
+- RachelOS ops-key query-string access is suitable for the authenticated operator surface but is
+  not a safe unauthenticated email action mechanism.
+- The existing email audit metadata is extensible, but duplicate approval-request prevention and
+  material-revision detection are not yet content-version-aware.
+
+### Defer
+
+- TKO publication adapter, cross-site publishing, batch intake, scheduled programs, measurement
+  feedback, additional asset types, and any external distribution automation.
+- New Fact Registry, vector search, knowledge graph, agent framework, client-facing platform, or
+  parallel content database.
+
+### Remove / avoid
+
+- Do not create a second Rachel content table, second approval queue, second publishing pipeline,
+  second derivative generator, or second email transport.
+- Do not make the TIF compose endpoint publish, write directly into `rachel-realestate`, send lead
+  outreach, or mutate RachelOS scoring, queue, lifecycle, or relationship state.
+
+## Phase 1 persistence decision
+
+Phase 1 can be completed without a new database table. Use the existing RachelOS records as follows:
+
+| Required data | Existing record/field | Phase 1 use |
+|---|---|---|
+| Source title | `content_items.title` | Canonical item/source title. |
+| Source material and source references | `content_tasks.ai_output` + `ai_output_metadata` (`task_type=source_intake`) | Serialized intake payload, evidence refs, and source kind. |
+| Target site | `content_items.notes` or task metadata | Explicit `tko` / `rachel_delray` routing value; do not infer from prose. |
+| Strategy brief | `content_tasks.ai_output` + `ai_output_metadata` (`task_type=strategy_brief`) | Versioned structured brief associated with the content item. |
+| Known facts / evidence | `content_items.known_facts`, TIF Evidence links, task metadata | Facts remain separate from freeform notes and retain claim guards. |
+| Current primary version | `content_versions` latest row | Append-only draft snapshot; version number and row ID are authoritative. |
+| Derivatives | Rachel derivative `content_items` + `content_versions` + `content_tasks` | Each derivative points to parent item/version in metadata. |
+| Approval state | `content_items.status`, `approved_at`, `approved_by`, `last_reviewed_at` | Existing operator state remains authoritative. |
+| Immutable approval decision | append-only `content_tasks` (`task_type=approval_decision`) | Stores item ID, version ID/number, decision, actor, timestamp, and reason. |
+| Change request | `content_items.approval_notes` + `content_tasks` (`task_type=revision_request`) | Preserve the prior version and create a new revision task. |
+| Publish state | `publication_jobs`, `content_items.status`, `published_at` | Existing Rachel publish/GitHub PR workflow remains authoritative. |
+
+This is an explicit Phase 1 constraint, not a claim that `content_tasks` is the ideal permanent
+approval ledger. A new table is justified only if append-only decision records cannot be queried,
+audited, or made idempotent safely with the existing records.
+
+## P0 — Make one asset flow end to end
+
+### TIF-1901 — Source intake and mandatory strategy brief
+
+**Purpose:** Accept one source submission and persist a complete, reviewable strategy brief before
+any copy generation. The first target is RachelDelray and the first primary output is a guide that
+uses an existing Rachel/TIF guide contract; the input contract must carry the normalized Phase 1
+asset labels (`executive_guide`, `proof_page`, `problem_page`) even if only one is enabled in the
+first runtime path.
+
+**Files:** `tko-site/src/app/tif/inbox/page.tsx`, `tko-site/src/app/tif/inbox/actions.ts`,
+`tko-site/src/lib/tif/contract.ts`, `rachel-realestate/src/app/api/ops/publishing/route.ts`,
+`rachel-realestate/src/lib/content/contentFacts.ts`, existing `content_tasks` persistence.
+
+**Existing capability reused:** Capture Inbox, Asset Opportunity fields, Rachel content-item
+creation, Known Facts, and task metadata JSONB.
+
+**Acceptance criteria:**
+
+- Intake accepts pasted text, audit/notes, document/repository reference, operational problem, or
+  proposed topic, with required title, source material, and target site.
+- Optional business objective and intended audience are retained.
+- A strategy brief is persisted before generation and contains target persona, executive problem,
+  business/financial consequence, search intent, recommended asset type, POV, available proof,
+  unsupported claims, primary CTA, internal-link targets, and derivative plan.
+- Missing strategy fields block the primary generator.
+- The source payload and strategy payload are attributable to one content item and one source ID.
+
+**Explicit exclusions:** No new table, no autonomous research, no vector search, no additional
+asset type, no publishing, and no RachelOS queue/scoring/lifecycle changes.
+
+**Tests:** Intake schema tests; persistence round-trip test; missing-strategy-field rejection;
+source/strategy-to-content-item attribution test.
+
+**Estimated effort:** M (1.5–2 days).
+
+### TIF-1902 — Primary draft plus exactly three derivatives
+
+**Purpose:** Generate one primary guide from the approved strategy brief and exactly three
+strategy-derived derivatives: LinkedIn post, executive email, and short summary/social post.
+
+**Files:** `tko-site/src/lib/tif/execution.ts`, `tko-site/src/lib/tif/draft-composer.ts`,
+`tko-site/asset-production/templates/{executive-brief,article,case-study}.md`,
+`rachel-realestate/src/app/api/ops/content/generate/route.ts`,
+`rachel-realestate/src/app/api/ops/publishing/[id]/derivatives/route.ts`,
+`rachel-realestate/src/lib/content/derivatives.ts`.
+
+**Existing capability reused:** TIF deterministic composition and warnings; Rachel TIF client;
+append-only content versions; existing derivative builder.
+
+**Acceptance criteria:**
+
+- Generation refuses to run without a persisted strategy brief.
+- The primary draft preserves source evidence/references, target audience, search intent,
+  `VERIFY`/`TODO` markers, and unsupported-claim warnings.
+- All three derivatives are derived from the same strategy and primary version; no derivative may
+  invent a separate thesis or CTA.
+- The package contains exactly three derivatives, each with parent content item and parent version
+  attribution.
+- Regeneration creates a new primary version and a new derivative set; prior versions remain.
+
+**Explicit exclusions:** No freeform per-channel generator family, no publishing, no external
+social/email distribution, and no additional derivative types in P0.
+
+**Tests:** Strategy gate; evidence/marker preservation; exactly-three package contract;
+parent-version attribution; regeneration preserves prior versions.
+
+**Estimated effort:** M (2–3 days).
+
+### TIF-1903 — Rachel publication-consumer adapter and review package
+
+**Purpose:** Connect the complete TIF package to the existing RachelOS content item and review
+surface without replacing Rachel's content pipeline.
+
+**Files:** `rachel-realestate/src/lib/tif/client.ts`,
+`rachel-realestate/src/app/api/ops/content/generate/route.ts`,
+`rachel-realestate/src/app/api/ops/publishing/[id]/route.ts`,
+`rachel-realestate/src/app/ops/content/sync/page.tsx`,
+`rachel-realestate/src/app/api/ops/publishing/[id]/versions/route.ts`.
+
+**Existing capability reused:** Existing TIF compose boundary, content item creation, review UI,
+append-only versions, approval status fields, and publish readiness guards.
+
+**Acceptance criteria:**
+
+- One source submission creates or updates exactly one Rachel content item and one primary version.
+- The operator can open the existing review surface and see the strategy summary, evidence risks,
+  audience, search intent, primary draft, and exactly three derivatives.
+- The current version ID/number is visible and is the version used for approval.
+- Approval does not publish; it only moves the current version/item to approved and exposes the
+  existing publish action.
+- Request Changes preserves the prior version and creates a revision task with structured reasons.
+- Reject preserves source, strategy, versions, and history.
+
+**Explicit exclusions:** No new Rachel editor, no new publishing route, no direct GitHub commit,
+no auto-publish, and no changes to lead/relationship state.
+
+**Tests:** End-to-end fixture from source to review surface; approve/revise/reject transition
+tests; version preservation; publish remains a separate operator action.
+
+**Estimated effort:** M (2–3 days).
+
+### TIF-1904 — Approval package email and secure decision actions
+
+**Purpose:** Send Todd one concise approval email when the first complete package is ready and
+record a secure, version-aware decision without allowing an unauthenticated GET to approve or
+publish.
+
+**Files:** `rachel-realestate/src/lib/email/sendEmail.ts`, new approval-email template adjacent to
+existing `src/lib/email/*` templates, `rachel-realestate/src/app/api/ops/publishing/*`,
+`rachel-realestate/src/lib/leads/leadToken.ts` pattern or a content-specific signed-token helper,
+and existing `content_tasks`/`outbound_messages` writes.
+
+**Existing capability reused:** Governed Resend send path, outbound audit, ops auth patterns,
+content-item/version routes, and approval status fields.
+
+**Acceptance criteria:**
+
+- Email includes item title, target audience, business problem, financial mechanism, asset type,
+  strategy summary, evidence risks, review link, derivative count, and Approve / Request Changes /
+  Reject actions.
+- Each action is bound to `content_item_id` and `version_id`/version number, expires, and is
+  verified server-side. A GET only renders/confirm-prompts; the state-changing action is a
+  POST with CSRF/auth or a second signed confirmation.
+- Approve sets the existing approved fields and inserts an append-only
+  `approval_decision` task record; it does not publish.
+- Request Changes captures structured reasons and inserts a revision task.
+- Reject sets rejected state and inserts a decision record without deleting history.
+- The happy path sends one approval email for one complete package and records the item/version in
+  email/task attribution metadata.
+
+**Explicit exclusions:** No public approval endpoint, no email-to-publish shortcut, no lead email,
+no new scheduler, and no automatic publication.
+
+**Tests:** Token expiry/tampering; GET cannot mutate; approve/revise/reject audit records;
+version mismatch rejection; email rendering contract; outbound metadata attribution.
+
+**Estimated effort:** M (2–3 days).
+
+## P1 — Production reliability
+
+### TIF-1911 — Idempotency, retries, and failure visibility
+
+**Purpose:** Make package generation and approval-email delivery safe to retry without duplicate
+versions, derivative sets, approval requests, or emails.
+
+**Files:** TIF execution and persistence seam; Rachel `src/app/api/ops/content/generate/route.ts`,
+derivative route, approval-email sender, `content_tasks`, and existing cron/run logging utilities.
+
+**Existing capability reused:** Append-only versions, task metadata, outbound audit, and existing
+single Vercel cron/run infrastructure.
+
+**Acceptance criteria:** Stable source/package/version idempotency key; retryable failures return to
+the prior safe state; failures are visible on the existing review surface; duplicate approval
+emails for the same item/version are prevented under retry and concurrent requests.
+
+**Explicit exclusions:** No new scheduler and no autonomous recovery that changes approval state.
+
+**Tests:** Retry matrix, concurrent request test, partial package recovery, duplicate-send test.
+
+**Estimated effort:** M (2–3 days).
+
+### TIF-1912 — Version-aware attribution and materially revised resend rules
+
+**Purpose:** Make every source, strategy, primary, derivative, email, approval, and publish action
+traceable to item/version IDs and resend only when a materially revised package is ready.
+
+**Files:** Rachel content task metadata writes, email metadata, `outbound_messages` query helpers,
+review surface, and publish route.
+
+**Existing capability reused:** `content_versions`, `content_tasks.ai_output_metadata`,
+`outbound_messages`, `publication_jobs`, and existing `updated_by`/approval fields.
+
+**Acceptance criteria:** One operator can reconstruct source → strategy → primary version → three
+derivatives → email → decision → publish PR from existing records; unchanged revisions do not
+resend; materially changed approved packages do; prior approval is invalidated when a new version
+is created.
+
+**Explicit exclusions:** No analytics platform, no measurement feedback loop, and no new content
+database.
+
+**Tests:** Full lineage fixture; material-change classifier tests; approval invalidation; publish
+PR attribution.
+
+**Estimated effort:** S–M (1–2 days).
+
+### TIF-1913 — TKO target adapter
+
+**Purpose:** Add the second target-site path for TKO executive/problem/proof assets while keeping
+the same TIF source, strategy, evidence, derivative, and approval package contract.
+
+**Files:** `tko-site/src/app/tif/*`, `src/lib/tif/execution.ts`,
+`src/lib/tif/content-workflow.ts`, `asset-production/templates/*`, and the existing TKO review
+surface; no Rachel publication files except shared contract documentation.
+
+**Existing capability reused:** TKO Asset, AssetVersion, RevisionRequest, Evidence, Asset
+Opportunity, generic templates, and current TIF console.
+
+**Acceptance criteria:** TKO-target packages use the same strategy schema and three derivative
+contract; the review surface exposes evidence/citations/warnings; approval is recorded immutably;
+publish remains a separate existing TKO action or documented handoff; no Rachel tables are used
+for TKO-target items.
+
+**Explicit exclusions:** No new generic content platform, no cross-repo database, no automatic
+publishing, and no new TKO scheduler.
+
+**Tests:** TKO package fixture; template contract tests; approval/publish separation; cross-target
+isolation.
+
+**Estimated effort:** L (3–5 days; may require explicit schema justification if existing TKO
+records cannot carry the approval audit safely).
+
+## P2 — Throughput and expansion
+
+### TIF-1921 — Batch source intake
+
+**Purpose:** Allow multiple source submissions to be queued into the same source → strategy →
+package workflow with per-item failure visibility.
+
+**Files:** TIF inbox actions/UI, package orchestration, existing task/run metadata, and Rachel
+content-item adapter.
+
+**Existing capability reused:** Capture Inbox, content item creation, idempotency keys, and the
+single composer.
+
+**Acceptance criteria:** Batch items remain independently attributable, retryable, reviewable, and
+approvable; one failure does not suppress other complete packages.
+
+**Explicit exclusions:** No bulk auto-approval or auto-publish.
+
+**Tests:** Mixed-success batch, duplicate source, retry, and isolation tests.
+
+**Estimated effort:** M (2–3 days).
+
+### TIF-1922 — Formalize the three templates and add approved expansion types
+
+**Purpose:** Formalize exactly three reusable template contracts — Executive Problem Guide,
+Evidence-Based Proof Page, and Operational Case Study — and only then consider additional types.
+
+**Files:** `asset-production/templates/{executive-brief,article,case-study}.md`, TIF template
+registry/composer, `src/lib/tif/contract.ts`, and target publication content contracts.
+
+**Existing capability reused:** Existing TKO templates, `METHOD.md`, case-study framework, proof
+Evidence records, and Rachel content contracts where the target is RachelDelray.
+
+**Acceptance criteria:** Each template defines intended audience, required evidence, section
+structure, prohibited claims, CTA type, and derivative rules; templates guide structure without
+forcing identical prose; unsupported claims remain blocked or marked VERIFY/TODO.
+
+**Explicit exclusions:** No fourth template, no template-specific generator, and no autonomous
+fact completion.
+
+**Tests:** Required-section validation; prohibited-claim fixtures; evidence/CTA/derivative rules.
+
+**Estimated effort:** M (2 days).
+
+### TIF-1923 — Scheduled content programs and measurement feedback
+
+**Purpose:** Use existing cron/job infrastructure to trigger only eligible package work and feed
+approved publication/search/engagement feedback into future opportunity selection.
+
+**Files:** Existing Rachel/TKO cron entry points, task metadata, deliverable read model, and
+measurement documentation.
+
+**Existing capability reused:** Existing Vercel cron/run infrastructure, deliverable readiness,
+content inventory, and publication jobs.
+
+**Acceptance criteria:** Scheduling is idempotent and does not send duplicate approval requests;
+only complete drafts enter approval email; measurement is advisory input to opportunity ranking,
+never autonomous publishing.
+
+**Explicit exclusions:** No new scheduler, external distribution automation, or self-approving
+content loop.
+
+**Tests:** Cron retry/dedup, eligibility gates, stale-package handling, and measurement lineage.
+
+**Estimated effort:** L (3–5 days).
+
+## Template definitions for the approved first three
+
+| Template | Intended audience | Required evidence | Core sections | Prohibited claims | CTA | Derivative rule |
+|---|---|---|---|---|---|---|
+| Executive Problem Guide | TKO executives, operations, transformation, and technology leaders | Source observation, proof refs, business consequence, and clearly labeled inference | Executive summary; problem; mechanism; consequence; evidence; decision framework; recommended next step; FAQ/CTA | ROI, revenue, adoption, compliance, or outcome claims without resolving proof | Diagnostic or assessment conversation | Preserve the single executive problem and financial mechanism in all three derivatives. |
+| Evidence-Based Proof Page | Buyers evaluating whether TKO can do the work | Verifiable implementation/artifact evidence, source refs, claim guards, and publication-safe attribution | Situation; invisible problem; intervention/design; operating model; proof table; limits; CTA | Client identity, metrics, or transformation outcome unless cleared and sourced | Read/inspect proof or request assessment | Convert proof into one transferable lesson; never turn an artifact into an unsupported case result. |
+| Operational Case Study | Executives and operators looking for a transferable operating pattern | Situation, complexity, failure mechanism, design change, and verifiable evidence trail | Situation; complexity; what was invisible; what was stalled; system/decision-layer design; operating model; findings; transfer; CTA | “Saved X,” ROI, lead/conversion, or enterprise-result claims without evidence | Discuss a similar operating problem | Derivatives use the same case-study finding and evidence boundary, not a new success claim. |
+
+## Approval email contract
+
+The approval email is an internal Todd notification, not a publication surface. It must include:
+
+- `content_item_id` and `version_id` in the subject preheader or internal metadata;
+- asset title, target site, target audience, business problem, financial mechanism, asset type,
+  strategy summary, evidence risks, primary review link, and derivative count;
+- three explicit actions: Approve, Request Changes, Reject;
+- signed, expiring, version-bound action links; no mutation on GET; authenticated or securely
+  tokenized POST confirmation; and an append-only decision record;
+- resend only for a materially revised complete package, never merely because a job retried.
+
+## Required implementation order
+
+Run **TIF-1901 first**. It is the contract and persistence gate that prevents the current capture,
+generation, review, and email capabilities from being connected around an underspecified payload.
+Do not begin with email styling or a new approval route. The first executable slice is:
+
+```text
+source intake
+→ persisted strategy brief
+→ one Rachel guide draft
+→ exactly three derivatives
+→ existing Rachel review surface
+→ one secure approval email
+→ one recorded approval decision
+```
+
+## Definition of Done for EPIC 19 P0
+
+- One real source submission can be traced by ID from intake through strategy, primary version,
+  three derivatives, approval email, and decision record.
+- No primary draft is generated before a persisted strategy brief exists.
+- The primary and all derivatives preserve evidence references, target audience, search intent,
+  and unresolved-claim markers.
+- Todd can approve, request changes, or reject from a secure flow; all three decisions preserve
+  history and identify the exact version.
+- Approval never publishes. The existing Rachel publish action and GitHub PR path remain separate.
+- No second content database, scheduler, review surface, derivative generator, or publishing
+  pipeline is introduced.
+- Automated tests cover the happy path, version mismatch, retry/dedup, rejection, change request,
+  and publish separation.
+
+---
+
 # BUSINESS SUCCESS CRITERIA
 
 TIF is NOT successful because software exists.
