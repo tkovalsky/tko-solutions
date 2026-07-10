@@ -11,7 +11,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Operational Recovery Assessment",
   description:
-    "A fixed-scope assessment for leaders who need to identify operational bottlenecks, hidden work, decision latency, workflow recovery needs, and the next highest-leverage move.",
+    "A fixed-scope, one-week assessment for leaders who need to identify hidden work, workflow bottlenecks, decision latency, and the next highest-leverage move.",
   alternates: { canonical: "/assessment" },
   openGraph: {
     title: "Operational Recovery Assessment",
@@ -51,6 +51,12 @@ const expectedInputs = [
   "Available operating signals—not a new platform, integration, or perfectly clean dataset.",
 ];
 
+const engagementScope = [
+  ["Fixed scope", "One workflow or operating problem under real pressure."],
+  ["One week", "Focused review, interviews, analysis, and an executive briefing."],
+  ["$5K–$8K", "A bounded first step before a deeper diagnostic or build is considered."],
+];
+
 export default function AssessmentPage() {
   return (
     <>
@@ -67,13 +73,24 @@ export default function AssessmentPage() {
       />
       <PageHero
         eyebrow="Primary Engagement"
-        title="Recover the workflow before you buy the next solution."
-        description="The Operational Recovery Assessment is a fixed-scope engagement for leaders who need to make hidden work visible, identify the operating constraint, and decide what deserves deeper spend."
+        title="See the workflow before you buy the next solution."
+        description="The Operational Recovery Assessment is a fixed-scope, one-week engagement for leaders who need to make hidden work visible, identify the operating constraint, and decide what deserves deeper spend."
         primaryHref="/contact"
         primaryLabel="Start the assessment intake"
         secondaryHref="/proof/rachelos"
         secondaryLabel="Review built-system proof"
       />
+
+      <Section className="border-b border-border !py-10 md:!py-12">
+        <div className="grid gap-3 md:grid-cols-3">
+          {engagementScope.map(([title, description]) => (
+            <div key={title} className="border border-border bg-white p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">{title}</p>
+              <p className="mt-3 text-base leading-7 text-muted">{description}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
 
       <Section className="bg-surface">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
@@ -113,7 +130,7 @@ export default function AssessmentPage() {
         <SectionHeader
           eyebrow="Diagnostic Outputs"
           title="A decision-ready view of the operating problem."
-          description="The output is not a generic maturity score. It is a constrained evidence package that gives leadership a clear view of the problem and a defensible next step."
+          description="The output is not a generic maturity score or tool recommendation. It is a constrained evidence package that gives leadership a clear view of the problem and a defensible next step."
         />
         <div className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {outputs.map((output) => (
@@ -145,7 +162,7 @@ export default function AssessmentPage() {
         <SectionHeader
           eyebrow="Next-Step Process"
           title="A short path to an informed decision."
-          description="The assessment creates evidence for a decision; it does not create an obligation to buy a build."
+          description="The assessment creates evidence for a decision. It does not create an obligation to buy a diagnostic, build, or ongoing advisory engagement."
         />
         <ol className="mt-12 grid gap-4 md:grid-cols-3">
           {[
