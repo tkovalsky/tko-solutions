@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/proof",
     "/proof/rachelos",
     "/assessment",
+    "/assessment/ai-delivery",
     "/services",
     "/services/prior-authorization-assessment",
     "/selected-work",

@@ -1,13 +1,32 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { caseStudies, getCaseStudy } from "@/lib/content";
+import {
+  caseStudies,
+  deliveryModelFaq,
+  deliveryModelFit,
+  deliveryModelNarrative,
+  deliveryModelSnapshot,
+  getCaseStudy,
+} from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
+
+const companionStudies: Record<string, { slug: string; label: string }> = {
+  "from-crm-to-operating-system": {
+    slug: "rachelos-delivery-model",
+    label: "How this system was delivered: the operator-led AI delivery model",
+  },
+  "rachelos-delivery-model": {
+    slug: "from-crm-to-operating-system",
+    label: "What this system does: the operational knowledge story",
+  },
+};
 
 type Params = {
   params: Promise<{ slug: string }>;
@@ -96,8 +115,12 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         eyebrow={`${study.industry} / ${study.proofLevel}`}
         title={study.title}
         description={study.problem}
-        primaryHref="/contact"
-        primaryLabel="Schedule an Operational Recovery Assessment"
+        primaryHref={study.slug === "rachelos-delivery-model" ? "/assessment/ai-delivery" : "/contact"}
+        primaryLabel={
+          study.slug === "rachelos-delivery-model"
+            ? "Start the AI Delivery Assessment"
+            : "Schedule an Operational Recovery Assessment"
+        }
         secondaryHref="/services/diagnostic"
         secondaryLabel="Schedule an Operational Truth Diagnostic"
       />
@@ -120,6 +143,19 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
                 ))}
               </ul>
             </Card>
+            {companionStudies[study.slug] ? (
+              <Card>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                  Companion Case Study
+                </p>
+                <Link
+                  href={`/selected-work/${companionStudies[study.slug].slug}`}
+                  className="mt-4 block text-base font-semibold text-primary hover:text-primary-dark"
+                >
+                  {companionStudies[study.slug].label}
+                </Link>
+              </Card>
+            ) : null}
           </aside>
           <div className="space-y-12">
             <WorkSection title="Situation" body={study.situation} />
@@ -139,6 +175,101 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           ))}
         </div>
       </Section>
+      {study.slug === "rachelos-delivery-model" ? (
+        <>
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: deliveryModelFaq.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: { "@type": "Answer", text: item.answer },
+              })),
+            }}
+          />
+          <Section className="bg-surface">
+            <SectionHeader
+              eyebrow={`What Exists Today — Production Snapshot, ${deliveryModelSnapshot.asOf}`}
+              title="Scale, verified."
+              description="Every figure below is repository- or production-record-verified. Aggregates only; no revenue attribution is claimed."
+            />
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {deliveryModelSnapshot.stats.map((stat) => (
+                <div key={stat.label} className="border border-border bg-white p-5">
+                  <p className="text-3xl font-semibold text-primary">{stat.value}</p>
+                  <p className="mt-2 text-sm leading-6 text-muted">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </Section>
+          <Section>
+            <SectionHeader
+              eyebrow="The Delivery Model"
+              title="Most 'built it with AI' stories are demos. This one is auditable."
+              description="A ten-month, evidence-audited account: what conventional delivery would have required, how it was actually done, and what the model could not compress."
+            />
+            <div className="mt-12 space-y-12">
+              {deliveryModelNarrative.map((section) => (
+                <section key={section.title} className="border-b border-border pb-10">
+                  <h2 className="text-3xl font-semibold">{section.title}</h2>
+                  <p className="mt-5 max-w-[75ch] text-lg leading-8 text-muted">{section.body}</p>
+                </section>
+              ))}
+            </div>
+          </Section>
+          <Section className="bg-surface">
+            <SectionHeader
+              eyebrow="Executive FAQ"
+              title="The questions executives actually ask."
+              description="Every answer follows the same claim discipline as the case study: verified facts, published limitations, no revenue attribution."
+            />
+            <div className="mt-12 grid gap-3 md:grid-cols-2">
+              {deliveryModelFaq.map((item) => (
+                <div key={item.question} className="border border-border bg-white p-6">
+                  <h3 className="text-xl font-semibold">{item.question}</h3>
+                  <p className="mt-3 text-base leading-7 text-muted">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          </Section>
+          <Section>
+            <SectionHeader
+              eyebrow="Next Step"
+              title="The AI Delivery Assessment — for the right operation."
+              description="The assessment applies this exact evidence method to your operation: a Built / Activated / Validated map of what you have, and a ranked list of what is actually constraining it. It is deliberately not for everyone."
+            />
+            <div className="mt-12 grid gap-8 lg:grid-cols-2">
+              <div>
+                <h3 className="text-xl font-semibold">Who this assessment is for</h3>
+                <ul className="mt-5 grid gap-3">
+                  {deliveryModelFit.for.map((item) => (
+                    <li key={item} className="border border-border bg-white p-5 text-base leading-7 text-muted">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold">Who this assessment is not for</h3>
+                <ul className="mt-5 grid gap-3">
+                  {deliveryModelFit.notFor.map((item) => (
+                    <li key={item} className="border border-border bg-surface p-5 text-base leading-7 text-muted">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <Link
+              href="/assessment/ai-delivery"
+              className="mt-10 inline-block text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
+            >
+              Start the AI Delivery Assessment →
+            </Link>
+          </Section>
+        </>
+      ) : null}
       {study.slug === "from-crm-to-operating-system" ? (
         <Section>
           <SectionHeader

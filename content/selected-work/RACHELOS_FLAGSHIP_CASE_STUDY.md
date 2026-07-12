@@ -10,6 +10,7 @@ summary: >-
   conversion, ROI, or adoption metrics are claimed.
 authority: /CURRENT_REALITY.md (Proof Tier 1)
 companion_narrative: rachelos-from-crm-to-operating-system.md
+companion_case_study: rachelos-delivery-model-case-study.md
 ---
 
 # RachelOS — How Operational Knowledge Became Operational Memory
@@ -17,6 +18,11 @@ companion_narrative: rachelos-from-crm-to-operating-system.md
 *An executive case study. The setting is a relationship-driven business; the subject is a
 problem healthcare operations, technology, and transformation leaders will recognize:
 critical operating knowledge living inside a person instead of a system.*
+
+*This study covers what the system does. Its companion,
+[What It Actually Takes to Build a Production Operating System With AI](/selected-work/rachelos-delivery-model),
+covers how it was delivered — the operator-led, AI-assisted delivery model, with the
+evidence audited. The two are complementary; neither replaces the other.*
 
 > **Evidence basis.** This account uses only verifiable facts drawn from the RachelOS
 > (`rachel-realestate`) repository, its documentation, audits, and deployed implementation.

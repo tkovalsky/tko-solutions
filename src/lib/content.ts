@@ -367,6 +367,29 @@ export const caseStudies = [
     relatedService: "Decision Layer Build Sprint",
   },
   {
+    slug: "rachelos-delivery-model",
+    title: "What It Actually Takes to Build a Production Operating System With AI",
+    industry: "Live operating environment",
+    proofLevel: "Featured proof",
+    problem:
+      "A production relationship-intelligence and revenue-operations system was delivered over ten months through an operator-led, AI-assisted model — a scope that conventionally crosses competency boundaries distributed across 12–18 professional roles.",
+    situation:
+      "The system was built while serving real production leads the entire time: 1,528 commits by a single accountable operator-builder, 67 database migrations, 25 operator screens, and 1,341 test cases, with a practicing domain authority wired in as the human approval layer.",
+    truth:
+      "AI compressed execution and coordination — the handoff and meeting layer between roles was replaced by a log of 83 dated architecture decisions. It did not compress judgment, domain validation, reliability engineering, adoption, or accountability.",
+    system:
+      "AI drafts and extracts under written governance; deterministic code derives state; humans take every action. Human-recorded facts are immutable by AI, outbound messages require human approval before send, and every capability is graded implemented, activated, validated, or unvalidated.",
+    outcome:
+      "A governed operating system runs daily production work with human judgment preserved by architecture. The published account includes its open limitations — a 2.2% measured email-first reply rate, dormant integrations, a bus factor of one — because the transferable asset is the evidence method itself.",
+    evidence: [
+      "Delivery evidence is repository-verified: 1,528 single-author commits over ten months, 67 SQL migrations, 145 test files, and roughly 38% of all written code later deleted in continuous refactoring.",
+      "Governance is enforced in code and configuration: approval-gated sends, human-fact immutability, advisory-only recommendations, and 83 numbered architecture decisions including decisions against building.",
+      "Limitations are published, not hidden: no revenue attribution is claimed, dormant capabilities are listed as dormant, and adoption telemetry is marked unvalidated.",
+    ],
+    relatedProblems: ["AI Without Operational Control", "Human API Dependence", "Workflow Governance"],
+    relatedService: "AI Delivery Assessment",
+  },
+  {
     slug: "prior-authorization-modernization",
     title: "Prior Authorization Workflow Modernization",
     industry: "Healthcare",
@@ -489,3 +512,130 @@ export function getService(slug: string) {
 export function getCaseStudy(slug: string) {
   return caseStudies.find((study) => study.slug === slug);
 }
+
+// Extended narrative for the rachelos-delivery-model case study. Claim discipline is
+// governed by asset-production/rachelos-delivery-model/07_CLAIM_AUDIT.md: no revenue
+// attribution, no cost or staffing-replacement claims, dormant capabilities named as
+// dormant, AI never portrayed as autonomous.
+export const deliveryModelNarrative = [
+  {
+    title: "The conventional requirement",
+    body: "The finished system crosses eighteen distinct professional competencies with direct evidence in the repository — product management, business analysis, data modeling across 67 migrations, solution architecture, frontend and backend engineering, applied AI engineering, behavioral design, lifecycle marketing, QA with 1,341 test cases, DevOps, security review, SEO, technical writing, and release management. In a conventional model those competencies are distributed across 12–18 professional roles, plus the coordination apparatus a team that size requires: ceremonies, tickets, handoffs, environments, and a release train.",
+  },
+  {
+    title: "How it was actually delivered",
+    body: "Three parties, with written rules between them. One accountable operator-builder: every one of the 1,528 commits across ten months has the same author, sustained at 75 to 270 commits per month while the system served production leads. One domain authority as the approval layer: the practicing agent's knowledge outranks the AI by architecture — if a human-sourced fact exists, AI extraction is prohibited from overriding it, and 77 outbound messages exist in production because a human reviewed and accepted each draft first. And AI as an instrument under governance: it drafts, extracts, analyzes, and implements; it does not decide. The coordination layer a conventional team needs was replaced by a log of 83 numbered, dated architecture decisions — including decisions against building things.",
+  },
+  {
+    title: "The honesty layer",
+    body: "The system grades itself on a four-status scale — implemented, activated, validated, unvalidated — and publishes its failures. As of this writing its own state document reports: inbound email receiving is implemented but dormant, the public recommendation engine has zero production snapshots, content publishing has never completed a production publication job, and one daily automation run was silently missed and logged as an open incident. The measured email-first reply rate — 2.2% — is published internally as the number-one revenue constraint. That candor is the method: every claim is classified against an evidence hierarchy in which code and production records outrank documentation.",
+  },
+  {
+    title: "What the model compressed — and what it did not",
+    body: "AI-assisted, operator-led delivery compressed execution and coordination: work that would traditionally be distributed across multiple specialized roles, and nearly all of the handoff cost between those roles. It did not compress five things. Judgment — completed capabilities sat deliberately switched off until the operator decided activation was safe. Domain validation — reply-rate reality was learned from production measurement, not predicted. Reliability engineering — missed runs, missing delivery webhooks, and dormant integrations remain human work. Adoption — building 25 operator screens does not make them used, and adoption telemetry is honestly listed as unvalidated. And accountability — the bus factor is one, and the log says so.",
+  },
+  {
+    title: "AI did not eliminate product management",
+    body: "The hardest problem was not implementation. It was deciding what to build — and, more often, what not to. The repository's 83 numbered architecture decisions are mostly product judgment wearing an engineering label: decisions against a vector database, against a CMS, against migrating the data layer, against speculative engines; superseded decisions retained as history; closure passes governed by a written rule that only blocking defects may be fixed; and entire audited capabilities recorded as reviewed-but-not-authorized. AI accelerated implementation dramatically. It did not eliminate prioritization, sequencing, tradeoff decisions, or scope control — if anything, cheap implementation made scope discipline more important, because building the wrong thing stopped being expensive enough to prevent itself.",
+  },
+  {
+    title: "What happens if the operator disappears?",
+    body: "The honest answer starts with the number already given: the bus factor is one. The mitigation is that the system's knowledge does not live only in the operator's head — the same discipline that produced the audit produced a durable record: 83 dated decisions with rationale and supersession history, a same-day-authoritative current-state document graded on the four-status scale, 67 migrations that carry the schema's full history, 1,341 test cases that encode expected behavior, and a versioned evidence package behind every published claim. A successor inherits a documented system, not an archaeology project. Mitigation is not elimination — the risk is real and stated — but it is the difference between a key-person dependency and a key-person catastrophe.",
+  },
+  {
+    title: "What transfers — and what does not",
+    body: "RachelOS is the proof. The method is the product. Transferable: the decision-governance pattern (dated, reasoned, supersedable decisions), the evidence hierarchy in which code and production records outrank documentation, AI-assisted implementation under written operating rules, the human-approval architecture (approval-gated sends, human-fact immutability, advisory-only recommendations), the relationship-intelligence pattern (perishable facts, derived state, detected gaps), the canonical queue with required explanations, approval-gated content operations, and operator-first workflow design. Not transferable: the community recommendation logic (relocation-specific, and unvalidated even in its home domain), the real-estate content inventory, the relocation fact taxonomy, and brokerage-specific routing and referral processes. What transfers is not the software. What transfers is the operating model.",
+  },
+  {
+    title: "One system, one operator",
+    body: "This is one system and one operator: the claim is not that the system generalizes from a single deployment. What transfers is the method — the evidence hierarchy, the activation gates, the approval architecture, and the audit itself. Any operation whose work breaks across tools, handoffs, decisions, and follow-up has the same shape: systems of record, no system of action, and the full picture living in one person's head.",
+  },
+];
+
+// Production snapshot for the proof-of-scale block. Every figure is verified in
+// asset-production/rachelos-delivery-model/07_CLAIM_AUDIT.md (repo inspection and
+// read-only production snapshot, 2026-07-11). Aggregates only; no revenue attribution.
+export const deliveryModelSnapshot = {
+  asOf: "2026-07-11",
+  stats: [
+    { value: "152", label: "non-test leads under management" },
+    { value: "117", label: "leads with a logged deliberate outbound touch" },
+    { value: "77", label: "outbound messages, each human-approved before send" },
+    { value: "927", label: "active relationship facts" },
+    { value: "224", label: "relationship updates captured" },
+    { value: "145 / 97", label: "canonical next actions open / completed" },
+    { value: "1,528", label: "commits, one author, ten months" },
+    { value: "67", label: "database migrations" },
+    { value: "1,341", label: "test cases" },
+    { value: "25", label: "operator screens" },
+  ],
+};
+
+export const deliveryModelFit = {
+  for: [
+    "Operations leaders whose critical workflows run across spreadsheets, inboxes, CRMs, and tribal knowledge.",
+    "Healthcare organizations with follow-up-driven work: prior authorization, referrals, care coordination.",
+    "Professional-services, advisory, and wealth-management firms where relationship facts are perishable and follow-up is revenue.",
+    "Broker-owners and team leads whose book depends on one person's memory.",
+    "Leaders who already have something 'built with AI' and need an evidence audit of what is real.",
+  ],
+  notFor: [
+    "Generic AI experimentation with no concrete workflow under pressure.",
+    "Prompt-engineering training or workshops.",
+    "Early-stage product ideation with no operating evidence to audit.",
+    "Organizations seeking fully autonomous systems — human approval is the architecture here, not a limitation to remove.",
+  ],
+};
+
+export const deliveryModelFaq = [
+  {
+    question: "How many people built RachelOS?",
+    answer:
+      "Two humans and AI assistance under written rules — one accountable operator-builder and one domain authority as the approval layer. All 1,528 commits over ten months have a single author. No one was replaced; the accurate statement is that the system crossed competency boundaries normally distributed across 12–18 professional roles.",
+  },
+  {
+    question: "Did AI build RachelOS?",
+    answer:
+      "No. AI assisted with implementation, analysis, refactoring, and documentation under version-controlled operating rules, and a human decided, merged, deployed, and activated everything. In the product, AI extracts knowledge and drafts messages; deterministic code derives state; humans take every action. Content generation returns an error without human approval.",
+  },
+  {
+    question: "How long did development take?",
+    answer:
+      "Ten months to the current state — live in production for essentially all of them. There was no launch day; the system served real leads while being built.",
+  },
+  {
+    question: "What remains unfinished?",
+    answer:
+      "The system's own state document lists it: inbound email receiving is dormant, email inbox delivery is unverified, the public recommendation engine has zero production snapshots, content publishing has never completed a production publication job, and downstream deal stages are not consistently recorded.",
+  },
+  {
+    question: "What were the biggest mistakes?",
+    answer:
+      "A platform vision the project's own audit falsified, five competing lifecycle fields, a scoring column that was never written, parallel email paths that could double-send, and defaulting to email-first outreach that measured 2.2% replies. Each is documented with its recovery — the point is that the project's self-audit caught them.",
+  },
+  {
+    question: "Where is the revenue proof?",
+    answer:
+      "There isn't one, and this case study says so directly. Production records do not form an attribution chain, so no closed revenue is claimed. This is a delivery-capability and governance story, not an ROI story — what TKO sells is the assessment method that found the constraints in its own operation.",
+  },
+  {
+    question: "What parts are reusable outside real estate?",
+    answer:
+      "The canonical queue with explanations, the fact-and-approval architecture, the behavioral layer, the content factory, and the governance method are highly reusable. The relocation-specific recommendation engine is not, and TKO says so. Transfer claims are architectural inference from one deployment, not a demonstrated second one.",
+  },
+  {
+    question: "Can this approach work in my industry?",
+    answer:
+      "If your work breaks across tools, handoffs, decisions, and follow-up — and relationship facts are perishable — the pattern maps. Healthcare operations is the sharpest fit TKO sees, followed by professional services, wealth management, recruiting, and consulting. The fit test is structural: is one person the integration layer between your systems of record?",
+  },
+  {
+    question: "What is an Operational Intelligence System?",
+    answer:
+      "A system of action, not a system of record: it captures evidence, derives current truth, recommends one explained next action, helps a human execute, records the outcome, and schedules the next commitment. The distinguishing features are the loop and the governance — human-approved actions, explainable recommendations, and honest capability status.",
+  },
+  {
+    question: "How does TKO engage?",
+    answer:
+      "Assessment first, build second, never the reverse. The entry engagement applies the same evidence hierarchy used on RachelOS to your operation, producing a map of what is built, activated, and validated, plus a ranked constraint list. Build engagements, where warranted, follow a governed component order with activation gates.",
+  },
+];

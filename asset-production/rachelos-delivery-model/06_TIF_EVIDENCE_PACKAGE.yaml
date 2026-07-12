@@ -1,0 +1,178 @@
+# TIF Evidence Package — RachelOS Delivery Model
+#
+# Companion to the existing content/proof/rachelos/evidence.yaml (operating-loop records).
+# These records cover the DELIVERY MODEL story. Same schema and rules (METHOD.md).
+# Reference format: git:<commit|date>, file:<path>, decision:<DEC>, production:<evidence>.
+# Standing claim guard: no revenue attribution, no cost/salary claims, no "replaced X people",
+# no dormant feature presented as live, AI never portrayed as autonomous.
+
+domain: rachelos-delivery-model
+library: ./01_CAPABILITY_TIMELINE.md
+
+project_identity:
+  name: RachelOS
+  repo: rachel-realestate
+  what: Production relationship-intelligence and revenue-operations system for a real-estate practice
+  window: 2025-09-30 through 2026-07-11 (ongoing)
+  delivery_model: One accountable operator-builder (Todd) + one domain authority/approval layer (Rachel) + AI assistance under written governance
+
+problem_statement: >-
+  A relationship-driven business had systems of record but no system of action; operating
+  knowledge lived in one person. Conventional delivery of the required system crosses
+  competency boundaries normally distributed across 12-18 professional roles.
+
+records:
+  - id: dm-cadence
+    observation: >-
+      1,528 commits over ten months by a single committer, sustained at 75-270 commits/month,
+      while the system served production leads the entire time.
+    proof_ref: "git:log 2025-09-30..2026-07-11; git shortlog -sn (1 author)"
+    confidence: high
+    claim_guard: "Cadence proves sustained throughput, not quality or business outcome."
+
+  - id: dm-churn
+    observation: >-
+      ~455,800 lines added and ~172,900 deleted across project life — roughly 38% of all
+      written code was later removed or replaced. Continuous refactoring, not accretion.
+    proof_ref: "git:log --numstat aggregate"
+    confidence: high
+    claim_guard: "Deletion ratio is a maintenance-discipline signal only."
+
+  - id: dm-competency-map
+    observation: >-
+      Eighteen distinct professional competencies are evidenced in the repository, from data
+      modeling (67 migrations) to behavioral design (BX-01..50) to release management
+      (closure passes). Conventional delivery distributes these across 12-18 roles.
+    proof_ref: "file:migrations/ (67); file:docs/RACHEL_OS_BEHAVIORAL_LAYER.md; decision:DEC-14"
+    confidence: high
+    claim_guard: "Never phrase as 'replaced N people' or estimate cost savings."
+
+  - id: dm-decision-log
+    observation: >-
+      83 numbered, dated architecture decisions with rationale, including superseded entries
+      retained as history and decisions that ruled AGAINST building (DEC-36 audited-not-
+      authorized; DEC-55 do-not-migrate-to-Prisma; DEC-49 do-not-build).
+    proof_ref: "file:docs/DECISIONS.md; decision:DEC-36; decision:DEC-55; decision:DEC-49"
+    confidence: high
+    claim_guard: "Governance evidence; not a completeness claim."
+
+  - id: dm-status-vocabulary
+    observation: >-
+      The project grades its own capabilities on an IMPLEMENTED / ACTIVATED / VALIDATED /
+      UNVALIDATED scale and publishes the failures: dormant inbound email, zero publication
+      jobs, zero RDE snapshots, a missed cron day.
+    proof_ref: "file:docs/CURRENT_STATE.md (2026-07-11) status conventions + §3A matrix"
+    confidence: high
+    claim_guard: "This candor must be preserved verbatim in derivative assets."
+
+  - id: dm-same-day
+    observation: >-
+      Call Block Mode was recorded as backlog ticket CALL-001 and shipped to production as
+      /ops/calls the same day (2026-07-09) — the operator-feedback-to-production loop
+      measured in hours, not sprints.
+    proof_ref: "decision:DEC-72; decision:DEC-73"
+    confidence: high
+    claim_guard: "One verified instance; cite as an example, not an average."
+
+  - id: dm-human-facts
+    observation: >-
+      Architecture rule: if a human-sourced fact exists, AI extraction is prohibited from
+      overriding it. AI may only supersede other AI facts.
+    proof_ref: "decision:'Human facts are immutable by AI' (DECISIONS.md, RIE section)"
+    confidence: high
+    claim_guard: "By-design constraint, presented as governance, not capability."
+
+  - id: dm-approval-loop
+    observation: >-
+      77 outbound messages were accepted through the human draft-review workflow; 74
+      outreach_draft_sent activities logged; content generation returns 403 without human
+      approval (CONTENT_AI_REQUIRE_APPROVAL=true in production).
+    proof_ref: "production:outbound_messages=77 (snapshot 2026-07-11); file:src/lib/leads/outreachDrafts.ts; decision:DEC-18; decision:DEC-69"
+    confidence: high
+    claim_guard: "Provider-acceptance validated; inbox delivery NOT validated (0 email.delivered events)."
+
+  - id: dm-honest-metrics
+    observation: >-
+      The system's own audit found email-first outreach producing a 2.2% response rate and
+      9 responded leads of 117 touched — published internally as the #1 revenue constraint
+      rather than hidden.
+    proof_ref: "file:docs/audits/P8_3_CONVERSATION_REVENUE_FUNNEL_AUDIT.md; file:docs/CURRENT_STATE.md §9"
+    confidence: high
+    claim_guard: "Cite as evidence of measurement honesty; never invert into a success metric."
+
+  - id: dm-bus-factor
+    observation: >-
+      The model's largest structural disadvantage is knowledge concentration: bus factor of
+      one, a single 60-second daily orchestrator, and one silently missed cron day
+      (2026-07-11) with a documented heartbeat design gap.
+    proof_ref: "file:docs/CURRENT_STATE.md §3 cron risks; production:cron_runs missing 2026-07-11 row"
+    confidence: high
+    claim_guard: "Required disadvantage disclosure in every balanced derivative."
+
+  - id: dm-queue
+    observation: >-
+      Every canonical queue action persists its explanation (triggering facts, freshness,
+      relationship state, decision reasons) as required metadata; generation is deterministic
+      and idempotent.
+    proof_ref: "file:src/lib/leads/canonicalQueue.ts; decision:DEC-23; decision:DEC-24; production:145 open + 97 completed canonical actions"
+    confidence: high
+    claim_guard: "Explainability claim only."
+
+  - id: dm-timeline-eras
+    observation: >-
+      Five verifiable eras: public acquisition site (2025-09→2026-02), lead persistence +
+      daily execution (2026-03→04), stabilization + governance (2026-05→06-11), relationship
+      intelligence + operator system (2026-06), behavioral layer + activation (2026-07).
+    proof_ref: "git:file-creation dates (see 01_CAPABILITY_TIMELINE.md); file:migrations/001..066"
+    confidence: high
+    claim_guard: "Timeline is capability-milestone based, not commit-dump based."
+
+  - id: dm-testing
+    observation: >-
+      145 test files and 1,341 test cases guard a live revenue system; production smoke-test
+      runs are a first-class table; live validation used disposable production leads deleted
+      after evidence capture. The E2E CI suite has been chronically red since May 2026 —
+      documented, not hidden.
+    proof_ref: "file:tests/ + colocated *.test.ts (145 files); file:migrations/030_smoke_test_runs.sql; decision:DEC-14; file:docs/BASELINE_2026.md (E2E red)"
+    confidence: high
+    claim_guard: "Include the E2E-red caveat whenever test counts are cited."
+
+  - id: dm-not-compressed
+    observation: >-
+      Five things the AI-assisted model did not compress: activation judgment (capabilities
+      sat complete-but-off pending operator decision), domain validation, operational
+      reliability engineering, adoption, and accountability.
+    proof_ref: "decision:DEC-15; decision:DEC-21; file:docs/CURRENT_STATE.md §11 deferred work"
+    confidence: high
+    claim_guard: "This is the thesis's load-bearing balance; never trim it."
+
+  - id: dm-scale-snapshot
+    observation: >-
+      Verified scale at 2026-07-11: 67 migrations, 67 API routes, 25 protected operator
+      screens, 643 source files, ~42,150 lines in the lead-intelligence library, 65 published
+      guides; production: 152 non-test leads, 927 active facts, 224 relationship updates,
+      134 journey states.
+    proof_ref: "repo inspection 2026-07-11; production:read-only snapshot in CURRENT_STATE.md"
+    confidence: high
+    claim_guard: "Aggregates only; no PII; no revenue attribution (2 deals/3 closed/1 converted have no attribution chain)."
+
+  - id: dm-claim-audit-method
+    observation: >-
+      Every published claim about the system is classified Verified / Reasonable Inference /
+      Estimate / Unverified against an explicit evidence hierarchy in which code and
+      production records outrank documentation.
+    proof_ref: "file:docs/CURRENT_STATE.md supersession rule; this package's 07_CLAIM_AUDIT.md"
+    confidence: high
+    claim_guard: "The method itself is a marketable asset (lead magnet)."
+
+limitations:
+  - Inbox delivery of email is unvalidated (0 email.delivered webhook events).
+  - Inbound lead email is implemented but dormant (0 email.received events).
+  - RDE public flow, GitHub publishing, and content-recommendation adoption are unvalidated.
+  - Revenue attribution is impossible from current data; never claim closed revenue.
+  - Adoption telemetry for operator screens is absent.
+  - Bus factor = 1; daily orchestration missed 2026-07-11 silently.
+  - "Traffic Cop" is briefing vocabulary, not a repo subsystem — do not publish the term.
+
+seo_brief: see ./04_SEO_PERSONA_STRATEGY.md
+claim_validation: see ./07_CLAIM_AUDIT.md
