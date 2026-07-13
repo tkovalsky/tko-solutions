@@ -199,16 +199,16 @@ export default function RecoveryAssessmentPage() {
               Operational Recovery Assessment
             </p>
             <h1 className="mt-5 max-w-4xl text-5xl font-bold leading-[1.03] tracking-tight text-foreground md:text-7xl">
-              Your operation runs on a few key people. When they are out, it stalls.
+              Your business should not depend on a few people to keep moving.
             </h1>
             <p className="mt-8 max-w-[68ch] text-xl leading-9 text-muted">
-              Your operation has data, tools, and process, but critical work still runs
-              through a few key people. When they are overloaded or unavailable, execution
-              slows down and risk becomes hard to see.
+              TKO finds the bottlenecks, decision gaps, and key-person dependencies
+              that slow execution, consume capacity, and leave revenue or service at risk.
+              Then leadership gets a clear, evidence-based next move.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <LinkButton href="/contact">
-                Book a 30-minute discovery call
+                Book an operating performance conversation
                 <ArrowRight className="size-4" aria-hidden="true" />
               </LinkButton>
             </div>
@@ -248,18 +248,17 @@ export default function RecoveryAssessmentPage() {
         <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <SectionHeader
             eyebrow="Problem Statement"
-            title="The failure mode is usually not the tool stack. It is the human API."
-            description="Knowledge lives in heads instead of systems. Who needs attention cannot be answered without a meeting. Status looks green while risk builds. AI pilots demo well, but nothing changes because the operating truth was never mapped."
+            title="The failure is rarely effort. It is a business that depends on invisible work."
+            description="Critical knowledge lives in a few people. Decisions wait for meetings. Status looks green while risk builds. Teams work around the problem because the real constraint has never been made visible."
           />
           <div className="border-l-4 border-l-primary bg-surface p-6 md:p-8">
             <p className="text-2xl font-semibold leading-snug text-foreground">
-              {"Human -> Knowledge -> Judgment -> Action"}
+              {"Key people → critical context → delayed judgment → stalled execution"}
             </p>
             <p className="mt-5 text-base leading-7 text-muted">
-              The assessment exposes where that chain depends on specific people and
-              converts the issue into findings leadership can act on: workflow visibility,
-              ownership clarity, decision latency, reporting quality, automation
-              opportunities, AI readiness, and knowledge concentration.
+              The assessment exposes where the chain breaks and turns it into findings
+              leadership can act on: ownership gaps, decision delays, capacity drag,
+              revenue exposure, and the smallest change likely to improve performance.
             </p>
           </div>
         </div>
@@ -269,8 +268,8 @@ export default function RecoveryAssessmentPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Who It Is For"
-            title="For leaders with a real operating stall, not a general interest in AI."
-            description="The best fit is a funded team with a workflow under pressure, a visible trigger, and a need to decide what deserves deeper spend."
+            title="For leaders with a real performance problem, not a general interest in AI."
+            description="The best fit is a team with a workflow or revenue process under pressure, a visible trigger, and a decision about what deserves investment."
           />
           <div>
             <div className="grid gap-3">
@@ -297,8 +296,8 @@ export default function RecoveryAssessmentPage() {
       <Section>
         <SectionHeader
           eyebrow="What The Assessment Is"
-          title="Six deliverables in one fixed-scope week."
-          description="The work is constrained on purpose. It creates enough evidence for leadership to see where the operation stalls, where key-person risk is concentrated, and what should happen next."
+            title="Six deliverables that turn a vague problem into an executive decision."
+            description="The work is constrained on purpose. It gives leadership enough evidence to see the constraint, the exposure, and what should happen next."
         />
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {deliverables.map((deliverable, index) => (
@@ -344,16 +343,16 @@ export default function RecoveryAssessmentPage() {
         <div className="mb-10 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <SectionHeader
             eyebrow="RachelOS Proof"
-            title="Backed by a deployed Operational Knowledge System."
-            description="RachelOS is not a slideware example. It is a working system that turns signals into memory, priority, recommendation, human approval, action, and outcome."
+            title="Backed by a live system that supports real revenue work."
+            description="RachelOS is not a slideware example. It is a production system for a South Florida real-estate business that turns fragmented context into prioritized work, automated nurture, and human-approved action."
           />
           <div className="border border-border bg-surface p-6">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
               Deployed proof
             </p>
             <p className="mt-3 text-2xl font-semibold">
-              Runs daily. Human-approved. Built around the same operating pattern this
-              assessment looks for.
+              Runs daily. Supports three closed transactions to date. Includes active
+              conversation management, automated email nurture, and human-approved AI assistance.
             </p>
           </div>
         </div>
@@ -384,8 +383,8 @@ export default function RecoveryAssessmentPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Outcomes"
-            title="What the buyer walks away with."
-            description="The assessment does not invent a business case. It gives leadership a grounded operating view and a clear next decision."
+            title="What leadership walks away with."
+            description="The assessment does not invent a business case. It clarifies the problem, the business exposure, and the next decision."
           />
           <ul className="grid gap-3">
             {outcomes.map((outcome) => (
@@ -407,12 +406,12 @@ export default function RecoveryAssessmentPage() {
       <Section>
         <SectionHeader
           eyebrow="Next Step"
-          title="Book the discovery call. Then decide whether the fixed week is a fit."
-          description="The first step is a 30-minute discovery call, not a hard sell into the assessment. If the workflow problem is concrete and there is mutual fit, TKO confirms the one-week scope, price, start date, and access needed."
+          title="Discuss the business problem. Then decide whether the assessment is a fit."
+          description="The first step is a focused executive conversation. If the problem is concrete and there is mutual fit, TKO confirms scope, price, timing, and the evidence needed to produce a useful decision."
         />
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           <LinkButton href="/contact">
-            Book a 30-minute discovery call
+            Book an operating performance conversation
             <ArrowRight className="size-4" aria-hidden="true" />
           </LinkButton>
         </div>
@@ -463,10 +462,10 @@ export default function RecoveryAssessmentPage() {
       </Section>
 
       <CtaBand
-        title="Use the Assessment to decide what deserves deeper spend."
-        description="One fixed-scope week maps the operating stall, the dependency risk, the AI readiness question, and the highest-leverage next move. The CTA is the discovery call that qualifies whether the assessment is the right next step."
+        title="Find what deserves deeper investment."
+        description="A focused assessment identifies the constraint, the key-person or decision risk behind it, and the highest-leverage move before a larger transformation or technology commitment."
         primaryHref="/contact"
-        primaryLabel="Book a 30-minute discovery call"
+        primaryLabel="Book an operating performance conversation"
         secondaryHref={null}
         secondaryLabel={null}
       />

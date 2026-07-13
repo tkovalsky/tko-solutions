@@ -15,16 +15,16 @@ import { caseStudies } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Where Complex Workflows Stall",
+  title: "Find the Constraints Holding Performance Back",
   description:
-    "TKO helps healthcare and complex-operations leaders identify hidden work, recover stalled workflows, and decide what to fix before committing to the next solution.",
+    "TKO helps leaders identify operational bottlenecks, decision gaps, and revenue leakage—then build systems that improve execution.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Where Complex Workflows Stall",
+    title: "Find the Constraints Holding Performance Back",
     description:
-      "Make hidden work visible, recover stalled workflows, and build systems of action from evidence.",
+      "Find bottlenecks, reduce execution drag, and build systems that make the business run better.",
     url: absoluteUrl("/"),
   },
 };
@@ -68,8 +68,8 @@ export default function HomePage() {
           <div>
             <SectionHeader
               eyebrow="The Operating Problem"
-              title="Work crosses systems. The decision does not."
-              description="Teams are busy, dashboards are current, and governance meetings are happening. The real problem is the work between handoffs, exceptions, and disputed facts—where leadership cannot see the constraint clearly enough to act."
+              title="The work is getting done. The business is still losing time, margin, and momentum."
+              description="The drag is usually hidden between handoffs, exceptions, and delayed decisions. That is where capacity disappears, customers wait, revenue leaks, and leaders lose the ability to act with confidence."
             />
             <ul className="mt-6 space-y-2 text-base leading-7 text-muted">
               <li>
@@ -80,10 +80,10 @@ export default function HomePage() {
                   Operational bottlenecks
                 </Link>
               </li>
-              <li>Decision latency</li>
-              <li>Human API dependency</li>
-              <li>Workflow recovery</li>
-              <li>Systems of action</li>
+              <li>Slow or unclear decisions</li>
+              <li>Key-person dependency</li>
+              <li>Revenue and capacity leakage</li>
+              <li>Transformation spend without operational improvement</li>
             </ul>
             <ArrowLink href="/problems" className="mt-8">
               Explore the operating problems
@@ -119,29 +119,31 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
             eyebrow="Built Proof"
-            title="RachelOS proves the operating pattern in a live environment."
-            description="It is a founder-built system in daily use: relationship memory, source-aware facts, priority surfacing, action queues, intelligence gaps, and human approval before AI-assisted action."
+            title="RachelOS proves TKO can turn scattered information into daily revenue work."
+            description="RachelOS is a live South Florida real-estate operating system. It preserves relationship context, surfaces the next priority, automates nurture, and keeps AI-assisted recommendations under human control."
           />
           <Card className="w-full max-w-2xl justify-self-start">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
               Problem
             </p>
             <p className="mt-3 text-base leading-7 text-muted">
-              A relationship-driven business had fragmented information,
-              inconsistent follow-up, knowledge trapped in one person&apos;s head,
-              and no trusted next action.
+              A real estate business had fragmented information, inconsistent
+              follow-up, knowledge trapped in one person&apos;s head, and no reliable
+              way to see which relationship or transaction needed attention next.
             </p>
             <p className="mt-6 text-sm font-semibold uppercase tracking-[0.1em] text-primary">
               System
             </p>
             <p className="mt-3 text-base leading-7 text-muted">
-              TKO built a governed operating layer that preserves relationship
-              knowledge, surfaces priority, produces a trusted action queue, and
-              keeps AI-assisted recommendations behind human approval.
+              TKO built the operating system: durable relationship memory, a
+              prioritized action queue, automated email nurture, and human-approved
+              AI assistance for the work that requires judgment.
             </p>
             <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
               <span className="font-semibold text-primary">Direct proof — </span>
-              Durable memory, a canonical queue, and a human approval gate are visible in the built system.
+              The live site has supported three closed transactions—one rental with
+              future purchase intent, one sale, and one purchase—alongside active
+              conversations and automated nurture.
             </p>
             <ArrowLink href="/proof/rachelos" className="mt-8">
               Review the RachelOS evidence
@@ -175,8 +177,8 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
             eyebrow="Healthcare Background"
-            title="The operating failure repeats across high-stakes work."
-            description="Healthcare transformation experience supplies the operating context: prior authorization, utilization management, care management, interoperability, regulatory programs, and multi-team governance all expose the same hidden-work and decision-latency pattern."
+            title="The same failure pattern appears wherever execution crosses teams."
+            description="Healthcare transformation, complex service delivery, and revenue operations all expose the same problem: critical context is fragmented, exceptions are handled manually, and leaders cannot see the next decision soon enough."
           />
           <Card className="w-full max-w-2xl justify-self-start">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
@@ -207,13 +209,12 @@ export default function HomePage() {
             Methodology
           </p>
           <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-            Start with operating truth, not a platform.
+            Fix the constraint before you fund the solution.
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/60">
-            Existing tools already capture signals. An Operational Knowledge
-            System preserves memory, resolves facts, shows current state,
-            identifies priority, recommends next action, routes human approval,
-            and records outcomes.
+            Your business may not need another platform. It needs a clear view of
+            what is blocking performance, who owns the next decision, and the
+            smallest change that will improve the result.
           </p>
         </div>
         <div className="mt-10">
@@ -221,24 +222,24 @@ export default function HomePage() {
         </div>
         <p className="mt-8 flex max-w-[65ch] items-start gap-3 text-sm leading-6 text-white/50">
           <Zap className="mt-0.5 size-4 shrink-0 text-primary-light" aria-hidden="true" />
-          AI is useful only when it is tied to workflow, decision rights, and
-          human approval. It supports the system; it is not the category.
+          AI is useful only when it improves a real workflow with clear ownership
+          and human accountability. It is a tool—not the reason to engage TKO.
         </p>
       </Section>
 
       <Section className="bg-surface !py-16 md:!py-20">
         <SectionHeader
           eyebrow="Engagement Path"
-          title="Start with recovery. Build only when the workflow truth is visible."
-          description="The one-week Operational Recovery Assessment is the fixed-scope first step. It identifies the operating constraint, the decision leadership needs to make, and whether a deeper diagnostic or build is justified."
+          title="Start with the operating problem. Build only when the business case is clear."
+          description="TKO begins by identifying the constraint, the business decision it is blocking, and the highest-leverage move—before recommending a larger transformation or technology investment."
         />
         <div className="mt-10">
           <ServiceCards />
         </div>
       </Section>
       <CtaBand
-        title="If execution depends on hidden work, start with the recovery assessment."
-        description="In one fixed-scope week, TKO maps the workflow, identifies the decision-latency pattern, assesses dependency risk, and gives leadership the next highest-leverage move."
+        title="Your team already knows where it hurts. TKO finds what is causing it."
+        description="Start with an executive conversation about the workflow, revenue process, or transformation effort that is not performing the way it should."
       />
     </>
   );

@@ -11,12 +11,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "The TKO service ladder for healthcare workflow modernization: Recovery Assessment, Truth Diagnostic, Decision Layer Build Sprint, and Fractional Advisor.",
+    "TKO helps leaders find operational bottlenecks, protect revenue, and improve execution through focused assessments, builds, and advisory support.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "TKO Services",
     description:
-      "One diagnostic entry point, followed by build and advisory paths when workflow evidence identifies the right next step.",
+      "Start with the operating constraint. Then decide whether focused recovery, a deeper diagnostic, a build, or ongoing operating support is warranted.",
     url: absoluteUrl("/services"),
   },
 };
@@ -26,8 +26,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="One service ladder for healthcare workflow recovery and modernization."
-        description="TKO offers a narrow engagement model: Operational Recovery Assessment for fast workflow clarity, Operational Truth Diagnostic for deeper evidence, Decision Layer Build Sprint for implementation, and Fractional Advisor for ongoing governance."
+        title="Solve the operating problem before you buy another solution."
+        description="TKO helps leaders find the bottleneck, understand the business exposure, and choose the right intervention—from a focused assessment to a build or ongoing operating support."
       />
       <Section>
         <ServiceCards />
@@ -35,8 +35,8 @@ export default function ServicesPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Engagement Logic"
-          title="The ladder is intentionally narrow."
-          description="Workflow orchestration, prioritization systems, operational memory, action queues, escalation detection, intelligence capture, and human-in-the-loop AI are capabilities inside the Build. They are not separate products, SaaS plans, or disconnected AI experiments."
+          title="One commercial question: what is preventing the business from performing better?"
+          description="The services are sequenced to avoid speculative projects. TKO diagnoses the constraint first, then recommends only the level of work needed to improve execution."
         />
         <div className="mt-12 grid gap-3 lg:grid-cols-4">
           {services.map((service, index) => (
@@ -54,16 +54,15 @@ export default function ServicesPage() {
         <div className="grid gap-8 border border-border bg-surface p-8 md:grid-cols-[1.2fr_auto] md:items-center md:p-12">
           <div className="max-w-[60ch]">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              Healthcare Wedge
+              Healthcare specialization
             </p>
             <h2 className="mt-4 text-2xl font-semibold md:text-3xl">
               Prior Authorization Operational Assessment
             </h2>
             <p className="mt-4 text-base leading-7 text-muted">
-              A Tier-1 healthcare specialization of the Recovery Assessment. It diagnoses
-              administrative burden, denial drivers, exception handling, and human
-              dependency risk in prior authorization — before automation, AI, FHIR, or
-              Gold Card work.
+              A focused assessment for prior authorization, utilization management, and
+              provider operations leaders who need to reduce administrative burden,
+              denial friction, and key-person dependency before investing in technology.
             </p>
           </div>
           <Link

@@ -60,25 +60,24 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="hero-kicker text-sm font-semibold uppercase tracking-[0.2em]">
-            Healthcare transformation recovery
+            Operational performance for complex businesses
           </p>
           <h1 className="hero-title mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            You have the data. You still do not know where work is stuck.
+            Find what is slowing execution, leaking revenue, and keeping your team stuck.
           </h1>
           <p className="hero-lead mt-6 max-w-[52ch] text-lg leading-8">
-            TKO helps healthcare and complex-operations leaders diagnose stalled
-            workflows, make the constraint visible, and decide whether a focused
-            recovery, deeper diagnostic, or build is warranted.
+            TKO helps CEOs and operating leaders uncover the bottlenecks, decision
+            gaps, and key-person dependencies holding the business back—then build
+            the systems that improve throughput, accountability, and results.
           </p>
           <p className="hero-kicker mt-6 text-sm font-semibold uppercase tracking-[0.1em]">
-            Fixed-scope recovery assessment · one week · $5K–$8K
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
               href="/assessment"
               className="shadow-[0_10px_30px_-10px_rgb(var(--primary-rgb)/0.6)]"
             >
-              Start the recovery assessment
+              Book an operating performance conversation
             </LinkButton>
           </div>
           <div className="hero-divider mt-10 grid grid-cols-1 gap-5 border-t pt-7 sm:grid-cols-3 sm:gap-4">
@@ -106,7 +105,7 @@ export function Hero() {
             Built and running
           </p>
           <h2 className="hero-title mt-4 text-2xl font-semibold leading-tight md:text-3xl">
-            RachelOS turns fragmented relationship data into daily operating work.
+            RachelOS turns fragmented relationship data into revenue-producing daily work.
           </h2>
           <div className="mt-6 space-y-3">
             {rachelosProof.map((item) => (
@@ -121,8 +120,9 @@ export function Hero() {
             ))}
           </div>
           <p className="hero-muted hero-divider mt-6 border-t pt-5 text-sm leading-6">
-            RachelOS is direct system proof. It demonstrates operating capability,
-            not an unmeasured revenue or adoption claim.
+            Live production proof: RachelOS supports real estate operations in South
+            Florida, including three closed transactions, active conversations,
+            automated email nurture, and human-approved AI-assisted workflows.
           </p>
         </motion.aside>
       </div>

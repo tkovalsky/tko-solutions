@@ -86,8 +86,8 @@ export default function RachelOSProofPage() {
       />
       <PageHero
         eyebrow="Built System / Direct Proof"
-        title="A founder-built system that turns relationship knowledge into today's work."
-        description="RachelOS is in daily use in a relationship-driven business. It replaced manual reconstruction across records, messages, notes, and activity with durable context, a trusted priority queue, and human-governed action."
+        title="A live operating system that turns relationship knowledge into revenue work."
+        description="RachelOS supports a South Florida real-estate business. It replaced manual reconstruction across records, messages, notes, and activity with durable context, prioritized work, automated email nurture, and human-governed AI assistance."
         primaryHref="/assessment"
         primaryLabel="Start with the assessment"
         secondaryHref="/proof"
@@ -139,15 +139,15 @@ export default function RachelOSProofPage() {
           <div>
             <SectionHeader
               eyebrow="What It Proves"
-              title="A working decision system can be built and operated."
-              description="RachelOS demonstrates that fragmented signals can become durable operational memory, source-aware facts, a prioritized action queue, and human-governed execution in a live operating environment."
+              title="A working operating system can support real commercial activity."
+              description="RachelOS demonstrates that fragmented relationship context can become prioritized work, automated nurture, and human-governed execution in a live operating environment. To date, it has supported three closed transactions: one rental with plans to buy, one sale, and one purchase."
             />
           </div>
           <div>
             <SectionHeader
               eyebrow="What It Does Not Yet Prove"
-              title="Capability proof is not commercial outcome proof."
-              description="RachelOS does not provide a published revenue, conversion, ROI, or adoption result. Outcome attribution, reporting, and referral close-loop measurement remain incomplete. It is not a healthcare product or proof of healthcare compliance."
+              title="The proof has a clear boundary."
+              description="The three closed transactions establish live commercial use, not a causal ROI, conversion-rate, or enterprise-adoption claim. RachelOS is not a healthcare product and does not establish healthcare compliance."
             />
           </div>
         </div>

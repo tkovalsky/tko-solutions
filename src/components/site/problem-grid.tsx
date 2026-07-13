@@ -12,7 +12,7 @@ import { problems } from "@/lib/content";
 const icons: Record<string, LucideIcon> = {
   "Administrative Burden": EyeOff,
   "Transformation Recovery": RefreshCw,
-  "Human API Dependence": AlertTriangle,
+  "Key-Person Dependency": AlertTriangle,
   "Operational Visibility Gaps": Clock,
   "Workflow Friction": ShieldAlert,
   "AI Without Operational Control": Cpu,

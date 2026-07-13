@@ -16,10 +16,10 @@ export function PageHero({
   eyebrow,
   title,
   description,
-  primaryHref = "/assessment",
-  primaryLabel = "Explore the Operational Recovery Assessment",
-  secondaryHref = "/services/diagnostic",
-  secondaryLabel = "Schedule an Operational Truth Diagnostic",
+  primaryHref = "/contact",
+  primaryLabel = "Book an operating performance conversation",
+  secondaryHref,
+  secondaryLabel,
   className,
 }: PageHeroProps) {
   return (

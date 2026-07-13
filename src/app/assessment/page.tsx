@@ -72,11 +72,11 @@ export default function AssessmentPage() {
         }}
       />
       <PageHero
-        eyebrow="Primary Engagement"
-        title="See the workflow before you buy the next solution."
-        description="The Operational Recovery Assessment is a fixed-scope, one-week engagement for leaders who need to make hidden work visible, identify the operating constraint, and decide what deserves deeper spend."
+        eyebrow="Executive operating review"
+        title="Find the constraint before you fund the solution."
+        description="The Operational Recovery Assessment is a focused engagement for leaders who need to identify the bottleneck, decision gap, or key-person dependency reducing performance—and decide what is worth fixing first."
         primaryHref="/contact"
-        primaryLabel="Start the assessment intake"
+        primaryLabel="Book an operating performance conversation"
         secondaryHref="/proof/rachelos"
         secondaryLabel="Review built-system proof"
       />
@@ -96,8 +96,8 @@ export default function AssessmentPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="When To Engage"
-            title="Start when the workflow problem is concrete."
-            description="This is not a tool-selection exercise or a generic AI conversation. It is for leadership teams that need operational truth before deciding what to fix, fund, automate, or redesign."
+            title="Start when a business problem is concrete."
+            description="This is for leadership teams that need to understand what is reducing throughput, consuming capacity, delaying decisions, or exposing revenue before choosing what to fix, fund, automate, or redesign."
           />
           <div className="grid gap-3">
             {engageSignals.map((signal) => (
@@ -113,8 +113,8 @@ export default function AssessmentPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Who Should Engage"
-            title="The sponsor owns an operating decision—not just a technology initiative."
-            description="The strongest engagements have a visible trigger, access to operating evidence, and a leader accountable for choosing the next move."
+            title="The sponsor owns a business decision—not just a technology initiative."
+            description="The strongest engagements have a visible trigger, access to operating evidence, and a leader accountable for improving the result."
           />
           <div className="grid gap-3 md:grid-cols-2">
             {audiences.map((audience) => (
@@ -129,8 +129,8 @@ export default function AssessmentPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Diagnostic Outputs"
-          title="A decision-ready view of the operating problem."
-          description="The output is not a generic maturity score or tool recommendation. It is a constrained evidence package that gives leadership a clear view of the problem and a defensible next step."
+          title="A decision-ready view of what is hurting performance."
+          description="The output is not a maturity score or tool recommendation. It gives leadership a clear view of the constraint, its exposure, and a defensible next step."
         />
         <div className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {outputs.map((output) => (
@@ -180,7 +180,7 @@ export default function AssessmentPage() {
           href="/contact"
           className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
         >
-          Start the assessment intake
+          Book an operating performance conversation
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </Section>
@@ -189,7 +189,7 @@ export default function AssessmentPage() {
         title="Bring the workflow under pressure."
         description="The first step is a focused intake. TKO will assess whether the problem is ready for a fixed-scope recovery engagement."
         primaryHref="/contact"
-        primaryLabel="Start the assessment intake"
+        primaryLabel="Book an operating performance conversation"
       />
     </>
   );

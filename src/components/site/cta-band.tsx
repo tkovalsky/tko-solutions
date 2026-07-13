@@ -12,19 +12,15 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "Start with the workflow that is already under pressure.",
-  description = "The Operational Recovery Assessment identifies where work stalls, where dependency risk is building, and where AI can help without taking control.",
-  primaryHref = "/assessment",
-  primaryLabel = "Explore the Operational Recovery Assessment",
-  secondaryHref,
-  secondaryLabel,
+  title = "Find the constraint holding performance back.",
+  description = "Bring the workflow, revenue process, or operating problem under pressure. TKO will help determine where execution is breaking down and what deserves action first.",
+  primaryHref = "/contact",
+  primaryLabel = "Book an operating performance conversation",
+  secondaryHref = null,
+  secondaryLabel = null,
 }: CtaBandProps) {
-  const resolvedSecondaryHref =
-    secondaryHref === undefined ? "/services/diagnostic" : secondaryHref;
-  const resolvedSecondaryLabel =
-    secondaryLabel === undefined
-      ? "Schedule an Operational Truth Diagnostic"
-      : secondaryLabel;
+  const resolvedSecondaryHref = secondaryHref;
+  const resolvedSecondaryLabel = secondaryLabel;
 
   return (
     <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-16 text-white md:py-20">
@@ -35,7 +31,7 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Operational Recovery Assessment
+            Executive operating review
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}

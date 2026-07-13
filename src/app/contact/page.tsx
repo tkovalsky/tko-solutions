@@ -4,14 +4,14 @@ import { DiagnosticForm } from "@/components/site/diagnostic-form";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Schedule an Operational Recovery Assessment",
+  title: "Book an Operating Performance Conversation",
   description:
-    "Submit the five-question intake for a TKO Operational Recovery Assessment or Operational Truth Diagnostic.",
+    "Start a focused conversation about the bottleneck, decision gap, or revenue leakage holding your operation back.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Schedule an Operational Recovery Assessment",
+    title: "Book an Operating Performance Conversation",
     description:
-      "Diagnostic intake for leaders with active workflow, prioritization, operational visibility, or AI adoption problems.",
+      "A focused executive conversation for leaders facing an active operating, execution, or revenue-performance problem.",
     url: absoluteUrl("/contact"),
   },
 };
@@ -28,28 +28,27 @@ export default async function ContactPage({ searchParams }: SearchParams) {
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-[60ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
-            Recovery Assessment Intake
+            Operating performance conversation
           </p>
           <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-foreground md:text-5xl">
-            Start with the workflow that is under pressure.
+            Start with the part of the business that is not performing.
           </h1>
           <p className="mt-5 text-lg leading-8 text-muted">
-            Five questions. The intake qualifies whether the one-week
-            Operational Recovery Assessment or the deeper Operational Truth
-            Diagnostic is the right next step for leaders facing administrative
-            burden, stalled transformation, human API dependency, or AI adoption
-            risk.
+            Five questions to establish whether TKO can help. Describe the
+            workflow, revenue process, or transformation effort under pressure—and
+            the decision leadership needs to make next.
           </p>
         </div>
 
         <div className="mt-10 grid gap-x-12 gap-y-8 lg:grid-cols-[0.7fr_1.3fr]">
           <aside className="lg:pt-1">
             <h2 className="text-lg font-semibold text-foreground">
-              The Assessment starts only when the workflow problem is concrete.
+              The conversation starts with a concrete business problem.
             </h2>
             <p className="mt-3 text-base leading-7 text-muted">
-              Answer as specifically as you can. Each response should describe a real
-              operating problem, not a general AI, automation, or tool-selection interest.
+              Answer as specifically as you can. The strongest starting point is a
+              measurable performance gap, stalled decision, key-person dependency,
+              or revenue risk—not a general interest in AI or automation.
             </p>
           </aside>
 

@@ -8,12 +8,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About TKO Solutions and Todd: operator-first Operational Knowledge Systems work grounded in enterprise healthcare leadership, workflow transformation, and RachelOS proof.",
+    "TKO brings operator-led experience in healthcare transformation, workflow recovery, and live operating-system builds to complex business performance problems.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About TKO Solutions",
     description:
-      "Todd builds systems that help organizations make better operational decisions.",
+      "TKO helps leaders find the constraints holding performance back and build systems that improve execution.",
     url: absoluteUrl("/about"),
   },
 };
@@ -56,9 +56,9 @@ const phases = [
       "A live system proving that relationship knowledge can become operational memory, priority logic, and human-approved AI action.",
   },
   {
-    title: "Operational Knowledge Systems",
+    title: "Operating systems for better execution",
     description:
-      "The category conclusion: institutional knowledge becomes operational memory, state, priority, human approval, action, and outcome.",
+      "The practical conclusion: critical context becomes visible, priorities are clear, ownership is explicit, and the business can execute without relying on a few people to reconstruct reality.",
   },
 ];
 
@@ -67,15 +67,15 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title="The category came after the operating work."
-        description="TKO is led from an operator's point of view. The work starts with how decisions actually get made, where workflow breaks down, what knowledge is trapped in people, and where AI can help without taking control."
+        title="Built for leaders who need the business to run better—not just sound more modern."
+        description="TKO brings an operator's point of view to performance problems: where execution breaks down, decisions slow, revenue leaks, and critical knowledge is trapped in a few people."
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Accumulation"
-            title="The story runs from healthcare operating complexity to live decision systems."
-            description="Operational Knowledge Systems are not a theory-first claim. They are the conclusion earned from modernization, recovery, workflow, governance, and product-building work."
+            title="The work runs from high-stakes healthcare operations to live revenue systems."
+            description="TKO's point of view was earned through modernization, recovery, workflow governance, and product-building work—not invented as an AI consulting category."
           />
           <ol className="grid gap-3">
             {phases.map((phase, index) => (
@@ -95,8 +95,8 @@ export default function AboutPage() {
       <Section className="bg-surface">
           <SectionHeader
             eyebrow="Credibility"
-            title="Experience in environments where decisions, workflows, and accountability matter."
-            description="The relevant credential is not generic consulting language. It is direct experience helping complex organizations modernize work, reduce operational friction, and improve execution visibility."
+            title="Experience in environments where execution, accountability, and risk matter."
+            description="The relevant credential is hands-on work in complex organizations where operational friction, delayed decisions, and adoption gaps have real consequences."
         />
         <div className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {credibility.map((item) => (
@@ -110,8 +110,8 @@ export default function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Method"
-            title="Operational Knowledge Systems start by asking better operating questions."
-            description="The method connects executive concern to workflow evidence, decision analysis, prioritization, and implementation."
+            title="Start with the questions that expose the constraint."
+            description="The method connects an executive concern to the evidence, ownership, and operating change required to improve the result."
           />
           <ol className="space-y-3">
             {truthFramework.map((item, index) => (
@@ -128,8 +128,8 @@ export default function AboutPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Proof"
-          title="RachelOS shows the work in a live operating environment."
-          description="RachelOS proves the same principle outside a slide deck: capture operational knowledge, preserve memory, surface priorities, recommend actions, and keep humans in approval."
+          title="RachelOS shows the work in a live revenue environment."
+          description="RachelOS supports a South Florida real-estate business with relationship memory, prioritized daily work, automated nurture, and human-approved AI assistance. It has supported three closed transactions to date."
         />
       </Section>
       <CtaBand />

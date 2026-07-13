@@ -10,7 +10,7 @@ export const problems = [
       "Modernization programs can report progress while dependency risk, decision latency, and adoption gaps accumulate between teams.",
   },
   {
-    title: "Human API Dependence",
+    title: "Key-Person Dependency",
     description:
       "Critical knowledge lives in a few key people. When they are overloaded, unavailable, or leave, execution slows down.",
   },
@@ -120,9 +120,9 @@ export const services = [
     duration: "1 week",
     entry: "Low-friction entry point",
     summary:
-      "A one-week assessment for healthcare and operations leaders who need fast clarity on where a workflow is stuck and what recovery step comes first.",
+      "A focused assessment for leaders who need to find the bottleneck, business exposure, and highest-leverage next move before committing to a larger solution.",
     overview:
-      "The Operational Recovery Assessment is a fixed-scope one-week engagement for teams facing administrative burden, stalled transformation, or an AI initiative that needs operational grounding. It maps the workflow, identifies bottlenecks and key-person dependencies, assesses AI readiness, and gives leadership a clear next move.",
+      "The Operational Recovery Assessment is a fixed-scope engagement for teams facing execution drag, stalled transformation, revenue risk, or an AI initiative without a clear business case. It identifies the bottleneck, key-person dependency, and decision leadership needs to make next.",
     outcomes: [
       "Evidence-based view of the top places work stalls.",
       "Identification of key-person dependency and the risk it creates.",
@@ -168,9 +168,9 @@ export const services = [
     duration: "2-3 weeks",
     entry: "Primary entry point",
     summary:
-      "A fixed-scope diagnostic for healthcare and enterprise leaders who need the operating truth behind stalled work before committing to a larger fix.",
+      "A focused diagnostic for leaders who need to understand what is reducing performance before committing to a larger transformation or technology investment.",
     overview:
-      "The Operational Truth Diagnostic studies one or two workflow areas where the organization already has data, tools, meetings, reports, and modernization pressure but still lacks a trusted decision system. It identifies where work stalls, where ownership breaks down, where AI can safely help, and what should happen next before larger spend is committed.",
+      "The Operational Truth Diagnostic examines one or two areas where the business has data, tools, and activity but performance still lags. It identifies where execution slows, ownership breaks down, capacity leaks, and investment can produce the greatest return.",
     outcomes: [
       "Clear view of where work stalls, why decisions slow down, and what friction is costing the team.",
       "Shared fact base across operations, technology, product, revenue, or governance leaders.",
@@ -217,17 +217,17 @@ export const services = [
   },
   {
     slug: "operating-system-build",
-    title: "Decision Layer Build Sprint",
+    title: "Operating System Build Sprint",
     shortTitle: "Build",
     price: "$45K-$150K",
     duration: "6-12 weeks",
     entry: "Downstream conversion offer",
     summary:
-      "Design and implementation support for the operating layer that turns workflow signals into governed next action.",
+      "Design and implementation support for the operating system that turns fragmented work into clear priorities, accountable action, and measurable improvement.",
     overview:
-      "The Build converts diagnostic findings into a decision layer: the operating system that captures memory, resolves facts, identifies priorities, recommends trusted next actions, and keeps humans in control of AI-assisted work.",
+      "The Build turns diagnostic findings into an operating system that preserves critical context, identifies priorities, assigns accountable next actions, and keeps people in control of AI-assisted work.",
     outcomes: [
-      "Working decision layer for one or two workflow areas.",
+      "Working operating system for one or two high-value workflow areas.",
       "Team workflow designed around prioritization, approval, and action.",
       "Better visibility into gaps, stalls, and escalation risk before opportunities are missed.",
       "Operational memory that preserves institutional knowledge beyond individual people.",
@@ -274,7 +274,7 @@ export const services = [
     duration: "3-6 months",
     entry: "Post-diagnostic or post-build retainer",
     summary:
-      "Strategic advisory support for leadership teams that need to continuously improve execution.",
+      "Ongoing operating support for leadership teams that need to improve execution, remove constraints, and keep transformation tied to business results.",
     overview:
       "The Fractional Operational Intelligence Advisor engagement helps leadership teams keep operational reviews, prioritization, workflow governance, AI adoption, and execution oversight tied to real operating evidence.",
     outcomes: [
@@ -363,7 +363,7 @@ export const caseStudies = [
       "Human approval remains part of the workflow before AI-assisted outreach is used.",
       "Operational outcomes are stated without inflated revenue claims or unverifiable metrics.",
     ],
-    relatedProblems: ["Human API Dependence", "Operational Visibility Gaps", "Workflow Governance"],
+    relatedProblems: ["Key-Person Dependency", "Operational Visibility Gaps", "Workflow Governance"],
     relatedService: "Decision Layer Build Sprint",
   },
   {
@@ -386,7 +386,7 @@ export const caseStudies = [
       "Governance is enforced in code and configuration: approval-gated sends, human-fact immutability, advisory-only recommendations, and 83 numbered architecture decisions including decisions against building.",
       "Limitations are published, not hidden: no revenue attribution is claimed, dormant capabilities are listed as dormant, and adoption telemetry is marked unvalidated.",
     ],
-    relatedProblems: ["AI Without Operational Control", "Human API Dependence", "Workflow Governance"],
+    relatedProblems: ["AI Without Operational Control", "Key-Person Dependency", "Workflow Governance"],
     relatedService: "AI Delivery Assessment",
   },
   {
@@ -432,7 +432,7 @@ export const caseStudies = [
       "Functional knowledge of claims, care management, eligibility, and provider operations.",
       "No client names or unverifiable delivery metrics are published.",
     ],
-    relatedProblems: ["Execution Visibility Failure", "Workflow Friction", "Human API Dependence"],
+    relatedProblems: ["Execution Visibility Failure", "Workflow Friction", "Key-Person Dependency"],
     relatedService: "Operational Truth Diagnostic",
   },
   {
@@ -478,7 +478,7 @@ export const caseStudies = [
       "Supports the Operational Knowledge Systems pattern without becoming a separate TKO service line.",
       "No commercial outcomes, client names, or market-performance claims are published.",
     ],
-    relatedProblems: ["Operational Visibility Gaps", "Human API Dependence", "Workflow Governance"],
+    relatedProblems: ["Operational Visibility Gaps", "Key-Person Dependency", "Workflow Governance"],
     relatedService: "Decision Layer Build Sprint",
   },
 ];

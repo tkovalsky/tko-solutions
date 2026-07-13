@@ -20,9 +20,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
         title={service.title}
         description={service.overview}
         primaryHref="/contact"
-        primaryLabel="Schedule an Operational Recovery Assessment"
-        secondaryHref="/services/diagnostic"
-        secondaryLabel="Schedule an Operational Truth Diagnostic"
+        primaryLabel="Book an operating performance conversation"
       />
 
       <Section>
@@ -52,8 +50,8 @@ export function ServiceTemplate({ slug }: { slug: string }) {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Outcomes"
-            title="What the engagement must make possible."
-            description="Each service exists to improve operational visibility, prioritization, execution confidence, and the buyer's ability to decide what happens next."
+            title="What should improve as a result."
+            description="Every engagement is designed to reduce execution drag, clarify ownership, protect capacity or revenue, and give leadership a defensible next decision."
           />
           <ul className="grid gap-3">
             {service.outcomes.map((outcome) => (
@@ -69,8 +67,8 @@ export function ServiceTemplate({ slug }: { slug: string }) {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Process"
-            title="Constrained, evidence-led work."
-            description="The work is structured to avoid open-ended consulting drift and keep the buyer focused on workflow evidence, decision points, human approval, and action."
+            title="A focused path from problem to action."
+            description="The work stays grounded in the operating problem, the business exposure, the decision required, and the change most likely to improve performance."
           />
           <ol className="grid gap-3">
             {service.process.map((step, index) => (
@@ -100,7 +98,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
       </Section>
 
       <Section>
-        <SectionHeader eyebrow="FAQ" title="Questions buyers should resolve before intake." />
+        <SectionHeader eyebrow="FAQ" title="Questions to resolve before engaging." />
         <div className="mt-10">
           <Faq items={service.faqs} />
         </div>
@@ -109,17 +107,17 @@ export function ServiceTemplate({ slug }: { slug: string }) {
       <CtaBand
         title={
           service.slug === "recovery-assessment"
-            ? "Use the Assessment to decide what deserves deeper spend."
+            ? "Use the Assessment to decide what deserves deeper investment."
             : service.slug === "diagnostic"
-            ? "Use the Diagnostic to clarify what should happen next."
-            : "The right starting point is still the Operational Recovery Assessment."
+            ? "Use the Diagnostic to identify the highest-leverage path forward."
+            : "Start with the operating problem, not a preselected solution."
         }
         description={
           service.slug === "recovery-assessment"
-            ? "The engagement is designed for funded teams that need fast clarity on workflow stalls, AI readiness, and the next highest-leverage move."
+            ? "The engagement gives leadership a fast, grounded view of the constraint, the exposure it creates, and the next move worth funding."
             : service.slug === "diagnostic"
-            ? "The engagement is designed for leaders with an active operating problem who need evidence, prioritization, and an implementation roadmap."
-            : "Build and advisory work follow when the operating problem is already visible. The Diagnostic creates the evidence base for that decision."
+            ? "The engagement gives leaders evidence, priorities, and an implementation path tied to an active business problem."
+            : "Build and advisory work follow when the operating problem is clear and there is a business case to improve it."
         }
       />
     </>
