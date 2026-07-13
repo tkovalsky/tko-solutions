@@ -82,6 +82,7 @@ export type KnowledgePackage = {
     knowledgeId: string;
     recordType: z.infer<typeof RecordTypeSchema>;
     title: string;
+    businessProblem: string;
     reviewedBy: string;
   };
   assets: KnowledgePackageAssetBrief[];
@@ -196,6 +197,7 @@ export function compileKnowledgePackage(input: KnowledgePackageInput): Knowledge
       knowledgeId: parsed.source.knowledgeId,
       recordType: parsed.source.recordType,
       title: parsed.source.title,
+      businessProblem: parsed.source.businessProblem,
       reviewedBy: parsed.source.reviewedBy,
     },
     assets,

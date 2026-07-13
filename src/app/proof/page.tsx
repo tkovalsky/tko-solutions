@@ -24,6 +24,14 @@ export const metadata: Metadata = {
 
 const proofSections = [
   {
+    eyebrow: "Founder Diligence",
+    title: "Founder Proof Hub",
+    description:
+      "Follow the operating record across built systems, bounded healthcare experience, difficult decisions, assessments, and the evidence limits around each claim.",
+    href: "/proof/founder",
+    linkLabel: "Open the Founder Proof Hub",
+  },
+  {
     eyebrow: "Built Systems",
     title: "RachelOS",
     description:

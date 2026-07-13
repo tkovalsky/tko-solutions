@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { orchestrateAuthorityProduction, type AuthorityCoverageArea } from "@/lib/tif/authority-orchestrator";
+import { buildAuthorityWorkQueue } from "@/lib/tif/authority-work-queue";
 import { tifDb } from "@/lib/tif/db";
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const dynamic = "force-dynamic";
 // Pattern, Framework, Package, Publication, and Measurement counts are shown as
 // untracked until their existing compiler outputs are materialized relationally.
 export default async function AuthorityDashboardPage() {
-  const [evidence, assets, diagrams] = await Promise.all([
+  const [evidence, assets, diagrams, opportunities] = await Promise.all([
     tifDb.evidence.findMany({
       select: { id: true, slug: true, domain: true, businessUnit: true, assets: { select: { assetId: true } } },
     }),
@@ -36,6 +37,16 @@ export default async function AuthorityDashboardPage() {
         knowledgeId: true,
         asset: { select: { title: true, status: true, evidenceLinks: { select: { evidenceId: true } } } },
         diagramLinks: { select: { assetId: true } },
+      },
+    }),
+    tifDb.assetOpportunity.findMany({
+      select: {
+        id: true,
+        title: true,
+        assetType: true,
+        angle: true,
+        evidenceLinks: { select: { evidenceId: true } },
+        _count: { select: { assets: true } },
       },
     }),
   ]);
@@ -71,6 +82,27 @@ export default async function AuthorityDashboardPage() {
       evidenceIds: item.evidenceLinks.map((link) => link.evidenceId),
       diagramIds: item.diagramLinks.map((link) => link.diagramId),
       updatedAt: item.updatedAt,
+    })),
+  });
+  const workQueue = buildAuthorityWorkQueue({
+    packages: [],
+    assets: assets.map((item) => ({
+      id: item.id,
+      title: item.title,
+      kind: item.assetType,
+      status: item.status,
+      coverage: coverageFor(undefined, item.businessUnit),
+      evidenceIds: item.evidenceLinks.map((link) => link.evidenceId),
+      diagramIds: item.diagramLinks.map((link) => link.diagramId),
+      updatedAt: item.updatedAt,
+    })),
+    opportunities: opportunities.map((item) => ({
+      id: item.id,
+      title: item.title,
+      assetType: item.assetType,
+      angle: item.angle,
+      evidenceIds: item.evidenceLinks.map((link) => link.evidenceId),
+      assetCount: item._count.assets,
     })),
   });
 
@@ -110,6 +142,10 @@ export default async function AuthorityDashboardPage() {
       <section className="mb-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
         {metricItems.map(([label, value]) => <Metric key={label} label={label} value={value} />)}
       </section>
+
+      <ReportSection title="Authority Work Queue" description="Ranked next actions only. This report creates no Opportunity, Asset, publication, or evidence record.">
+        {workQueue.length ? <div className="grid gap-4">{workQueue.map((item) => <WorkQueueItem key={item.id} item={item} />)}</div> : <Empty label="No persisted work is currently queued. Compiler-package work will appear after reviewed Experience records are available." />}
+      </ReportSection>
 
       <section className="mb-12">
         <h2 className="text-2xl font-semibold">Authority Heat Map</h2>
@@ -189,4 +225,17 @@ function Quality({ label, entries }: { label: string; entries: string[] }) {
 
 function Empty({ label }: { label: string }) {
   return <p className="rounded-lg border border-dashed border-border p-5 text-sm text-muted">{label}</p>;
+}
+
+function WorkQueueItem({ item }: { item: ReturnType<typeof buildAuthorityWorkQueue>[number] }) {
+  const gaps = [
+    ...item.missingEvidence,
+    ...item.missingDiagram,
+    ...item.missingFramework,
+    ...item.missingAssets.map((asset) => `Missing Asset: ${asset}`),
+  ];
+  return <article className="rounded-lg border border-border bg-white p-5">
+    <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-wide text-muted">{item.priority} · unlocks an estimated {item.estimatedAssetsUnlocked} asset(s)</p><h3 className="mt-1 text-lg font-semibold">{item.title}</h3></div><div className="text-right text-xs text-muted"><p>Authority: {item.expectedAuthorityImpact}</p><p>SEO: {item.expectedSeoImpact}</p><p>Commercial: {item.expectedCommercialValue}</p></div></div>
+    <dl className="mt-4 grid gap-3 text-sm md:grid-cols-2"><div><dt className="font-semibold">Experience</dt><dd className="text-muted">{item.experience}</dd></div><div><dt className="font-semibold">Business Problem</dt><dd className="text-muted">{item.businessProblem}</dd></div><div><dt className="font-semibold">Missing / blocking</dt><dd className="text-muted">{[...gaps, ...item.blockingDependencies].join(" ") || "None."}</dd></div><div><dt className="font-semibold">Recommended Next Action</dt><dd className="text-muted">{item.recommendedNextAction}</dd></div></dl>
+  </article>;
 }

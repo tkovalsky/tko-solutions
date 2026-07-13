@@ -131,6 +131,20 @@ export default function PriorAuthorizationAssessmentPage() {
           },
         }}
       />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.q,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.a,
+            },
+          })),
+        }}
+      />
 
       <PageHero
         eyebrow="Tier-1 Healthcare Assessment"

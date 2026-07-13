@@ -40,6 +40,12 @@ export const metadata: Metadata = {
     title: "TKO Solutions | Healthcare Workflow Modernization",
     description: site.description,
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION }
+      : undefined,
+  },
 };
 
 export default function RootLayout({
@@ -70,11 +76,31 @@ export default function RootLayout({
       "Decision Layer Build",
     ],
   };
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Todd Kovalsky",
+    jobTitle: "Founder and Operator",
+    worksFor: {
+      "@type": "Organization",
+      name: site.name,
+      url: site.url,
+    },
+    url: absoluteUrl("/about"),
+    knowsAbout: [
+      "Healthcare Workflow Modernization",
+      "Prior Authorization",
+      "Transformation Governance",
+      "Operational Intelligence",
+      "Human-in-the-Loop AI",
+    ],
+  };
 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <JsonLd data={organizationJsonLd} />
+        <JsonLd data={personJsonLd} />
         <Header />
         <main>{children}</main>
         <Footer />

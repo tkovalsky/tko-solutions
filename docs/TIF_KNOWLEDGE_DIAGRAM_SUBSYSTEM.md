@@ -117,7 +117,6 @@ No new approval workflow has been introduced. Existing Asset status and Revision
 - Before any diagram records exist, revert the migration using the standard database change process.
 - After records exist, disable the registry route and UI while preserving Assets and metadata; do not delete diagrams or their evidence links as a rollback shortcut.
 
-## Current implementation limitation
+## Deployment verification
 
-The local migration could not be applied during implementation because PostgreSQL denied the current project database user (`P1010`). The schema, SQL migration, registry code, composer template, and generated Prisma client are ready; database application remains a deployment prerequisite.
-
+On 2026-07-13, `npm run tif:migrate:status` against the configured PostgreSQL database reported that all seven committed migrations were applied and the database schema was up to date. The registry remains subject to the existing human-review workflow; this confirmation does not authorize bulk diagram creation.
