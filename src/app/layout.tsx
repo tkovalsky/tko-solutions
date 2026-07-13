@@ -34,11 +34,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: "TKO Solutions | Operational Recovery for Complex Workflows",
     description: site.description,
+    images: [{ url: "/og.png", width: 1731, height: 909, alt: "TKO Solutions: Make hidden work visible. Recover the next decision." }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "TKO Solutions | Healthcare Workflow Modernization",
     description: site.description,
+    images: ["/og.png"],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
@@ -59,6 +61,7 @@ export default function RootLayout({
     name: site.name,
     url: site.url,
     description: site.description,
+    logo: absoluteUrl("/og.png"),
     knowsAbout: [
       "Operational Knowledge Systems",
       "Healthcare Workflow Modernization",
@@ -87,6 +90,7 @@ export default function RootLayout({
       url: site.url,
     },
     url: absoluteUrl("/about"),
+    sameAs: process.env.NEXT_PUBLIC_LINKEDIN_URL ? [process.env.NEXT_PUBLIC_LINKEDIN_URL] : undefined,
     knowsAbout: [
       "Healthcare Workflow Modernization",
       "Prior Authorization",

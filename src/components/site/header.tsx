@@ -7,10 +7,11 @@ const navItems = [
   { href: "/", label: "Home" },
   { href: "/problems", label: "Problems" },
   { href: "/proof", label: "Proof" },
+  { href: "/offers", label: "Assessments" },
   { href: "/healthcare", label: "Healthcare" },
   { href: "/insights", label: "Guides" },
   { href: "/about", label: "About" },
-  { href: "/assessment", label: "Assessment" },
+  { href: "/founder", label: "Founder" },
 ];
 
 export function Header() {
@@ -30,12 +31,12 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <LinkButton href="/assessment" className="whitespace-nowrap">
+          <LinkButton href="/offers" className="whitespace-nowrap">
             {site.cta}
           </LinkButton>
         </div>
         <Link
-          href="/assessment"
+          href="/offers"
           className="text-sm font-semibold uppercase tracking-[0.08em] text-primary lg:hidden"
         >
           Assessment

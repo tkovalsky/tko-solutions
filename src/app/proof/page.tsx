@@ -52,6 +52,30 @@ const proofSections = [
     alt: "RachelOS system health view showing operational checks and execution status.",
   },
   {
+    eyebrow: "Healthcare Operating Pattern",
+    title: "Prior Authorization",
+    description:
+      "A bounded pattern for making exception authority, evidence, escalation, and decision rights visible before automation or Gold Card work.",
+    href: "/proof/prior-authorization",
+    linkLabel: "Review the prior-authorization pattern",
+  },
+  {
+    eyebrow: "Executive Delivery",
+    title: "Program Recovery",
+    description:
+      "A decision-centered recovery pattern for programs whose dependencies and operating constraints are hidden behind workstream status.",
+    href: "/proof/program-recovery",
+    linkLabel: "Review the program-recovery pattern",
+  },
+  {
+    eyebrow: "AI Governance",
+    title: "Human authority remains visible",
+    description:
+      "Source-aware facts, bounded recommendations, explicit approval, governed action, and outcome visibility are separate controls—not a promise that AI will self-govern.",
+    href: "/proof/ai-governance",
+    linkLabel: "Review the AI-governance pattern",
+  },
+  {
     eyebrow: "Healthcare Operating Background",
     title: "Complex workflow and governance experience",
     description:
@@ -91,6 +115,14 @@ export default function ProofPage() {
         secondaryHref="/assessment"
         secondaryLabel="Start with the assessment"
       />
+
+      <Section>
+        <SectionHeader
+          eyebrow="Executive path"
+          title="Start with the operating problem, then follow evidence to a bounded next move."
+          description="Every published proof page states the executive question, operating model, evidence, lessons, and claim boundary. The path continues into a relevant guide and assessment rather than a generic service pitch."
+        />
+      </Section>
 
       <Section className="bg-surface">
         <div className="grid gap-5 lg:grid-cols-2">

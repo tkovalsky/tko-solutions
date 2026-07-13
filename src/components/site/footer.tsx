@@ -4,10 +4,12 @@ import { Logo } from "@/components/site/logo";
 const footerLinks = [
   { href: "/problems", label: "Problems" },
   { href: "/proof", label: "Proof" },
+  { href: "/diagrams", label: "Diagrams" },
   { href: "/healthcare", label: "Healthcare" },
   { href: "/insights", label: "Guides" },
   { href: "/about", label: "About" },
-  { href: "/assessment", label: "Assessment" },
+  { href: "/founder", label: "Founder" },
+  { href: "/offers", label: "Assessments" },
   { href: "/contact", label: "Contact" },
 ];
 

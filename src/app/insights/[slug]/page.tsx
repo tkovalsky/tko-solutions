@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
+import { AuthorityLinks } from "@/components/site/authority-links";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
@@ -114,7 +115,8 @@ export default async function InsightPage({ params }: Params) {
           </div>
         </Section>
       ) : null}
-      <CtaBand />
+      <AuthorityLinks current={`/insights/${insight.slug}`} />
+      <CtaBand primaryLabel="Operational Recovery Assessment" />
     </>
   );
 }

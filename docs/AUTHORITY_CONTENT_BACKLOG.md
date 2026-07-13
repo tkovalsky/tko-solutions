@@ -1,5 +1,16 @@
 # TIF V2 — Authority Content Backlog
 
+## V1 launch follow-through — 2026-07-13
+
+The V1 public authority platform is implemented. The remaining items are editorial and launch-operations work, not platform engineering:
+
+1. **P0 / owner action:** Verify Google Search Console and Bing Webmaster Tools on the production domain, submit sitemap, and record verification in the launch log.
+2. **P0 / owner action:** Verify analytics, consent, and contact-form conversion events on production.
+3. **P0 / editor + founder:** Human-review and publish the approved set of 25 flagship TIF diagrams; keep unpublished records behind the existing approval gate.
+4. **P1 / founder:** Approve any publishable named-role, client, metric, or date evidence before adding it to founder pages.
+5. **P1 / editor:** Convert the download placeholders into reviewed decision-rights, exception-routing, and executive-operating-review briefs.
+6. **P1 / SEO lead:** Review production impressions and queries before retiring or redirecting legacy `/services/*` paths in favor of the problem-first `/offers/*` taxonomy.
+
 ## Operating rule
 
 This is not a keyword calendar. Every asset must originate from approved Evidence and/or an Experience Record, carry a claim boundary, and link back to the Problem Library. P0 means evidence exists today; P1 means evidence is partial and an artifact is required; P2 means future operating experience is required.
@@ -35,4 +46,3 @@ This is not a keyword calendar. Every asset must originate from approved Evidenc
 3. Publish the P0 guide/Operator Note/case/LinkedIn packages from the same source assets.
 4. Produce P1 healthcare artifacts only as anonymized or synthetic examples with explicit boundaries.
 5. Do not produce P2 industry content until direct experience becomes evidence.
-

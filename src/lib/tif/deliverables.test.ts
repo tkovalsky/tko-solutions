@@ -37,6 +37,7 @@ const newDeliverableTypes = [
   "changelog_page",
   "workflow_guide",
   "system_overview",
+  "knowledge_diagram",
 ] satisfies DeliverableType[];
 
 const legacyDeliverableTypes = [

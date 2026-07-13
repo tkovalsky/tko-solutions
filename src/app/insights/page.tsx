@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
+import { AuthorityLinks } from "@/components/site/authority-links";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsights, type Insight } from "@/lib/insights";
@@ -47,6 +48,7 @@ export default function InsightsPage() {
           </div>
         )}
       </Section>
+      <AuthorityLinks current="/insights" />
     </>
   );
 }
