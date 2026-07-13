@@ -6,6 +6,11 @@
 **Scope:** Documentation and backlog alignment only. This document does not authorize feature
 implementation, schema changes, migrations, new routes, or production behavior changes.
 
+**Multichannel implementation:** The approved channel-package extension, privacy rules, Meta ad
+contract, media briefs, and RachelOS social-profile/Today-task boundary are defined in
+[`TIF_MULTICHANNEL_CONTENT_PRD.md`](./TIF_MULTICHANNEL_CONTENT_PRD.md). That PRD supersedes this
+document where it describes the implemented derivative-package surface.
+
 ## Documentation Audit Summary
 
 Reviewed authoritative and supporting TIF/content docs:
@@ -115,6 +120,15 @@ Supported deliverable types:
 - LinkedIn Post
 - LinkedIn Carousel
 - Facebook Post
+- Instagram Post
+- Instagram Story
+- Instagram Reel Script
+- YouTube Video Brief
+- YouTube Short Script
+- Video Shot List
+- Meta Ad
+- Meta Ad Set
+- Story Page
 - Facebook Ad
 - CRM Next-Touch Asset
 

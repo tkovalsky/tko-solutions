@@ -1,5 +1,10 @@
 # TIF Rachel Draft API
 
+> **Expanded contract (2026-07-12):** The same governed endpoint now also composes future-site
+> commercial tenant-representation and business-transferability drafts. Rachel publishing behavior
+> is unchanged. Commercial drafts target a separate future publisher and use `cre-intelligence` as
+> their intelligence source. See `TIF_CRE_BUSINESS_OWNER_REQUIREMENTS.md`.
+
 **Status:** Initial TKO-side contract  
 **Purpose:** Let the Rachel publishing system request draft content from `tko-site` without moving
 publishing ownership into TKO.
@@ -45,6 +50,8 @@ Frameworks:
 
 - `rachel_community`
 - `rachel_relocation`
+- `cre_tenant_rep`
+- `business_exit`
 
 Artifacts:
 
@@ -52,6 +59,15 @@ Artifacts:
 - `comparison_page`
 - `comparison_guide`
 - `relocation_guide`
+- `cre_area_page`
+- `cre_neighborhood_page`
+- `cre_corridor_page`
+- `cre_medical_cluster_page`
+- `cre_site_report`
+- `cre_corridor_comparison`
+- `tenant_rep_guide`
+- `business_exit_guide`
+- `transferability_assessment_page`
 
 Deliverable mapping:
 
@@ -64,6 +80,8 @@ Voices:
 
 - `rachel`
 - `consumer`
+- `todd`
+- `commercial_operator`
 
 ## Example: Comparison Draft
 

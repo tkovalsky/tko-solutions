@@ -1,0 +1,35 @@
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'story_page';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'linkedin_carousel';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'reddit_post';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'youtube_video_brief';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'youtube_short_script';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'video_shot_list';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'meta_ad';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'meta_ad_set';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'meta_video_script';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'meta_image_brief';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'email_next_touch';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'image_brief';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'instagram_post';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'instagram_story';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'instagram_reel_script';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'behavioral_content_brief';
+
+ALTER TABLE "DerivativeAsset" ADD COLUMN IF NOT EXISTS "context" JSONB;
+ALTER TABLE "DerivativeAsset" ADD COLUMN IF NOT EXISTS "behavioralStrategy" JSONB;
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'cre_tenant_rep_brief';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'cre_site_driveby_report';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'cre_corridor_comparison';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'cre_lease_decision_guide';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'business_exit_readiness_brief';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'business_transferability_assessment';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'owner_operating_system_brief';
+ALTER TYPE "DerivativeAssetType" ADD VALUE IF NOT EXISTS 'cre_field_video_brief';
+
+ALTER TABLE "CaptureItem" ADD COLUMN IF NOT EXISTS "mediaUrl" TEXT;
+ALTER TABLE "CaptureItem" ADD COLUMN IF NOT EXISTS "mediaType" TEXT;
+ALTER TABLE "CaptureItem" ADD COLUMN IF NOT EXISTS "observedAt" TIMESTAMP(3);
+ALTER TABLE "CaptureItem" ADD COLUMN IF NOT EXISTS "location" TEXT;
+ALTER TABLE "CaptureItem" ADD COLUMN IF NOT EXISTS "rightsStatus" TEXT;
+ALTER TABLE "CaptureItem" ADD COLUMN IF NOT EXISTS "transcript" TEXT;
+ALTER TYPE "ContentTenant" ADD VALUE IF NOT EXISTS 'cre_advisory';

@@ -4,7 +4,7 @@
 //
 //   Payload → Validation → Run → Draft → Response
 //
-// `composeRachelDraft` performs validation + deterministic composition (it throws on invalid
+// `composeDraft` performs validation + deterministic composition (it throws on invalid
 // payloads, satisfying the fail-fast requirement). This layer wraps it to create a Run and a Draft
 // and return their identifiers, proving the integration boundary documented in
 // docs/TIF_RACHEL_DRAFT_API.md and TKO_INTELLIGENCE_FACTORY_PRD.md.
@@ -14,7 +14,7 @@
 // layers on top of this contract without changing it. No publishing, no external AI, no workflow.
 
 import { randomUUID } from "node:crypto";
-import { composeRachelDraft, type ComposeDraftRequest } from "./draft-composer";
+import { composeDraft, type ComposeDraftRequest } from "./draft-composer";
 import type { ComposeResponse } from "./contract";
 
 function generateId(prefix: string): string {
@@ -27,7 +27,7 @@ function generateId(prefix: string): string {
  */
 export function runCompose(payload: ComposeDraftRequest): ComposeResponse {
   // Validation + composition (fail-fast: throws before any run/draft is created).
-  const draft = composeRachelDraft(payload);
+  const draft = composeDraft(payload);
 
   // Run creation → Draft creation.
   const runId = generateId("run");

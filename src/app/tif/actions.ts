@@ -9,11 +9,14 @@ import {
   ContentTenant,
   DerivativeAssetType,
   OpportunitySourceType,
+  Prisma,
 } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
+  type ChannelPackageContext,
   type DerivativeAssetKind,
+  deriveBehavioralContentStrategy,
   generateDerivativeCopy,
   makeContentSlug,
 } from "@/lib/tif/content-workflow";
@@ -137,6 +140,32 @@ export async function createDerivativeAsset(formData: FormData) {
   const assetId = requiredString(formData, "assetId");
   const slug = requiredString(formData, "slug");
   const type = enumValue(DerivativeAssetType, requiredString(formData, "type"), "type") as DerivativeAssetKind;
+  const privacyMode = optionalString(formData, "privacyMode") as ChannelPackageContext["privacyMode"];
+  const context: ChannelPackageContext = {
+    voice: optionalString(formData, "voice"),
+    audience: optionalString(formData, "audience"),
+    objective: optionalString(formData, "objective"),
+    cta: optionalString(formData, "cta"),
+    destinationUrl: optionalString(formData, "destinationUrl"),
+    geography: optionalString(formData, "geography"),
+    privacyMode,
+    channelNotes: optionalString(formData, "channelNotes"),
+    buyerDomain: optionalString(formData, "buyerDomain") as ChannelPackageContext["buyerDomain"],
+    journeyStage: optionalString(formData, "journeyStage") as ChannelPackageContext["journeyStage"],
+    searchIntent: optionalString(formData, "searchIntent") as ChannelPackageContext["searchIntent"],
+    searchPhrase: optionalString(formData, "searchPhrase"),
+    decisionJob: optionalString(formData, "decisionJob") as ChannelPackageContext["decisionJob"],
+    expressedMotivation: optionalString(formData, "expressedMotivation"),
+    barrier: optionalString(formData, "barrier"),
+    priceOrValueContext: optionalString(formData, "priceOrValueContext"),
+    desiredAction: optionalString(formData, "desiredAction"),
+    market: optionalString(formData, "market"),
+    propertyOrBusinessType: optionalString(formData, "propertyOrBusinessType"),
+    leaseOrExitHorizon: optionalString(formData, "leaseOrExitHorizon"),
+    fieldObservationSummary: optionalString(formData, "fieldObservationSummary"),
+    referralPartner: optionalString(formData, "referralPartner"),
+    licenseDisclosure: optionalString(formData, "licenseDisclosure"),
+  };
 
   const asset = await tifDb.asset.findUnique({
     where: { id: assetId },
@@ -153,13 +182,16 @@ export async function createDerivativeAsset(formData: FormData) {
   const body =
     latestVersion?.body ??
     `Source asset "${asset.title}" has no captured draft version yet. Regenerate the asset first.`;
+  const behavioralStrategy = deriveBehavioralContentStrategy(context, `${asset.title} ${body}`);
 
   await tifDb.derivativeAsset.create({
     data: {
       assetId,
       type,
       sourceVersionNumber: latestVersion?.versionNumber,
-      body: generateDerivativeCopy({ type, title: asset.title, body }),
+      body: generateDerivativeCopy({ type, title: asset.title, body, context }),
+      context: JSON.parse(JSON.stringify(context)) as Prisma.InputJsonValue,
+      behavioralStrategy: JSON.parse(JSON.stringify(behavioralStrategy)) as Prisma.InputJsonValue,
     },
   });
 

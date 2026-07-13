@@ -1,8 +1,22 @@
 import { z } from "zod";
 
-const FrameworkSchema = z.enum(["rachel_community", "rachel_relocation"]);
-const ArtifactSchema = z.enum(["community_page", "comparison_page", "comparison_guide", "relocation_guide"]);
-const VoiceSchema = z.enum(["rachel", "consumer"]);
+const FrameworkSchema = z.enum(["rachel_community", "rachel_relocation", "cre_tenant_rep", "business_exit"]);
+const ArtifactSchema = z.enum([
+  "community_page",
+  "comparison_page",
+  "comparison_guide",
+  "relocation_guide",
+  "cre_area_page",
+  "cre_neighborhood_page",
+  "cre_corridor_page",
+  "cre_medical_cluster_page",
+  "cre_site_report",
+  "cre_corridor_comparison",
+  "tenant_rep_guide",
+  "business_exit_guide",
+  "transferability_assessment_page",
+]);
+const VoiceSchema = z.enum(["rachel", "consumer", "todd", "commercial_operator"]);
 
 const ComposeDraftRequestSchema = z.object({
   framework: FrameworkSchema,
@@ -25,6 +39,21 @@ const ComposeDraftRequestSchema = z.object({
       targetSegments: z.array(z.string().min(2)).optional(),
       tags: z.array(z.string().min(2)).optional(),
       internalLinks: z.array(z.string().min(2)).optional(),
+      market: z.string().min(2).optional(),
+      corridor: z.string().min(2).optional(),
+      corridors: z.array(z.string().min(2)).optional(),
+      neighborhood: z.string().min(2).optional(),
+      medicalCluster: z.string().min(2).optional(),
+      siteName: z.string().min(2).optional(),
+      address: z.string().min(2).optional(),
+      operatorType: z.string().min(2).optional(),
+      businessType: z.string().min(2).optional(),
+      leaseHorizon: z.string().min(2).optional(),
+      exitHorizon: z.string().min(2).optional(),
+      fieldObservations: z.array(z.string().min(2)).optional(),
+      licenseStatus: z.enum(["pre_license", "active_sales_associate", "active_broker"]).optional(),
+      brokerageName: z.string().min(2).optional(),
+      licensedReferralPartner: z.string().min(2).optional(),
     })
     .default({}),
 });
@@ -75,6 +104,17 @@ function getDestinationMarket(request: ParsedRequest) {
 
 function validateRequest(request: ParsedRequest) {
   const errors: string[] = [];
+  const rachelArtifacts = new Set(["community_page", "comparison_page", "comparison_guide", "relocation_guide"]);
+  const creArtifacts = new Set([
+    "cre_area_page",
+    "cre_neighborhood_page",
+    "cre_corridor_page",
+    "cre_medical_cluster_page",
+    "cre_site_report",
+    "cre_corridor_comparison",
+    "tenant_rep_guide",
+  ]);
+  const exitArtifacts = new Set(["business_exit_guide", "transferability_assessment_page"]);
 
   if (request.framework === "rachel_relocation" && request.artifact !== "relocation_guide") {
     errors.push("rachel_relocation can only compose relocation_guide drafts in this first slice.");
@@ -82,6 +122,26 @@ function validateRequest(request: ParsedRequest) {
 
   if (request.framework === "rachel_community" && request.artifact === "relocation_guide") {
     errors.push("rachel_community cannot compose relocation_guide drafts.");
+  }
+
+  if (request.framework.startsWith("rachel_") && !rachelArtifacts.has(request.artifact)) {
+    errors.push("Rachel frameworks cannot compose commercial-site artifacts.");
+  }
+
+  if (request.framework === "cre_tenant_rep" && !creArtifacts.has(request.artifact)) {
+    errors.push("cre_tenant_rep requires a CRE area, neighborhood, corridor, cluster, site, comparison, or tenant-rep artifact.");
+  }
+
+  if (request.framework === "business_exit" && !exitArtifacts.has(request.artifact)) {
+    errors.push("business_exit can only compose business_exit_guide or transferability_assessment_page.");
+  }
+
+  if ((request.framework === "cre_tenant_rep" || request.framework === "business_exit") && !request.inputs.market) {
+    errors.push("Commercial-site drafts require inputs.market.");
+  }
+
+  if (request.artifact === "cre_corridor_comparison" && (!request.inputs.corridors || request.inputs.corridors.length < 2)) {
+    errors.push("cre_corridor_comparison requires inputs.corridors with at least two corridors.");
   }
 
   if (request.artifact === "comparison_guide" || request.artifact === "comparison_page") {
@@ -505,20 +565,145 @@ ${ctaBlock()}
   return { title, slug, markdown };
 }
 
-export function composeRachelDraft(payload: ComposeDraftRequest): ComposeDraftResult {
+function commercialFrontmatter(params: {
+  title: string;
+  slug: string;
+  artifact: ParsedRequest["artifact"];
+  market: string;
+  audience: string;
+}) {
+  return `---
+title: "${params.title.replaceAll('"', '\\"')}"
+slug: ${params.slug}
+type: ${params.artifact}
+market: "${params.market.replaceAll('"', '\\"')}"
+audience: "${params.audience.replaceAll('"', '\\"')}"
+draftStatus: tko-draft
+publishDate: '${todayIsoDate()}'
+lastUpdated: '${todayIsoDate()}'
+licenseReviewRequired: true
+intelligenceSource: cre-intelligence
+---`;
+}
+
+function commercialLicenseBlock(request: ParsedRequest) {
+  if (request.inputs.licenseStatus === "active_broker" || request.inputs.licenseStatus === "active_sales_associate") {
+    return `VERIFY before publication: confirm active license, registered brokerage (${request.inputs.brokerageName ?? "ADD BROKERAGE"}), advertising approval, and the exact brokerage relationship offered.`;
+  }
+  return `Pre-license boundary: educational and operational intelligence only. Do not present Todd as a broker or sales associate. Route licensed tenant-representation or business-brokerage services to ${request.inputs.licensedReferralPartner ?? "a confirmed licensed commercial partner"}.`;
+}
+
+function commercialDraft(request: ParsedRequest, warnings: string[]) {
+  const market = request.inputs.market ?? "VERIFY South Florida Market";
+  const subject = request.inputs.corridor
+    ?? request.inputs.neighborhood
+    ?? request.inputs.medicalCluster
+    ?? request.inputs.siteName
+    ?? request.inputs.businessType
+    ?? request.inputs.operatorType
+    ?? market;
+  const titleByArtifact: Record<string, string> = {
+    cre_area_page: `${market} Commercial Real Estate Intelligence for Business Operators`,
+    cre_neighborhood_page: `${subject}: Commercial Location Intelligence`,
+    cre_corridor_page: `${subject}: Tenant and Operator Corridor Guide`,
+    cre_medical_cluster_page: `${subject}: Medical Office and Healthcare Location Guide`,
+    cre_site_report: `${subject}: Operator-Informed Site Report`,
+    cre_corridor_comparison: `${(request.inputs.corridors ?? []).join(" vs ")}: Which Corridor Fits the Operation?`,
+    tenant_rep_guide: `How to Make a Better ${market} Lease and Location Decision`,
+    business_exit_guide: `Preparing a ${request.inputs.businessType ?? "Business"} to Operate Without the Owner`,
+    transferability_assessment_page: `Business Transferability Assessment for ${request.inputs.businessType ?? "Owner-Led Companies"}`,
+  };
+  const title = request.inputs.title ?? titleByArtifact[request.artifact] ?? `${subject} Intelligence`;
+  const slug = request.inputs.slug ?? slugify(title);
+  const isExit = request.framework === "business_exit";
+  const audience = isExit
+    ? "business owners preparing for succession, transfer, or a future sale"
+    : `${request.inputs.operatorType ?? "business operators"} evaluating ${market}`;
+  const observations = request.inputs.fieldObservations?.length
+    ? request.inputs.fieldObservations.map((item) => `- ${item}`).join("\n")
+    : "- VERIFY: add dated field observations, source, location, confidence, and media references.";
+
+  const body = isExit
+    ? `## The Operating Question
+
+Can this business produce reliable results, decisions, and customer value without the owner's constant intervention?
+
+## Transferability Evidence
+
+- Revenue, margin, pipeline, and customer concentration visibility.
+- Documented workflows, exceptions, controls, and decision rights.
+- Management depth, role clarity, and accountability.
+- Vendor, employee, facility, technology, and compliance dependencies.
+- A staged owner-transition plan supported by operating evidence.
+
+## What This Is Not
+
+This is not a valuation, listing agreement, brokerage opinion, legal opinion, tax advice, or promise of a premium. Independent licensed brokerage, legal, tax, and financial advice remains separate.
+
+## Engagement Path
+
+An operational assessment may lead to a scoped operating-system implementation when evidence shows that owner dependency, unreliable reporting, or undocumented workflows are constraining transferability. Pricing and scope follow diagnosis; no engagement guarantees a transaction or valuation outcome.`
+    : `## Operator Decision
+
+Define the operating requirement before selecting real estate: customer geography, staffing, workflow, access, parking, visibility, configuration, buildout, lease timing, and flexibility.
+
+## Field Intelligence
+
+${observations}
+
+## Fit and Poor Fit
+
+State who this location, corridor, or market may fit—and who should avoid it—using verified operating criteria rather than generic market prose.
+
+## Lease and Location Risks
+
+VERIFY current availability, asking economics, use/zoning, parking, access, signage, buildout, operating expenses, and lease terms with qualified licensed and legal professionals.
+
+## Licensed Representation
+
+${commercialLicenseBlock(request)}`;
+
+  const markdown = `${commercialFrontmatter({ title, slug, artifact: request.artifact, market, audience })}
+# ${title}
+
+${draftNotes(warnings)}
+
+This page helps ${audience} make a high-stakes decision with clearer operating criteria, field evidence, and explicit verification boundaries.
+
+${body}
+
+## Next Step
+
+${isExit
+  ? "Start with an operational-readiness conversation; engage independent licensed transaction advisors separately."
+  : commercialLicenseBlock(request)}
+`;
+
+  return { title, slug, markdown };
+}
+
+export function composeDraft(payload: ComposeDraftRequest): ComposeDraftResult {
   const request = normalizeRequest(payload);
   const validationErrors = validateRequest(request);
   if (validationErrors.length > 0) {
     throw new Error(validationErrors.join(" "));
   }
 
-  const warnings = [
-    "Pricing, HOA, tax, amenity, and inventory claims must be verified before publishing.",
-    "This draft intentionally avoids unsupported claims and leaves VERIFY markers where source facts are needed.",
-  ];
+  const isCommercial = request.framework === "cre_tenant_rep" || request.framework === "business_exit";
+  const warnings = isCommercial
+    ? [
+        "Availability, lease economics, zoning/use, operating performance, valuation, and transaction claims require current source verification.",
+        "License and brokerage status must be reviewed before every publication or CTA change.",
+        "Field observations must include provenance, date, location, rights, and a separation between visible fact and operator judgment.",
+      ]
+    : [
+        "Pricing, HOA, tax, amenity, and inventory claims must be verified before publishing.",
+        "This draft intentionally avoids unsupported claims and leaves VERIFY markers where source facts are needed.",
+      ];
 
-  const draft =
-    request.artifact === "relocation_guide"
+  const draft = isCommercial
+    ? commercialDraft(request, warnings)
+    : request.artifact === "relocation_guide"
       ? relocationDraft(request, warnings)
       : request.artifact === "community_page"
         ? communityDraft(request, warnings)
@@ -533,7 +718,11 @@ export function composeRachelDraft(payload: ComposeDraftRequest): ComposeDraftRe
     title: draft.title,
     markdown: draft.markdown,
     warnings,
-    suggestedPath: `src/content/guides/${draft.slug}.md`,
+    suggestedPath: isCommercial
+      ? `src/content/commercial/${draft.slug}.md`
+      : `src/content/guides/${draft.slug}.md`,
   };
 }
 
+// Compatibility export for the original RachelOS integration. New callers should use composeDraft.
+export const composeRachelDraft = composeDraft;

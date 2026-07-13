@@ -94,6 +94,23 @@ export default async function CaptureInboxPage() {
           <input name="tags" className="w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="human-api, pa, denial" />
         </Field>
 
+        <div className="border-t border-border pt-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted">Optional media evidence</p>
+          <p className="mt-1 text-xs text-muted">Reference an already uploaded clip or image. Direct binary upload/storage is not part of this slice.</p>
+        </div>
+        <Field label="Media URL">
+          <input name="mediaUrl" type="url" className="w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="https://..." />
+        </Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Media type"><input name="mediaType" className="w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="drive-by video, photo, voice memo" /></Field>
+          <Field label="Observed at"><input name="observedAt" type="datetime-local" className="w-full rounded-lg border border-border px-3 py-2 text-sm" /></Field>
+          <Field label="Location"><input name="location" className="w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="Center, corridor, address" /></Field>
+          <Field label="Rights"><input name="rightsStatus" className="w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="owned, permission, licensed" /></Field>
+        </div>
+        <Field label="Transcript / field memo">
+          <textarea name="transcript" rows={3} className="w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="What is visible, what it may mean, and what still needs verification" />
+        </Field>
+
         <button
           type="submit"
           className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:opacity-90"
@@ -121,6 +138,14 @@ export default async function CaptureInboxPage() {
                 {item.businessUnit ? ` · ${item.businessUnit}` : " · unclassified"}
                 {item.tags.length > 0 ? ` · ${item.tags.join(", ")}` : ""}
               </p>
+              {item.mediaUrl && (
+                <p className="mt-2 text-xs text-muted">
+                  <a href={item.mediaUrl} target="_blank" rel="noreferrer" className="font-semibold text-primary hover:underline">Media evidence</a>
+                  {item.mediaType ? ` · ${item.mediaType}` : ""}
+                  {item.location ? ` · ${item.location}` : ""}
+                  {item.rightsStatus ? ` · rights: ${item.rightsStatus}` : ""}
+                </p>
+              )}
             </div>
           ))}
           {items.length === 0 && <p className="p-4 text-sm text-muted">Nothing captured yet.</p>}

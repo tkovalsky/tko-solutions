@@ -11,6 +11,12 @@ const captureSchema = z.object({
   source: z.enum(CaptureSource),
   businessUnit: z.enum(BusinessUnit).optional(),
   tags: z.string().optional(),
+  mediaUrl: z.string().url().optional(),
+  mediaType: z.string().trim().optional(),
+  observedAt: z.string().optional(),
+  location: z.string().trim().optional(),
+  rightsStatus: z.string().trim().optional(),
+  transcript: z.string().trim().optional(),
 });
 
 function slugify(title: string) {
@@ -30,6 +36,12 @@ export async function createCaptureItem(formData: FormData) {
     source: formData.get("source"),
     businessUnit: formData.get("businessUnit") || undefined,
     tags: formData.get("tags") || undefined,
+    mediaUrl: formData.get("mediaUrl") || undefined,
+    mediaType: formData.get("mediaType") || undefined,
+    observedAt: formData.get("observedAt") || undefined,
+    location: formData.get("location") || undefined,
+    rightsStatus: formData.get("rightsStatus") || undefined,
+    transcript: formData.get("transcript") || undefined,
   });
 
   const tags = (parsed.tags ?? "")
@@ -45,6 +57,12 @@ export async function createCaptureItem(formData: FormData) {
       source: parsed.source,
       businessUnit: parsed.businessUnit ?? null,
       tags,
+      mediaUrl: parsed.mediaUrl ?? null,
+      mediaType: parsed.mediaType ?? null,
+      observedAt: parsed.observedAt ? new Date(parsed.observedAt) : null,
+      location: parsed.location ?? null,
+      rightsStatus: parsed.rightsStatus ?? null,
+      transcript: parsed.transcript ?? null,
     },
   });
 

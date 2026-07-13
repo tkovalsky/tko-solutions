@@ -279,8 +279,148 @@ function DerivativeForm({ assetId, slug }: { assetId: string; slug: string }) {
           ))}
         </select>
       </label>
+      <details className="mt-3 text-sm" open>
+        <summary className="cursor-pointer font-semibold">Channel context</summary>
+        <div className="mt-3 grid gap-3">
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Voice</span>
+            <select name="voice" defaultValue="rachel" className="rounded-md border border-input-border px-3 py-2">
+              <option value="rachel">Rachel</option>
+              <option value="todd">Todd / TKO</option>
+              <option value="consumer">Consumer</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Audience</span>
+            <input name="audience" placeholder="NJ buyers relocating to Florida" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Objective</span>
+            <input name="objective" placeholder="Drive qualified guide visits" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">CTA</span>
+            <input name="cta" defaultValue="Learn More" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Tracked content link</span>
+            <input name="destinationUrl" type="url" placeholder="https://...?...utm_source=" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Geography</span>
+            <input name="geography" defaultValue="Florida" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Privacy treatment</span>
+            <select name="privacyMode" defaultValue="not_applicable" className="rounded-md border border-input-border px-3 py-2">
+              <option value="not_applicable">Not applicable</option>
+              <option value="anonymized">Anonymized real situation</option>
+              <option value="composite">Clearly labeled composite</option>
+              <option value="consent_backed">Consent-backed story</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Channel rules / notes</span>
+            <textarea name="channelNotes" rows={2} placeholder="Subreddit rules, placement limits, claim guards..." className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <div className="border-t border-border pt-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">Behavioral alignment</p>
+          </div>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Buyer domain</span>
+            <select name="buyerDomain" defaultValue="rachel_luxury" className="rounded-md border border-input-border px-3 py-2">
+              <option value="rachel_luxury">Rachel luxury / relocation</option>
+              <option value="tko_executive">TKO operator / executive</option>
+              <option value="cre_tenant_rep">CRE tenant representation</option>
+              <option value="business_owner_exit">Business-owner exit readiness</option>
+              <option value="general">General</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Buyer journey stage</span>
+            <select name="journeyStage" defaultValue="exploring" className="rounded-md border border-input-border px-3 py-2">
+              <option value="exploring">Exploring possibilities</option>
+              <option value="defining">Defining the decision</option>
+              <option value="comparing">Comparing options</option>
+              <option value="validating">Validating trust and proof</option>
+              <option value="ready_to_act">Ready to act</option>
+              <option value="post_decision">Post-decision</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Search intent</span>
+            <select name="searchIntent" defaultValue="specific" className="rounded-md border border-input-border px-3 py-2">
+              <option value="broad">Broad research</option>
+              <option value="specific">Specific / detailed question</option>
+              <option value="high_intent">High intent</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Observed search phrase</span>
+            <input name="searchPhrase" placeholder="Where can I find the Florida home that fits my next chapter?" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Decision job</span>
+            <select name="decisionJob" defaultValue="certainty" className="rounded-md border border-input-border px-3 py-2">
+              <option value="possibility">Possibility / aspiration</option>
+              <option value="identity">Identity / next role</option>
+              <option value="belonging">Belonging / community</option>
+              <option value="certainty">Certainty</option>
+              <option value="simplification">Simplification</option>
+              <option value="legacy">Legacy / family</option>
+              <option value="control">Control / governance</option>
+              <option value="risk_reduction">Risk reduction</option>
+              <option value="location_fit">Location / occupancy fit</option>
+              <option value="transferability">Business transferability</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Expressed motivation</span>
+            <textarea name="expressedMotivation" rows={2} placeholder="Use the person's own words; do not infer sensitive traits." className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Barrier or unanswered question</span>
+            <textarea name="barrier" rows={2} placeholder="What is keeping the person from deciding?" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Price / value context</span>
+            <input name="priceOrValueContext" placeholder="$2M–$5M homes or Director–VP operating impact" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Desired next action</span>
+            <textarea name="desiredAction" rows={2} placeholder="Call Rachel for a guided shortlist; connect with Todd about the operating problem..." className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <div className="border-t border-border pt-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">Commercial context</p>
+          </div>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Market / corridor</span>
+            <input name="market" placeholder="Delray Beach east; Congress Avenue corridor" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Property or business type</span>
+            <input name="propertyOrBusinessType" placeholder="Medical office, restaurant, professional services firm..." className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Lease or exit horizon</span>
+            <input name="leaseOrExitHorizon" placeholder="Renewal in 12 months; owner exit in 24–36 months" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Field observation summary</span>
+            <textarea name="fieldObservationSummary" rows={3} placeholder="Dated observations from a safe drive-by or site visit; separate visible facts from judgment." className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Licensed referral partner</span>
+            <input name="referralPartner" placeholder="Confirm person and brokerage before publishing" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Licensing disclosure</span>
+            <textarea name="licenseDisclosure" rows={3} placeholder="Educational intelligence only; licensed services handled by..." className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+        </div>
+      </details>
       <button type="submit" className="mt-3 rounded-lg border border-primary px-3 py-1.5 text-sm font-semibold text-primary">
-        Generate Copy
+        Generate Channel Package
       </button>
     </form>
   );

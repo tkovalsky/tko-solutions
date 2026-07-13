@@ -290,7 +290,7 @@ describe("TIF deliverable readiness", () => {
       evidence_count: 1,
       has_asset: false,
       next_action: "Produce the deliverable from the existing opportunity and evidence.",
-      channel_readiness_counts: { ready: 5, partial: 1, blocked: 4 },
+      channel_readiness_counts: { ready: 11, partial: 1, blocked: 5 },
     });
   });
 

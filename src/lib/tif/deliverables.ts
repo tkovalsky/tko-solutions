@@ -25,13 +25,20 @@ export const DELIVERABLE_TYPES = [
 
 export const DELIVERABLE_STATUSES = ["ready", "in_progress", "blocked", "published"] as const;
 export const CHANNEL_PACKAGE_TYPES = [
+  "story_page",
   "seo_page",
   "pdf",
   "linkedin_post",
   "linkedin_carousel",
   "facebook_post",
   "facebook_ad",
+  "instagram_post",
+  "instagram_story",
+  "instagram_reel",
   "reddit_post",
+  "youtube_video",
+  "youtube_short",
+  "video_shot_list",
   "email_sequence",
   "crm_next_touch_asset",
   "sales_one_pager",
@@ -169,13 +176,20 @@ const TYPE_LABELS: Record<DeliverableType, string> = {
 };
 
 export const CHANNEL_PACKAGE_LABELS: Record<ChannelPackageType, string> = {
+  story_page: "Story Page",
   seo_page: "SEO Page",
   pdf: "PDF",
   linkedin_post: "LinkedIn Post",
   linkedin_carousel: "LinkedIn Carousel",
   facebook_post: "Facebook Post",
   facebook_ad: "Facebook Ad",
+  instagram_post: "Instagram Post",
+  instagram_story: "Instagram Story",
+  instagram_reel: "Instagram Reel",
   reddit_post: "Reddit Post",
+  youtube_video: "YouTube Video",
+  youtube_short: "YouTube Short",
+  video_shot_list: "Video Shot List",
   email_sequence: "Email Sequence",
   crm_next_touch_asset: "CRM Next Touch Asset",
   sales_one_pager: "Sales One Pager",
@@ -652,6 +666,12 @@ export function getChannelPackageReadiness(deliverable: Pick<
   const signals = deliverable.channel_signals;
 
   return {
+    story_page:
+      signals.source_insight_exists && isDeliverableReady
+        ? "ready"
+        : signals.draft_exists
+          ? "partial"
+          : "blocked",
     seo_page:
       signals.title_exists && signals.topic_exists && isDeliverableReady
         ? "ready"
@@ -686,8 +706,36 @@ export function getChannelPackageReadiness(deliverable: Pick<
         : signals.audience_exists && !signals.cta_exists
           ? "partial"
           : "blocked",
+    instagram_post:
+      signals.audience_exists && (signals.source_insight_exists || isDeliverableReady)
+        ? "ready"
+        : "blocked",
+    instagram_story:
+      signals.audience_exists && signals.body_content_exists
+        ? "ready"
+        : signals.draft_exists
+          ? "partial"
+          : "blocked",
+    instagram_reel:
+      signals.audience_exists && signals.source_insight_exists
+        ? "ready"
+        : "blocked",
     reddit_post:
       signals.topic_exists && signals.source_insight_exists
+        ? "ready"
+        : "blocked",
+    youtube_video:
+      signals.audience_exists && signals.source_insight_exists && isDeliverableReady
+        ? "ready"
+        : signals.draft_exists
+          ? "partial"
+          : "blocked",
+    youtube_short:
+      signals.source_insight_exists || isDeliverableReady
+        ? "ready"
+        : "blocked",
+    video_shot_list:
+      signals.topic_exists && signals.title_exists
         ? "ready"
         : "blocked",
     email_sequence:

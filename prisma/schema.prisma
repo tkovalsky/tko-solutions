@@ -20,6 +20,7 @@ enum ContentTenant {
   tko
   boundos
   rachel_delray
+  cre_advisory
 }
 
 enum AssetType {
@@ -82,8 +83,32 @@ enum RevisionRequestStatus {
 }
 
 enum DerivativeAssetType {
+  behavioral_content_brief
+  cre_tenant_rep_brief
+  cre_site_driveby_report
+  cre_corridor_comparison
+  cre_lease_decision_guide
+  business_exit_readiness_brief
+  business_transferability_assessment
+  owner_operating_system_brief
+  cre_field_video_brief
+  story_page
   linkedin_post
+  linkedin_carousel
   facebook_post
+  instagram_post
+  instagram_story
+  instagram_reel_script
+  reddit_post
+  youtube_video_brief
+  youtube_short_script
+  video_shot_list
+  meta_ad
+  meta_ad_set
+  meta_video_script
+  meta_image_brief
+  email_next_touch
+  image_brief
   email_draft
   ad_concept
   summary
@@ -101,6 +126,12 @@ model CaptureItem {
   source       CaptureSource
   status       CaptureStatus @default(inbox)
   businessUnit BusinessUnit?
+  mediaUrl      String?
+  mediaType     String?
+  observedAt    DateTime?
+  location      String?
+  rightsStatus  String?
+  transcript    String?
 
   promotedToEvidenceId String?
   promotedToEvidence   Evidence? @relation(fields: [promotedToEvidenceId], references: [id])
@@ -264,6 +295,8 @@ model DerivativeAsset {
   asset               Asset               @relation(fields: [assetId], references: [id])
   type                DerivativeAssetType
   body                String
+  context             Json?
+  behavioralStrategy Json?
   sourceVersionNumber Int?
   createdAt           DateTime            @default(now())
 
