@@ -2637,6 +2637,16 @@ source intake
 
 ---
 
+## P0K-01 — Typed knowledge joins for public diagram lineage
+
+**Priority:** P1
+
+**Rationale:** The production diagram factory reuses the existing `AssetEvidence` and `AssetDiagram` joins. The current running schema does not yet persist normalized Experience, Problem, Pattern, Framework, Authority Package, Guide, Assessment, Offer, or Operator Note records, so the public diagrams cite source artifacts without creating a parallel JSON registry.
+
+**Dependencies:** Approved normalized registries and typed join contracts that extend the existing Asset lifecycle without replacing it.
+
+**Expected value:** A buyer and editor can traverse an executive diagram directly to every related knowledge record and derivative asset while preserving one authoritative evidence and publication workflow.
+
 # BUSINESS SUCCESS CRITERIA
 
 TIF is NOT successful because software exists.

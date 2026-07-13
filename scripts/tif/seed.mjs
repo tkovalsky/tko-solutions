@@ -3,6 +3,7 @@
 // content/proof/*/evidence.yaml record instead of duplicating it (reuse-first per CLAUDE.md).
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import { FLAGSHIP_DIAGRAMS, flagshipDiagramBody } from "./flagship-diagrams.mjs";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -280,8 +281,40 @@ async function main() {
     }
   }
 
+  for (const diagram of FLAGSHIP_DIAGRAMS) {
+    const linkedEvidence = diagram.evidenceSlugs.map((slug) => {
+      const evidenceRecord = evidenceBySlug.get(slug);
+      if (!evidenceRecord) throw new Error(`Flagship diagram ${diagram.knowledgeId} references unknown evidence: ${slug}`);
+      return evidenceRecord;
+    });
+    const opportunity = await prisma.assetOpportunity.upsert({
+      where: { slug: diagram.slug },
+      update: { title: diagram.title, tenant: "tko", businessUnit: "tko", assetType: "knowledge_diagram", angle: diagram.purpose, audience: diagram.audience.join(", "), sourceType: "existing_guide", contextNotes: `P0K ${diagram.knowledgeId} · ${diagram.family}\nClaim boundary: ${diagram.boundary}` },
+      create: { slug: diagram.slug, title: diagram.title, tenant: "tko", businessUnit: "tko", assetType: "knowledge_diagram", angle: diagram.purpose, audience: diagram.audience.join(", "), sourceType: "existing_guide", contextNotes: `P0K ${diagram.knowledgeId} · ${diagram.family}\nClaim boundary: ${diagram.boundary}` },
+    });
+    const body = flagshipDiagramBody(diagram, linkedEvidence);
+    const asset = await prisma.asset.upsert({
+      where: { slug: diagram.slug },
+      update: { title: diagram.title, tenant: "tko", businessUnit: "tko", assetType: "knowledge_diagram", status: "published", outputPath: `asset-production/generated/${diagram.slug}.md`, opportunityId: opportunity.id },
+      create: { slug: diagram.slug, title: diagram.title, tenant: "tko", businessUnit: "tko", assetType: "knowledge_diagram", status: "published", outputPath: `asset-production/generated/${diagram.slug}.md`, opportunityId: opportunity.id },
+    });
+    await prisma.knowledgeDiagram.upsert({
+      where: { assetId: asset.id },
+      update: { knowledgeId: diagram.knowledgeId, diagramFormat: diagram.format, purpose: diagram.purpose, executiveAudience: diagram.audience, businessProblem: diagram.problem, inputs: diagram.sourceRefs, outputs: [diagram.decision], claimBoundary: diagram.boundary, evidenceStatus: diagram.evidenceStatus, createdBy: "p0k-executive-diagram-factory" },
+      create: { knowledgeId: diagram.knowledgeId, assetId: asset.id, diagramFormat: diagram.format, purpose: diagram.purpose, executiveAudience: diagram.audience, businessProblem: diagram.problem, inputs: diagram.sourceRefs, outputs: [diagram.decision], claimBoundary: diagram.boundary, evidenceStatus: diagram.evidenceStatus, createdBy: "p0k-executive-diagram-factory" },
+    });
+    await prisma.assetEvidence.createMany({ data: linkedEvidence.map((item) => ({ assetId: asset.id, evidenceId: item.id })), skipDuplicates: true });
+    const existingVersion = await prisma.assetVersion.findFirst({ where: { assetId: asset.id, body }, select: { id: true } });
+    if (!existingVersion) {
+      const aggregate = await prisma.assetVersion.aggregate({ where: { assetId: asset.id }, _max: { versionNumber: true } });
+      const versionNumber = (aggregate._max.versionNumber ?? 0) + 1;
+      await prisma.assetVersion.create({ data: { assetId: asset.id, versionNumber, title: diagram.title, body, revisionNotes: "P0K executive-diagram factory review draft.", createdBy: "p0k-executive-diagram-factory" } });
+      await prisma.asset.update({ where: { id: asset.id }, data: { currentVersionNumber: versionNumber } });
+    }
+  }
+
   console.log(
-    `Seeded ${captureItems.length} capture items, ${evidence.length} evidence records, ${opportunities.length} asset opportunities.`,
+    `Seeded ${captureItems.length} capture items, ${evidence.length} evidence records, ${opportunities.length} asset opportunities, and ${FLAGSHIP_DIAGRAMS.length} published flagship diagrams.`,
   );
 }
 
