@@ -9,7 +9,7 @@ Fill every [BRACKET]; delete guidance before publishing.
 ---
 title: "Operational Intelligence vs Reporting"
 slug: operational-intelligence-vs-reporting
-published_url: https://tkosolutions.com/insights/operational-intelligence-vs-reporting
+published_url: https://tko.solutions/insights/operational-intelligence-vs-reporting
 type: insight
 asset_type: article
 business_unit: tko

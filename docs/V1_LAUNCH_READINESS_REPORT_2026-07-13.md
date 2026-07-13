@@ -58,7 +58,7 @@ None found in the repository build, route generation, test suite, or launch meta
 
 ## Remaining publication blockers
 
-1. Confirm production `NEXT_PUBLIC_SITE_URL` is the canonical live domain.
+1. Set production `NEXT_PUBLIC_SITE_URL=https://tko.solutions` in Vercel so the runtime configuration matches the canonical live domain.
 2. Set Google and Bing verification environment variables and complete ownership verification.
 3. Confirm analytics events, contact-form delivery, consent treatment, and production database connectivity.
 4. Publish or deliberately hold the human-reviewed TIF diagram records.
