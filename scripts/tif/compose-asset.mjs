@@ -15,6 +15,7 @@ const TEMPLATE_BY_ASSET_TYPE = {
   case_study: "asset-production/templates/case-study.md",
   assessment: "asset-production/templates/assessment.md",
   intelligence_report: "asset-production/templates/intelligence-report.md",
+  knowledge_diagram: "asset-production/templates/knowledge-diagram.md",
   // landing_page, executive_brief, comparison_guide have no template yet (v0.1 gap).
   // Fall back to article.md rather than block composition.
   landing_page: "asset-production/templates/article.md",

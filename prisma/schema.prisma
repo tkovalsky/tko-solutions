@@ -31,6 +31,28 @@ enum AssetType {
   executive_brief
   comparison_guide
   intelligence_report
+  knowledge_diagram
+}
+
+// Shared claim-evidence vocabulary. It is introduced with Knowledge Diagrams and is
+// intentionally reusable by the planned Evidence maturity extension.
+enum ClaimStatus {
+  verified
+  owner_confirmed
+  experience_based
+  unsupported
+}
+
+enum KnowledgeDiagramFormat {
+  architecture
+  workflow
+  dependency_map
+  decision_rights_matrix
+  heat_map
+  timeline
+  governance_stack
+  operating_loop
+  framework
 }
 
 // Human Approved AI: every generated artifact starts at draft. Future statuses
@@ -255,9 +277,50 @@ model Asset {
   versions        AssetVersion[]
   revisionRequests RevisionRequest[]
   derivativeAssets DerivativeAsset[]
+  knowledgeDiagram KnowledgeDiagram?
+  diagramLinks     AssetDiagram[] @relation("ConsumerAssetDiagrams")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// KnowledgeDiagram is a typed extension of the existing Asset lifecycle. The parent Asset
+// continues to own draft/review/approved/published status, versions, revisions, evidence
+// traceability, and derivatives. This model only holds diagram-specific operating metadata.
+model KnowledgeDiagram {
+  id                 String                 @id @default(cuid())
+  knowledgeId        String                 @unique // KD-001, KD-002, … permanent citation ID
+  assetId            String                 @unique
+  asset              Asset                  @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  diagramFormat      KnowledgeDiagramFormat
+  purpose            String
+  executiveAudience  String[]               @default([])
+  businessProblem    String
+  inputs             Json
+  outputs            Json
+  claimBoundary      String
+  evidenceStatus     ClaimStatus            @default(experience_based)
+  diagramLinks       AssetDiagram[]
+  createdBy          String                 @default("operator")
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+
+  @@index([diagramFormat])
+  @@index([evidenceStatus])
+}
+
+// A Guide, Assessment, Proposal, Operator Note, or other Asset references one or more
+// Knowledge Diagrams through this explicit join. Diagram evidence stays on its parent Asset
+// through the existing AssetEvidence relation; no parallel evidence store is created.
+model AssetDiagram {
+  assetId    String
+  asset      Asset            @relation("ConsumerAssetDiagrams", fields: [assetId], references: [id], onDelete: Cascade)
+  diagramId  String
+  diagram    KnowledgeDiagram @relation(fields: [diagramId], references: [id], onDelete: Cascade)
+  createdAt  DateTime         @default(now())
+
+  @@id([assetId, diagramId])
+  @@index([diagramId])
 }
 
 model AssetVersion {

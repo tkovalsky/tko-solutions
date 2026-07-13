@@ -21,6 +21,7 @@ export const DELIVERABLE_TYPES = [
   "changelog_page",
   "workflow_guide",
   "system_overview",
+  "knowledge_diagram",
 ] as const;
 
 export const DELIVERABLE_STATUSES = ["ready", "in_progress", "blocked", "published"] as const;
@@ -173,6 +174,7 @@ const TYPE_LABELS: Record<DeliverableType, string> = {
   changelog_page: "Changelog Pages",
   workflow_guide: "Workflow Guides",
   system_overview: "System Overviews",
+  knowledge_diagram: "Knowledge Diagrams",
 };
 
 export const CHANNEL_PACKAGE_LABELS: Record<ChannelPackageType, string> = {
@@ -224,6 +226,7 @@ const ASSET_TYPE_TO_DELIVERABLE: Record<string, DeliverableType | undefined> = {
   changelog_page: "changelog_page",
   workflow_guide: "workflow_guide",
   system_overview: "system_overview",
+  knowledge_diagram: "knowledge_diagram",
 };
 
 const PROBLEM_SIGNALS = [
@@ -326,6 +329,7 @@ const BUSINESS_VALUE_BY_TYPE: Record<DeliverableType, number> = {
   changelog_page: 78,
   workflow_guide: 80,
   system_overview: 86,
+  knowledge_diagram: 92,
 };
 const SALES_ONE_PAGER_BUSINESS_VALUE_THRESHOLD = 85;
 
@@ -484,6 +488,14 @@ const COMPONENT_RULES: Record<DeliverableType, ComponentRule[]> = {
       hasSignal(allText(input), ["system", "architecture", "framework", "operating model"]),
     true),
     component("proof", "proof", (input) => hasProof(input), true),
+  ],
+  knowledge_diagram: [
+    component("title", "title", (input) => hasMeaningfulText(input.title)),
+    component("business_problem", "business_problem", (input) => hasProblem(input)),
+    component("evidence", "evidence", (input) => input.evidence.length > 0),
+    component("diagram_specification", "diagram_specification", (input) =>
+      hasSignal(allText(input), ["diagram", "purpose", "inputs", "outputs", "claim boundary"]),
+    ),
   ],
 };
 

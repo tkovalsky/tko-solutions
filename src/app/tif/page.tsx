@@ -104,6 +104,12 @@ export default async function TifConsolePage() {
           <Link href="/tif/inventory" className="font-semibold text-primary underline-offset-2 hover:underline">
             Content Inventory →
           </Link>
+          <Link href="/tif/diagrams" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Knowledge Diagrams →
+          </Link>
+          <Link href="/tif/authority" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Authority Dashboard →
+          </Link>
         </div>
       </header>
 
@@ -148,6 +154,7 @@ export default async function TifConsolePage() {
               <option value="executive_brief">Executive brief</option>
               <option value="comparison_guide">Comparison guide</option>
               <option value="intelligence_report">Intelligence report</option>
+              <option value="knowledge_diagram">Knowledge diagram</option>
             </select>
           </label>
           <label className="grid gap-1 text-sm">
