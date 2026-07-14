@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/site/logo";
 
 const footerLinks = [
+  { href: "/services", label: "Services" },
   { href: "/problems", label: "Problems" },
   { href: "/proof", label: "Proof" },
   { href: "/diagrams", label: "Diagrams" },
@@ -9,7 +10,6 @@ const footerLinks = [
   { href: "/insights", label: "Guides" },
   { href: "/about", label: "About" },
   { href: "/founder", label: "Founder" },
-  { href: "/offers", label: "Assessments" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -20,9 +20,10 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Evidence-backed operational recovery for organizations that need to
-            make hidden work visible, recover stalled workflows, and turn what
-            they know into accountable action.
+            Executive strategy through implementation for complex operations.
+            TKO turns operating problems into working strategy, operating
+            models, products, and AI-enabled systems—from executive decision
+            through production implementation.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 md:justify-self-end">

@@ -100,7 +100,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Schedule an Operational Recovery Assessment
+        Request a Conversation
       </Button>
     </form>
   );

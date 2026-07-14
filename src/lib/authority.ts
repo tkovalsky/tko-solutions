@@ -81,8 +81,8 @@ export const proofPages: ProofPage[] = [
     claimBoundary: healthcareBoundary,
     diagram: "flowchart LR\n  A[Case enters] --> B{Routine or exception?}\n  B -->|Routine| C[Named operational owner]\n  B -->|Exception| D[Evidence check]\n  D --> E[Authorized escalation]\n  C --> F[Decision and rationale recorded]\n  E --> F\n  F --> G[Next review]",
     relatedGuide: { label: "Read the decision-rights guide", href: "/insights/prior-authorization-is-a-decision-rights-problem", description: "Why faster tools do not resolve hidden authority." },
-    relatedAssessment: { label: "Prior Authorization Assessment", href: "/offers/prior-authorization", description: "A fixed-scope review of burden, exceptions, and decision rights." },
-    relatedOffer: { label: "Healthcare Operating Assessment", href: "/offers/healthcare-operating", description: "A broader healthcare workflow and governance assessment." },
+    relatedAssessment: { label: "Prior Authorization Assessment", href: "/services/prior-authorization-assessment", description: "A fixed-scope review of burden, exceptions, and decision rights." },
+    relatedOffer: { label: "Healthcare Operations", href: "/healthcare", description: "The healthcare workflow and governance service lane." },
     score: { ...launchScore, healthcare: 4, founder: 2 },
   },
   {
@@ -104,8 +104,8 @@ export const proofPages: ProofPage[] = [
     claimBoundary: healthcareBoundary,
     diagram: "flowchart LR\n  A[Submission quality] --> B[Exception and denial patterns]\n  B --> C[Evidence and owner]\n  C --> D[Workflow improvement]\n  D --> E[Readiness signal]\n  E --> F[Review, learn, adjust]",
     relatedGuide: { label: "Read the operational-quality guide", href: "/insights/prior-authorization-operational-quality-problem", description: "Why Gold Card is an output, not the operating problem." },
-    relatedAssessment: { label: "Prior Authorization Assessment", href: "/offers/prior-authorization", description: "Review the workflow behind readiness." },
-    relatedOffer: { label: "Decision Rights Workshop", href: "/offers/decision-rights-workshop", description: "Make exception and override authority visible." },
+    relatedAssessment: { label: "Prior Authorization Assessment", href: "/services/prior-authorization-assessment", description: "Review the workflow behind readiness." },
+    relatedOffer: { label: "Prior Authorization Assessment", href: "/services/prior-authorization-assessment", description: "Make exception and override authority visible." },
     score: { ...launchScore, healthcare: 4, founder: 2 },
   },
   {
@@ -127,8 +127,8 @@ export const proofPages: ProofPage[] = [
     claimBoundary: enterpriseBoundary,
     diagram: "flowchart LR\n  A[Workstream status] --> B[Named constraint]\n  B --> C[Evidence and exposure]\n  C --> D{Executive decision}\n  D --> E[Action or escalation]\n  E --> F[Owner and review date]",
     relatedGuide: { label: "Read operational intelligence vs. reporting", href: "/insights/operational-intelligence-vs-reporting", description: "Why dashboards can leave work stuck." },
-    relatedAssessment: { label: "Program Recovery Assessment", href: "/offers/program-recovery", description: "A bounded recovery review for a program under pressure." },
-    relatedOffer: { label: "Portfolio Recovery", href: "/offers/portfolio-recovery", description: "Prioritize recovery decisions across a portfolio." },
+    relatedAssessment: { label: "Recovery", href: "/services/recovery", description: "A bounded recovery review for a program under pressure." },
+    relatedOffer: { label: "Recovery", href: "/services/recovery", description: "Prioritize recovery decisions across a portfolio." },
     score: { ...launchScore, healthcare: 2, founder: 3 },
   },
   {
@@ -150,8 +150,8 @@ export const proofPages: ProofPage[] = [
     claimBoundary: enterpriseBoundary,
     diagram: "flowchart LR\n  A[Operating signals] --> B[Constraint register]\n  B --> C[Evidence and owner]\n  C --> D[Executive decision]\n  D --> E[Action, escalation, or stop]\n  E --> F[Next review]",
     relatedGuide: { label: "Read operational intelligence vs. reporting", href: "/insights/operational-intelligence-vs-reporting", description: "The distinction behind the operating review." },
-    relatedAssessment: { label: "Executive Operating Review", href: "/offers/executive-operating-review", description: "Design a decision-centered executive review." },
-    relatedOffer: { label: "Executive Recovery Assessment", href: "/offers/executive-recovery", description: "Find the highest-leverage recovery move." },
+    relatedAssessment: { label: "Fractional Leadership", href: "/services/fractional-leadership", description: "Design a decision-centered executive review." },
+    relatedOffer: { label: "Recovery", href: "/services/recovery", description: "Find the highest-leverage recovery move." },
     score: { ...launchScore, healthcare: 2, founder: 4 },
   },
   {
@@ -173,8 +173,8 @@ export const proofPages: ProofPage[] = [
     claimBoundary: rachelosBoundary,
     diagram: "flowchart TB\n  A[Source-aware facts] --> B[Bounded recommendation]\n  B --> C[Human approval]\n  C --> D[Governed action]\n  D --> E[Outcome and audit log]\n  E --> F[Operational visibility]",
     relatedGuide: { label: "Read what AI-assisted delivery compresses", href: "/insights/what-ai-assisted-delivery-compresses", description: "The delivery evidence and its limits." },
-    relatedAssessment: { label: "Executive AI Assessment", href: "/offers/executive-ai", description: "Assess readiness, control, and operating fit." },
-    relatedOffer: { label: "Operational Intelligence Assessment", href: "/offers/operational-intelligence", description: "Connect AI assistance to an accountable workflow." },
+    relatedAssessment: { label: "Enterprise AI", href: "/services/enterprise-ai", description: "Assess readiness, control, and operating fit." },
+    relatedOffer: { label: "Recovery", href: "/services/recovery", description: "Connect AI assistance to an accountable workflow." },
     score: { ...launchScore, healthcare: 2, founder: 4 },
   },
 ];
@@ -232,10 +232,10 @@ export const offerPages: OfferPage[] = [
 void offers;
 
 export const searchClusters = [
-  { problem: "Decision Latency", guide: "/insights/operational-intelligence-vs-reporting", diagram: "/proof/executive-operating-system", proof: "/proof/program-recovery", offer: "/offers/executive-recovery", audience: "CEO, COO, transformation sponsor" },
-  { problem: "Prior Authorization Quality", guide: "/insights/prior-authorization-operational-quality-problem", diagram: "/proof/prior-authorization", proof: "/proof/gold-card", offer: "/offers/prior-authorization", audience: "Prior-authorization or provider-operations leader" },
-  { problem: "Key-Person Dependency", guide: "/insights/human-apis-become-organizational-bottlenecks", diagram: "/proof/rachelos", proof: "/proof/rachelos", offer: "/offers/operational-intelligence", audience: "COO, owner-operator, operations leader" },
-  { problem: "AI Governance", guide: "/insights/what-ai-assisted-delivery-compresses", diagram: "/proof/ai-governance", proof: "/proof/ai-governance", offer: "/offers/executive-ai", audience: "CIO, COO, product leader" },
+  { problem: "Decision Latency", guide: "/insights/operational-intelligence-vs-reporting", diagram: "/proof/executive-operating-system", proof: "/proof/program-recovery", offer: "/services/recovery", audience: "CEO, COO, transformation sponsor" },
+  { problem: "Prior Authorization Quality", guide: "/insights/prior-authorization-operational-quality-problem", diagram: "/proof/prior-authorization", proof: "/proof/gold-card", offer: "/services/prior-authorization-assessment", audience: "Prior-authorization or provider-operations leader" },
+  { problem: "Key-Person Dependency", guide: "/insights/human-apis-become-organizational-bottlenecks", diagram: "/proof/rachelos", proof: "/proof/rachelos", offer: "/services/recovery", audience: "COO, owner-operator, operations leader" },
+  { problem: "AI Governance", guide: "/insights/what-ai-assisted-delivery-compresses", diagram: "/proof/ai-governance", proof: "/proof/ai-governance", offer: "/services/enterprise-ai", audience: "CIO, COO, product leader" },
 ];
 
 export function getProofPage(slug: string) {

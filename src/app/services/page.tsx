@@ -6,17 +6,17 @@ import { CtaBand } from "@/components/site/cta-band";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { services } from "@/lib/content";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services | Strategy Through Implementation",
   description:
-    "TKO helps leaders find operational bottlenecks, protect revenue, and improve execution through focused assessments, builds, and advisory support.",
+    "TKO designs the strategy, defines the operating model, builds the product, and implements it in production—for healthcare and enterprise leaders with complex operating problems.",
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "TKO Services",
+    title: "TKO Services | Strategy Through Implementation",
     description:
-      "Start with the operating constraint. Then decide whether focused recovery, a deeper diagnostic, a build, or ongoing operating support is warranted.",
+      "Start at the stage the business needs: strategy, operating model, product, or implementation—one accountable path, not a generic consulting scope.",
     url: absoluteUrl("/services"),
   },
 };
@@ -25,9 +25,10 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Services"
-        title="Solve the operating problem before you buy another solution."
-        description="TKO helps leaders find the bottleneck, understand the business exposure, and choose the right intervention—from a focused assessment to a build or ongoing operating support."
+        eyebrow="The Delivery Model"
+        title="From executive strategy to production implementation—one accountable path."
+        description="TKO designs the strategy, defines the operating model, builds the product, and implements it in production. Each engagement starts at the stage the business actually needs."
+        primaryLabel={site.cta}
       />
       <Section>
         <ServiceCards />
@@ -35,8 +36,8 @@ export default function ServicesPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Engagement Logic"
-          title="One commercial question: what is preventing the business from performing better?"
-          description="The services are sequenced to avoid speculative projects. TKO diagnoses the constraint first, then recommends only the level of work needed to improve execution."
+          title="One question: what needs to move from strategy to production first?"
+          description="The services are sequenced to avoid speculative projects. TKO diagnoses the operating problem first, then recommends only the stage of work—strategy, operating model, product, or implementation—needed next."
         />
         <div className="mt-12 grid gap-3 lg:grid-cols-4">
           {services.map((service, index) => (

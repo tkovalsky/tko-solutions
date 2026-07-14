@@ -88,8 +88,8 @@ export default function RachelOSProofPage() {
         eyebrow="Built System / Direct Proof"
         title="A live operating system that turns relationship knowledge into revenue work."
         description="RachelOS supports a South Florida real-estate business. It replaced manual reconstruction across records, messages, notes, and activity with durable context, prioritized work, automated email nurture, and human-governed AI assistance."
-        primaryHref="/assessment"
-        primaryLabel="Start with the assessment"
+        primaryHref="/contact"
+        primaryLabel="Discuss an Active Initiative"
         secondaryHref="/proof"
         secondaryLabel="Back to proof registry"
       />

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { caseStudies, services } from "@/lib/content";
-import { founderPages, offerPages, proofPages } from "@/lib/authority";
+import { founderPages } from "@/lib/authority";
 import { getInsights } from "@/lib/insights";
 import { absoluteUrl } from "@/lib/site";
 
@@ -12,9 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/proof/founder",
     "/proof/rachelos",
     "/healthcare",
-    "/assessment",
-    "/assessment/ai-delivery",
-    "/offers",
     "/founder",
     "/services",
     "/services/prior-authorization-assessment",
@@ -30,11 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const serviceRoutes = services.map((service) => `/services/${service.slug}`);
   const caseStudyRoutes = caseStudies.map((study) => `/selected-work/${study.slug}`);
   const insightRoutes = getInsights().map((insight) => `/insights/${insight.slug}`);
-  const proofRoutes = proofPages.map((page) => `/proof/${page.slug}`);
   const founderRoutes = founderPages.map((page) => `/founder/${page.slug}`);
-  const offerRoutes = offerPages.map((page) => `/offers/${page.slug}`);
 
-  return [...new Set([...staticRoutes, ...serviceRoutes, ...caseStudyRoutes, ...insightRoutes, ...proofRoutes, ...founderRoutes, ...offerRoutes])].map((route) => ({
+  // /offers/* and /assessment/* are retired to 301 redirects (Phase A). The five
+  // framework-class /proof/* children are reclassified and noindexed pending a
+  // dedicated Frameworks hub, so they are excluded from the sitemap.
+  return [...new Set([...staticRoutes, ...serviceRoutes, ...caseStudyRoutes, ...insightRoutes, ...founderRoutes])].map((route) => ({
     url: absoluteUrl(route),
     lastModified: new Date("2026-07-13"),
     changeFrequency: "monthly",

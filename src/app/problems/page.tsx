@@ -57,10 +57,10 @@ export default function ProblemsPage() {
         eyebrow="Executive Discoverability"
         title="Your teams are working. Leadership still cannot see where the work is stuck."
         description="The issue is rarely effort or another dashboard. It is the hidden work between systems, handoffs, exceptions, and decisions that no one owns clearly enough to fix."
-        primaryHref="/assessment"
-        primaryLabel="Book an operating performance conversation"
-        secondaryHref="/proof"
-        secondaryLabel="See the built proof"
+        primaryHref="/contact"
+        primaryLabel="Discuss an Active Initiative"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
 
       <Section className="bg-surface">

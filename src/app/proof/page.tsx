@@ -112,8 +112,8 @@ export default function ProofPage() {
         description="TKO separates direct built-system proof from healthcare operating background and supporting methods. Each asset states the operating pattern it demonstrates and the evidence boundary around it."
         primaryHref="/proof/rachelos"
         primaryLabel="Inspect RachelOS"
-        secondaryHref="/assessment"
-        secondaryLabel="Start with the assessment"
+        secondaryHref="/contact"
+        secondaryLabel="Discuss an Active Initiative"
       />
 
       <Section>

@@ -2,8 +2,8 @@ export const site = {
   name: "TKO Solutions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tko.solutions",
   description:
-    "TKO helps leaders find operational bottlenecks, decision gaps, and revenue leakage, then build systems that improve execution.",
-  cta: "Book an operating performance conversation",
+    "Executive strategy through implementation for complex operations. TKO turns operating problems into working strategy, operating models, products, and AI-enabled systems—from executive decision through production implementation.",
+  cta: "Discuss an Active Initiative",
 };
 
 export function absoluteUrl(path = "/") {

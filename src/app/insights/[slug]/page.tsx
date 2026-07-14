@@ -67,9 +67,9 @@ export default async function InsightPage({ params }: Params) {
         title={insight.title}
         description={insight.description}
         primaryHref="/contact"
-        primaryLabel="Schedule an Operational Recovery Assessment"
-        secondaryHref="/insights"
-        secondaryLabel="View all insights"
+        primaryLabel="Discuss an Active Initiative"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
@@ -116,7 +116,7 @@ export default async function InsightPage({ params }: Params) {
         </Section>
       ) : null}
       <AuthorityLinks current={`/insights/${insight.slug}`} />
-      <CtaBand primaryLabel="Operational Recovery Assessment" />
+      <CtaBand secondaryHref="/selected-work" secondaryLabel="Review Selected Work" />
     </>
   );
 }

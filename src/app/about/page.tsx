@@ -8,14 +8,14 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Todd Kovalsky | Founder & Operator",
+  title: "Todd Kovalsky | Founder, TKO Solutions",
   description:
-    "Todd Kovalsky is the founder of TKO Solutions and builder of RachelOS. He helps leaders identify operating constraints and build systems that improve execution.",
+    "Todd Kovalsky is the founder of TKO Solutions. He helps healthcare and enterprise leaders turn complex operating problems into working strategy, operating models, and production systems.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "Todd Kovalsky | Founder & Operator",
+    title: "Todd Kovalsky | Founder, TKO Solutions",
     description:
-      "The operating decisions, systems, evidence, and claim boundaries behind TKO, RachelOS, and the BoundOS product hypothesis.",
+      "The decisions, systems, evidence, and claim boundaries behind TKO's strategy-through-implementation model, RachelOS, and the BoundOS product hypothesis.",
     url: absoluteUrl("/about"),
   },
 };
@@ -82,15 +82,15 @@ export default function AboutPage() {
           <div className="mt-5 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
             <div>
               <h1 className="max-w-4xl text-5xl font-bold leading-[1.03] tracking-tight text-foreground md:text-7xl">
-                Todd Kovalsky builds operating systems for businesses that cannot afford to run on memory, meetings, and manual reconstruction.
+                Todd Kovalsky leads TKO: executive strategy through implementation for complex operations.
               </h1>
               <p className="mt-8 max-w-[65ch] text-xl leading-9 text-muted">
-                Founder of TKO Solutions and builder of RachelOS. Todd works where operations, systems, product decisions, and accountability collide.
+                Founder of TKO Solutions. Todd works where executive decisions, operating models, product builds, and production implementation meet—turning strategy into systems that run, not decks that sit.
               </p>
             </div>
             <Card className="bg-surface">
               <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Start with the evidence</p>
-              <p className="mt-4 text-lg leading-8 text-muted">RachelOS is a live production reference system: durable relationship memory, prioritized work, automated nurture, human-approved AI assistance, and visible system health.</p>
+              <p className="mt-4 text-lg leading-8 text-muted">RachelOS is TKO&apos;s proof in production: durable relationship memory, prioritized work, automated nurture, human-approved AI assistance, and visible system health, carried from strategy through implementation.</p>
               <Link href="/proof/rachelos" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark">
                 Inspect RachelOS proof <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
@@ -174,7 +174,7 @@ export default function AboutPage() {
           </div>
           <div className="flex flex-col gap-3">
             {linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center border border-primary bg-primary px-5 text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-primary-dark">Connect with Todd on LinkedIn</a> : <LinkButton href="/contact">Connect with Todd</LinkButton>}
-            <LinkButton href="/contact" variant="secondary">Book an operating conversation</LinkButton>
+            <LinkButton href="/contact" variant="secondary">Discuss an Active Initiative</LinkButton>
           </div>
         </div>
       </Section>

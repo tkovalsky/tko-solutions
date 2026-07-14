@@ -151,9 +151,9 @@ export default function PriorAuthorizationAssessmentPage() {
         title="Prior Authorization is a workflow problem before it is an automation problem."
         description="A fixed-scope assessment for prior authorization, utilization management, and provider operations leaders. It diagnoses administrative burden, denial drivers, exception handling, and human dependency risk — so you can fix operational quality before spending on AI, automation, FHIR, or Gold Card programs."
         primaryHref="/contact"
-        primaryLabel="Schedule a Prior Authorization Assessment"
-        secondaryHref="/services/recovery-assessment"
-        secondaryLabel="See the Operational Recovery Assessment"
+        primaryLabel="Discuss an Active Initiative"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
 
       <Section>
@@ -296,9 +296,9 @@ export default function PriorAuthorizationAssessmentPage() {
       <CtaBand
         title="Diagnose operational quality before you buy automation."
         description="The Prior Authorization Operational Assessment maps administrative burden, denial drivers, exception patterns, and human dependency risk in one fixed-scope week — and shows leadership the next highest-leverage move."
-        primaryLabel="Schedule a Prior Authorization Assessment"
-        secondaryHref="/services/recovery-assessment"
-        secondaryLabel="See the Operational Recovery Assessment"
+        primaryLabel="Discuss an Active Initiative"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
     </>
   );

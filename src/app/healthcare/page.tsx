@@ -9,14 +9,14 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Healthcare Workflow & Transformation Authority",
+  title: "Healthcare Executive Strategy & Implementation",
   description:
-    "Evidence-led healthcare operating guidance on prior authorization, utilization management, workflow governance, transformation recovery, and human-controlled AI.",
+    "TKO helps healthcare leaders turn prior authorization, utilization management, and transformation risk into working operating models, products, and production systems.",
   alternates: { canonical: "/healthcare" },
   openGraph: {
-    title: "Healthcare Workflow & Transformation Authority",
+    title: "Healthcare Executive Strategy & Implementation",
     description:
-      "Evidence-led guidance for healthcare leaders working through administrative burden, exception handling, workflow governance, and transformation risk.",
+      "Executive strategy through implementation for healthcare leaders working through administrative burden, exception handling, workflow governance, and transformation risk.",
     url: absoluteUrl("/healthcare"),
   },
 };
@@ -43,7 +43,7 @@ const authorityAreas = [
   {
     title: "Human-controlled AI",
     body: "Use source authority, human approval, and visible system health as controls before asking AI to influence an operational workflow.",
-    href: "/assessment/ai-delivery",
+    href: "/services/enterprise-ai",
     label: "Explore AI delivery assessment",
   },
 ];
@@ -70,10 +70,10 @@ export default function HealthcarePage() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "TKO Healthcare Workflow & Transformation Authority",
+          name: "TKO Healthcare Executive Strategy & Implementation",
           url: absoluteUrl("/healthcare"),
           description:
-            "Evidence-led healthcare operating guidance on prior authorization, utilization management, workflow governance, transformation recovery, and human-controlled AI.",
+            "Executive strategy through implementation for healthcare leaders: prior authorization, utilization management, workflow governance, transformation recovery, and human-controlled AI.",
           about: [
             "Prior Authorization",
             "Utilization Management",
@@ -84,13 +84,13 @@ export default function HealthcarePage() {
         }}
       />
       <PageHero
-        eyebrow="Healthcare authority"
-        title="Healthcare workflows improve when the operating model becomes visible."
-        description="TKO brings advisory experience across prior authorization, utilization management, care management, interoperability, regulatory initiatives, workflow modernization, and transformation governance to the decisions that sit underneath administrative burden and delivery risk."
-        primaryHref="/services/prior-authorization-assessment"
-        primaryLabel="Explore the PA assessment"
-        secondaryHref="/services/recovery-assessment"
-        secondaryLabel="Explore recovery assessment"
+        eyebrow="Healthcare Executive Strategy"
+        title="Healthcare leaders don't need another strategy. They need one that survives implementation."
+        description="TKO helps healthcare executives turn complex operating problems—prior authorization, utilization management, care management, interoperability, and transformation risk—into working operating models, products, and AI-enabled systems that hold up in production."
+        primaryHref="/contact"
+        primaryLabel="Discuss an Active Initiative"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
 
       <Section className="bg-surface">
@@ -170,9 +170,9 @@ export default function HealthcarePage() {
       <CtaBand
         title="Bring the workflow and the decision under pressure."
         description="Start with a focused assessment when the immediate question is where work stalls, who carries the missing context, and what leadership should do before another technology investment."
-        primaryLabel="Schedule an assessment"
-        secondaryHref="/proof"
-        secondaryLabel="Inspect the evidence standard"
+        primaryLabel="Discuss an Active Initiative"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
     </>
   );

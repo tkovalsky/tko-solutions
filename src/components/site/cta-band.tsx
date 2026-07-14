@@ -15,7 +15,7 @@ export function CtaBand({
   title = "Find the constraint holding performance back.",
   description = "Bring the workflow, revenue process, or operating problem under pressure. TKO will help determine where execution is breaking down and what deserves action first.",
   primaryHref = "/contact",
-  primaryLabel = "Book an operating performance conversation",
+  primaryLabel = "Discuss an Active Initiative",
   secondaryHref = null,
   secondaryLabel = null,
 }: CtaBandProps) {

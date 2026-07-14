@@ -24,7 +24,7 @@ const proofPaths = [
   ["What I have built", "RachelOS is the direct, inspectable proof of memory, priority, human approval, and system health in an operating system.", "/founder/what-i-have-built"],
   ["What I have owned and learned", "Founder decisions, limitations, and evidence levels explain where responsibility, implementation, and hypotheses differ.", "/founder/what-i-have-owned"],
   ["Healthcare advisory background", "Healthcare authority is grounded in bounded operating experience across complex workflows and transformation governance.", "/founder/healthcare"],
-  ["Executive assessments", "Bounded assessment paths make the operating question, required inputs, and expected decision tangible.", "/offers"],
+  ["Services", "One accountable path from strategy to production makes the operating question, required inputs, and expected decision tangible.", "/services"],
   ["Claim boundaries", "Evidence strength controls what can be said: observed, implemented, measured, validated, and hypothesis are different states.", "/proof"],
 ];
 

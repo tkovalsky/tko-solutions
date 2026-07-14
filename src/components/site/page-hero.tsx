@@ -17,7 +17,7 @@ export function PageHero({
   title,
   description,
   primaryHref = "/contact",
-  primaryLabel = "Book an operating performance conversation",
+  primaryLabel = "Discuss an Active Initiative",
   secondaryHref,
   secondaryLabel,
   className,

@@ -4,12 +4,12 @@ import { DiagnosticForm } from "@/components/site/diagnostic-form";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Book an Operating Performance Conversation",
+  title: "Request a Conversation",
   description:
-    "Start a focused conversation about the bottleneck, decision gap, or revenue leakage holding your operation back.",
+    "Request a focused conversation about the bottleneck, decision gap, or revenue leakage holding your operation back.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Book an Operating Performance Conversation",
+    title: "Request a Conversation",
     description:
       "A focused executive conversation for leaders facing an active operating, execution, or revenue-performance problem.",
     url: absoluteUrl("/contact"),
@@ -55,10 +55,12 @@ export default async function ContactPage({ searchParams }: SearchParams) {
           <div>
             {status === "submitted" ? (
               <div className="mb-6 rounded-md border border-primary/30 border-l-4 border-l-primary bg-surface p-5">
-                <p className="font-semibold text-foreground">Intake received.</p>
+                <p className="font-semibold text-foreground">Request received.</p>
                 <p className="mt-2 text-sm leading-6 text-muted">
-                  If there is a fit, follow-up will come directly from TKO. No
-                  automated sales sequence is triggered.
+                  Todd personally reviews every submission and will respond within
+                  two business days. If there is a mutual fit, the next step is a
+                  30-minute working conversation—no automated sales sequence is
+                  triggered.
                 </p>
               </div>
             ) : null}

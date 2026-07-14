@@ -1,25 +1,31 @@
 "use client";
 
-import { CheckCircle2, Compass, Eye, TrendingUp } from "lucide-react";
+import { CheckCircle2, Compass, Layers, Cpu, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
 import { LinkButton } from "@/components/ui/button";
 import { NetworkVisual } from "@/components/site/network-visual";
+import { site } from "@/lib/site";
 
 const pillars = [
   {
-    icon: Eye,
-    title: "Find the hidden work",
-    description: "See the handoffs, exceptions, and risks that reports miss.",
-  },
-  {
     icon: Compass,
-    title: "Name the constraint",
-    description: "Identify where work, ownership, and decisions actually stall.",
+    title: "Strategy",
+    description: "Define the executive decision and the operating problem it must resolve.",
   },
   {
-    icon: TrendingUp,
-    title: "Ship the smallest fix",
-    description: "Build a decision system only when the evidence calls for one.",
+    icon: Layers,
+    title: "Operating Model",
+    description: "Design how decisions, ownership, and work should actually run.",
+  },
+  {
+    icon: Cpu,
+    title: "Product",
+    description: "Build the AI-enabled systems the operating model requires.",
+  },
+  {
+    icon: Rocket,
+    title: "Implementation",
+    description: "Put it into production with human control and measurable adoption.",
   },
 ];
 
@@ -60,27 +66,29 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="hero-kicker text-sm font-semibold uppercase tracking-[0.2em]">
-            Operational performance for complex businesses
+            Executive strategy through implementation
           </p>
           <h1 className="hero-title mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            Find what is slowing execution, leaking revenue, and keeping your team stuck.
+            Strategy that gets implemented—not shelved.
           </h1>
           <p className="hero-lead mt-6 max-w-[52ch] text-lg leading-8">
-            TKO helps CEOs and operating leaders uncover the bottlenecks, decision
-            gaps, and key-person dependencies holding the business back—then build
-            the systems that improve throughput, accountability, and results.
-          </p>
-          <p className="hero-kicker mt-6 text-sm font-semibold uppercase tracking-[0.1em]">
+            TKO helps healthcare and enterprise leaders turn complex operating
+            problems into working strategies, operating models, products, and
+            AI-enabled systems—from executive decision through production
+            implementation.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
-              href="/assessment"
+              href="/contact"
               className="shadow-[0_10px_30px_-10px_rgb(var(--primary-rgb)/0.6)]"
             >
-              Book an operating performance conversation
+              {site.cta}
+            </LinkButton>
+            <LinkButton href="/selected-work" variant="secondary">
+              Review Selected Work
             </LinkButton>
           </div>
-          <div className="hero-divider mt-10 grid grid-cols-1 gap-5 border-t pt-7 sm:grid-cols-3 sm:gap-4">
+          <div className="hero-divider mt-10 grid grid-cols-2 gap-5 border-t pt-7 sm:gap-4 lg:grid-cols-4">
             {pillars.map((pillar) => (
               <div key={pillar.title} className="flex gap-3">
                 <div className="hero-icon flex size-9 shrink-0 items-center justify-center rounded-lg">
@@ -102,10 +110,10 @@ export function Hero() {
           aria-label="TKO proof ladder"
         >
           <p className="hero-kicker text-xs font-semibold uppercase tracking-[0.16em]">
-            Built and running
+            Proof: product &amp; implementation
           </p>
           <h2 className="hero-title mt-4 text-2xl font-semibold leading-tight md:text-3xl">
-            RachelOS turns fragmented relationship data into revenue-producing daily work.
+            RachelOS is what a working operating model looks like in production.
           </h2>
           <div className="mt-6 space-y-3">
             {rachelosProof.map((item) => (

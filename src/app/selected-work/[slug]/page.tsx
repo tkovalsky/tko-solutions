@@ -115,14 +115,10 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         eyebrow={`${study.industry} / ${study.proofLevel}`}
         title={study.title}
         description={study.problem}
-        primaryHref={study.slug === "rachelos-delivery-model" ? "/assessment/ai-delivery" : "/contact"}
-        primaryLabel={
-          study.slug === "rachelos-delivery-model"
-            ? "Start the AI Delivery Assessment"
-            : "Schedule an Operational Recovery Assessment"
-        }
-        secondaryHref="/services/diagnostic"
-        secondaryLabel="Schedule an Operational Truth Diagnostic"
+        primaryHref="/contact"
+        primaryLabel="Discuss an Active Initiative"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
@@ -262,10 +258,10 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
               </div>
             </div>
             <Link
-              href="/assessment/ai-delivery"
+              href="/contact"
               className="mt-10 inline-block text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
             >
-              Start the AI Delivery Assessment →
+              Discuss an Active Initiative →
             </Link>
           </Section>
         </>
