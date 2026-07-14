@@ -50,6 +50,15 @@ const nextConfig: NextConfig = {
       { source: "/services/fractional-leadership", destination: "/services/fractional-advisor", permanent: false },
       { source: "/services/enterprise-ai", destination: "/services", permanent: false },
       { source: "/services/product", destination: "/services", permanent: false },
+
+      // --- Proof vs Framework separation (WS3) ---
+      // Experience-based operating models move from /proof to /frameworks so that
+      // /proof is reserved for inspectable built-system evidence.
+      { source: "/proof/prior-authorization", destination: "/frameworks/prior-authorization", permanent: true },
+      { source: "/proof/gold-card", destination: "/frameworks/gold-card", permanent: true },
+      { source: "/proof/program-recovery", destination: "/frameworks/program-recovery", permanent: true },
+      { source: "/proof/executive-operating-system", destination: "/frameworks/executive-operating-system", permanent: true },
+      { source: "/proof/ai-governance", destination: "/frameworks/ai-governance", permanent: true },
     ];
   },
 };

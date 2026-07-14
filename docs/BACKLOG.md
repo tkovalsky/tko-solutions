@@ -50,6 +50,17 @@ Deferred work, documented rather than dropped. Each item was evaluated against t
 - **Recommended future sprint:** Post-launch, phased.
 - **Acceptance criteria:** Each new asset owns a distinct buyer, intent, and evidence set, with crawlable standalone content and deliberate cluster links (no thin pages).
 
+## BL-006 — Content-cleanup sweep of remaining internal language
+
+- **Previous priority:** P0 (Content Cleanup workstream)
+- **New priority:** P0 — continue in a dedicated pass
+- **Reason deferred (partial):** The high-visibility placeholder leakage on live framework pages was removed during the Proof/Framework split. The remaining internal-language instances (`Primary search query`, "Proposal and downloadable asset placeholders…", "Commercial offer / bounded assessment" in `OfferAuthorityPage`; `entry` funnel labels like "Low-friction entry point"/"downstream conversion offer" in `content.ts`; diagram internal IDs) live mostly on redirect-intercepted or lower-traffic surfaces and are best cleaned in one focused sweep rather than piecemeal.
+- **Business value:** High — internal terminology erodes executive trust.
+- **Dependencies:** Overlaps BL-005 (dead `/offers` pages carry much of this leakage).
+- **Estimated effort:** M
+- **Recommended future sprint:** Next P0 batch (Content Cleanup).
+- **Acceptance criteria:** No buyer-facing page exposes search-query labels, funnel/entry labels, publication status, evidence/workflow IDs, or proposal/download placeholders.
+
 ## BL-005 — Remove redirect-intercepted legacy page files (`/offers/*`, `/assessment/*`)
 
 - **Previous priority:** —

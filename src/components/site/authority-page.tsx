@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { AuthorityLinks } from "@/components/site/authority-links";
 import { MermaidDiagram } from "@/components/site/mermaid-diagram";
-import type { FounderPage, OfferPage, ProofPage } from "@/lib/authority";
+import type { FounderPage, OfferPage, FrameworkPage } from "@/lib/authority";
 import { Card } from "@/components/ui/card";
 import { CtaBand } from "@/components/site/cta-band";
 import { PageHero } from "@/components/site/page-hero";
@@ -16,9 +16,9 @@ function RelatedLink({ item, heading }: { item: { label: string; href: string; d
   return <Card className="rounded-lg"><p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">{heading}</p><h3 className="mt-3 text-xl font-semibold">{item.label}</h3><p className="mt-3 text-sm leading-6 text-muted">{item.description}</p><Link href={item.href} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark">Open asset <ArrowRight className="size-4" aria-hidden="true" /></Link></Card>;
 }
 
-export function ProofAuthorityPage({ page }: { page: ProofPage }) {
+export function FrameworkAuthorityPage({ page }: { page: FrameworkPage }) {
   return <>
-    <PageHero eyebrow={page.eyebrow} title={page.title} description={page.description} primaryHref={page.relatedAssessment.href} primaryLabel={page.relatedAssessment.label} secondaryHref="/proof" secondaryLabel="Back to proof hub" />
+    <PageHero eyebrow={page.eyebrow} title={page.title} description={page.description} primaryHref="/contact" primaryLabel="Discuss an Active Initiative" secondaryHref="/frameworks" secondaryLabel="Back to frameworks" />
     <Section>
       <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
         <div><p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Executive question</p><h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight">{page.executiveQuestion}</h2></div>
@@ -40,10 +40,10 @@ export function ProofAuthorityPage({ page }: { page: ProofPage }) {
       <div className="grid gap-10 lg:grid-cols-2"><div><SectionHeader eyebrow="Evidence" title="What supports this page." /><List values={page.evidence} /></div><div><SectionHeader eyebrow="What changed" title="The operating lens changes before the technology does." description={page.whatChanged} /><h3 className="mt-8 text-xl font-semibold">Lessons</h3><List values={page.lessons} /></div></div>
     </Section>
     <Section>
-      <div className="border border-border bg-midnight p-8 text-white md:p-10"><p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">Claim boundary</p><p className="mt-4 max-w-4xl text-xl leading-8 text-white/85">{page.claimBoundary}</p><p className="mt-6 text-sm leading-6 text-white/65">Downloadable executive brief placeholder: the reviewed asset will appear here after evidence, confidentiality, and claim review are complete.</p></div>
-      <div className="mt-8 grid gap-4 lg:grid-cols-3"><RelatedLink heading="Related guide" item={page.relatedGuide} /><RelatedLink heading="Related assessment" item={page.relatedAssessment} /><RelatedLink heading="Related offer" item={page.relatedOffer} /></div>
+      <div className="border border-border bg-midnight p-8 text-white md:p-10"><p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">Claim boundary</p><p className="mt-4 max-w-4xl text-xl leading-8 text-white/85">{page.claimBoundary}</p></div>
+      <div className="mt-8 grid gap-4 lg:grid-cols-3"><RelatedLink heading="Related guide" item={page.relatedGuide} /><RelatedLink heading="Related assessment" item={page.relatedAssessment} /><RelatedLink heading="Related service" item={page.relatedOffer} /></div>
     </Section>
-    <AuthorityLinks current={`/proof/${page.slug}`} />
+    <AuthorityLinks current={`/frameworks/${page.slug}`} />
     <CtaBand title="Bring one workflow under pressure." description="The first conversation starts with the decision, the evidence available, and the operating constraint—not a preferred platform." />
   </>;
 }

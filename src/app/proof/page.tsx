@@ -52,30 +52,6 @@ const proofSections = [
     alt: "RachelOS system health view showing operational checks and execution status.",
   },
   {
-    eyebrow: "Healthcare Operating Pattern",
-    title: "Prior Authorization",
-    description:
-      "A bounded pattern for making exception authority, evidence, escalation, and decision rights visible before automation or Gold Card work.",
-    href: "/proof/prior-authorization",
-    linkLabel: "Review the prior-authorization pattern",
-  },
-  {
-    eyebrow: "Executive Delivery",
-    title: "Program Recovery",
-    description:
-      "A decision-centered recovery pattern for programs whose dependencies and operating constraints are hidden behind workstream status.",
-    href: "/proof/program-recovery",
-    linkLabel: "Review the program-recovery pattern",
-  },
-  {
-    eyebrow: "AI Governance",
-    title: "Human authority remains visible",
-    description:
-      "Source-aware facts, bounded recommendations, explicit approval, governed action, and outcome visibility are separate controls—not a promise that AI will self-govern.",
-    href: "/proof/ai-governance",
-    linkLabel: "Review the AI-governance pattern",
-  },
-  {
     eyebrow: "Healthcare Operating Background",
     title: "Complex workflow and governance experience",
     description:
@@ -91,6 +67,14 @@ const proofSections = [
     href: "/selected-work/cre-intelligence-model",
     linkLabel: "Review supporting method proof",
   },
+  {
+    eyebrow: "Operating Frameworks",
+    title: "The operating models are separate from the evidence",
+    description:
+      "Synthesized operating and governance models—prior authorization, program recovery, executive operating reviews, human-governed AI—live in Frameworks with their claim boundaries, so Proof stays reserved for inspectable evidence.",
+    href: "/frameworks",
+    linkLabel: "Review the operating frameworks",
+  },
 ];
 
 export default function ProofPage() {
@@ -103,11 +87,11 @@ export default function ProofPage() {
           name: "TKO Proof You Can Inspect",
           url: absoluteUrl("/proof"),
           description:
-            "Evidence-first proof registry for TKO operational recovery and systems-of-action work.",
+            "Evidence-first proof for TKO operational recovery and systems-of-action work.",
         }}
       />
       <PageHero
-        eyebrow="Proof Registry"
+        eyebrow="Proof"
         title="Proof you can inspect, not claims you have to accept."
         description="TKO separates direct built-system proof from healthcare operating background and supporting methods. Each asset states the operating pattern it demonstrates and the evidence boundary around it."
         primaryHref="/proof/rachelos"
