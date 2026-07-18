@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/proof/rachelos",
     "/proof/transfer",
     "/healthcare",
+    "/industries",
     "/founder",
     "/services",
     "/services/prior-authorization-assessment",

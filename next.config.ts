@@ -20,11 +20,6 @@ const nextConfig: NextConfig = {
         destination: "/selected-work/:slug",
         permanent: true,
       },
-      {
-        source: "/industries",
-        destination: "/selected-work",
-        permanent: true,
-      },
 
       // --- Commercial path consolidation (Phase A) ---
       // Retire the parallel /offers and /assessment namespaces into the single

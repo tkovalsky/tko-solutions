@@ -5,28 +5,32 @@ import { caseStudies, services } from "@/lib/content";
 export function ServiceCards() {
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {services.map((service) => (
-        <Card key={service.slug} className="flex min-h-80 flex-col">
-          <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-            {service.entry}
-          </p>
-          <h3 className="mt-6 text-2xl font-semibold">{service.title}</h3>
-          <p className="mt-4 text-base leading-7 text-muted">{service.summary}</p>
-          <dl className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-6 text-sm">
-            <div>
-              <dt className="text-muted">Investment</dt>
-              <dd className="mt-1 font-semibold">{service.price}</dd>
-            </div>
-            <div>
-              <dt className="text-muted">Timeline</dt>
-              <dd className="mt-1 font-semibold">{service.duration}</dd>
-            </div>
-          </dl>
-          <ArrowLink href={`/services/${service.slug}`} className="mt-auto pt-8">
-            View service
-          </ArrowLink>
-        </Card>
-      ))}
+      {services.map((service) => {
+        const investment =
+          "investmentSummary" in service ? service.investmentSummary : service.price;
+        return (
+          <Card key={service.slug} className="flex min-h-80 flex-col">
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
+              {service.entry}
+            </p>
+            <h3 className="mt-6 text-2xl font-semibold">{service.title}</h3>
+            <p className="mt-4 text-base leading-7 text-muted">{service.summary}</p>
+            <dl className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-6 text-sm">
+              <div>
+                <dt className="text-muted">Investment</dt>
+                <dd className="mt-1 font-semibold">{investment}</dd>
+              </div>
+              <div>
+                <dt className="text-muted">Timeline</dt>
+                <dd className="mt-1 font-semibold">{service.duration}</dd>
+              </div>
+            </dl>
+            <ArrowLink href={`/services/${service.slug}`} className="mt-auto pt-8">
+              View service
+            </ArrowLink>
+          </Card>
+        );
+      })}
     </div>
   );
 }

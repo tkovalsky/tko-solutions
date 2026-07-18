@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { credibilityStrip } from "@/lib/founder";
+import { site } from "@/lib/site";
 
 export function CredibilityStrip() {
   return (
@@ -34,6 +35,18 @@ export function CredibilityStrip() {
             </li>
           </ul>
         </div>
+        <p className="mt-6 text-xs leading-5 text-muted">
+          Employment history, not client endorsements. Each role is publicly verifiable on{" "}
+          <a
+            href={site.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-foreground underline-offset-4 hover:text-primary hover:underline"
+          >
+            LinkedIn
+          </a>
+          .
+        </p>
       </div>
     </section>
   );

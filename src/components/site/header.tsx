@@ -9,8 +9,8 @@ const navItems = [
   { href: "/services", label: "Services" },
   { href: "/proof", label: "Proof" },
   { href: "/healthcare", label: "Healthcare" },
-  { href: "/insights", label: "Guides" },
-  { href: "/founder", label: "Founder" },
+  { href: "/insights", label: "Insights" },
+  { href: "/founder", label: "About" },
 ];
 
 export function Header() {

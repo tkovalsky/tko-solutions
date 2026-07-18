@@ -220,6 +220,7 @@ export const services = [
     title: "Operating System Build Sprint",
     shortTitle: "Build",
     price: "$45K-$150K",
+    investmentSummary: "Scoped to program size",
     duration: "6-12 weeks",
     entry: "Downstream conversion offer",
     summary:
@@ -271,6 +272,7 @@ export const services = [
     title: "Fractional Operational Intelligence Advisor",
     shortTitle: "Fractional",
     price: "$12K-$25K / month",
+    investmentSummary: "Scoped to program size",
     duration: "3-6 months",
     entry: "Post-diagnostic or post-build retainer",
     summary:
@@ -349,15 +351,15 @@ export const caseStudies = [
     industry: "Live operating environment",
     proofLevel: "Featured proof",
     problem:
-      "A relationship-driven business had data, notes, messages, and activity, but no trusted decision system for who needed attention and what action should happen next.",
+      "The business ran on relationships but had no system of action. The data, notes, and messages existed, yet who needed attention and what to do next lived only in one person's judgment. Every priority call and every follow-up depended on that person being available.",
     situation:
-      "The business managed 100+ relationships across fragmented information, inconsistent follow-up, and knowledge trapped in one person's head.",
+      "One operator carried 100+ active relationships across fragmented notes, inconsistent follow-up, and context that existed nowhere but memory. The business could not see its own pipeline without that person, and could not scale past their attention.",
     truth:
-      "The invisible failure was the human API pattern: available relationship signals existed, but priority, timing, missing context, and next action still depended on one person.",
+      "This is the human API pattern. The signals were all present, but priority, timing, missing context, and the next action all routed through a single person. That person was the operating system, and an operating system that cannot hand off or survive a bad week is a business risk, not a feature.",
     system:
-      "TKO built an Operational Knowledge System that captured relationship knowledge, preserved institutional memory, surfaced priorities, recommended actions, and supported execution with human-approved AI.",
+      "TKO built an Operational Knowledge System that captures relationship knowledge as durable facts, preserves institutional memory beyond any individual, surfaces who needs attention, and recommends the next action with an explanation. A human approves every AI-assisted step before it moves the work forward.",
     outcome:
-      "RachelOS now provides one trusted next action, improved relationship visibility, reduced manual tracking, persistent relationship knowledge, and scalable decision support.",
+      "Leadership now works from one trusted next action instead of one person's recall. Relationship context is visible, follow-up no longer depends on memory, and institutional knowledge persists when people are out or move on. No revenue attribution is claimed. The demonstrated outcome is a governed decision layer running daily production work.",
     evidence: [
       "Live operating environment with relationship memory, priority surfacing, action queues, intelligence gaps, outreach drafts, and daily execution support.",
       "Human approval remains part of the workflow before AI-assisted outreach is used.",
@@ -464,15 +466,15 @@ export const caseStudies = [
     industry: "Method portability",
     proofLevel: "Internal proof",
     problem:
-      "Market observations, property context, and analyst judgment existed, but intelligence remained fragmented and hard to reuse.",
+      "A commercial real estate research operation held real market insight, but that insight stayed locked in analyst judgment and one-off documents. Every question restarted from scratch, and the firm's intelligence could not compound or be reused across deals.",
     situation:
-      "Commercial real estate research required turning scattered observations, entity data, and local market knowledge into reusable intelligence assets.",
+      "Scattered observations, entity data, and local market knowledge had to become reusable intelligence assets rather than disposable analysis. The constraint was structural, not analytical: the firm had judgment but no system to carry it forward.",
     truth:
-      "The operating failure was the same human API pattern in a different domain: the analyst became the system that connected facts, observations, risks, opportunities, and recommendations.",
+      "The same human API pattern appeared in a non-healthcare domain. The analyst was the system, personally connecting facts, observations, risks, opportunities, and recommendations. When that person moved on, the intelligence moved with them.",
     system:
-      "Modeled entity facts, observations, risks, opportunities, recommendations, comparisons, and report outputs as reusable intelligence structures.",
+      "TKO modeled entity facts, observations, risks, opportunities, recommendations, comparisons, and report outputs as reusable intelligence structures, so domain judgment could be captured once and reused as structured decision support.",
     outcome:
-      "The work demonstrates that the operational knowledge pattern travels beyond healthcare when domain judgment needs to become structured, reusable decision support.",
+      "The engagement proves the operational knowledge pattern travels beyond healthcare: wherever expert judgment must become structured, reusable decision support, the same method applies. It does so without becoming a separate TKO service line, and without any commercial, client, or market-performance claim.",
     evidence: [
       "Demonstrates method portability across a non-healthcare intelligence workflow.",
       "Supports the Operational Knowledge Systems pattern without becoming a separate TKO service line.",

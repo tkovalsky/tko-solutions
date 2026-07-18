@@ -9,8 +9,8 @@ const footerLinks = [
   { href: "/proof/transfer", label: "The Transfer Argument" },
   { href: "/frameworks", label: "Frameworks" },
   { href: "/healthcare", label: "Healthcare" },
-  { href: "/insights", label: "Guides" },
-  { href: "/founder", label: "Founder" },
+  { href: "/insights", label: "Insights" },
+  { href: "/founder", label: "About" },
   { href: "/selected-work", label: "Selected Work" },
   { href: "/contact", label: "Contact" },
 ];
