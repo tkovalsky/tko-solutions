@@ -50,7 +50,7 @@ export function FrameworkAuthorityPage({ page }: { page: FrameworkPage }) {
 
 export function FounderAuthorityPage({ page }: { page: FounderPage }) {
   return <>
-    <PageHero eyebrow="Founder authority / evidence-first" title={page.title} description={page.description} primaryHref={page.relatedProof.href} primaryLabel={page.relatedProof.label} secondaryHref="/proof/founder" secondaryLabel="Founder proof hub" />
+    <PageHero eyebrow="Founder authority / evidence-first" title={page.title} description={page.description} primaryHref={page.relatedProof.href} primaryLabel={page.relatedProof.label} secondaryHref="/founder" secondaryLabel="Founder record" />
     <Section><div className="grid gap-10 lg:grid-cols-2"><div><SectionHeader eyebrow="Operating point" title="The record is the argument." description={page.operatingPoint} /></div><Card className="rounded-lg"><h2 className="text-xl font-semibold">Evidence available for inspection</h2><List values={page.evidence} /></Card></div></Section>
     <Section className="bg-surface"><div className="border border-border bg-white p-8"><p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Claim boundary</p><p className="mt-4 max-w-4xl text-lg leading-8 text-muted">{page.claimBoundary}</p></div><div className="mt-8 max-w-md"><RelatedLink heading="Related proof" item={page.relatedProof} /></div></Section>
     <AuthorityLinks current={`/founder/${page.slug}`} />

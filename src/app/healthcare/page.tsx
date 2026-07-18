@@ -43,8 +43,8 @@ const authorityAreas = [
   {
     title: "Human-controlled AI",
     body: "Use source authority, human approval, and visible system health as controls before asking AI to influence an operational workflow.",
-    href: "/services/enterprise-ai",
-    label: "Explore AI delivery assessment",
+    href: "/services/recovery-assessment",
+    label: "Explore the AI readiness path",
   },
 ];
 

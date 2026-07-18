@@ -130,8 +130,8 @@ export const frameworkPages: FrameworkPage[] = [
     claimBoundary: enterpriseBoundary,
     diagram: "flowchart LR\n  A[Workstream status] --> B[Named constraint]\n  B --> C[Evidence and exposure]\n  C --> D{Executive decision}\n  D --> E[Action or escalation]\n  E --> F[Owner and review date]",
     relatedGuide: { label: "Read operational intelligence vs. reporting", href: "/insights/operational-intelligence-vs-reporting", description: "Why dashboards can leave work stuck." },
-    relatedAssessment: { label: "Recovery", href: "/services/recovery", description: "A bounded recovery review for a program under pressure." },
-    relatedOffer: { label: "Recovery", href: "/services/recovery", description: "Prioritize recovery decisions across a portfolio." },
+    relatedAssessment: { label: "Recovery", href: "/services/recovery-assessment", description: "A bounded recovery review for a program under pressure." },
+    relatedOffer: { label: "Recovery", href: "/services/recovery-assessment", description: "Prioritize recovery decisions across a portfolio." },
     score: { ...launchScore, healthcare: 2, founder: 3 },
   },
   {
@@ -153,8 +153,8 @@ export const frameworkPages: FrameworkPage[] = [
     claimBoundary: enterpriseBoundary,
     diagram: "flowchart LR\n  A[Operating signals] --> B[Constraint register]\n  B --> C[Evidence and owner]\n  C --> D[Executive decision]\n  D --> E[Action, escalation, or stop]\n  E --> F[Next review]",
     relatedGuide: { label: "Read operational intelligence vs. reporting", href: "/insights/operational-intelligence-vs-reporting", description: "The distinction behind the operating review." },
-    relatedAssessment: { label: "Fractional Leadership", href: "/services/fractional-leadership", description: "Design a decision-centered executive review." },
-    relatedOffer: { label: "Recovery", href: "/services/recovery", description: "Find the highest-leverage recovery move." },
+    relatedAssessment: { label: "Fractional Advisor", href: "/services/fractional-advisor", description: "Design a decision-centered executive review." },
+    relatedOffer: { label: "Recovery", href: "/services/recovery-assessment", description: "Find the highest-leverage recovery move." },
     score: { ...launchScore, healthcare: 2, founder: 4 },
   },
   {
@@ -176,8 +176,8 @@ export const frameworkPages: FrameworkPage[] = [
     claimBoundary: rachelosBoundary,
     diagram: "flowchart TB\n  A[Source-aware facts] --> B[Bounded recommendation]\n  B --> C[Human approval]\n  C --> D[Governed action]\n  D --> E[Outcome and audit log]\n  E --> F[Operational visibility]",
     relatedGuide: { label: "Read what AI-assisted delivery compresses", href: "/insights/what-ai-assisted-delivery-compresses", description: "The delivery evidence and its limits." },
-    relatedAssessment: { label: "Enterprise AI", href: "/services/enterprise-ai", description: "Assess readiness, control, and operating fit." },
-    relatedOffer: { label: "Recovery", href: "/services/recovery", description: "Connect AI assistance to an accountable workflow." },
+    relatedAssessment: { label: "Recovery Assessment (AI readiness)", href: "/services/recovery-assessment", description: "Assess readiness, control, and operating fit." },
+    relatedOffer: { label: "Recovery", href: "/services/recovery-assessment", description: "Connect AI assistance to an accountable workflow." },
     score: { ...launchScore, healthcare: 2, founder: 4 },
   },
 ];
@@ -235,10 +235,10 @@ export const offerPages: OfferPage[] = [
 void offers;
 
 export const searchClusters = [
-  { problem: "Decision Latency", guide: "/insights/operational-intelligence-vs-reporting", diagram: "/frameworks/executive-operating-system", proof: "/frameworks/program-recovery", offer: "/services/recovery", audience: "CEO, COO, transformation sponsor" },
+  { problem: "Decision Latency", guide: "/insights/operational-intelligence-vs-reporting", diagram: "/frameworks/executive-operating-system", proof: "/frameworks/program-recovery", offer: "/services/recovery-assessment", audience: "CEO, COO, transformation sponsor" },
   { problem: "Prior Authorization Quality", guide: "/insights/prior-authorization-operational-quality-problem", diagram: "/frameworks/prior-authorization", proof: "/frameworks/gold-card", offer: "/services/prior-authorization-assessment", audience: "Prior-authorization or provider-operations leader" },
-  { problem: "Key-Person Dependency", guide: "/insights/human-apis-become-organizational-bottlenecks", diagram: "/proof/rachelos", proof: "/proof/rachelos", offer: "/services/recovery", audience: "COO, owner-operator, operations leader" },
-  { problem: "AI Governance", guide: "/insights/what-ai-assisted-delivery-compresses", diagram: "/frameworks/ai-governance", proof: "/frameworks/ai-governance", offer: "/services/enterprise-ai", audience: "CIO, COO, product leader" },
+  { problem: "Key-Person Dependency", guide: "/insights/human-apis-become-organizational-bottlenecks", diagram: "/proof/rachelos", proof: "/proof/rachelos", offer: "/services/recovery-assessment", audience: "COO, owner-operator, operations leader" },
+  { problem: "AI Governance", guide: "/insights/what-ai-assisted-delivery-compresses", diagram: "/frameworks/ai-governance", proof: "/frameworks/ai-governance", offer: "/services/recovery-assessment", audience: "CIO, COO, product leader" },
 ];
 
 export function getFrameworkPage(slug: string) {

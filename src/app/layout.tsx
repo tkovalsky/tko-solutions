@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "TKO Solutions | Operational Recovery for Complex Workflows",
+    default: "TKO Solutions | Operational Intelligence for Healthcare & Regulated Operations",
     template: "%s | TKO Solutions",
   },
   description: site.description,
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
     type: "website",
     url: absoluteUrl("/"),
     siteName: site.name,
-    title: "TKO Solutions | Operational Recovery for Complex Workflows",
+    title: "TKO Solutions | Operational Intelligence for Healthcare & Regulated Operations",
     description: site.description,
     images: [{ url: "/og.png", width: 1731, height: 909, alt: "TKO Solutions: Make hidden work visible. Recover the next decision." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TKO Solutions | Healthcare Workflow Modernization",
+    title: "TKO Solutions | Operational Intelligence for Healthcare & Regulated Operations",
     description: site.description,
     images: ["/og.png"],
   },
@@ -83,20 +83,28 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Todd Kovalsky",
-    jobTitle: "Founder and Operator",
+    jobTitle: "Founder & Principal, Operational Intelligence Advisor",
     worksFor: {
       "@type": "Organization",
       name: site.name,
       url: site.url,
     },
-    url: absoluteUrl("/about"),
-    sameAs: process.env.NEXT_PUBLIC_LINKEDIN_URL ? [process.env.NEXT_PUBLIC_LINKEDIN_URL] : undefined,
+    url: absoluteUrl("/founder"),
+    sameAs: [site.linkedin],
+    alumniOf: [
+      { "@type": "Organization", name: "Apollo Global Management" },
+      { "@type": "Organization", name: "Sapient" },
+      { "@type": "Organization", name: "FolioDynamix" },
+      { "@type": "Organization", name: "ELLKAY" },
+      { "@type": "Organization", name: "Montclair State University" },
+    ],
     knowsAbout: [
       "Healthcare Workflow Modernization",
       "Prior Authorization",
       "Transformation Governance",
       "Operational Intelligence",
       "Human-in-the-Loop AI",
+      "Healthcare Interoperability (FHIR, CMS Cures Act)",
     ],
   };
 

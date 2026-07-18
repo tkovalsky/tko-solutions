@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Zap } from "lucide-react";
-import { ServiceCards } from "@/components/site/cards";
+import { CredibilityStrip } from "@/components/site/credibility-strip";
 import { CtaBand } from "@/components/site/cta-band";
+import { EngagementPath } from "@/components/site/engagement-path";
 import { Hero } from "@/components/site/hero";
 import { JsonLd } from "@/components/site/json-ld";
 import { ProblemGrid } from "@/components/site/problem-grid";
@@ -85,6 +86,8 @@ export default function HomePage() {
 
       <Hero />
 
+      <CredibilityStrip />
+
       <Section className="!py-16 md:!py-20">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
@@ -164,14 +167,18 @@ export default function HomePage() {
               RachelOS: Product and Implementation, in production.
             </h3>
             <p className="mt-4 text-base leading-7 text-muted">
-              RachelOS is a live South Florida real-estate operating system—one
-              proof point for how TKO carries a strategy through to a running
-              product. It preserves relationship context, surfaces the next
-              priority, automates nurture, and keeps AI-assisted recommendations
-              under human control.
+              RachelOS is TKO&apos;s reference implementation: a live operating
+              system, built end to end by the founder, that preserves
+              relationship context, surfaces the next priority, and keeps
+              AI-assisted recommendations under human approval. What transfers
+              to healthcare and enterprise work is the operating model and its
+              governance—not the software.
             </p>
             <ArrowLink href="/proof/rachelos" className="mt-6">
               Review the RachelOS evidence
+            </ArrowLink>
+            <ArrowLink href="/proof/transfer" className="mt-3">
+              Why this matters outside real estate
             </ArrowLink>
           </div>
           <div className="grid gap-4 lg:grid-cols-3">
@@ -252,11 +259,11 @@ export default function HomePage() {
       <Section className="bg-surface !py-16 md:!py-20">
         <SectionHeader
           eyebrow="Engagement Path"
-          title="Start at the stage the business needs. Build only when the case is clear."
-          description="TKO begins by identifying the operating problem, the executive decision it is blocking, and the highest-leverage stage—strategy, operating model, product, or implementation—before recommending a larger build."
+          title="Engagement starts small and sequential: assessment first, build only when the case is clear."
+          description="Every engagement begins with a fixed-scope assessment of the operating problem and the decision it is blocking. Deeper work follows only when the evidence supports it."
         />
         <div className="mt-10">
-          <ServiceCards />
+          <EngagementPath />
         </div>
       </Section>
       <CtaBand

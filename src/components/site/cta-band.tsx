@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
+import { site } from "@/lib/site";
 
 type CtaBandProps = {
   title?: string;
@@ -54,6 +55,24 @@ export function CtaBand({
               />
             </Link>
           ) : null}
+          <p className="text-center text-sm leading-6 text-white/60 md:text-left">
+            Or directly:{" "}
+            <a
+              href={`mailto:${site.email}`}
+              className="font-semibold text-white/85 underline-offset-4 hover:text-white hover:underline"
+            >
+              email
+            </a>
+            <span className="mx-1.5 text-white/40">·</span>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-white/85 underline-offset-4 hover:text-white hover:underline"
+            >
+              LinkedIn
+            </a>
+          </p>
         </div>
       </div>
     </section>

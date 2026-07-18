@@ -5,9 +5,9 @@ import { Card } from "@/components/ui/card";
 const links = [
   { title: "Related problems", body: "Find the operating question before choosing a service.", href: "/problems", label: "Explore problems" },
   { title: "Related guides", body: "Read the evidence-led executive guides.", href: "/insights", label: "Read guides" },
-  { title: "Related diagrams", body: "Inspect decision, workflow, and governance models.", href: "/diagrams", label: "Browse diagrams" },
+  { title: "Related frameworks", body: "Inspect decision, workflow, and governance models.", href: "/frameworks", label: "Browse frameworks" },
   { title: "Related proof", body: "See direct system proof and bounded operating patterns.", href: "/proof", label: "Review proof" },
-  { title: "Founder record", body: "Follow the operating judgment behind the work.", href: "/proof/founder", label: "Meet the founder" },
+  { title: "Founder record", body: "The verified career timeline and the judgment behind the work.", href: "/founder", label: "Meet the founder" },
   { title: "Services", body: "One accountable path from strategy to production—start with the lane under pressure.", href: "/services", label: "View services" },
 ];
 

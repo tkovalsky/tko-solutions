@@ -25,11 +25,19 @@ export const metadata: Metadata = {
 const proofSections = [
   {
     eyebrow: "Founder Diligence",
-    title: "Founder Proof Hub",
+    title: "The verified career record",
     description:
-      "Follow the operating record across built systems, bounded healthcare experience, difficult decisions, assessments, and the evidence limits around each claim.",
-    href: "/proof/founder",
-    linkLabel: "Open the Founder Proof Hub",
+      "Twenty-plus years across Apollo, Sapient (Goldman Sachs AM, JPMorgan AM), FolioDynamix, ELLKAY, and Fortune 5 healthcare transformation at Cognizant—with timeline, experience atlas, and claim boundaries.",
+    href: "/founder",
+    linkLabel: "Review the founder record",
+  },
+  {
+    eyebrow: "The Transfer Argument",
+    title: "Why RachelOS matters outside real estate",
+    description:
+      "What the reference implementation proves, what transfers to healthcare and enterprise operations, and exactly where the claim stops—stated before a buyer has to ask.",
+    href: "/proof/transfer",
+    linkLabel: "Read the transfer argument",
   },
   {
     eyebrow: "Built Systems",

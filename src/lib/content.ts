@@ -364,7 +364,7 @@ export const caseStudies = [
       "Operational outcomes are stated without inflated revenue claims or unverifiable metrics.",
     ],
     relatedProblems: ["Key-Person Dependency", "Operational Visibility Gaps", "Workflow Governance"],
-    relatedService: "Decision Layer Build Sprint",
+    relatedService: "Operating System Build Sprint",
   },
   {
     slug: "rachelos-delivery-model",
@@ -387,7 +387,7 @@ export const caseStudies = [
       "Limitations are published, not hidden: no revenue attribution is claimed, dormant capabilities are listed as dormant, and adoption telemetry is marked unvalidated.",
     ],
     relatedProblems: ["AI Without Operational Control", "Key-Person Dependency", "Workflow Governance"],
-    relatedService: "AI Delivery Assessment",
+    relatedService: "Operational Recovery Assessment",
   },
   {
     slug: "prior-authorization-modernization",
@@ -479,7 +479,7 @@ export const caseStudies = [
       "No commercial outcomes, client names, or market-performance claims are published.",
     ],
     relatedProblems: ["Operational Visibility Gaps", "Key-Person Dependency", "Workflow Governance"],
-    relatedService: "Decision Layer Build Sprint",
+    relatedService: "Operating System Build Sprint",
   },
 ];
 

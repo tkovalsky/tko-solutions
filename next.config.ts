@@ -59,6 +59,21 @@ const nextConfig: NextConfig = {
       { source: "/proof/program-recovery", destination: "/frameworks/program-recovery", permanent: true },
       { source: "/proof/executive-operating-system", destination: "/frameworks/executive-operating-system", permanent: true },
       { source: "/proof/ai-governance", destination: "/frameworks/ai-governance", permanent: true },
+
+      // --- Founder consolidation (Credibility Sprint, 2026-07-17) ---
+      // One canonical founder destination. /about, /proof/founder, and the
+      // eight /founder/* taxonomy pages merge into /founder (anchored sections).
+      { source: "/about", destination: "/founder", permanent: true },
+      { source: "/proof/founder", destination: "/founder", permanent: true },
+      { source: "/founder/what-i-have-built", destination: "/founder#experience", permanent: true },
+      { source: "/founder/what-i-have-owned", destination: "/founder#timeline", permanent: true },
+      { source: "/founder/how-i-think", destination: "/founder#philosophy", permanent: true },
+      { source: "/founder/operating-principles", destination: "/founder#philosophy", permanent: true },
+      { source: "/founder/difficult-decisions", destination: "/founder#philosophy", permanent: true },
+      { source: "/founder/what-i-got-wrong", destination: "/founder#philosophy", permanent: true },
+      { source: "/founder/healthcare", destination: "/founder#experience", permanent: true },
+      { source: "/founder/ai-delivery", destination: "/founder#capabilities", permanent: true },
+      { source: "/founder/:slug", destination: "/founder", permanent: true },
     ];
   },
 };

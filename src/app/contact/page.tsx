@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { ExternalLink, Mail } from "lucide-react";
 import { submitDiagnosticIntake } from "@/app/contact/actions";
 import { DiagnosticForm } from "@/components/site/diagnostic-form";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Request a Conversation",
@@ -43,12 +44,45 @@ export default async function ContactPage({ searchParams }: SearchParams) {
         <div className="mt-10 grid gap-x-12 gap-y-8 lg:grid-cols-[0.7fr_1.3fr]">
           <aside className="lg:pt-1">
             <h2 className="text-lg font-semibold text-foreground">
-              The conversation starts with a concrete business problem.
+              Prefer a direct path?
+            </h2>
+            <div className="mt-4 flex flex-col gap-3">
+              <a
+                href={`mailto:${site.email}`}
+                className="inline-flex min-h-11 items-center gap-2 border border-border bg-white px-4 text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
+              >
+                <Mail className="size-4 shrink-0" aria-hidden="true" />
+                {site.email}
+              </a>
+              <a
+                href={site.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 border border-border bg-white px-4 text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
+              >
+                <ExternalLink className="size-4 shrink-0" aria-hidden="true" />
+                Connect on LinkedIn
+              </a>
+              {site.scheduling ? (
+                <a
+                  href={site.scheduling}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 border border-border bg-white px-4 text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
+                >
+                  Book a working session
+                </a>
+              ) : null}
+            </div>
+            <h2 className="mt-8 text-lg font-semibold text-foreground">
+              Or start the conversation prepared.
             </h2>
             <p className="mt-3 text-base leading-7 text-muted">
-              Answer as specifically as you can. The strongest starting point is a
-              measurable performance gap, stalled decision, key-person dependency,
-              or revenue risk—not a general interest in AI or automation.
+              The five short questions on the right make the first call a
+              working session instead of an introduction. The strongest starting
+              point is a measurable performance gap, stalled decision,
+              key-person dependency, or revenue risk—not a general interest in
+              AI or automation.
             </p>
           </aside>
 

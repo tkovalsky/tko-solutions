@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { Logo } from "@/components/site/logo";
+import { site } from "@/lib/site";
 
 const footerLinks = [
   { href: "/services", label: "Services" },
   { href: "/problems", label: "Problems" },
   { href: "/proof", label: "Proof" },
+  { href: "/proof/transfer", label: "The Transfer Argument" },
   { href: "/frameworks", label: "Frameworks" },
-  { href: "/diagrams", label: "Diagrams" },
   { href: "/healthcare", label: "Healthcare" },
   { href: "/insights", label: "Guides" },
-  { href: "/about", label: "About" },
   { href: "/founder", label: "Founder" },
+  { href: "/selected-work", label: "Selected Work" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -25,6 +26,15 @@ export function Footer() {
             TKO turns operating problems into working strategy, operating
             models, products, and AI-enabled systems—from executive decision
             through production implementation.
+          </p>
+          <p className="mt-6 text-sm leading-6 text-white/70">
+            <a href={`mailto:${site.email}`} className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">
+              {site.email}
+            </a>
+            <span className="mx-2 text-white/40">·</span>
+            <a href={site.linkedin} target="_blank" rel="noreferrer" className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">
+              LinkedIn
+            </a>
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 md:justify-self-end">

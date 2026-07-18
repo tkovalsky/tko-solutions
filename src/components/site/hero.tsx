@@ -66,16 +66,17 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="hero-kicker text-sm font-semibold uppercase tracking-[0.2em]">
-            Executive strategy through implementation
+            Operational intelligence advisory
           </p>
           <h1 className="hero-title mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
             Strategy that gets implemented—not shelved.
           </h1>
           <p className="hero-lead mt-6 max-w-[52ch] text-lg leading-8">
-            TKO helps healthcare and enterprise leaders turn complex operating
-            problems into working strategies, operating models, products, and
-            AI-enabled systems—from executive decision through production
-            implementation.
+            Todd Kovalsky is an operational intelligence advisor for healthcare
+            and regulated operations—the layer between systems of record and
+            the decisions people actually make. TKO turns operating problems
+            into working operating models, products, and human-governed
+            AI systems, from executive decision through production.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
@@ -110,10 +111,11 @@ export function Hero() {
           aria-label="TKO proof ladder"
         >
           <p className="hero-kicker text-xs font-semibold uppercase tracking-[0.16em]">
-            Proof: product &amp; implementation
+            Reference implementation
           </p>
           <h2 className="hero-title mt-4 text-2xl font-semibold leading-tight md:text-3xl">
-            RachelOS is what a working operating model looks like in production.
+            RachelOS: the operating thesis, built end to end and running in
+            production.
           </h2>
           <div className="mt-6 space-y-3">
             {rachelosProof.map((item) => (
@@ -128,9 +130,9 @@ export function Hero() {
             ))}
           </div>
           <p className="hero-muted hero-divider mt-6 border-t pt-5 text-sm leading-6">
-            Live production proof: RachelOS supports real estate operations in South
-            Florida, including three closed transactions, active conversations,
-            automated email nurture, and human-approved AI-assisted workflows.
+            Built by an advisor with two decades in regulated operations, and
+            audited in public. One deployment, one operator—the boundary is
+            stated, and what transfers is the operating model, not the software.
           </p>
         </motion.aside>
       </div>
