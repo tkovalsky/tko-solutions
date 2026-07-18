@@ -22,21 +22,45 @@ jobs:
     environment: production
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
 
+      - name: Verify required secrets are present
+        run: |
+          missing=0
+          for name in DATABASE_URL VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing required secret: $name (set it under Settings -> Environments -> production)"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "One or more required secrets are not set for the 'production' environment."
+            exit 1
+          fi
+          echo "All required secrets present."
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
       - name: Install dependencies
         run: npm ci
 
+      # Neon note: migrations must run against a DIRECT (non-pooled) connection.
+      # A pooled "-pooler" endpoint can break `migrate deploy` (advisory locks /
+      # prepared statements over PgBouncer). Set a DIRECT_URL secret to the
+      # direct Neon endpoint; it falls back to DATABASE_URL if unset.
       - name: Apply pending Prisma migrations
         run: npx prisma migrate deploy
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DIRECT_URL != '' && secrets.DIRECT_URL || secrets.DATABASE_URL }}
 
       # This path is deliberately after the migration. Do not enable a parallel
       # Vercel Git deployment for main, or it can race this serialized workflow.
@@ -53,6 +77,7 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Deploy production build
         run: npx --yes vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
