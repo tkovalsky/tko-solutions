@@ -208,7 +208,7 @@ export default function RecoveryAssessmentPage() {
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <LinkButton href="/contact">
-                Discuss an Active Initiative
+                Request a Program Assessment
                 <ArrowRight className="size-4" aria-hidden="true" />
               </LinkButton>
             </div>
@@ -411,7 +411,7 @@ export default function RecoveryAssessmentPage() {
         />
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           <LinkButton href="/contact">
-            Discuss an Active Initiative
+            Request a Program Assessment
             <ArrowRight className="size-4" aria-hidden="true" />
           </LinkButton>
         </div>
@@ -465,7 +465,7 @@ export default function RecoveryAssessmentPage() {
         title="Find what deserves deeper investment."
         description="A focused assessment identifies the constraint, the key-person or decision risk behind it, and the highest-leverage move before a larger transformation or technology commitment."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

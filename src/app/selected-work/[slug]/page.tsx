@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import {
   caseStudies,
+  deliveryModelExecutiveSummary,
   deliveryModelFaq,
   deliveryModelFit,
   deliveryModelNarrative,
@@ -116,7 +117,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         title={study.title}
         description={study.problem}
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />
@@ -184,9 +185,30 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
               })),
             }}
           />
+          <Section>
+            <SectionHeader
+              eyebrow="Executive summary"
+              title="Read this first: the method is the point, not the metrics."
+            />
+            <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-start">
+              <p className="max-w-[75ch] text-lg leading-8 text-muted">
+                {deliveryModelExecutiveSummary.lead}
+              </p>
+              <ul className="grid gap-3">
+                {deliveryModelExecutiveSummary.points.map((point) => (
+                  <li
+                    key={point}
+                    className="border border-border bg-white p-5 text-base leading-7 text-muted"
+                  >
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Section>
           <Section className="bg-surface">
             <SectionHeader
-              eyebrow={`What Exists Today — Production Snapshot, ${deliveryModelSnapshot.asOf}`}
+              eyebrow={`What Exists Today, Production Snapshot, ${deliveryModelSnapshot.asOf}`}
               title="Scale, verified."
               description="Every figure below is repository- or production-record-verified. Aggregates only; no revenue attribution is claimed."
             />
@@ -232,7 +254,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           <Section>
             <SectionHeader
               eyebrow="Next Step"
-              title="The AI Delivery Assessment — for the right operation."
+              title="The AI Delivery Assessment, for the right operation."
               description="The assessment applies this exact evidence method to your operation: a Built / Activated / Validated map of what you have, and a ranked list of what is actually constraining it. It is deliberately not for everyone."
             />
             <div className="mt-12 grid gap-8 lg:grid-cols-2">
@@ -261,7 +283,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
               href="/contact"
               className="mt-10 inline-block text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
             >
-              Discuss an Active Initiative →
+              Request a Program Assessment →
             </Link>
           </Section>
         </>

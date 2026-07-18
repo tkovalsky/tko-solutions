@@ -36,7 +36,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
           </h1>
           <p className="mt-5 text-lg leading-8 text-muted">
             Five questions to establish whether TKO can help. Describe the
-            workflow, revenue process, or transformation effort under pressure—and
+            workflow, revenue process, or transformation effort under pressure, and
             the decision leadership needs to make next.
           </p>
         </div>
@@ -81,8 +81,12 @@ export default async function ContactPage({ searchParams }: SearchParams) {
               The five short questions on the right make the first call a
               working session instead of an introduction. The strongest starting
               point is a measurable performance gap, stalled decision,
-              key-person dependency, or revenue risk—not a general interest in
+              key-person dependency, or revenue risk, not a general interest in
               AI or automation.
+            </p>
+            <p className="mt-4 text-base leading-7 text-muted">
+              Engagements are senior-led and direct. Prior-engagement context and
+              references are available under NDA once there is mutual fit.
             </p>
           </aside>
 
@@ -93,7 +97,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
                 <p className="mt-2 text-sm leading-6 text-muted">
                   Todd personally reviews every submission and will respond within
                   two business days. If there is a mutual fit, the next step is a
-                  30-minute working conversation—no automated sales sequence is
+                  30-minute working conversation, no automated sales sequence is
                   triggered.
                 </p>
               </div>

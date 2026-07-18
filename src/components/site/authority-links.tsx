@@ -8,7 +8,7 @@ const links = [
   { title: "Related frameworks", body: "Inspect decision, workflow, and governance models.", href: "/frameworks", label: "Browse frameworks" },
   { title: "Related proof", body: "See direct system proof and bounded operating patterns.", href: "/proof", label: "Review proof" },
   { title: "Founder record", body: "The verified career timeline and the judgment behind the work.", href: "/founder", label: "Meet the founder" },
-  { title: "Services", body: "One accountable path from strategy to production—start with the lane under pressure.", href: "/services", label: "View services" },
+  { title: "Services", body: "One accountable path from strategy to production, start with the lane under pressure.", href: "/services", label: "View services" },
 ];
 
 export function AuthorityLinks({ current }: { current?: string }) {

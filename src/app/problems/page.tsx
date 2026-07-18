@@ -58,7 +58,7 @@ export default function ProblemsPage() {
         title="Your teams are working. Leadership still cannot see where the work is stuck."
         description="The issue is rarely effort or another dashboard. It is the hidden work between systems, handoffs, exceptions, and decisions that no one owns clearly enough to fix."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

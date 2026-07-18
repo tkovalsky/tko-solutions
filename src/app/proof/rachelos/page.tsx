@@ -89,7 +89,7 @@ export default function RachelOSProofPage() {
         title="A live operating system that turns relationship knowledge into revenue work."
         description="RachelOS supports a South Florida real-estate business. It replaced manual reconstruction across records, messages, notes, and activity with durable context, prioritized work, automated email nurture, and human-governed AI assistance."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/proof"
         secondaryLabel="Back to proof registry"
       />
@@ -98,7 +98,7 @@ export default function RachelOSProofPage() {
         <div className="space-y-12">
           <ProofSection
             title="Executive Problem"
-            body="The business had information across a CRM, email, text threads, notes, calendar, and spreadsheets. The hard question—who needs attention now, why, and what should happen next—still required the operator to reconstruct the answer each day."
+            body="The business had information across a CRM, email, text threads, notes, calendar, and spreadsheets. The hard question, who needs attention now, why, and what should happen next, still required the operator to reconstruct the answer each day."
           />
           <ProofSection
             title="Constraint"

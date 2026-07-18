@@ -48,7 +48,7 @@ const expectedInputs = [
   "Existing workflow documentation, process notes, reports, dashboards, and backlog or status artifacts.",
   "Examples of stalled work, rework, missed handoffs, exceptions, or decisions that took too long.",
   "Interviews with the people closest to the workflow and the sponsor who needs to make the next decision.",
-  "Available operating signals—not a new platform, integration, or perfectly clean dataset.",
+  "Available operating signals, not a new platform, integration, or perfectly clean dataset.",
 ];
 
 const engagementScope = [
@@ -74,9 +74,9 @@ export default function AssessmentPage() {
       <PageHero
         eyebrow="Executive operating review"
         title="Find the constraint before you fund the solution."
-        description="The Operational Recovery Assessment is a focused engagement for leaders who need to identify the bottleneck, decision gap, or key-person dependency reducing performance—and decide what is worth fixing first."
+        description="The Operational Recovery Assessment is a focused engagement for leaders who need to identify the bottleneck, decision gap, or key-person dependency reducing performance, and decide what is worth fixing first."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/proof/rachelos"
         secondaryLabel="Review built-system proof"
       />
@@ -113,7 +113,7 @@ export default function AssessmentPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="Who Should Engage"
-            title="The sponsor owns a business decision—not just a technology initiative."
+            title="The sponsor owns a business decision, not just a technology initiative."
             description="The strongest engagements have a visible trigger, access to operating evidence, and a leader accountable for improving the result."
           />
           <div className="grid gap-3 md:grid-cols-2">
@@ -180,7 +180,7 @@ export default function AssessmentPage() {
           href="/contact"
           className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
         >
-          Discuss an Active Initiative
+          Request a Program Assessment
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </Section>
@@ -189,7 +189,7 @@ export default function AssessmentPage() {
         title="Bring the workflow under pressure."
         description="The first step is a focused intake. TKO will assess whether the problem is ready for a fixed-scope recovery engagement."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
       />
     </>
   );

@@ -44,7 +44,7 @@ export function CaseStudyCards() {
           <h3 className="mt-6 text-2xl font-semibold">{study.title}</h3>
           <p className="mt-4 text-base leading-7 text-muted">{study.problem}</p>
           <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-            <span className="font-semibold text-primary">Outcome — </span>
+            <span className="font-semibold text-primary">Outcome: </span>
             {study.outcome}
           </p>
           <ArrowLink href={`/selected-work/${study.slug}`} className="mt-8">

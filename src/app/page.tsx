@@ -15,16 +15,16 @@ import { caseStudies } from "@/lib/content";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Executive Strategy Through Implementation",
+  title: "Transformation & Program Recovery for Healthcare & Regulated Operations",
   description:
-    "TKO helps healthcare and enterprise leaders turn complex operating problems into working strategy, operating models, products, and AI-enabled systems—from executive decision through production implementation.",
+    "TKO is an independent transformation and program recovery advisor for healthcare and regulated operations. Find where large initiatives are actually failing, and what to fix first, with evidence you can inspect.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Executive Strategy Through Implementation",
+    title: "Transformation & Program Recovery",
     description:
-      "Strategy, operating model, product, and implementation—one accountable path from executive decision to production.",
+      "Independent, evidence-based assessment of where transformation and modernization programs are actually failing, and what to fix first.",
     url: absoluteUrl("/"),
   },
 };
@@ -43,7 +43,7 @@ const strategyLadder = [
   {
     stage: "Product",
     description:
-      "Build the AI-enabled systems the operating model requires—not a generic platform.",
+      "Build the AI-enabled systems the operating model requires, not a generic platform.",
   },
   {
     stage: "Implementation",
@@ -80,7 +80,7 @@ export default function HomePage() {
           name: "TKO Solutions",
           url: absoluteUrl("/"),
           description:
-            "Executive strategy through implementation for complex operations: strategy, operating model, product, and production implementation.",
+            "Independent transformation and program recovery for healthcare and regulated operations: evidence-based assessment of where large initiatives are actually failing.",
         }}
       />
 
@@ -129,7 +129,7 @@ export default function HomePage() {
                 <h3 className="mt-5 text-2xl font-semibold">{study.title}</h3>
                 <p className="mt-4 text-base leading-7 text-muted">{study.problem}</p>
                 <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-                  <span className="font-semibold text-primary">Evidence scope — </span>
+                  <span className="font-semibold text-primary">Evidence scope: </span>
                   {study.evidence[0]}
                 </p>
                 <ArrowLink href={`/selected-work/${study.slug}`} className="mt-8">
@@ -142,9 +142,9 @@ export default function HomePage() {
 
       <Section className="bg-surface !py-16 md:!py-20">
         <SectionHeader
-          eyebrow="How TKO Works"
-          title="Strategy → Operating Model → Product → Implementation."
-          description="One accountable path from executive decision to production system. Most engagements start at the stage the business actually needs—not at the top of a generic methodology."
+          eyebrow="How TKO works"
+          title="Assessment first, then only the work the evidence supports."
+          description="TKO diagnoses where the initiative is failing before recommending a fix. When deeper work is warranted it runs across four stages, strategy, operating model, product, and implementation, but the default first step is a bounded assessment, not a full program."
         />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {strategyLadder.map((step, index) => (
@@ -161,18 +161,18 @@ export default function HomePage() {
         <div className="mt-14 grid gap-10 border-t border-border pt-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-              Supporting Proof
+              Method &amp; Evidence Proof
             </p>
             <h3 className="mt-4 text-2xl font-semibold leading-tight">
-              RachelOS: Product and Implementation, in production.
+              RachelOS: proof the evidence method holds in production.
             </h3>
             <p className="mt-4 text-base leading-7 text-muted">
-              RachelOS is TKO&apos;s reference implementation: a live operating
-              system, built end to end by the founder, that preserves
-              relationship context, surfaces the next priority, and keeps
-              AI-assisted recommendations under human approval. What transfers
-              to healthcare and enterprise work is the operating model and its
-              governance—not the software.
+              RachelOS is the reference implementation of how TKO works, not the
+              product TKO sells. It is a live system, built and audited in
+              public, where every capability is graded implemented, activated,
+              validated, or unvalidated. It shows the same evidence discipline
+              TKO brings to a transformation or program assessment. What
+              transfers is the method and its governance, not the software.
             </p>
             <ArrowLink href="/proof/rachelos" className="mt-6">
               Review the RachelOS evidence
@@ -224,7 +224,7 @@ export default function HomePage() {
               multi-team dependencies are real constraints.
             </p>
             <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-              <span className="font-semibold text-primary">Operating lesson — </span>
+              <span className="font-semibold text-primary">Operating lesson: </span>
               Identify the dependency, make the decision path explicit, and build
               only after the operating truth is visible.
             </p>
@@ -241,18 +241,19 @@ export default function HomePage() {
             Why TKO
           </p>
           <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-            Executives don&apos;t lack strategy. They lack a partner who will carry it through implementation.
+            Most programs do not fail for lack of a plan. They fail where the work crosses teams.
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/60">
-            A strategy deck does not change how work runs. TKO stays accountable
-            through the operating model, the product build, and the production
-            implementation—the stages where most transformation spend stalls.
+            Status reports show green while risk accumulates between workstreams.
+            TKO finds where the work is actually stuck, who owns the next
+            decision, and what to fix before more budget is committed.
           </p>
         </div>
         <p className="mt-10 flex max-w-[65ch] items-start gap-3 text-sm leading-6 text-white/50">
           <Zap className="mt-0.5 size-4 shrink-0 text-primary-light" aria-hidden="true" />
-          AI is useful only when it improves a real workflow with clear ownership
-          and human accountability. It is a tool—not the reason to engage TKO.
+          AI matters only when it improves a real workflow with clear ownership
+          and human accountability. It is one tool among several, never the
+          reason to engage TKO.
         </p>
       </Section>
 
@@ -267,8 +268,8 @@ export default function HomePage() {
         </div>
       </Section>
       <CtaBand
-        title="Your strategy is only as good as what gets built and shipped."
-        description="Bring the operating problem, decision, or system that needs to move from strategy to production. TKO will help determine what deserves action first."
+        title="Bring the initiative that is not landing."
+        description="Describe the transformation, program, or workflow under pressure. TKO will help determine where execution is breaking down and what deserves action first."
         primaryLabel={site.cta}
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"

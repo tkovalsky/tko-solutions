@@ -30,13 +30,13 @@ export const metadata: Metadata = {
 const decisions = [
   {
     title: "Choosing an operating system over a better CRM view",
-    body: "The problem was not missing records. It was that relationship context, priority, and next action still had to be reconstructed by one person. The decision was to build RachelOS around durable memory, priority, recommendation, human approval, and action—not simply improve storage.",
+    body: "The problem was not missing records. It was that relationship context, priority, and next action still had to be reconstructed by one person. The decision was to build RachelOS around durable memory, priority, recommendation, human approval, and action, not simply improve storage.",
     lesson: "The product was a trusted answer to “what should happen next?”",
   },
   {
     title: "Refusing fully autonomous outbound AI",
     body: "AI could draft or recommend outreach, but relationship-sensitive errors and factual uncertainty made autonomous action the wrong tradeoff. RachelOS keeps AI-assisted outbound action behind a human approval gate.",
-    lesson: "Governance is part of the product—not a policy attached later.",
+    lesson: "Governance is part of the product, not a policy attached later.",
   },
   {
     title: "Letting production behavior change the priority",
@@ -108,11 +108,12 @@ export default function FounderPage() {
                 {executiveSummary.headline}
               </h1>
               <p className="mt-8 max-w-[65ch] text-xl leading-9 text-muted">
-                {executiveSummary.gloss} Twenty-plus years across financial
-                services operations, enterprise transformation, product
-                ownership, healthcare interoperability, and healthcare
-                transformation—now focused on making AI-enabled operations
-                governable, auditable, and real.
+                An independent transformation and program recovery advisor for
+                healthcare and regulated operations, with twenty-plus years
+                across capital markets, asset management, wealth platforms,
+                enterprise transformation, product leadership, and healthcare.
+                Engagements are senior-led and direct: the person who assesses
+                your program is the person you work with.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
@@ -163,14 +164,14 @@ export default function FounderPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Why TKO exists"
-          title="Six vantage points on one problem—then I built the answer."
+          title="Six vantage points on one problem, then I built the answer."
         />
         <div className="mt-10 max-w-[75ch] space-y-6 text-lg leading-8 text-muted">
           <p>
             My formation was the back office of leveraged finance through the
             post-2008 cycle: multi-billion-dollar loan settlements, LSTA trades,
             reconciliation under volume stress at Apollo. The lesson of that
-            decade became the founding lesson of TKO—the system of record is
+            decade became the founding lesson of TKO: the system of record is
             never the operating truth. The truth lived in reconciliations, in
             exceptions, and in the few people who knew which counterparty always
             failed to settle.
@@ -180,7 +181,7 @@ export default function FounderPage() {
             investment platforms for Goldman Sachs and JPMorgan asset management
             at Sapient, owning advisor-facing products at WBI and FolioDynamix,
             and turning the CMS Cures Act into machine-enforceable FHIR platform
-            behavior at ELLKAY—where I learned that governance is architecture,
+            behavior at ELLKAY, where I learned that governance is architecture,
             not documentation. Inside a Fortune 5 healthcare transformation
             portfolio at Cognizant, I watched the enterprise-scale version:
             programs reporting green while the real state lives between
@@ -188,8 +189,8 @@ export default function FounderPage() {
           </p>
           <p>
             No enterprise engagement would let one advisor implement the entire
-            thesis—memory, governed facts, priority, human approval, observable
-            health—end to end. So I built it myself, in a live business, and
+            thesis (memory, governed facts, priority, human approval, observable
+            health) end to end. So I built it myself, in a live business, and
             audited it in public. RachelOS is not a pivot into real estate. It
             is the controlled experiment the previous twenty years demanded.
           </p>
@@ -223,7 +224,7 @@ export default function FounderPage() {
                 {entry.scope}
               </p>
               <p className="mt-3 max-w-[70ch] text-sm leading-6 text-foreground">
-                <span className="font-semibold text-primary">Lesson — </span>
+                <span className="font-semibold text-primary">Lesson: </span>
                 {entry.lesson}
               </p>
             </li>
@@ -235,7 +236,7 @@ export default function FounderPage() {
       <Section id="experience" className="bg-surface">
         <SectionHeader
           eyebrow="Experience atlas"
-          title="Where each operating pattern was learned—and where it is proven."
+          title="Where each operating pattern was learned, and where it is proven."
           description="The patterns TKO sells were not invented for this site. Each one has a career origin and an inspectable implementation."
         />
         <div className="mt-10 overflow-x-auto border border-border bg-white">
@@ -271,15 +272,15 @@ export default function FounderPage() {
             <Card key={row.capability} className="flex flex-col">
               <h3 className="text-xl font-semibold">{row.capability}</h3>
               <p className="mt-4 text-sm leading-6 text-muted">
-                <span className="font-semibold text-foreground">Career evidence — </span>
+                <span className="font-semibold text-foreground">Career evidence: </span>
                 {row.careerEvidence}
               </p>
               <p className="mt-3 text-sm leading-6 text-muted">
-                <span className="font-semibold text-foreground">Proof evidence — </span>
+                <span className="font-semibold text-foreground">Proof evidence: </span>
                 {row.proofEvidence}
               </p>
               <p className="mt-4 border-t border-border pt-4 text-sm leading-6 text-foreground">
-                <span className="font-semibold text-primary">Boundary — </span>
+                <span className="font-semibold text-primary">Boundary: </span>
                 {row.boundary}
               </p>
               <Link
@@ -298,7 +299,7 @@ export default function FounderPage() {
       <Section id="philosophy" className="bg-surface">
         <SectionHeader
           eyebrow="Operating philosophy"
-          title="The work is choosing the right operating tradeoff—and recording it."
+          title="The work is choosing the right operating tradeoff, and recording it."
           description="Three decisions and four corrected assumptions from the production record, published because the method matters more than the highlight reel."
         />
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
@@ -307,7 +308,7 @@ export default function FounderPage() {
               <h3 className="text-xl font-semibold">{item.title}</h3>
               <p className="mt-4 text-base leading-7 text-muted">{item.body}</p>
               <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-                <span className="font-semibold text-primary">Lesson — </span>
+                <span className="font-semibold text-primary">Lesson: </span>
                 {item.lesson}
               </p>
             </Card>

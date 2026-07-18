@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
 import { site } from "@/lib/site";
 
+const DEFAULT_CTA_LABEL = site.cta;
+
 type CtaBandProps = {
   title?: string;
   description?: string;
@@ -13,10 +15,10 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "Find the constraint holding performance back.",
-  description = "Bring the workflow, revenue process, or operating problem under pressure. TKO will help determine where execution is breaking down and what deserves action first.",
+  title = "Find where the initiative is actually failing.",
+  description = "Bring the transformation, program, or workflow under pressure. TKO will help determine where execution is breaking down and what deserves action first.",
   primaryHref = "/contact",
-  primaryLabel = "Discuss an Active Initiative",
+  primaryLabel = DEFAULT_CTA_LABEL,
   secondaryHref = null,
   secondaryLabel = null,
 }: CtaBandProps) {

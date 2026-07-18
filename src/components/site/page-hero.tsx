@@ -1,5 +1,6 @@
 import { LinkButton } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { site } from "@/lib/site";
 
 type PageHeroProps = {
   eyebrow?: string;
@@ -17,7 +18,7 @@ export function PageHero({
   title,
   description,
   primaryHref = "/contact",
-  primaryLabel = "Discuss an Active Initiative",
+  primaryLabel = site.cta,
   secondaryHref,
   secondaryLabel,
   className,

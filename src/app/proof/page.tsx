@@ -27,7 +27,7 @@ const proofSections = [
     eyebrow: "Founder Diligence",
     title: "The verified career record",
     description:
-      "Twenty-plus years across Apollo, Sapient (Goldman Sachs AM, JPMorgan AM), FolioDynamix, ELLKAY, and Fortune 5 healthcare transformation at Cognizant—with timeline, experience atlas, and claim boundaries.",
+      "Twenty-plus years across Apollo, Sapient (Goldman Sachs AM, JPMorgan AM), FolioDynamix, ELLKAY, and Fortune 5 healthcare transformation at Cognizant, with timeline, experience atlas, and claim boundaries.",
     href: "/founder",
     linkLabel: "Review the founder record",
   },
@@ -35,15 +35,15 @@ const proofSections = [
     eyebrow: "The Transfer Argument",
     title: "Why RachelOS matters outside real estate",
     description:
-      "What the reference implementation proves, what transfers to healthcare and enterprise operations, and exactly where the claim stops—stated before a buyer has to ask.",
+      "What the reference implementation proves, what transfers to healthcare and enterprise operations, and exactly where the claim stops, stated before a buyer has to ask.",
     href: "/proof/transfer",
     linkLabel: "Read the transfer argument",
   },
   {
-    eyebrow: "Built Systems",
+    eyebrow: "Method & Evidence Proof",
     title: "RachelOS",
     description:
-      "A live relationship intelligence and action system that preserves operational memory, resolves facts, produces one trusted next action, and keeps human approval in the workflow.",
+      "The reference implementation of how TKO works, not the product TKO sells. A live system that preserves operational memory, resolves facts, produces one trusted next action, and keeps human approval in the workflow, with every capability graded implemented, activated, validated, or unvalidated.",
     href: "/proof/rachelos",
     linkLabel: "Review RachelOS proof",
     image: "/proof/rachelos/canonical-queue.png",
@@ -63,7 +63,7 @@ const proofSections = [
     eyebrow: "Healthcare Operating Background",
     title: "Complex workflow and governance experience",
     description:
-      "Prior authorization, utilization management, care management, interoperability, regulatory initiatives, and transformation programs supply relevant operating context—not a claimed deployed healthcare product or quantified case result.",
+      "Prior authorization, utilization management, care management, interoperability, regulatory initiatives, and transformation programs supply relevant operating context, not a claimed deployed healthcare product or quantified case result.",
     href: "/selected-work",
     linkLabel: "Review selected healthcare work",
   },
@@ -79,7 +79,7 @@ const proofSections = [
     eyebrow: "Operating Frameworks",
     title: "The operating models are separate from the evidence",
     description:
-      "Synthesized operating and governance models—prior authorization, program recovery, executive operating reviews, human-governed AI—live in Frameworks with their claim boundaries, so Proof stays reserved for inspectable evidence.",
+      "Synthesized operating and governance models (prior authorization, program recovery, executive operating reviews, human-governed AI) live in Frameworks with their claim boundaries, so Proof stays reserved for inspectable evidence.",
     href: "/frameworks",
     linkLabel: "Review the operating frameworks",
   },
@@ -105,7 +105,7 @@ export default function ProofPage() {
         primaryHref="/proof/rachelos"
         primaryLabel="Inspect RachelOS"
         secondaryHref="/contact"
-        secondaryLabel="Discuss an Active Initiative"
+        secondaryLabel="Request a Program Assessment"
       />
 
       <Section>
@@ -153,7 +153,7 @@ export default function ProofPage() {
       </Section>
 
       <CtaBand
-        title="Bring the workflow under pressure—not a preferred tool."
+        title="Bring the workflow under pressure, not a preferred tool."
         description="The Assessment determines whether the immediate need is operational recovery, a deeper diagnostic, or no additional build at all."
       />
     </>

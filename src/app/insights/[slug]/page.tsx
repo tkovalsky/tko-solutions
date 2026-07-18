@@ -67,7 +67,7 @@ export default async function InsightPage({ params }: Params) {
         title={insight.title}
         description={insight.description}
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

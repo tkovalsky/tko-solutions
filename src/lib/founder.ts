@@ -16,10 +16,10 @@ export const careerTimeline: TimelineEntry[] = [
   {
     years: "2000s",
     organization: "Reuters Loan Pricing Corp · Bisys · Chatham Asset Management",
-    role: "Early career — credit and fund operations",
+    role: "Early career, credit and fund operations",
     era: "Financial Services Operations",
     scope: "Loan pricing data, fund services, and credit operations in regulated financial environments.",
-    lesson: "Operating truth is derived from messy signals—not stored in the system of record.",
+    lesson: "Operating truth is derived from messy signals, not stored in the system of record.",
   },
   {
     years: "2009–2012",
@@ -31,16 +31,16 @@ export const careerTimeline: TimelineEntry[] = [
   },
   {
     years: "2012–2015",
-    organization: "Sapient — Goldman Sachs AM · JPMorgan AM",
+    organization: "Sapient, Goldman Sachs AM · JPMorgan AM",
     role: "Manager / Business Analyst",
     era: "Enterprise Transformation",
     scope: "Investment-manager research and due-diligence platform for Goldman Sachs Asset Management's Fund of Funds business; investment-operations modernization for JPMorgan Asset Management.",
-    lesson: "Expert judgment can become structured, institutional decision support—if the workflow is designed for it.",
+    lesson: "Expert judgment can become structured, institutional decision support, if the workflow is designed for it.",
   },
   {
     years: "2016–2017",
     organization: "WBI",
-    role: "Project Manager (Consultant) — Investment Operations",
+    role: "Project Manager (Consultant), Investment Operations",
     era: "Product & Platform Leadership",
     scope: "Full rebuild of the firm's CRM and advisor platform across trading, ETF distribution, and settlement workflows.",
     lesson: "The operator's screen is the product. A system that cannot answer 'what should happen next' is storage.",
@@ -48,7 +48,7 @@ export const careerTimeline: TimelineEntry[] = [
   {
     years: "2017–2018",
     organization: "FolioDynamix",
-    role: "Product Owner — TAMP & Wealth Technology",
+    role: "Product Owner, TAMP & Wealth Technology",
     era: "Product & Platform Leadership",
     scope: "Product roadmap and delivery for a turnkey asset management platform through its acquisition by Envestnet.",
     lesson: "Roadmaps survive only when they are tied to advisor workflow reality, not feature ambition.",
@@ -56,7 +56,7 @@ export const careerTimeline: TimelineEntry[] = [
   {
     years: "2020–2022",
     organization: "ELLKAY",
-    role: "Product Manager — Healthcare Interoperability",
+    role: "Product Manager, Healthcare Interoperability",
     era: "Healthcare & Interoperability",
     scope: "Owned a payer-facing interoperability platform for CMS Cures Act compliance: FHIR APIs with access control, auditability, and data governance embedded in platform logic.",
     lesson: "Governance is architecture. Compliance enforced in code scales; compliance attached as policy does not.",
@@ -64,10 +64,10 @@ export const careerTimeline: TimelineEntry[] = [
   {
     years: "2022–present",
     organization: "Cognizant",
-    role: "Senior Manager — Healthcare Transformation, AI & Analytics",
+    role: "Senior Manager, Healthcare Transformation, AI & Analytics",
     era: "Healthcare Transformation",
     scope: "Large-scale payer modernization for a Fortune 5 healthcare organization: delivery governance, executive reporting, workflow transformation, and AI-enabled operational improvement.",
-    lesson: "Programs fail between workstreams—where dependency risk, decision latency, and adoption gaps live.",
+    lesson: "Programs fail between workstreams, where dependency risk, decision latency, and adoption gaps live.",
   },
   {
     years: "2018–present",
@@ -75,7 +75,7 @@ export const careerTimeline: TimelineEntry[] = [
     role: "Founder & Principal",
     era: "Founder",
     scope: "Operational intelligence advisory for healthcare and regulated operations. RachelOS (2025–26) is the production reference implementation of the full operating thesis.",
-    lesson: "The decision layer can be built, governed, and audited—so it should be.",
+    lesson: "The decision layer can be built, governed, and audited, so it should be.",
   },
 ];
 
@@ -127,7 +127,7 @@ export const experienceAtlas: AtlasRow[] = [
   {
     pattern: "Governance embedded as architecture",
     learned: "ELLKAY: Cures Act compliance enforced in FHIR API logic",
-    proven: "RachelOS approval gates, human-fact immutability, activation states—enforced in code",
+    proven: "RachelOS approval gates, human-fact immutability, activation states, enforced in code",
   },
   {
     pattern: "Program and dependency governance",
@@ -174,14 +174,14 @@ export const capabilityAtlas: CapabilityRow[] = [
   {
     capability: "Operating System Build & AI Governance",
     careerEvidence: "Product ownership at WBI, FolioDynamix, and ELLKAY; AI-enabled operations work at Cognizant.",
-    proofEvidence: "RachelOS: 1,528 commits, 67 migrations, 1,341 tests, ten months live—human-governed AI in production.",
-    boundary: "One deployment, one operator. Direct proof of capability and governance architecture—not enterprise scale or ROI.",
+    proofEvidence: "RachelOS: 1,528 commits, 67 migrations, 1,341 tests, ten months live, human-governed AI in production.",
+    boundary: "One deployment, one operator. Direct proof of capability and governance architecture, not enterprise scale or ROI.",
     href: "/services/operating-system-build",
   },
 ];
 
 export const executiveSummary = {
-  headline: "Todd Kovalsky — Operational Intelligence Advisor",
+  headline: "Todd Kovalsky, Operational Intelligence Advisor",
   gloss: "The layer between systems of record and the decisions people actually make.",
   facts: [
     "20+ years in regulated operating environments: financial services operations, enterprise transformation, product leadership, healthcare interoperability, and healthcare transformation.",

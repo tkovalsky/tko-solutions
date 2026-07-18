@@ -52,7 +52,7 @@ export function EngagementPath() {
             </dl>
             <p className="mt-4 text-sm leading-6 text-muted">{service.summary}</p>
             <p className="mt-4 text-sm leading-6 text-foreground">
-              <span className="font-semibold text-primary">Outcome — </span>
+              <span className="font-semibold text-primary">Outcome: </span>
               {service.outcomes[0]}
             </p>
             <ArrowLink href={`/services/${service.slug}`} className="mt-auto pt-6">

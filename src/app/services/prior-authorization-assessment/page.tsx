@@ -12,7 +12,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Prior Authorization Operational Assessment",
   description:
-    "A fixed-scope healthcare workflow assessment that diagnoses administrative burden, denials, exception handling, and human dependency risk in prior authorization — before automation, AI, FHIR, or Gold Card work.",
+    "A fixed-scope healthcare workflow assessment that diagnoses administrative burden, denials, exception handling, and human dependency risk in prior authorization, before automation, AI, FHIR, or Gold Card work.",
   alternates: { canonical: "/services/prior-authorization-assessment" },
   openGraph: {
     title: "Prior Authorization Operational Assessment",
@@ -50,7 +50,7 @@ const outputs = [
   {
     title: "Human API Risk Analysis",
     description:
-      "Who knows payer-specific rules, handles exceptions, performs escalations, and trains staff — and what happens if they leave.",
+      "Who knows payer-specific rules, handles exceptions, performs escalations, and trains staff, and what happens if they leave.",
   },
   {
     title: "Gold Card Readiness Assessment",
@@ -149,9 +149,9 @@ export default function PriorAuthorizationAssessmentPage() {
       <PageHero
         eyebrow="Tier-1 Healthcare Assessment"
         title="Prior Authorization is a workflow problem before it is an automation problem."
-        description="A fixed-scope assessment for prior authorization, utilization management, and provider operations leaders. It diagnoses administrative burden, denial drivers, exception handling, and human dependency risk — so you can fix operational quality before spending on AI, automation, FHIR, or Gold Card programs."
+        description="A fixed-scope assessment for prior authorization, utilization management, and provider operations leaders. It diagnoses administrative burden, denial drivers, exception handling, and human dependency risk, so you can fix operational quality before spending on AI, automation, FHIR, or Gold Card programs."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />
@@ -252,8 +252,8 @@ export default function PriorAuthorizationAssessmentPage() {
               ))}
             </ul>
             <p className="mt-6 max-w-[60ch] text-base leading-7 text-muted">
-              The assessment makes that dependency visible — who holds payer-specific
-              knowledge, who handles exceptions, who escalates, who trains — and what
+              The assessment makes that dependency visible, who holds payer-specific
+              knowledge, who handles exceptions, who escalates, who trains, and what
               breaks if they become unavailable.
             </p>
           </div>
@@ -295,8 +295,8 @@ export default function PriorAuthorizationAssessmentPage() {
 
       <CtaBand
         title="Diagnose operational quality before you buy automation."
-        description="The Prior Authorization Operational Assessment maps administrative burden, denial drivers, exception patterns, and human dependency risk in one fixed-scope week — and shows leadership the next highest-leverage move."
-        primaryLabel="Discuss an Active Initiative"
+        description="The Prior Authorization Operational Assessment maps administrative burden, denial drivers, exception patterns, and human dependency risk in one fixed-scope week, and shows leadership the next highest-leverage move."
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

@@ -9,14 +9,14 @@ import { services } from "@/lib/content";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Services | Strategy Through Implementation",
+  title: "Engagements | Transformation & Program Recovery",
   description:
-    "TKO designs the strategy, defines the operating model, builds the product, and implements it in production—for healthcare and enterprise leaders with complex operating problems.",
+    "Start with a bounded assessment of where a transformation or program is actually failing. TKO recommends deeper diagnostic, build, or advisory work only when the evidence supports it.",
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "TKO Services | Strategy Through Implementation",
+    title: "TKO Engagements | Transformation & Program Recovery",
     description:
-      "Start at the stage the business needs: strategy, operating model, product, or implementation—one accountable path, not a generic consulting scope.",
+      "Assessment first. Evidence, then a bounded next move: diagnostic, operating-model or product build, or ongoing advisory.",
     url: absoluteUrl("/services"),
   },
 };
@@ -25,9 +25,9 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="The Delivery Model"
-        title="From executive strategy to production implementation—one accountable path."
-        description="TKO designs the strategy, defines the operating model, builds the product, and implements it in production. Each engagement starts at the stage the business actually needs."
+        eyebrow="Engagements"
+        title="Start with a bounded assessment of where the initiative is failing."
+        description="TKO diagnoses the operating problem first, then recommends only the work the evidence supports: a deeper diagnostic, an operating-model or product build, or ongoing advisory. Each engagement starts at the stage the business actually needs."
         primaryLabel={site.cta}
       />
       <Section>
@@ -36,8 +36,8 @@ export default function ServicesPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Engagement Logic"
-          title="One question: what needs to move from strategy to production first?"
-          description="The services are sequenced to avoid speculative projects. TKO diagnoses the operating problem first, then recommends only the stage of work—strategy, operating model, product, or implementation—needed next."
+          title="One question: where is the initiative actually failing, and what deserves action first?"
+          description="The engagements are sequenced to avoid speculative projects. TKO diagnoses the operating problem first, then recommends only the stage of work (diagnostic, operating model, product, or implementation) needed next."
         />
         <div className="mt-12 grid gap-3 lg:grid-cols-4">
           {services.map((service, index) => (
@@ -50,6 +50,16 @@ export default function ServicesPage() {
             </div>
           ))}
         </div>
+        <p className="mt-8 text-base leading-7 text-muted">
+          Prefer to start from a specific problem?{" "}
+          <Link
+            href="/offers"
+            className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline"
+          >
+            See the topic-specific assessments
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </p>
       </Section>
       <Section>
         <div className="grid gap-8 border border-border bg-surface p-8 md:grid-cols-[1.2fr_auto] md:items-center md:p-12">

@@ -11,7 +11,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "AI Delivery Assessment",
   description:
-    "A fixed-scope assessment that maps what your operation has actually built, activated, and validated — and ranks the constraints blocking throughput — before anyone proposes building anything.",
+    "A fixed-scope assessment that maps what your operation has actually built, activated, and validated, and ranks the constraints blocking throughput, before anyone proposes building anything.",
   alternates: { canonical: "/assessment/ai-delivery" },
   openGraph: {
     title: "AI Delivery Assessment",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 const engageSignals = [
   "AI has been mandated or budgeted, but no one can say which workflow it should govern or what human approval looks like.",
-  "Something was already 'built with AI' — internally or by a vendor — and leadership cannot tell whether it is a production system or a demo.",
+  "Something was already 'built with AI', internally or by a vendor, and leadership cannot tell whether it is a production system or a demo.",
   "Capabilities exist but sit unused: implemented is being confused with activated, and activated with validated.",
   "Follow-up work depends on one person as the integration layer between the systems of record.",
 ];
@@ -36,18 +36,18 @@ const audiences = [
 ];
 
 const outputs = [
-  "A Built / Activated / Validated map of your current tools, workflows, and any AI usage — the same four-status honesty scale RachelOS grades itself on.",
+  "A Built / Activated / Validated map of your current tools, workflows, and any AI usage, the same four-status honesty scale RachelOS grades itself on.",
   "A ranked constraint list showing what is actually blocking throughput, with evidence for each ranking.",
-  "An evidence-hierarchy audit: what implementation, configuration, and production records prove — as opposed to what documentation claims.",
+  "An evidence-hierarchy audit: what implementation, configuration, and production records prove, as opposed to what documentation claims.",
   "Governance findings: where human approval points, activation gates, and audit trails exist and where they are missing.",
   "Knowledge-concentration findings: where the full picture lives in one person and what mitigates it.",
   "An executive briefing with the next highest-leverage move and a recommendation to stop, deepen, or build.",
 ];
 
 const methodProof = [
-  "This method found a cohort of captured-but-never-contacted leads in TKO's own reference system — a finding worth more than any feature.",
+  "This method found a cohort of captured-but-never-contacted leads in TKO's own reference system, a finding worth more than any feature.",
   "It measured a 2.2% email-first reply rate and reranked the operating priorities around conversation creation instead of more software.",
-  "It classified every capability as implemented, activated, validated, or unvalidated — and published the failures, including dormant integrations and a silently missed automation day.",
+  "It classified every capability as implemented, activated, validated, or unvalidated, and published the failures, including dormant integrations and a silently missed automation day.",
 ];
 
 export default function AiDeliveryAssessmentPage() {
@@ -67,9 +67,9 @@ export default function AiDeliveryAssessmentPage() {
       <PageHero
         eyebrow="Entry Engagement"
         title="Audit the evidence before you fund the build."
-        description="The AI Delivery Assessment applies the evidence method behind the RachelOS case study to your operation: a Built / Activated / Validated map of what you have, and a ranked list of what is actually constraining it — before anyone proposes building anything."
+        description="The AI Delivery Assessment applies the evidence method behind the RachelOS case study to your operation: a Built / Activated / Validated map of what you have, and a ranked list of what is actually constraining it, before anyone proposes building anything."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work/rachelos-delivery-model"
         secondaryLabel="Read the delivery-model case study"
       />
@@ -79,7 +79,7 @@ export default function AiDeliveryAssessmentPage() {
           <SectionHeader
             eyebrow="When To Engage"
             title="Start when 'we should use AI' has no evidence under it."
-            description="This is not a tool-selection exercise. It is for leaders who need to know what their operation has actually proven — and what an AI-assisted build would require — before committing spend."
+            description="This is not a tool-selection exercise. It is for leaders who need to know what their operation has actually proven, and what an AI-assisted build would require, before committing spend."
           />
           <div className="grid gap-3">
             {engageSignals.map((signal) => (
@@ -128,7 +128,7 @@ export default function AiDeliveryAssessmentPage() {
           <SectionHeader
             eyebrow="Method Proof"
             title="The method is demonstrated, not described."
-            description="Every step of this assessment was run first on RachelOS — TKO's own production system — and the findings were published, including the unflattering ones."
+            description="Every step of this assessment was run first on RachelOS, TKO's own production system, and the findings were published, including the unflattering ones."
           />
           <ul className="grid gap-3">
             {methodProof.map((item) => (
@@ -150,7 +150,7 @@ export default function AiDeliveryAssessmentPage() {
           {[
             ["1. Intake", "Describe the operation, the tools and workflows in play, any AI already in use, and the decision leadership needs to make."],
             ["2. Fit conversation", "Confirm the problem is concrete and that an evidence audit can produce a useful decision."],
-            ["3. Fixed-scope assessment", "Receive the Built / Activated / Validated map, the ranked constraints, and the briefing — then decide whether to stop, deepen, or build."],
+            ["3. Fixed-scope assessment", "Receive the Built / Activated / Validated map, the ranked constraints, and the briefing, then decide whether to stop, deepen, or build."],
           ].map(([title, description]) => (
             <li key={title} className="border border-border bg-white p-6">
               <h2 className="text-2xl font-semibold">{title}</h2>
@@ -162,7 +162,7 @@ export default function AiDeliveryAssessmentPage() {
           href="/contact"
           className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
         >
-          Discuss an Active Initiative
+          Request a Program Assessment
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </Section>
@@ -171,7 +171,7 @@ export default function AiDeliveryAssessmentPage() {
         title="Bring the operation, not the org chart."
         description="The first step is a focused intake. TKO will assess whether the problem is ready for a fixed-scope evidence audit."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
       />
     </>
   );

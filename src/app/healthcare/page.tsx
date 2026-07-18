@@ -9,14 +9,14 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Healthcare Executive Strategy & Implementation",
+  title: "Healthcare Transformation & Program Recovery",
   description:
-    "TKO helps healthcare leaders turn prior authorization, utilization management, and transformation risk into working operating models, products, and production systems.",
+    "TKO helps healthcare leaders find where prior authorization, utilization management, and modernization programs are actually failing, and what to fix first, with evidence you can inspect.",
   alternates: { canonical: "/healthcare" },
   openGraph: {
-    title: "Healthcare Executive Strategy & Implementation",
+    title: "Healthcare Transformation & Program Recovery",
     description:
-      "Executive strategy through implementation for healthcare leaders working through administrative burden, exception handling, workflow governance, and transformation risk.",
+      "Independent transformation and program recovery for healthcare leaders: administrative burden, prior authorization, workflow governance, and transformation risk.",
     url: absoluteUrl("/healthcare"),
   },
 };
@@ -30,7 +30,7 @@ const authorityAreas = [
   },
   {
     title: "Workflow governance and regulatory delivery",
-    body: "Examine whether decision rights, approvals, exceptions, and evidence are operating in daily work—not merely documented.",
+    body: "Examine whether decision rights, approvals, exceptions, and evidence are operating in daily work, not merely documented.",
     href: "/services/recovery-assessment",
     label: "Explore Recovery Assessment",
   },
@@ -70,10 +70,10 @@ export default function HealthcarePage() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "TKO Healthcare Executive Strategy & Implementation",
+          name: "TKO Healthcare Transformation & Program Recovery",
           url: absoluteUrl("/healthcare"),
           description:
-            "Executive strategy through implementation for healthcare leaders: prior authorization, utilization management, workflow governance, transformation recovery, and human-controlled AI.",
+            "Independent transformation and program recovery for healthcare leaders: prior authorization, utilization management, workflow governance, transformation recovery, and human-controlled AI.",
           about: [
             "Prior Authorization",
             "Utilization Management",
@@ -84,20 +84,20 @@ export default function HealthcarePage() {
         }}
       />
       <PageHero
-        eyebrow="Healthcare Executive Strategy"
-        title="Healthcare leaders don't need another strategy. They need one that survives implementation."
-        description="TKO helps healthcare executives turn complex operating problems—prior authorization, utilization management, care management, interoperability, and transformation risk—into working operating models, products, and AI-enabled systems that hold up in production."
+        eyebrow="Healthcare"
+        title="See where your healthcare transformation is actually failing."
+        description="TKO helps healthcare leaders find where prior authorization, utilization management, care management, interoperability, and modernization programs are stalling, who carries the risk, and what to fix first. The same program-recovery method applies across regulated operations."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />
 
       <Section className="bg-surface">
         <SectionHeader
-          eyebrow="Evidence boundary"
-          title="Operating experience is not a product claim or a case-study result."
-          description="The healthcare material on this site documents recurring operating patterns. It does not disclose a client workflow, patient information, payer rule, measured outcome, compliance certification, or deployed healthcare product. RachelOS remains the separate, direct proof of an implemented operating system."
+          eyebrow="Where TKO works in healthcare"
+          title="Two decades inside payer operations, prior authorization, and interoperability."
+          description="Active in the provider-experience domain, where gold-card programs reduce administrative burden by narrowing prior authorization and bypassing medical-necessity review for selected codes. Earlier work owned CMS Cures Act and FHIR interoperability for payers. This is where the program-recovery method is sharpest."
         />
       </Section>
 
@@ -144,6 +144,12 @@ export default function HealthcarePage() {
             </div>
           ))}
         </div>
+        <p className="mt-8 max-w-[70ch] text-sm leading-6 text-muted">
+          This page documents recurring operating patterns from that experience.
+          It discloses no client workflow, patient information, payer rule, or
+          measured outcome. RachelOS is the separate, directly inspectable proof
+          of an implemented system.
+        </p>
       </Section>
 
       <Section>
@@ -170,7 +176,7 @@ export default function HealthcarePage() {
       <CtaBand
         title="Bring the workflow and the decision under pressure."
         description="Start with a focused assessment when the immediate question is where work stalls, who carries the missing context, and what leadership should do before another technology investment."
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

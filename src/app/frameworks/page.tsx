@@ -12,12 +12,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Operating Frameworks",
   description:
-    "Experience-based operating models for prior authorization, program recovery, executive operating reviews, and human-governed AI—each stated with its evidence boundary.",
+    "Experience-based operating models for prior authorization, program recovery, executive operating reviews, and human-governed AI, each stated with its evidence boundary.",
   alternates: { canonical: "/frameworks" },
   openGraph: {
     title: "Operating Frameworks",
     description:
-      "Synthesized operating models and governance methods for complex operations—separate from direct built-system proof.",
+      "Synthesized operating models and governance methods for complex operations, separate from direct built-system proof.",
     url: absoluteUrl("/frameworks"),
   },
 };
@@ -37,10 +37,10 @@ export default function FrameworksPage() {
       />
       <PageHero
         eyebrow="Operating Frameworks"
-        title="The operating models behind the work—stated with their limits."
+        title="The operating models behind the work, stated with their limits."
         description="These are synthesized operating and governance models drawn from delivery and recovery experience. They are frameworks, not client outcomes: each states the executive question, the model, and the exact claim boundary. For inspectable built-system evidence, see Proof."
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
         secondaryHref="/proof"
         secondaryLabel="Review Proof"
       />
@@ -72,7 +72,7 @@ export default function FrameworksPage() {
         </div>
       </Section>
       <CtaBand
-        title="Bring one workflow under pressure—not a preferred tool."
+        title="Bring one workflow under pressure, not a preferred tool."
         description="A framework helps frame the operating problem. The first conversation starts with the decision, the evidence available, and the constraint."
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"

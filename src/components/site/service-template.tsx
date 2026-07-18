@@ -20,7 +20,7 @@ export function ServiceTemplate({ slug }: { slug: string }) {
         title={service.title}
         description={service.overview}
         primaryHref="/contact"
-        primaryLabel="Discuss an Active Initiative"
+        primaryLabel="Request a Program Assessment"
       />
 
       <Section>

@@ -29,18 +29,18 @@ const pillars = [
   },
 ];
 
-const rachelosProof = [
+const careerProof = [
   {
-    label: "Memory",
-    proof: "Relationship context survives outside one person's head.",
+    label: "Healthcare",
+    proof: "Fortune 5 payer transformation, and active prior authorization and provider-experience delivery.",
   },
   {
-    label: "Priority",
-    proof: "A ranked queue surfaces the next action that deserves attention.",
+    label: "Capital Markets",
+    proof: "Leveraged loan, fund, and REIT operations through the post-2008 cycle at Apollo.",
   },
   {
-    label: "Control",
-    proof: "AI-assisted recommendations wait for human approval before action.",
+    label: "Enterprise & Wealth",
+    proof: "Platform modernization for Goldman Sachs and JPMorgan asset management, and wealth platforms through acquisition.",
   },
 ];
 
@@ -66,17 +66,18 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="hero-kicker text-sm font-semibold uppercase tracking-[0.2em]">
-            Operational intelligence advisory
+            Transformation &amp; program recovery
           </p>
           <h1 className="hero-title mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            Strategy that gets implemented—not shelved.
+            Find out where your transformation is actually failing.
           </h1>
           <p className="hero-lead mt-6 max-w-[52ch] text-lg leading-8">
-            Todd Kovalsky is an operational intelligence advisor for healthcare
-            and regulated operations—the layer between systems of record and
-            the decisions people actually make. TKO turns operating problems
-            into working operating models, products, and human-governed
-            AI systems, from executive decision through production.
+            Todd Kovalsky is an independent transformation and program recovery
+            advisor for healthcare and regulated operations. He has led delivery
+            and modernization inside Fortune 5 healthcare, Apollo, and Goldman
+            Sachs and JPMorgan asset management. He finds where large initiatives
+            are actually failing, who carries the risk, and what to fix first,
+            backed by evidence you can inspect.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
@@ -108,17 +109,16 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           className="hero-proof-panel relative z-10 w-full rounded-xl border p-5 shadow-[0_24px_80px_-42px_rgb(0_0_0/0.85)] md:p-7"
-          aria-label="TKO proof ladder"
+          aria-label="TKO track record"
         >
           <p className="hero-kicker text-xs font-semibold uppercase tracking-[0.16em]">
-            Reference implementation
+            The track record
           </p>
           <h2 className="hero-title mt-4 text-2xl font-semibold leading-tight md:text-3xl">
-            RachelOS: the operating thesis, built end to end and running in
-            production.
+            Two decades where execution carries real consequences.
           </h2>
           <div className="mt-6 space-y-3">
-            {rachelosProof.map((item) => (
+            {careerProof.map((item) => (
               <div
                 key={item.label}
                 className="hero-proof-row grid gap-3 rounded-lg border p-4 sm:grid-cols-[1fr_auto_1.1fr] sm:items-center"
@@ -130,9 +130,8 @@ export function Hero() {
             ))}
           </div>
           <p className="hero-muted hero-divider mt-6 border-t pt-5 text-sm leading-6">
-            Built by an advisor with two decades in regulated operations, and
-            audited in public. One deployment, one operator—the boundary is
-            stated, and what transfers is the operating model, not the software.
+            Independent and senior-led. The person who assesses your program is
+            the person you engage. No staffing pyramid, no bait and switch.
           </p>
         </motion.aside>
       </div>

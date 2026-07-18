@@ -17,7 +17,7 @@ export function CredibilityStrip() {
             {credibilityStrip.map((item) => (
               <li key={item.name} className="text-sm leading-6">
                 <span className="font-semibold text-foreground">{item.name}</span>
-                <span className="text-muted"> — {item.detail}</span>
+                <span className="text-muted">, {item.detail}</span>
               </li>
             ))}
             <li className="text-sm leading-6">

@@ -31,26 +31,26 @@ const transfers = [
   {
     pattern: "Human-approval governance",
     detail:
-      "Approval-gated sends, human-fact immutability, advisory-only recommendations, activation gates—enforced in code, not policy.",
+      "Approval-gated sends, human-fact immutability, advisory-only recommendations, activation gates, enforced in code, not policy.",
     healthcare: "The same control set healthcare AI adoption requires before a model may touch a member- or provider-facing workflow.",
   },
   {
     pattern: "The decision log",
     detail:
-      "83 numbered, dated architecture decisions with rationale and supersession history—including decisions against building.",
+      "83 numbered, dated architecture decisions with rationale and supersession history, including decisions against building.",
     healthcare: "Transformation programs fail between workstreams; a governed decision record is the recovery mechanism.",
   },
   {
     pattern: "The honesty scale",
     detail:
-      "Every capability graded implemented, activated, validated, or unvalidated—and reported that way.",
+      "Every capability graded implemented, activated, validated, or unvalidated, and reported that way.",
     healthcare: "The audit method TKO applies to a client's 'built with AI' inventory: what is real, what is dormant, what is unproven.",
   },
   {
     pattern: "The evidence hierarchy",
     detail:
       "Code and production records outrank documentation; claims may not outrun their source.",
-    healthcare: "The standard an executive should demand from any vendor's transformation or AI claim—including TKO's.",
+    healthcare: "The standard an executive should demand from any vendor's transformation or AI claim, including TKO's.",
   },
 ];
 
@@ -78,7 +78,7 @@ export default function TransferPage() {
       <PageHero
         eyebrow="The Transfer Argument"
         title="You are not buying RachelOS. You are buying the method that built and audited it."
-        description="RachelOS is a live real-estate operating system. TKO's buyers run healthcare and enterprise operations. This page states—in plain terms—why the proof carries, and exactly where it stops."
+        description="RachelOS is a live real-estate operating system. TKO's buyers run healthcare and enterprise operations. This page states, in plain terms, why the proof carries, and exactly where it stops."
         primaryHref="/proof/rachelos"
         primaryLabel="Inspect RachelOS"
         secondaryHref="/founder"
@@ -93,9 +93,9 @@ export default function TransferPage() {
           </h2>
           <div className="max-w-[65ch] space-y-5 text-lg leading-8 text-muted">
             <p>
-              Twenty years of enterprise work—Apollo operations, Goldman Sachs
+              Twenty years of enterprise work, Apollo operations, Goldman Sachs
               and JPMorgan platform transformation, CMS Cures Act
-              interoperability, Fortune 5 payer programs—produced a thesis: the
+              interoperability, Fortune 5 payer programs, produced a thesis: the
               missing layer in complex operations is the decision layer, and it
               fails the same way everywhere.
             </p>
@@ -105,7 +105,7 @@ export default function TransferPage() {
               consultant is permitted to own memory, priority, approval, and
               action at once. The only way to test the whole thesis was to
               build the whole thesis, in a real business, with real
-              consequences for being wrong—and publish the results without an
+              consequences for being wrong, and publish the results without an
               NDA in the way.
             </p>
             <p>
@@ -133,14 +133,14 @@ export default function TransferPage() {
               <span className="font-semibold text-foreground">Governance architecture.</span>{" "}
               Human-approval gates, source-authority rules, advisory-only
               recommendations, and observable system health exist in production
-              and can be inspected—demonstrated, not proposed.
+              and can be inspected, demonstrated, not proposed.
             </p>
             <p>
               <span className="font-semibold text-foreground">Evidence discipline.</span>{" "}
               The system audits itself and publishes its failures: a 2.2%
               email-first reply rate, dormant capabilities named as dormant, a
               bus factor of one. That discipline is the actual product TKO
-              sells—the assessment applies the same method to your operation.
+              sells, the assessment applies the same method to your operation.
             </p>
           </div>
         </div>
@@ -158,7 +158,7 @@ export default function TransferPage() {
               <h3 className="text-xl font-semibold">{item.pattern}</h3>
               <p className="mt-3 text-base leading-7 text-muted">{item.detail}</p>
               <p className="mt-4 border-t border-border pt-4 text-sm leading-6 text-foreground">
-                <span className="font-semibold text-primary">In healthcare terms — </span>
+                <span className="font-semibold text-primary">In healthcare terms: </span>
                 {item.healthcare}
               </p>
             </Card>
@@ -171,7 +171,7 @@ export default function TransferPage() {
         <SectionHeader
           eyebrow="4. What does not transfer"
           title="Stated here first, so no buyer has to discover it."
-          description="Transfer claims are architectural inference from one deployment—not a demonstrated second deployment. These boundaries are explicit."
+          description="Transfer claims are architectural inference from one deployment, not a demonstrated second deployment. These boundaries are explicit."
         />
         <ul className="mt-10 grid gap-3 md:grid-cols-2">
           {nonTransfers.map((item) => (
@@ -190,15 +190,15 @@ export default function TransferPage() {
         />
         <div className="mt-10 max-w-[75ch] space-y-5 text-lg leading-8 text-muted">
           <p>
-            Healthcare AI adoption fails on governance, not on models—most
+            Healthcare AI adoption fails on governance, not on models, most
             healthcare executives already believe this. Governance must be
             architecture, not policy; that was proven at payer scale in Cures
             Act interoperability work, where compliance was embedded in FHIR
             platform logic. RachelOS is a production system where that
             architecture exists and can be inspected. And the enterprise
-            context where the same failure lives—prior authorization exception
+            context where the same failure lives, prior authorization exception
             handling, program dependency risk, status reporting that hides
-            decisions—is where the founder has operated since 2022, inside a
+            decisions, is where the founder has operated since 2022, inside a
             Fortune 5 healthcare transformation portfolio.
           </p>
           <p>
@@ -228,7 +228,7 @@ export default function TransferPage() {
 
       <CtaBand
         title="Apply the same evidence standard to your operation."
-        description="The Assessment is a one-week, fixed-scope review that identifies the constraint, the exposure, and the next decision—before any technology or AI investment."
+        description="The Assessment is a one-week, fixed-scope review that identifies the constraint, the exposure, and the next decision, before any technology or AI investment."
       />
     </>
   );

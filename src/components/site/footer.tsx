@@ -24,7 +24,7 @@ export function Footer() {
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
             Executive strategy through implementation for complex operations.
             TKO turns operating problems into working strategy, operating
-            models, products, and AI-enabled systems—from executive decision
+            models, products, and AI-enabled systems, from executive decision
             through production implementation.
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
