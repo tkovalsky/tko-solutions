@@ -18,7 +18,7 @@ function RelatedLink({ item, heading }: { item: { label: string; href: string; d
 
 export function FrameworkAuthorityPage({ page }: { page: FrameworkPage }) {
   return <>
-    <PageHero eyebrow={page.eyebrow} title={page.title} description={page.description} primaryHref="/contact" primaryLabel="Request a Program Assessment" secondaryHref="/frameworks" secondaryLabel="Back to frameworks" />
+    <PageHero eyebrow={page.eyebrow} title={page.title} description={page.description} primaryHref="/contact" primaryLabel="Find Your Highest-Leverage Workflow" secondaryHref="/frameworks" secondaryLabel="Back to frameworks" />
     <Section>
       <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
         <div><p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Executive question</p><h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight">{page.executiveQuestion}</h2></div>
@@ -60,7 +60,7 @@ export function FounderAuthorityPage({ page }: { page: FounderPage }) {
 
 export function OfferAuthorityPage({ page }: { page: OfferPage }) {
   return <>
-    <PageHero eyebrow="Commercial offer / bounded assessment" title={page.title} description={page.description} primaryHref="/contact" primaryLabel="Request a Program Assessment" secondaryHref={page.relatedProof.href} secondaryLabel="Review related proof" />
+    <PageHero eyebrow="Commercial offer / bounded assessment" title={page.title} description={page.description} primaryHref="/contact" primaryLabel="Find Your Highest-Leverage Workflow" secondaryHref={page.relatedProof.href} secondaryLabel="Review related proof" />
     <Section><div className="grid gap-8 lg:grid-cols-2"><div><SectionHeader eyebrow="Who this is for" title={page.forWhom} /><h2 className="mt-10 text-xl font-semibold">Signals you may need this</h2><List values={page.signals} /></div><Card className="rounded-lg"><p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary">Executive question</p><p className="mt-4 text-2xl font-semibold leading-tight">{page.executiveQuestion}</p><p className="mt-8 text-xs font-semibold uppercase tracking-[0.1em] text-primary">Primary search query</p><p className="mt-3 text-lg text-muted">{page.primaryQuery}</p></Card></div></Section>
     <Section className="bg-surface"><div className="grid gap-5 md:grid-cols-2"><Card className="rounded-lg"><h2 className="text-xl font-semibold">What happens during the engagement</h2><List values={page.process} /></Card><Card className="rounded-lg"><h2 className="text-xl font-semibold">Deliverables</h2><List values={page.deliverables} /></Card></div></Section>
     <Section><div className="grid gap-8 lg:grid-cols-2"><div><SectionHeader eyebrow="Evidence" title="The offer begins with what can be inspected." /><List values={page.evidence} /></div><div className="border border-border bg-midnight p-8 text-white"><p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">Claim boundary</p><p className="mt-4 text-lg leading-8 text-white/85">{page.claimBoundary}</p><p className="mt-6 text-sm leading-6 text-white/65">Proposal and downloadable asset placeholders are released only after the engagement scope and evidence conditions are confirmed.</p></div></div><div className="mt-8 max-w-md"><RelatedLink heading="Related proof" item={page.relatedProof} /></div></Section>

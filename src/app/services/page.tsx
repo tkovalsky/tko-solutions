@@ -9,14 +9,14 @@ import { services } from "@/lib/content";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Engagements | Transformation & Program Recovery",
+  title: "Engagements | AI-Assisted Operations Modernization",
   description:
-    "Start with a bounded assessment of where a transformation or program is actually failing. TKO recommends deeper diagnostic, build, or advisory work only when the evidence supports it.",
+    "Start with a fixed-scope, three-week Operational Truth & AI Workflow Diagnostic, then implement the prioritized operating model through a bounded three-month engagement.",
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "TKO Engagements | Transformation & Program Recovery",
+    title: "TKO Engagements | AI-Assisted Operations Modernization",
     description:
-      "Assessment first. Evidence, then a bounded next move: diagnostic, operating-model or product build, or ongoing advisory.",
+      "One flagship diagnostic, followed only when warranted by a bounded three-month implementation.",
     url: absoluteUrl("/services"),
   },
 };
@@ -26,8 +26,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Engagements"
-        title="Start with a bounded assessment of where the initiative is failing."
-        description="TKO diagnoses the operating problem first, then recommends only the work the evidence supports: a deeper diagnostic, an operating-model or product build, or ongoing advisory. Each engagement starts at the stage the business actually needs."
+        title="One critical workflow. Three weeks to expose the truth and decide what deserves implementation."
+        description="TKO starts with a fixed-scope Diagnostic, not a broad transformation program. If the evidence supports implementation, a separate three-month engagement installs the workflow, controls, measures, knowledge system, and first practical AI-assisted use cases."
         primaryLabel={site.cta}
       />
       <Section>
@@ -36,29 +36,24 @@ export default function ServicesPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Engagement Logic"
-          title="One question: where is the initiative actually failing, and what deserves action first?"
-          description="The engagements are sequenced to avoid speculative projects. TKO diagnoses the operating problem first, then recommends only the stage of work (diagnostic, operating model, product, or implementation) needed next."
+          title="A simple commercial path, with explicit boundaries."
+          description="The Diagnostic creates the fact base and executive decision. Implementation follows only when there is a defined workflow, accountable owner, practical control model, and measurable business case."
         />
-        <div className="mt-12 grid gap-3 lg:grid-cols-4">
-          {services.map((service, index) => (
+        <div className="mt-12 grid gap-3 lg:grid-cols-2">
+          {services.filter((service) => service.featured).map((service, index) => (
             <div key={service.slug} className="border border-border bg-white p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
-                Rung {index + 1}
+                Step {index + 1}
               </p>
               <h2 className="mt-5 text-2xl font-semibold">{service.shortTitle}</h2>
               <p className="mt-4 text-base leading-7 text-muted">{service.summary}</p>
             </div>
           ))}
         </div>
-        <p className="mt-8 text-base leading-7 text-muted">
-          Prefer to start from a specific problem?{" "}
-          <Link
-            href="/offers"
-            className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline"
-          >
-            See the topic-specific assessments
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
+        <p className="mt-8 max-w-[70ch] text-base leading-7 text-muted">
+          TKO is not an outsourced operations department, staffing provider,
+          general-purpose AI trainer, or software-development agency. Each scope
+          is bounded around a business decision and a measurable operating improvement.
         </p>
       </Section>
       <Section>

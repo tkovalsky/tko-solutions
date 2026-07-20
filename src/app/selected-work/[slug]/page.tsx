@@ -117,7 +117,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         title={study.title}
         description={study.problem}
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />
@@ -283,7 +283,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
               href="/contact"
               className="mt-10 inline-block text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
             >
-              Request a Program Assessment →
+              Find Your Highest-Leverage Workflow →
             </Link>
           </Section>
         </>

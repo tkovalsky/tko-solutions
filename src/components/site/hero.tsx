@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Compass, Layers, Cpu, Rocket } from "lucide-react";
+import { CheckCircle2, Search, Workflow, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 import { LinkButton } from "@/components/ui/button";
 import { NetworkVisual } from "@/components/site/network-visual";
@@ -8,39 +8,34 @@ import { site } from "@/lib/site";
 
 const pillars = [
   {
-    icon: Compass,
-    title: "Strategy",
-    description: "Define the executive decision and the operating problem it must resolve.",
+    icon: Search,
+    title: "Expose",
+    description: "See the real work, including exceptions and undocumented judgment.",
   },
   {
-    icon: Layers,
-    title: "Operating Model",
-    description: "Design how decisions, ownership, and work should actually run.",
+    icon: Workflow,
+    title: "Design",
+    description: "Make handoffs, decisions, ownership, and measures explicit.",
   },
   {
-    icon: Cpu,
-    title: "Product",
-    description: "Build the AI-enabled systems the operating model requires.",
-  },
-  {
-    icon: Rocket,
-    title: "Implementation",
-    description: "Put it into production with human control and measurable adoption.",
+    icon: ShieldCheck,
+    title: "Implement",
+    description: "Apply AI with evidence, approval, privacy, and auditability.",
   },
 ];
 
 const careerProof = [
   {
-    label: "Healthcare",
-    proof: "Fortune 5 payer transformation, and active prior authorization and provider-experience delivery.",
+    label: "Complex service operations",
+    proof: "Cross-functional workflows where exceptions, judgment, and handoffs determine performance.",
   },
   {
-    label: "Capital Markets",
-    proof: "Leveraged loan, fund, and REIT operations through the post-2008 cycle at Apollo.",
+    label: "Regulated workflows",
+    proof: "Healthcare, financial services, investment operations, and interoperability experience.",
   },
   {
-    label: "Enterprise & Wealth",
-    proof: "Platform modernization for Goldman Sachs and JPMorgan asset management, and wealth platforms through acquisition.",
+    label: "Built-system evidence",
+    proof: "Inspectable knowledge, priority, recommendation, approval, and action patterns in production.",
   },
 ];
 
@@ -66,18 +61,15 @@ export function Hero() {
           className="relative z-10"
         >
           <p className="hero-kicker text-sm font-semibold uppercase tracking-[0.2em]">
-            Transformation &amp; program recovery
+            AI-assisted operations modernization
           </p>
           <h1 className="hero-title mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-            Find out where your transformation is actually failing.
+            Turn messy work into an operating system your team and AI can actually use.
           </h1>
           <p className="hero-lead mt-6 max-w-[52ch] text-lg leading-8">
-            Todd Kovalsky is an independent transformation and program recovery
-            advisor for healthcare and regulated operations. He has led delivery
-            and modernization inside Fortune 5 healthcare, Apollo, and Goldman
-            Sachs and JPMorgan asset management. He finds where large initiatives
-            are actually failing, who carries the risk, and what to fix first,
-            backed by evidence you can inspect.
+            TKO helps complex service businesses expose hidden handoffs, decision
+            bottlenecks, and knowledge trapped in people, then builds governed
+            AI-assisted workflows that improve speed, accountability, and execution.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
@@ -86,11 +78,15 @@ export function Hero() {
             >
               {site.cta}
             </LinkButton>
-            <LinkButton href="/selected-work" variant="secondary">
-              Review Selected Work
+            <LinkButton
+              href="/selected-work"
+              variant="secondary"
+              className="border-white/35 text-white hover:border-white/60 hover:bg-white/10"
+            >
+              View Selected Work
             </LinkButton>
           </div>
-          <div className="hero-divider mt-10 grid grid-cols-2 gap-5 border-t pt-7 sm:gap-4 lg:grid-cols-4">
+          <div className="hero-divider mt-10 grid gap-5 border-t pt-7 sm:grid-cols-3 sm:gap-4">
             {pillars.map((pillar) => (
               <div key={pillar.title} className="flex gap-3">
                 <div className="hero-icon flex size-9 shrink-0 items-center justify-center rounded-lg">
@@ -112,10 +108,10 @@ export function Hero() {
           aria-label="TKO track record"
         >
           <p className="hero-kicker text-xs font-semibold uppercase tracking-[0.16em]">
-            The track record
+            Built for an executive owner
           </p>
           <h2 className="hero-title mt-4 text-2xl font-semibold leading-tight md:text-3xl">
-            Two decades where execution carries real consequences.
+            For leaders accountable for a critical workflow that is too dependent on coordination and memory.
           </h2>
           <div className="mt-6 space-y-3">
             {careerProof.map((item) => (
@@ -130,8 +126,8 @@ export function Hero() {
             ))}
           </div>
           <p className="hero-muted hero-divider mt-6 border-t pt-5 text-sm leading-6">
-            Independent and senior-led. The person who assesses your program is
-            the person you engage. No staffing pyramid, no bait and switch.
+            Fixed scope. Remote delivery. One critical workflow. Senior-led from
+            first interview through executive readout.
           </p>
         </motion.aside>
       </div>

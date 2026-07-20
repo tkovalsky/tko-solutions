@@ -15,8 +15,8 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "Find where the initiative is actually failing.",
-  description = "Bring the transformation, program, or workflow under pressure. TKO will help determine where execution is breaking down and what deserves action first.",
+  title = "Find the workflow where better design and governed AI can create measurable leverage.",
+  description = "Bring the handoffs, exceptions, delays, or knowledge dependencies under pressure. TKO will help determine whether the fixed-scope Diagnostic is the right next move.",
   primaryHref = "/contact",
   primaryLabel = DEFAULT_CTA_LABEL,
   secondaryHref = null,
@@ -34,7 +34,7 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Executive operating review
+            Operational truth conversation
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}

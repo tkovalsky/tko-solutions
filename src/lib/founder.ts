@@ -66,7 +66,7 @@ export const careerTimeline: TimelineEntry[] = [
     organization: "Cognizant",
     role: "Senior Manager, Healthcare Transformation, AI & Analytics",
     era: "Healthcare Transformation",
-    scope: "Large-scale payer modernization for a Fortune 5 healthcare organization: delivery governance, executive reporting, workflow transformation, and AI-enabled operational improvement.",
+    scope: "Large-scale payer modernization: delivery governance, executive reporting, workflow transformation, cross-functional alignment, and AI-enabled operational improvement.",
     lesson: "Programs fail between workstreams, where dependency risk, decision latency, and adoption gaps live.",
   },
   {
@@ -74,7 +74,7 @@ export const careerTimeline: TimelineEntry[] = [
     organization: "TKO Solutions",
     role: "Founder & Principal",
     era: "Founder",
-    scope: "Operational intelligence advisory for healthcare and regulated operations. RachelOS (2025–26) is the production reference implementation of the full operating thesis.",
+    scope: "AI-assisted operations modernization for complex service businesses. RachelOS (2025–26) is a production reference implementation of the evidence, knowledge, priority, recommendation, approval, and action method.",
     lesson: "The decision layer can be built, governed, and audited, so it should be.",
   },
 ];
@@ -98,7 +98,7 @@ export const credibilityStrip = [
   },
   {
     name: "Cognizant",
-    detail: "Fortune 5 healthcare transformation, AI & analytics",
+    detail: "Large-scale healthcare transformation, AI & analytics",
   },
 ];
 
@@ -131,7 +131,7 @@ export const experienceAtlas: AtlasRow[] = [
   },
   {
     pattern: "Program and dependency governance",
-    learned: "Cognizant: Fortune 5 payer transformation portfolio",
+    learned: "Cognizant: large-scale payer transformation portfolio",
     proven: "Program-recovery operating framework: constraint registers and decision-centered reviews",
   },
   {
@@ -151,18 +151,18 @@ export type CapabilityRow = {
 
 export const capabilityAtlas: CapabilityRow[] = [
   {
-    capability: "Operational Recovery Assessment",
+    capability: "Operational Truth & AI Workflow Diagnostic",
     careerEvidence: "Two decades of operations and delivery governance in regulated environments (Apollo, Sapient, Cognizant).",
     proofEvidence: "The same evidence method that produced RachelOS's published self-audit, applied to a client workflow.",
-    boundary: "Fixed scope, one week. Identifies the constraint and next move; does not promise a build or an outcome metric.",
-    href: "/services/recovery-assessment",
+    boundary: "Fixed scope, 15 business days, one critical workflow or workflow family. No production-system access required and no implementation included.",
+    href: "/services/diagnostic",
   },
   {
-    capability: "Operational Truth Diagnostic",
-    careerEvidence: "Enterprise transformation analysis for GSAM, JPMAM, and a Fortune 5 payer portfolio.",
+    capability: "AI-Assisted Operations Implementation",
+    careerEvidence: "Enterprise transformation analysis for GSAM, JPMAM, healthcare payer operations, and product-platform delivery.",
     proofEvidence: "Published operating frameworks: program recovery, decision rights, executive operating reviews.",
-    boundary: "Evidence work across one or two workflow areas. Not a broad strategy review or tool selection exercise.",
-    href: "/services/diagnostic",
+    boundary: "Three-month initial term after a credible diagnostic. Not staff augmentation, unlimited access, an outsourced operations team, or a guaranteed headcount-reduction program.",
+    href: "/services/operating-system-build",
   },
   {
     capability: "Prior Authorization Operational Assessment",
@@ -181,15 +181,15 @@ export const capabilityAtlas: CapabilityRow[] = [
 ];
 
 export const executiveSummary = {
-  headline: "Todd Kovalsky, Operational Intelligence Advisor",
-  gloss: "The layer between systems of record and the decisions people actually make.",
+  headline: "Todd Kovalsky, Cross-Functional Operator",
+  gloss: "Solving the operational problems that remain unresolved because every specialist sees only one part.",
   facts: [
     "20+ years in regulated operating environments: financial services operations, enterprise transformation, product leadership, healthcare interoperability, and healthcare transformation.",
     "Operations under consequence at Apollo Global Management through the post-2008 restructuring cycle.",
     "Enterprise platform transformation for Goldman Sachs Asset Management and JPMorgan Asset Management (Sapient).",
     "Product ownership of advisor and wealth platforms (WBI; FolioDynamix through its Envestnet acquisition).",
     "CMS Cures Act / FHIR interoperability platform ownership for healthcare payers (ELLKAY).",
-    "Fortune 5 healthcare transformation: delivery governance, payer operations, and AI-enabled operational improvement (Cognizant, 2022–present).",
+    "Large-scale healthcare transformation: delivery governance, payer operations, and AI-enabled operational improvement (Cognizant, 2022–present).",
     "Founder-builder of RachelOS: a production, human-governed AI operating system with a published self-audit.",
   ],
 };

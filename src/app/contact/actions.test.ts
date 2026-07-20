@@ -62,16 +62,18 @@ describe("submitDiagnosticIntake", () => {
     expect(mockedPersistInboundLead).toHaveBeenCalledWith({
       name: "Todd Example",
       email: "todd@example.com",
+      company: "Example Co",
+      role: "COO",
       source: "contact_form",
       landingPage: "/contact",
       payload: {
-        problem: "Prior authorization work is stuck across teams.",
-        systems: "CRM, spreadsheets, dashboards",
-        notWorking: "Exceptions stall because ownership is unclear.",
-        aiDeployed: "unsure",
-        decision: "Leadership needs to choose the next recovery move.",
         name: "Todd Example",
         email: "todd@example.com",
+        company: "Example Co",
+        role: "COO",
+        workflow: "Client onboarding stalls at cross-functional handoffs.",
+        timing: "30-60",
+        message: "We need a defensible next move.",
       },
       submittedAt: expect.any(Date),
     });
@@ -103,12 +105,12 @@ describe("submitDiagnosticIntake", () => {
 
 function validFormData() {
   const formData = new FormData();
-  formData.set("problem", "Prior authorization work is stuck across teams.");
-  formData.set("systems", "CRM, spreadsheets, dashboards");
-  formData.set("notWorking", "Exceptions stall because ownership is unclear.");
-  formData.set("aiDeployed", "unsure");
-  formData.set("decision", "Leadership needs to choose the next recovery move.");
   formData.set("name", "Todd Example");
   formData.set("email", "todd@example.com");
+  formData.set("company", "Example Co");
+  formData.set("role", "COO");
+  formData.set("workflow", "Client onboarding stalls at cross-functional handoffs.");
+  formData.set("timing", "30-60");
+  formData.set("message", "We need a defensible next move.");
   return formData;
 }

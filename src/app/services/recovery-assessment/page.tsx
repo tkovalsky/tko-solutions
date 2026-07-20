@@ -13,12 +13,12 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Operational Recovery Assessment",
   description:
-    "A one-week, fixed-scope Operational Recovery Assessment for leaders whose workflows depend on a few key people. $5K-$8K, six deliverables, executive briefing.",
+    "A one-week, fixed-scope Operational Recovery Assessment for leaders whose workflows depend on a few key people.",
   alternates: { canonical: "/services/recovery-assessment" },
   openGraph: {
     title: "Operational Recovery Assessment",
     description:
-      "Book a one-week, $5K-$8K assessment that maps workflow stalls, key-person dependency, AI readiness, operational risk, and the next highest-leverage move.",
+      "A one-week assessment that maps workflow stalls, key-person dependency, AI readiness, operational risk, and the next highest-leverage move.",
     url: absoluteUrl("/services/recovery-assessment"),
   },
 };
@@ -180,15 +180,7 @@ export default function RecoveryAssessmentPage() {
           provider: { "@type": "Organization", name: "TKO Solutions" },
           serviceType: "Operational Recovery Assessment",
           areaServed: "United States",
-          offers: {
-            "@type": "Offer",
-            priceSpecification: {
-              "@type": "PriceSpecification",
-              priceCurrency: "USD",
-              minPrice: 5000,
-              maxPrice: 8000,
-            },
-          },
+          audience: "Operations and transformation leaders",
         }}
       />
 
@@ -208,7 +200,7 @@ export default function RecoveryAssessmentPage() {
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <LinkButton href="/contact">
-                Request a Program Assessment
+                Find Your Highest-Leverage Workflow
                 <ArrowRight className="size-4" aria-hidden="true" />
               </LinkButton>
             </div>
@@ -224,9 +216,9 @@ export default function RecoveryAssessmentPage() {
             </Card>
             <Card className="rounded-lg">
               <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-                Investment
+                Commercial model
               </p>
-              <p className="mt-3 text-4xl font-semibold">$5K-$8K</p>
+              <p className="mt-3 text-3xl font-semibold">Fixed scope</p>
               <p className="mt-3 text-sm leading-6 text-muted">
                 Set before the assessment starts.
               </p>
@@ -316,7 +308,7 @@ export default function RecoveryAssessmentPage() {
           <SectionHeader
             eyebrow="Timeline"
             title="A one-week assessment, not open-ended consulting drift."
-            description="The price expectation is $5K-$8K. Scope, access, and timing are confirmed after the 30-minute discovery call."
+            description="Scope, access, commercial terms, and timing are confirmed after the 30-minute discovery call."
           />
           <ol className="grid gap-3">
             {timeline.map((step) => (
@@ -411,7 +403,7 @@ export default function RecoveryAssessmentPage() {
         />
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           <LinkButton href="/contact">
-            Request a Program Assessment
+            Find Your Highest-Leverage Workflow
             <ArrowRight className="size-4" aria-hidden="true" />
           </LinkButton>
         </div>
@@ -465,7 +457,7 @@ export default function RecoveryAssessmentPage() {
         title="Find what deserves deeper investment."
         description="A focused assessment identifies the constraint, the key-person or decision risk behind it, and the highest-leverage move before a larger transformation or technology commitment."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

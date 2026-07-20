@@ -6,8 +6,8 @@ import { site } from "@/lib/site";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/proof", label: "Proof" },
+  { href: "/services/diagnostic", label: "Diagnostic" },
+  { href: "/selected-work", label: "Selected Work" },
   { href: "/healthcare", label: "Healthcare" },
   { href: "/insights", label: "Insights" },
   { href: "/founder", label: "About" },

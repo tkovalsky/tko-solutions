@@ -105,7 +105,7 @@ export default function ProofPage() {
         primaryHref="/proof/rachelos"
         primaryLabel="Inspect RachelOS"
         secondaryHref="/contact"
-        secondaryLabel="Request a Program Assessment"
+        secondaryLabel="Find Your Highest-Leverage Workflow"
       />
 
       <Section>

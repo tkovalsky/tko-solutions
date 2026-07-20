@@ -1,10 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
-const QUESTION_IDS = ["problem", "systems", "notWorking", "aiDeployed", "decision"] as const;
-const TOTAL_QUESTIONS = QUESTION_IDS.length;
 
 const controlClass =
   "mt-2 w-full rounded-md border border-[color:var(--input-border)] bg-white px-4 text-base text-foreground transition-colors placeholder:text-[color:var(--input-border-hover)] hover:border-[color:var(--input-border-hover)] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
@@ -14,115 +10,61 @@ export function DiagnosticForm({
 }: {
   action: (formData: FormData) => void | Promise<void>;
 }) {
-  const [answered, setAnswered] = useState<Record<string, boolean>>({});
-
-  const completed = QUESTION_IDS.filter((id) => answered[id]).length;
-  const percent = Math.round((completed / TOTAL_QUESTIONS) * 100);
-
-  function track(id: string, value: string) {
-    setAnswered((prev) => {
-      const isAnswered = value.trim().length > 0;
-      if (prev[id] === isAnswered) return prev;
-      return { ...prev, [id]: isAnswered };
-    });
-  }
-
   return (
     <form action={action} className="space-y-6">
-      <div
-        className="rounded-md border border-border bg-surface px-4 py-3"
-        role="status"
-        aria-live="polite"
-      >
-        <div className="flex items-center justify-between text-sm font-semibold text-foreground">
-          <span>
-            Question {Math.min(completed + 1, TOTAL_QUESTIONS)} of {TOTAL_QUESTIONS}
-          </span>
-          <span className="text-muted">{percent}% complete</span>
-        </div>
-        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-border">
-          <div
-            className="h-full rounded-full bg-primary transition-all duration-300"
-            style={{ width: `${percent}%` }}
-          />
-        </div>
+      <input type="hidden" name="source" value="highest_leverage_workflow" />
+      <input type="hidden" name="landingPage" value="/contact" />
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <Field id="name" label="Name" autoComplete="name" />
+        <Field id="email" label="Business email" type="email" autoComplete="email" />
+        <Field id="company" label="Company" autoComplete="organization" />
+        <Field id="role" label="Role" autoComplete="organization-title" />
       </div>
 
       <Field
-        id="problem"
-        index={1}
-        label="Which healthcare workflow, transformation, or operating process is under pressure?"
+        id="workflow"
+        label="Which workflow or operating problem is under pressure?"
+        placeholder="Describe the handoffs, exceptions, delays, undocumented judgment, or decision bottleneck."
         textarea
-        onValue={track}
       />
-      <Field
-        id="systems"
-        index={2}
-        label="Which dashboards, CRMs, reports, workflows, meetings, or spreadsheets are involved?"
-        textarea
-        onValue={track}
-      />
-      <Field
-        id="notWorking"
-        index={3}
-        label="Where does work stall today, and who becomes the human API?"
-        textarea
-        onValue={track}
-      />
+
       <div>
-        <Label htmlFor="aiDeployed" index={4}>
-          Is AI or automation already involved?
-        </Label>
-        <select
-          id="aiDeployed"
-          name="aiDeployed"
-          required
-          className={`${controlClass} min-h-12`}
-          onChange={(e) => track("aiDeployed", e.target.value)}
-        >
+        <Label htmlFor="timing">When does leadership need a decision?</Label>
+        <select id="timing" name="timing" required className={`${controlClass} min-h-12`}>
           <option value="">Select one</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-          <option value="unsure">Unsure</option>
+          <option value="now">Now / active priority</option>
+          <option value="30-60">Within 30-60 days</option>
+          <option value="60-90">Within 60-90 days</option>
+          <option value="exploring">Exploring options</option>
         </select>
       </div>
+
       <Field
-        id="decision"
-        index={5}
-        label="What operational decision or recovery move does leadership need to make next?"
+        id="message"
+        label="Optional context"
+        placeholder="What has already been tried, and what decision is currently blocked?"
         textarea
-        onValue={track}
+        required={false}
       />
 
-      <div className="grid gap-6 border-t border-border pt-6 md:grid-cols-2">
-        <Field id="name" label="Name" onValue={track} />
-        <Field id="email" label="Email" type="email" onValue={track} />
+      <div className="rounded-md border border-border bg-surface p-4 text-sm leading-6 text-muted">
+        Do not submit PHI, personal financial information, credentials,
+        confidential client information, or other sensitive data. Appropriately
+        de-identified artifacts can be discussed after scope and handling controls are agreed.
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Request a Conversation
+        Find Your Highest-Leverage Workflow
       </Button>
     </form>
   );
 }
 
-function Label({
-  htmlFor,
-  index,
-  children,
-}: {
-  htmlFor: string;
-  index?: number;
-  children: React.ReactNode;
-}) {
+function Label({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) {
   return (
-    <label className="flex items-start gap-2 text-sm font-semibold text-foreground" htmlFor={htmlFor}>
-      {index ? (
-        <span className="mt-px inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-          {index}
-        </span>
-      ) : null}
-      <span>{children}</span>
+    <label className="text-sm font-semibold text-foreground" htmlFor={htmlFor}>
+      {children}
     </label>
   );
 }
@@ -130,40 +72,41 @@ function Label({
 function Field({
   id,
   label,
-  index,
   textarea = false,
   type = "text",
-  onValue,
+  placeholder,
+  autoComplete,
+  required = true,
 }: {
   id: string;
   label: string;
-  index?: number;
   textarea?: boolean;
   type?: string;
-  onValue: (id: string, value: string) => void;
+  placeholder?: string;
+  autoComplete?: string;
+  required?: boolean;
 }) {
   return (
     <div>
-      <Label htmlFor={id} index={index}>
-        {label}
-      </Label>
+      <Label htmlFor={id}>{label}</Label>
       {textarea ? (
         <textarea
           id={id}
           name={id}
-          required
-          rows={3}
+          required={required}
+          rows={4}
+          placeholder={placeholder}
           className={`${controlClass} resize-y py-3 leading-7`}
-          onInput={(e) => onValue(id, e.currentTarget.value)}
         />
       ) : (
         <input
           id={id}
           name={id}
-          required
+          required={required}
           type={type}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
           className={`${controlClass} min-h-12`}
-          onInput={(e) => onValue(id, e.currentTarget.value)}
         />
       )}
     </div>

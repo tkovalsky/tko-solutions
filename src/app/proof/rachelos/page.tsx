@@ -89,7 +89,7 @@ export default function RachelOSProofPage() {
         title="A live operating system that turns relationship knowledge into revenue work."
         description="RachelOS supports a South Florida real-estate business. It replaced manual reconstruction across records, messages, notes, and activity with durable context, prioritized work, automated email nurture, and human-governed AI assistance."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/proof"
         secondaryLabel="Back to proof registry"
       />

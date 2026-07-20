@@ -22,7 +22,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/insights",
   ];
 
-  const serviceRoutes = services.map((service) => `/services/${service.slug}`);
+  const serviceRoutes = services
+    .filter((service) => service.featured)
+    .map((service) => `/services/${service.slug}`);
   const caseStudyRoutes = caseStudies.map((study) => `/selected-work/${study.slug}`);
   const insightRoutes = getInsights().map((insight) => `/insights/${insight.slug}`);
   const frameworkRoutes = frameworkPages.map((page) => `/frameworks/${page.slug}`);
@@ -33,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // to the canonical /founder page.
   return [...new Set([...staticRoutes, ...serviceRoutes, ...caseStudyRoutes, ...insightRoutes, ...frameworkRoutes])].map((route) => ({
     url: absoluteUrl(route),
-    lastModified: new Date("2026-07-17"),
+    lastModified: new Date("2026-07-20"),
     changeFrequency: "monthly",
     priority: route === "/" ? 1 : 0.7,
   }));

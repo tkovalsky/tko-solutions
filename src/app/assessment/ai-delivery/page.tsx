@@ -69,7 +69,7 @@ export default function AiDeliveryAssessmentPage() {
         title="Audit the evidence before you fund the build."
         description="The AI Delivery Assessment applies the evidence method behind the RachelOS case study to your operation: a Built / Activated / Validated map of what you have, and a ranked list of what is actually constraining it, before anyone proposes building anything."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/selected-work/rachelos-delivery-model"
         secondaryLabel="Read the delivery-model case study"
       />
@@ -162,7 +162,7 @@ export default function AiDeliveryAssessmentPage() {
           href="/contact"
           className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
         >
-          Request a Program Assessment
+          Find Your Highest-Leverage Workflow
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </Section>
@@ -171,7 +171,7 @@ export default function AiDeliveryAssessmentPage() {
         title="Bring the operation, not the org chart."
         description="The first step is a focused intake. TKO will assess whether the problem is ready for a fixed-scope evidence audit."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
       />
     </>
   );

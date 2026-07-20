@@ -15,40 +15,35 @@ import { caseStudies } from "@/lib/content";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Transformation & Program Recovery for Healthcare & Regulated Operations",
+  title: "AI-Assisted Operations Modernization for Complex Service Businesses",
   description:
-    "TKO is an independent transformation and program recovery advisor for healthcare and regulated operations. Find where large initiatives are actually failing, and what to fix first, with evidence you can inspect.",
+    "Expose hidden handoffs, decision bottlenecks, and knowledge trapped in people, then design governed AI-assisted workflows that improve execution.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Transformation & Program Recovery",
+    title: "AI-Assisted Operations Modernization",
     description:
-      "Independent, evidence-based assessment of where transformation and modernization programs are actually failing, and what to fix first.",
+      "Turn messy work into an operating system your team and AI can actually use.",
     url: absoluteUrl("/"),
   },
 };
 
-const strategyLadder = [
+const methodSteps = [
   {
-    stage: "Strategy",
+    stage: "Expose the real work",
     description:
-      "Name the executive decision and the operating problem it has to resolve.",
+      "Map the official process against the exceptions, handoffs, workarounds, and judgment that keep the workflow moving.",
   },
   {
-    stage: "Operating Model",
+    stage: "Design the better operating model",
     description:
-      "Define decision rights, ownership, escalation, and how work should actually run.",
+      "Make decision rights, ownership, escalation, measures, and the trusted next action explicit.",
   },
   {
-    stage: "Product",
+    stage: "Implement and govern AI-assisted workflows",
     description:
-      "Build the AI-enabled systems the operating model requires, not a generic platform.",
-  },
-  {
-    stage: "Implementation",
-    description:
-      "Put it into production with human control, adoption, and measurable results.",
+      "Apply AI only where evidence, privacy, human review, and auditability support a measurable operating improvement.",
   },
 ];
 
@@ -80,7 +75,7 @@ export default function HomePage() {
           name: "TKO Solutions",
           url: absoluteUrl("/"),
           description:
-            "Independent transformation and program recovery for healthcare and regulated operations: evidence-based assessment of where large initiatives are actually failing.",
+            "AI-assisted operations modernization for complex service businesses: expose the real workflow, reduce operational friction, and design governed AI-assisted execution.",
         }}
       />
 
@@ -93,8 +88,8 @@ export default function HomePage() {
           <div>
             <SectionHeader
               eyebrow="The Operating Problem"
-              title="Complex operations don't fail from bad strategy. They fail between strategy and execution."
-              description="The gap usually lives in the handoff from executive decision to operating model to system to daily work. That is where capacity disappears, customers wait, revenue leaks, and leaders lose the ability to act with confidence."
+              title="The operation looks orderly on paper. The real work runs through exceptions, memory, and hidden coordination."
+              description="That gap is where decisions slow down, senior people become human APIs, accountability blurs, and AI pilots fail to create measurable operating value."
             />
             <ul className="mt-6 space-y-2 text-base leading-7 text-muted">
               <li>
@@ -102,16 +97,16 @@ export default function HomePage() {
                   href="/problems"
                   className="font-medium text-foreground hover:text-primary hover:underline"
                 >
-                  Operational bottlenecks
+                  Recognize the pattern
                 </Link>
               </li>
-              <li>Slow or unclear decisions</li>
-              <li>Key-person dependency</li>
-              <li>Revenue and capacity leakage</li>
-              <li>Transformation spend without operational improvement</li>
+              <li>Meetings, email, spreadsheets, Slack, or Teams hold the workflow together</li>
+              <li>Undocumented judgment determines how exceptions move</li>
+              <li>Systems show activity but no trusted next action</li>
+              <li>AI tools exist without a workflow, control model, or measurable outcome</li>
             </ul>
             <ArrowLink href="/problems" className="mt-8">
-              Explore the operating problems
+              Explore the operating symptoms
             </ArrowLink>
           </div>
           <ProblemGrid />
@@ -119,8 +114,7 @@ export default function HomePage() {
 
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {caseStudies
-            .filter((study) => study.industry === "Healthcare")
-            .slice(0, 2)
+            .filter((study) => ["from-crm-to-operating-system", "prior-authorization-modernization", "cre-intelligence-model"].includes(study.slug))
             .map((study) => (
               <Card key={study.slug}>
                 <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
@@ -142,12 +136,12 @@ export default function HomePage() {
 
       <Section className="bg-surface !py-16 md:!py-20">
         <SectionHeader
-          eyebrow="How TKO works"
-          title="Assessment first, then only the work the evidence supports."
-          description="TKO diagnoses where the initiative is failing before recommending a fix. When deeper work is warranted it runs across four stages, strategy, operating model, product, and implementation, but the default first step is a bounded assessment, not a full program."
+          eyebrow="Operational truth"
+          title="Improve the workflow that actually exists, not the one described in the procedure."
+          description="TKO connects strategy, workflow, product, technology, and execution so the business can see what is happening, decide what should change, and use AI without surrendering human control."
         />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {strategyLadder.map((step, index) => (
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          {methodSteps.map((step, index) => (
             <Card key={step.stage}>
               <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
                 {String(index + 1).padStart(2, "0")}
@@ -208,9 +202,9 @@ export default function HomePage() {
       <Section className="!py-16 md:!py-20">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <SectionHeader
-            eyebrow="Healthcare Background"
-            title="The same failure pattern appears wherever executive strategy crosses teams."
-            description="Healthcare transformation, complex service delivery, and enterprise operations all expose the same problem: strategy is set, but the operating model, product, and implementation needed to carry it out never fully arrive."
+            eyebrow="Healthcare credibility lane"
+            title="The method travels. Healthcare remains a proving ground, not the boundary of the business."
+            description="Healthcare payer and provider operations make exceptions, administrative burden, auditability, and multi-team dependencies impossible to ignore. The same operating pattern appears in financial services, enterprise technology, investment operations, property operations, and other complex service businesses."
           />
           <Card className="w-full max-w-2xl justify-self-start">
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
@@ -241,38 +235,39 @@ export default function HomePage() {
             Why TKO
           </p>
           <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-            Most programs do not fail for lack of a plan. They fail where the work crosses teams.
+            The unresolved problems are usually the ones every specialist can see only in part.
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/60">
-            Status reports show green while risk accumulates between workstreams.
-            TKO finds where the work is actually stuck, who owns the next
-            decision, and what to fix before more budget is committed.
+            Todd is a cross-functional operator who works across strategy,
+            workflow, product, technology, and execution. He finds the gap
+            between the documented process and operating reality, then creates
+            enough structure to improve execution without adding bureaucracy.
           </p>
         </div>
         <p className="mt-10 flex max-w-[65ch] items-start gap-3 text-sm leading-6 text-white/50">
           <Zap className="mt-0.5 size-4 shrink-0 text-primary-light" aria-hidden="true" />
-          AI matters only when it improves a real workflow with clear ownership
-          and human accountability. It is one tool among several, never the
-          reason to engage TKO.
+          AI matters only when it improves a real workflow with clear ownership,
+          source evidence, privacy controls, human approval, and measurable
+          operating value.
         </p>
       </Section>
 
       <Section className="bg-surface !py-16 md:!py-20">
         <SectionHeader
           eyebrow="Engagement Path"
-          title="Engagement starts small and sequential: assessment first, build only when the case is clear."
-          description="Every engagement begins with a fixed-scope assessment of the operating problem and the decision it is blocking. Deeper work follows only when the evidence supports it."
+          title="Start with one critical workflow. Implement only what the evidence supports."
+          description="The flagship Diagnostic is a fixed-scope, three-week engagement. A separate three-month implementation installs the prioritized workflow, controls, measures, knowledge system, and first practical AI-assisted use cases."
         />
         <div className="mt-10">
           <EngagementPath />
         </div>
       </Section>
       <CtaBand
-        title="Bring the initiative that is not landing."
-        description="Describe the transformation, program, or workflow under pressure. TKO will help determine where execution is breaking down and what deserves action first."
+        title="Bring the workflow your best people keep holding together."
+        description="Describe the handoffs, exceptions, delays, and decisions under pressure. TKO will help determine whether a focused Diagnostic is the right next move."
         primaryLabel={site.cta}
         secondaryHref="/selected-work"
-        secondaryLabel="Review Selected Work"
+        secondaryLabel="View Selected Work"
       />
     </>
   );

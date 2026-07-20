@@ -56,7 +56,7 @@ export default function IndustriesPage() {
         title="Healthcare is the practice. The operating pattern transfers."
         description="TKO works deepest in healthcare, where prior authorization, utilization management, and interoperability make the operating problem sharpest. The same failure pattern, and the same evidence method that resolves it, appears across regulated and relationship-driven operations."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/healthcare"
         secondaryLabel="See the Healthcare practice"
       />
@@ -152,7 +152,7 @@ export default function IndustriesPage() {
       <CtaBand
         title="Start from the industry, land on the operating problem."
         description="Bring the transformation, program, or workflow under pressure. TKO will help determine where execution is breaking down and what deserves action first."
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

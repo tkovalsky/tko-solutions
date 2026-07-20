@@ -15,9 +15,9 @@ import {
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Todd Kovalsky | Founder, TKO Solutions",
+  title: "Todd Kovalsky | Cross-Functional Operator",
   description:
-    "Todd Kovalsky is an operational intelligence advisor: 20+ years across Apollo, Sapient (GSAM, JPMAM), FolioDynamix, ELLKAY, and Fortune 5 healthcare transformation at Cognizant, plus RachelOS as production proof.",
+    "Todd Kovalsky is a cross-functional operator working across financial services, product, technology, healthcare, enterprise transformation, and governed AI-assisted workflows.",
   alternates: { canonical: "/founder" },
   openGraph: {
     title: "Todd Kovalsky | Founder, TKO Solutions",
@@ -82,7 +82,7 @@ export default function FounderPage() {
           mainEntity: {
             "@type": "Person",
             name: "Todd Kovalsky",
-            jobTitle: "Founder & Principal, Operational Intelligence Advisor",
+            jobTitle: "Founder & Principal, AI-Assisted Operations Advisor",
             worksFor: { "@type": "Organization", name: site.name, url: site.url },
             sameAs: [site.linkedin],
             alumniOf: [
@@ -108,12 +108,11 @@ export default function FounderPage() {
                 {executiveSummary.headline}
               </h1>
               <p className="mt-8 max-w-[65ch] text-xl leading-9 text-muted">
-                An independent transformation and program recovery advisor for
-                healthcare and regulated operations, with twenty-plus years
-                across capital markets, asset management, wealth platforms,
-                enterprise transformation, product leadership, and healthcare.
-                Engagements are senior-led and direct: the person who assesses
-                your program is the person you work with.
+                Todd is a cross-functional operator who specializes in work that
+                does not fit neatly inside one department. He helps leadership
+                teams uncover the real operating system behind their business,
+                recover stalled initiatives, and apply AI where it creates
+                measurable leverage instead of more complexity.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
@@ -164,7 +163,7 @@ export default function FounderPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Why TKO exists"
-          title="Six vantage points on one problem, then I built the answer."
+          title="The unresolved problems are usually the ones every specialist sees only in part."
         />
         <div className="mt-10 max-w-[75ch] space-y-6 text-lg leading-8 text-muted">
           <p>
@@ -188,11 +187,11 @@ export default function FounderPage() {
             workstreams, and AI arriving before decision rights do.
           </p>
           <p>
-            No enterprise engagement would let one advisor implement the entire
-            thesis (memory, governed facts, priority, human approval, observable
-            health) end to end. So I built it myself, in a live business, and
-            audited it in public. RachelOS is not a pivot into real estate. It
-            is the controlled experiment the previous twenty years demanded.
+            TKO brings those vantage points together: operating reality,
+            decision ownership, product design, technology constraints,
+            governance, and adoption. RachelOS is one inspectable example of the
+            method in practice, with memory, governed facts, priority, human
+            approval, and observable health working together in a live business.
           </p>
         </div>
       </Section>

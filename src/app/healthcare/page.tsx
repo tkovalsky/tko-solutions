@@ -88,7 +88,7 @@ export default function HealthcarePage() {
         title="See where your healthcare transformation is actually failing."
         description="TKO helps healthcare leaders find where prior authorization, utilization management, care management, interoperability, and modernization programs are stalling, who carries the risk, and what to fix first. The same program-recovery method applies across regulated operations."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />
@@ -176,7 +176,7 @@ export default function HealthcarePage() {
       <CtaBand
         title="Bring the workflow and the decision under pressure."
         description="Start with a focused assessment when the immediate question is where work stalls, who carries the missing context, and what leadership should do before another technology investment."
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

@@ -8,7 +8,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Selected Work",
   description:
-    "Selected TKO work across healthcare workflow modernization, enterprise program recovery, interoperability governance, and RachelOS.",
+    "Selected work organized around workflow modernization, transformation recovery, operational knowledge, governed AI, enterprise delivery, and regulated operations.",
   alternates: { canonical: "/selected-work" },
   openGraph: {
     title: "Selected Work",
@@ -23,8 +23,8 @@ export default function SelectedWorkPage() {
     <>
       <PageHero
         eyebrow="Selected Work"
-        title="Evidence before category."
-        description="TKO's point of view is built from operating work: healthcare workflow modernization, enterprise program recovery, interoperability governance, and RachelOS as live proof that the same pattern works outside the enterprise."
+        title="Proof organized around the operating problem, not an industry claim."
+        description="The record spans workflow modernization, transformation recovery, operational knowledge systems, enterprise product and platform delivery, complex financial and regulated workflows, AI-assisted decision support, interoperability, and governance."
       />
       <Section>
         <CaseStudyCards />
@@ -32,8 +32,8 @@ export default function SelectedWorkPage() {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Common Pattern"
-          title="The work changes domains. The operating failure repeats."
-          description="Teams have systems, dashboards, meetings, and now AI interest. The missing layer is the governed path from signal to fact, state, priority, human approval, action, and outcome."
+          title="The domain changes. The operating failure repeats."
+          description="Across relationship operations, healthcare, financial services, investment workflows, enterprise programs, and property intelligence, the missing layer is a governed path from signal to fact, state, priority, human approval, action, and outcome. Employment history and public program context do not imply employer or client endorsement."
         />
       </Section>
       <CtaBand

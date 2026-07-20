@@ -4,14 +4,14 @@ import { ServiceTemplate } from "@/components/site/service-template";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Operational Truth Diagnostic",
+  title: "Operational Truth & AI Workflow Diagnostic",
   description:
-    "A 2-3 week Operational Truth Diagnostic for leaders with AI or workflow budget who need to find where work stalls and what to fund first.",
+    "A fixed-scope, three-week diagnostic that maps one critical workflow, identifies operational friction and human-API risk, and produces a governed AI-assisted operating model with a 90-day plan.",
   alternates: { canonical: "/services/diagnostic" },
   openGraph: {
-    title: "Operational Truth Diagnostic",
+    title: "Operational Truth & AI Workflow Diagnostic",
     description:
-      "A focused diagnostic that produces workflow assessment, decision analysis, AI opportunity guidance, and an implementation roadmap.",
+      "Expose the real workflow, rank AI opportunities by value and risk, define human controls, and leave with a prioritized 90-day implementation plan.",
     url: absoluteUrl("/services/diagnostic"),
   },
 };
@@ -23,18 +23,11 @@ export default function DiagnosticPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "Service",
-          name: "Operational Truth Diagnostic",
+          name: "Operational Truth & AI Workflow Diagnostic",
           provider: { "@type": "Organization", name: "TKO Solutions" },
-          serviceType: "Operational Truth Diagnostic",
+          serviceType: "AI-assisted workflow diagnostic",
           areaServed: "United States",
-          offers: {
-            "@type": "Offer",
-            priceSpecification: {
-              "@type": "PriceSpecification",
-              priceCurrency: "USD",
-              minPrice: 15000,
-            },
-          },
+          providerMobility: "remote",
         }}
       />
       <ServiceTemplate slug="diagnostic" />

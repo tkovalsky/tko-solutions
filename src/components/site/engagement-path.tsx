@@ -2,20 +2,15 @@ import { ArrowRight } from "lucide-react";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { services } from "@/lib/content";
 
-// Sequential engagement model rendered from the existing service catalog.
-// Order matches the commercial ladder: Assessment → Diagnostic → Build → Advisory.
+// Public commercial path: one flagship diagnostic, then a bounded implementation.
 const pathOrder = [
-  "recovery-assessment",
   "diagnostic",
   "operating-system-build",
-  "fractional-advisor",
 ] as const;
 
 const stageLabels: Record<(typeof pathOrder)[number], string> = {
-  "recovery-assessment": "Assessment",
   diagnostic: "Diagnostic",
-  "operating-system-build": "Build",
-  "fractional-advisor": "Advisory",
+  "operating-system-build": "Implementation",
 };
 
 export function EngagementPath() {
@@ -24,7 +19,7 @@ export function EngagementPath() {
     .filter((service): service is (typeof services)[number] => Boolean(service));
 
   return (
-    <ol className="grid gap-4 lg:grid-cols-4" aria-label="Engagement path">
+    <ol className="grid gap-4 lg:grid-cols-2" aria-label="Engagement path">
       {steps.map((service, index) => (
         <li key={service.slug} className="relative flex">
           <div className="flex w-full flex-col border border-border bg-white p-6">
@@ -46,7 +41,7 @@ export function EngagementPath() {
                 <dd className="mt-0.5 font-semibold">{service.duration}</dd>
               </div>
               <div>
-                <dt className="text-muted">Investment</dt>
+                <dt className="text-muted">Commercial model</dt>
                 <dd className="mt-0.5 font-semibold">{service.price}</dd>
               </div>
             </dl>

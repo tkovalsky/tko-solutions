@@ -3,7 +3,8 @@ import { Logo } from "@/components/site/logo";
 import { site } from "@/lib/site";
 
 const footerLinks = [
-  { href: "/services", label: "Services" },
+  { href: "/services/diagnostic", label: "Flagship Diagnostic" },
+  { href: "/services", label: "Engagements" },
   { href: "/problems", label: "Problems" },
   { href: "/proof", label: "Proof" },
   { href: "/proof/transfer", label: "The Transfer Argument" },
@@ -22,10 +23,9 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Executive strategy through implementation for complex operations.
-            TKO turns operating problems into working strategy, operating
-            models, products, and AI-enabled systems, from executive decision
-            through production implementation.
+            TKO helps complex service businesses uncover how work really happens,
+            remove operational friction, and build governed AI-assisted workflows
+            that improve speed, accountability, and execution.
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
             <a href={`mailto:${site.email}`} className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">

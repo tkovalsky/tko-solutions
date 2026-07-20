@@ -4,8 +4,8 @@ import { caseStudies, services } from "@/lib/content";
 
 export function ServiceCards() {
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {services.map((service) => {
+    <div className="grid gap-4 md:grid-cols-2">
+      {services.filter((service) => service.featured).map((service) => {
         const investment =
           "investmentSummary" in service ? service.investmentSummary : service.price;
         return (
@@ -17,7 +17,7 @@ export function ServiceCards() {
             <p className="mt-4 text-base leading-7 text-muted">{service.summary}</p>
             <dl className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-6 text-sm">
               <div>
-                <dt className="text-muted">Investment</dt>
+                <dt className="text-muted">Commercial model</dt>
                 <dd className="mt-1 font-semibold">{investment}</dd>
               </div>
               <div>
@@ -41,9 +41,9 @@ export function CaseStudyCards() {
       {caseStudies.map((study) => (
         <Card key={study.slug}>
           <div className="flex flex-wrap gap-2 text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-            <span>{study.industry}</span>
+            <span>{study.relatedProblems[0]}</span>
             <span>/</span>
-            <span>{study.proofLevel}</span>
+            <span>{study.industry}</span>
           </div>
           <h3 className="mt-6 text-2xl font-semibold">{study.title}</h3>
           <p className="mt-4 text-base leading-7 text-muted">{study.problem}</p>

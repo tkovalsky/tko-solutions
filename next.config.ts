@@ -34,17 +34,21 @@ const nextConfig: NextConfig = {
       { source: "/offers/prior-authorization", destination: "/services/prior-authorization-assessment", permanent: true },
       { source: "/offers/decision-rights-workshop", destination: "/services/prior-authorization-assessment", permanent: true },
       { source: "/offers/executive-operating-review", destination: "/services/fractional-leadership", permanent: true },
-      { source: "/assessment", destination: "/services/recovery", permanent: true },
+      { source: "/assessment", destination: "/services/diagnostic", permanent: true },
       { source: "/assessment/ai-delivery", destination: "/services/enterprise-ai", permanent: true },
 
       // Interim lane targets: the final lane URLs do not exist yet. Point them at
       // the nearest existing page so no redirect resolves to a 404. Phase B creates
       // /services/recovery, /services/enterprise-ai, /services/product, and
       // /services/fractional-leadership and removes the interim rows below.
-      { source: "/services/recovery", destination: "/services/recovery-assessment", permanent: false },
-      { source: "/services/fractional-leadership", destination: "/services/fractional-advisor", permanent: false },
+      { source: "/services/recovery", destination: "/services/diagnostic", permanent: false },
+      { source: "/services/fractional-leadership", destination: "/services/operating-system-build", permanent: false },
       { source: "/services/enterprise-ai", destination: "/services", permanent: false },
       { source: "/services/product", destination: "/services", permanent: false },
+
+      // One public entry offer and one bounded expansion path.
+      { source: "/services/recovery-assessment", destination: "/services/diagnostic", permanent: true },
+      { source: "/services/fractional-advisor", destination: "/services/operating-system-build", permanent: true },
 
       // --- Proof vs Framework separation (WS3) ---
       // Experience-based operating models move from /proof to /frameworks so that

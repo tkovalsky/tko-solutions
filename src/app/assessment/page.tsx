@@ -54,7 +54,7 @@ const expectedInputs = [
 const engagementScope = [
   ["Fixed scope", "One workflow or operating problem under real pressure."],
   ["One week", "Focused review, interviews, analysis, and an executive briefing."],
-  ["$5K–$8K", "A bounded first step before a deeper diagnostic or build is considered."],
+  ["Fixed scope", "A bounded first step before a deeper diagnostic or build is considered."],
 ];
 
 export default function AssessmentPage() {
@@ -76,7 +76,7 @@ export default function AssessmentPage() {
         title="Find the constraint before you fund the solution."
         description="The Operational Recovery Assessment is a focused engagement for leaders who need to identify the bottleneck, decision gap, or key-person dependency reducing performance, and decide what is worth fixing first."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/proof/rachelos"
         secondaryLabel="Review built-system proof"
       />
@@ -180,7 +180,7 @@ export default function AssessmentPage() {
           href="/contact"
           className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
         >
-          Request a Program Assessment
+          Find Your Highest-Leverage Workflow
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </Section>
@@ -189,7 +189,7 @@ export default function AssessmentPage() {
         title="Bring the workflow under pressure."
         description="The first step is a focused intake. TKO will assess whether the problem is ready for a fixed-scope recovery engagement."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
       />
     </>
   );

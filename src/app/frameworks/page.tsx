@@ -40,7 +40,7 @@ export default function FrameworksPage() {
         title="The operating models behind the work, stated with their limits."
         description="These are synthesized operating and governance models drawn from delivery and recovery experience. They are frameworks, not client outcomes: each states the executive question, the model, and the exact claim boundary. For inspectable built-system evidence, see Proof."
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
         secondaryHref="/proof"
         secondaryLabel="Review Proof"
       />

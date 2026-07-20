@@ -20,14 +20,14 @@ export function ServiceTemplate({ slug }: { slug: string }) {
         title={service.title}
         description={service.overview}
         primaryHref="/contact"
-        primaryLabel="Request a Program Assessment"
+        primaryLabel="Find Your Highest-Leverage Workflow"
       />
 
       <Section>
         <div className="grid gap-6 md:grid-cols-3">
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-              Investment
+              Commercial model
             </p>
             <p className="mt-4 text-3xl font-semibold">{service.price}</p>
           </Card>
@@ -106,17 +106,13 @@ export function ServiceTemplate({ slug }: { slug: string }) {
 
       <CtaBand
         title={
-          service.slug === "recovery-assessment"
-            ? "Use the Assessment to decide what deserves deeper investment."
-            : service.slug === "diagnostic"
-            ? "Use the Diagnostic to identify the highest-leverage path forward."
+          service.slug === "diagnostic"
+            ? "Find the workflow where better design and governed AI can create measurable leverage."
             : "Start with the operating problem, not a preselected solution."
         }
         description={
-          service.slug === "recovery-assessment"
-            ? "The engagement gives leadership a fast, grounded view of the constraint, the exposure it creates, and the next move worth funding."
-            : service.slug === "diagnostic"
-            ? "The engagement gives leaders evidence, priorities, and an implementation path tied to an active business problem."
+          service.slug === "diagnostic"
+            ? "The three-week engagement gives leaders the real workflow, prioritized AI opportunities, required human controls, and a 90-day implementation path."
             : "Build and advisory work follow when the operating problem is clear and there is a business case to improve it."
         }
       />

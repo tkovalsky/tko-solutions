@@ -55,7 +55,7 @@ describe("InsightPage", () => {
     expect(screen.getByText("2 min read")).toBeInTheDocument();
     expect(screen.getByText("Based on 2 sources")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Related" })).toBeInTheDocument();
-    expect(screen.getByText("Operational Recovery Assessment")).toBeInTheDocument();
+    expect(screen.getAllByText("Find Your Highest-Leverage Workflow").length).toBeGreaterThan(0);
   });
 
   it("returns a 404 for unknown slugs", async () => {

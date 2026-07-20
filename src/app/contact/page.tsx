@@ -7,7 +7,7 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Request a Conversation",
   description:
-    "Request a focused conversation about the bottleneck, decision gap, or revenue leakage holding your operation back.",
+    "Describe the critical workflow, hidden coordination, or stalled cross-functional operation you want to improve.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: "Request a Conversation",
@@ -29,15 +29,15 @@ export default async function ContactPage({ searchParams }: SearchParams) {
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-[60ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
-            Operating performance conversation
+            Highest-leverage workflow
           </p>
           <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-foreground md:text-5xl">
-            Start with the part of the business that is not performing.
+            Start with the workflow your best people keep holding together.
           </h1>
           <p className="mt-5 text-lg leading-8 text-muted">
-            Five questions to establish whether TKO can help. Describe the
-            workflow, revenue process, or transformation effort under pressure, and
-            the decision leadership needs to make next.
+            Share the workflow or operating problem under pressure, who owns it,
+            and when leadership needs a decision. TKO will determine whether the
+            fixed-scope Diagnostic is the right next step.
           </p>
         </div>
 
@@ -78,11 +78,10 @@ export default async function ContactPage({ searchParams }: SearchParams) {
               Or start the conversation prepared.
             </h2>
             <p className="mt-3 text-base leading-7 text-muted">
-              The five short questions on the right make the first call a
-              working session instead of an introduction. The strongest starting
-              point is a measurable performance gap, stalled decision,
-              key-person dependency, or revenue risk, not a general interest in
-              AI or automation.
+              The short intake makes the first call a working conversation. The
+              strongest starting point is a measurable performance gap, stalled
+              decision, hidden handoff, key-person dependency, or knowledge-loss
+              risk, not a general interest in AI.
             </p>
             <p className="mt-4 text-base leading-7 text-muted">
               Engagements are senior-led and direct. Prior-engagement context and
@@ -106,7 +105,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
               <div className="mb-6 rounded-md border border-primary/30 border-l-4 border-l-primary bg-surface p-5">
                 <p className="font-semibold text-foreground">More detail is required.</p>
                 <p className="mt-2 text-sm leading-6 text-muted">
-                  Each answer should be specific enough to qualify the operating problem.
+                  Complete the required fields and describe the workflow with enough detail to qualify the operating problem.
                 </p>
               </div>
             ) : null}
