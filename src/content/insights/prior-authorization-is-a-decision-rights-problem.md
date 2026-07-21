@@ -63,7 +63,7 @@ Ask:
 
 Those answers form the operating model that technology has to support. Without them, the organization risks automating ambiguity.
 
-The [Prior Authorization Performance Diagnostic](/services/diagnostic) is built around that work: a measured baseline, denial and exception patterns, staff dependency, decision rights, and a responsible 90-day plan. It is the single public starting engagement—not one assessment among several.
+The [Prior Authorization Performance Diagnostic](/healthcare#prior-authorization-diagnostic) is built around that work: a measured baseline, denial and exception patterns, staff dependency, decision rights, and a responsible 90-day plan. It is TKO's concrete healthcare-specific diagnostic.
 
 For the adjacent operating-quality argument, read [Prior Authorization Is an Operational Quality Problem](/insights/prior-authorization-operational-quality-problem).
 

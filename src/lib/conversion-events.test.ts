@@ -11,7 +11,7 @@ describe("conversion events", () => {
   it("records only the path and allow-listed context", () => {
     trackConversion("primary_cta_click", {
       ctaLocation: "homepage_hero",
-      ctaLabel: "Request a Diagnostic Fit Call",
+      ctaLabel: "Request a Confidential Program Review",
       referencedService: "diagnostic",
     });
 

@@ -8,102 +8,109 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Prior Authorization Performance Diagnostic",
+  title: "Transformation Recovery Diagnostic",
   description:
-    "A $25,000 fixed-fee, 15-business-day Diagnostic that gives healthcare leadership a measured prior-authorization baseline, root-cause view, target workflow, and 90-day improvement plan.",
+    "A 15-business-day, $25,000–$40,000 fixed-fee diagnostic that gives executive sponsors a trusted delivery baseline, recovery choices, and a measurable 90-day plan.",
   alternates: { canonical: "/services/diagnostic" },
   openGraph: {
-    title: "Prior Authorization Performance Diagnostic",
+    title: "Transformation Recovery Diagnostic",
     description:
-      "Find the operational causes of prior-authorization delay, rework, denials, and staff dependency.",
+      "Establish delivery reality and make a defensible decision about what to continue, reset, narrow, renegotiate, or stop.",
     url: absoluteUrl("/services/diagnostic"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+    images: [
+      {
+        url: site.socialImage,
+        width: 1200,
+        height: 630,
+        alt: "TKO Solutions Transformation Recovery Diagnostic.",
+      },
+    ],
   },
 };
 
 const triggers = [
-  "Denials, turnaround time, backlog, or staff effort are moving in the wrong direction.",
-  "Different locations, specialties, payers, or team members produce inconsistent results.",
-  "Critical payer or escalation knowledge lives with a few experienced people.",
-  "Leadership is considering automation, a vendor change, centralization, or more headcount without a trusted baseline.",
-  "Teams disagree about whether the problem is documentation, workflow, capacity, policy, technology, or ownership.",
+  "Status reports no longer reconcile with milestone confidence or operating readiness.",
+  "Workstreams, vendors, or executives disagree about the cause of delay or the credible recovery path.",
+  "Dependencies and decisions age without a single accountable owner or escalation path.",
+  "Leadership is considering another replan, vendor change, funding request, scope reduction, or leadership change without a trusted baseline.",
+  "Delivery activity remains disconnected from adoption, benefits, or the operational change the program was funded to produce.",
 ];
 
 const questions = [
-  "Where does a case first become incomplete, delayed, or likely to require rework?",
-  "Which denial and exception patterns are operationally addressable?",
-  "How much staff effort is consumed by touches, follow-up, escalation, and reconstruction?",
-  "Which payer, specialty, location, or evidence patterns explain meaningful variation?",
-  "Where are decision rights or escalation rules unclear?",
-  "Which knowledge dependencies create continuity risk?",
-  "What should be standardized, automated, measured, stopped, or left under human judgment?",
+  "What is actually true about scope, milestones, dependencies, decisions, vendors, adoption, and value?",
+  "Where is delivery risk accumulating, and which issues are symptoms rather than causes?",
+  "Which decisions, owners, and escalation paths are missing or ineffective?",
+  "What must be re-baselined, narrowed, funded, stopped, renegotiated, or escalated?",
+  "What should leadership expect to be operating within the next 90 days?",
+  "Can the current team and vendor model execute the recovery, or does accountability need to change?",
 ];
 
 const plan = [
   {
     period: "Days 1–3",
-    title: "Frame and baseline",
+    title: "Frame the executive decision",
     description:
-      "Confirm the decision, scope, evidence boundary, stakeholder set, KPI definitions, and available baseline.",
+      "Confirm the sponsor, program boundary, evidence set, stakeholder map, known constraints, and the decision the diagnostic must protect.",
   },
   {
     period: "Days 4–8",
-    title: "Trace the work",
+    title: "Establish delivery reality",
     description:
-      "Interview stakeholders and map intake, documentation, routing, payer variation, exceptions, escalation, follow-up, and rework.",
+      "Interview stakeholders and reconcile plans, status, RAID, governance, vendors, dependencies, decisions, adoption, and value evidence.",
   },
   {
     period: "Days 9–11",
-    title: "Diagnose and size",
+    title: "Diagnose the control failures",
     description:
-      "Separate symptoms from addressable causes, establish responsible opportunity ranges, and test where technology or controlled automation may help.",
+      "Separate symptoms from root causes and assess delivery confidence, ownership, decision latency, sequencing, vendor performance, and operational readiness.",
   },
   {
     period: "Days 12–14",
-    title: "Design and sequence",
+    title: "Build recovery choices",
     description:
-      "Create the target workflow, clarify decision rights, define measures, and prioritize the 90-day backlog.",
+      "Define re-baselining requirements, recovery scenarios, accountable ownership, decision gates, and the measurable 90-day sequence.",
   },
   {
     period: "Day 15",
     title: "Executive readout",
     description:
-      "Present the evidence, tradeoffs, recommendation, and decision required. Final artifacts incorporate agreed factual corrections.",
+      "Present the fact base, material exposures, choices, recommendation, and immediate decisions. Final artifacts incorporate agreed factual corrections.",
   },
 ];
 
 const deliverables = [
-  "Executive decision brief",
-  "Baseline scorecard and KPI definitions",
-  "Current-state workflow and exception map",
-  "Denial, rework, handoff, and delay driver analysis",
-  "Decision-rights and escalation map",
-  "Key-person dependency register",
-  "Target workflow and operating requirements",
-  "Prioritized improvement backlog",
-  "90-day roadmap with owners, measures, and decision gates",
+  "Executive exposure and decision brief",
+  "Accepted delivery baseline",
+  "Dependency and decision map",
+  "Delivery-confidence assessment",
+  "Root-cause analysis",
+  "Ownership and governance reset",
+  "Vendor and sequencing actions",
+  "Recovery choices and tradeoffs",
+  "Re-baselining requirements",
+  "Measurable 90-day recovery plan",
 ];
 
 const faqs = [
   {
-    q: "Do we need clean data or production-system access?",
-    a: "No. Existing reports, appropriately de-identified examples, workflow documents, and stakeholder interviews are enough to begin. No production-system access or PHI ingestion is required for the standard scope.",
+    q: "Is the Diagnostic an audit or a PMO maturity assessment?",
+    a: "No. It is a decision-focused intervention for one major program or bounded portfolio. The work establishes delivery reality, identifies the control failures that matter, and defines a practical recovery path.",
+  },
+  {
+    q: "Do we need clean data or a perfect integrated plan?",
+    a: "No. Existing plans, status reports, RAID logs, decision records, vendor materials, operating evidence, and stakeholder interviews are enough to begin. Evidence gaps are made explicit rather than hidden.",
   },
   {
     q: "Is this an AI or software assessment?",
-    a: "No. The Diagnostic starts with the prior-authorization workflow and measurable operating problem. Automation or AI is considered only after workflow stability, evidence, exceptions, decision rights, controls, and expected value are understood.",
+    a: "No. Technology and AI may be part of the program, but the Diagnostic focuses on the business decision, delivery system, ownership, controls, operational readiness, and measurable value.",
   },
   {
-    q: "Does the Diagnostic guarantee denial reduction or savings?",
-    a: "No. It does not guarantee denial, cost, staffing, reimbursement, or revenue results. It creates the baseline and implementation case required to set a responsible target.",
+    q: "Does the Diagnostic guarantee schedule, cost, or benefit recovery?",
+    a: "No. It provides the accepted baseline, recovery choices, accountable plan, and decision gates required to set responsible targets. TKO does not promise results before that evidence exists.",
   },
   {
-    q: "Do we have to retain TKO for implementation?",
-    a: "No. TKO may recommend internal execution, an existing vendor, a specialist partner, no further implementation, or the 90-Day Sprint. The Diagnostic creates no implementation obligation.",
-  },
-  {
-    q: "What happens if the scope is broader than one workflow?",
-    a: "The proposal will narrow the work to one organization and one defined PA workflow or specialty/payer segment. Additional workflow families, interviews, data remediation, or specialist needs require a revised scope.",
+    q: "Do we have to retain TKO for mobilization?",
+    a: "No. TKO may recommend internal execution, the existing vendor, a specialist partner, a leadership change, a narrowed scope, no further investment, or 90-Day Recovery Mobilization. The Diagnostic creates no implementation obligation.",
   },
 ];
 
@@ -114,23 +121,25 @@ export default function DiagnosticPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "Service",
-          name: "Prior Authorization Performance Diagnostic",
+          name: "Transformation Recovery Diagnostic",
           description: metadata.description,
           url: absoluteUrl("/services/diagnostic"),
           provider: { "@type": "Organization", name: site.name, url: site.url },
-          serviceType: "Prior authorization operations diagnostic",
+          serviceType: "Transformation recovery diagnostic",
           areaServed: "United States",
           providerMobility: "remote",
           audience: {
             "@type": "BusinessAudience",
-            audienceType: "Specialty medical groups, MSOs, and provider-side healthcare operators",
+            audienceType:
+              "Executive sponsors, COOs, CIOs, transformation leaders, and operating partners",
           },
           offers: {
-            "@type": "Offer",
-            price: "25000",
+            "@type": "AggregateOffer",
+            lowPrice: "25000",
+            highPrice: "40000",
             priceCurrency: "USD",
+            offerCount: "1",
             url: absoluteUrl("/services/diagnostic"),
-            description: "Fixed fee for a 15-business-day, principal-led Diagnostic.",
           },
         }}
       />
@@ -147,9 +156,9 @@ export default function DiagnosticPage() {
       />
 
       <PageHero
-        eyebrow="Flagship engagement"
-        title="Find the operational causes of prior-authorization delay, rework, denials, and staff dependency."
-        description="A fixed-fee, principal-led Diagnostic that gives leadership a measured baseline, root-cause view, and 90-day improvement plan."
+        eyebrow="Core advisory offer"
+        title="Establish what is true before leadership commits to another plan."
+        description="A 15-business-day, principal-led diagnostic for one major program or bounded portfolio. Executive sponsors leave with a trusted baseline, recovery choices, and a measurable 90-day plan."
         primaryHref="/contact"
         primaryLabel={site.cta}
         secondaryHref="#scope-and-pricing"
@@ -164,11 +173,11 @@ export default function DiagnosticPage() {
           </Card>
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Fee</p>
-            <p className="mt-4 text-2xl font-semibold">$25,000 fixed</p>
+            <p className="mt-4 text-2xl font-semibold">$25,000–$40,000</p>
           </Card>
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Scope</p>
-            <p className="mt-4 text-xl font-semibold">One PA workflow or segment</p>
+            <p className="mt-4 text-xl font-semibold">One major program or bounded portfolio</p>
           </Card>
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Delivery</p>
@@ -180,9 +189,9 @@ export default function DiagnosticPage() {
       <Section className="!py-14 md:!py-20">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
-            eyebrow="Buyer fit"
-            title="Buy this when leadership needs a defensible next decision."
-            description="The standard scope covers one organization, one defined prior-authorization workflow or specialty/payer segment, up to 10 stakeholder interviews, and one executive sponsor."
+            eyebrow="Buyer triggers"
+            title="Buy this when the next executive decision needs an independent fact base."
+            description="The standard scope includes one executive sponsor, one major program or bounded portfolio, 8–12 stakeholder interviews, and focused evidence review."
           />
           <ul className="grid gap-3">
             {triggers.map((trigger) => (
@@ -197,7 +206,7 @@ export default function DiagnosticPage() {
       <Section className="bg-surface !py-14 md:!py-20">
         <SectionHeader
           eyebrow="Questions answered"
-          title="A measured view of where work breaks and what leadership can change."
+          title="One trusted view of delivery reality and the choices leadership can make."
         />
         <div className="mt-10 grid gap-3 md:grid-cols-2">
           {questions.map((question) => (
@@ -213,18 +222,18 @@ export default function DiagnosticPage() {
           <SectionHeader
             eyebrow="Client inputs"
             title="What TKO needs from the client."
-            description="No production-system access is required for the standard scope. Do not submit PHI through the website."
+            description="One executive sponsor, timely access to 8–12 stakeholders, and the best available program evidence. Do not submit confidential or sensitive program material through the website."
           />
           <div className="space-y-5 text-base leading-7 text-muted">
             <p>
-              One executive sponsor; one bounded workflow; a working client contact;
-              access to 6–10 stakeholders; and existing volume, approval/denial,
-              reason, turnaround, payer, specialty, and staffing evidence where available.
+              TKO reviews current plans, status reporting, RAID and decision logs,
+              governance materials, vendor commitments, budget and benefits evidence,
+              adoption or operational-readiness materials, and selected working artifacts.
             </p>
             <p>
-              TKO also reviews current workflow documents, standard work, queue reports,
-              and selected appropriately de-identified examples. The proposal records
-              evidence availability and any material limitations before work begins.
+              The proposal records the evidence boundary, access assumptions, known
+              limitations, and any privacy, security, regulatory, or specialist needs
+              before the engagement begins.
             </p>
           </div>
         </div>
@@ -233,7 +242,7 @@ export default function DiagnosticPage() {
       <Section className="bg-surface !py-14 md:!py-20">
         <SectionHeader
           eyebrow="15-business-day plan"
-          title="A bounded path from evidence to executive decision."
+          title="A bounded path from competing explanations to an executive decision."
         />
         <ol className="mt-10 grid gap-3">
           {plan.map((step) => (
@@ -251,8 +260,8 @@ export default function DiagnosticPage() {
       <Section className="!py-14 md:!py-20">
         <SectionHeader
           eyebrow="Deliverables"
-          title="The concrete decision package."
-          description="The work succeeds when leadership accepts one fact base, agrees on the top priorities, assigns accountable owners, and can decide what to fund within 10 business days of the readout."
+          title="The concrete recovery decision package."
+          description="The work succeeds when leadership accepts one fact base, understands the material exposures and choices, assigns accountable owners, and can act on the 90-day recovery sequence."
         />
         <div className="mt-10 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {deliverables.map((deliverable) => (
@@ -267,30 +276,24 @@ export default function DiagnosticPage() {
         <div className="grid gap-5 lg:grid-cols-2">
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Commercial terms</p>
-            <h2 className="mt-4 text-3xl font-semibold">$25,000 fixed fee</h2>
+            <h2 className="mt-4 text-3xl font-semibold">$25,000–$40,000 fixed fee</h2>
             <p className="mt-4 text-base leading-7 text-muted">
-              50% at scheduling and 50% at executive readout. Travel, unusual data
-              remediation, clinical or coding specialists, expanded interviews, and
-              additional workflow families require a revised scope.
-            </p>
-            <p className="mt-4 text-base leading-7 text-muted">
-              The Diagnostic does not obligate the client to buy implementation. TKO
-              may recommend internal execution, an existing vendor, a specialist partner,
-              no further implementation, or the 90-Day Sprint.
+              The final scope and fee reflect program complexity, stakeholder count,
+              evidence condition, and the decision boundary. Travel, specialist support,
+              unusual data remediation, expanded interviews, and additional programs are separate.
             </p>
           </Card>
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Exclusions and claim boundary</p>
             <p className="mt-4 text-base leading-7 text-muted">
-              The standard scope excludes PHI ingestion by default, clinical criteria
-              or medical-necessity decisions, legal or regulatory advice, payer contracting,
-              claims adjudication, production integrations, vendor procurement, custom
-              software, and implementation.
+              The standard scope excludes implementation, production-system access,
+              legal or regulatory advice, forensic accounting, formal assurance,
+              vendor procurement, custom software, and open-ended portfolio transformation.
             </p>
             <p className="mt-4 text-base font-semibold leading-7 text-foreground">
-              The Diagnostic does not guarantee denial, cost, staffing, reimbursement,
-              or revenue results. It creates the baseline and implementation case required
-              to set a responsible target.
+              The Diagnostic does not guarantee schedule, cost, benefit, adoption, or
+              compliance results. It creates the fact base and recovery plan required
+              to set responsible targets.
             </p>
           </Card>
         </div>
@@ -305,8 +308,7 @@ export default function DiagnosticPage() {
 
       <CtaBand
         title="Decide whether this is the right 15-day scope."
-        description="The first call is a 30-minute working conversation with Todd about the trigger, workflow boundary, evidence, sponsor, timing, and decision leadership needs to make."
-        primaryLabel={site.cta}
+        description="The first call is a confidential 30-minute working conversation with Todd about the trigger, program boundary, evidence, sponsor, timing, and decision leadership needs to make."
         secondaryHref="#scope-and-pricing"
         secondaryLabel="See Scope & Pricing"
       />

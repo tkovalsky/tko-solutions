@@ -27,7 +27,7 @@ const defaultAttribution: Attribution = {
   ctaLocation: "contact_page",
 };
 
-export function DiagnosticForm({
+export function ProgramReviewForm({
   action,
   status,
 }: {
@@ -69,10 +69,22 @@ export function DiagnosticForm({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     const formData = new FormData(event.currentTarget);
-    const prepared = formData.get("commercialReadiness") === "prepared";
-    const activeTiming = formData.get("timing") !== "exploring";
+    const timing = formData.get("timing");
+    const budgetRange = formData.get("budgetRange");
+    const executiveDecision = formData.get("executiveDecision");
+    const activeTiming = timing === "now" || timing === "30" || timing === "31-90";
+    const definedDecision =
+      typeof executiveDecision === "string" && executiveDecision.trim().length >= 10;
+    const plausibleCommercialReadiness =
+      budgetRange === "10-25" ||
+      budgetRange === "25-50" ||
+      budgetRange === "50-150" ||
+      budgetRange === "150-plus";
+
     trackConversion("contact_form_submit_attempt", { ctaLocation: "contact_form" });
-    trackConversion("qualified_intake_indicator", { qualified: prepared && activeTiming });
+    trackConversion("qualified_intake_indicator", {
+      qualified: activeTiming && definedDecision && plausibleCommercialReadiness,
+    });
   }
 
   function handleInvalid() {
@@ -89,7 +101,7 @@ export function DiagnosticForm({
       onSubmit={handleSubmit}
       onInvalidCapture={handleInvalid}
     >
-      <input type="hidden" name="source" value="diagnostic_fit_call" />
+      <input type="hidden" name="source" value="confidential_program_review" />
       {Object.entries(attribution).map(([name, value]) => (
         <input key={name} type="hidden" name={name} value={value} />
       ))}
@@ -98,81 +110,93 @@ export function DiagnosticForm({
         <Field id="name" label="Name" autoComplete="name" />
         <Field id="email" label="Business email" type="email" autoComplete="email" />
         <Field id="company" label="Organization" autoComplete="organization" />
-        <Field id="role" label="Title / role" autoComplete="organization-title" />
+        <Field id="role" label="Title or role" autoComplete="organization-title" />
       </div>
 
-      <SelectField id="organizationType" label="Organization type">
-        <option value="">Select one</option>
-        <option value="specialty-medical-group">Specialty medical group</option>
-        <option value="mso">MSO</option>
-        <option value="health-system">Health system</option>
-        <option value="payer-health-plan">Payer / health plan</option>
-        <option value="healthcare-technology-services">Healthcare technology or services</option>
-        <option value="other">Other</option>
-      </SelectField>
+      <div className="grid gap-6 md:grid-cols-2">
+        <SelectField id="organizationType" label="Organization type">
+          <option value="">Select one</option>
+          <option value="healthcare-provider-mso">Healthcare provider or MSO</option>
+          <option value="payer-health-plan">Payer or health plan</option>
+          <option value="health-technology-services">Health technology or services</option>
+          <option value="financial-services">Financial services</option>
+          <option value="wealth-fintech">Wealth management or fintech</option>
+          <option value="pe-backed-acquisitive">PE-backed or acquisitive business</option>
+          <option value="consulting-firm">Consulting firm</option>
+          <option value="other">Other</option>
+        </SelectField>
+
+        <SelectField id="engagementNeed" label="Engagement need">
+          <option value="">Select one</option>
+          <option value="program-under-pressure">Program under pressure</option>
+          <option value="operating-workflow-issue">Operating workflow issue</option>
+          <option value="ai-initiative">AI initiative</option>
+          <option value="fractional-transformation-leadership">Fractional transformation leadership</option>
+          <option value="prior-authorization">Prior authorization</option>
+          <option value="consulting-delivery-partner">Consulting delivery partner</option>
+          <option value="other">Other</option>
+        </SelectField>
+      </div>
 
       <Field
-        id="workflowSegment"
-        label="Which prior-authorization workflow or specialty/payer segment is under pressure?"
-        placeholder="Describe the workflow boundary, specialty, payer segment, location, or team involved. Use de-identified operating context only."
+        id="programUnderPressure"
+        label="Program or initiative under pressure"
+        placeholder="Describe the bounded program, workflow, initiative, or delivery responsibility. Use non-confidential context only."
         textarea
       />
 
-      <SelectField id="currentTrigger" label="What is the primary trigger or problem?">
-        <option value="">Select one</option>
-        <option value="denials">Avoidable denials or inconsistent outcomes</option>
-        <option value="turnaround-backlog">Turnaround time or backlog</option>
-        <option value="staff-capacity">Staff capacity or rework</option>
-        <option value="inconsistent-workflow">Inconsistent payer or specialty workflow</option>
-        <option value="key-person-dependency">Knowledge concentrated in experienced staff</option>
-        <option value="automation-decision">Vendor, automation, or headcount decision</option>
-        <option value="other">Other</option>
-      </SelectField>
+      <Field
+        id="urgencyContext"
+        label="What changed or made this urgent?"
+        placeholder="Describe the trigger, exposure, or approaching decision without including sensitive information."
+        textarea
+      />
 
       <Field
-        id="triggerContext"
-        label="What changed or made this urgent now?"
-        placeholder="Describe the operating pressure and the decision leadership needs to make."
+        id="executiveDecision"
+        label="Executive decision required within 90 days"
+        placeholder="What must leadership decide, approve, reset, narrow, fund, stop, renegotiate, or escalate?"
         textarea
       />
 
       <div className="grid gap-6 md:grid-cols-2">
-        <SelectField id="timing" label="When does leadership need a decision?">
+        <SelectField id="timing" label="Timing">
           <option value="">Select one</option>
           <option value="now">Active now</option>
           <option value="30">Within 30 days</option>
           <option value="31-90">Within 31–90 days</option>
-          <option value="exploring">Exploring only</option>
+          <option value="exploring">Exploring or more than 90 days out</option>
         </SelectField>
         <Field
           id="executiveSponsor"
-          label="Executive sponsor / decision owner"
+          label="Executive sponsor or decision owner"
           placeholder="Name or role"
         />
       </div>
 
-      <SelectField id="commercialReadiness" label="Commercial readiness">
+      <SelectField id="budgetRange" label="Approximate budget range">
         <option value="">Select one</option>
-        <option value="prepared">
-          Prepared to fund a $25,000 Diagnostic if fit is confirmed
-        </option>
-        <option value="approval-required">Budget approval required</option>
-        <option value="early-exploration">Early exploration</option>
+        <option value="under-10">Under $10,000</option>
+        <option value="10-25">$10,000–$25,000</option>
+        <option value="25-50">$25,000–$50,000</option>
+        <option value="50-150">$50,000–$150,000</option>
+        <option value="150-plus">$150,000+</option>
+        <option value="not-determined">Not yet determined</option>
       </SelectField>
 
       <Field
         id="message"
         label="Optional context"
-        placeholder="What has already been tried, and what evidence is available?"
+        placeholder="What has already been tried, and what non-sensitive evidence is available?"
         textarea
         required={false}
       />
 
       <div className="rounded-md border border-border bg-surface p-4 text-sm leading-6 text-muted">
-        Do not submit PHI, patient identifiers, credentials, personal financial
-        information, confidential client information, or other sensitive data.
-        Appropriately de-identified artifacts can be discussed after scope and
-        handling controls are agreed.
+        Do not submit PHI, patient identifiers, PII, credentials, personal financial
+        information, confidential client or company information, or other sensitive
+        data. Appropriately de-identified materials can be discussed only after scope
+        and handling controls are agreed.
       </div>
 
       <div className="flex items-start gap-3">
@@ -189,7 +213,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Request the Fit Call
+        Request a Confidential Program Review
       </Button>
     </form>
   );

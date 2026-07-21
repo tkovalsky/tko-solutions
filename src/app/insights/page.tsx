@@ -11,14 +11,14 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Insights",
   description:
-    "TKO insights on prior-authorization workflow, healthcare operating quality, staff dependency, evidence, and responsible automation.",
+    "TKO insights on transformation recovery, delivery control, healthcare workflow, evidence, responsible AI, and implementation discipline.",
   alternates: { canonical: "/insights" },
   openGraph: {
     title: "Insights",
     description:
-      "Evidence-led notes on prior-authorization workflow and responsible operating improvement.",
+      "Evidence-led notes on transformation recovery, healthcare workflow, delivery control, and responsible AI.",
     url: absoluteUrl("/insights"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions transformation recovery insights." }],
   },
 };
 
@@ -29,10 +29,10 @@ export default function InsightsPage() {
     <>
       <PageHero
         eyebrow="Insights"
-        title="Prior-authorization operating problems, written plainly."
-        description="Evidence-led notes on workflow quality, decision rights, staff dependency, exception handling, and the controls required before automation can improve execution."
+        title="Transformation recovery and operating problems, written plainly."
+        description="Evidence-led notes on delivery control, workflow quality, decision rights, staff dependency, exception handling, implementation discipline, and responsible AI."
         primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
+        primaryLabel="See the Recovery Diagnostic"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />

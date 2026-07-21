@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       title: study.title,
       description: study.trigger,
       url: absoluteUrl(`/selected-work/${study.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions transformation recovery advisory." }],
     },
   };
 }
@@ -74,26 +74,18 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           description: study.trigger,
           url: absoluteUrl(`/selected-work/${study.slug}`),
           publisher: { "@type": "Organization", name: site.name, url: site.url },
-          about: [study.industry, study.classification, "Prior authorization workflow improvement"],
+          about: [study.industry, study.classification, "Transformation recovery and execution"],
         }}
       />
       <PageHero
         eyebrow={`${study.classification} / ${study.industry}`}
         title={study.title}
         description={study.trigger}
-        primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
+        primaryHref={study.relatedOfferHref}
+        primaryLabel={study.relatedOffer}
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />
-
-      <Section className="bg-surface !py-12 md:!py-16">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <EvidenceSummary title="What this is" body={study.classification} />
-          <EvidenceSummary title="What it supports" body={study.relevance} />
-          <EvidenceSummary title="What it does not prove" body={study.evidenceLimit} />
-        </div>
-      </Section>
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
@@ -102,7 +94,9 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Related engagement</p>
               <p className="mt-4 text-xl font-semibold">{study.relatedOffer}</p>
               <p className="mt-4 text-sm leading-6 text-muted">
-                The first paid engagement establishes the workflow baseline and the responsible implementation case. This evidence does not replace that client-specific work.
+                The related engagement establishes the client-specific fact base,
+                decision boundary, and responsible next step. This evidence does not
+                replace that work.
               </p>
             </Card>
           </aside>
@@ -123,10 +117,13 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       <Section className="bg-surface">
         <SectionHeader
           eyebrow="Evidence record"
-          title="What can be supported publicly."
-          description="These statements establish operating scope, mechanisms, or implementation capability. They do not create a quantified prior-authorization outcome claim."
+          title="What can be supported publicly—and where the boundary sits."
+          description="These statements establish operating scope, mechanisms, or implementation capability. They do not create a quantified or attributable client outcome claim."
         />
-        <div className="mt-10 grid gap-3 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <EvidenceSummary title="What this is" body={study.classification} />
+          <EvidenceSummary title="What it supports" body={study.relevance} />
+          <EvidenceSummary title="What it does not prove" body={study.evidenceLimit} />
           {study.evidence.map((item) => (
             <div key={item} className="border border-border bg-white p-5 text-sm leading-6 text-muted">
               {item}
@@ -140,7 +137,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           <SectionHeader
             eyebrow="Inspectable internal proof"
             title="A working environment, shown with its limits."
-            description="These current, redacted screens demonstrate operating mechanisms. They are not a healthcare implementation or a proxy for prior-authorization results."
+            description="These current, redacted screens demonstrate operating mechanisms. They are not an enterprise client implementation or a proxy for transformation outcomes."
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
             {rachelosProofAssets.map((asset) => (
@@ -159,12 +156,12 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       ) : null}
 
       <CtaBand
-        title="See how the evidence becomes a client-specific baseline."
-        description="The Prior Authorization Performance Diagnostic measures one defined workflow, separates symptoms from addressable causes, and gives leadership a 90-day improvement plan."
+        title="Connect the evidence to a client-specific decision."
+        description={`The ${study.relatedOffer} starts from the client's own program, evidence, sponsor, and decision boundary. This case establishes relevant experience; it does not replace that fact-finding.`}
         primaryHref={study.relatedOfferHref}
-        primaryLabel="See the Prior Authorization Diagnostic"
+        primaryLabel={study.relatedOffer}
         secondaryHref="/contact"
-        secondaryLabel="Request a Diagnostic Fit Call"
+        secondaryLabel={site.cta}
       />
     </>
   );

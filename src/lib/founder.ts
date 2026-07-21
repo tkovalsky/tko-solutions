@@ -65,7 +65,7 @@ export const careerTimeline: TimelineEntry[] = [
     organization: "TKO Solutions",
     role: "Founder & Principal",
     era: "Independent advisory",
-    scope: "Principal-led diagnostic and implementation work, now focused on prior-authorization performance for specialty medical groups, MSOs, and provider-side healthcare operators.",
+    scope: "Principal-led transformation recovery, diagnostic, workflow, and implementation work, with healthcare as the primary specialization.",
     buyerRelevance: "Combines the operating, product, healthcare, technology, governance, and implementation perspectives inside one accountable engagement lead.",
   },
 ];
@@ -78,7 +78,7 @@ export const credibilityStrip = [
 ];
 
 export const executiveSummary = {
-  headline: "Buyer diligence on the operator behind the work.",
+  headline: "Senior accountability when a transformation needs an honest reset.",
   facts: [
     "20+ years across regulated operations, enterprise transformation, product ownership, healthcare interoperability, and healthcare transformation.",
     "Healthcare experience spanning prior authorization, utilization management, payer/provider operations, interoperability, and administrative workflow change.",

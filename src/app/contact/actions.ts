@@ -5,33 +5,43 @@ import { z } from "zod";
 import { notifyLead } from "@/lib/leads/notify";
 import { persistInboundLead } from "@/lib/leads/persist";
 
-const intakeSchema = z.object({
+const programReviewSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
   company: z.string().min(2),
   role: z.string().min(2),
   organizationType: z.enum([
-    "specialty-medical-group",
-    "mso",
-    "health-system",
+    "healthcare-provider-mso",
     "payer-health-plan",
-    "healthcare-technology-services",
+    "health-technology-services",
+    "financial-services",
+    "wealth-fintech",
+    "pe-backed-acquisitive",
+    "consulting-firm",
     "other",
   ]),
-  workflowSegment: z.string().min(10).max(2000),
-  currentTrigger: z.enum([
-    "denials",
-    "turnaround-backlog",
-    "staff-capacity",
-    "inconsistent-workflow",
-    "key-person-dependency",
-    "automation-decision",
+  engagementNeed: z.enum([
+    "program-under-pressure",
+    "operating-workflow-issue",
+    "ai-initiative",
+    "fractional-transformation-leadership",
+    "prior-authorization",
+    "consulting-delivery-partner",
     "other",
   ]),
-  triggerContext: z.string().min(10).max(2000),
+  programUnderPressure: z.string().min(10).max(2000),
+  urgencyContext: z.string().min(10).max(2000),
+  executiveDecision: z.string().min(10).max(2000),
   timing: z.enum(["now", "30", "31-90", "exploring"]),
   executiveSponsor: z.string().min(2).max(200),
-  commercialReadiness: z.enum(["prepared", "approval-required", "early-exploration"]),
+  budgetRange: z.enum([
+    "under-10",
+    "10-25",
+    "25-50",
+    "50-150",
+    "150-plus",
+    "not-determined",
+  ]),
   privacyConsent: z.literal(true),
   message: z.string().max(2000).optional(),
   referrer: z.string().max(2000).optional(),
@@ -42,19 +52,20 @@ const intakeSchema = z.object({
   ctaLocation: z.string().max(200).optional(),
 });
 
-export async function submitDiagnosticIntake(formData: FormData) {
-  const parsed = intakeSchema.safeParse({
+export async function submitProgramReview(formData: FormData) {
+  const parsed = programReviewSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
     company: formData.get("company"),
     role: formData.get("role"),
     organizationType: formData.get("organizationType"),
-    workflowSegment: formData.get("workflowSegment"),
-    currentTrigger: formData.get("currentTrigger"),
-    triggerContext: formData.get("triggerContext"),
+    engagementNeed: formData.get("engagementNeed"),
+    programUnderPressure: formData.get("programUnderPressure"),
+    urgencyContext: formData.get("urgencyContext"),
+    executiveDecision: formData.get("executiveDecision"),
     timing: formData.get("timing"),
     executiveSponsor: formData.get("executiveSponsor"),
-    commercialReadiness: formData.get("commercialReadiness"),
+    budgetRange: formData.get("budgetRange"),
     privacyConsent: formData.get("privacyConsent") === "on",
     message: getFormString(formData, "message"),
     referrer: getFormString(formData, "referrer"),

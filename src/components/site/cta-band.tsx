@@ -15,8 +15,8 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "Fix the workflow before you fund more automation.",
-  description = "Bring one prior-authorization workflow under pressure. TKO will determine whether the fixed-fee Diagnostic is the right next move.",
+  title = "Before another replan, vendor change, or funding decision, establish what is true.",
+  description = "Bring one program under pressure. In a confidential 30-minute discussion, TKO will determine whether a rapid pressure test, full diagnostic, or another path is warranted.",
   primaryHref = "/contact",
   primaryLabel = DEFAULT_CTA_LABEL,
   secondaryHref = null,
@@ -24,6 +24,7 @@ export function CtaBand({
 }: CtaBandProps) {
   const resolvedSecondaryHref = secondaryHref;
   const resolvedSecondaryLabel = secondaryLabel;
+  const secondaryIsEmail = resolvedSecondaryHref?.startsWith("mailto:") ?? false;
 
   return (
     <section className="relative overflow-hidden border-t border-white/10 bg-midnight py-16 text-white md:py-20">
@@ -34,7 +35,7 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Diagnostic fit call
+            Confidential program review
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}
@@ -48,7 +49,7 @@ export function CtaBand({
           {resolvedSecondaryHref && resolvedSecondaryLabel ? (
             <Link
               href={resolvedSecondaryHref}
-              data-conversion-event="secondary_cta_click"
+              data-conversion-event={secondaryIsEmail ? "email_link_click" : "secondary_cta_click"}
               data-cta-location="cta_band"
               data-cta-label={resolvedSecondaryLabel}
               data-referenced-service={resolvedSecondaryHref.startsWith("/services/") ? resolvedSecondaryHref.split("/").pop() : undefined}

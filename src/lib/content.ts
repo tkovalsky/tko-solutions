@@ -51,8 +51,8 @@ export const caseStudies: CaseStudy[] = [
       "RachelOS is one founder-operated, non-healthcare environment. It does not establish enterprise scale, healthcare compliance, prior-authorization performance, or causal financial outcomes.",
     relevance:
       "A buyer can inspect how Todd turns fragmented work into explicit workflow, evidence, controls, and handoff-ready operating artifacts—the same implementation discipline applied after a Diagnostic.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
+    relatedOffer: "90-Day Recovery Mobilization",
+    relatedOfferHref: "/services/operating-system-build",
   },
   {
     slug: "prior-authorization-modernization",
@@ -83,7 +83,7 @@ export const caseStudies: CaseStudy[] = [
     relevance:
       "It shows why TKO begins with a measured workflow and exception baseline rather than assuming software, staffing, or AI is the answer.",
     relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
+    relatedOfferHref: "/healthcare#prior-authorization-diagnostic",
   },
   {
     slug: "enterprise-care-management-modernization",
@@ -112,8 +112,8 @@ export const caseStudies: CaseStudy[] = [
     evidenceLimit:
       "This is employment-period enterprise experience, not a named TKO client case. Public artifacts and quantified outcomes are unavailable.",
     relevance:
-      "Prior-authorization improvement also crosses operations, clinical review, revenue cycle, technology, and leadership; the Diagnostic makes those dependencies explicit within one bounded workflow.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
+      "It shows direct experience making cross-workstream dependencies, accountable decisions, and escalation needs visible when local status cannot explain enterprise delivery risk.",
+    relatedOffer: "Transformation Recovery Diagnostic",
     relatedOfferHref: "/services/diagnostic",
   },
   {
@@ -143,8 +143,8 @@ export const caseStudies: CaseStudy[] = [
     evidenceLimit:
       "Employer and client endorsement is not implied. Confidential program artifacts and outcome measures are not published.",
     relevance:
-      "It demonstrates the ability to translate policy and technical requirements into controlled operating behavior—important when prior-authorization automation depends on evidence, access, exceptions, and auditability.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
+      "It demonstrates the ability to translate policy and technical requirements into controlled operating behavior—important when regulated product delivery depends on evidence, access, exceptions, auditability, and adoption.",
+    relatedOffer: "Transformation Recovery Diagnostic",
     relatedOfferHref: "/services/diagnostic",
   },
   {
@@ -175,8 +175,8 @@ export const caseStudies: CaseStudy[] = [
       "This is supporting method evidence. It should not be read as equivalent to verified client outcomes or healthcare implementation proof.",
     relevance:
       "It answers the portability objection narrowly: the method for making expert judgment explicit can travel, while the domain logic and performance claims do not.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
+    relatedOffer: "AI Initiative Readiness & Control Review",
+    relatedOfferHref: "/services#ai-review",
   },
 ];
 
