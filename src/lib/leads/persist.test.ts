@@ -11,7 +11,12 @@ vi.mock("@/lib/db/prisma", () => ({
   },
 }));
 
-const mockedPrisma = vi.mocked(prisma);
+const mockedPrisma = prisma as unknown as {
+  inboundLead: {
+    upsert: ReturnType<typeof vi.fn>;
+    update: ReturnType<typeof vi.fn>;
+  };
+};
 
 afterEach(() => {
   vi.restoreAllMocks();

@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: "article",
       publishedTime: insight.date,
       url: absoluteUrl(`/insights/${insight.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions transformation recovery insight." }],
     },
   };
 }
@@ -49,6 +49,7 @@ export default async function InsightPage({ params }: Params) {
   }
 
   const related = getRelatedInsights(insight.slug);
+  const cta = getInsightCta(insight.slug);
 
   return (
     <>
@@ -67,10 +68,10 @@ export default async function InsightPage({ params }: Params) {
         eyebrow="Insight"
         title={insight.title}
         description={insight.description}
-        primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
+        primaryHref={cta.href}
+        primaryLabel={cta.label}
         secondaryHref="/contact"
-        secondaryLabel="Request a Diagnostic Fit Call"
+        secondaryLabel={site.cta}
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
@@ -118,15 +119,45 @@ export default async function InsightPage({ params }: Params) {
       ) : null}
       <AuthorityLinks current={`/insights/${insight.slug}`} />
       <CtaBand
-        title="See how the operating problem becomes a measured Diagnostic."
-        description="The Prior Authorization Performance Diagnostic establishes the workflow baseline, root causes, target workflow, and responsible 90-day plan."
-        primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
+        title={cta.title}
+        description={cta.description}
+        primaryHref={cta.href}
+        primaryLabel={cta.label}
         secondaryHref="/contact"
-        secondaryLabel="Request a Diagnostic Fit Call"
+        secondaryLabel={site.cta}
       />
     </>
   );
+}
+
+function getInsightCta(slug: string) {
+  if (slug.startsWith("prior-authorization-")) {
+    return {
+      href: "/healthcare#prior-authorization-diagnostic",
+      label: "See the Prior Authorization Diagnostic",
+      title: "Measure the healthcare workflow before selecting the intervention.",
+      description:
+        "The Prior Authorization Performance Diagnostic establishes the baseline, operating causes, control boundaries, target workflow, and responsible 90-day plan.",
+    };
+  }
+
+  if (slug === "what-ai-assisted-delivery-compresses") {
+    return {
+      href: "/services#ai-review",
+      label: "See the AI Readiness & Control Review",
+      title: "Put value, authority, controls, adoption, and accountability around the AI initiative.",
+      description:
+        "The AI Initiative Readiness & Control Review determines whether an active initiative should proceed, narrow, pause, or be redesigned before more money is committed.",
+    };
+  }
+
+  return {
+    href: "/services/diagnostic",
+    label: "See the Recovery Diagnostic",
+    title: "Turn the operating pattern into a client-specific recovery decision.",
+    description:
+      "The Transformation Recovery Diagnostic establishes the program baseline, material control failures, recovery choices, and measurable 90-day plan.",
+  };
 }
 
 function RelatedInsightCard({ insight }: { insight: Insight }) {

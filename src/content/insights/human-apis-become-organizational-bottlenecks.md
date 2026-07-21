@@ -44,7 +44,7 @@ Second, quality varies by handler. Two capable people may make different calls b
 
 Third, modernization work preserves the dependency. A new tool can move the same hidden judgment into a faster interface without changing the underlying risk.
 
-That is why key-person dependency is a useful warning sign inside the [Prior Authorization Performance Diagnostic](/services/diagnostic). It tells leaders that the documented workflow is not the whole workflow.
+That is why key-person dependency is a useful warning sign inside the [Transformation Recovery Diagnostic](/services/diagnostic). It tells leaders that the documented program or workflow is not the whole operating reality.
 
 ## A Real-World Example
 
@@ -72,7 +72,7 @@ The goal is not to remove the expert. The goal is to stop making the expert serv
 
 When the knowledge is captured as memory, facts, state, priority, and approval rules, the expert can focus on judgment instead of constant reconstruction. That is the move from Human API to operational system.
 
-For a related view of the reporting gap this creates, read [Operational Intelligence vs. Reporting](/insights/operational-intelligence-vs-reporting). If the dependency is visible in a prior-authorization workflow, use the [Prior Authorization Performance Diagnostic](/services/diagnostic) to measure it before selecting an intervention.
+For a related view of the reporting gap this creates, read [Operational Intelligence vs. Reporting](/insights/operational-intelligence-vs-reporting). If the dependency is visible in a prior-authorization workflow, use the [Prior Authorization Performance Diagnostic](/healthcare#prior-authorization-diagnostic) to measure it before selecting an intervention.
 
 ## Evidence Trail
 

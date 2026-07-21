@@ -54,7 +54,7 @@ A useful prior authorization assessment should not stop at volume and turnaround
 - Auditability: whether the reason for each decision can be reconstructed.
 - Gold Card readiness: whether the workflow is consistent enough to support it.
 
-That is why the [Prior Authorization Performance Diagnostic](/services/diagnostic) is TKO's single public starting engagement. The point is not to sell a platform. It is to establish the operating baseline, causes, controls, and implementation case required before a platform, automation, staffing, or payer-program decision.
+That is why the [Prior Authorization Performance Diagnostic](/healthcare#prior-authorization-diagnostic) is TKO's concrete healthcare-specific starting point for this problem. The point is not to sell a platform. It is to establish the operating baseline, causes, controls, and implementation case required before a platform, automation, staffing, or payer-program decision.
 
 ## What Leaders Should Do
 
@@ -70,7 +70,7 @@ Then examine the operating inputs:
 
 The actionable takeaway is straightforward: fix the workflow quality before scaling the technology. That means making exception logic, decision rights, and human review visible enough to govern.
 
-For the decision-rights side of the problem, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem). If the problem is already active, review the [Prior Authorization Performance Diagnostic](/services/diagnostic) before committing larger spend.
+For the decision-rights side of the problem, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem). If the problem is already active, review the [Prior Authorization Performance Diagnostic](/healthcare#prior-authorization-diagnostic) before committing larger spend.
 
 ## Evidence Trail
 

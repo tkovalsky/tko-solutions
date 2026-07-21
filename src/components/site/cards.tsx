@@ -14,7 +14,11 @@ export function CaseStudyCards() {
           </div>
           <h3 className="mt-6 text-2xl font-semibold">{study.title}</h3>
           <p className="mt-4 text-base leading-7 text-muted">{study.trigger}</p>
-          <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
+          <p className="mt-5 text-sm leading-6 text-foreground">
+            <span className="font-semibold text-primary">Buyer relevance: </span>
+            {study.relevance}
+          </p>
+          <p className="mt-5 border-t border-border pt-5 text-xs leading-5 text-muted">
             <span className="font-semibold text-primary">Evidence boundary: </span>
             {study.evidenceLimit}
           </p>

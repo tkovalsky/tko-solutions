@@ -2,9 +2,9 @@ export const site = {
   name: "TKO Solutions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tko.solutions",
   description:
-    "TKO helps specialty medical groups, MSOs, and provider-side healthcare operators identify the operational causes of prior-authorization delays, avoidable denials, rework, and staff dependency before they fund more automation.",
-  cta: "Request a Diagnostic Fit Call",
-  socialImage: "/og-pa-v2.png",
+    "TKO helps executive teams regain control of transformation programs that are slipping, stalled, or no longer trusted—clarifying delivery reality, resetting ownership and decisions, and mobilizing a measurable 90-day recovery.",
+  cta: "Request a Confidential Program Review",
+  socialImage: "/og-recovery.png",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "t.e.kovalsky@gmail.com",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "https://www.linkedin.com/in/toddkovalsky",
   scheduling: process.env.NEXT_PUBLIC_SCHEDULING_URL,

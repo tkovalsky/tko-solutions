@@ -6,9 +6,9 @@ import { site } from "@/lib/site";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/services/diagnostic", label: "Diagnostic" },
-  { href: "/healthcare", label: "How We Help" },
-  { href: "/selected-work", label: "Results" },
+  { href: "/services", label: "Services" },
+  { href: "/healthcare", label: "Healthcare" },
+  { href: "/selected-work", label: "Selected Work" },
   { href: "/founder", label: "About" },
 ];
 

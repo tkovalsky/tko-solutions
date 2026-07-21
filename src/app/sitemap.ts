@@ -4,6 +4,7 @@ import { getInsights } from "@/lib/insights";
 import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const siteUpdatedAt = new Date("2026-07-21");
   const staticRoutes = [
     "/",
     "/healthcare",
@@ -15,14 +16,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const serviceRoutes = ["/services/diagnostic", "/services/operating-system-build"];
-  const caseStudyRoutes = caseStudies.map((study) => `/selected-work/${study.slug}`);
-  const insightRoutes = getInsights().map((insight) => `/insights/${insight.slug}`);
-  // Selected Work is the canonical evidence center. /proof, /frameworks,
-  // /case-studies, /offers, and /assessment are redirect-only namespaces.
-  return [...new Set([...staticRoutes, ...serviceRoutes, ...caseStudyRoutes, ...insightRoutes])].map((route) => ({
+  const currentRoutes = [...new Set([
+    ...staticRoutes,
+    ...serviceRoutes,
+    ...caseStudies.map((study) => `/selected-work/${study.slug}`),
+  ])].map((route) => ({
     url: absoluteUrl(route),
-    lastModified: new Date("2026-07-21"),
-    changeFrequency: "monthly",
+    lastModified: siteUpdatedAt,
+    changeFrequency: "monthly" as const,
     priority: route === "/" ? 1 : 0.7,
   }));
+
+  const insightRoutes = getInsights().map((insight) => ({
+    url: absoluteUrl(`/insights/${insight.slug}`),
+    lastModified: siteUpdatedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...currentRoutes, ...insightRoutes];
 }

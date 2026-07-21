@@ -55,7 +55,7 @@ describe("InsightPage", () => {
     expect(screen.getByText("2 min read")).toBeInTheDocument();
     expect(screen.getByText("Based on 2 sources")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Related" })).toBeInTheDocument();
-    expect(screen.getAllByText("See the Prior Authorization Diagnostic").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("See the Recovery Diagnostic").length).toBeGreaterThan(0);
   });
 
   it("returns a 404 for unknown slugs", async () => {
