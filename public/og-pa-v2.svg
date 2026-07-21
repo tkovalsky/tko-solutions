@@ -1,0 +1,34 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071425"/>
+      <stop offset="1" stop-color="#0C2038"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1000 60) rotate(136) scale(520 620)">
+      <stop stop-color="#3B82C4" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#3B82C4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <path d="M842 154H1004V238H1080" stroke="#56789A" stroke-width="4"/>
+  <path d="M842 315H1080" stroke="#3B82C4" stroke-width="5"/>
+  <path d="M842 476H1004V392H1080" stroke="#56789A" stroke-width="4"/>
+  <circle cx="842" cy="154" r="12" fill="#0C2038" stroke="#7FA6CC" stroke-width="4"/>
+  <circle cx="842" cy="315" r="15" fill="#0C2038" stroke="#70B7F3" stroke-width="5"/>
+  <circle cx="842" cy="476" r="12" fill="#0C2038" stroke="#7FA6CC" stroke-width="4"/>
+  <circle cx="1080" cy="238" r="22" fill="#2F78B7"/>
+  <circle cx="1080" cy="315" r="22" fill="#2F78B7"/>
+  <circle cx="1080" cy="392" r="22" fill="#2F78B7"/>
+  <path d="M1070 238L1077 245L1090 230" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1070 315L1077 322L1090 307" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1070 392L1077 399L1090 384" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="92" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">TKO Solutions</text>
+  <text x="72" y="184" fill="#7FC2FA" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="3">PRIOR AUTHORIZATION PERFORMANCE</text>
+  <text x="72" y="272" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Fix the workflow before</text>
+  <text x="72" y="342" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">you fund more automation.</text>
+  <text x="72" y="438" fill="#BED0E2" font-family="Arial, Helvetica, sans-serif" font-size="25">Principal-led diagnostic and bounded implementation</text>
+  <text x="72" y="477" fill="#BED0E2" font-family="Arial, Helvetica, sans-serif" font-size="25">for specialty medical groups and healthcare operators.</text>
+  <rect x="72" y="548" width="1056" height="2" fill="#2E4A66"/>
+  <text x="72" y="590" fill="#8FA8BF" font-family="Arial, Helvetica, sans-serif" font-size="19">15 business days · $25,000 fixed fee · tko.solutions</text>
+</svg>

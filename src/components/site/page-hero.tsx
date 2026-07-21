@@ -39,9 +39,9 @@ export function PageHero({
             {description}
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <LinkButton href={primaryHref}>{primaryLabel}</LinkButton>
+            <LinkButton href={primaryHref} ctaLocation="page_hero">{primaryLabel}</LinkButton>
             {secondaryHref && secondaryLabel ? (
-              <LinkButton href={secondaryHref} variant="secondary">
+              <LinkButton href={secondaryHref} variant="secondary" ctaLocation="page_hero">
                 {secondaryLabel}
               </LinkButton>
             ) : null}

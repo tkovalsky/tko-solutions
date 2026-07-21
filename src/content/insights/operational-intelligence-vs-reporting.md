@@ -63,7 +63,7 @@ That is not a reporting failure in the narrow sense. The reports may be accurate
 
 The same pattern appears in relationship-driven work. In RachelOS, a CRM could store relationship data, but storage did not answer the daily operating question: who needs attention now, and why? The useful output was not a better report. It was a ranked, reasoned action surface built from signals, memory, facts, state, and priority.
 
-That is why TKO treats reporting quality as one part of the [Operational Recovery Assessment](/services/recovery-assessment), not the whole answer. The diagnostic question is not "do we have a dashboard?" It is "does anything reliably convert what we know into the next trusted action?"
+That is why TKO treats reporting quality as one input to the [Prior Authorization Performance Diagnostic](/services/diagnostic), not the whole answer. The diagnostic question is not "do we have a dashboard?" It is "can leadership explain where the case waits, why it requires rework, and what evidence supports the next change?"
 
 ## What Leaders Should Do
 
@@ -85,7 +85,7 @@ Those reconstruction points are the real work. They show where the organization 
 
 If the gap is narrow, improve the reporting. If the gap is broad, reporting is not the problem. The organization needs operational intelligence: memory, facts, state, priority, recommendation, human approval, and action tied together around the work.
 
-For a deeper version of the same pattern, read [Human APIs Become Organizational Bottlenecks](/insights/human-apis-become-organizational-bottlenecks). If the issue is already visible in a live workflow, start with the [Operational Recovery Assessment](/services/recovery-assessment) and use the assessment to decide what deserves deeper spend.
+For a deeper version of the same pattern, read [Human APIs Become Organizational Bottlenecks](/insights/human-apis-become-organizational-bottlenecks). If the issue is visible in a prior-authorization workflow, start with the [Prior Authorization Performance Diagnostic](/services/diagnostic) and use the measured baseline to decide what deserves deeper spend.
 
 ## Evidence Trail
 

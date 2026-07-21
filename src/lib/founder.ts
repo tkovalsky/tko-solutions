@@ -1,7 +1,6 @@
 // Verified founder career record. Source: LinkedIn profile export (2026-07-13),
 // approved in docs/audits/TKO_POSITIONING_NARRATIVE_RECONSTRUCTION_2026_07_17.md.
-// Claim rule: every entry here must be supportable by the public record. No
-// client-confidential program details, metrics, or unreleased organization names.
+// Employment history establishes experience, not employer or client endorsement.
 
 export type TimelineEntry = {
   years: string;
@@ -9,7 +8,7 @@ export type TimelineEntry = {
   role: string;
   era: string;
   scope: string;
-  lesson: string;
+  buyerRelevance: string;
 };
 
 export const careerTimeline: TimelineEntry[] = [
@@ -17,179 +16,73 @@ export const careerTimeline: TimelineEntry[] = [
     years: "2000s",
     organization: "Reuters Loan Pricing Corp · Bisys · Chatham Asset Management",
     role: "Early career, credit and fund operations",
-    era: "Financial Services Operations",
+    era: "Regulated operations",
     scope: "Loan pricing data, fund services, and credit operations in regulated financial environments.",
-    lesson: "Operating truth is derived from messy signals, not stored in the system of record.",
+    buyerRelevance: "Established the operating discipline of reconciliation, exception handling, and evidence under consequence.",
   },
   {
     years: "2009–2012",
     organization: "Apollo Global Management",
     role: "Operations Analyst / Operations Manager",
-    era: "Financial Services Operations",
-    scope: "Multi-billion-dollar leveraged loan settlement, LSTA secondary trades, BondCo V–VII build-out, and REIT operations through the post-2008 restructuring cycle.",
-    lesson: "Controls, reconciliation, and exception handling are what execution means when errors carry real consequence.",
+    era: "Financial-services operations",
+    scope: "Leveraged-loan settlement, LSTA secondary trades, BondCo V–VII build-out, and REIT operations through the post-2008 restructuring cycle.",
+    buyerRelevance: "Complex work becomes reliable when controls, ownership, and exception paths are explicit—not when the system of record merely contains the transaction.",
   },
   {
     years: "2012–2015",
     organization: "Sapient, Goldman Sachs AM · JPMorgan AM",
     role: "Manager / Business Analyst",
-    era: "Enterprise Transformation",
-    scope: "Investment-manager research and due-diligence platform for Goldman Sachs Asset Management's Fund of Funds business; investment-operations modernization for JPMorgan Asset Management.",
-    lesson: "Expert judgment can become structured, institutional decision support, if the workflow is designed for it.",
+    era: "Enterprise transformation",
+    scope: "Investment-manager research and due-diligence platform work for Goldman Sachs Asset Management and investment-operations modernization for JPMorgan Asset Management.",
+    buyerRelevance: "Connected expert judgment, operating requirements, product design, and technology delivery across institutional environments.",
   },
   {
-    years: "2016–2017",
-    organization: "WBI",
-    role: "Project Manager (Consultant), Investment Operations",
-    era: "Product & Platform Leadership",
-    scope: "Full rebuild of the firm's CRM and advisor platform across trading, ETF distribution, and settlement workflows.",
-    lesson: "The operator's screen is the product. A system that cannot answer 'what should happen next' is storage.",
-  },
-  {
-    years: "2017–2018",
-    organization: "FolioDynamix",
-    role: "Product Owner, TAMP & Wealth Technology",
-    era: "Product & Platform Leadership",
-    scope: "Product roadmap and delivery for a turnkey asset management platform through its acquisition by Envestnet.",
-    lesson: "Roadmaps survive only when they are tied to advisor workflow reality, not feature ambition.",
+    years: "2016–2018",
+    organization: "WBI · FolioDynamix",
+    role: "Project Manager / Product Owner",
+    era: "Product and platform leadership",
+    scope: "Advisor-platform, CRM, trading, settlement, and wealth-technology roadmap and delivery work, including FolioDynamix through its acquisition by Envestnet.",
+    buyerRelevance: "Built the operator-first product perspective required to turn workflow findings into usable standard work and implementation choices.",
   },
   {
     years: "2020–2022",
     organization: "ELLKAY",
     role: "Product Manager, Healthcare Interoperability",
-    era: "Healthcare & Interoperability",
-    scope: "Owned a payer-facing interoperability platform for CMS Cures Act compliance: FHIR APIs with access control, auditability, and data governance embedded in platform logic.",
-    lesson: "Governance is architecture. Compliance enforced in code scales; compliance attached as policy does not.",
+    era: "Healthcare product and regulation",
+    scope: "Payer-facing interoperability platform ownership for CMS Cures Act compliance, including FHIR APIs, access control, auditability, and data governance.",
+    buyerRelevance: "Demonstrated how regulatory requirements, technical architecture, controls, and day-to-day operating behavior must be designed together.",
   },
   {
     years: "2022–present",
     organization: "Cognizant",
     role: "Senior Manager, Healthcare Transformation, AI & Analytics",
-    era: "Healthcare Transformation",
-    scope: "Large-scale payer modernization: delivery governance, executive reporting, workflow transformation, cross-functional alignment, and AI-enabled operational improvement.",
-    lesson: "Programs fail between workstreams, where dependency risk, decision latency, and adoption gaps live.",
+    era: "Healthcare transformation",
+    scope: "Healthcare transformation work spanning delivery governance, executive reporting, payer operations, cross-functional alignment, workflow transformation, and AI-enabled improvement.",
+    buyerRelevance: "Provides direct context for prior authorization, utilization management, provider operations, multi-workstream dependencies, and responsible automation decisions.",
   },
   {
     years: "2018–present",
     organization: "TKO Solutions",
     role: "Founder & Principal",
-    era: "Founder",
-    scope: "AI-assisted operations modernization for complex service businesses. RachelOS (2025–26) is a production reference implementation of the evidence, knowledge, priority, recommendation, approval, and action method.",
-    lesson: "The decision layer can be built, governed, and audited, so it should be.",
+    era: "Independent advisory",
+    scope: "Principal-led diagnostic and implementation work, now focused on prior-authorization performance for specialty medical groups, MSOs, and provider-side healthcare operators.",
+    buyerRelevance: "Combines the operating, product, healthcare, technology, governance, and implementation perspectives inside one accountable engagement lead.",
   },
 ];
 
 export const credibilityStrip = [
-  {
-    name: "Apollo Global Management",
-    detail: "Leveraged loan and REIT operations through the post-2008 cycle",
-  },
-  {
-    name: "Sapient",
-    detail: "Platform transformation for Goldman Sachs AM and JPMorgan AM",
-  },
-  {
-    name: "FolioDynamix",
-    detail: "Wealth platform product ownership through Envestnet acquisition",
-  },
-  {
-    name: "ELLKAY",
-    detail: "CMS Cures Act / FHIR interoperability platform for payers",
-  },
-  {
-    name: "Cognizant",
-    detail: "Large-scale healthcare transformation, AI & analytics",
-  },
-];
-
-export type AtlasRow = {
-  pattern: string;
-  learned: string;
-  proven: string;
-};
-
-export const experienceAtlas: AtlasRow[] = [
-  {
-    pattern: "Deriving trusted state from fragmented signals",
-    learned: "Apollo: reconciliation and settlement across multi-billion-dollar credit portfolios",
-    proven: "RachelOS facts-and-state engine: source-aware facts resolved from unstructured updates",
-  },
-  {
-    pattern: "Turning expert judgment into decision support",
-    learned: "Sapient: manager research and due-diligence platform for Goldman Sachs AM",
-    proven: "RachelOS recommendation layer: advisory-only, explained, human-approved",
-  },
-  {
-    pattern: "Operator-first workflow design",
-    learned: "WBI and FolioDynamix: advisor platforms owned as products",
-    proven: "RachelOS canonical queue and daily work surface, in production use",
-  },
-  {
-    pattern: "Governance embedded as architecture",
-    learned: "ELLKAY: Cures Act compliance enforced in FHIR API logic",
-    proven: "RachelOS approval gates, human-fact immutability, activation states, enforced in code",
-  },
-  {
-    pattern: "Program and dependency governance",
-    learned: "Cognizant: large-scale payer transformation portfolio",
-    proven: "Program-recovery operating framework: constraint registers and decision-centered reviews",
-  },
-  {
-    pattern: "AI under human authority",
-    learned: "Cognizant AI & Analytics: AI-enabled operational improvement in regulated programs",
-    proven: "RachelOS + published delivery record: 77 outbound messages, each human-approved before send",
-  },
-];
-
-export type CapabilityRow = {
-  capability: string;
-  careerEvidence: string;
-  proofEvidence: string;
-  boundary: string;
-  href: string;
-};
-
-export const capabilityAtlas: CapabilityRow[] = [
-  {
-    capability: "Operational Truth & AI Workflow Diagnostic",
-    careerEvidence: "Two decades of operations and delivery governance in regulated environments (Apollo, Sapient, Cognizant).",
-    proofEvidence: "The same evidence method that produced RachelOS's published self-audit, applied to a client workflow.",
-    boundary: "Fixed scope, 15 business days, one critical workflow or workflow family. No production-system access required and no implementation included.",
-    href: "/services/diagnostic",
-  },
-  {
-    capability: "AI-Assisted Operations Implementation",
-    careerEvidence: "Enterprise transformation analysis for GSAM, JPMAM, healthcare payer operations, and product-platform delivery.",
-    proofEvidence: "Published operating frameworks: program recovery, decision rights, executive operating reviews.",
-    boundary: "Three-month initial term after a credible diagnostic. Not staff augmentation, unlimited access, an outsourced operations team, or a guaranteed headcount-reduction program.",
-    href: "/services/operating-system-build",
-  },
-  {
-    capability: "Prior Authorization Operational Assessment",
-    careerEvidence: "Payer operations transformation (Cognizant, 2022–present) and interoperability compliance ownership (ELLKAY, 2020–22).",
-    proofEvidence: "Published prior-authorization decision-rights and operational-quality frameworks.",
-    boundary: "Experience-based healthcare pattern work. No PHI access required; no client workflow or outcome is disclosed.",
-    href: "/services/prior-authorization-assessment",
-  },
-  {
-    capability: "Operating System Build & AI Governance",
-    careerEvidence: "Product ownership at WBI, FolioDynamix, and ELLKAY; AI-enabled operations work at Cognizant.",
-    proofEvidence: "RachelOS: 1,528 commits, 67 migrations, 1,341 tests, ten months live, human-governed AI in production.",
-    boundary: "One deployment, one operator. Direct proof of capability and governance architecture, not enterprise scale or ROI.",
-    href: "/services/operating-system-build",
-  },
+  { name: "Apollo Global Management", detail: "regulated operations and exception handling" },
+  { name: "Sapient", detail: "institutional platform transformation" },
+  { name: "ELLKAY", detail: "CMS Cures Act and FHIR interoperability" },
+  { name: "Cognizant", detail: "healthcare transformation and payer operations" },
 ];
 
 export const executiveSummary = {
-  headline: "Todd Kovalsky, Cross-Functional Operator",
-  gloss: "Solving the operational problems that remain unresolved because every specialist sees only one part.",
+  headline: "Buyer diligence on the operator behind the work.",
   facts: [
-    "20+ years in regulated operating environments: financial services operations, enterprise transformation, product leadership, healthcare interoperability, and healthcare transformation.",
-    "Operations under consequence at Apollo Global Management through the post-2008 restructuring cycle.",
-    "Enterprise platform transformation for Goldman Sachs Asset Management and JPMorgan Asset Management (Sapient).",
-    "Product ownership of advisor and wealth platforms (WBI; FolioDynamix through its Envestnet acquisition).",
-    "CMS Cures Act / FHIR interoperability platform ownership for healthcare payers (ELLKAY).",
-    "Large-scale healthcare transformation: delivery governance, payer operations, and AI-enabled operational improvement (Cognizant, 2022–present).",
-    "Founder-builder of RachelOS: a production, human-governed AI operating system with a published self-audit.",
+    "20+ years across regulated operations, enterprise transformation, product ownership, healthcare interoperability, and healthcare transformation.",
+    "Healthcare experience spanning prior authorization, utilization management, payer/provider operations, interoperability, and administrative workflow change.",
+    "Product and implementation experience translating operating requirements into usable workflows, controls, and delivery decisions.",
+    "RachelOS provides inspectable internal proof of implementation and governance discipline, with its non-healthcare and non-client limits stated explicitly.",
   ],
 };

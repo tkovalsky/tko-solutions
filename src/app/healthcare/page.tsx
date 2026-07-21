@@ -1,66 +1,59 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Healthcare Transformation & Program Recovery",
+  title: "Prior Authorization Operations for Specialty Medical Groups",
   description:
-    "TKO helps healthcare leaders find where prior authorization, utilization management, and modernization programs are actually failing, and what to fix first, with evidence you can inspect.",
+    "TKO helps specialty medical groups, MSOs, and provider-side healthcare operators identify the workflow causes of prior-authorization delay, rework, denials, and staff dependency.",
   alternates: { canonical: "/healthcare" },
   openGraph: {
-    title: "Healthcare Transformation & Program Recovery",
+    title: "Prior Authorization Operations | TKO Solutions",
     description:
-      "Independent transformation and program recovery for healthcare leaders: administrative burden, prior authorization, workflow governance, and transformation risk.",
+      "Healthcare operating experience behind a fixed-fee prior-authorization workflow Diagnostic.",
     url: absoluteUrl("/healthcare"),
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
   },
 };
 
-const authorityAreas = [
+const operatingProblems = [
   {
-    title: "Prior authorization operational quality",
-    body: "Map where documentation, authority, exception routing, and human review create variation before funding automation or a new platform.",
-    href: "/services/prior-authorization-assessment",
-    label: "Explore the PA assessment",
+    title: "Prior authorization",
+    body: "Requests move through inconsistent intake, documentation, payer handling, follow-up, exception, and escalation paths. The cost appears as delay, rework, denials, backlog, and dependence on experienced staff.",
   },
   {
-    title: "Workflow governance and regulatory delivery",
-    body: "Examine whether decision rights, approvals, exceptions, and evidence are operating in daily work, not merely documented.",
-    href: "/services/recovery-assessment",
-    label: "Explore Recovery Assessment",
+    title: "Utilization management",
+    body: "Review work depends on complete evidence, explicit prioritization, defined decision authority, and reliable escalation. Technology does not resolve those operating requirements by itself.",
   },
   {
-    title: "Transformation recovery",
-    body: "Make the dependency layer, constraints, and required executive decisions visible when local status does not explain enterprise risk.",
-    href: "/services/recovery-assessment",
-    label: "See recovery approach",
+    title: "Interoperability",
+    body: "FHIR and data exchange can improve information availability. They do not determine who owns the next action, how conflicting evidence is resolved, or how exceptions move through the operating workflow.",
   },
   {
-    title: "Human-controlled AI",
-    body: "Use source authority, human approval, and visible system health as controls before asking AI to influence an operational workflow.",
-    href: "/services/recovery-assessment",
-    label: "Explore the AI readiness path",
+    title: "Administrative transformation",
+    body: "Programs stall when workstream status hides cross-functional dependencies, adoption risk, and decisions that no single team owns. The same problem appears inside a PA workflow at a smaller scale.",
   },
 ];
 
-const insights = [
-  {
-    title: "Prior Authorization Is a Decision-Rights Problem",
-    href: "/insights/prior-authorization-is-a-decision-rights-problem",
-  },
-  {
-    title: "Prior Authorization Is an Operational Quality Problem",
-    href: "/insights/prior-authorization-operational-quality-problem",
-  },
-  {
-    title: "Operational Intelligence vs Reporting",
-    href: "/insights/operational-intelligence-vs-reporting",
-  },
+const credibility = [
+  ["Prior authorization and utilization management", "Experience with payer/provider coordination, review tiers, exceptions, escalation, auditability, and human decision points."],
+  ["Healthcare interoperability", "Verified product ownership covering CMS Cures Act, FHIR, access control, auditability, governance, and payer-facing requirements."],
+  ["Enterprise healthcare transformation", "Experience in delivery governance, executive reporting, dependency management, workflow transformation, and AI-enabled operating improvement."],
+  ["Implementation under controls", "RachelOS supplies inspectable, non-healthcare evidence of workflow design, source authority, human approval, operating health, and bounded AI assistance."],
+];
+
+const diagnosticQuestions = [
+  "Where does a request first become incomplete, delayed, or likely to require rework?",
+  "Which payer, specialty, location, or exception patterns explain meaningful variation?",
+  "Where do experienced staff compensate for unclear standard work or escalation?",
+  "Which measures are credible enough to govern a 90-day improvement?",
+  "What should be standardized, controlled, automated, or deliberately left under human judgment?",
 ];
 
 export default function HealthcarePage() {
@@ -70,55 +63,41 @@ export default function HealthcarePage() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "TKO Healthcare Transformation & Program Recovery",
+          name: "Prior Authorization Operations for Specialty Medical Groups",
           url: absoluteUrl("/healthcare"),
-          description:
-            "Independent transformation and program recovery for healthcare leaders: prior authorization, utilization management, workflow governance, transformation recovery, and human-controlled AI.",
-          about: [
-            "Prior Authorization",
-            "Utilization Management",
-            "Healthcare Workflow Governance",
-            "Transformation Recovery",
-            "Human-in-the-Loop AI",
-          ],
+          description: metadata.description,
+          about: ["Prior Authorization", "Utilization Management", "Provider Operations", "Healthcare Interoperability", "Administrative Burden"],
         }}
       />
       <PageHero
-        eyebrow="Healthcare"
-        title="See where your healthcare transformation is actually failing."
-        description="TKO helps healthcare leaders find where prior authorization, utilization management, care management, interoperability, and modernization programs are stalling, who carries the risk, and what to fix first. The same program-recovery method applies across regulated operations."
+        eyebrow="Healthcare specialization"
+        title="Prior authorization is the commercial focus. Healthcare operating experience is the foundation."
+        description="TKO works with specialty medical groups, MSOs, and provider-side healthcare operators when prior-authorization delay, rework, denials, inconsistent payer handling, or staff dependency is creating an expensive operating problem. The first engagement is a 15-business-day Diagnostic—not a broad transformation program or technology pitch."
         primaryHref="/contact"
-        primaryLabel="Find Your Highest-Leverage Workflow"
-        secondaryHref="/selected-work"
-        secondaryLabel="Review Selected Work"
+        primaryLabel="Request a Diagnostic Fit Call"
+        secondaryHref="/services/diagnostic"
+        secondaryLabel="See Scope & Pricing"
       />
 
-      <Section className="bg-surface">
-        <SectionHeader
-          eyebrow="Where TKO works in healthcare"
-          title="Two decades inside payer operations, prior authorization, and interoperability."
-          description="Active in the provider-experience domain, where gold-card programs reduce administrative burden by narrowing prior authorization and bypassing medical-necessity review for selected codes. Earlier work owned CMS Cures Act and FHIR interoperability for payers. This is where the program-recovery method is sharpest."
-        />
+      <Section className="bg-surface !py-12 md:!py-16">
+        <div className="grid gap-5 md:grid-cols-3">
+          <Credential title="Primary specialization" body="Provider-side prior-authorization performance" />
+          <Credential title="Starting engagement" body="15 business days · $25,000 fixed fee" />
+          <Credential title="Operating principle" body="Fix the workflow before funding more automation" />
+        </div>
       </Section>
 
       <Section>
         <SectionHeader
-          eyebrow="Where to start"
-          title="Start with the decision underneath the visible symptom."
-          description="The work is designed for leaders deciding whether to stabilize a workflow, clarify authority, examine delivery risk, or determine whether automation and AI have the operating controls they need."
+          eyebrow="Recognizable operating problems"
+          title="The technology layer is only one part of the work."
+          description="Prior authorization is the entry wedge because it makes the operating failure concrete and measurable. Related healthcare experience matters when it helps leadership understand workflow, evidence, authority, controls, and implementation—not as a separate menu of services."
         />
         <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {authorityAreas.map((area) => (
-            <Card key={area.title}>
-              <h2 className="text-2xl font-semibold">{area.title}</h2>
-              <p className="mt-4 text-base leading-7 text-muted">{area.body}</p>
-              <Link
-                href={area.href}
-                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
-              >
-                {area.label}
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-              </Link>
+          {operatingProblems.map((item) => (
+            <Card key={item.title}>
+              <h2 className="text-2xl font-semibold">{item.title}</h2>
+              <p className="mt-4 text-base leading-7 text-muted">{item.body}</p>
             </Card>
           ))}
         </div>
@@ -126,60 +105,81 @@ export default function HealthcarePage() {
 
       <Section className="bg-surface">
         <SectionHeader
-          eyebrow="Operating patterns"
-          title="The recurring failure is that the person becomes the operating system."
-          description="Across these settings, critical knowledge, prioritization, and exception routing can live in individual heads. The diagnostic job is to make the facts, authority, escalation path, and next action visible enough to review and improve."
+          eyebrow="Why Todd is relevant"
+          title="Operations, product, regulation, technology, and implementation in one operating view."
+          description="The credibility is the intersection, not a claim that every prior role produced a publishable client result. Employment history establishes experience. Selected Work states the available evidence and its limits."
         />
-        <div className="mt-10 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {[
-            "Decision rights are implicit.",
-            "Exceptions depend on informal routing.",
-            "Priority changes with who is working.",
-            "Status obscures dependency risk.",
-            "Modernization changes tools but not the operating model.",
-            "AI is proposed before controls are designed.",
-          ].map((pattern) => (
-            <div key={pattern} className="border border-border bg-white p-5 text-base leading-7 text-muted">
-              {pattern}
-            </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {credibility.map(([title, body]) => (
+            <Card key={title} className="bg-white">
+              <h2 className="text-xl font-semibold">{title}</h2>
+              <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
+            </Card>
           ))}
         </div>
-        <p className="mt-8 max-w-[70ch] text-sm leading-6 text-muted">
-          This page documents recurring operating patterns from that experience.
-          It discloses no client workflow, patient information, payer rule, or
-          measured outcome. RachelOS is the separate, directly inspectable proof
-          of an implemented system.
-        </p>
+        <Link
+          href="/selected-work"
+          className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
+        >
+          Review the evidence and its limits
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+        </Link>
       </Section>
 
       <Section>
-        <SectionHeader
-          eyebrow="Related reading"
-          title="Evidence-led notes for healthcare and executive operators."
-        />
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {insights.map((insight) => (
-            <Card key={insight.href}>
-              <h2 className="text-xl font-semibold leading-tight">{insight.title}</h2>
-              <Link
-                href={insight.href}
-                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
-              >
-                Read insight
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-              </Link>
-            </Card>
-          ))}
+        <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <SectionHeader
+            eyebrow="What the Diagnostic resolves"
+            title="A client-specific baseline before an implementation decision."
+            description="The engagement stays within one organization and one defined PA workflow or specialty/payer segment. It produces evidence leadership can use whether TKO implements the next step or not."
+          />
+          <ul className="grid gap-3">
+            {diagnosticQuestions.map((question) => (
+              <li key={question} className="border border-border bg-white p-5 text-base leading-7 text-muted">
+                {question}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      <Section className="bg-surface !py-12 md:!py-16">
+        <div className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Regulatory context</p>
+            <h2 className="mt-4 text-3xl font-semibold">Interoperability requirements increase the need for operating clarity.</h2>
+            <p className="mt-4 max-w-[70ch] text-base leading-7 text-muted">
+              CMS-0057-F advances prior-authorization process and API requirements for impacted payers. That technology and policy context is important, but it does not replace provider-side workflow design, evidence quality, exception handling, ownership, or adoption.
+            </p>
+          </div>
+          <a
+            href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 items-center justify-center gap-2 border border-border bg-white px-5 text-sm font-semibold uppercase tracking-[0.08em] text-foreground hover:border-primary hover:text-primary"
+          >
+            Review the CMS rule
+            <ExternalLink className="size-4" aria-hidden="true" />
+          </a>
         </div>
       </Section>
 
       <CtaBand
-        title="Bring the workflow and the decision under pressure."
-        description="Start with a focused assessment when the immediate question is where work stalls, who carries the missing context, and what leadership should do before another technology investment."
-        primaryLabel="Find Your Highest-Leverage Workflow"
-        secondaryHref="/selected-work"
-        secondaryLabel="Review Selected Work"
+        title="Bring one prior-authorization workflow under pressure."
+        description="If leadership needs to understand the operating causes before making another technology, staffing, or vendor decision, request a Diagnostic Fit Call."
+        primaryLabel="Request a Diagnostic Fit Call"
+        secondaryHref="/services/diagnostic"
+        secondaryLabel="See Scope & Pricing"
       />
     </>
+  );
+}
+
+function Credential({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="border border-border bg-white p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">{title}</p>
+      <p className="mt-3 text-base font-semibold leading-7">{body}</p>
+    </div>
   );
 }

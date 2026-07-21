@@ -37,6 +37,18 @@ describe("submitDiagnosticIntake", () => {
     expect(mockedNotifyLead).not.toHaveBeenCalled();
   });
 
+  it("requires explicit privacy consent", async () => {
+    const formData = validFormData();
+    formData.delete("privacyConsent");
+
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow(
+      "REDIRECT:/contact?status=invalid",
+    );
+
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+    expect(mockedNotifyLead).not.toHaveBeenCalled();
+  });
+
   it("persists a valid lead before notifying", async () => {
     const lead = {
       id: "lead_123",
@@ -71,8 +83,14 @@ describe("submitDiagnosticIntake", () => {
         email: "todd@example.com",
         company: "Example Co",
         role: "COO",
-        workflow: "Client onboarding stalls at cross-functional handoffs.",
-        timing: "30-60",
+        organizationType: "specialty-medical-group",
+        workflowSegment: "Cardiology prior authorizations for two high-volume payers.",
+        currentTrigger: "turnaround-backlog",
+        triggerContext: "Turnaround time increased before a planned automation decision.",
+        timing: "31-90",
+        executiveSponsor: "VP Revenue Cycle",
+        commercialReadiness: "prepared",
+        privacyConsent: true,
         message: "We need a defensible next move.",
       },
       submittedAt: expect.any(Date),
@@ -101,6 +119,16 @@ describe("submitDiagnosticIntake", () => {
       "REDIRECT:/contact?status=submitted",
     );
   });
+
+  it("redirects to an explicit error state when persistence fails", async () => {
+    mockedNotifyLead.mockClear();
+    mockedPersistInboundLead.mockRejectedValue(new Error("database unavailable"));
+
+    await expect(submitDiagnosticIntake(validFormData())).rejects.toThrow(
+      "REDIRECT:/contact?status=error",
+    );
+    expect(mockedNotifyLead).not.toHaveBeenCalled();
+  });
 });
 
 function validFormData() {
@@ -109,8 +137,14 @@ function validFormData() {
   formData.set("email", "todd@example.com");
   formData.set("company", "Example Co");
   formData.set("role", "COO");
-  formData.set("workflow", "Client onboarding stalls at cross-functional handoffs.");
-  formData.set("timing", "30-60");
+  formData.set("organizationType", "specialty-medical-group");
+  formData.set("workflowSegment", "Cardiology prior authorizations for two high-volume payers.");
+  formData.set("currentTrigger", "turnaround-backlog");
+  formData.set("triggerContext", "Turnaround time increased before a planned automation decision.");
+  formData.set("timing", "31-90");
+  formData.set("executiveSponsor", "VP Revenue Cycle");
+  formData.set("commercialReadiness", "prepared");
+  formData.set("privacyConsent", "on");
   formData.set("message", "We need a defensible next move.");
   return formData;
 }

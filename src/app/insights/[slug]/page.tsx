@@ -9,7 +9,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsight, getInsights, getRelatedInsights, type Insight } from "@/lib/insights";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, site } from "@/lib/site";
 
 type Params = {
   params: Promise<{ slug: string }>;
@@ -35,6 +35,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: "article",
       publishedTime: insight.date,
       url: absoluteUrl(`/insights/${insight.slug}`),
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
     },
   };
 }
@@ -66,10 +67,10 @@ export default async function InsightPage({ params }: Params) {
         eyebrow="Insight"
         title={insight.title}
         description={insight.description}
-        primaryHref="/contact"
-        primaryLabel="Find Your Highest-Leverage Workflow"
-        secondaryHref="/selected-work"
-        secondaryLabel="Review Selected Work"
+        primaryHref="/services/diagnostic"
+        primaryLabel="See the Prior Authorization Diagnostic"
+        secondaryHref="/contact"
+        secondaryLabel="Request a Diagnostic Fit Call"
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
@@ -116,7 +117,14 @@ export default async function InsightPage({ params }: Params) {
         </Section>
       ) : null}
       <AuthorityLinks current={`/insights/${insight.slug}`} />
-      <CtaBand secondaryHref="/selected-work" secondaryLabel="Review Selected Work" />
+      <CtaBand
+        title="See how the operating problem becomes a measured Diagnostic."
+        description="The Prior Authorization Performance Diagnostic establishes the workflow baseline, root causes, target workflow, and responsible 90-day plan."
+        primaryHref="/services/diagnostic"
+        primaryLabel="See the Prior Authorization Diagnostic"
+        secondaryHref="/contact"
+        secondaryLabel="Request a Diagnostic Fit Call"
+      />
     </>
   );
 }

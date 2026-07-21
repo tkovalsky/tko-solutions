@@ -7,9 +7,8 @@ import { site } from "@/lib/site";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/services/diagnostic", label: "Diagnostic" },
-  { href: "/selected-work", label: "Selected Work" },
-  { href: "/healthcare", label: "Healthcare" },
-  { href: "/insights", label: "Insights" },
+  { href: "/healthcare", label: "How We Help" },
+  { href: "/selected-work", label: "Results" },
   { href: "/founder", label: "About" },
 ];
 
@@ -30,7 +29,7 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <LinkButton href="/contact" className="whitespace-nowrap">
+          <LinkButton href="/contact" ctaLocation="header" className="whitespace-nowrap">
             {site.cta}
           </LinkButton>
         </div>

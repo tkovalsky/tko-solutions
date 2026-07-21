@@ -15,8 +15,8 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "Find the workflow where better design and governed AI can create measurable leverage.",
-  description = "Bring the handoffs, exceptions, delays, or knowledge dependencies under pressure. TKO will help determine whether the fixed-scope Diagnostic is the right next move.",
+  title = "Fix the workflow before you fund more automation.",
+  description = "Bring one prior-authorization workflow under pressure. TKO will determine whether the fixed-fee Diagnostic is the right next move.",
   primaryHref = "/contact",
   primaryLabel = DEFAULT_CTA_LABEL,
   secondaryHref = null,
@@ -34,7 +34,7 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Operational truth conversation
+            Diagnostic fit call
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}
@@ -42,12 +42,16 @@ export function CtaBand({
           <p className="mt-6 text-lg leading-8 text-white/65">{description}</p>
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center md:flex-col md:items-stretch">
-          <LinkButton href={primaryHref} className="bg-primary hover:bg-primary-dark">
+          <LinkButton href={primaryHref} ctaLocation="cta_band" className="bg-primary hover:bg-primary-dark">
             {primaryLabel}
           </LinkButton>
           {resolvedSecondaryHref && resolvedSecondaryLabel ? (
             <Link
               href={resolvedSecondaryHref}
+              data-conversion-event="secondary_cta_click"
+              data-cta-location="cta_band"
+              data-cta-label={resolvedSecondaryLabel}
+              data-referenced-service={resolvedSecondaryHref.startsWith("/services/") ? resolvedSecondaryHref.split("/").pop() : undefined}
               className="group inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline md:justify-start"
             >
               {resolvedSecondaryLabel}
@@ -61,6 +65,9 @@ export function CtaBand({
             Or directly:{" "}
             <a
               href={`mailto:${site.email}`}
+              data-conversion-event="email_link_click"
+              data-cta-location="cta_band"
+              data-cta-label="email"
               className="font-semibold text-white/85 underline-offset-4 hover:text-white hover:underline"
             >
               email
@@ -68,6 +75,9 @@ export function CtaBand({
             <span className="mx-1.5 text-white/40">·</span>
             <a
               href={site.linkedin}
+              data-conversion-event="linkedin_click"
+              data-cta-location="cta_band"
+              data-cta-label="LinkedIn"
               target="_blank"
               rel="noreferrer"
               className="font-semibold text-white/85 underline-offset-4 hover:text-white hover:underline"

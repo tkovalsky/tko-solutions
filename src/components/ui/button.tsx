@@ -33,6 +33,8 @@ type LinkButtonProps = {
   children: ReactNode;
   variant?: ButtonProps["variant"];
   className?: string;
+  eventName?: "primary_cta_click" | "secondary_cta_click";
+  ctaLocation?: string;
 };
 
 export function LinkButton({
@@ -40,10 +42,18 @@ export function LinkButton({
   children,
   variant = "primary",
   className,
+  eventName,
+  ctaLocation = "link_button",
 }: LinkButtonProps) {
+  const referencedService = href.startsWith("/services/") ? href.split("/").pop() : undefined;
+  const label = typeof children === "string" ? children : undefined;
   return (
     <Link
       href={href}
+      data-conversion-event={eventName ?? (variant === "primary" ? "primary_cta_click" : "secondary_cta_click")}
+      data-cta-location={ctaLocation}
+      data-cta-label={label}
+      data-referenced-service={referencedService}
       className={cn(
         "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors",
         variants[variant],
@@ -54,4 +64,3 @@ export function LinkButton({
     </Link>
   );
 }
-

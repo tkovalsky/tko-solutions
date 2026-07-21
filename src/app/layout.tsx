@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
+import { ConversionTracker } from "@/components/site/conversion-tracker";
 import { JsonLd } from "@/components/site/json-ld";
 import { absoluteUrl, site } from "@/lib/site";
 
@@ -21,7 +22,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "TKO Solutions | AI-Assisted Operations Modernization",
+    default: "TKO Solutions | Prior Authorization Performance",
     template: "%s | TKO Solutions",
   },
   description: site.description,
@@ -32,15 +33,15 @@ export const metadata: Metadata = {
     type: "website",
     url: absoluteUrl("/"),
     siteName: site.name,
-    title: "TKO Solutions | AI-Assisted Operations Modernization",
+    title: "TKO Solutions | Prior Authorization Performance",
     description: site.description,
-    images: [{ url: "/og.png", width: 1734, height: 907, alt: "TKO Solutions: turn messy work into an operating system your team and AI can actually use." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TKO Solutions | AI-Assisted Operations Modernization",
+    title: "TKO Solutions | Prior Authorization Performance",
     description: site.description,
-    images: ["/og.png"],
+    images: [site.socialImage],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
@@ -61,36 +62,25 @@ export default function RootLayout({
     name: site.name,
     url: site.url,
     description: site.description,
-    logo: absoluteUrl("/og.png"),
+    logo: absoluteUrl(site.socialImage),
     knowsAbout: [
-      "Operational Knowledge Systems",
-      "AI-Assisted Workflow Design",
-      "AI Operations Consulting",
-      "Operations Modernization",
-      "Business Workflow Optimization",
-      "Knowledge Capture and Transfer",
-      "Transformation Recovery",
-      "Cross-Functional Workflow Improvement",
-      "Healthcare Workflow Modernization",
-      "Administrative Burden Reduction",
       "Prior Authorization",
       "Utilization Management",
-      "Care Management",
-      "Transformation Recovery",
-      "Operational Visibility",
-      "Healthcare AI Adoption",
-      "Human-in-the-Loop AI",
-      "Workflow Governance",
-      "Operating Model Design",
-      "Operational Truth and AI Workflow Diagnostics",
-      "Decision Layer Build",
+      "Prior Authorization Workflow Improvement",
+      "Prior Authorization Denial Analysis",
+      "Healthcare Operations",
+      "Provider Operations",
+      "Revenue Cycle Operations",
+      "Workflow Measurement",
+      "Exception and Escalation Design",
+      "Automation Readiness",
     ],
   };
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Todd Kovalsky",
-    jobTitle: "Founder & Principal, AI-Assisted Operations Advisor",
+    jobTitle: "Founder & Principal, Prior Authorization Operations Advisor",
     worksFor: {
       "@type": "Organization",
       name: site.name,
@@ -106,16 +96,13 @@ export default function RootLayout({
       { "@type": "Organization", name: "Montclair State University" },
     ],
     knowsAbout: [
-      "AI-Assisted Operations Modernization",
-      "Workflow Optimization",
-      "Operational Excellence",
-      "Transformation Management",
-      "Product Strategy",
-      "Healthcare Workflow Modernization",
       "Prior Authorization",
-      "Transformation Governance",
-      "Operational Intelligence",
-      "Human-in-the-Loop AI",
+      "Utilization Management",
+      "Healthcare Operations",
+      "Prior Authorization Workflow Improvement",
+      "Workflow Measurement",
+      "Exception and Escalation Design",
+      "Automation Readiness",
       "Healthcare Interoperability (FHIR, CMS Cures Act)",
     ],
   };
@@ -123,6 +110,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
+        <ConversionTracker />
         <JsonLd data={organizationJsonLd} />
         <JsonLd data={personJsonLd} />
         <Header />

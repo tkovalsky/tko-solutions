@@ -67,7 +67,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
                 {item.label}
               </Link>
             ))}
-            <LinkButton href="/contact" className="mt-3 w-full">
+            <LinkButton href="/contact" ctaLocation="mobile_navigation" className="mt-3 w-full">
               {site.cta}
             </LinkButton>
           </nav>

@@ -6,18 +6,19 @@ import { AuthorityLinks } from "@/components/site/authority-links";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsights, type Insight } from "@/lib/insights";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Insights",
   description:
-    "TKO insights on healthcare workflow modernization, operational recovery, governance, and AI adoption grounded in operating evidence.",
+    "TKO insights on prior-authorization workflow, healthcare operating quality, staff dependency, evidence, and responsible automation.",
   alternates: { canonical: "/insights" },
   openGraph: {
     title: "Insights",
     description:
-      "Evidence-led TKO insights on workflow modernization, operational recovery, governance, and AI adoption.",
+      "Evidence-led notes on prior-authorization workflow and responsible operating improvement.",
     url: absoluteUrl("/insights"),
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
   },
 };
 
@@ -28,8 +29,12 @@ export default function InsightsPage() {
     <>
       <PageHero
         eyebrow="Insights"
-        title="Operational patterns, written plainly."
-        description="Evidence-led notes on stalled workflows, decision latency, human API dependency, and the governance required before automation or AI can improve execution."
+        title="Prior-authorization operating problems, written plainly."
+        description="Evidence-led notes on workflow quality, decision rights, staff dependency, exception handling, and the controls required before automation can improve execution."
+        primaryHref="/services/diagnostic"
+        primaryLabel="See the Prior Authorization Diagnostic"
+        secondaryHref="/selected-work"
+        secondaryLabel="Review Selected Work"
       />
       <Section>
         {insights.length > 0 ? (

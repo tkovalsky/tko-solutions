@@ -63,7 +63,7 @@ Ask:
 
 Those answers form the operating model that technology has to support. Without them, the organization risks automating ambiguity.
 
-The [Prior Authorization Operational Assessment](/services/prior-authorization-assessment) is built around that work: administrative burden, denial drivers, exception handling, Human API risk, and Gold Card readiness. It also connects back to the broader [Operational Recovery Assessment](/services/recovery-assessment) when the same dependency pattern appears outside prior authorization.
+The [Prior Authorization Performance Diagnostic](/services/diagnostic) is built around that work: a measured baseline, denial and exception patterns, staff dependency, decision rights, and a responsible 90-day plan. It is the single public starting engagement—not one assessment among several.
 
 For the adjacent operating-quality argument, read [Prior Authorization Is an Operational Quality Problem](/insights/prior-authorization-operational-quality-problem).
 

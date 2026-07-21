@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/case-studies/rachelos-delivery-model",
+        destination: "/selected-work/from-crm-to-operating-system",
+        permanent: true,
+      },
+      {
         source: "/case-studies",
         destination: "/selected-work",
         permanent: true,
@@ -25,39 +30,55 @@ const nextConfig: NextConfig = {
       // Retire the parallel /offers and /assessment namespaces into the single
       // /services commercial path. Assessments become entry offers within a lane.
       { source: "/offers", destination: "/services", permanent: true },
-      { source: "/offers/executive-recovery", destination: "/services/recovery", permanent: true },
-      { source: "/offers/program-recovery", destination: "/services/recovery", permanent: true },
-      { source: "/offers/portfolio-recovery", destination: "/services/recovery", permanent: true },
-      { source: "/offers/operational-intelligence", destination: "/services/recovery", permanent: true },
-      { source: "/offers/executive-ai", destination: "/services/enterprise-ai", permanent: true },
+      { source: "/offers/executive-recovery", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/program-recovery", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/portfolio-recovery", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/operational-intelligence", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/executive-ai", destination: "/services", permanent: true },
       { source: "/offers/healthcare-operating", destination: "/healthcare", permanent: true },
-      { source: "/offers/prior-authorization", destination: "/services/prior-authorization-assessment", permanent: true },
-      { source: "/offers/decision-rights-workshop", destination: "/services/prior-authorization-assessment", permanent: true },
-      { source: "/offers/executive-operating-review", destination: "/services/fractional-leadership", permanent: true },
+      { source: "/offers/prior-authorization", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/decision-rights-workshop", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/executive-operating-review", destination: "/services/operating-system-build", permanent: true },
       { source: "/assessment", destination: "/services/diagnostic", permanent: true },
-      { source: "/assessment/ai-delivery", destination: "/services/enterprise-ai", permanent: true },
+      { source: "/assessment/ai-delivery", destination: "/services", permanent: true },
 
-      // Interim lane targets: the final lane URLs do not exist yet. Point them at
-      // the nearest existing page so no redirect resolves to a 404. Phase B creates
-      // /services/recovery, /services/enterprise-ai, /services/product, and
-      // /services/fractional-leadership and removes the interim rows below.
-      { source: "/services/recovery", destination: "/services/diagnostic", permanent: false },
-      { source: "/services/fractional-leadership", destination: "/services/operating-system-build", permanent: false },
-      { source: "/services/enterprise-ai", destination: "/services", permanent: false },
-      { source: "/services/product", destination: "/services", permanent: false },
+      { source: "/services/recovery", destination: "/services/diagnostic", permanent: true },
+      { source: "/services/fractional-leadership", destination: "/services/operating-system-build", permanent: true },
+      { source: "/services/enterprise-ai", destination: "/services", permanent: true },
+      { source: "/services/product", destination: "/services", permanent: true },
 
       // One public entry offer and one bounded expansion path.
+      { source: "/services/prior-authorization-assessment", destination: "/services/diagnostic", permanent: true },
       { source: "/services/recovery-assessment", destination: "/services/diagnostic", permanent: true },
       { source: "/services/fractional-advisor", destination: "/services/operating-system-build", permanent: true },
 
-      // --- Proof vs Framework separation (WS3) ---
-      // Experience-based operating models move from /proof to /frameworks so that
-      // /proof is reserved for inspectable built-system evidence.
-      { source: "/proof/prior-authorization", destination: "/frameworks/prior-authorization", permanent: true },
-      { source: "/proof/gold-card", destination: "/frameworks/gold-card", permanent: true },
-      { source: "/proof/program-recovery", destination: "/frameworks/program-recovery", permanent: true },
-      { source: "/proof/executive-operating-system", destination: "/frameworks/executive-operating-system", permanent: true },
-      { source: "/proof/ai-governance", destination: "/frameworks/ai-governance", permanent: true },
+      // Evidence consolidation: Selected Work is the single public proof center.
+      { source: "/proof", destination: "/selected-work", permanent: true },
+      { source: "/proof/rachelos", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
+      { source: "/proof/transfer", destination: "/selected-work#method-portability", permanent: true },
+      { source: "/proof/prior-authorization", destination: "/healthcare", permanent: true },
+      { source: "/proof/gold-card", destination: "/healthcare", permanent: true },
+      { source: "/proof/program-recovery", destination: "/selected-work/enterprise-care-management-modernization", permanent: true },
+      { source: "/proof/executive-operating-system", destination: "/selected-work", permanent: true },
+      { source: "/proof/ai-governance", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
+
+      // Frameworks are supporting method content, not a parallel product library.
+      { source: "/frameworks", destination: "/healthcare", permanent: true },
+      { source: "/frameworks/prior-authorization", destination: "/healthcare", permanent: true },
+      { source: "/frameworks/gold-card", destination: "/healthcare", permanent: true },
+      { source: "/frameworks/program-recovery", destination: "/selected-work/enterprise-care-management-modernization", permanent: true },
+      { source: "/frameworks/executive-operating-system", destination: "/selected-work", permanent: true },
+      { source: "/frameworks/ai-governance", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
+      { source: "/frameworks/:slug", destination: "/healthcare", permanent: true },
+
+      // Two RachelOS narratives are merged into one bounded case study.
+      { source: "/selected-work/rachelos-delivery-model", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
+
+      // Broad taxonomies now resolve into the healthcare specialization.
+      { source: "/industries", destination: "/healthcare", permanent: true },
+      { source: "/problems", destination: "/healthcare", permanent: true },
+      { source: "/diagrams", destination: "/healthcare", permanent: true },
+      { source: "/diagrams/:slug", destination: "/healthcare", permanent: true },
 
       // --- Founder consolidation (Credibility Sprint, 2026-07-17) ---
       // One canonical founder destination. /about, /proof/founder, and the
