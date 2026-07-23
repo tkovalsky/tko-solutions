@@ -27,18 +27,52 @@ export type ArtifactKey =
 
 export type VoiceKey = "rachel" | "consumer" | "todd" | "commercial_operator";
 
+export const TIF_COMPOSE_CONTRACT_VERSION = "2026-07-22" as const;
+export type ComposeContractVersion = typeof TIF_COMPOSE_CONTRACT_VERSION;
+
+export interface ComposeContext {
+  contentType?: string;
+  persona?: string;
+  funnelStage?: string;
+  targetUrl?: string;
+  county?: string;
+  originMarket?: string;
+  destinationMarket?: string;
+  community?: string;
+  communities?: string[];
+  internalLinks?: string[];
+  tags?: string[];
+}
+
+export interface ComposeInputs extends Record<string, unknown> {
+  context?: ComposeContext;
+  facts?: string;
+  notes?: string;
+  revisionFeedback?: string;
+}
+
 // Mirrors AssetStatus in prisma/schema.prisma. v0.1 only ever produces `draft`.
 export type ComposeStatus = "draft" | "review" | "approved" | "published";
 
 export interface ComposeRequest {
+  contractVersion?: ComposeContractVersion;
   framework: FrameworkKey;
   artifact: ArtifactKey;
   voice?: VoiceKey;
-  inputs?: Record<string, unknown>;
+  inputs?: ComposeInputs;
+}
+
+export interface ComposeSourceUsage {
+  factsIncluded: boolean;
+  factReferences: string[];
+  notesIncluded: boolean;
+  revisionFeedbackIncluded: boolean;
+  voiceApplied: boolean;
 }
 
 export interface ComposeResponse {
   ok: true;
+  contractVersion: ComposeContractVersion;
   // Execution-layer identifiers (v0.1: generated per request; durable Run/Draft
   // persistence is the documented next step — see execution.ts).
   runId: string;
@@ -53,6 +87,7 @@ export interface ComposeResponse {
   markdown: string;
   warnings: string[];
   suggestedPath: string;
+  sourceUsage: ComposeSourceUsage;
 }
 
 export interface ComposeErrorResponse {

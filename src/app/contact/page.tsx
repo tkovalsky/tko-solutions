@@ -87,6 +87,16 @@ export default async function ContactPage({ searchParams }: SearchParams) {
                 </p>
               </div>
             ) : null}
+            {status === "notification-error" ? (
+              <div className="mb-6 rounded-md border border-warning/30 border-l-4 border-l-warning bg-surface p-5">
+                <p className="font-semibold text-foreground">
+                  Your request was saved, but the notification could not be confirmed.
+                </p>
+                <p className="mt-2 text-sm leading-6 text-muted">
+                  Please email Todd directly so the request is not missed. Do not include patient or other sensitive information.
+                </p>
+              </div>
+            ) : null}
             <DiagnosticForm action={submitDiagnosticIntake} status={status} />
             <div className="mt-8 border-t border-border pt-6">
               <p className="text-sm leading-6 text-muted">

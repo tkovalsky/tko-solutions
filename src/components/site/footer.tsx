@@ -6,10 +6,11 @@ const footerLinks = [
   { href: "/services/diagnostic", label: "Prior Authorization Performance Diagnostic" },
   { href: "/services/operating-system-build", label: "90-Day Improvement Sprint" },
   { href: "/healthcare", label: "How We Help" },
-  { href: "/selected-work", label: "Results & Experience" },
+  { href: "/selected-work", label: "Evidence & Experience" },
   { href: "/founder", label: "About" },
   { href: "/insights", label: "Insights" },
   { href: "/contact", label: "Request a Fit Call" },
+  { href: "/privacy", label: "Privacy" },
 ];
 
 export function Footer() {

@@ -9,15 +9,7 @@ const intakeSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
   company: z.string().min(2),
-  role: z.string().min(2),
-  organizationType: z.enum([
-    "specialty-medical-group",
-    "mso",
-    "health-system",
-    "payer-health-plan",
-    "healthcare-technology-services",
-    "other",
-  ]),
+  role: z.string().min(2).max(200).optional(),
   workflowSegment: z.string().min(10).max(2000),
   currentTrigger: z.enum([
     "denials",
@@ -28,10 +20,7 @@ const intakeSchema = z.object({
     "automation-decision",
     "other",
   ]),
-  triggerContext: z.string().min(10).max(2000),
   timing: z.enum(["now", "30", "31-90", "exploring"]),
-  executiveSponsor: z.string().min(2).max(200),
-  commercialReadiness: z.enum(["prepared", "approval-required", "early-exploration"]),
   privacyConsent: z.literal(true),
   message: z.string().max(2000).optional(),
   referrer: z.string().max(2000).optional(),
@@ -43,18 +32,18 @@ const intakeSchema = z.object({
 });
 
 export async function submitDiagnosticIntake(formData: FormData) {
+  if (getFormString(formData, "website")) {
+    redirect("/contact?status=submitted");
+  }
+
   const parsed = intakeSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
     company: formData.get("company"),
-    role: formData.get("role"),
-    organizationType: formData.get("organizationType"),
+    role: getFormString(formData, "role"),
     workflowSegment: formData.get("workflowSegment"),
     currentTrigger: formData.get("currentTrigger"),
-    triggerContext: formData.get("triggerContext"),
     timing: formData.get("timing"),
-    executiveSponsor: formData.get("executiveSponsor"),
-    commercialReadiness: formData.get("commercialReadiness"),
     privacyConsent: formData.get("privacyConsent") === "on",
     message: getFormString(formData, "message"),
     referrer: getFormString(formData, "referrer"),
@@ -72,6 +61,13 @@ export async function submitDiagnosticIntake(formData: FormData) {
   const submittedAt = new Date();
   const source = getFormString(formData, "source") || "contact_form";
   const landingPage = getFormString(formData, "landingPage") || "/contact";
+  const payload: Record<string, string | boolean> = {};
+  for (const [key, value] of Object.entries(parsed.data)) {
+    if (value !== undefined) {
+      payload[key] = value;
+    }
+  }
+  let notificationSent = false;
 
   try {
     const lead = await persistInboundLead({
@@ -81,13 +77,18 @@ export async function submitDiagnosticIntake(formData: FormData) {
       role: parsed.data.role,
       source,
       landingPage,
-      payload: parsed.data,
+      payload,
       submittedAt,
     });
 
-    await notifyLead(lead);
+    const notification = await notifyLead(lead);
+    notificationSent = notification.status === "sent";
   } catch {
     redirect("/contact?status=error");
+  }
+
+  if (!notificationSent) {
+    redirect("/contact?status=notification-error");
   }
 
   redirect("/contact?status=submitted");

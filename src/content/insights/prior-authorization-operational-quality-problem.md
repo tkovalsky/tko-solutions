@@ -1,80 +1,83 @@
 ---
-title: "Prior Authorization Is an Operational Quality Problem"
-description: "Gold Card readiness is not a standalone goal. It is the output of cleaner authorization workflows, clearer exception routing, and reduced Human API dependency."
+title: "Prior Authorization Operational Quality: What to Measure First"
+description: "A practical guide to measuring prior authorization rework, exception handling, staff effort, and decision quality before adding automation."
 business_unit: tko
 voice: tko-advisory
 sources:
-  - healthcare:ev-healthcare-pa-operational-burden
-  - healthcare:ev-healthcare-human-api-dependency
-date: "2026-07-02"
+  - https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f
+  - https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/frequently-asked-questions/prior-authorization-api
+  - https://www.ama-assn.org/practice-management/prior-authorization/ama-prior-authorization-physician-survey
+date: "2026-07-23"
 slug: prior-authorization-operational-quality-problem
 published: true
 featured: false
 ---
 
-# Prior Authorization Is an Operational Quality Problem
+# Prior Authorization Operational Quality: What to Measure First
 
-Gold Card eligibility is not the problem. Operational quality is the problem.
+Prior authorization technology is changing, but an API does not remove the need for sound operational judgment. CMS explicitly notes that some requests will continue to require clinical review. That makes workflow quality—what is submitted, how exceptions are routed, and who can explain a decision—an operating priority rather than a software detail.
 
-Prior authorization leaders feel the pain as administrative burden, denial friction, manual exception handling, inconsistent workflows, and staff dependency. Gold Card readiness may become one useful signal, but it is an output of operational quality, not the operating problem itself.
+Provider organizations should establish an operational baseline before they automate or redesign the work. The baseline does not need to be elaborate. It needs to connect effort and outcomes to the decisions leaders can actually make.
 
-If the workflow is inconsistent, if documentation quality varies, if payer-specific knowledge lives in a few heads, and if exceptions depend on informal escalation paths, a Gold Card program or automation layer will not fix the root cause.
+## Six Measures to Establish First
 
-## What Goes Invisible
+| Measure | Practical definition | Decision it supports | Important caveat |
+|---|---|---|---|
+| Staff touches per case | Every handoff, follow-up, correction, or status check required to complete one request | Where to simplify the workflow | A low average can hide a small group of costly exceptions |
+| Staff minutes per case | Active work time, separated from elapsed payer response time | Staffing, standardization, and automation priorities | Sample the work rather than asking staff to estimate from memory |
+| Clean submission rate | Requests accepted without missing-information follow-up or internal correction | Documentation and intake improvements | Define “clean” consistently before comparing teams |
+| Avoidable denial rate | Denials tied to preventable documentation, eligibility, routing, or timing failures | Root-cause fixes and training | Clinical disagreement should not be classified as an operational failure |
+| Median turnaround time | Time from a complete request to a decision, reported by request type and payer | Service expectations and escalation rules | Report expedited and standard requests separately |
+| Aged exception inventory | Open requests outside the normal path or expected response window | Exception ownership and escalation capacity | A queue count alone does not reveal why work is stuck |
 
-Prior authorization work creates visible queues and invisible judgment.
+CMS requires impacted payers to report certain prior authorization metrics, including approval, denial, and decision-time measures. Those published payer metrics can provide useful context, but they do not replace a provider’s internal view of staff effort, submission quality, handoffs, and rework.
 
-The visible queue shows cases waiting, submissions completed, denials returned, and follow-up needed. The invisible layer contains the questions that actually determine quality:
+## Segment Before Drawing Conclusions
 
-- Which cases are routine and which are exceptions?
-- Which denials are preventable because documentation was missing?
-- Which payers create repeated friction?
-- Which staff members know the workaround?
-- Which rules are current, trusted, and consistently applied?
-- Which decisions require human review?
+A single organization-wide average is rarely actionable. At minimum, segment the baseline by:
 
-When that invisible layer is unmanaged, leaders see burden but not the operating model causing it.
+- request type or specialty;
+- payer and plan;
+- routine versus expedited request;
+- initial request versus resubmission or appeal;
+- standard path versus exception;
+- location or team, when workflows differ.
 
-## A Real-World Example
+The aim is not to create a perfect dashboard. It is to find a repeatable concentration of avoidable work that can be addressed without making clinical judgment less safe.
 
-A practice may experience prior authorization as a staffing problem. The team is busy. Cases take too long. Denials create rework. Everyone knows that one experienced person can get difficult cases through more cleanly than the rest of the team.
+## A Hypothetical Example
 
-That person is not just faster. They are carrying operational knowledge: payer-specific patterns, documentation expectations, escalation routes, and exception judgment.
+Suppose one denial category appears across several service lines. At first, it looks like a single payer problem. A case-level review shows three different causes: incomplete documentation at intake, an outdated routing rule, and cases that genuinely require clinical review.
 
-If that knowledge is not captured, quality depends on availability. The organization can add a tool, but the tool will still route difficult work back to the Human API. The burden shifts shape without disappearing.
+Treating all three as one automation opportunity would hide the real work. The first calls for a clearer intake control, the second for maintained routing logic, and the third for explicit clinical decision rights. This example is illustrative, not a reported client result.
 
-## Assessment Dimensions That Matter
+## Test Automation Readiness
 
-A useful prior authorization assessment should not stop at volume and turnaround time. It should examine operational quality dimensions:
+Automation is safer and more valuable when:
 
-- Administrative burden: where manual effort concentrates.
-- Denial patterns: where preventable rework appears.
-- Exception routing: where cases leave the standard path.
-- Human API dependency: who carries payer, documentation, and escalation knowledge.
-- Auditability: whether the reason for each decision can be reconstructed.
-- Gold Card readiness: whether the workflow is consistent enough to support it.
+- the standard path and its required inputs are explicit;
+- exception categories are stable enough to route consistently;
+- decision owners are named;
+- source rules are current and traceable;
+- overrides and human review can be reconstructed;
+- success is measured as reduced avoidable work, not only faster clicks.
 
-That is why the [Prior Authorization Performance Diagnostic](/services/diagnostic) is TKO's single public starting engagement. The point is not to sell a platform. It is to establish the operating baseline, causes, controls, and implementation case required before a platform, automation, staffing, or payer-program decision.
+If those conditions are missing, begin with the [Prior Authorization Performance Diagnostic](/services/diagnostic). Its purpose is to establish the baseline, causes, controls, and implementation case before a larger platform, staffing, or automation commitment.
 
-## What Leaders Should Do
+## Questions Leaders Should Be Able to Answer
 
-Start by treating Gold Card readiness as a lagging indicator.
-
-Then examine the operating inputs:
-
-- Are documentation requirements explicit and current?
-- Are denial reasons reviewed as workflow evidence?
-- Are exceptions classified and routed consistently?
-- Are staff relying on a few experienced people for payer-specific knowledge?
-- Are decisions auditable enough to explain why a case moved the way it did?
-
-The actionable takeaway is straightforward: fix the workflow quality before scaling the technology. That means making exception logic, decision rights, and human review visible enough to govern.
+- Which failure modes create the most avoidable staff work?
+- Which requests leave the standard path, and why?
+- Which rules depend on one experienced person’s memory?
+- Which cases need clinical judgment rather than administrative processing?
+- Can the team reconstruct the source, owner, and reason for an important decision?
 
 For the decision-rights side of the problem, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem). If the problem is already active, review the [Prior Authorization Performance Diagnostic](/services/diagnostic) before committing larger spend.
 
-## Evidence Trail
+## Public Sources and Claim Boundaries
 
-| Claim | Evidence record | Proof basis | Claim guard |
-|---|---|---|---|
-| Prior authorization burden often concentrates in exception routing and operational quality gaps. | healthcare:ev-healthcare-pa-operational-burden | content/proof/healthcare/evidence.yaml#prior-auth-exception-routing. | Advisory experience; pattern not metric; no organizations named. |
-| Human API dependency is a root pattern in healthcare workflow quality problems. | healthcare:ev-healthcare-human-api-dependency | content/proof/healthcare/evidence.yaml#human-api-root-pattern. | Advisory experience; pattern not metric. |
+- [CMS Interoperability and Prior Authorization Final Rule](https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f): requirements, compliance dates, and payer reporting context.
+- [CMS Prior Authorization API frequently asked questions](https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/frequently-asked-questions/prior-authorization-api): implementation guidance and the continued role of clinical review.
+- [AMA prior authorization physician survey](https://www.ama-assn.org/practice-management/prior-authorization/ama-prior-authorization-physician-survey): directional evidence of physician-reported administrative burden.
+
+The measurement model and hypothetical example above are TKO advisory guidance. They are not presented as CMS requirements, client results, or proof that any specific intervention caused a financial outcome.

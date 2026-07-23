@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { ZodError } from "zod";
 import { composeDraft } from "./draft-composer";
 
 describe("TIF core draft composer", () => {
@@ -49,5 +50,64 @@ describe("TIF core draft composer", () => {
       voice: "todd",
       inputs: {},
     })).toThrow("inputs.market");
+  });
+
+  it("preserves facts, context, notes, and revision feedback with explicit truth metadata", () => {
+    const result = composeDraft({
+      contractVersion: "2026-07-22",
+      framework: "rachel_community",
+      artifact: "community_page",
+      voice: "rachel",
+      inputs: {
+        title: "Valencia Sound Guide",
+        context: {
+          community: "Valencia Sound",
+          county: "Palm Beach County",
+          persona: "55-plus buyer",
+        },
+        facts: "[Fact 44 v2] Valencia Sound has eight pickleball courts.",
+        notes: "Keep the comparison decision-oriented.",
+        revisionFeedback: "Tighten the opening and preserve the evidence boundary.",
+      },
+    });
+
+    expect(result.markdown).toContain("[Fact 44 v2] Valencia Sound has eight pickleball courts.");
+    expect(result.markdown).toContain("Keep the comparison decision-oriented.");
+    expect(result.markdown).toContain("Tighten the opening and preserve the evidence boundary.");
+    expect(result.markdown).toContain("**persona:** 55-plus buyer");
+    expect(result.sourceUsage).toEqual({
+      factsIncluded: true,
+      factReferences: ["Fact 44 v2"],
+      notesIncluded: true,
+      revisionFeedbackIncluded: true,
+      voiceApplied: false,
+    });
+    expect(result.warnings).toContain('Voice "rachel" is recorded as metadata only; automated voice refinement is not operational.');
+  });
+
+  it("changes the draft when the supplied approved fact version changes", () => {
+    const base = {
+      framework: "rachel_community" as const,
+      artifact: "community_page" as const,
+      inputs: { community: "Valencia Sound", county: "Palm Beach County" },
+    };
+    const first = composeDraft({ ...base, inputs: { ...base.inputs, facts: "[Fact 44 v2] Eight courts." } });
+    const second = composeDraft({ ...base, inputs: { ...base.inputs, facts: "[Fact 44 v3] Ten courts." } });
+
+    expect(first.markdown).not.toBe(second.markdown);
+    expect(first.sourceUsage.factReferences).toEqual(["Fact 44 v2"]);
+    expect(second.sourceUsage.factReferences).toEqual(["Fact 44 v3"]);
+  });
+
+  it("rejects unknown fields instead of silently stripping them", () => {
+    expect(() => composeDraft({
+      framework: "rachel_community",
+      artifact: "community_page",
+      inputs: {
+        community: "Valencia Sound",
+        county: "Palm Beach County",
+        unsupportedPayload: "must not disappear",
+      } as never,
+    })).toThrow(ZodError);
   });
 });

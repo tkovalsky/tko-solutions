@@ -5,7 +5,7 @@
 > is unchanged. Commercial drafts target a separate future publisher and use `cre-intelligence` as
 > their intelligence source. See `TIF_CRE_BUSINESS_OWNER_REQUIREMENTS.md`.
 
-**Status:** Initial TKO-side contract  
+**Status:** Versioned TKO-side contract (`2026-07-22`)
 **Purpose:** Let the Rachel publishing system request draft content from `tko-site` without moving
 publishing ownership into TKO.
 
@@ -25,6 +25,26 @@ This endpoint does not:
 - Send lead outreach.
 - Use an LLM provider.
 - Create CRM records.
+
+## Truth contract
+
+The request accepts `contractVersion: "2026-07-22"`. Older callers may omit it during the
+additive rollout and receive the current version by default. Request objects and nested `inputs`
+objects reject unknown fields rather than silently discarding them.
+
+RachelOS may send these canonical source fields inside `inputs`:
+
+- `context`: publication context such as persona, funnel stage, target URL, geography, community,
+  internal links, and tags.
+- `facts`: approved, unexpired fact-version lines. Fact references use `[Fact <id> v<version>]`.
+- `notes`: operator-supplied source notes.
+- `revisionFeedback`: human revision direction.
+
+The response includes `sourceUsage`. `sourceUsage.factReferences` is the authoritative list of
+fact versions that TIF actually preserved in the returned Markdown. A consumer must not record fact
+usage merely because it supplied a fact. `voiceApplied` is currently `false`; voice remains metadata
+until a real refinement step is implemented. Revision feedback is preserved for the editor, but the
+deterministic composer does not claim to perform model-backed prose revision.
 
 ## Endpoint
 
@@ -87,6 +107,7 @@ Voices:
 
 ```json
 {
+  "contractVersion": "2026-07-22",
   "framework": "rachel_community",
   "artifact": "comparison_guide",
   "voice": "rachel",
@@ -125,6 +146,7 @@ Voices:
 ```json
 {
   "ok": true,
+  "contractVersion": "2026-07-22",
   "framework": "rachel_community",
   "artifact": "comparison_guide",
   "voice": "rachel",
@@ -134,7 +156,14 @@ Voices:
   "warnings": [
     "Pricing, HOA, tax, amenity, and inventory claims must be verified before publishing."
   ],
-  "suggestedPath": "src/content/guides/valencia-sound-vs-valencia-grand.md"
+  "suggestedPath": "src/content/guides/valencia-sound-vs-valencia-grand.md",
+  "sourceUsage": {
+    "factsIncluded": true,
+    "factReferences": ["Fact 44 v2"],
+    "notesIncluded": true,
+    "revisionFeedbackIncluded": false,
+    "voiceApplied": false
+  }
 }
 ```
 
@@ -148,6 +177,7 @@ Rachel-side publishing flow:
 
 ## Current Behavior
 
-The endpoint returns deterministic markdown drafts with YAML frontmatter and `VERIFY` markers. It
-does not call an AI model. This keeps the first integration useful for content production while
-preserving the human review gate.
+The endpoint returns deterministic markdown drafts with YAML frontmatter, explicit source context,
+and `VERIFY` markers. It does not call an AI model. The response says so through warnings and
+`sourceUsage.voiceApplied=false`; source preservation must not be represented as autonomous prose
+generation or voice refinement.

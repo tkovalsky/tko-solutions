@@ -109,6 +109,7 @@ async function composeOpportunity(slug) {
       generatedAt,
       generatedHash,
       opportunityId: opportunity.id,
+      status: "draft",
     },
     create: {
       slug: opportunity.slug,
@@ -143,7 +144,7 @@ async function composeOpportunity(slug) {
 
   await prisma.asset.update({
     where: { id: asset.id },
-    data: { currentVersionNumber: versionNumber },
+    data: { currentVersionNumber: versionNumber, status: "draft" },
   });
 
   for (const { evidence } of opportunity.evidenceLinks) {

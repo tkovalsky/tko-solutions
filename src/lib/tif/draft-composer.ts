@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { TIF_COMPOSE_CONTRACT_VERSION, type ComposeSourceUsage } from "./contract";
 
 const FrameworkSchema = z.enum(["rachel_community", "rachel_relocation", "cre_tenant_rep", "business_exit"]);
 const ArtifactSchema = z.enum([
@@ -18,12 +19,38 @@ const ArtifactSchema = z.enum([
 ]);
 const VoiceSchema = z.enum(["rachel", "consumer", "todd", "commercial_operator"]);
 
+const ComposeContextSchema = z.object({
+  contentType: z.string().min(1).optional(),
+  persona: z.string().min(1).optional(),
+  funnelStage: z.string().min(1).optional(),
+  targetUrl: z.string().min(1).optional(),
+  county: z.string().min(2).optional(),
+  originMarket: z.string().min(2).optional(),
+  destinationMarket: z.string().min(2).optional(),
+  community: z.string().min(2).optional(),
+  communities: z.array(z.string().min(2)).optional(),
+  internalLinks: z.array(z.string().min(2)).optional(),
+  tags: z.array(z.string().min(2)).optional(),
+}).strict();
+
 const ComposeDraftRequestSchema = z.object({
+  contractVersion: z.literal(TIF_COMPOSE_CONTRACT_VERSION).default(TIF_COMPOSE_CONTRACT_VERSION),
   framework: FrameworkSchema,
   artifact: ArtifactSchema,
   voice: VoiceSchema.default("rachel"),
   inputs: z
     .object({
+      context: ComposeContextSchema.optional(),
+      facts: z.string().max(100_000).optional(),
+      notes: z.string().max(20_000).optional(),
+      revisionFeedback: z.string().max(20_000).optional(),
+      // Compatibility aliases remain explicit while RachelOS moves to the canonical fields.
+      knownFacts: z.string().max(100_000).optional(),
+      operatorNotes: z.string().max(20_000).optional(),
+      contentType: z.string().min(1).optional(),
+      persona: z.string().min(1).optional(),
+      funnelStage: z.string().min(1).optional(),
+      targetUrl: z.string().min(1).optional(),
       title: z.string().min(3).optional(),
       slug: z.string().min(3).optional(),
       community: z.string().min(2).optional(),
@@ -55,12 +82,14 @@ const ComposeDraftRequestSchema = z.object({
       brokerageName: z.string().min(2).optional(),
       licensedReferralPartner: z.string().min(2).optional(),
     })
+    .strict()
     .default({}),
-});
+}).strict();
 
 export type ComposeDraftRequest = z.input<typeof ComposeDraftRequestSchema>;
 export type ComposeDraftResult = {
   ok: true;
+  contractVersion: typeof TIF_COMPOSE_CONTRACT_VERSION;
   framework: z.infer<typeof FrameworkSchema>;
   artifact: z.infer<typeof ArtifactSchema>;
   voice: z.infer<typeof VoiceSchema>;
@@ -69,6 +98,7 @@ export type ComposeDraftResult = {
   markdown: string;
   warnings: string[];
   suggestedPath: string;
+  sourceUsage: ComposeSourceUsage;
 };
 
 type ParsedRequest = z.infer<typeof ComposeDraftRequestSchema>;
@@ -87,7 +117,70 @@ function yamlList(values: string[]) {
 }
 
 function normalizeRequest(payload: ComposeDraftRequest) {
-  return ComposeDraftRequestSchema.parse(payload);
+  const parsed = ComposeDraftRequestSchema.parse(payload);
+  const context = parsed.inputs.context ?? {};
+
+  return {
+    ...parsed,
+    inputs: {
+      ...context,
+      ...parsed.inputs,
+      context,
+      facts: parsed.inputs.facts ?? parsed.inputs.knownFacts,
+      notes: parsed.inputs.notes ?? parsed.inputs.operatorNotes,
+    },
+  };
+}
+
+function extractFactReferences(facts: string | undefined) {
+  if (!facts) return [];
+
+  return Array.from(facts.matchAll(/\[Fact\s+(\d+)\s+v(\d+)\]/gi), (match) => `Fact ${match[1]} v${match[2]}`)
+    .filter((value, index, values) => values.indexOf(value) === index);
+}
+
+function sourceContextMarkdown(request: ParsedRequest) {
+  const facts = request.inputs.facts?.trim();
+  const notes = request.inputs.notes?.trim();
+  const revisionFeedback = request.inputs.revisionFeedback?.trim();
+  const context = request.inputs.context;
+  const contextRows = context
+    ? Object.entries(context)
+        .filter(([, value]) => value !== undefined && (!Array.isArray(value) || value.length > 0))
+        .map(([key, value]) => `- **${key}:** ${Array.isArray(value) ? value.join(", ") : value}`)
+    : [];
+
+  if (!facts && !notes && !revisionFeedback && contextRows.length === 0) {
+    return "";
+  }
+
+  const sections = [
+    "## Source Context for Human Review",
+    "",
+    "> This section preserves source material supplied by the publication system. TIF does not independently verify or upgrade these claims; the human publication gate remains authoritative.",
+  ];
+
+  if (facts) {
+    sections.push("", "### Approved Fact Versions Supplied", "", facts);
+  }
+  if (notes) {
+    sections.push("", "### Operator Notes", "", notes);
+  }
+  if (revisionFeedback) {
+    sections.push(
+      "",
+      "### Revision Direction",
+      "",
+      revisionFeedback,
+      "",
+      "> The deterministic composer preserves this direction for the editor; it does not claim to have performed model-backed prose revision.",
+    );
+  }
+  if (contextRows.length > 0) {
+    sections.push("", "### Publication Context", "", ...contextRows);
+  }
+
+  return `\n\n${sections.join("\n")}\n`;
 }
 
 function todayIsoDate() {
@@ -701,6 +794,11 @@ export function composeDraft(payload: ComposeDraftRequest): ComposeDraftResult {
         "This draft intentionally avoids unsupported claims and leaves VERIFY markers where source facts are needed.",
       ];
 
+  warnings.push(`Voice "${request.voice}" is recorded as metadata only; automated voice refinement is not operational.`);
+  if (request.inputs.revisionFeedback?.trim()) {
+    warnings.push("Revision feedback is preserved for the human editor; this deterministic composer does not rewrite prose from revision instructions.");
+  }
+
   const draft = isCommercial
     ? commercialDraft(request, warnings)
     : request.artifact === "relocation_guide"
@@ -708,19 +806,29 @@ export function composeDraft(payload: ComposeDraftRequest): ComposeDraftResult {
       : request.artifact === "community_page"
         ? communityDraft(request, warnings)
         : comparisonDraft(request, warnings);
+  const factReferences = extractFactReferences(request.inputs.facts);
+  const sourceUsage: ComposeSourceUsage = {
+    factsIncluded: Boolean(request.inputs.facts?.trim()),
+    factReferences,
+    notesIncluded: Boolean(request.inputs.notes?.trim()),
+    revisionFeedbackIncluded: Boolean(request.inputs.revisionFeedback?.trim()),
+    voiceApplied: false,
+  };
 
   return {
     ok: true,
+    contractVersion: TIF_COMPOSE_CONTRACT_VERSION,
     framework: request.framework,
     artifact: request.artifact,
     voice: request.voice,
     slug: draft.slug,
     title: draft.title,
-    markdown: draft.markdown,
+    markdown: `${draft.markdown.trimEnd()}${sourceContextMarkdown(request)}`,
     warnings,
     suggestedPath: isCommercial
       ? `src/content/commercial/${draft.slug}.md`
       : `src/content/guides/${draft.slug}.md`,
+    sourceUsage,
   };
 }
 

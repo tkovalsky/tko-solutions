@@ -304,7 +304,26 @@ function DerivativeForm({ assetId, slug }: { assetId: string; slug: string }) {
           </label>
           <label className="grid gap-1">
             <span className="text-xs text-muted">Tracked content link</span>
-            <input name="destinationUrl" type="url" placeholder="https://...?...utm_source=" className="rounded-md border border-input-border px-3 py-2" />
+            <input name="destinationUrl" type="url" placeholder="https://tko.solutions/...?utm_source=linkedin&utm_medium=social&utm_campaign=pa_quality" className="rounded-md border border-input-border px-3 py-2" />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Editorial track</span>
+            <select name="editorialTrack" defaultValue="expertise" className="rounded-md border border-input-border px-3 py-2">
+              <option value="expertise">Todd&apos;s expertise</option>
+              <option value="system_proof">Evidence that the method works</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">CTA stage</span>
+            <select name="ctaStage" defaultValue="awareness" className="rounded-md border border-input-border px-3 py-2">
+              <option value="awareness">Awareness</option>
+              <option value="consideration">Consideration</option>
+              <option value="conversion">Conversion</option>
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-muted">Claim and permission boundary</span>
+            <textarea name="claimBoundary" required rows={3} placeholder="Public CMS sources and TKO methodology only; illustrative scenario; no client result claim." className="rounded-md border border-input-border px-3 py-2" />
           </label>
           <label className="grid gap-1">
             <span className="text-xs text-muted">Geography</span>
@@ -417,6 +436,17 @@ function DerivativeForm({ assetId, slug }: { assetId: string; slug: string }) {
             <span className="text-xs text-muted">Licensing disclosure</span>
             <textarea name="licenseDisclosure" rows={3} placeholder="Educational intelligence only; licensed services handled by..." className="rounded-md border border-input-border px-3 py-2" />
           </label>
+          <div className="grid gap-2 border-t border-border pt-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">Publication gate</p>
+            <label className="flex items-start gap-2 text-xs leading-5">
+              <input name="confidentialityConfirmed" type="checkbox" required className="mt-1" />
+              <span>I confirm this source excludes confidential employer, client, patient, and deal information. Current Cognizant/UnitedHealthcare material is not allowed.</span>
+            </label>
+            <label className="flex items-start gap-2 text-xs leading-5">
+              <input name="manualPublicationConfirmed" type="checkbox" required className="mt-1" />
+              <span>Todd will review, edit, and publish this package manually. TIF will not post or engage automatically.</span>
+            </label>
+          </div>
         </div>
       </details>
       <button type="submit" className="mt-3 rounded-lg border border-primary px-3 py-1.5 text-sm font-semibold text-primary">

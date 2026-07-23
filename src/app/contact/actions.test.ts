@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { submitDiagnosticIntake } from "@/app/contact/actions";
 import { notifyLead } from "@/lib/leads/notify";
 import { persistInboundLead } from "@/lib/leads/persist";
@@ -19,6 +19,10 @@ vi.mock("@/lib/leads/notify", () => ({
 
 const mockedPersistInboundLead = vi.mocked(persistInboundLead);
 const mockedNotifyLead = vi.mocked(notifyLead);
+
+beforeEach(() => {
+  vi.clearAllMocks();
+});
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -65,7 +69,10 @@ describe("submitDiagnosticIntake", () => {
       updatedAt: new Date("2026-07-02T12:00:00.000Z"),
     };
     mockedPersistInboundLead.mockResolvedValue(lead);
-    mockedNotifyLead.mockResolvedValue({ status: "skipped", reason: "missing_env" });
+    mockedNotifyLead.mockResolvedValue({
+      status: "sent",
+      notifiedAt: new Date("2026-07-02T12:01:00.000Z"),
+    });
 
     await expect(submitDiagnosticIntake(validFormData())).rejects.toThrow(
       "REDIRECT:/contact?status=submitted",
@@ -83,13 +90,9 @@ describe("submitDiagnosticIntake", () => {
         email: "todd@example.com",
         company: "Example Co",
         role: "COO",
-        organizationType: "specialty-medical-group",
         workflowSegment: "Cardiology prior authorizations for two high-volume payers.",
         currentTrigger: "turnaround-backlog",
-        triggerContext: "Turnaround time increased before a planned automation decision.",
         timing: "31-90",
-        executiveSponsor: "VP Revenue Cycle",
-        commercialReadiness: "prepared",
         privacyConsent: true,
         message: "We need a defensible next move.",
       },
@@ -98,7 +101,10 @@ describe("submitDiagnosticIntake", () => {
     expect(mockedNotifyLead).toHaveBeenCalledWith(lead);
   });
 
-  it("still redirects successfully when notification fails safely", async () => {
+  it.each([
+    { status: "skipped" as const, reason: "missing_env" as const },
+    { status: "failed" as const, reason: "Resend unavailable" },
+  ])("shows a notification-specific recovery state when notification is $status", async (notification) => {
     mockedPersistInboundLead.mockResolvedValue({
       id: "lead_123",
       name: "Todd",
@@ -113,11 +119,23 @@ describe("submitDiagnosticIntake", () => {
       createdAt: new Date("2026-07-02T12:00:00.000Z"),
       updatedAt: new Date("2026-07-02T12:00:00.000Z"),
     });
-    mockedNotifyLead.mockResolvedValue({ status: "failed", reason: "Resend unavailable" });
+    mockedNotifyLead.mockResolvedValue(notification);
 
     await expect(submitDiagnosticIntake(validFormData())).rejects.toThrow(
+      "REDIRECT:/contact?status=notification-error",
+    );
+  });
+
+  it("silently accepts honeypot submissions without persisting or notifying", async () => {
+    const formData = validFormData();
+    formData.set("website", "https://spam.example");
+
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow(
       "REDIRECT:/contact?status=submitted",
     );
+
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+    expect(mockedNotifyLead).not.toHaveBeenCalled();
   });
 
   it("redirects to an explicit error state when persistence fails", async () => {
@@ -137,13 +155,9 @@ function validFormData() {
   formData.set("email", "todd@example.com");
   formData.set("company", "Example Co");
   formData.set("role", "COO");
-  formData.set("organizationType", "specialty-medical-group");
   formData.set("workflowSegment", "Cardiology prior authorizations for two high-volume payers.");
   formData.set("currentTrigger", "turnaround-backlog");
-  formData.set("triggerContext", "Turnaround time increased before a planned automation decision.");
   formData.set("timing", "31-90");
-  formData.set("executiveSponsor", "VP Revenue Cycle");
-  formData.set("commercialReadiness", "prepared");
   formData.set("privacyConsent", "on");
   formData.set("message", "We need a defensible next move.");
   return formData;

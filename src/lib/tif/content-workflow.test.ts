@@ -5,6 +5,7 @@ import {
   generateDerivativeCopy,
   deriveBehavioralContentStrategy,
   makeContentSlug,
+  validateChannelPackageGate,
 } from "./content-workflow";
 
 describe("content workflow helpers", () => {
@@ -87,6 +88,82 @@ describe("content workflow helpers", () => {
     expect(instagram).toContain("link sticker destination");
     expect(video).toContain("Rights log:");
     expect(video).toContain("Delray Beach, Florida");
+  });
+
+  it("requires approval, traceability, tracked URLs, and human review for social packages", () => {
+    const errors = validateChannelPackageGate({
+      type: "linkedin_post",
+      assetStatus: "review",
+      sourceText: "A public-source operating guide.",
+      context: {
+        destinationUrl: "https://tko.solutions/insights/example",
+      },
+      confidentialityConfirmed: false,
+      manualPublicationConfirmed: false,
+    });
+
+    expect(errors).toContain("Create a source asset version before generating a social package.");
+    expect(errors).toContain("Move the current source asset version through review and approval first.");
+    expect(errors).toContain("Record the claim and permission boundary.");
+    expect(errors).toContain("Set utm_source=linkedin for this package.");
+    expect(errors).toContain("Set utm_medium=social.");
+    expect(errors).toContain("Add a non-empty utm_campaign.");
+    expect(errors).toContain("Confirm that the source excludes confidential employer, client, patient, and deal information.");
+    expect(errors).toContain("Confirm that Todd will review and publish this package manually.");
+  });
+
+  it("accepts an approved, traceable LinkedIn package and blocks current-client identifiers", () => {
+    const approved = validateChannelPackageGate({
+      type: "linkedin_post",
+      assetStatus: "approved",
+      sourceVersionNumber: 3,
+      sourceText: "A public CMS-based prior authorization guide.",
+      context: {
+        destinationUrl:
+          "https://tko.solutions/insights/prior-authorization?utm_source=linkedin&utm_medium=social&utm_campaign=pa_quality",
+        claimBoundary: "Public CMS sources and TKO methodology; no client result claim.",
+      },
+      confidentialityConfirmed: true,
+      manualPublicationConfirmed: true,
+    });
+    const protectedSource = validateChannelPackageGate({
+      type: "linkedin_post",
+      assetStatus: "approved",
+      sourceVersionNumber: 3,
+      sourceText: "A lesson from the current Cognizant project.",
+      context: {
+        destinationUrl:
+          "https://tko.solutions/insights/prior-authorization?utm_source=linkedin&utm_medium=social&utm_campaign=pa_quality",
+        claimBoundary: "Anonymized current-client experience.",
+      },
+      confidentialityConfirmed: true,
+      manualPublicationConfirmed: true,
+    });
+
+    expect(approved).toEqual([]);
+    expect(protectedSource.join(" ")).toContain("Current-client or employer identifiers are blocked");
+  });
+
+  it("creates materially different TKO packages for LinkedIn, Instagram, and Facebook", () => {
+    const shared = {
+      title: "Prior Authorization Operational Quality",
+      body: "Teams should measure rework and exceptions before adding automation.",
+      context: {
+        buyerDomain: "tko_executive" as const,
+        cta: "Read the guide",
+        destinationUrl: "https://tko.solutions/insights/prior-authorization",
+        claimBoundary: "Public sources and TKO method only.",
+      },
+    };
+
+    const linkedin = generateDerivativeCopy({ type: "linkedin_post", ...shared });
+    const instagram = generateDerivativeCopy({ type: "instagram_post", ...shared });
+    const facebook = generateDerivativeCopy({ type: "facebook_post", ...shared });
+
+    expect(linkedin).toContain("Before choosing another tool");
+    expect(instagram).toContain("Slide 7");
+    expect(facebook).toContain("A practical note");
+    expect(new Set([linkedin, instagram, facebook]).size).toBe(3);
   });
 
   it("aligns luxury relocation content to an expressed possibility journey without exploiting mortality", () => {

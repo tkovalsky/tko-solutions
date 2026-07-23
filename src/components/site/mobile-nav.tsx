@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -11,6 +11,8 @@ type NavItem = { href: string; label: string };
 
 export function MobileNav({ items }: { items: NavItem[] }) {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   // Close the menu whenever the route changes.
@@ -22,10 +24,38 @@ export function MobileNav({ items }: { items: NavItem[] }) {
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        requestAnimationFrame(() => menuButtonRef.current?.focus());
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const panelFocusable = Array.from(
+        panelRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      );
+      const focusable = [menuButtonRef.current, ...panelFocusable].filter(
+        (element): element is HTMLElement => Boolean(element),
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => {
+      panelRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
+    });
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -35,6 +65,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
   return (
     <div className="lg:hidden">
       <button
+        ref={menuButtonRef}
         type="button"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
@@ -51,7 +82,11 @@ export function MobileNav({ items }: { items: NavItem[] }) {
 
       {open ? (
         <div
+          ref={panelRef}
           id="mobile-nav-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation"
           className="absolute inset-x-0 top-full border-b border-border bg-white shadow-lg"
         >
           <nav

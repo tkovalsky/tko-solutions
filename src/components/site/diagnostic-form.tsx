@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { trackConversion } from "@/lib/conversion-events";
@@ -56,7 +57,7 @@ export function DiagnosticForm({
     if (status === "invalid") {
       trackConversion("contact_form_submit_error", { errorType: "server_validation" });
     }
-    if (status === "error") {
+    if (status === "error" || status === "notification-error") {
       trackConversion("contact_form_submit_error", { errorType: "submission_failure" });
     }
   }, [status]);
@@ -69,10 +70,9 @@ export function DiagnosticForm({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     const formData = new FormData(event.currentTarget);
-    const prepared = formData.get("commercialReadiness") === "prepared";
     const activeTiming = formData.get("timing") !== "exploring";
     trackConversion("contact_form_submit_attempt", { ctaLocation: "contact_form" });
-    trackConversion("qualified_intake_indicator", { qualified: prepared && activeTiming });
+    trackConversion("qualified_intake_indicator", { qualified: activeTiming });
   }
 
   function handleInvalid() {
@@ -94,27 +94,27 @@ export function DiagnosticForm({
         <input key={name} type="hidden" name={name} value={value} />
       ))}
 
+      <div aria-hidden="true" className="absolute -left-[10000px] top-auto size-px overflow-hidden">
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2">
         <Field id="name" label="Name" autoComplete="name" />
         <Field id="email" label="Business email" type="email" autoComplete="email" />
         <Field id="company" label="Organization" autoComplete="organization" />
-        <Field id="role" label="Title / role" autoComplete="organization-title" />
+        <Field
+          id="role"
+          label="Title / role (optional)"
+          autoComplete="organization-title"
+          required={false}
+        />
       </div>
-
-      <SelectField id="organizationType" label="Organization type">
-        <option value="">Select one</option>
-        <option value="specialty-medical-group">Specialty medical group</option>
-        <option value="mso">MSO</option>
-        <option value="health-system">Health system</option>
-        <option value="payer-health-plan">Payer / health plan</option>
-        <option value="healthcare-technology-services">Healthcare technology or services</option>
-        <option value="other">Other</option>
-      </SelectField>
 
       <Field
         id="workflowSegment"
-        label="Which prior-authorization workflow or specialty/payer segment is under pressure?"
-        placeholder="Describe the workflow boundary, specialty, payer segment, location, or team involved. Use de-identified operating context only."
+        label="Which prior-authorization workflow is under pressure?"
+        placeholder="Describe the workflow, specialty, payer segment, location, or team involved. Use de-identified operating context only."
         textarea
       />
 
@@ -129,41 +129,18 @@ export function DiagnosticForm({
         <option value="other">Other</option>
       </SelectField>
 
-      <Field
-        id="triggerContext"
-        label="What changed or made this urgent now?"
-        placeholder="Describe the operating pressure and the decision leadership needs to make."
-        textarea
-      />
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <SelectField id="timing" label="When does leadership need a decision?">
-          <option value="">Select one</option>
-          <option value="now">Active now</option>
-          <option value="30">Within 30 days</option>
-          <option value="31-90">Within 31–90 days</option>
-          <option value="exploring">Exploring only</option>
-        </SelectField>
-        <Field
-          id="executiveSponsor"
-          label="Executive sponsor / decision owner"
-          placeholder="Name or role"
-        />
-      </div>
-
-      <SelectField id="commercialReadiness" label="Commercial readiness">
+      <SelectField id="timing" label="When does leadership need a decision?">
         <option value="">Select one</option>
-        <option value="prepared">
-          Prepared to fund a $25,000 Diagnostic if fit is confirmed
-        </option>
-        <option value="approval-required">Budget approval required</option>
-        <option value="early-exploration">Early exploration</option>
+        <option value="now">Active now</option>
+        <option value="30">Within 30 days</option>
+        <option value="31-90">Within 31–90 days</option>
+        <option value="exploring">Exploring only</option>
       </SelectField>
 
       <Field
         id="message"
-        label="Optional context"
-        placeholder="What has already been tried, and what evidence is available?"
+        label="What changed, and what has already been tried? (optional)"
+        placeholder="Describe the operating pressure, decision approaching, and evidence available."
         textarea
         required={false}
       />
@@ -184,7 +161,11 @@ export function DiagnosticForm({
           className="mt-1 size-4 rounded border-[color:var(--input-border)] accent-[color:var(--primary)] focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
         <Label htmlFor="privacyConsent">
-          I consent to TKO using this information to review and respond to my request.
+          I consent to TKO using this information to review and respond to my request.{" "}
+          <Link href="/privacy" className="text-primary underline-offset-4 hover:underline">
+            Privacy notice
+          </Link>
+          .
         </Label>
       </div>
 

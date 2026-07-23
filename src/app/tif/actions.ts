@@ -19,6 +19,7 @@ import {
   deriveBehavioralContentStrategy,
   generateDerivativeCopy,
   makeContentSlug,
+  validateChannelPackageGate,
 } from "@/lib/tif/content-workflow";
 import { getAssetManualEditState, shouldBlockRegeneration } from "@/lib/tif/manual-edit-protection";
 import { tifDb } from "@/lib/tif/db";
@@ -147,6 +148,9 @@ export async function createDerivativeAsset(formData: FormData) {
     objective: optionalString(formData, "objective"),
     cta: optionalString(formData, "cta"),
     destinationUrl: optionalString(formData, "destinationUrl"),
+    editorialTrack: optionalString(formData, "editorialTrack") as ChannelPackageContext["editorialTrack"],
+    ctaStage: optionalString(formData, "ctaStage") as ChannelPackageContext["ctaStage"],
+    claimBoundary: optionalString(formData, "claimBoundary"),
     geography: optionalString(formData, "geography"),
     privacyMode,
     channelNotes: optionalString(formData, "channelNotes"),
@@ -182,6 +186,18 @@ export async function createDerivativeAsset(formData: FormData) {
   const body =
     latestVersion?.body ??
     `Source asset "${asset.title}" has no captured draft version yet. Regenerate the asset first.`;
+  const gateErrors = validateChannelPackageGate({
+    type,
+    assetStatus: asset.status,
+    sourceVersionNumber: latestVersion?.versionNumber,
+    sourceText: `${asset.title}\n${body}`,
+    context,
+    confidentialityConfirmed: formData.get("confidentialityConfirmed") === "on",
+    manualPublicationConfirmed: formData.get("manualPublicationConfirmed") === "on",
+  });
+  if (gateErrors.length > 0) {
+    throw new Error(gateErrors.join(" "));
+  }
   const behavioralStrategy = deriveBehavioralContentStrategy(context, `${asset.title} ${body}`);
 
   await tifDb.derivativeAsset.create({

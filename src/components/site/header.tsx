@@ -5,10 +5,10 @@ import { MobileNav } from "@/components/site/mobile-nav";
 import { site } from "@/lib/site";
 
 const navItems = [
-  { href: "/", label: "Home" },
   { href: "/services/diagnostic", label: "Diagnostic" },
-  { href: "/healthcare", label: "How We Help" },
-  { href: "/selected-work", label: "Results" },
+  { href: "/healthcare", label: "How It Works" },
+  { href: "/selected-work", label: "Evidence" },
+  { href: "/insights", label: "Insights" },
   { href: "/founder", label: "About" },
 ];
 

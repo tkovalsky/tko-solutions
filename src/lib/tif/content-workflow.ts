@@ -59,6 +59,9 @@ export type ChannelPackageContext = {
   objective?: string;
   cta?: string;
   destinationUrl?: string;
+  editorialTrack?: "expertise" | "system_proof";
+  ctaStage?: "awareness" | "consideration" | "conversion";
+  claimBoundary?: string;
   geography?: string;
   privacyMode?: "not_applicable" | "anonymized" | "composite" | "consent_backed";
   channelNotes?: string;
@@ -78,6 +81,102 @@ export type ChannelPackageContext = {
   referralPartner?: string;
   licenseDisclosure?: string;
 };
+
+const GOVERNED_SOCIAL_TYPES = new Set<DerivativeAssetKind>([
+  "linkedin_post",
+  "linkedin_carousel",
+  "facebook_post",
+  "instagram_post",
+  "instagram_story",
+  "instagram_reel_script",
+]);
+
+const PLATFORM_BY_DERIVATIVE: Partial<Record<DerivativeAssetKind, "linkedin" | "facebook" | "instagram">> = {
+  linkedin_post: "linkedin",
+  linkedin_carousel: "linkedin",
+  facebook_post: "facebook",
+  instagram_post: "instagram",
+  instagram_story: "instagram",
+  instagram_reel_script: "instagram",
+};
+
+const CURRENT_CLIENT_TERMS = [
+  /\bcognizant\b/i,
+  /\bunited\s*health\s*care\b/i,
+  /\bunitedhealthcare\b/i,
+  /\bunitedhealth\s+group\b/i,
+  /\buhc\b/i,
+];
+
+export function validateChannelPackageGate({
+  type,
+  assetStatus,
+  sourceVersionNumber,
+  sourceText,
+  context,
+  confidentialityConfirmed,
+  manualPublicationConfirmed,
+}: {
+  type: DerivativeAssetKind;
+  assetStatus: string;
+  sourceVersionNumber?: number;
+  sourceText: string;
+  context: ChannelPackageContext;
+  confidentialityConfirmed: boolean;
+  manualPublicationConfirmed: boolean;
+}) {
+  if (!GOVERNED_SOCIAL_TYPES.has(type)) return [];
+
+  const errors: string[] = [];
+  if (!sourceVersionNumber) {
+    errors.push("Create a source asset version before generating a social package.");
+  }
+  if (assetStatus !== "approved" && assetStatus !== "published") {
+    errors.push("Move the current source asset version through review and approval first.");
+  }
+  if (!context.claimBoundary?.trim()) {
+    errors.push("Record the claim and permission boundary.");
+  }
+  if (!confidentialityConfirmed) {
+    errors.push("Confirm that the source excludes confidential employer, client, patient, and deal information.");
+  }
+  if (!manualPublicationConfirmed) {
+    errors.push("Confirm that Todd will review and publish this package manually.");
+  }
+
+  const platform = PLATFORM_BY_DERIVATIVE[type];
+  try {
+    const destination = new URL(context.destinationUrl ?? "");
+    if (destination.protocol !== "https:") {
+      errors.push("Use an HTTPS canonical destination URL.");
+    }
+    if (platform && destination.searchParams.get("utm_source") !== platform) {
+      errors.push(`Set utm_source=${platform} for this package.`);
+    }
+    if (destination.searchParams.get("utm_medium") !== "social") {
+      errors.push("Set utm_medium=social.");
+    }
+    if (!destination.searchParams.get("utm_campaign")) {
+      errors.push("Add a non-empty utm_campaign.");
+    }
+  } catch {
+    errors.push("Add a valid tracked canonical destination URL.");
+  }
+
+  const protectedText = [
+    sourceText,
+    context.channelNotes,
+    context.claimBoundary,
+    context.fieldObservationSummary,
+  ].filter(Boolean).join(" ");
+  if (CURRENT_CLIENT_TERMS.some((term) => term.test(protectedText))) {
+    errors.push(
+      "Current-client or employer identifiers are blocked from social generation. Remove them; a separate permissioned workflow is not implemented.",
+    );
+  }
+
+  return errors;
+}
 
 export type BehavioralContentStrategy = {
   buyerDomain: NonNullable<ChannelPackageContext["buyerDomain"]>;
@@ -248,9 +347,17 @@ export function generateDerivativeCopy({
         "",
         excerpt,
         "",
-        "The practical question: what decision, workflow, or buyer belief should this change next?",
+        "Before choosing another tool, I would ask:",
+        "",
+        "- Where does the standard path stop?",
+        "- Which exceptions create avoidable rework?",
+        "- Who owns the decision when the case leaves the standard path?",
+        "",
+        "That is usually where the operating problem becomes specific enough to improve.",
         "",
         `${cta}: ${destination}`,
+        "",
+        "Todd review required: replace any phrasing that does not sound natural before publishing.",
       ].join("\n");
     case "linkedin_carousel":
       return [
@@ -269,25 +376,34 @@ export function generateDerivativeCopy({
       ].join("\n");
     case "facebook_post":
       return [
-        `${title}`,
+        `A practical note on ${title.toLowerCase()}`,
         "",
         excerpt,
         "",
-        "Useful for anyone comparing options and trying to make the next step clearer.",
+        "The useful question is not whether a team is busy. It is where preventable work enters the process, who has to resolve it, and what evidence would support a better decision.",
+        "",
+        "I put the fuller framework in the linked guide for anyone working through a similar operating question.",
         "",
         `${cta}: ${destination}`,
+        "",
+        "Todd review required: keep this conversational and remove any detail learned from confidential work.",
       ].join("\n");
     case "instagram_post":
       return [
-        `${title}`,
+        `Instagram carousel: ${title}`,
         "",
-        excerpt,
+        `Slide 1 — ${title}`,
+        `Slide 2 — The operating signal: ${excerpt}`,
+        "Slide 3 — Measure staff touches per case.",
+        "Slide 4 — Separate clean submissions from preventable rework.",
+        "Slide 5 — Make exceptions and decision owners visible.",
+        "Slide 6 — Test whether the workflow is ready to automate.",
+        `Slide 7 — ${cta}. Use the approved profile link.`,
         "",
-        `Practical ${geography} takeaway: name one decision, tradeoff, or question the audience can use.`,
-        "",
-        `${cta}: use the tracked link in bio or approved profile destination.`,
         `Destination: ${destination}`,
-        "Creative: authentic 4:5 location image, carousel, or short original video.",
+        "Creative: 4:5 text-led carousel using TKO brand styles; do not use client or employer imagery.",
+        "Caption: summarize one measure in plain language, state that the full guide is linked, and ask one non-sensitive question.",
+        "Todd review required before manual publication.",
         governance,
       ].join("\n");
     case "instagram_story":
@@ -486,6 +602,8 @@ function governanceBlock(context: ChannelPackageContext, strategy: BehavioralCon
   return [
     `BEHAVIORAL ALIGNMENT — ${strategy.buyerDomain} · ${strategy.journeyStage} · ${strategy.searchIntent} · ${strategy.decisionJob}.`,
     `Decision objective: ${strategy.desiredAction}. Recommended archetype: ${strategy.recommendedArchetype}. CTA intensity: ${strategy.ctaIntensity}.`,
+    `Editorial track: ${context.editorialTrack ?? "not_recorded"}. CTA stage: ${context.ctaStage ?? "not_recorded"}.`,
+    `Claim / permission boundary: ${context.claimBoundary ?? "NOT RECORDED — DO NOT PUBLISH"}.`,
     "APPROVAL REQUIRED — verify every claim, link, privacy decision, and channel rule before publication.",
     `Privacy mode: ${privacy}.`,
     context.channelNotes ? `Channel notes: ${context.channelNotes}` : "Channel notes: verify current placement and community rules.",
