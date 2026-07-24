@@ -664,45 +664,23 @@ Use URL Inspection for individual pages, Page Indexing for patterns, Crawl Stats
 
 ### Profile
 
-Because Todd is currently employed by Cognizant on a UnitedHealthcare project, profile changes should be made in two stages.
+Use one commercial profile that accurately retains Todd's Cognizant employment while excluding current-client identifiers, systems, project details, metrics, and proprietary terminology. Todd has decided to proceed without making employer approval a launch dependency. That is an owner decision, not a legal or employment-policy conclusion.
 
-#### Stage 1 — employment-safe profile alignment
+The authoritative paste-ready profile—including the headline, banner, About, Cognizant entry, TKO entry, Services, Featured items, skills, recommendations, and final checklist—is:
 
-Use while outside-work approval is unresolved:
+[Todd LinkedIn Profile Content](./TODD_LINKEDIN_PROFILE_CONTENT_2026_07_23.md)
 
-**Headline**
+#### Recommended commercial profile
 
-> Senior Manager, Healthcare Transformation, AI & Analytics | Healthcare Operations, Workflow Modernization & Human-Controlled AI | Founder, TKO Solutions
-
-This improves relevance without publicly soliciting work that may overlap with a current client engagement.
+> Healthcare Transformation Leader | Prior Authorization & Utilization Management | Workflow Modernization, AI Governance & Program Recovery | Founder, TKO Solutions
 
 **Banner**
 
-> Better workflows before bigger automation.  
-> Healthcare operations · decision rights · human-controlled AI
-
-**About opening**
-
-> I work at the intersection of healthcare operations, workflow modernization, product, governance, and implementation.
+> PRIOR AUTHORIZATION & HEALTHCARE WORKFLOW IMPROVEMENT
 >
-> Across regulated and relationship-driven environments, I have seen the same failure pattern: the system stores information, but the operating judgment still lives across people, workarounds, handoffs, and exceptions.
+> Senior judgment. Principal-led. Evidence before automation.
 >
-> My work focuses on making that decision layer visible—what is happening, where work stalls, who owns the next decision, which exceptions require human judgment, and what should be automated only after the workflow is understood.
-
-The remaining About section can use the verified career history and founder-built proof, but should not name UnitedHealthcare or discuss the current project.
-
-#### Stage 2 — commercial TKO profile
-
-Use only after written confirmation that the outside activity and positioning are allowed.
-
-**Headline**
-
-> Prior Authorization Operations Advisor | Helping specialty medical groups and MSOs find the workflow causes of delays, denials, rework, and staff dependency
-
-**Banner**
-
-> Fix the prior-authorization workflow before you fund more automation.  
-> 15-business-day Diagnostic · TKO Solutions · tko.solutions
+> tko.solutions
 
 **About**
 
@@ -725,12 +703,12 @@ Use only after written confirmation that the outside activity and positioning ar
 Todd can complete these changes manually in approximately 60–90 minutes once the wording is approved:
 
 1. **Contact info:** Replace the current unrelated website with `https://tko.solutions`. Add a TKO-domain email when configured.
-2. **Headline:** Use the approved Stage 1 or Stage 2 version. Do not leave the headline as only an employer/title label.
+2. **Headline:** Use the recommended commercial headline. Do not leave the headline as only an employer/title label.
 3. **Banner:** Upload a restrained 1584 × 396 banner with one message and the site URL. Do not use employer or client logos.
 4. **Profile photo:** Use a current, well-lit professional headshot consistent with the site.
 5. **About:** Replace the broad generalist opening with the approved text. Put the buyer/problem or operating thesis in the first two visible lines.
 6. **Featured:** Pin the Diagnostic, flagship guide, PA evidence page, and RachelOS proof in that order. Remove old articles that reinforce lending, real estate marketing, or unrelated service categories from the first visible set.
-7. **Experience — Cognizant:** Keep the verified employer/title. Describe healthcare transformation, workflow, governance, and AI/analytics at a general level. Do not name the client or project.
+7. **Experience — Cognizant:** Keep the verified employer/title. Describe healthcare transformation, workflow, governance, and AI/analytics at a general level. Do not name the client, project, systems, metrics, or proprietary terminology.
 8. **Experience — TKO Solutions:** Add the focused founder role, public offer, delivery boundary, and link. Avoid implying Cognizant sponsorship.
 9. **Services:** Keep only services Todd is actually allowed and prepared to sell. Prefer Healthcare Consulting, Management Consulting, Change Management, Program Management, and IT/Technology Consulting if those are the closest available categories. Remove SaaS Development, Application Development, Cloud Application Development, Executive Coaching, and other categories that dilute the offer unless they remain real businesses.
 10. **Recommendations:** Request 3–5 recommendations from former colleagues or approved contacts who can speak to workflow diagnosis, requirements clarity, cross-functional judgment, documentation, governance, and execution. Do not request recommendations from current UnitedHealthcare stakeholders without written approval.
@@ -1196,7 +1174,7 @@ Compare rates and buyer quality, not isolated impressions.
 
 ### Risks
 
-- Employer conflict or perceived employer endorsement.
+- Perceived employer/client endorsement or accidental current-client disclosure.
 - Overstating anonymous enterprise experience.
 - Treating Rachel pipeline/deals as TIF-caused revenue.
 - Lost inquiries from unmonitored notification failure.
@@ -1213,11 +1191,11 @@ Compare rates and buyer quality, not isolated impressions.
 - The target remains U.S. provider-side specialty groups/MSOs.
 - Todd can allocate approximately 2–3 hours per week to LinkedIn and relationship work.
 - No client outcome claim is publishable today.
+- Todd has elected not to make employer approval a launch dependency while excluding current-client systems, details, metrics, and identifiers. This is an owner decision, not a legal conclusion.
 
 ### Unresolved
 
 - Launch date.
-- Employer approval.
 - Search Console/analytics status.
 - Contact notification configuration.
 - Scheduling preference.
@@ -1230,7 +1208,7 @@ Compare rates and buyer quality, not isolated impressions.
 ## 13. The next five actions, in exact order
 
 1. **Ratify the market boundary:** TKO sells the expert + Prior Authorization Performance Diagnostic; TIF remains the internal evidence/asset system.
-2. **Close launch-control gaps:** verify form persistence and notification in production, add daily lead reconciliation, publish a privacy notice, and confirm employer/conflict permission.
+2. **Close launch-control gaps:** verify form persistence and notification in production, add daily lead reconciliation, and publish the privacy notice.
 3. **Align Todd’s LinkedIn:** replace the unrelated website, narrow headline/About/Services/banner, and feature the Diagnostic, flagship guide, and evidence case.
 4. **Connect observation:** verify Search Console/Bing, connect the approved analytics destination, submit the sitemap, and test the complete non-sensitive conversion event path.
 5. **Run the 30-day proof-led pilot:** publish two posts per week, conduct targeted commenting and referral conversations, preserve first/last/self-reported/assisted source data, and review qualified conversations before creating more pages.

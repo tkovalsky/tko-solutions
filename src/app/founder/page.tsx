@@ -80,6 +80,11 @@ export default function FounderPage() {
         <p className="mt-6 text-xs leading-5 text-muted">
           Employment history is verifiable and is presented as experience—not employer endorsement, client endorsement, or evidence of a quantified TKO result.
         </p>
+        <p className="mt-3 max-w-[78ch] text-sm leading-6 text-muted">
+          TKO is a separate, limited-capacity advisory practice. Todd accepts fixed-scope work he can lead personally;
+          availability and fit are confirmed before contracting. Current employment and client work are not TKO
+          engagements or endorsements.
+        </p>
       </Section>
 
       <Section>
