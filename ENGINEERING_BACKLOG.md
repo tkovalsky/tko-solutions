@@ -2649,7 +2649,7 @@ source intake
 
 # EPIC 20 — OPPORTUNITY INTELLIGENCE ENGINE
 
-> **Status:** v0.1 contact-queue slice implemented; Phase 1 partial · **Classification:** ACTIVE · **Owner:** Todd
+> **Status:** v0.1 contact queue and Slice A1 ingestion implemented · **Classification:** ACTIVE · **Owner:** Todd
 > Kovalsky · **Requirements:**
 > [`docs/OPPORTUNITY_INTELLIGENCE_ENGINE_REQUIREMENTS.md`](docs/OPPORTUNITY_INTELLIGENCE_ENGINE_REQUIREMENTS.md)
 >
@@ -2672,19 +2672,22 @@ drafts, and outcome learning.
   patterns, evidence discipline, and TIF composition pathway.
 - Keep Opportunity Intelligence as a separate bounded context under
   `src/lib/opportunity-intelligence`.
-- Use `OiPursuit` for employment, consulting, advisory, partnership, and relationship pursuits.
+- Use `OiOpportunity` for possible funded work that may exist before a person is known.
+- Use `OiPursuit` for person-specific employment, consulting, advisory, partnership, and
+  relationship motions.
 - Do not modify, overload, or reinterpret TIF's content-only `AssetOpportunity`.
 - Keep scoring and queue selection deterministic, versioned, tested, and explainable.
-- Use AI for extraction, summarization, matching proposals, and TIF drafts only; humans verify facts
-  and perform every external action.
+- Keep Slice A1 extraction and scoring deterministic. Any future AI inference must be labeled,
+  reviewable, and separated from operator-authored facts.
+- Treat an OIE-to-TIF outreach adapter as future integration work; TIF does not currently provide a
+  general AI or outreach service.
 
 ## Required sequence
 
 1. **Phase 0 — Manual validation:** initial personas and score policy, 20 target organizations, 10
    manually researched pursuits, and a one-week daily queue trial.
-2. **Phase 1 — Thin vertical slice:** manual source capture → normalized
-   organization/signal/initiative → pursuit → immutable score → research task → daily queue → TIF
-   draft → manually recorded action/outcome.
+2. **Phase 1 / Slice A1 — Pasted opportunity ingestion:** immutable source capture → person-free
+   opportunity → provenanced facts and research gaps → immutable opportunity-fit score.
 3. **Phase 2 — Narrow source automation:** one documented public job-board connector and one
    company-news/RSS connector, each idempotent and policy-compliant.
 4. **Phase 3 — Enrichment:** approved role/contact verification and peer expansion only when
@@ -2700,17 +2703,17 @@ drafts, and outcome learning.
 - Employment and TKO consulting motions are distinguishable by pursuit mode and outcome.
 - Legal, source, contact-data, and outreach rules are documented before ingestion automation.
 
-## Phase 1 Definition of Done
+## Slice A1 Definition of Done
 
-- One real source completes the end-to-end thin vertical slice.
-- All material facts and inferences retain provenance, confidence, freshness, and verification
-  state.
-- Every score is reproducible from a versioned policy and persisted component explanation.
-- The daily queue shows no more than ten items and one recommended action per item.
-- TIF returns a versioned outreach draft but never scores, sends, applies, or mutates the pursuit
-  lifecycle.
-- Duplicate ingestion, state transitions, opt-out suppression, immutable score history, access
-  control, queue rules, and draft boundaries have automated coverage.
+- Raw pasted content is preserved byte-for-byte in an immutable source snapshot.
+- Same-organization/content and same-URL/content duplicates are idempotent; a changed source at the
+  same canonical URL creates a new snapshot linked to the existing opportunity.
+- Repeated facts retain evidence offsets into raw source content.
+- Operator overrides and resolved/dismissed research gaps survive deterministic reruns.
+- Every opportunity-fit rerun appends a score snapshot and then updates the current-score pointer.
+- The scorer records `todd-v1` and a versioned deterministic score policy.
+- Focused tests cover normalization, offsets, repeated facts, gaps, scoring, ingestion, and score
+  sequencing.
 
 ## Explicit exclusions
 
@@ -2731,12 +2734,24 @@ multi-user SaaS, or client-facing product.
 - Validation: focused tests pass; production build passes; authenticated local route returns 200
   and renders the live ranked cohort.
 
+## Slice A1 implementation evidence
+
+- Migration: `prisma/migrations/20260730010026_add_opportunity_intelligence_a1/migration.sql`.
+- Domain services: `src/lib/opportunity-intelligence/`.
+- Models: `OiSource`, `OiOpportunity`, `OiOpportunityFact`, `OiEvidence`, `OiResearchGap`, and
+  `OiOpportunityScore`.
+- Capability profile: versioned `todd-v1` in code.
+- Boundaries: no UI, AI provider, URL fetching, Signal/Initiative workflow, person linkage,
+  outreach, or ATS adapter.
+- Validation: focused A1 tests, full test suite, Prisma validation, migration status, lint, and
+  production build.
+
 ## Next increment
 
-Add a narrow, policy-compliant discovery inbox that admits fresh company/initiative signals and
-Director+ candidate people into the existing score and research queue. Do not begin with universal
-ATS coverage. The next slice must preserve public-source provenance, role freshness, human
-admission, and the no-auto-contact boundary.
+Complete the manual pasted-opportunity workflow with a private operator form and an opportunity
+brief/correction view over the A1 domain services. The workflow must allow operator facts, thesis,
+and gap resolution without mutating source snapshots or score history. Do not begin automated
+discovery, outreach, URL fetching, or universal ATS coverage.
 
 ---
 

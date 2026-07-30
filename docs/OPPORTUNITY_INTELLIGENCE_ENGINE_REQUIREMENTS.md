@@ -1,12 +1,12 @@
 # Opportunity Intelligence Engine — Architecture and Requirements
 
-**Status:** v0.1 contact-queue slice implemented; broader Phase 1 remains in progress
-**Date:** 2026-07-29
+**Status:** v0.1 contact queue and Slice A1 source-ingestion backend implemented
+**Date:** 2026-07-30
 **Owner:** Todd Kovalsky
 **System of record:** `ENGINEERING_BACKLOG.md` EPIC 20
 **Product boundary:** Private TKO operator capability; not a public feature or client-facing SaaS
 
-## Implementation Status — 2026-07-29
+## Implementation Status — 2026-07-30
 
 Implemented:
 
@@ -20,21 +20,29 @@ Implemented:
 - Manual professional-contact-path capture with source and verification state.
 - Contacted, conversation, pause, and close controls; contacted creates a seven-day follow-up date.
 - In-app operator guide and this document's quick-start instructions.
+- Immutable `OiSource` snapshots with raw and normalized content, hashes, canonical URLs, and dates.
+- Person-free `OiOpportunity` records with repeated provenanced facts and verified raw-source
+  offsets.
+- Explicit research-gap lifecycle and rerun preservation rules.
+- Immutable `OiOpportunityScore` history with a nullable current-score pointer.
+- Deterministic extraction, `scoreOpportunityFit()`, and the versioned `todd-v1` profile.
+- Transactional pasted-source ingestion and canonical URL/content reconciliation.
 
 Not implemented yet:
 
 - Automated company, initiative, ATS, public-news, or Director+ discovery connectors.
 - Automated lookalike generation beyond scoring entered or seeded people.
 - Organization-map and reporting-chain research.
-- TIF-composed outreach drafts.
+- An OIE-to-TIF outreach adapter; TIF is currently content-specific and is not a general AI or
+  outreach service.
 - Activity history beyond the current pursuit/contact fields.
-- Immutable multi-version score snapshots.
+- A private pasted-source form and opportunity brief/correction UI over Slice A1.
 - Email verification-provider integration.
 - Email sending, automated applications, or autonomous outreach.
 
-The implemented slice answers “who in the current researched cohort deserves attention next?” It
-does not yet continuously find new people. That discovery loop is the next strategically useful
-increment.
+The v0.1 route answers “who in the current researched cohort deserves attention next?” Slice A1
+adds the person-free funded-work record beneath the future workflow. The next increment is the
+manual pasted-opportunity form and brief/correction workflow—not automated discovery.
 
 ## Executive Recommendation
 
@@ -44,9 +52,11 @@ private TKO application**.
 It should:
 
 - Reuse the current Next.js application, Postgres/Prisma database, `/tif` access control, operator
-  design patterns, evidence discipline, and TIF composition capability.
+  design patterns and evidence discipline.
 - Keep its commercial records separate from TIF's content-production records.
 - Treat job postings as one source of evidence, not as the center of the system.
+- Represent possible funded work as `OiOpportunity` before requiring a known person.
+- Represent `OiPursuit` as the later person-specific commercial motion.
 - Turn public signals into a small daily queue of researched, scored pursuits and next actions.
 - Support employment, advisory, consulting, partnership, and referral pursuits through one
   common model.
@@ -152,7 +162,8 @@ into a job application.
 - Explain how every pursuit score was calculated.
 - Produce a single prioritized daily work queue.
 - Preserve research and relationship history.
-- Generate evidence-grounded outreach drafts through the existing TIF composition boundary.
+- Preserve a future adapter boundary for evidence-grounded outreach without claiming that TIF
+  currently supplies a general outreach composer.
 - Learn from outcomes without allowing an opaque model to control priority.
 
 ## 5. Non-Goals
@@ -191,15 +202,17 @@ and interactions have different authority and lifecycle rules from content asset
 | Private access | Reuse the `/tif` gate for the MVP; strengthen authentication before adding another user |
 | Operator UI patterns | Reuse |
 | Evidence and claim discipline | Reuse the principles, not the `Evidence` table for every signal |
-| AI composition | Reuse the single TIF composition pathway for drafts |
+| AI composition | Future adapter only; no general AI or OIE outreach service exists today |
 | Content opportunity | Keep `AssetOpportunity` unchanged |
-| Commercial opportunity | Introduce `OiPursuit`; never overload `AssetOpportunity` |
+| Possible funded work | `OiOpportunity`; it does not require a person |
+| Person-specific motion | `OiPursuit`; contact path and relationship state live here |
 | Commercial lifecycle | Owned by Opportunity Intelligence |
 | Sending, applying, or publishing | Outside TIF and human-controlled |
 
 ### Boundary rule
 
-TIF may receive a structured, approved pursuit brief and return an outreach draft. TIF must not:
+If a future OIE adapter is implemented, it may send a structured, approved pursuit brief to an
+explicitly supported composer. No such adapter exists in Slice A1. TIF must not:
 
 - Decide which pursuit Todd should contact.
 - Change a pursuit score or lifecycle state.
@@ -208,7 +221,8 @@ TIF may receive a structured, approved pursuit brief and return an outreach draf
 - Submit an application.
 - Mark an interaction as having occurred.
 
-Opportunity Intelligence owns the pursuit facts and activity history. TIF owns draft composition.
+Opportunity Intelligence owns opportunity/pursuit facts and activity history. Current TIF owns
+content-specific deterministic composition only.
 
 ## 7. Product Principles
 
@@ -264,19 +278,20 @@ Required result:
 - A merge/review task when identity is ambiguous.
 - No silent duplicate creation from a repeated URL or source item.
 
-### Stage 4 — Form a pursuit
+### Stage 4 — Form an opportunity
 
-A pursuit connects an organization with an initiative, posting, person, or combination of signals
-and states what Todd might pursue.
+An opportunity records possible funded work supported by one or more source snapshots. It can exist
+before a person, contact path, or relationship is known.
 
 Required result:
 
-- Pursuit mode.
-- Fit hypothesis.
-- Pain or initiative hypothesis.
-- Target outcome.
-- Evidence links.
-- Known people and missing decision-maker coverage.
+- Opportunity title and organization.
+- Extracted thesis inputs with evidence links.
+- Research gaps for decision-relevant missing information.
+- Immutable opportunity-fit score snapshot.
+
+A later `OiPursuit` may connect a person-specific commercial motion to the opportunity. Slice A1
+does not add that nullable link and leaves the working person-first queue unchanged.
 
 ### Stage 5 — Score
 
@@ -304,8 +319,8 @@ Required result:
 
 ### Stage 7 — Prepare action
 
-The operator may create an application task, request an introduction, record a manual message, or
-ask TIF to prepare an evidence-grounded outreach draft.
+The operator may create an application task, request an introduction, or record a manual message.
+A TIF outreach request remains future adapter work.
 
 Required result:
 
@@ -360,35 +375,28 @@ The route may live below `/tif` to reuse the private shell. Domain code should n
 Manual capture / approved public connectors
                      │
                      ▼
-              Source ingestion
-      dedupe · provenance · policy checks
+           Immutable OiSource
+ raw · normalized · hash · canonical URL
                      │
                      ▼
-         Extraction and entity proposals
-        organization · role · posting · signal
+              OiOpportunity
+       possible work; person optional
                      │
-              human verification
+       ┌─────────────┼──────────────┐
+       ▼             ▼              ▼
+ provenanced     research-gap    immutable fit
+    facts         lifecycle       score history
+       │
+       ▼
+ operator thesis / corrections
+       │
+       ▼
+ future Signals / Initiatives / person discovery
                      ▼
-   Organization ─ Initiative ─ Person / Role
-          │             │             │
-          └──────────── Pursuit ──────┘
-                         │
-                         ▼
-        Deterministic score + completeness
-                         │
-                         ▼
-             Canonical daily work queue
-                         │
-               ┌─────────┴─────────┐
-               ▼                   ▼
-         Research task       Action preparation
-                                   │
-                            TIF draft adapter
-                                   │
-                            human approval/action
-                                   │
-                                   ▼
-                       Activity + outcome history
+            person-specific OiPursuit
+                      │
+                      ▼
+             daily queue / action
 ```
 
 ### Component boundaries
@@ -396,13 +404,14 @@ Manual capture / approved public connectors
 | Component | Responsibility |
 |---|---|
 | Source intake | Manual entry, import contracts, URL/content deduplication, provenance |
-| Extraction | Propose structured fields and signals from permitted source material |
+| Extraction | Deterministically extract thesis inputs with verified raw-source offsets |
+| Opportunity service | Own possible funded work before person discovery |
 | Entity resolution | Find or propose canonical organizations, people, roles, and initiatives |
-| Pursuit service | Own commercial lifecycle, fit hypothesis, and links |
+| Pursuit service | Own later person-specific motion, contact path, and relationship state |
 | Scoring service | Apply versioned deterministic policy and persist explanation |
 | Queue service | Compute the bounded daily next-action view |
 | Research service | Track verification and intelligence gaps |
-| TIF draft adapter | Convert an approved pursuit brief into one composer request |
+| Future outreach adapter | Explicit integration only; not implemented TIF reuse |
 | Activity service | Preserve manual actions, replies, meetings, referrals, and outcomes |
 | Reporting | Measure funnel quality and operator efficiency |
 
@@ -417,22 +426,37 @@ Use an `Oi` prefix for Prisma models so their ownership is unambiguous.
 | `OiOrganization` | Canonical company or institution | name, domain, industry, size band, headquarters, status, aliases |
 | `OiPerson` | A professional person known through permitted research or relationship history | name, public profile URLs, verification state, last verified at |
 | `OiOrganizationRole` | A person's current or historical role | person, organization, title, function, seniority, started/ended, confidence, source |
-| `OiSource` | Provenance record for a posting, page, announcement, conversation, referral, or note | type, URL/origin, title, captured/published dates, content hash, rights note, freshness |
+| `OiSource` | Immutable source snapshot for a posting, announcement, referral, event, or paste | type, canonical URL, raw/normalized content, content hash, retrieved/published dates |
+| `OiOpportunity` | Possible funded need, role, engagement, advisory opening, or transformation problem | organization, title, operator thesis, status, current score |
+| `OiOpportunityFact` | Repeated stated, inferred, or operator-authored fact | field, value, normalized value, ordinal, basis, confidence, override flag, evidence |
+| `OiEvidence` | Exact excerpt into immutable raw source content | source, start/end offsets, excerpt |
+| `OiResearchGap` | Decision-relevant missing information with durable lifecycle | stable key, question, reason, status, resolution, operator notes, timestamps |
+| `OiOpportunityScore` | Immutable opportunity-fit snapshot | policy/profile versions, total, completeness, components, input snapshot |
 | `OiSignal` | A typed observation derived from a source | type, summary, occurred date, confidence, verification state, source |
 | `OiInitiative` | A named or hypothesized body of funded change | organization, name, category, status, owner hypothesis, start/timing, confidence |
 | `OiJobPosting` | Structured projection of a job source | external ID, title, location, compensation, reporting clue, technology, status, dates |
 | `OiPersona` | Reusable problem/KPI/goal archetype | name, functions, problems, KPIs, goals, fit rules |
-| `OiPursuit` | The commercial unit of work | kind, organization, initiative/posting, hypothesis, target outcome, lifecycle, owner |
+| `OiPursuit` | A person-specific commercial motion | person, organization, mode, contact path, relationship lifecycle |
 | `OiScorePolicy` | Versioned deterministic scoring configuration | name, version, active dates, rules, weights, hard filters |
 | `OiScoreSnapshot` | Immutable score explanation for a pursuit at a point in time | policy version, total, completeness, components, reasons, scored at |
 | `OiTask` | Research, introduction, application, outreach, or follow-up work | pursuit, type, due date, priority, status, completion result |
 | `OiContactPoint` | A business contact method with provenance and verification | person, type, value, source, verified at, status, do-not-contact |
-| `OiOutreachDraft` | A versioned draft returned by TIF | pursuit, composer run ID, channel, body, source context, status |
+| `OiOutreachDraft` | Future versioned outreach draft | adapter run ID, channel, body, source context, status |
 | `OiActivity` | Append-only relationship and pursuit history | pursuit/person, type, occurred at, summary, external reference, outcome |
 
 ### Important relationships
 
 ```text
+OiOrganization 1 ── * OiOpportunity
+OiOpportunity 1 ── * OiSource
+OiOpportunity 1 ── * OiOpportunityFact
+OiSource 1 ── * OiEvidence
+OiEvidence 1 ── * OiOpportunityFact
+OiOpportunity 1 ── * OiResearchGap
+OiOpportunity 1 ── * OiOpportunityScore
+OiOpportunity 0..1 ── 1 current OiOpportunityScore
+
+Future:
 OiSource 1 ── * OiSignal
 OiOrganization 1 ── * OiInitiative
 OiOrganization 1 ── * OiOrganizationRole * ── 1 OiPerson
@@ -459,7 +483,10 @@ provenance is required. Do not hide these relationships in unqueryable JSON.
 - An inference is never displayed as verified fact.
 - Contact deliverability verification does not prove identity, relationship, permission, or current
   employment.
-- Score snapshots are immutable. A changed rule produces a new snapshot under a new policy version.
+- Opportunity score snapshots are immutable. Creation first appends a snapshot and then updates the
+  nullable current-score pointer.
+- A normal rerun does not reopen an operator-resolved or dismissed research gap. Contradictory
+  evidence requires an explicit later workflow.
 - Activities are append-only; corrections reference the original activity.
 
 ### Freshness defaults
@@ -769,9 +796,11 @@ The system must distinguish:
 
 Verification indicates likely deliverability, not consent or relationship.
 
-### OI-FR-13 — TIF outreach drafting
+### OI-FR-13 — Future outreach-adapter boundary
 
-When a pursuit is complete enough, the operator may request a draft.
+This requirement is deferred. Current TIF composition is deterministic and content-specific; there
+is no implemented general AI provider or OIE outreach service. If an explicit adapter is authorized
+later, a sufficiently complete pursuit may request a draft.
 
 The adapter sends TIF:
 
@@ -792,6 +821,7 @@ The adapter receives:
 
 Requirements:
 
+- No implied reuse of the current content templates as an outreach engine.
 - No separate `OpportunityEmailGenerator`.
 - The draft is stored as a versioned `OiOutreachDraft`.
 - Missing recipient identity, unsupported personalization, or missing relevance blocks approval.
@@ -853,7 +883,7 @@ AI may:
 - Propose organization, person, and initiative matches.
 - Identify likely business problems and missing research questions.
 - Compare a pursuit to a persona.
-- Draft personalized outreach through TIF.
+- Draft personalized outreach through a future explicitly implemented adapter.
 - Summarize relationship history for operator review.
 
 AI may not:
@@ -965,7 +995,7 @@ work.
 - Daily queue with a maximum of ten recommendations.
 - Activity and outcome history.
 - Manual contact-point recording with provenance.
-- One TIF outreach-draft adapter.
+- One explicitly authorized outreach-draft adapter after a compatible composer exists.
 - Basic funnel and operator-efficiency reporting.
 
 ### Explicitly excluded
@@ -992,7 +1022,7 @@ source
 → explained score
 → research task
 → daily queue
-→ approved TIF draft
+→ optional future approved outreach draft
 → manually recorded action
 → recorded outcome and next follow-up
 ```
@@ -1021,21 +1051,20 @@ Exit gate:
 - At least 80% of active pursuits have a clear next action.
 - Todd confirms the workflow saves or focuses research time.
 
-### Phase 1 — Thin vertical slice
+### Phase 1 — Incremental vertical slices
 
-**Purpose:** Implement the MVP proof scenario in `tko-site`.
+**Purpose:** Implement the proof scenario in governed increments inside `tko-site`.
 
 Suggested order:
 
-1. Domain contracts and authority rules.
-2. Core Prisma models and migration.
-3. Manual source capture and entity review.
-4. Pursuit detail and lifecycle.
-5. Scoring policy, snapshot, and tests.
-6. Research tasks and daily queue.
-7. Activity history.
-8. TIF draft adapter.
-9. Basic measurement and operational visibility.
+1. **Slice A1 (implemented):** immutable pasted source, person-free opportunity, provenanced facts,
+   research gaps, deterministic fit score, immutable snapshots, and tests.
+2. Manual opportunity form, brief, thesis, and correction workflow.
+3. Signal and initiative admission.
+4. Executive and relationship discovery.
+5. Narrow ATS adapters.
+6. Person-specific pursuit linkage, activity history, and queue integration.
+7. A future outreach adapter only after an explicit compatible composer contract exists.
 
 Exit gate:
 
@@ -1157,11 +1186,17 @@ This is a target layout, not authorization to create every file at once.
 ```text
 src/lib/opportunity-intelligence/
   contracts.ts
-  authority.ts
+  capability-profile.ts
+  extract.ts
+  ingest.ts
+  research-gaps.ts
+  score.ts
   sources/
-    adapter.ts
     normalize.ts
-    dedupe.ts
+  # Future slices:
+  authority.ts
+  sources/adapter.ts
+  sources/dedupe.ts
   entities/
     resolve.ts
   scoring/
@@ -1196,6 +1231,10 @@ Server actions or route handlers should be thin adapters over these domain servi
 Minimum automated coverage:
 
 - URL normalization and content-hash deduplication.
+- Exact evidence offsets into immutable raw source content.
+- Repeated fact values and normalized-value deduplication.
+- Operator override and resolved/dismissed gap preservation across reruns.
+- Opportunity creation without a current score, immutable snapshot creation, then pointer update.
 - Connector idempotency and retry behavior.
 - Organization/person resolution fixtures, including ambiguous matches.
 - Source-to-field provenance.
@@ -1207,7 +1246,7 @@ Minimum automated coverage:
 - Daily queue suppression, cap, due-date, and next-action rules.
 - Pursuit state-transition permissions.
 - Contact opt-out suppression.
-- TIF draft request/response validation.
+- Future outreach-adapter request/response validation when that adapter exists.
 - Unsupported personalization blocks.
 - Approval-versus-send separation.
 - Activity append-only behavior.
@@ -1221,7 +1260,8 @@ Minimum automated coverage:
 - `AssetOpportunity` remains unchanged and semantically content-only.
 - Opportunity Intelligence domain logic is isolated from `src/lib/tif`.
 - One daily queue shows no more than ten actionable items with one next action each.
-- One outreach draft can be generated through TIF and remains unsent until Todd acts externally.
+- Any future outreach adapter is explicitly implemented and remains unsent until Todd acts
+  externally; this is not a Slice A1 completion condition.
 - An action, reply, conversation, and next follow-up can be recorded without losing history.
 - Duplicate source capture is safe.
 - Stale roles, sources, and contact points are visible.
@@ -1234,8 +1274,8 @@ Minimum automated coverage:
 
 1. The system belongs in `tko-site`, behind the existing private operator boundary.
 2. It is a separate bounded context that reuses TIF services; it is not another content asset type.
-3. The canonical commercial record is `OiPursuit`, not `AssetOpportunity`.
-4. The architecture supports multiple pursuit modes from the start.
+3. `OiOpportunity` owns possible funded work and does not require a person.
+4. `OiPursuit` owns a person-specific commercial motion; `AssetOpportunity` remains content-only.
 5. Scoring and the daily queue are deterministic and explainable.
 6. AI proposes and drafts; humans verify and act.
 7. The MVP starts with manual capture and one thin vertical slice.
@@ -1258,23 +1298,18 @@ first migration:
 8. Is the single access key sufficient for the intended data, or should user-level authentication
    be pulled into Phase 1?
 
-## 26. Implementation Handoff Prompt
+## 26. Slice A1 Implementation Contract
 
-Use this only after Phase 0 is complete and the initiative is explicitly selected for
-implementation:
+Slice A1 is implemented under this contract:
 
-> Implement EPIC 20 Phase 1 from
-> `docs/OPPORTUNITY_INTELLIGENCE_ENGINE_REQUIREMENTS.md` as one thin vertical slice. Preserve the
-> bounded-context decision: commercial records use `Oi*` models and domain logic lives under
-> `src/lib/opportunity-intelligence`; do not modify or repurpose `AssetOpportunity`. Reuse the
-> existing Postgres/Prisma infrastructure, `/tif` access boundary, operator UI patterns, and the TIF
-> composer only through an outreach-draft adapter. Start with manual source capture, provenance,
-> organization/initiative/pursuit records, one versioned deterministic score policy, immutable
-> score snapshots, research tasks, a daily queue capped at ten items, append-only activity, and one
-> unsent TIF outreach draft. Do not add source harvesters, email sending, automatic applications,
-> vector search, agents, multi-user SaaS, or provider subscriptions. Add migrations only for the
-> minimum selected `Oi*` models, keep state-changing UI thin over tested domain services, and
-> verify the full MVP proof scenario before expanding scope.
+> Implement `OiSource`, `OiOpportunity`, `OiOpportunityFact`, `OiEvidence`, `OiResearchGap`, and
+> `OiOpportunityScore`; a typed versioned `todd-v1` capability profile; pure deterministic
+> extraction with verified raw-content offsets; pure deterministic `scoreOpportunityFit()`; and
+> transactional pasted-source ingestion with content-hash/canonical-URL reconciliation. Preserve
+> operator overrides and resolved gaps on rerun, append immutable score snapshots, and update the
+> current-score pointer only after snapshot creation. Leave the working person-first `OiPursuit`
+> flow and `src/lib/oi.ts` intact. Do not add UI, AI, URL fetching, Signals, Initiatives, person
+> linkage, outreach, or ATS adapters.
 
 ## 27. Operator Quick Start — v0.1
 

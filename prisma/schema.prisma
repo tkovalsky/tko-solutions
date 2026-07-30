@@ -171,6 +171,34 @@ enum OiPursuitStatus {
   closed
 }
 
+enum OiOpportunityStatus {
+  reviewing
+  qualified
+  paused
+  closed
+}
+
+enum OiSourceType {
+  pasted_text
+  job_posting
+  company_announcement
+  referral
+  regulatory_event
+  other
+}
+
+enum OiFactBasis {
+  stated
+  inferred
+  operator
+}
+
+enum OiResearchGapStatus {
+  open
+  resolved
+  dismissed
+}
+
 // Capture Inbox (EPIC 11 TIF-1101 / TIF v0.2 Priority 1): lightweight intake, ahead of a
 // normalized Evidence record. Capture-only — no edit endpoint is implemented (TIF v0.2 P1).
 model CaptureItem {
@@ -418,8 +446,10 @@ model OiOrganization {
   kind    OiOrganizationKind
   notes   String?
 
-  people   OiPerson[]
-  pursuits OiPursuit[]
+  people        OiPerson[]
+  pursuits      OiPursuit[]
+  opportunities OiOpportunity[]
+  sources       OiSource[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -489,4 +519,138 @@ model OiPursuit {
   @@index([status, score])
   @@index([organizationId])
   @@index([nextFollowUpAt])
+}
+
+// A possible funded need, role, engagement, advisory opening, or transformation problem.
+// Unlike OiPursuit, an opportunity does not require a known person.
+model OiOpportunity {
+  id             String              @id @default(cuid())
+  title          String
+  status         OiOpportunityStatus @default(reviewing)
+  operatorThesis String?
+  thesisBasis    OiFactBasis?
+
+  organizationId String
+  organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  sources      OiSource[]
+  facts        OiOpportunityFact[]
+  evidence     OiEvidence[]
+  researchGaps OiResearchGap[]
+  scoreHistory OiOpportunityScore[] @relation("OiOpportunityScoreHistory")
+
+  currentScoreId String?             @unique
+  currentScore   OiOpportunityScore? @relation("OiOpportunityCurrentScore", fields: [currentScoreId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([createdAt])
+}
+
+// Immutable source snapshot. Evidence offsets always point into rawContent.
+model OiSource {
+  id                String       @id @default(cuid())
+  sourceType        OiSourceType
+  canonicalUrl      String?
+  rawContent        String       @db.Text
+  normalizedContent String       @db.Text
+  contentHash       String
+  retrievedAt       DateTime
+  publishedAt       DateTime?
+
+  organizationId String
+  organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  opportunityId  String
+  opportunity    OiOpportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  evidence       OiEvidence[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([organizationId, contentHash])
+  @@unique([canonicalUrl, contentHash])
+  @@index([canonicalUrl])
+  @@index([opportunityId, retrievedAt])
+}
+
+model OiEvidence {
+  id          String @id @default(cuid())
+  startOffset Int
+  endOffset   Int
+  excerpt     String @db.Text
+
+  opportunityId String
+  opportunity   OiOpportunity       @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  sourceId      String
+  source        OiSource            @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  facts         OiOpportunityFact[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([sourceId, startOffset, endOffset])
+  @@index([opportunityId])
+}
+
+model OiOpportunityFact {
+  id                 String      @id @default(cuid())
+  field              String
+  value              String      @db.Text
+  normalizedValue    String      @db.Text
+  ordinal            Int         @default(0)
+  basis              OiFactBasis
+  confidence         Int
+  isOperatorOverride Boolean     @default(false)
+
+  opportunityId String
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  evidenceId    String?
+  evidence      OiEvidence?   @relation(fields: [evidenceId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([opportunityId, field, normalizedValue, basis])
+  @@index([opportunityId, field, ordinal])
+  @@index([evidenceId])
+}
+
+model OiResearchGap {
+  id            String              @id @default(cuid())
+  gapKey        String
+  question      String              @db.Text
+  reason        String              @db.Text
+  status        OiResearchGapStatus @default(open)
+  resolution    String?             @db.Text
+  operatorNotes String?             @db.Text
+  resolvedAt    DateTime?
+
+  opportunityId String
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([opportunityId, gapKey])
+  @@index([status, createdAt])
+}
+
+// Append-only opportunity-fit score snapshot. currentScoreId is updated to point here.
+model OiOpportunityScore {
+  id                       String @id @default(cuid())
+  total                    Int
+  completeness             Int
+  components               Json
+  inputSnapshot            Json
+  scorePolicyVersion       String
+  capabilityProfileVersion String
+
+  opportunityId String
+  opportunity   OiOpportunity  @relation("OiOpportunityScoreHistory", fields: [opportunityId], references: [id], onDelete: Cascade)
+  currentFor    OiOpportunity? @relation("OiOpportunityCurrentScore")
+
+  createdAt DateTime @default(now())
+
+  @@index([opportunityId, createdAt])
+  @@index([total])
 }

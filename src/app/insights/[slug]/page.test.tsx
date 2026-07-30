@@ -45,7 +45,7 @@ describe("InsightPage", () => {
     });
   });
 
-  it("renders markdown HTML, source metadata, related insights, and the Recovery Assessment CTA", async () => {
+  it("renders markdown HTML, source metadata, related insights, and the program assessment CTA", async () => {
     insightState.items = [insight("first", "First"), insight("related", "Related")];
 
     render(await InsightPage({ params: Promise.resolve({ slug: "first" }) }));
