@@ -1,5 +1,37 @@
 # Decisions
 
+## DEC-2026-07-29-Opportunity-Intelligence-Boundary
+
+**Status:** Ratified; v0.1 contact-queue slice implemented
+
+**Context:** TKO needs a private system that finds relevant transformation work before or beyond an
+ATS-only application process. The proposed workflow combines job-posting signals, company
+initiatives, executives and roles, persona fit, deterministic opportunity scoring, relationship
+memory, and evidence-grounded outreach preparation. TIF already contains an `AssetOpportunity`
+model, but that record means an opportunity to create content. Reusing it for employment,
+consulting, or relationship pursuits would mix unrelated authority and lifecycle rules.
+
+**Decision:** Build Opportunity Intelligence inside `tko-site` as a separate bounded context that
+reuses the current private operator shell, Postgres/Prisma infrastructure, evidence discipline, and
+TIF composition pathway. Name commercial records with the `Oi` domain prefix and use `OiPursuit` as
+the canonical commercial record. Keep `AssetOpportunity` content-only. Domain logic lives under
+`src/lib/opportunity-intelligence`; TIF may compose a versioned outreach draft from an approved
+pursuit brief but does not score, send, apply, infer facts as authoritative, or mutate pursuit
+lifecycle.
+
+**Operating constraint:** Validate the workflow manually before implementing source automation.
+Priority and queue logic remain deterministic, versioned, explainable, and human-overridable with a
+recorded reason. AI may extract, summarize, propose matches, and draft; humans verify facts and
+perform external actions.
+
+**Implementation update (2026-07-29):** The operator explicitly authorized the first version.
+Additive `OiOrganization`, `OiPerson`, and `OiPursuit` tables, deterministic scoring, the private
+`/tif/opportunities` queue, starter anchors and sourced candidates, manual candidate/contact-path
+capture, and basic pursuit controls are implemented. Source connectors, enrichment providers,
+automated outreach, automatic applications, vector search, agents, and client-facing product remain
+unauthorized. Canonical requirements and current implementation status:
+[`docs/OPPORTUNITY_INTELLIGENCE_ENGINE_REQUIREMENTS.md`](docs/OPPORTUNITY_INTELLIGENCE_ENGINE_REQUIREMENTS.md).
+
 ## DEC-2026-07-01-TIF-Content-Operating-Model
 
 **Status:** Ratified as documentation/backlog baseline

@@ -1,7 +1,7 @@
 # GOVERNANCE — TKO
 
 **Status:** Authoritative classification for this repository
-**Last Updated:** 2026-06-26
+**Last Updated:** 2026-07-29
 **Owner:** Todd Kovalsky
 **Portfolio context:** Governed by `/dev/PORTFOLIO_GOVERNANCE.md`. Reality lives in
 [`CURRENT_REALITY.md`](CURRENT_REALITY.md) (the v2.0 baseline) — this doc classifies initiatives
@@ -57,7 +57,7 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
   the manual, no-software spine for making assets. *Method* is closed/decided; *using* it to
   produce assets is ongoing active work (the "intelligence asset sprint" in PORTFOLIO §3).
 
-### ACTIVE (≤3; currently 2 — the TKO entries in the portfolio's 5)
+### ACTIVE (≤3; currently 3 — the TKO entries in the portfolio's 5)
 
 **A1 — First Paid Assessment** *(PORTFOLIO P2)*
 - **Objective:** Package + sell the Operational Recovery Assessment ($5K–$8K) and the Tier-1 Prior
@@ -75,6 +75,23 @@ into CLOSED / ACTIVE / BACKLOG / DEFERRED and routes the older planning docs.
 - **Expected outcome:** A credibility surface that converts A1 outreach.
 - **Effort:** Medium. **Blocking deps:** RachelOS screenshots (available); approved healthcare/
   transformation stories (drafts in `docs/`).
+
+**A3 — Opportunity Intelligence Engine v0.1** *(operator-selected 2026-07-29)*
+- **Objective:** Turn public professional sources and Todd's UnitedHealthcare/ELLKAY lookalike
+  context into a ranked private queue of Director+ payer and health-tech people who may sponsor a
+  $20K+/month consulting engagement or an appropriately senior FTE role.
+- **Built:** Isolated `OiOrganization` / `OiPerson` / `OiPursuit` records; deterministic explained
+  scoring; four lookalike anchors; six sourced starter pursuits; private `/tif/opportunities`
+  operator page; manual candidate and professional-contact-path capture; basic pursuit-state and
+  follow-up controls; operator instructions.
+- **Current boundary:** The tool ranks the researched cohort. It does not yet continuously discover
+  people, compose TIF outreach drafts, verify email through a provider, send messages, or submit
+  applications.
+- **Next gate:** Add one narrow public-source discovery/admission workflow only after the operator
+  uses the current queue and confirms which research step is the true bottleneck.
+- **Rules:** Public professional sources only; no access-control bypass, private-profile scraping,
+  guessed-email sending, mass outreach, automated applications, vector search, agent framework, or
+  client-facing SaaS.
 
 ### SANCTIONED NEXT (un-gated; advances on excess capacity, behind ACTIVE revenue work)
 

@@ -110,6 +110,9 @@ export default async function TifConsolePage() {
           <Link href="/tif/authority" className="font-semibold text-primary underline-offset-2 hover:underline">
             Authority Dashboard →
           </Link>
+          <Link href="/tif/opportunities" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Opportunity Intelligence →
+          </Link>
         </div>
       </header>
 

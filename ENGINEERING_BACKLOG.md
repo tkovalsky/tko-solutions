@@ -2647,6 +2647,99 @@ source intake
 
 **Expected value:** A buyer and editor can traverse an executive diagram directly to every related knowledge record and derivative asset while preserving one authoritative evidence and publication workflow.
 
+# EPIC 20 — OPPORTUNITY INTELLIGENCE ENGINE
+
+> **Status:** v0.1 contact-queue slice implemented; Phase 1 partial · **Classification:** ACTIVE · **Owner:** Todd
+> Kovalsky · **Requirements:**
+> [`docs/OPPORTUNITY_INTELLIGENCE_ENGINE_REQUIREMENTS.md`](docs/OPPORTUNITY_INTELLIGENCE_ENGINE_REQUIREMENTS.md)
+>
+> **Operator authorization (2026-07-29):** the first implementation slice is explicitly selected.
+> `OiOrganization`, `OiPerson`, and `OiPursuit` storage, deterministic scoring, the private
+> `/tif/opportunities` queue, starter anchors/candidates, manual candidate/contact-path capture, and
+> basic pursuit-state controls are built. This authorization does not extend to source harvesters,
+> enrichment subscriptions, automated outreach, automatic applications, or client-facing product.
+
+## Purpose
+
+Create a private, single-operator commercial intelligence workflow that turns public sources,
+professional relationship context, job postings, and transformation signals into evidence-backed
+commercial pursuits, explained scores, a bounded daily next-action queue, human-approved outreach
+drafts, and outcome learning.
+
+## Architectural decision
+
+- Build inside `tko-site` and reuse the existing database, `/tif` private operator shell, design
+  patterns, evidence discipline, and TIF composition pathway.
+- Keep Opportunity Intelligence as a separate bounded context under
+  `src/lib/opportunity-intelligence`.
+- Use `OiPursuit` for employment, consulting, advisory, partnership, and relationship pursuits.
+- Do not modify, overload, or reinterpret TIF's content-only `AssetOpportunity`.
+- Keep scoring and queue selection deterministic, versioned, tested, and explainable.
+- Use AI for extraction, summarization, matching proposals, and TIF drafts only; humans verify facts
+  and perform every external action.
+
+## Required sequence
+
+1. **Phase 0 — Manual validation:** initial personas and score policy, 20 target organizations, 10
+   manually researched pursuits, and a one-week daily queue trial.
+2. **Phase 1 — Thin vertical slice:** manual source capture → normalized
+   organization/signal/initiative → pursuit → immutable score → research task → daily queue → TIF
+   draft → manually recorded action/outcome.
+3. **Phase 2 — Narrow source automation:** one documented public job-board connector and one
+   company-news/RSS connector, each idempotent and policy-compliant.
+4. **Phase 3 — Enrichment:** approved role/contact verification and peer expansion only when
+   measured manual bottlenecks justify provider cost.
+5. **Phase 4 — Outcome optimization:** compare policy versions against conversations and qualified
+   outcomes; never let measurement auto-activate a policy.
+
+## P0 acceptance gate
+
+- The manual model consistently produces one clear next action per active pursuit.
+- The selected fields and score rules save or focus operator research time.
+- At least 80% of active trial pursuits have a current next action.
+- Employment and TKO consulting motions are distinguishable by pursuit mode and outcome.
+- Legal, source, contact-data, and outreach rules are documented before ingestion automation.
+
+## Phase 1 Definition of Done
+
+- One real source completes the end-to-end thin vertical slice.
+- All material facts and inferences retain provenance, confidence, freshness, and verification
+  state.
+- Every score is reproducible from a versioned policy and persisted component explanation.
+- The daily queue shows no more than ten items and one recommended action per item.
+- TIF returns a versioned outreach draft but never scores, sends, applies, or mutates the pursuit
+  lifecycle.
+- Duplicate ingestion, state transitions, opt-out suppression, immutable score history, access
+  control, queue rules, and draft boundaries have automated coverage.
+
+## Explicit exclusions
+
+No universal ATS harvester, access-control bypass, private-profile scraping, automated mass email,
+automatic applications, autonomous social actions, knowledge graph, vector search, agent framework,
+multi-user SaaS, or client-facing product.
+
+## v0.1 implementation evidence
+
+- Migration: `prisma/migrations/20260729183000_add_opportunity_intelligence_v1/migration.sql`.
+- Scoring and starter cohort: `src/lib/oi.ts`.
+- Scoring coverage: `src/lib/oi.test.ts`.
+- Operator route: `src/app/tif/opportunities/page.tsx`.
+- Mutations: `src/app/tif/opportunities/actions.ts`.
+- Database state after initialization: 7 organizations, 10 people, 6 active pursuits.
+- Initial ranking after calibration: Caraline Coats 81; Ashok Chennuru 79; Curtis Miller 73;
+  Matt Cunningham 72 (research); Alan Hutchison 69 (research); Samantha Murphy 63 (research).
+- Validation: focused tests pass; production build passes; authenticated local route returns 200
+  and renders the live ranked cohort.
+
+## Next increment
+
+Add a narrow, policy-compliant discovery inbox that admits fresh company/initiative signals and
+Director+ candidate people into the existing score and research queue. Do not begin with universal
+ATS coverage. The next slice must preserve public-source provenance, role freshness, human
+admission, and the no-auto-contact boundary.
+
+---
+
 # BUSINESS SUCCESS CRITERIA
 
 TIF is NOT successful because software exists.
