@@ -1,5 +1,11 @@
 export const OI_SCORE_POLICY_VERSION = "oi-v1";
 export const OI_MINIMUM_CONSULTING_MONTHLY_VALUE = 20_000;
+export { scoreStakeholderAccess } from "../../commercial/score/access";
+export type {
+  ScoreComponent,
+  StakeholderAccessInput,
+  StakeholderAccessResult,
+} from "../../commercial/score/access";
 
 export type OiOrganizationKind =
   | "payer"

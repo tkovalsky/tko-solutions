@@ -13,6 +13,7 @@
     "tif:seed": "node --env-file=.env.local scripts/tif/seed.mjs",
     "tif:compose": "node --env-file=.env.local scripts/tif/compose-asset.mjs",
     "tif:inventory": "node --env-file=.env.local scripts/tif/inventory-scan.mjs",
+    "oi:backfill": "node --env-file=.env.local scripts/oi/backfill-pursuits.mjs",
     "test": "vitest run"
   },
   "dependencies": {

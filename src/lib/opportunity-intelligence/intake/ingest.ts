@@ -239,6 +239,9 @@ export async function ingestPastedOpportunity(
       },
     });
     if (duplicate) {
+      if (!duplicate.opportunityId || !duplicate.opportunity) {
+        throw new Error("Duplicate source is not linked to an opportunity.");
+      }
       return {
         created: false,
         duplicate: true,
@@ -259,7 +262,7 @@ export async function ingestPastedOpportunity(
         })
       : null;
 
-    const opportunity = priorSnapshot
+    const opportunity = priorSnapshot?.opportunityId
       ? await tx.oiOpportunity.findUniqueOrThrow({
           where: { id: priorSnapshot.opportunityId },
           select: { id: true, operatorThesis: true },
@@ -268,6 +271,7 @@ export async function ingestPastedOpportunity(
           data: {
             organizationId: organization.id,
             title,
+            type: "consulting",
           },
           select: { id: true, operatorThesis: true },
         });

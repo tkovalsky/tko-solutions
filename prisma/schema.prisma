@@ -857,7 +857,7 @@ model OiOpportunity {
   status         OiOpportunityStatus @default(reviewing)
   operatorThesis String?
   thesisBasis    OiFactBasis?
-  type           OiOpportunityType?
+  type           OiOpportunityType
 
   organizationId String
   organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
