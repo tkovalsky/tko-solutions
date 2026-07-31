@@ -86,6 +86,25 @@ export default async function OpportunityIntelligencePage() {
         </div>
       </header>
 
+      <section className="my-8 flex flex-col gap-5 rounded-2xl border border-primary/25 bg-primary/5 p-6 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+            Start with the opportunity
+          </p>
+          <h2 className="mt-1 text-2xl font-semibold">Add a job posting or funded-work signal</h2>
+          <p className="mt-2 max-w-[68ch] text-sm leading-6 text-muted">
+            Paste the source before you know the hiring manager. TIF will preserve the posting,
+            extract supported facts, score the opportunity, and show what still needs research.
+          </p>
+        </div>
+        <Link
+          href="/tif/opportunities/sources"
+          className="inline-flex shrink-0 items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-primary-dark"
+        >
+          Add job posting
+        </Link>
+      </section>
+
       {anchors.length === 0 && pursuits.length === 0 ? (
         <section className="my-8 rounded-xl border border-primary/25 bg-primary/5 p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary">Start here</p>

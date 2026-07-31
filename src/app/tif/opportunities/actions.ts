@@ -1,13 +1,16 @@
 "use server";
 
 import {
+  OiFactBasis,
   OiOrganizationKind,
   OiPursuitMode,
   OiPursuitStatus,
   OiSeniority,
+  OiSourceType,
   Prisma,
 } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import {
   OI_STARTER_PEOPLE,
   countLookalikeOverlap,
@@ -17,9 +20,14 @@ import {
   type OiPursuitMode as OiPursuitModeValue,
   type OiSeniority as OiSeniorityValue,
 } from "@/lib/oi";
+import {
+  ingestPastedOpportunity,
+  rerunOpportunityExtraction,
+} from "@/lib/opportunity-intelligence/ingest";
 import { tifDb } from "@/lib/tif/db";
 
 const OI_PATH = "/tif/opportunities";
+const OI_SOURCE_PATH = `${OI_PATH}/sources`;
 
 export async function bootstrapOpportunityIntelligence() {
   const anchorTags = uniqueTags(
@@ -270,6 +278,84 @@ export async function createOpportunityCandidate(formData: FormData) {
   revalidatePath(OI_PATH);
 }
 
+export async function createOpportunitySource(formData: FormData) {
+  const organizationName = requiredString(formData, "organizationName");
+  const organizationKind = enumValue(
+    OiOrganizationKind,
+    requiredString(formData, "organizationKind"),
+    "organization kind",
+  );
+  const sourceType = enumValue(
+    OiSourceType,
+    requiredString(formData, "sourceType"),
+    "source type",
+  );
+  const title = requiredString(formData, "title");
+  const rawContent = requiredString(formData, "rawContent");
+  const operatorThesis = optionalString(formData, "operatorThesis");
+
+  const result = await ingestPastedOpportunity(
+    {
+      organization: {
+        name: organizationName,
+        website: optionalHttpUrl(formData, "organizationWebsite"),
+        kind: organizationKind,
+      },
+      title,
+      rawContent,
+      sourceType,
+      canonicalUrl: optionalHttpUrl(formData, "canonicalUrl"),
+      publishedAt: optionalDate(formData, "publishedAt") ?? null,
+    },
+    tifDb,
+  );
+
+  if (operatorThesis) {
+    const opportunity = await tifDb.oiOpportunity.findUnique({
+      where: { id: result.opportunityId },
+      select: { operatorThesis: true },
+    });
+
+    if (opportunity?.operatorThesis !== operatorThesis) {
+      await tifDb.oiOpportunity.update({
+        where: { id: result.opportunityId },
+        data: {
+          operatorThesis,
+          thesisBasis: OiFactBasis.operator,
+        },
+      });
+      await rerunOpportunityExtraction(result.opportunityId, tifDb);
+    }
+  }
+
+  revalidatePath(OI_PATH);
+  revalidatePath(OI_SOURCE_PATH);
+  redirect(
+    `${OI_SOURCE_PATH}?opportunityId=${encodeURIComponent(result.opportunityId)}&capture=${
+      result.duplicate ? "duplicate" : "created"
+    }`,
+  );
+}
+
+export async function saveOpportunityThesis(formData: FormData) {
+  const opportunityId = requiredString(formData, "opportunityId");
+  const operatorThesis = optionalString(formData, "operatorThesis") ?? null;
+
+  await tifDb.oiOpportunity.update({
+    where: { id: opportunityId },
+    data: {
+      operatorThesis,
+      thesisBasis: operatorThesis ? OiFactBasis.operator : null,
+    },
+  });
+  await rerunOpportunityExtraction(opportunityId, tifDb);
+
+  revalidatePath(OI_SOURCE_PATH);
+  redirect(
+    `${OI_SOURCE_PATH}?opportunityId=${encodeURIComponent(opportunityId)}&capture=reviewed`,
+  );
+}
+
 export async function updatePursuitStatus(formData: FormData) {
   const pursuitId = requiredString(formData, "pursuitId");
   const status = enumValue(
@@ -346,6 +432,19 @@ function requiredString(formData: FormData, key: string) {
 function optionalString(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function optionalHttpUrl(formData: FormData, key: string) {
+  const value = optionalString(formData, key);
+  if (!value) {
+    return undefined;
+  }
+
+  const url = new URL(value);
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error(`Invalid ${key}`);
+  }
+  return url.toString();
 }
 
 function integerValue(formData: FormData, key: string, fallback: number) {
