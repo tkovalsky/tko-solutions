@@ -30,9 +30,9 @@ Fixing those three converts more calls than rewriting fifty sentences. The sente
 
 The dominant problem isn't classic buzzwords ("AI-powered," "next-generation") — those were already scrubbed. It's **abstract category jargon repeated until it's wallpaper**, plus a few tricolon tells.
 
-1. `"Operational Intelligence"` — hero eyebrow ([hero.tsx:40](src/components/site/hero.tsx)). A category the buyer doesn't search and can't price.
-2. `"The Missing Layer Between Data and Action"` — H1 ([hero.tsx:43](src/components/site/hero.tsx)). Evocative, but a COO can't tell what you sell from it.
-3. `"TKO builds Operational Intelligence Systems"` — hero ([hero.tsx:48](src/components/site/hero.tsx)). Names a category you invented; buyer has no mental slot for it.
+1. `"Operational Intelligence"` — hero eyebrow (`hero.tsx:40`). A category the buyer doesn't search and can't price.
+2. `"The Missing Layer Between Data and Action"` — H1 (`hero.tsx:43`). Evocative, but a COO can't tell what you sell from it.
+3. `"TKO builds Operational Intelligence Systems"` — hero (`hero.tsx:48`). Names a category you invented; buyer has no mental slot for it.
 4. `"turn existing data into priorities, decisions, and action"` — repeated verbatim in [hero.tsx:50], [site.ts:5], [page.tsx:18], [page.tsx:40]. Tricolon + repetition: the #1 AI-cadence tell on the site.
 5. `"what matters, who needs attention, and what should happen next"` — repeated in [hero.tsx:49], [page.tsx:52], [page.tsx:166], plus the About/CTA. A buyer who scrolls sees the **same sentence 4+ times** — the clearest "generated" signal here.
 6. `"operational memory, priority surfacing, action queues, and human-approved AI"` — [page.tsx:71]. Feature-list jargon; means nothing to someone who hasn't seen the product.

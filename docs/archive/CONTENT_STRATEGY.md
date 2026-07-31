@@ -3,7 +3,7 @@
 > **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
 > diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers are
 > the **Operational Recovery Assessment** and the **Prior Authorization Operational Assessment**
-> (see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md)). Human API is a strong
+> (see the authoritative [`CURRENT_REALITY.md`](CURRENT_REALITY.md)). Human API is a strong
 > **content theme** that drives demand into those assessments — that use is correct and unchanged.
 
 ## Content Objective

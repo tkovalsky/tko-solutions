@@ -3,7 +3,7 @@
 > **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
 > diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers are
 > the **Operational Recovery Assessment** and the **Prior Authorization Operational Assessment**
-> (see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md)). These outlines illustrate
+> (see the authoritative [`CURRENT_REALITY.md`](CURRENT_REALITY.md)). These outlines illustrate
 > the Human API pattern as a finding across engagements.
 
 ## Evidence Rules
@@ -176,4 +176,3 @@ No outcome should be claimed until there is a concrete CRE engagement, dataset, 
 ### Lessons Learned
 
 CRE is a useful adjacent pattern but should not be positioned as primary proof until evidence exists. Treat it as a future validation path, not a current case study.
-

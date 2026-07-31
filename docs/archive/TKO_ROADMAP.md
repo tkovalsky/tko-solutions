@@ -2,7 +2,7 @@
 
 > **⚠️ SUPERSEDED (2026-06-26).** This June-dated phase plan is stale (Phase 1 "Prove the Rachel
 > System Works" is RachelOS work, tracked in RachelOS ROS §0E, not here). The authoritative TKO
-> classification is now [`/GOVERNANCE.md`](../GOVERNANCE.md); cross-project priorities are in
+> classification is now `GOVERNANCE.md`; cross-project priorities are in
 > `/dev/PORTFOLIO_GOVERNANCE.md`. Read this only as historical context. Current TKO active work:
 > first paid assessment + proof-led website migration.
 

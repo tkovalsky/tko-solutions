@@ -178,13 +178,13 @@ Differentiation:
 
 The refreshed TKO documents are:
 
-- [Vision](vision.md)
-- [Capabilities](capabilities.md)
-- [Offerings](offerings.md)
-- [Architecture Overview](architecture-overview.md)
+- Vision
+- Capabilities
+- Offerings
+- Architecture Overview
 - [Roadmap](roadmap.md)
-- [Case Studies](case-studies.md)
-- [Competitive Positioning](competitive-positioning.md)
+- Case Studies
+- Competitive Positioning
 
 ## Phase 7 - Strategic Recommendations
 
@@ -235,4 +235,3 @@ Prioritize revenue, marketability, proof of value, and readiness:
 5. Complete referral lifecycle close-loop states if referral handling becomes a service proof point.
 6. Rewrite shared vocabulary into real definitions with Rachel examples before platform extraction.
 7. Do not build shared services, SaaS, model gateway, intelligence graph, CRM integrations, or report engine until paid demand proves the need.
-

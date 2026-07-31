@@ -8,7 +8,7 @@ landing page" rather than the approved positioning: *executive operating-system 
 
 This audit is a **token-implementation** review, not a redesign. Content, layout, and
 information architecture are unchanged. The companion spec is
-[`DESIGN_TOKEN_SPEC.md`](./DESIGN_TOKEN_SPEC.md).
+[`DESIGN_TOKEN_SPEC.md`](../architecture/DESIGN_TOKEN_SPEC.md).
 
 Legend:
 - **Approved?** — does the value belong in the TKO system?
@@ -19,7 +19,7 @@ Legend:
 
 ## 1. Global Color Tokens
 
-Source of truth: [`src/app/globals.css`](../src/app/globals.css) `:root`.
+Source of truth: [`src/app/globals.css`](../../src/app/globals.css) `:root`.
 
 | Token | Before | Source | Approved? | Framework default? | Replacement / Action |
 |---|---|---|---|---|---|
@@ -47,7 +47,7 @@ two custom properties, a single wrong pair of values propagated the SaaS look ev
 
 ## 2. Tailwind Theme Extensions
 
-Source: [`src/app/globals.css`](../src/app/globals.css) `@theme inline` block.
+Source: [`src/app/globals.css`](../../src/app/globals.css) `@theme inline` block.
 
 | Mapping | Status | Notes |
 |---|---|---|
@@ -74,11 +74,11 @@ class strings and one canvas constant (see §4). These were re-pointed at
 
 | Location | Before | Approved? | Default? | Action |
 |---|---|---|---|---|
-| [`network-visual.tsx:15`](../src/components/site/network-visual.tsx) | `PRIMARY = "37, 99, 235"` (cornflower nodes/links) | ❌ | ✅ | `"125, 163, 201"` steel + lower alpha — **REPLACE** |
-| [`hero.tsx:31`](../src/components/site/hero.tsx) | `radial-gradient(... rgba(37,99,235,0.18) ...)` | ❌ | ✅ | `rgb(var(--accent-rgb)/0.16)` — **REPLACE** |
-| [`cta-band.tsx:16`](../src/components/site/cta-band.tsx) | `radial-gradient(... rgba(37,99,235,0.16) ...)` | ❌ | ✅ | `rgb(var(--accent-rgb)/0.16)` — **REPLACE** |
-| [`problem-grid.tsx:29`](../src/components/site/problem-grid.tsx) | `shadow-[... rgba(37,99,235,0.25)]` | ❌ | ✅ | `rgb(var(--primary-rgb)/0.20)` — **REPLACE** |
-| [`card.tsx:8`](../src/components/ui/card.tsx) | `shadow-[... rgba(15,23,41,0.12)]` | ✅ neutral navy drop shadow | ❌ | **KEEP** |
+| [`network-visual.tsx:15`](../../src/components/site/network-visual.tsx) | `PRIMARY = "37, 99, 235"` (cornflower nodes/links) | ❌ | ✅ | `"125, 163, 201"` steel + lower alpha — **REPLACE** |
+| `hero.tsx:31` | `radial-gradient(... rgba(37,99,235,0.18) ...)` | ❌ | ✅ | `rgb(var(--accent-rgb)/0.16)` — **REPLACE** |
+| [`cta-band.tsx:16`](../../src/components/site/cta-band.tsx) | `radial-gradient(... rgba(37,99,235,0.16) ...)` | ❌ | ✅ | `rgb(var(--accent-rgb)/0.16)` — **REPLACE** |
+| `problem-grid.tsx:29` | `shadow-[... rgba(37,99,235,0.25)]` | ❌ | ✅ | `rgb(var(--primary-rgb)/0.20)` — **REPLACE** |
+| [`card.tsx:8`](../../src/components/ui/card.tsx) | `shadow-[... rgba(15,23,41,0.12)]` | ✅ neutral navy drop shadow | ❌ | **KEEP** |
 | `industries/page.tsx` (prior) | `bg-[#111111] text-white` | ❌ caused invisible card | ❌ | Removed in prior pass |
 | `contact/page.tsx` (prior) | `border-[#111111]` | ❌ off-system | ❌ | Replaced with token border in prior pass |
 

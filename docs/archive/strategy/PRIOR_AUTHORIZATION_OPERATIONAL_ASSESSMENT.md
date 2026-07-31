@@ -246,8 +246,8 @@ The assessment market aligns directly with Human APIs, Administrative Burden, He
 
 ## Related Documents
 
-- [CURRENT_REALITY.md](../../CURRENT_REALITY.md)
-- [Offer Architecture](../OFFER_ARCHITECTURE.md)
+- [CURRENT_REALITY.md](../CURRENT_REALITY.md)
+- [Offer Architecture](../../architecture/OFFER_ARCHITECTURE.md)
 - [Content Strategy](../CONTENT_STRATEGY.md)
 - [Authority Content Strategy](../AUTHORITY_CONTENT_STRATEGY.md)
 - [Editorial Calendar](../EDITORIAL_CALENDAR_90_DAYS.md)

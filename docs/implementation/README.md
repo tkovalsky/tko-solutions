@@ -4,7 +4,7 @@ This directory is the **canonical, executable POIS backlog**. Each file is one i
 story: independently scoped, 30–90 minutes of focused work, executable by Codex in one session
 with minimal context.
 
-`docs/opportunity-intelligence/POIS-CODEX-TASKS.md` and `POIS-CODEX-IMPLEMENTATION-PLAN.md`
+`docs/archive/opportunity-intelligence/POIS-CODEX-TASKS.md` and `POIS-CODEX-IMPLEMENTATION-PLAN.md`
 remain as the historical, milestone-level record of the original task shape. They are **not**
 loaded per Codex session. If this index and those documents ever disagree, this index wins —
 it reflects the current, executable state of the backlog.
@@ -16,7 +16,7 @@ it reflects the current, executable state of the backlog.
 4. Only the documents that story's own **Referenced Documents** section names
 
 See `docs/CODEX_OPERATING_MODEL.md` for the full operating contract, and **D-031** in
-`docs/opportunity-intelligence/POIS-DECISIONS.md` for why some stories in a lettered chain
+`docs/decisions/POIS-DECISIONS.md` for why some stories in a lettered chain
 ship logic with no UI (an explicit, scoped amendment to Rule 1 — the *chain* is the vertical
 slice, not every letter in it).
 

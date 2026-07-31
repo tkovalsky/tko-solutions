@@ -110,7 +110,7 @@ A story is done only when all of these hold:
 8. No `TIF_ACCESS_KEY` bypass introduced.
 9. No outbound send capability introduced (email, LinkedIn, application submission, or any
    messaging/social API) — this is absolute, per `IMPLEMENTATION_RULES.md` Rule 8.
-10. Any doc under `docs/opportunity-intelligence/` that the change invalidates is updated in
+10. Any doc under `docs/architecture/` that the change invalidates is updated in
     the same commit.
 
 ---

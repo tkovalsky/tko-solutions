@@ -1,6 +1,6 @@
 # Wave 1 Completion Report
 
-**Authority:** [`CURRENT_REALITY.md`](../../CURRENT_REALITY.md)
+**Authority:** [`CURRENT_REALITY.md`](../CURRENT_REALITY.md)
 
 **Mission:** Implement Wave 1 alignment so the repository tells one coherent story:
 organizations become dependent on human APIs, and TKO helps convert institutional

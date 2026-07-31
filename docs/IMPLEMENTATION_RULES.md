@@ -66,7 +66,7 @@ proposes; it does not decide identity.
 
 **14. Every completed task includes tests and updates the docs it invalidates.**
 `npm test` green, `npm run lint` clean, `npm run build` succeeds. If a task changes behavior
-described in `docs/opportunity-intelligence/`, update that document in the same commit.
+described in `docs/architecture/`, update that document in the same commit.
 
 **15. If behavior is ambiguous, stop and document the decision.**
 Do not guess. Add an entry to `POIS-DECISIONS.md` with context, the options, and your
@@ -112,17 +112,15 @@ Stop and ask Todd before:
 
 | Question | Document |
 |---|---|
-| Why does this exist? | `PERSONAL-OPPORTUNITY-OPERATING-SYSTEM.md` |
-| How do the parts fit? | `POIS-TARGET-ARCHITECTURE.md` |
-| What is stored? | `POIS-DATA-MODEL.md` |
-| How is it ranked? | `POIS-SCORING-AND-DECISION-MODEL.md` |
-| What does the screen show? | `POIS-OPERATOR-UX.md` |
-| What order do I build in? | `POIS-CODEX-IMPLEMENTATION-PLAN.md` |
-| What exactly do I build now? | `POIS-CODEX-TASKS.md` |
-| Why was it decided this way? | `POIS-DECISIONS.md` |
-| Known gaps and traps | `POIS-IMPLEMENTATION-READINESS-REVIEW.md` |
-
-All under `docs/opportunity-intelligence/`.
+| Why does this exist? | `docs/architecture/PERSONAL-OPPORTUNITY-OPERATING-SYSTEM.md` |
+| How do the parts fit? | `docs/architecture/POIS-TARGET-ARCHITECTURE.md` |
+| What is stored? | `docs/architecture/POIS-DATA-MODEL.md` |
+| How is it ranked? | `docs/architecture/POIS-SCORING-AND-DECISION-MODEL.md` |
+| What does the screen show? | `docs/architecture/POIS-OPERATOR-UX.md` |
+| What order do I build in? | `docs/WORK_PACKAGES.md` |
+| What exactly do I build now? | `docs/implementation/` |
+| Why was it decided this way? | `docs/decisions/POIS-DECISIONS.md` |
+| Known gaps and traps | `docs/archive/opportunity-intelligence/POIS-IMPLEMENTATION-READINESS-REVIEW.md` |
 
 ---
 

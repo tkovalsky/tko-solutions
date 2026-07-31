@@ -1,6 +1,6 @@
 # Wave 1 Alignment Audit
 
-**Authority:** [`CURRENT_REALITY.md`](../../CURRENT_REALITY.md)
+**Authority:** [`CURRENT_REALITY.md`](../CURRENT_REALITY.md)
 
 **Mission:** Move the repository from an interesting consulting website to an
 evidence-backed firm for Operational Knowledge Systems, with healthcare workflow

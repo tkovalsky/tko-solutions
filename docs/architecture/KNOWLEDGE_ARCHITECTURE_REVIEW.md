@@ -323,7 +323,7 @@ Keep the discipline of the backlog (structured, tested, phased, anti-CMS) but **
 ## 12. Addendum — Registry & Artifact Engine alignment (TIF v2)
 
 Added 2026-06-25 to align this data-model authority with the v2 architecture in
-[`/TKO_INTELLIGENCE_FACTORY_PRD.md`](../TKO_INTELLIGENCE_FACTORY_PRD.md). **The 8-entity MVP
+[`TIF_MULTICHANNEL_CONTENT_PRD.md`](TIF_MULTICHANNEL_CONTENT_PRD.md). **The 8-entity MVP
 knowledge graph (§5, §9) does not change.** v2 adds a runtime delivery spine and a
 configuration layer *around* it, and renames one term.
 

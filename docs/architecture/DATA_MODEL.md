@@ -3,7 +3,7 @@
 > **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
 > diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers are
 > the **Operational Recovery Assessment** and the **Prior Authorization Operational Assessment**
-> (see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md)). `Human API` is one entity
+> (see the authoritative [`CURRENT_REALITY.md`](../archive/CURRENT_REALITY.md)). `Human API` is one entity
 > in this assessment-delivery model — a dependency/finding node, not the product.
 
 ## Purpose
@@ -190,4 +190,3 @@ Human API + Dependency + Risk reveal where operational fragility exists.
 Assessment + Finding + Recommendation + Action Plan define the diagnostic output.
 
 System is intentionally broad because Human API dependency often lives in informal systems such as spreadsheets, inboxes, and meetings.
-

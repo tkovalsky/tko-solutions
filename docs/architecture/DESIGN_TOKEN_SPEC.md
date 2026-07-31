@@ -1,8 +1,8 @@
 # TKO Design Token Specification
 
 **Status:** Approved baseline — Operational Intelligence visual system.
-**Source of truth:** [`src/app/globals.css`](../src/app/globals.css) (`:root` + `@theme inline`).
-**Companion audit:** [`DESIGN_SYSTEM_AUDIT.md`](./DESIGN_SYSTEM_AUDIT.md).
+**Source of truth:** [`src/app/globals.css`](../../src/app/globals.css) (`:root` + `@theme inline`).
+**Companion audit:** [`DESIGN_SYSTEM_AUDIT.md`](../archive/DESIGN_SYSTEM_AUDIT.md).
 
 Design intent: **executive operating-system advisory**, not AI-startup landing page.
 The palette is built from charcoal, navy, slate, and muted steel, with a single deep
@@ -115,7 +115,7 @@ kits.
 
 ## Card System
 
-Base: [`src/components/ui/card.tsx`](../src/components/ui/card.tsx).
+Base: [`src/components/ui/card.tsx`](../../src/components/ui/card.tsx).
 
 - Container: `rounded-xl border border-border bg-white p-6 md:p-8`
 - Hover: `hover:border-primary/30` + `card-hover` shadow
@@ -136,7 +136,7 @@ Base: [`src/components/ui/card.tsx`](../src/components/ui/card.tsx).
 | **Ghost / link** | `text-primary font-semibold` + arrow icon | Inline navigation |
 
 **Language:** the diagnostic CTA reads **"Start the Diagnostic"** everywhere — defined
-once in [`src/lib/site.ts`](../src/lib/site.ts) as `site.cta`. No "Go to Intake",
+once in [`src/lib/site.ts`](../../src/lib/site.ts) as `site.cta`. No "Go to Intake",
 "Begin Intake", or "Start Diagnostic" variants.
 
 Contrast guarantee: primary CTA is always white on `--primary` (8.4:1). Never dark text

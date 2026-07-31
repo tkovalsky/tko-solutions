@@ -1,6 +1,6 @@
 # TIF Implementation Backlog
 
-**Status:** Remaining executable work only. The [TIF Runtime Model](TIF_RUNTIME_MODEL.md) is the canonical architecture reference; this file does not redefine the model.
+**Status:** Remaining executable work only. The [TIF Runtime Model](../architecture/TIF_RUNTIME_MODEL.md) is the canonical architecture reference; this file does not redefine the model.
 
 ## Workstream disposition
 
@@ -37,7 +37,7 @@
 
 1. **Add `MeasurementRecord` and a manual observation-to-Capture action.** Store source, period, unit, observation, reviewer, and boundary. Never infer causal outcome.
 2. **Add freshness/review cadence reporting.** Use effective/review timestamps from structured Evidence, diagrams, Assets, Publications, and Measurements.
-3. **Implement Authority Score v2 only after its documented inputs exist and calibration is approved.** See [Authority Score v2](TIF_AUTHORITY_SCORE_V2.md).
+3. **Implement Authority Score v2 only after its documented inputs exist and calibration is approved.** See [Authority Score v2](../architecture/TIF_AUTHORITY_SCORE_V2.md).
 
 ## Deferred — not executable under the current architecture
 

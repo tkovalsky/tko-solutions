@@ -31,7 +31,7 @@ The extension is intentionally constrained by what is already present:
 | `CaptureItem` | Implemented | Keep it as raw source; never use it directly as public proof. |
 | `ExperienceRecord`, `OperatingProblem`, `OperatingPattern`, `OperatingFramework` | Planned, not persisted | Package contract accepts reviewed references now; database records arrive through the planned additive migrations. |
 
-No current compiler logic is replaced. P0B adds [knowledge-package.ts](../src/lib/tif/knowledge-package.ts), a pure contract compiler, and focused tests.
+No current compiler logic is replaced. P0B adds [knowledge-package.ts](../../src/lib/tif/knowledge-package.ts), a pure contract compiler, and focused tests.
 
 ## Scope and non-goals
 
@@ -172,11 +172,11 @@ The compiler output is a computed manifest. Persisting another `KnowledgePackage
 | 5 | Map approved briefs to AssetOpportunity and use current composer | Maintains a single asset lifecycle. |
 | 6 | Publication/measurement records | Closes the learning loop without attribution inference. |
 
-This refines, rather than supersedes, the phase ordering in [TIF_IMPLEMENTATION_BACKLOG.md](TIF_IMPLEMENTATION_BACKLOG.md). The P0B compiler contract can be used immediately for reviewed planning; persistent use begins only as the prerequisite rows land.
+This refines, rather than supersedes, the phase ordering in [TIF_IMPLEMENTATION_BACKLOG.md](../archive/TIF_IMPLEMENTATION_BACKLOG.md). The P0B compiler contract can be used immediately for reviewed planning; persistent use begins only as the prerequisite rows land.
 
 ## Validation tests
 
-Focused executable tests live in [knowledge-package.test.ts](../src/lib/tif/knowledge-package.test.ts):
+Focused executable tests live in [knowledge-package.test.ts](../../src/lib/tif/knowledge-package.test.ts):
 
 - emits all thirteen required draft briefs;
 - attaches Experience, Evidence, Problem, Pattern, Framework, and Diagram lineage to each brief;

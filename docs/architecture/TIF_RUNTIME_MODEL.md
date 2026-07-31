@@ -118,5 +118,5 @@ Some package briefs are not top-level current `AssetType` values (for example Li
 
 - [Knowledge Asset Compiler](TIF_KNOWLEDGE_ASSET_COMPILER.md) for compiler contract details.
 - [Knowledge Diagram Subsystem](TIF_KNOWLEDGE_DIAGRAM_SUBSYSTEM.md) for typed diagram behavior.
-- [Implementation Backlog](TIF_IMPLEMENTATION_BACKLOG.md) for remaining executable work.
+- [Implementation Backlog](../archive/TIF_IMPLEMENTATION_BACKLOG.md) for remaining executable work.
 - [Authority Production](TIF_AUTHORITY_PRODUCTION.md) for composition and learning flow.

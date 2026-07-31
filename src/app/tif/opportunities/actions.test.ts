@@ -6,7 +6,7 @@ import {
 import {
   ingestPastedOpportunity,
   rerunOpportunityExtraction,
-} from "@/lib/opportunity-intelligence/ingest";
+} from "@/lib/opportunity-intelligence/intake/ingest";
 import { tifDb } from "@/lib/tif/db";
 
 vi.mock("next/cache", () => ({
@@ -19,7 +19,7 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
-vi.mock("@/lib/opportunity-intelligence/ingest", () => ({
+vi.mock("@/lib/opportunity-intelligence/intake/ingest", () => ({
   ingestPastedOpportunity: vi.fn(),
   rerunOpportunityExtraction: vi.fn(),
 }));

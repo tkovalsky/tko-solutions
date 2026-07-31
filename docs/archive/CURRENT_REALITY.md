@@ -3,7 +3,7 @@
 > **Status — supporting reference, reframed 2026-06-25.** "Human API" is a **finding type and
 > diagnostic lens**, not a standalone offer, separate assessment, or pricing tier. The offers
 > are the **Operational Recovery Assessment** and the **Prior Authorization Operational
-> Assessment** — see the authoritative [`/CURRENT_REALITY.md`](../CURRENT_REALITY.md) (note: this
+> Assessment** — see the authoritative [`CURRENT_REALITY.md`](CURRENT_REALITY.md) (note: this
 > file shares that name but is **not** authoritative; it should be renamed). Retained as
 > assessment methodology / IP and TIF seed content. Wherever this document frames "Human API
 > Risk Assessment" as a product or names a distinct offer/price, that framing is superseded.
