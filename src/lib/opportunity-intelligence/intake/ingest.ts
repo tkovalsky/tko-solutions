@@ -163,7 +163,7 @@ async function rebuildFromSource(
     facts: persistedFacts as OpportunityFactForScoring[],
     operatorThesis: opportunity.operatorThesis,
   });
-  const scoreSnapshot = await tx.oiOpportunityScore.create({
+  const scoreSnapshot = await tx.oiScore.create({
     data: {
       opportunityId: opportunity.id,
       total: score.total,
@@ -172,6 +172,10 @@ async function rebuildFromSource(
       inputSnapshot: score.inputSnapshot,
       scorePolicyVersion: score.scorePolicyVersion,
       capabilityProfileVersion: score.capabilityProfileVersion,
+      fitScore: 0,
+      evidenceScore: 0,
+      accessScore: 0,
+      urgencyScore: 0,
     },
   });
 

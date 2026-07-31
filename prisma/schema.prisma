@@ -199,6 +199,284 @@ enum OiResearchGapStatus {
   dismissed
 }
 
+enum OiOpportunityType {
+  fte
+  consulting
+  fractional
+  assessment
+  partnership
+  rfp
+}
+
+enum OiSignalTier {
+  tier_1
+  tier_2
+  tier_3
+}
+
+enum OiSignalType {
+  senior_role_posting
+  domain_role_posting
+  rfp_published
+  leadership_appointment
+  leadership_departure
+  concentrated_hiring
+  stated_operational_problem
+  transformation_announcement
+  stalled_program
+  acquisition_merger
+  funding_round
+  vendor_selection
+  earnings_statement
+  regulatory_deadline
+  technology_modernization
+  partnership_announcement
+  conference_presentation
+  partner_change
+  general_news
+  operator_note
+  referral
+}
+
+enum OiSignalStatus {
+  captured
+  classified
+  promoted
+  watched
+  dismissed
+}
+
+enum OiInitiativeStatus {
+  hypothesized
+  evidenced
+  active
+  delayed
+  completed
+  cancelled
+}
+
+enum OiInitiativeCategory {
+  prior_authorization
+  utilization_management
+  interoperability
+  workflow_modernization
+  care_management
+  claims_operations
+  program_recovery
+  ai_adoption
+  operating_model
+  regulatory_compliance
+  post_merger_integration
+  platform_implementation
+  other
+}
+
+enum OiStakeholderRole {
+  economic_buyer
+  executive_sponsor
+  operational_owner
+  technical_owner
+  hiring_manager
+  recruiter
+  champion
+  influencer
+  procurement
+  partner
+  blocker
+  unknown
+}
+
+enum OiAuthorityLevel {
+  none
+  low
+  medium
+  high
+  unknown
+}
+
+enum OiRelationshipType {
+  cold
+  warm_referral
+  warm_history
+  existing_client
+}
+
+enum OiContactPointType {
+  email
+  phone
+  linkedin
+  other
+}
+
+enum OiContactProvenance {
+  pattern_inferred
+  provider_discovered
+  publicly_listed
+  directly_provided
+  verified_deliverable
+}
+
+enum OiContactStatus {
+  active
+  bounced
+  invalid
+  opted_out
+  replaced
+}
+
+enum OiNextActionType {
+  approve_initiative
+  close_research_gap
+  identify_stakeholder
+  select_stakeholder
+  select_offer
+  complete_role_profile
+  prepare_outreach
+  review_draft
+  send_outreach
+  submit_application
+  follow_up
+  log_conversation
+  bid_no_bid_decision
+  find_partner
+  send_proposal
+  review_stale
+  record_outcome
+}
+
+enum OiNextActionStatus {
+  open
+  completed
+  snoozed
+  cancelled
+}
+
+enum OiActivityType {
+  outreach_sent
+  application_submitted
+  reply_received
+  no_reply
+  call_scheduled
+  call_completed
+  conversation
+  intro_requested
+  intro_received
+  referral_made
+  interview
+  proposal_sent
+  assessment_delivered
+  status_change
+  note
+  correction
+}
+
+enum OiActivitySentiment {
+  positive
+  neutral
+  deflecting
+  rejection
+  unknown
+}
+
+enum OiOutreachChannel {
+  email
+  linkedin_dm
+  application_note
+  intro_request
+  call_script
+  follow_up
+}
+
+enum OiDraftStatus {
+  draft
+  operator_review
+  approved_for_manual_use
+  changes_requested
+  discarded
+}
+
+enum OiOutcomeType {
+  engagement_won
+  role_accepted
+  proposal_declined
+  role_rejected
+  no_response
+  disqualified
+  withdrawn
+  expired
+}
+
+enum OiOfferKind {
+  assessment
+  diagnostic
+  recovery
+  build
+  fractional
+  workshop
+  subcontract
+}
+
+enum OiBidDecision {
+  undecided
+  bid_prime
+  bid_sub
+  no_bid
+}
+
+enum OiDecisionType {
+  promote_signal
+  dismiss_signal
+  qualify_opportunity
+  disqualify_opportunity
+  select_stakeholder
+  select_offer
+  select_playbook
+  approve_artifact
+  send_outreach
+  submit_application
+  bid_no_bid
+  send_proposal
+  pause_opportunity
+  close_opportunity
+}
+
+enum OiDecisionConfidence {
+  low
+  medium
+  high
+}
+
+enum OiPlaybookScope {
+  healthcare_executive
+  job_application
+  consulting_assessment
+  warm_referral
+  cold_outreach
+  partnership
+  program_recovery
+}
+
+enum OiArtifactKind {
+  executive_brief
+  research_summary
+  email_draft
+  linkedin_draft
+  talking_points
+  meeting_prep
+  proposal_outline
+  intro_request
+  application_note
+  follow_up_draft
+}
+
+enum OiArtifactStatus {
+  draft
+  operator_review
+  approved_for_manual_use
+  changes_requested
+  discarded
+}
+
 // Capture Inbox (EPIC 11 TIF-1101 / TIF v0.2 Priority 1): lightweight intake, ahead of a
 // normalized Evidence record. Capture-only — no edit endpoint is implemented (TIF v0.2 P1).
 model CaptureItem {
@@ -450,6 +728,8 @@ model OiOrganization {
   pursuits      OiPursuit[]
   opportunities OiOpportunity[]
   sources       OiSource[]
+  signals       OiSignal[]
+  initiatives   OiInitiative[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -478,6 +758,8 @@ model OiPerson {
   organizationId String
   organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   pursuits       OiPursuit[]
+  stakeholders   OiStakeholder[]
+  contactPoints  OiContactPoint[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -532,20 +814,37 @@ model OiOpportunity {
 
   organizationId String
   organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  initiativeId   String?
+  initiative     OiInitiative?    @relation(fields: [initiativeId], references: [id], onDelete: SetNull)
+  playbookId     String?
+  playbook       OiPlaybook?      @relation(fields: [playbookId], references: [id], onDelete: SetNull)
 
   sources      OiSource[]
+  sourceLinks  OiOpportunitySource[]
   facts        OiOpportunityFact[]
   evidence     OiEvidence[]
   researchGaps OiResearchGap[]
-  scoreHistory OiOpportunityScore[] @relation("OiOpportunityScoreHistory")
+  scoreHistory OiScore[] @relation("OiScoreHistory")
+  stakeholders OiStakeholder[]
+  nextActions  OiNextAction[]
+  activities   OiActivity[]
+  roleProfile  OiRoleProfile?
+  outcome      OiOutcome?
+  offers       OiOffer[]
+  proofLinks   OiOpportunityProof[]
+  decisions    OiDecision[]
+  campaignLinks OiCampaignOpportunity[]
+  artifacts    OiArtifact[]
 
   currentScoreId String?             @unique
-  currentScore   OiOpportunityScore? @relation("OiOpportunityCurrentScore", fields: [currentScoreId], references: [id], onDelete: SetNull)
+  currentScore   OiScore? @relation("OiCurrentScore", fields: [currentScoreId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([organizationId, status])
+  @@index([initiativeId])
+  @@index([playbookId])
   @@index([createdAt])
 }
 
@@ -565,6 +864,8 @@ model OiSource {
   opportunityId  String
   opportunity    OiOpportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
   evidence       OiEvidence[]
+  signals        OiSignal[]
+  opportunityLinks OiOpportunitySource[]
 
   createdAt DateTime @default(now())
 
@@ -582,6 +883,8 @@ model OiEvidence {
 
   opportunityId String
   opportunity   OiOpportunity       @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  initiativeId  String?
+  initiative    OiInitiative?       @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
   sourceId      String
   source        OiSource            @relation(fields: [sourceId], references: [id], onDelete: Cascade)
   facts         OiOpportunityFact[]
@@ -590,6 +893,7 @@ model OiEvidence {
 
   @@unique([sourceId, startOffset, endOffset])
   @@index([opportunityId])
+  @@index([initiativeId])
 }
 
 model OiOpportunityFact {
@@ -604,6 +908,8 @@ model OiOpportunityFact {
 
   opportunityId String
   opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  initiativeId  String?
+  initiative    OiInitiative?  @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
   evidenceId    String?
   evidence      OiEvidence?   @relation(fields: [evidenceId], references: [id], onDelete: SetNull)
 
@@ -612,6 +918,7 @@ model OiOpportunityFact {
 
   @@unique([opportunityId, field, normalizedValue, basis])
   @@index([opportunityId, field, ordinal])
+  @@index([initiativeId, field, ordinal])
   @@index([evidenceId])
 }
 
@@ -627,16 +934,19 @@ model OiResearchGap {
 
   opportunityId String
   opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  initiativeId  String?
+  initiative    OiInitiative?  @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([opportunityId, gapKey])
   @@index([status, createdAt])
+  @@index([initiativeId])
 }
 
 // Append-only opportunity-fit score snapshot. currentScoreId is updated to point here.
-model OiOpportunityScore {
+model OiScore {
   id                       String @id @default(cuid())
   total                    Int
   completeness             Int
@@ -645,12 +955,545 @@ model OiOpportunityScore {
   scorePolicyVersion       String
   capabilityProfileVersion String
 
+  fitScore      Int
+  evidenceScore Int
+  accessScore   Int
+  urgencyScore  Int
+
+  estimatedValue        Int?
+  conversionProbability Int?
+  expectedValue         Int?
+  estimatedHours        Decimal? @db.Decimal(6, 2)
+  priorityEfficiency    Decimal? @db.Decimal(12, 2)
+
+  isDisqualified     Boolean  @default(false)
+  disqualifyingRules String[] @default([])
+
   opportunityId String
-  opportunity   OiOpportunity  @relation("OiOpportunityScoreHistory", fields: [opportunityId], references: [id], onDelete: Cascade)
-  currentFor    OiOpportunity? @relation("OiOpportunityCurrentScore")
+  opportunity   OiOpportunity  @relation("OiScoreHistory", fields: [opportunityId], references: [id], onDelete: Cascade)
+  currentFor    OiOpportunity? @relation("OiCurrentScore")
+  decisions     OiDecision[]
 
   createdAt DateTime @default(now())
 
   @@index([opportunityId, createdAt])
   @@index([total])
+  @@index([priorityEfficiency])
+  @@map("OiOpportunityScore")
+}
+
+model OiSignal {
+  id         String         @id @default(cuid())
+  tier       OiSignalTier
+  signalType OiSignalType
+  status     OiSignalStatus @default(captured)
+
+  summary    String   @db.Text
+  occurredAt DateTime?
+  confidence Int      @default(50)
+  domainTags String[] @default([])
+
+  dismissedReason String?
+  dismissedAt     DateTime?
+
+  sourceId       String
+  source         OiSource       @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  initiativeLinks OiInitiativeSignal[]
+  decisions       OiDecision[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, tier, status])
+  @@index([status, createdAt])
+  @@index([occurredAt])
+}
+
+model OiInitiative {
+  id       String             @id @default(cuid())
+  name     String
+  status   OiInitiativeStatus @default(hypothesized)
+  category OiInitiativeCategory
+
+  hypothesis      String      @db.Text
+  hypothesisBasis OiFactBasis @default(inferred)
+  confidence      Int         @default(45)
+  domainTags      String[]    @default([])
+
+  likelyOwnerRoles String[] @default([])
+
+  estimatedStartAt DateTime?
+  urgencyBasis     String?
+  lastEvidenceAt   DateTime?
+
+  approvedAt DateTime?
+  approvedBy String?
+
+  aiGenerated   Boolean @default(false)
+  aiModel       String?
+  promptVersion String?
+
+  organizationId String
+  organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  signalLinks   OiInitiativeSignal[]
+  opportunities OiOpportunity[]
+  facts         OiOpportunityFact[]
+  evidence      OiEvidence[]
+  researchGaps  OiResearchGap[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([status, confidence])
+  @@index([category])
+  @@index([lastEvidenceAt])
+}
+
+model OiInitiativeSignal {
+  initiativeId String
+  initiative   OiInitiative @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  signalId     String
+  signal       OiSignal     @relation(fields: [signalId], references: [id], onDelete: Cascade)
+
+  contribution String?
+  weight       Int    @default(1)
+  addedBy      String @default("system")
+
+  createdAt DateTime @default(now())
+
+  @@id([initiativeId, signalId])
+  @@index([signalId])
+}
+
+model OiOpportunitySource {
+  opportunityId String
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  sourceId      String
+  source        OiSource      @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@id([opportunityId, sourceId])
+  @@index([sourceId])
+}
+
+model OiStakeholder {
+  id        String            @id @default(cuid())
+  role      OiStakeholderRole @default(unknown)
+  authority OiAuthorityLevel  @default(unknown)
+
+  relationshipType  OiRelationshipType @default(cold)
+  warmPathNotes     String?            @db.Text
+  referralSourceName String?
+
+  likelyMotivation String? @db.Text
+  likelyObjection  String? @db.Text
+  relevanceToTodd  String? @db.Text
+
+  roleEvidenceUrl   String?
+  roleEvidenceLabel String?
+  roleConfidence    Int       @default(50)
+  roleVerifiedAt    DateTime?
+
+  accessScore Int?
+  isSelected  Boolean   @default(false)
+  selectedAt  DateTime?
+
+  opportunityId String
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  personId      String
+  person        OiPerson      @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  activities OiActivity[]
+  artifacts  OiArtifact[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([opportunityId, personId])
+  @@index([opportunityId, isSelected])
+  @@index([personId])
+  @@index([role])
+  // Partial unique raw-SQL index lands in POIS-006D:
+  // one selected stakeholder per opportunity where isSelected is true.
+}
+
+model OiContactPoint {
+  id         String              @id @default(cuid())
+  type       OiContactPointType
+  value      String
+  provenance OiContactProvenance
+  status     OiContactStatus     @default(active)
+
+  sourceLabel String?
+  verifiedAt  DateTime?
+  lastUsedAt  DateTime?
+
+  personId String
+  person   OiPerson @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([personId, type, value])
+  @@index([personId, status])
+}
+
+model OiNextAction {
+  id     String             @id @default(cuid())
+  type   OiNextActionType
+  status OiNextActionStatus @default(open)
+
+  description      String    @db.Text
+  rationale        String?   @db.Text
+  estimatedMinutes Int       @default(15)
+  dueAt            DateTime?
+  snoozedUntil     DateTime?
+
+  completedAt   DateTime?
+  completedNote String?   @db.Text
+
+  isSystemGenerated Boolean @default(true)
+
+  opportunityId String
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, dueAt])
+  @@index([opportunityId, status])
+  // Partial unique raw-SQL index lands in POIS-006D:
+  // exactly one open next action per opportunity.
+}
+
+model OiActivity {
+  id         String              @id @default(cuid())
+  type       OiActivityType
+  occurredAt DateTime
+  summary    String              @db.Text
+  sentiment  OiActivitySentiment @default(unknown)
+
+  channel     OiOutreachChannel?
+  externalRef String?
+  outcomeNote String?            @db.Text
+
+  fromStatus String?
+  toStatus   String?
+  reason     String? @db.Text
+
+  correctsActivityId String?
+
+  opportunityId String
+  opportunity   OiOpportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  stakeholderId String?
+  stakeholder   OiStakeholder? @relation(fields: [stakeholderId], references: [id], onDelete: SetNull)
+  artifactId    String?
+  artifact      OiArtifact?    @relation(fields: [artifactId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([opportunityId, occurredAt])
+  @@index([type, occurredAt])
+  @@index([stakeholderId])
+  @@index([artifactId])
+}
+
+model OiRoleProfile {
+  id String @id @default(cuid())
+
+  compMin           Int?
+  compMax           Int?
+  compCurrency      String  @default("USD")
+  compSource        String?
+  meetsCompFloor    Boolean @default(false)
+  totalCompEstimate Int?
+
+  isRemote         Boolean?
+  location         String?
+  travelPercent    Int?
+  remoteCompatible Boolean @default(true)
+
+  reportsToTitle String?
+  teamSize       String?
+  scopeNotes     String? @db.Text
+  seniorityBand  String?
+
+  applicationUrl       String?
+  requisitionId        String?
+  postedAt             DateTime?
+  closesAt             DateTime?
+  postingLastCheckedAt DateTime?
+  postingIsOpen        Boolean   @default(true)
+
+  resumeVariant   String?
+  applicationNote String? @db.Text
+  appliedAt       DateTime?
+
+  currentStage    String?
+  nextInterviewAt DateTime?
+  offerAmount     Int?
+  offerReceivedAt DateTime?
+
+  opportunityId String        @unique
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([meetsCompFloor])
+  @@index([closesAt])
+}
+
+model OiOutcome {
+  id   String        @id @default(cuid())
+  type OiOutcomeType
+
+  proposedValue  Int?
+  actualValue    Int?
+  isRecurring    Boolean   @default(false)
+  monthlyValue   Int?
+  contractStartAt DateTime?
+  contractEndAt   DateTime?
+
+  closeReason String  @db.Text
+  lesson      String? @db.Text
+
+  daysFromFirstSignal   Int?
+  daysFromFirstOutreach Int?
+  originatingSignalType OiSignalType?
+  scorePolicyVersion    String?
+  scoreAtClose          Int?
+
+  opportunityId String        @unique
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt])
+}
+
+model OiOffer {
+  id   String      @id @default(cuid())
+  slug String      @unique
+  name String
+  kind OiOfferKind
+
+  description  String   @db.Text
+  valueLow     Int
+  valueHigh    Int
+  isRecurring  Boolean  @default(false)
+  typicalWeeks Int?
+  domainTags   String[] @default([])
+  problemTags  String[] @default([])
+  publicUrl    String?
+  isActive     Boolean  @default(true)
+
+  opportunities OiOpportunity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([kind, isActive])
+}
+
+model OiProofItem {
+  id   String @id @default(cuid())
+  slug String @unique
+  title String
+  kind  String
+
+  summary     String   @db.Text
+  publicUrl   String?
+  internalRef String?
+  domainTags  String[] @default([])
+  problemTags String[] @default([])
+  isApprovedForOutreach Boolean @default(false)
+
+  opportunityLinks OiOpportunityProof[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([kind, isApprovedForOutreach])
+}
+
+model OiOpportunityProof {
+  opportunityId String
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  proofItemId   String
+  proofItem     OiProofItem   @relation(fields: [proofItemId], references: [id], onDelete: Cascade)
+
+  matchScore      Int?
+  relevanceReason String?
+  isSelected      Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@id([opportunityId, proofItemId])
+  @@index([proofItemId])
+}
+
+model OiDecision {
+  id   String         @id @default(cuid())
+  type OiDecisionType
+
+  decision   String                 @db.Text
+  reason     String                 @db.Text
+  confidence OiDecisionConfidence
+
+  expectedValue       Int?
+  expectedEffortHours Decimal? @db.Decimal(6, 2)
+  expectedProbability Int?
+  expectedOutcome     String?  @db.Text
+
+  scoreIdAtDecision String?
+  scoreId           OiScore? @relation(fields: [scoreIdAtDecision], references: [id], onDelete: SetNull)
+
+  actualOutcome     String?  @db.Text
+  actualValue       Int?
+  actualEffortHours Decimal? @db.Decimal(6, 2)
+  lessonsLearned    String?  @db.Text
+  resolvedAt        DateTime?
+
+  valueDelta  Int?
+  effortDelta Decimal? @db.Decimal(6, 2)
+  wasCorrect  Boolean?
+
+  opportunityId String?
+  opportunity   OiOpportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  signalId      String?
+  signal        OiSignal?      @relation(fields: [signalId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([type, createdAt])
+  @@index([opportunityId, createdAt])
+  @@index([resolvedAt])
+}
+
+model OiCampaign {
+  id   String @id @default(cuid())
+  slug String @unique
+  name String
+
+  thesis     String   @db.Text
+  domainTags String[] @default([])
+  isActive   Boolean  @default(true)
+
+  targetAccountNames String[] @default([])
+
+  opportunityLinks OiCampaignOpportunity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive])
+}
+
+model OiCampaignOpportunity {
+  campaignId    String
+  campaign      OiCampaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  opportunityId String
+  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  addedBy   String   @default("operator")
+  createdAt DateTime @default(now())
+
+  @@id([campaignId, opportunityId])
+  @@index([opportunityId])
+}
+
+model OiPlaybook {
+  id    String          @id @default(cuid())
+  slug  String          @unique
+  name  String
+  scope OiPlaybookScope
+
+  appliesToTypes         OiOpportunityType[]  @default([])
+  appliesToRelationships OiRelationshipType[] @default([])
+  domainTags             String[]             @default([])
+
+  researchSteps      String[] @default([])
+  decisionPoints     String[] @default([])
+  proofGuidance      String?  @db.Text
+  offerGuidance      String?  @db.Text
+  draftGuidance      String?  @db.Text
+  followUpRhythmDays Int[]    @default([])
+  commonObjections   String[] @default([])
+
+  isActive Boolean @default(true)
+
+  opportunities OiOpportunity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([scope, isActive])
+}
+
+model OiArtifact {
+  id      String           @id @default(cuid())
+  kind    OiArtifactKind
+  status  OiArtifactStatus @default(draft)
+  version Int              @default(1)
+
+  title String?
+  body  String @db.Text
+
+  aiGenerated      Boolean  @default(false)
+  aiModel          String?
+  promptVersion    String?
+  contextSnapshot  Json
+  citedEvidenceIds String[] @default([])
+  citedProofIds    String[] @default([])
+
+  unsupportedClaims String[] @default([])
+  validationPassed  Boolean  @default(false)
+
+  approvedAt       DateTime?
+  operatorEditedAt DateTime?
+
+  opportunityId String
+  opportunity   OiOpportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  stakeholderId String?
+  stakeholder   OiStakeholder? @relation(fields: [stakeholderId], references: [id], onDelete: SetNull)
+
+  activities OiActivity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([opportunityId, kind, status])
+  @@unique([opportunityId, kind, stakeholderId, version])
+}
+
+model OiWeeklyReview {
+  id          String   @id @default(cuid())
+  periodStart DateTime
+  periodEnd   DateTime
+
+  metrics Json
+
+  whatChanged      String? @db.Text
+  whatStalled      String? @db.Text
+  wrongPredictions String? @db.Text
+  timeSpentNotes   String? @db.Text
+  lessons          String? @db.Text
+  nextWeekFocus    String? @db.Text
+
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([periodStart, periodEnd])
+  @@index([completedAt])
 }

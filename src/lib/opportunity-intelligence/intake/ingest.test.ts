@@ -51,7 +51,7 @@ function createDatabaseDouble() {
       createMany: vi.fn().mockResolvedValue({ count: 1 }),
       updateMany: vi.fn().mockResolvedValue({ count: 0 }),
     },
-    oiOpportunityScore: {
+    oiScore: {
       create: vi.fn().mockResolvedValue({ id: "score-1" }),
     },
   };
@@ -95,13 +95,13 @@ describe("ingestPastedOpportunity", () => {
         isOperatorOverride: false,
       },
     });
-    expect(tx.oiOpportunityScore.create).toHaveBeenCalledTimes(1);
+    expect(tx.oiScore.create).toHaveBeenCalledTimes(1);
     expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
       where: { id: "opportunity-1" },
       data: { currentScoreId: "score-1" },
     });
     expect(
-      tx.oiOpportunityScore.create.mock.invocationCallOrder[0],
+      tx.oiScore.create.mock.invocationCallOrder[0],
     ).toBeLessThan(tx.oiOpportunity.update.mock.invocationCallOrder[0]);
   });
 
@@ -124,7 +124,7 @@ describe("ingestPastedOpportunity", () => {
 
     expect(result.duplicate).toBe(true);
     expect(tx.oiOpportunity.create).not.toHaveBeenCalled();
-    expect(tx.oiOpportunityScore.create).not.toHaveBeenCalled();
+    expect(tx.oiScore.create).not.toHaveBeenCalled();
   });
 
   it("links a changed snapshot at the same canonical URL to the existing opportunity", async () => {
