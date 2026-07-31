@@ -4,18 +4,41 @@ import { extractOpportunity } from "./extract";
 import { ingestPastedOpportunity } from "./ingest";
 
 const RAW_SOURCE = `Director, Healthcare Transformation
-Reports to the COO and will lead a rapid modernization program.
-Own delivery using FHIR. Compensation is $240,000 per year.`;
+Reports to the COO and will lead a rapid modernization program across claims, care management, and provider operations.
+Own delivery using FHIR, Salesforce, and analytics workflows. Compensation is $240,000 per year.
+The first 90 days require immediate stabilization of implementation governance and executive reporting.`;
 
 function createDatabaseDouble() {
   const extractedFacts = extractOpportunity(RAW_SOURCE).facts.map((fact) => ({
+    id: `fact-${fact.field}`,
     field: fact.field,
     value: fact.value,
     normalizedValue: fact.normalizedValue,
     basis: fact.basis,
     confidence: fact.confidence,
     isOperatorOverride: false,
+    evidence: {
+      excerpt: fact.excerpt,
+      startOffset: fact.startOffset,
+      endOffset: fact.endOffset,
+      source: { rawContent: RAW_SOURCE },
+    },
   }));
+  const scoringFacts = extractedFacts.map(({ field, value, normalizedValue, basis, confidence, isOperatorOverride }) => ({
+    field,
+    value,
+    normalizedValue,
+    basis,
+    confidence,
+    isOperatorOverride,
+  }));
+  const reviewGap = {
+    id: "gap-1",
+    gapKey: "opportunity_thesis_missing",
+    question: "Why is this organization spending money, what changed, and who cares?",
+    reason: "A commercial conclusion is still required.",
+    status: "open",
+  };
 
   const tx = {
     oiOrganization: {
@@ -36,7 +59,9 @@ function createDatabaseDouble() {
     oiOpportunityFact: {
       deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
       create: vi.fn().mockResolvedValue({ id: "fact-1" }),
-      findMany: vi.fn().mockResolvedValue(extractedFacts),
+      findMany: vi.fn().mockImplementation((args) =>
+        args?.select?.evidence ? Promise.resolve(extractedFacts) : Promise.resolve(scoringFacts),
+      ),
     },
     oiEvidence: {
       deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
@@ -47,7 +72,9 @@ function createDatabaseDouble() {
         })),
     },
     oiResearchGap: {
-      findMany: vi.fn().mockResolvedValue([]),
+      findMany: vi.fn().mockImplementation((args) =>
+        args?.select?.question ? Promise.resolve([reviewGap]) : Promise.resolve([]),
+      ),
       createMany: vi.fn().mockResolvedValue({ count: 1 }),
       updateMany: vi.fn().mockResolvedValue({ count: 0 }),
     },
@@ -83,6 +110,19 @@ describe("ingestPastedOpportunity", () => {
       sourceId: "source-1",
       opportunityId: "opportunity-1",
       scoreId: "score-1",
+      facts: expect.arrayContaining([
+        expect.objectContaining({
+          field: "opportunity_title",
+          excerpt: "Director, Healthcare Transformation",
+          startOffset: 0,
+        }),
+      ]),
+      gaps: [
+        expect.objectContaining({
+          gapKey: "opportunity_thesis_missing",
+          status: "open",
+        }),
+      ],
     });
     expect(tx.oiOpportunity.create).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -123,8 +163,28 @@ describe("ingestPastedOpportunity", () => {
     );
 
     expect(result.duplicate).toBe(true);
+    expect(result.facts.length).toBeGreaterThan(0);
+    expect(result.gaps).toEqual([expect.objectContaining({ gapKey: "opportunity_thesis_missing" })]);
     expect(tx.oiOpportunity.create).not.toHaveBeenCalled();
     expect(tx.oiScore.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects content under 200 characters before extraction writes begin", async () => {
+    const { db, tx } = createDatabaseDouble();
+
+    await expect(
+      ingestPastedOpportunity(
+        {
+          organization: { name: "Example Health" },
+          title: "Director",
+          rawContent: "Short posting.",
+        },
+        db,
+      ),
+    ).rejects.toThrow("Too short to extract from");
+
+    expect(tx.oiOrganization.upsert).not.toHaveBeenCalled();
+    expect(db.$transaction).not.toHaveBeenCalled();
   });
 
   it("links a changed snapshot at the same canonical URL to the existing opportunity", async () => {

@@ -33,12 +33,33 @@ export type PastedOpportunityInput = {
   publishedAt?: Date | null;
 };
 
+export type OpportunityIngestionFact = {
+  id: string;
+  field: string;
+  value: string;
+  basis: string;
+  confidence: number;
+  excerpt: string;
+  startOffset: number;
+  endOffset: number;
+};
+
+export type OpportunityIngestionGap = {
+  id: string;
+  gapKey: string;
+  question: string;
+  reason: string;
+  status: string;
+};
+
 export type OpportunityIngestionResult = {
   created: boolean;
   duplicate: boolean;
   sourceId: string;
   opportunityId: string;
   scoreId: string | null;
+  facts: OpportunityIngestionFact[];
+  gaps: OpportunityIngestionGap[];
 };
 
 type TransactionClient = Prisma.TransactionClient;
@@ -187,6 +208,71 @@ async function rebuildFromSource(
   return scoreSnapshot;
 }
 
+async function getIngestionReview(
+  tx: TransactionClient,
+  opportunityId: string,
+  sourceId: string,
+): Promise<Pick<OpportunityIngestionResult, "facts" | "gaps">> {
+  const facts = await tx.oiOpportunityFact.findMany({
+    where: { opportunityId, evidence: { sourceId } },
+    select: {
+      id: true,
+      field: true,
+      value: true,
+      basis: true,
+      confidence: true,
+      evidence: {
+        select: {
+          excerpt: true,
+          startOffset: true,
+          endOffset: true,
+          source: { select: { rawContent: true } },
+        },
+      },
+    },
+    orderBy: [{ field: "asc" }, { ordinal: "asc" }],
+  });
+
+  const reviewedFacts = facts.map((fact) => {
+    if (!fact.evidence) {
+      throw new Error(`Fact ${fact.id} is missing source evidence.`);
+    }
+    const excerpt = fact.evidence.source.rawContent.slice(
+      fact.evidence.startOffset,
+      fact.evidence.endOffset,
+    );
+    if (excerpt !== fact.evidence.excerpt) {
+      throw new Error(
+        `Evidence offsets do not match raw source content for ${fact.field} at ${fact.evidence.startOffset}:${fact.evidence.endOffset}.`,
+      );
+    }
+    return {
+      id: fact.id,
+      field: fact.field,
+      value: fact.value,
+      basis: fact.basis,
+      confidence: fact.confidence,
+      excerpt,
+      startOffset: fact.evidence.startOffset,
+      endOffset: fact.evidence.endOffset,
+    };
+  });
+
+  const gaps = await tx.oiResearchGap.findMany({
+    where: { opportunityId },
+    select: {
+      id: true,
+      gapKey: true,
+      question: true,
+      reason: true,
+      status: true,
+    },
+    orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+  });
+
+  return { facts: reviewedFacts, gaps };
+}
+
 export async function ingestPastedOpportunity(
   input: PastedOpportunityInput,
   db: PrismaClient = prisma,
@@ -204,6 +290,9 @@ export async function ingestPastedOpportunity(
   }
 
   const normalizedContent = normalizeSourceContent(input.rawContent);
+  if (normalizedContent.length < 200) {
+    throw new Error("Too short to extract from");
+  }
   const contentHash = hashSourceContent(normalizedContent);
   const canonicalUrl = canonicalizeSourceUrl(input.canonicalUrl);
 
@@ -242,12 +331,14 @@ export async function ingestPastedOpportunity(
       if (!duplicate.opportunityId || !duplicate.opportunity) {
         throw new Error("Duplicate source is not linked to an opportunity.");
       }
+      const review = await getIngestionReview(tx, duplicate.opportunityId, duplicate.id);
       return {
         created: false,
         duplicate: true,
         sourceId: duplicate.id,
         opportunityId: duplicate.opportunityId,
         scoreId: duplicate.opportunity.currentScoreId,
+        ...review,
       };
     }
 
@@ -298,6 +389,7 @@ export async function ingestPastedOpportunity(
       sourceId: source.id,
       opportunityId: opportunity.id,
       scoreId: score.id,
+      ...(await getIngestionReview(tx, opportunity.id, source.id)),
     };
   });
 }
