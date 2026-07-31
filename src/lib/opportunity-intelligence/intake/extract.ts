@@ -3,8 +3,8 @@ import type {
   OpportunityExtraction,
   OpportunityFactField,
   ResearchGapCandidate,
-} from "./contracts";
-import { normalizeFactValue } from "./sources/normalize";
+} from "../contracts";
+import { normalizeFactValue } from "./normalize";
 
 type TextSpan = {
   text: string;

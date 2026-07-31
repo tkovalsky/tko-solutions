@@ -71,3 +71,59 @@ export const TODD_CAPABILITY_PROFILE: ToddCapabilityProfile = {
     "scale",
   ],
 };
+
+export const TODD_CAPABILITY_PROFILE_V1 = TODD_CAPABILITY_PROFILE;
+
+export const TODD_CAPABILITY_PROFILE_V2 = {
+  version: "todd-v2",
+  domains: [
+    ...TODD_CAPABILITY_PROFILE_V1.domains,
+    "care management",
+    "claims",
+    "interoperability",
+    "medicaid",
+    "medicare",
+    "provider operations",
+    "revenue cycle",
+    "population health",
+    "regulated operations",
+    "financial services",
+  ],
+  businessProblems: [
+    ...TODD_CAPABILITY_PROFILE_V1.businessProblems,
+    "administrative burden",
+    "denial",
+    "turnaround time",
+    "governance",
+    "decision rights",
+    "program recovery",
+    "stalled",
+    "delayed",
+    "at risk",
+    "exception handling",
+    "manual process",
+    "handoff",
+    "escalation",
+  ],
+  transformationLanguage: [
+    ...TODD_CAPABILITY_PROFILE_V1.transformationLanguage,
+    "remediation",
+    "stabilization",
+    "digital transformation",
+    "workflow redesign",
+  ],
+  responsibilities: [
+    ...TODD_CAPABILITY_PROFILE_V1.responsibilities,
+    "govern",
+    "stand up",
+    "turn around",
+  ],
+  technologies: TODD_CAPABILITY_PROFILE_V1.technologies,
+  thresholds: {
+    fteCompFloor: 225_000,
+    consultingMonthlyFloor: 20_000,
+    targetAnnualIncome: 300_000,
+    minFitScore: 45,
+    minEvidenceForOutreach: 50,
+  },
+} as const;

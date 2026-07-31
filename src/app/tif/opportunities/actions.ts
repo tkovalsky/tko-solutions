@@ -23,7 +23,7 @@ import {
 import {
   ingestPastedOpportunity,
   rerunOpportunityExtraction,
-} from "@/lib/opportunity-intelligence/ingest";
+} from "@/lib/opportunity-intelligence/intake/ingest";
 import { tifDb } from "@/lib/tif/db";
 
 const OI_PATH = "/tif/opportunities";

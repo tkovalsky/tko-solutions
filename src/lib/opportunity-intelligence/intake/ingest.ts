@@ -1,14 +1,14 @@
 import type { Prisma, PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
-import type { OpportunityFactForScoring } from "./contracts";
+import type { OpportunityFactForScoring } from "../contracts";
 import { extractOpportunity, verifyEvidenceOffsets } from "./extract";
-import { planResearchGapReconciliation } from "./research-gaps";
-import { scoreOpportunityFit } from "./score";
+import { scoreOpportunityFit } from "../commercial/score/fit";
+import { planResearchGapReconciliation } from "../intelligence/research-gaps";
 import {
   canonicalizeSourceUrl,
   hashSourceContent,
   normalizeSourceContent,
-} from "./sources/normalize";
+} from "./normalize";
 
 type OiOrganizationKind = "payer" | "health_tech" | "health_system" | "consulting" | "other";
 type OiSourceType =

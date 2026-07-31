@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { OpportunityFactForScoring } from "./contracts";
-import { scoreOpportunityFit } from "./score";
+import type { OpportunityFactForScoring } from "../../contracts";
+import { scoreOpportunityFit } from "./fit";
 
 const fact = (field: string, value: string): OpportunityFactForScoring => ({
   field,

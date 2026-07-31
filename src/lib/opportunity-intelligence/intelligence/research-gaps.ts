@@ -1,4 +1,4 @@
-import type { ResearchGapCandidate } from "./contracts";
+import type { ResearchGapCandidate } from "../contracts";
 
 export type ExistingResearchGap = {
   id: string;

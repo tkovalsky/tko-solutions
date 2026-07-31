@@ -1,9 +1,9 @@
-import { TODD_CAPABILITY_PROFILE } from "./capability-profile";
+import { TODD_CAPABILITY_PROFILE } from "../../capability-profile";
 import type {
   OpportunityFactForScoring,
   OpportunityFitScore,
   OpportunityScoreComponent,
-} from "./contracts";
+} from "../../contracts";
 
 export const OPPORTUNITY_SCORE_POLICY_VERSION = "opportunity-fit-v1";
 
