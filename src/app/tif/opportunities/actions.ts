@@ -111,40 +111,46 @@ export async function bootstrapOpportunityIntelligence() {
       lookalikeOverlapCount: countLookalikeOverlap(starter.domainTags, anchorTags),
     });
 
-    await tifDb.oiPursuit.upsert({
-      where: {
-        personId_mode: {
-          personId: person.id,
-          mode: starter.pursuit.mode as OiPursuitMode,
-        },
-      },
-      create: {
-        personId: person.id,
-        organizationId: organization.id,
-        mode: starter.pursuit.mode as OiPursuitMode,
-        status: score.readiness as OiPursuitStatus,
-        targetMonthlyValue: starter.pursuit.targetMonthlyValue,
-        problemHypothesis: starter.pursuit.problemHypothesis,
-        fitHypothesis: starter.pursuit.fitHypothesis,
-        evidenceSummary: starter.pursuit.evidenceSummary,
-        nextAction: score.nextAction,
-        score: score.score,
-        scoreBreakdown: toJson(score),
-        scorePolicyVersion: score.policyVersion,
-      },
-      update: {
-        status: score.readiness as OiPursuitStatus,
-        targetMonthlyValue: starter.pursuit.targetMonthlyValue,
-        problemHypothesis: starter.pursuit.problemHypothesis,
-        fitHypothesis: starter.pursuit.fitHypothesis,
-        evidenceSummary: starter.pursuit.evidenceSummary,
-        nextAction: score.nextAction,
-        score: score.score,
-        scoreBreakdown: toJson(score),
-        scorePolicyVersion: score.policyVersion,
-        scoredAt: new Date(),
-      },
+    const pursuitMode = starter.pursuit.mode as OiPursuitMode;
+    const existingPursuit = await tifDb.oiPursuit.findFirst({
+      where: { personId: person.id, mode: pursuitMode },
+      orderBy: { createdAt: "asc" },
     });
+
+    if (existingPursuit) {
+      await tifDb.oiPursuit.update({
+        where: { id: existingPursuit.id },
+        data: {
+          status: score.readiness as OiPursuitStatus,
+          targetMonthlyValue: starter.pursuit.targetMonthlyValue,
+          problemHypothesis: starter.pursuit.problemHypothesis,
+          fitHypothesis: starter.pursuit.fitHypothesis,
+          evidenceSummary: starter.pursuit.evidenceSummary,
+          nextAction: score.nextAction,
+          score: score.score,
+          scoreBreakdown: toJson(score),
+          scorePolicyVersion: score.policyVersion,
+          scoredAt: new Date(),
+        },
+      });
+    } else {
+      await tifDb.oiPursuit.create({
+        data: {
+          personId: person.id,
+          organizationId: organization.id,
+          mode: pursuitMode,
+          status: score.readiness as OiPursuitStatus,
+          targetMonthlyValue: starter.pursuit.targetMonthlyValue,
+          problemHypothesis: starter.pursuit.problemHypothesis,
+          fitHypothesis: starter.pursuit.fitHypothesis,
+          evidenceSummary: starter.pursuit.evidenceSummary,
+          nextAction: score.nextAction,
+          score: score.score,
+          scoreBreakdown: toJson(score),
+          scorePolicyVersion: score.policyVersion,
+        },
+      });
+    }
   }
 
   revalidatePath(OI_PATH);
@@ -244,36 +250,40 @@ export async function createOpportunityCandidate(formData: FormData) {
     },
   });
 
-  await tifDb.oiPursuit.upsert({
-    where: { personId_mode: { personId: person.id, mode } },
-    create: {
-      personId: person.id,
-      organizationId: organization.id,
-      mode,
-      status: score.readiness as OiPursuitStatus,
-      targetMonthlyValue,
-      problemHypothesis: requiredString(formData, "problemHypothesis"),
-      fitHypothesis: requiredString(formData, "fitHypothesis"),
-      evidenceSummary: requiredString(formData, "evidenceSummary"),
-      nextAction: score.nextAction,
-      score: score.score,
-      scoreBreakdown: toJson(score),
-      scorePolicyVersion: score.policyVersion,
-    },
-    update: {
-      organizationId: organization.id,
-      status: score.readiness as OiPursuitStatus,
-      targetMonthlyValue,
-      problemHypothesis: requiredString(formData, "problemHypothesis"),
-      fitHypothesis: requiredString(formData, "fitHypothesis"),
-      evidenceSummary: requiredString(formData, "evidenceSummary"),
-      nextAction: score.nextAction,
-      score: score.score,
-      scoreBreakdown: toJson(score),
-      scorePolicyVersion: score.policyVersion,
-      scoredAt: new Date(),
-    },
+  const pursuitData = {
+    organizationId: organization.id,
+    status: score.readiness as OiPursuitStatus,
+    targetMonthlyValue,
+    problemHypothesis: requiredString(formData, "problemHypothesis"),
+    fitHypothesis: requiredString(formData, "fitHypothesis"),
+    evidenceSummary: requiredString(formData, "evidenceSummary"),
+    nextAction: score.nextAction,
+    score: score.score,
+    scoreBreakdown: toJson(score),
+    scorePolicyVersion: score.policyVersion,
+  };
+  const existingPursuit = await tifDb.oiPursuit.findFirst({
+    where: { personId: person.id, mode },
+    orderBy: { createdAt: "asc" },
   });
+
+  if (existingPursuit) {
+    await tifDb.oiPursuit.update({
+      where: { id: existingPursuit.id },
+      data: {
+        ...pursuitData,
+        scoredAt: new Date(),
+      },
+    });
+  } else {
+    await tifDb.oiPursuit.create({
+      data: {
+        ...pursuitData,
+        personId: person.id,
+        mode,
+      },
+    });
+  }
 
   revalidatePath(OI_PATH);
 }

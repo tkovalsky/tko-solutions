@@ -172,9 +172,40 @@ enum OiPursuitStatus {
 }
 
 enum OiOpportunityStatus {
+  identified
+  qualifying
   reviewing
   qualified
+  researching
+  dismissed
   paused
+  outreach_ready
+  contacted
+  conversation
+  nurturing
+  diagnostic_scoped
+  proposal_sent
+  capability_shared
+  agreement_discussion
+  application_ready
+  applied
+  recruiter_screen
+  hiring_manager
+  interview_loop
+  offer
+  no_response
+  rfp_intake
+  seeking_partner
+  bid_as_prime
+  bid_as_sub
+  no_bid
+  submitted
+  shortlisted
+  won
+  accepted
+  lost
+  declined
+  rejected
   closed
 }
 
@@ -723,6 +754,12 @@ model OiOrganization {
   website String?
   kind    OiOrganizationKind
   notes   String?
+  domain  String?
+  sizeBand String?
+  tier    Int                @default(2)
+  isWatched Boolean          @default(false)
+  aliases String[]           @default([])
+  headquarters String?
 
   people        OiPerson[]
   pursuits      OiPursuit[]
@@ -735,6 +772,8 @@ model OiOrganization {
   updatedAt DateTime @updatedAt
 
   @@index([kind])
+  @@index([domain])
+  @@index([isWatched])
 }
 
 model OiPerson {
@@ -754,12 +793,16 @@ model OiPerson {
   transformationRelevance Int         @default(0)
   relationshipStrength    Int         @default(0)
   notes                   String?
+  linkedinUrl             String?
+  lastVerifiedAt          DateTime?
+  doNotContact            Boolean     @default(false)
 
   organizationId String
   organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   pursuits       OiPursuit[]
   stakeholders   OiStakeholder[]
   contactPoints  OiContactPoint[]
+  facts          OiOpportunityFact[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -767,6 +810,7 @@ model OiPerson {
   @@unique([organizationId, name, title])
   @@index([isLookalikeAnchor])
   @@index([seniority])
+  @@index([doNotContact])
 }
 
 model OiPursuit {
@@ -793,13 +837,15 @@ model OiPursuit {
   person         OiPerson       @relation(fields: [personId], references: [id], onDelete: Cascade)
   organizationId String
   organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  opportunityId  String?
+  opportunity    OiOpportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([personId, mode])
   @@index([status, score])
   @@index([organizationId])
+  @@index([opportunityId])
   @@index([nextFollowUpAt])
 }
 
@@ -811,13 +857,26 @@ model OiOpportunity {
   status         OiOpportunityStatus @default(reviewing)
   operatorThesis String?
   thesisBasis    OiFactBasis?
+  type           OiOpportunityType?
 
   organizationId String
   organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   initiativeId   String?
   initiative     OiInitiative?    @relation(fields: [initiativeId], references: [id], onDelete: SetNull)
+  offerId        String?
+  offer          OiOffer?         @relation(fields: [offerId], references: [id])
   playbookId     String?
   playbook       OiPlaybook?      @relation(fields: [playbookId], references: [id], onDelete: SetNull)
+  estimatedValueLow     Int?
+  estimatedValueHigh    Int?
+  conversionProbability Int?
+  estimatedHours        Decimal? @db.Decimal(6, 2)
+  valueBasis            String?
+  valueApprovedAt       DateTime?
+  disqualifiedReason    String?
+  closedReason          String?
+  lastActivityAt        DateTime?
+  firstSignalAt         DateTime?
 
   sources      OiSource[]
   sourceLinks  OiOpportunitySource[]
@@ -825,12 +884,12 @@ model OiOpportunity {
   evidence     OiEvidence[]
   researchGaps OiResearchGap[]
   scoreHistory OiScore[] @relation("OiScoreHistory")
+  pursuits     OiPursuit[]
   stakeholders OiStakeholder[]
   nextActions  OiNextAction[]
   activities   OiActivity[]
   roleProfile  OiRoleProfile?
   outcome      OiOutcome?
-  offers       OiOffer[]
   proofLinks   OiOpportunityProof[]
   decisions    OiDecision[]
   campaignLinks OiCampaignOpportunity[]
@@ -843,8 +902,10 @@ model OiOpportunity {
   updatedAt DateTime @updatedAt
 
   @@index([organizationId, status])
+  @@index([type, status])
   @@index([initiativeId])
   @@index([playbookId])
+  @@index([lastActivityAt])
   @@index([createdAt])
 }
 
@@ -861,8 +922,8 @@ model OiSource {
 
   organizationId String
   organization   OiOrganization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  opportunityId  String
-  opportunity    OiOpportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId  String?
+  opportunity    OiOpportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
   evidence       OiEvidence[]
   signals        OiSignal[]
   opportunityLinks OiOpportunitySource[]
@@ -873,6 +934,7 @@ model OiSource {
   @@unique([canonicalUrl, contentHash])
   @@index([canonicalUrl])
   @@index([opportunityId, retrievedAt])
+  @@index([retrievedAt])
 }
 
 model OiEvidence {
@@ -881,8 +943,8 @@ model OiEvidence {
   endOffset   Int
   excerpt     String @db.Text
 
-  opportunityId String
-  opportunity   OiOpportunity       @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId String?
+  opportunity   OiOpportunity?      @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
   initiativeId  String?
   initiative    OiInitiative?       @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
   sourceId      String
@@ -905,11 +967,16 @@ model OiOpportunityFact {
   basis              OiFactBasis
   confidence         Int
   isOperatorOverride Boolean     @default(false)
+  aiGenerated        Boolean     @default(false)
+  aiModel            String?
+  promptVersion      String?
 
-  opportunityId String
-  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId String?
+  opportunity   OiOpportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
   initiativeId  String?
   initiative    OiInitiative?  @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  personId      String?
+  person        OiPerson?      @relation(fields: [personId], references: [id], onDelete: Cascade)
   evidenceId    String?
   evidence      OiEvidence?   @relation(fields: [evidenceId], references: [id], onDelete: SetNull)
 
@@ -919,6 +986,7 @@ model OiOpportunityFact {
   @@unique([opportunityId, field, normalizedValue, basis])
   @@index([opportunityId, field, ordinal])
   @@index([initiativeId, field, ordinal])
+  @@index([personId, field, ordinal])
   @@index([evidenceId])
 }
 
@@ -931,9 +999,12 @@ model OiResearchGap {
   resolution    String?             @db.Text
   operatorNotes String?             @db.Text
   resolvedAt    DateTime?
+  priority      Int                 @default(2)
+  blocksOutreach Boolean            @default(false)
+  suggestedSources String[]         @default([])
 
-  opportunityId String
-  opportunity   OiOpportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId String?
+  opportunity   OiOpportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
   initiativeId  String?
   initiative    OiInitiative?  @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
 
@@ -942,7 +1013,8 @@ model OiResearchGap {
 
   @@unique([opportunityId, gapKey])
   @@index([status, createdAt])
-  @@index([initiativeId])
+  @@index([initiativeId, status])
+  @@index([blocksOutreach, status])
 }
 
 // Append-only opportunity-fit score snapshot. currentScoreId is updated to point here.
@@ -1294,6 +1366,12 @@ model OiOffer {
   problemTags  String[] @default([])
   publicUrl    String?
   isActive     Boolean  @default(true)
+  idealBuyer        String?  @db.Text
+  problemSolved     String?  @db.Text
+  deliverables      String[] @default([])
+  typicalObjections String[] @default([])
+  proofItemIds      String[] @default([])
+  positioningNotes  String?  @db.Text
 
   opportunities OiOpportunity[]
 
