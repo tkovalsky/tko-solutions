@@ -2,8 +2,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { redirect } from "next/navigation";
 import { canTransition } from "@/lib/opportunity-intelligence/commercial/lifecycle";
 import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
+import { isContactPointOutreachEligible } from "@/lib/opportunity-intelligence/intelligence/contact-point";
 import { tifDb } from "@/lib/tif/db";
-import { resolveResearchGap, updateOpportunityStatus } from "./actions";
+import { addContactPoint, addPersonFact, resolveResearchGap, selectStakeholder, updateOpportunityStatus } from "./actions";
 
 vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
@@ -53,6 +54,12 @@ vi.mock("@/lib/tif/db", () => ({
     $transaction: vi.fn(),
     oiOpportunity: {
       findUniqueOrThrow: vi.fn(),
+    },
+    oiContactPoint: {
+      create: vi.fn(),
+    },
+    oiOpportunityFact: {
+      create: vi.fn(),
     },
   },
 }));
@@ -127,6 +134,90 @@ describe("workbench actions", () => {
     });
     expect(scoreOpportunity).toHaveBeenCalled();
     expect(mockedPersist).toHaveBeenCalledWith(tx, "opp-1", expect.any(Object), expect.objectContaining({ opportunityId: "opp-1" }));
+  });
+
+  it("prevents selecting a stakeholder with no evidence and no operator confirmation", async () => {
+    const tx = {
+      oiStakeholder: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "stakeholder-1",
+          roleEvidenceUrl: null,
+          roleEvidenceLabel: null,
+          roleConfidence: 50,
+          person: { doNotContact: false },
+        }),
+        updateMany: vi.fn(),
+        update: vi.fn(),
+      },
+      oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue(scoreInputOpportunity()),
+        update: vi.fn(),
+      },
+      oiScore: { create: vi.fn().mockResolvedValue({ id: "score-1" }) },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("stakeholderId", "stakeholder-1");
+
+    await expect(selectStakeholder(formData)).rejects.toThrow("Selection requires role evidence or explicit operator confirmation.");
+    expect(tx.oiStakeholder.update).not.toHaveBeenCalled();
+  });
+
+  it("prevents selecting a do-not-contact stakeholder", async () => {
+    const tx = {
+      oiStakeholder: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "stakeholder-1",
+          roleEvidenceUrl: "https://example.com",
+          roleEvidenceLabel: null,
+          roleConfidence: 100,
+          person: { doNotContact: true },
+        }),
+        updateMany: vi.fn(),
+        update: vi.fn(),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("stakeholderId", "stakeholder-1");
+
+    await expect(selectStakeholder(formData)).rejects.toThrow("A do-not-contact stakeholder cannot be selected.");
+    expect(tx.oiStakeholder.update).not.toHaveBeenCalled();
+  });
+
+  it("requires contact point provenance and excludes pattern-inferred contact points from outreach eligibility", async () => {
+    const missing = new FormData();
+    missing.set("opportunityId", "opp-1");
+    missing.set("personId", "person-1");
+    missing.set("type", "email");
+    missing.set("value", "person@example.com");
+
+    await expect(addContactPoint(missing)).rejects.toThrow();
+    expect(isContactPointOutreachEligible({ status: "active", provenance: "pattern_inferred" })).toBe(false);
+    expect(isContactPointOutreachEligible({ status: "active", provenance: "publicly_listed" })).toBe(true);
+  });
+
+  it("writes person facts with only personId set", async () => {
+    const formData = new FormData();
+    formData.set("personId", "person-1");
+    formData.set("field", "career");
+    formData.set("value", "VP Operations at Regional Payer Health");
+    formData.set("basis", "operator");
+    formData.set("confidence", "90");
+
+    await addPersonFact(formData);
+
+    expect(mockedDb.oiOpportunityFact.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        personId: "person-1",
+        basis: "operator",
+        confidence: 90,
+      }),
+    });
+    expect(mockedDb.oiOpportunityFact.create.mock.calls[0][0].data).not.toHaveProperty("opportunityId");
+    expect(mockedDb.oiOpportunityFact.create.mock.calls[0][0].data).not.toHaveProperty("initiativeId");
   });
 });
 

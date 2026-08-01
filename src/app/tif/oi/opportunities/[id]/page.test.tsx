@@ -18,13 +18,18 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("./actions", () => ({
+  addContactPoint: vi.fn(),
   addOperatorFact: vi.fn(),
+  addStakeholder: vi.fn(),
   approveInitiative: vi.fn(),
   dismissResearchGap: vi.fn(),
   editInitiativeHypothesis: vi.fn(),
+  markDoNotContact: vi.fn(),
   recomputeScore: vi.fn(),
   resolveResearchGap: vi.fn(),
+  selectStakeholder: vi.fn(),
   updateOpportunityStatus: vi.fn(),
+  updateStakeholder: vi.fn(),
 }));
 
 const mockedDb = vi.mocked(tifDb);
@@ -46,12 +51,28 @@ describe("OpportunityWorkbenchPage", () => {
     expect(screen.getByRole("link", { name: "Initiative" })).toHaveAttribute("href", "#initiative");
     expect(screen.getByRole("link", { name: "Evidence" })).toHaveAttribute("href", "#evidence");
     expect(screen.getByRole("link", { name: "Gaps" })).toHaveAttribute("href", "#gaps");
+    expect(screen.getByRole("link", { name: "Stakeholders" })).toHaveAttribute("href", "#stakeholders");
     expect(screen.getByRole("link", { name: "Timeline" })).toHaveAttribute("href", "#timeline");
     expect(screen.getByRole("heading", { name: "Overview" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Initiative" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Evidence" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Research gaps" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Stakeholders" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Timeline" })).toBeInTheDocument();
+  });
+
+  it("renders stakeholder suggestions, contact provenance, and selected controls", async () => {
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.getByText("Suggested roles not yet filled")).toBeInTheDocument();
+    expect(screen.getAllByRole("option", { name: "executive sponsor" }).length).toBeGreaterThan(0);
+    expect(screen.getByText(/email: sarah@example.com · publicly_listed/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Selected" })).toBeInTheDocument();
   });
 
   it("keeps inferred hypotheses visually distinct from stated facts", async () => {
@@ -186,6 +207,38 @@ function opportunityFixture() {
         },
       ],
     },
+    stakeholders: [
+      {
+        id: "stakeholder-1",
+        role: "operational_owner",
+        authority: "high",
+        relationshipType: "warm_history",
+        warmPathNotes: "prior colleague",
+        relevanceToTodd: "Led an analogous recovery",
+        roleEvidenceUrl: "https://example.com/person",
+        roleEvidenceLabel: "Company bio",
+        roleConfidence: 100,
+        accessScore: 82,
+        isSelected: true,
+        selectedAt: createdAt,
+        personId: "person-1",
+        person: {
+          id: "person-1",
+          name: "Sarah Chen",
+          title: "VP Operations",
+          doNotContact: false,
+          contactPoints: [
+            {
+              id: "contact-1",
+              type: "email",
+              value: "sarah@example.com",
+              provenance: "publicly_listed",
+              status: "active",
+            },
+          ],
+        },
+      },
+    ],
     facts: [
       {
         id: "fact-1",

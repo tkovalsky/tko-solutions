@@ -305,4 +305,49 @@ describe("disqualifyOpportunity", () => {
 
     expect(result.conversionProbability).toBe(60);
   });
+
+  it("wires access multipliers into score components and caps combined contribution", () => {
+    const result = scoreOpportunity(
+      input({
+        opportunity: { type: "consulting" },
+        facts: fitFacts("warm"),
+        initiative: { status: "evidenced", approvedAt: AS_OF },
+        sources: [source(2)],
+        stakeholders: [
+          {
+            role: "economic_buyer",
+            relationshipType: "warm_history",
+            isSelected: true,
+            roleEvidenceUrl: "https://example.com/person",
+            roleConfidence: 100,
+            person: {
+              seniority: "senior_vice_president",
+              budgetAuthority: 3,
+              hiringAuthority: 3,
+              transformationRelevance: 3,
+              relationshipStrength: 3,
+              sourceConfidence: 3,
+              contactPoints: [{ status: "active", provenance: "publicly_listed" }],
+            },
+          },
+        ],
+      }),
+    );
+
+    expect(result.accessScore).toBe(100);
+    expect(result.conversionProbability).toBe(60);
+    expect(result.components).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ key: "access.warm_history_multiplier", reason: expect.stringContaining("x2.5") }),
+        expect.objectContaining({ key: "access.high_access_multiplier", reason: expect.stringContaining("x1.4") }),
+        expect.objectContaining({ key: "access.probability_cap", reason: expect.stringContaining("60%") }),
+      ]),
+    );
+  });
+
+  it("computes accessScore as the max across opportunity stakeholders", () => {
+    const result = scoreOpportunity(input({ stakeholders: [stakeholder38(), stakeholder45()] }));
+
+    expect(result.accessScore).toBe(45);
+  });
 });

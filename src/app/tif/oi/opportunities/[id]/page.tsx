@@ -4,15 +4,21 @@ import { notFound } from "next/navigation";
 import DecisionCapture from "@/app/tif/oi/decision-capture";
 import { buildTimeline } from "@/lib/opportunity-intelligence/action/timeline";
 import { validTargetsFor } from "@/lib/opportunity-intelligence/commercial/lifecycle";
+import { suggestStakeholderRoles } from "@/lib/opportunity-intelligence/intelligence/stakeholder-suggest";
 import { tifDb } from "@/lib/tif/db";
 import {
+  addContactPoint,
   addOperatorFact,
+  addStakeholder,
   approveInitiative,
   dismissResearchGap,
   editInitiativeHypothesis,
+  markDoNotContact,
   recomputeScore,
   resolveResearchGap,
+  selectStakeholder,
   updateOpportunityStatus,
+  updateStakeholder,
 } from "./actions";
 import ScorePanel from "./score-panel";
 
@@ -71,6 +77,18 @@ async function getOpportunity(id: string) {
       },
       decisions: {
         orderBy: [{ createdAt: "asc" }],
+      },
+      stakeholders: {
+        include: {
+          person: {
+            include: {
+              contactPoints: {
+                orderBy: [{ createdAt: "desc" }],
+              },
+            },
+          },
+        },
+        orderBy: [{ isSelected: "desc" }, { updatedAt: "desc" }],
       },
     },
   });
@@ -179,8 +197,8 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
           <a href="#initiative" className="underline">Initiative</a>
           <a href="#evidence" className="underline">Evidence</a>
           <a href="#gaps" className="underline">Gaps</a>
+          <a href="#stakeholders" className="underline">Stakeholders</a>
           <a href="#timeline" className="underline">Timeline</a>
-          <span className="text-muted">Stakeholders</span>
           <span className="text-muted">Offer</span>
           <span className="text-muted">Outreach</span>
           <span className="text-muted">Log</span>
@@ -192,6 +210,7 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
         <InitiativeSection opportunity={opportunity} />
         <EvidenceSection opportunity={opportunity} />
         <GapsSection opportunity={opportunity} />
+        <StakeholdersSection opportunity={opportunity} />
         <TimelineSection opportunity={opportunity} />
       </div>
     </section>
@@ -423,6 +442,163 @@ function GapsSection({ opportunity }: { opportunity: WorkbenchOpportunity }) {
   );
 }
 
+function StakeholdersSection({ opportunity }: { opportunity: WorkbenchOpportunity }) {
+  const suggestions = suggestStakeholderRoles(opportunity.initiative?.category, opportunity.type);
+  const filledRoles = new Set(opportunity.stakeholders.map((stakeholder) => stakeholder.role));
+  const unfilledRoles = suggestions.filter((role) => !filledRoles.has(role));
+
+  return (
+    <section id="stakeholders" className="rounded-md border border-border bg-white p-5">
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <h3 className="text-lg font-semibold">Stakeholders</h3>
+        <span className="text-sm text-muted">{opportunity.stakeholders.filter((stakeholder) => stakeholder.isSelected).length} selected</span>
+      </div>
+
+      {opportunity.stakeholders.length > 0 ? (
+        <div className="mt-4 grid gap-4">
+          {opportunity.stakeholders.map((stakeholder) => (
+            <article key={stakeholder.id} className="rounded-md border border-border p-4 text-sm">
+              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                <div>
+                  <p className="font-semibold">
+                    {stakeholder.isSelected ? "Selected · " : ""}
+                    <Link href={`/tif/oi/people/${stakeholder.personId}`} className="underline">
+                      {stakeholder.person.name}
+                    </Link>{" "}
+                    · {stakeholder.person.title}
+                  </p>
+                  <p className="mt-1 text-muted">
+                    Role: {label(stakeholder.role)} · Authority: {stakeholder.authority} · Confidence {stakeholder.roleConfidence}%
+                  </p>
+                  <p className="mt-1 text-muted">
+                    Relationship: {label(stakeholder.relationshipType)}
+                    {stakeholder.warmPathNotes ? ` - ${stakeholder.warmPathNotes}` : ""}
+                  </p>
+                  {stakeholder.relevanceToTodd ? <p className="mt-2">Relevance to Todd: {stakeholder.relevanceToTodd}</p> : null}
+                  {stakeholder.person.doNotContact ? <p className="mt-2 font-semibold text-red-700">Do not contact</p> : null}
+                  <ContactPointList stakeholder={stakeholder} opportunityId={opportunity.id} />
+                </div>
+                <div className="grid gap-2">
+                  <form action={selectStakeholder}>
+                    <input type="hidden" name="opportunityId" value={opportunity.id} />
+                    <input type="hidden" name="stakeholderId" value={stakeholder.id} />
+                    <button className="rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white" disabled={stakeholder.person.doNotContact}>
+                      {stakeholder.isSelected ? "Selected" : "Select as target"}
+                    </button>
+                  </form>
+                  <form action={markDoNotContact}>
+                    <input type="hidden" name="opportunityId" value={opportunity.id} />
+                    <input type="hidden" name="stakeholderId" value={stakeholder.id} />
+                    <button className="rounded-md border border-border px-3 py-2 text-sm font-semibold">
+                      Mark DNC
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <details className="mt-4">
+                <summary className="cursor-pointer font-semibold">Edit stakeholder</summary>
+                <StakeholderForm opportunity={opportunity} stakeholder={stakeholder} suggestions={suggestions} />
+              </details>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-4 text-sm text-muted">No stakeholders yet. Start with one of the suggested roles below.</p>
+      )}
+
+      <div className="mt-5 rounded-md border border-border bg-[#f7f8fb] p-4">
+        <p className="text-sm font-semibold">Suggested roles not yet filled</p>
+        <p className="mt-1 text-sm text-muted">{unfilledRoles.length > 0 ? unfilledRoles.map(label).join(" · ") : "All suggested roles have a stakeholder."}</p>
+      </div>
+      <StakeholderForm opportunity={opportunity} suggestions={suggestions} />
+    </section>
+  );
+}
+
+function StakeholderForm({
+  opportunity,
+  stakeholder,
+  suggestions,
+}: {
+  opportunity: WorkbenchOpportunity;
+  stakeholder?: WorkbenchOpportunity["stakeholders"][number];
+  suggestions: string[];
+}) {
+  return (
+    <form action={stakeholder ? updateStakeholder : addStakeholder} className="mt-4 grid gap-2 md:grid-cols-2">
+      <input type="hidden" name="opportunityId" value={opportunity.id} />
+      {stakeholder ? <input type="hidden" name="stakeholderId" value={stakeholder.id} /> : null}
+      <input name="personName" className={inputClass} defaultValue={stakeholder?.person.name} placeholder="Person name" />
+      <input name="title" className={inputClass} defaultValue={stakeholder?.person.title} placeholder="Title" />
+      <select name="role" className={inputClass} defaultValue={stakeholder?.role ?? suggestions[0] ?? "unknown"}>
+        {Array.from(new Set([...suggestions, "economic_buyer", "executive_sponsor", "operational_owner", "technical_owner", "hiring_manager", "recruiter", "champion", "influencer", "procurement", "partner", "blocker", "unknown"])).map((role) => (
+          <option key={role} value={role}>
+            {label(role)}
+          </option>
+        ))}
+      </select>
+      <select name="authority" className={inputClass} defaultValue={stakeholder?.authority ?? "unknown"}>
+        {["unknown", "none", "low", "medium", "high"].map((authority) => (
+          <option key={authority} value={authority}>{authority}</option>
+        ))}
+      </select>
+      <select name="relationshipType" className={inputClass} defaultValue={stakeholder?.relationshipType ?? "cold"}>
+        {["cold", "warm_referral", "warm_history", "existing_client"].map((relationship) => (
+          <option key={relationship} value={relationship}>{label(relationship)}</option>
+        ))}
+      </select>
+      <input name="roleEvidenceLabel" className={inputClass} defaultValue={stakeholder?.roleEvidenceLabel ?? ""} placeholder="Evidence label" />
+      <input name="roleEvidenceUrl" className={inputClass} defaultValue={stakeholder?.roleEvidenceUrl ?? ""} placeholder="Evidence URL" />
+      <input name="roleConfidence" className={inputClass} type="number" min="1" max="100" defaultValue={stakeholder?.roleConfidence ?? 50} />
+      <input name="warmPathNotes" className={inputClass} defaultValue={stakeholder?.warmPathNotes ?? ""} placeholder="Warm path notes" />
+      <input name="relevanceToTodd" className={inputClass} defaultValue={stakeholder?.relevanceToTodd ?? ""} placeholder="Relevance to Todd" />
+      <label className="flex items-center gap-2 text-sm">
+        <input name="operatorConfirmed" type="checkbox" defaultChecked={stakeholder?.roleConfidence === 100} />
+        Operator confirmed
+      </label>
+      <button className="rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white">
+        {stakeholder ? "Update stakeholder" : "Add stakeholder"}
+      </button>
+    </form>
+  );
+}
+
+function ContactPointList({ stakeholder, opportunityId }: { stakeholder: WorkbenchOpportunity["stakeholders"][number]; opportunityId: string }) {
+  return (
+    <div className="mt-3">
+      <p className="font-semibold">Contact points</p>
+      {stakeholder.person.contactPoints.length > 0 ? (
+        <ul className="mt-1 grid gap-1 text-muted">
+          {stakeholder.person.contactPoints.map((point) => (
+            <li key={point.id}>
+              {point.type}: {point.value} · {point.provenance}
+              {point.provenance === "pattern_inferred" ? " · not outreach eligible" : ""}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-1 text-muted">No contact point captured yet.</p>
+      )}
+      <form action={addContactPoint} className="mt-2 grid gap-2 md:grid-cols-[auto_1fr_auto_auto]">
+        <input type="hidden" name="opportunityId" value={opportunityId} />
+        <input type="hidden" name="personId" value={stakeholder.personId} />
+        <select name="type" className={inputClass} defaultValue="email">
+          {["email", "phone", "linkedin", "other"].map((type) => (
+            <option key={type} value={type}>{type}</option>
+          ))}
+        </select>
+        <input name="value" className={inputClass} placeholder="Contact value" />
+        <select name="provenance" className={inputClass} defaultValue="publicly_listed">
+          {["publicly_listed", "directly_provided", "provider_discovered", "verified_deliverable", "pattern_inferred"].map((provenance) => (
+            <option key={provenance} value={provenance}>{provenance}</option>
+          ))}
+        </select>
+        <button className="rounded-md border border-border px-3 py-2 text-sm font-semibold">Add contact</button>
+      </form>
+    </div>
+  );
+}
+
 function Metric({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-md border border-border bg-[#f7f8fb] p-3">
@@ -451,4 +627,8 @@ function numberValue(value: unknown) {
 
 function money(value: number | null) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value ?? 0);
+}
+
+function label(value: string) {
+  return value.replaceAll("_", " ");
 }

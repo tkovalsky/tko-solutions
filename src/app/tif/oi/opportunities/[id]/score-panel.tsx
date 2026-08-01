@@ -57,7 +57,7 @@ export default function ScorePanel({ score }: ScorePanelProps) {
         <div className="grid gap-5 border-t border-border p-4 text-sm">
           <ScoreGroup label="Fit" value={score.fitScore} max={100} components={components.filter((component) => !component.key.includes(".") && component.key !== "access")} />
           <ScoreGroup label="Evidence" value={score.evidenceScore} max={100} components={components.filter((component) => component.key.startsWith("evidence."))} />
-          <ScoreGroup label="Access" value={score.accessScore} max={100} components={components.filter((component) => component.key === "access")} />
+          <ScoreGroup label="Access" value={score.accessScore} max={100} components={components.filter((component) => component.key === "access" || component.key.startsWith("access."))} />
           <ScoreGroup label="Urgency" value={score.urgencyScore} max={100} components={components.filter((component) => component.key.startsWith("urgency."))} />
 
           <div>

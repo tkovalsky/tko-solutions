@@ -84,6 +84,60 @@ const factSchema = opportunityIdSchema.extend({
   confidence: z.coerce.number().int().min(1).max(100).default(85),
 });
 
+const roleSchema = z.enum([
+  "economic_buyer",
+  "executive_sponsor",
+  "operational_owner",
+  "technical_owner",
+  "hiring_manager",
+  "recruiter",
+  "champion",
+  "influencer",
+  "procurement",
+  "partner",
+  "blocker",
+  "unknown",
+]);
+
+const authoritySchema = z.enum(["none", "low", "medium", "high", "unknown"]);
+const relationshipSchema = z.enum(["cold", "warm_referral", "warm_history", "existing_client"]);
+
+const stakeholderSchema = opportunityIdSchema.extend({
+  stakeholderId: z.string().trim().optional(),
+  personName: z.string().trim().min(1, "Person name is required."),
+  title: z.string().trim().min(1, "Title is required."),
+  role: roleSchema.default("unknown"),
+  authority: authoritySchema.default("unknown"),
+  relationshipType: relationshipSchema.default("cold"),
+  roleEvidenceUrl: z.string().trim().optional(),
+  roleEvidenceLabel: z.string().trim().optional(),
+  roleConfidence: z.coerce.number().int().min(1).max(100).default(50),
+  operatorConfirmed: z.coerce.boolean().default(false),
+  warmPathNotes: z.string().trim().optional(),
+  relevanceToTodd: z.string().trim().optional(),
+});
+
+const stakeholderIdSchema = opportunityIdSchema.extend({
+  stakeholderId: z.string().trim().min(1),
+});
+
+const contactPointSchema = opportunityIdSchema.extend({
+  personId: z.string().trim().min(1),
+  type: z.enum(["email", "phone", "linkedin", "other"]),
+  value: z.string().trim().min(1, "Contact value is required."),
+  provenance: z.enum(["pattern_inferred", "provider_discovered", "publicly_listed", "directly_provided", "verified_deliverable"]),
+  sourceLabel: z.string().trim().optional(),
+});
+
+const personFactSchema = z.object({
+  personId: z.string().trim().min(1),
+  field: z.enum(["career", "responsibilities", "public_interviews", "conference_talks"]),
+  value: z.string().trim().min(1, "Fact value is required."),
+  basis: z.enum(["stated", "inferred", "operator"]).default("operator"),
+  confidence: z.coerce.number().int().min(1).max(100).default(85),
+  sourceLabel: z.string().trim().optional(),
+});
+
 export async function updateOpportunityStatus(formData: FormData) {
   const parsed = statusSchema.parse({
     opportunityId: formData.get("opportunityId"),
@@ -273,6 +327,193 @@ export async function addOperatorFact(formData: FormData) {
   await recomputeScoreAction(parsed.opportunityId);
 }
 
+export async function addStakeholder(formData: FormData) {
+  const parsed = stakeholderSchema.parse({
+    opportunityId: formData.get("opportunityId"),
+    personName: formData.get("personName"),
+    title: formData.get("title"),
+    role: formData.get("role") || "unknown",
+    authority: formData.get("authority") || "unknown",
+    relationshipType: formData.get("relationshipType") || "cold",
+    roleEvidenceUrl: formData.get("roleEvidenceUrl") || undefined,
+    roleEvidenceLabel: formData.get("roleEvidenceLabel") || undefined,
+    roleConfidence: formData.get("roleConfidence") || 50,
+    operatorConfirmed: formData.get("operatorConfirmed") === "on",
+    warmPathNotes: formData.get("warmPathNotes") || undefined,
+    relevanceToTodd: formData.get("relevanceToTodd") || undefined,
+  });
+  await tifDb.$transaction(async (tx) => {
+    const opportunity = await tx.oiOpportunity.findUniqueOrThrow({
+      where: { id: parsed.opportunityId },
+      select: { organizationId: true },
+    });
+    const person = await tx.oiPerson.upsert({
+      where: {
+        organizationId_name_title: {
+          organizationId: opportunity.organizationId,
+          name: parsed.personName,
+          title: parsed.title,
+        },
+      },
+      update: {},
+      create: {
+        organizationId: opportunity.organizationId,
+        name: parsed.personName,
+        title: parsed.title,
+        seniority: inferSeniority(parsed.title),
+        sourceConfidence: parsed.operatorConfirmed ? parsed.roleConfidence : 0,
+      },
+    });
+    await tx.oiStakeholder.upsert({
+      where: {
+        opportunityId_personId: {
+          opportunityId: parsed.opportunityId,
+          personId: person.id,
+        },
+      },
+      update: stakeholderData(parsed),
+      create: {
+        ...stakeholderData(parsed),
+        opportunityId: parsed.opportunityId,
+        personId: person.id,
+      },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+  });
+  revalidateWorkbenchSurfaces(parsed.opportunityId);
+}
+
+export async function updateStakeholder(formData: FormData) {
+  const parsed = stakeholderSchema.required({ stakeholderId: true }).parse({
+    opportunityId: formData.get("opportunityId"),
+    stakeholderId: formData.get("stakeholderId"),
+    personName: formData.get("personName"),
+    title: formData.get("title"),
+    role: formData.get("role") || "unknown",
+    authority: formData.get("authority") || "unknown",
+    relationshipType: formData.get("relationshipType") || "cold",
+    roleEvidenceUrl: formData.get("roleEvidenceUrl") || undefined,
+    roleEvidenceLabel: formData.get("roleEvidenceLabel") || undefined,
+    roleConfidence: formData.get("roleConfidence") || 50,
+    operatorConfirmed: formData.get("operatorConfirmed") === "on",
+    warmPathNotes: formData.get("warmPathNotes") || undefined,
+    relevanceToTodd: formData.get("relevanceToTodd") || undefined,
+  });
+  await tifDb.$transaction(async (tx) => {
+    const stakeholder = await tx.oiStakeholder.update({
+      where: { id: parsed.stakeholderId },
+      data: stakeholderData(parsed),
+      select: { personId: true },
+    });
+    await tx.oiPerson.update({
+      where: { id: stakeholder.personId },
+      data: {
+        name: parsed.personName,
+        title: parsed.title,
+        seniority: inferSeniority(parsed.title),
+      },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+  });
+  revalidateWorkbenchSurfaces(parsed.opportunityId);
+}
+
+export async function selectStakeholder(formData: FormData) {
+  const parsed = stakeholderIdSchema.parse({
+    opportunityId: formData.get("opportunityId"),
+    stakeholderId: formData.get("stakeholderId"),
+  });
+  await tifDb.$transaction(async (tx) => {
+    const stakeholder = await tx.oiStakeholder.findUniqueOrThrow({
+      where: { id: parsed.stakeholderId },
+      include: { person: true },
+    });
+    if (stakeholder.person.doNotContact) {
+      throw new Error("A do-not-contact stakeholder cannot be selected.");
+    }
+    if (!stakeholder.roleEvidenceUrl && !stakeholder.roleEvidenceLabel && stakeholder.roleConfidence < 100) {
+      throw new Error("Selection requires role evidence or explicit operator confirmation.");
+    }
+    await tx.oiStakeholder.updateMany({
+      where: { opportunityId: parsed.opportunityId, isSelected: true },
+      data: { isSelected: false, selectedAt: null },
+    });
+    await tx.oiStakeholder.update({
+      where: { id: parsed.stakeholderId },
+      data: { isSelected: true, selectedAt: new Date() },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+  });
+  revalidateWorkbenchSurfaces(parsed.opportunityId);
+}
+
+export async function markDoNotContact(formData: FormData) {
+  const parsed = stakeholderIdSchema.parse({
+    opportunityId: formData.get("opportunityId"),
+    stakeholderId: formData.get("stakeholderId"),
+  });
+  await tifDb.$transaction(async (tx) => {
+    const stakeholder = await tx.oiStakeholder.findUniqueOrThrow({
+      where: { id: parsed.stakeholderId },
+      select: { personId: true },
+    });
+    await tx.oiPerson.update({
+      where: { id: stakeholder.personId },
+      data: { doNotContact: true },
+    });
+    await tx.oiStakeholder.update({
+      where: { id: parsed.stakeholderId },
+      data: { isSelected: false, selectedAt: null },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+  });
+  revalidateWorkbenchSurfaces(parsed.opportunityId);
+}
+
+export async function addContactPoint(formData: FormData) {
+  const parsed = contactPointSchema.parse({
+    opportunityId: formData.get("opportunityId"),
+    personId: formData.get("personId"),
+    type: formData.get("type"),
+    value: formData.get("value"),
+    provenance: formData.get("provenance"),
+    sourceLabel: formData.get("sourceLabel") || undefined,
+  });
+  await tifDb.oiContactPoint.create({
+    data: {
+      personId: parsed.personId,
+      type: parsed.type,
+      value: parsed.value,
+      provenance: parsed.provenance,
+      sourceLabel: parsed.sourceLabel,
+    },
+  });
+  await recomputeScoreAction(parsed.opportunityId);
+}
+
+export async function addPersonFact(formData: FormData) {
+  const parsed = personFactSchema.parse({
+    personId: formData.get("personId"),
+    field: formData.get("field"),
+    value: formData.get("value"),
+    basis: formData.get("basis") || "operator",
+    confidence: formData.get("confidence") || 85,
+    sourceLabel: formData.get("sourceLabel") || undefined,
+  });
+  await tifDb.oiOpportunityFact.create({
+    data: {
+      personId: parsed.personId,
+      field: parsed.field,
+      value: parsed.value,
+      normalizedValue: parsed.value.toLowerCase(),
+      basis: parsed.basis,
+      confidence: parsed.confidence,
+      isOperatorOverride: parsed.basis === "operator",
+    },
+  });
+  revalidatePath(`/tif/oi/people/${parsed.personId}`);
+}
+
 export async function recomputeScore(formData: FormData) {
   const parsed = opportunityIdSchema.parse({ opportunityId: formData.get("opportunityId") });
   await recomputeScoreAction(parsed.opportunityId);
@@ -360,4 +601,33 @@ async function loadScoreInput(tx: Prisma.TransactionClient, opportunityId: strin
 
 function workbenchPath(opportunityId: string) {
   return `/tif/oi/opportunities/${opportunityId}`;
+}
+
+function revalidateWorkbenchSurfaces(opportunityId: string) {
+  revalidatePath(workbenchPath(opportunityId));
+  revalidatePath("/tif/oi/opportunities");
+  revalidatePath("/tif/oi/today");
+}
+
+function stakeholderData(parsed: z.infer<typeof stakeholderSchema>) {
+  return {
+    role: parsed.role,
+    authority: parsed.authority,
+    relationshipType: parsed.relationshipType,
+    roleEvidenceUrl: parsed.roleEvidenceUrl,
+    roleEvidenceLabel: parsed.roleEvidenceLabel,
+    roleConfidence: parsed.operatorConfirmed ? 100 : parsed.roleConfidence,
+    roleVerifiedAt: parsed.operatorConfirmed ? new Date() : undefined,
+    warmPathNotes: parsed.warmPathNotes,
+    relevanceToTodd: parsed.relevanceToTodd,
+  };
+}
+
+function inferSeniority(title: string) {
+  const normalized = title.toLowerCase();
+  if (/\b(chief|ceo|coo|cio|cto|cfo|cmo|cxo)\b/.test(normalized)) return "c_suite";
+  if (normalized.includes("senior vice president") || normalized.includes("svp")) return "senior_vice_president";
+  if (normalized.includes("vice president") || normalized.includes("vp")) return "vice_president";
+  if (normalized.includes("director")) return "director";
+  return "other";
 }

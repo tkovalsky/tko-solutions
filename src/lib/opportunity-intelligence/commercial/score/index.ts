@@ -113,7 +113,7 @@ export type PersistScoreClient = {
 
 const ROLE_POINTS: Record<string, number> = {
   economic_buyer: 10,
-  exec_sponsor: 8,
+  executive_sponsor: 8,
   operational_owner: 6,
   hiring_manager: 8,
   recruiter: 2,
@@ -132,6 +132,7 @@ export function scoreOpportunity(input: ScoreInput): ScoreResult {
     asOf: input.asOf,
   });
   const accessScore = scoreStakeholderAccess(input.stakeholders);
+  const relationshipType = strongestRelationship(input.stakeholders);
   const urgency = scoreUrgency({
     facts: input.facts,
     roleProfile: input.roleProfile,
@@ -173,7 +174,7 @@ export function scoreOpportunity(input: ScoreInput): ScoreResult {
         evidenceScore: evidence.total,
         accessScore,
         estimatedValue,
-        relationshipType: strongestRelationship(input.stakeholders),
+        relationshipType,
         incumbentIdentified: Boolean(input.rfpProfile?.incumbentIdentified),
         rfpBiddingRole: input.rfpProfile?.biddingRole,
         compBelowFloor: input.opportunity.type === "fte" && disqualified.rules.includes("DQ_COMP_FLOOR"),
@@ -210,6 +211,7 @@ export function scoreOpportunity(input: ScoreInput): ScoreResult {
         maxPoints: 100,
         reason: "Best stakeholder access score for the opportunity.",
       },
+      ...accessComponents({ accessScore, relationshipType, conversionProbability: priority.conversionProbability }),
     ],
     warnings: disqualified.rules,
     scorePolicyVersion: "pois-v1",
@@ -291,4 +293,60 @@ function strongestRelationship(stakeholders: StakeholderScoreInput[]) {
   if (stakeholders.some((stakeholder) => stakeholder.relationshipType === "warm_history")) return "warm_history";
   if (stakeholders.some((stakeholder) => stakeholder.relationshipType === "warm_referral")) return "warm_referral";
   return "cold";
+}
+
+function accessComponents({
+  accessScore,
+  relationshipType,
+  conversionProbability,
+}: {
+  accessScore: number;
+  relationshipType: string;
+  conversionProbability: number | null;
+}): OpportunityScoreComponent[] {
+  const components: OpportunityScoreComponent[] = [];
+  if (relationshipType === "warm_history") {
+    components.push({
+      key: "access.warm_history_multiplier",
+      label: "Warm history multiplier",
+      points: 250,
+      maxPoints: 250,
+      reason: "Warm history contributes a x2.5 probability multiplier.",
+    });
+  } else if (relationshipType === "warm_referral") {
+    components.push({
+      key: "access.warm_referral_multiplier",
+      label: "Warm referral multiplier",
+      points: 200,
+      maxPoints: 200,
+      reason: "Warm referral contributes a x2.0 probability multiplier.",
+    });
+  } else if (relationshipType === "existing_client") {
+    components.push({
+      key: "access.existing_client_multiplier",
+      label: "Existing client multiplier",
+      points: 300,
+      maxPoints: 300,
+      reason: "Existing client access contributes a x3.0 probability multiplier.",
+    });
+  }
+  if (accessScore >= 70) {
+    components.push({
+      key: "access.high_access_multiplier",
+      label: "High-access multiplier",
+      points: 140,
+      maxPoints: 140,
+      reason: "Access score at or above 70 contributes a x1.4 probability multiplier.",
+    });
+  }
+  if (conversionProbability === 60) {
+    components.push({
+      key: "access.probability_cap",
+      label: "Probability cap",
+      points: 60,
+      maxPoints: 60,
+      reason: "Combined access and fit contribution is capped at 60% probability.",
+    });
+  }
+  return components;
 }
