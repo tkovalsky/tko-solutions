@@ -31,6 +31,21 @@ story is defective. Stop and report it as defective rather than reading further 
 
 ---
 
+## Completion Bias
+
+When multiple reasonable implementations exist:
+
+- prefer the smallest implementation
+- prefer the implementation requiring the fewest files
+- prefer existing patterns
+- prefer shipping over elegance
+
+The objective is a usable Personal Opportunity Intelligence System before October 1.
+
+Repository elegance is secondary to shipping.
+
+---
+
 ## 2. Scope boundaries
 
 ### 2.1 One story per session, no exceptions
