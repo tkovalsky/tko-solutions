@@ -1,0 +1,129 @@
+import type { OiOpportunityStatus, OiOpportunityType } from "@prisma/client";
+import { describe, expect, it } from "vitest";
+import { canTransition, validTargetsFor } from "./lifecycle";
+
+const validByType: Record<OiOpportunityType, Array<[OiOpportunityStatus, OiOpportunityStatus]>> = {
+  consulting: [
+    ["identified", "qualifying"],
+    ["qualifying", "qualified"],
+    ["qualified", "researching"],
+    ["researching", "outreach_ready"],
+    ["outreach_ready", "contacted"],
+    ["contacted", "conversation"],
+    ["contacted", "nurturing"],
+    ["conversation", "diagnostic_scoped"],
+    ["diagnostic_scoped", "proposal_sent"],
+    ["proposal_sent", "won"],
+    ["proposal_sent", "lost"],
+    ["researching", "paused"],
+    ["conversation", "paused"],
+    ["paused", "researching"],
+  ],
+  fractional: [
+    ["identified", "qualifying"],
+    ["qualifying", "qualified"],
+    ["qualified", "researching"],
+    ["researching", "outreach_ready"],
+    ["outreach_ready", "contacted"],
+    ["contacted", "conversation"],
+    ["conversation", "diagnostic_scoped"],
+    ["diagnostic_scoped", "proposal_sent"],
+    ["proposal_sent", "won"],
+    ["proposal_sent", "lost"],
+  ],
+  assessment: [
+    ["identified", "qualifying"],
+    ["qualifying", "qualified"],
+    ["qualified", "researching"],
+    ["researching", "outreach_ready"],
+    ["outreach_ready", "contacted"],
+    ["contacted", "conversation"],
+    ["conversation", "diagnostic_scoped"],
+    ["diagnostic_scoped", "proposal_sent"],
+    ["proposal_sent", "won"],
+    ["proposal_sent", "lost"],
+  ],
+  fte: [
+    ["identified", "qualifying"],
+    ["qualifying", "qualified"],
+    ["qualified", "researching"],
+    ["researching", "application_ready"],
+    ["application_ready", "applied"],
+    ["applied", "recruiter_screen"],
+    ["applied", "no_response"],
+    ["recruiter_screen", "hiring_manager"],
+    ["recruiter_screen", "rejected"],
+    ["hiring_manager", "interview_loop"],
+    ["interview_loop", "offer"],
+    ["interview_loop", "rejected"],
+    ["offer", "accepted"],
+    ["offer", "declined"],
+  ],
+  rfp: [
+    ["identified", "rfp_intake"],
+    ["rfp_intake", "qualifying"],
+    ["qualifying", "no_bid"],
+    ["qualifying", "bid_as_prime"],
+    ["qualifying", "seeking_partner"],
+    ["seeking_partner", "bid_as_sub"],
+    ["seeking_partner", "no_bid"],
+    ["bid_as_prime", "submitted"],
+    ["bid_as_sub", "submitted"],
+    ["submitted", "shortlisted"],
+    ["submitted", "lost"],
+    ["shortlisted", "won"],
+    ["shortlisted", "lost"],
+  ],
+  partnership: [
+    ["identified", "qualifying"],
+    ["qualifying", "qualified"],
+    ["qualified", "researching"],
+    ["researching", "outreach_ready"],
+    ["outreach_ready", "contacted"],
+    ["contacted", "capability_shared"],
+    ["contacted", "nurturing"],
+    ["capability_shared", "agreement_discussion"],
+    ["agreement_discussion", "won"],
+    ["agreement_discussion", "lost"],
+  ],
+};
+
+describe("canTransition", () => {
+  it("accepts every valid transition by opportunity type", () => {
+    for (const [type, transitions] of Object.entries(validByType) as Array<[OiOpportunityType, Array<[OiOpportunityStatus, OiOpportunityStatus]>]>) {
+      for (const [from, to] of transitions) {
+        expect(canTransition({ type, from, to, reason: "because" })).toEqual({ ok: true, requiresReason: to === "paused" || terminal(to) });
+      }
+    }
+  });
+
+  it("rejects invalid transitions by opportunity type", () => {
+    expect(canTransition({ type: "consulting", from: "researching", to: "applied" })).toMatchObject({ ok: false });
+    expect(canTransition({ type: "fte", from: "applied", to: "proposal_sent" })).toMatchObject({ ok: false });
+    expect(canTransition({ type: "rfp", from: "qualifying", to: "qualified" })).toMatchObject({ ok: false });
+    expect(canTransition({ type: "partnership", from: "agreement_discussion", to: "accepted", reason: "done" })).toMatchObject({ ok: false });
+  });
+
+  it("requires a reason for paused and terminal statuses", () => {
+    expect(canTransition({ type: "consulting", from: "researching", to: "paused" })).toMatchObject({
+      ok: false,
+      blockingReason: "A reason is required to move an opportunity to paused.",
+    });
+    expect(canTransition({ type: "consulting", from: "proposal_sent", to: "won" })).toMatchObject({
+      ok: false,
+      blockingReason: "A reason is required to move an opportunity to won.",
+    });
+    expect(canTransition({ type: "consulting", from: "proposal_sent", to: "won", reason: "signed" })).toEqual({
+      ok: true,
+      requiresReason: true,
+    });
+  });
+
+  it("exposes valid targets for the workbench status control", () => {
+    expect(validTargetsFor("assessment", "contacted")).toEqual(["conversation", "nurturing"]);
+  });
+});
+
+function terminal(status: OiOpportunityStatus) {
+  return ["dismissed", "won", "accepted", "lost", "declined", "rejected", "no_bid", "no_response"].includes(status);
+}

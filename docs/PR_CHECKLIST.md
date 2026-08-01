@@ -1,6 +1,6 @@
 # Pull Request Checklist
 
-WP-008 verification completed 2026-08-01.
+WP-009 verification completed 2026-08-01.
 
 ## Implementation
 

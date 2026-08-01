@@ -30,7 +30,7 @@ describe("OiLayout", () => {
     );
     expect(screen.getByRole("link", { name: "Pipeline2" })).toHaveAttribute(
       "href",
-      "/tif/oi/pipeline",
+      "/tif/oi/opportunities",
     );
     expect(screen.getByRole("link", { name: "Accounts4" })).toHaveAttribute(
       "href",

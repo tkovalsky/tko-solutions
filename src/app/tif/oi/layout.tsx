@@ -24,7 +24,7 @@ type BadgeCounts = {
 const navItems = [
   { label: "Today", href: "/tif/oi/today", badge: "today" },
   { label: "Intake", href: "/tif/oi/intake", badge: "intake" },
-  { label: "Pipeline", href: "/tif/oi/pipeline", badge: "pipeline" },
+  { label: "Pipeline", href: "/tif/oi/opportunities", badge: "pipeline" },
   { label: "Accounts", href: "/tif/oi/accounts", badge: "accounts" },
 ] as const;
 
