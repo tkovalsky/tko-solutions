@@ -131,6 +131,26 @@ Weights are retuned; the mechanism is preserved.
 and access axes, where they belong. This corrects a real flaw in `opportunity-fit-v1`, where
 evidence quality inflated fit.
 
+> **Component maxima are hard caps.** No component may exceed its `Max`. A component never
+> "overflows and is capped" — the computed value is bounded before it enters the sum, so
+> `points ≤ maxPoints` always holds in the persisted `components` array.
+
+---
+
+## 3A. Precedence — which document wins
+
+**The rules are authoritative. The worked examples are derived from the rules.**
+
+When §14's arithmetic disagrees with §4–§10, **the rules win and §14 is a defect to be
+corrected.** Worked examples exist to demonstrate the rules, never to extend or override
+them.
+
+Codex must not implement a number from §14 that cannot be derived from §4–§10. If a conflict
+is found: stop, report it, and fix §14 — do not special-case the implementation to reproduce
+a bad example.
+
+*Applied 2026-08-01 to resolve the WP-008 block. See `POIS-DECISIONS.md` D-031.*
+
 ### `todd-v2` capability profile
 
 Extends `todd-v1` (`capability-profile.ts`), which is preserved and versioned.
@@ -344,8 +364,27 @@ expectedValue = estimatedValue × (conversionProbability / 100)
 | `rfp` (prime) | 4.0 | 2.0 | 1.0 | 30.0 | **37.0** |
 | `rfp` (sub) | 2.0 | 2.0 | 1.0 | 8.0 | **13.0** |
 
-**Adjustments:** −30% if the account already has a researched initiative (reuse);
-−20% if a stakeholder is already identified; +50% if evidence score < 50.
+**Adjustments.** Applied multiplicatively, in this order, to the type base. Each condition is
+stated as a boolean expression so it is directly testable — no judgment required.
+
+| # | Adjustment | Condition (exact) | Multiplier |
+|---|---|---|---|
+| 1 | Initiative reuse | `initiative !== null && initiative.createdAt < opportunity.createdAt` | **×0.7** |
+| 2 | Stakeholder known | at least one stakeholder with `isSelected === true` **or** `roleEvidenceUrl !== null` | **×0.8** |
+| 3 | Thin evidence | `evidenceScore < 50` | **×1.5** |
+
+`remainingHours = round(base × m₁ × m₂ × m₃, 1)` — rounded to one decimal, once, at the end.
+
+**Notes that resolve real ambiguity:**
+
+- **Initiative reuse requires a *pre-existing* initiative.** An initiative created during the
+  same ingestion that created the opportunity is not reuse — no prior research was banked, so
+  `createdAt` is not strictly earlier and the discount does not apply. This is why §14.1 keeps
+  its full 6.0 hours despite having an approved initiative.
+- **Thin evidence uses the same threshold as the outreach gate (50) but is a different rule.**
+  The gate blocks outreach *below* 50; the effort penalty applies *below* 50. At
+  `evidenceScore ≥ 50` neither applies. Do not conflate "the outreach gate has not been
+  cleared yet for other reasons" with "evidence is thin."
 
 Only **remaining** hours count. An opportunity already at `conversation` no longer carries
 research and outreach hours, which is what lets in-flight opportunities correctly outrank
@@ -485,11 +524,15 @@ accessScore    = 0 (no stakeholder identified yet)
 urgencyScore   = 30 regulatory + 20 new exec = 50
 
 estimatedValue = PA Assessment $6,500 + (0.45 × $75,000) = $40,250
-probability    = 0.22 base × 1.3 (fit≥80) × 0.6 (evidence<50? NO, 65 ≥ 50 → 1.0)
+probability    = 0.22 base × 1.3 (fit≥80) × 1.0 (evidence 65 ≥ 50, no penalty)
                  × 0.5 (access<30) = 0.143 → 14%
 expectedValue  = $40,250 × 0.14 = $5,635
-remainingHours = 6.0 × 1.5 (evidence gate not yet met for outreach) = 9.0
-priorityEfficiency = $5,635 / 9.0 = $626/hr
+remainingHours = 6.0 base, no adjustments:
+                   initiative reuse  NO  (created in this same ingestion)
+                   stakeholder known NO  (none identified)
+                   thin evidence     NO  (65 ≥ 50)
+                 = 6.0
+priorityEfficiency = $5,635 / 6.0 = $939/hr
 
 Next action: identify_stakeholder (accessScore = 0 is the binding constraint)
 ```
@@ -503,7 +546,8 @@ polishing the pitch.
 knows a former colleague who is now VP Operations there.
 
 ```
-fitScore      = 20 + 20 + 15 + 15 + 4 + 15 + 10 = 99
+fitScore      = 20 problem + 20 transformation + 15 responsibility + 15 domain
+                + 4 technology + 10 urgency (max) + 10 seniority = 94
 evidenceScore = 15 + 10 + 10 + 15 + 15 + 15 + 10 + 0 = 90
 accessScore   = 10 VP + 8 budget(2) + 6 hiring(2) + 12 transformation(3)
                 + 8 relationship(2) + 4 source(2) + 20 warm_history
@@ -514,7 +558,11 @@ estimatedValue = Operational Truth Diagnostic $22,500 + (0.35 × $90,000) = $54,
 probability    = 0.15 × 2.5 (warm history) × 1.4 (access≥70) × 1.3 (evidence≥75)
                  × 1.3 (fit≥80) = 0.887 → capped at 60%
 expectedValue  = $54,000 × 0.60 = $32,400
-remainingHours = 11.5 × 0.7 (initiative researched) × 0.8 (stakeholder known) = 6.4
+remainingHours = 11.5 base × 0.7 × 0.8:
+                   initiative reuse  YES (initiative predates this opportunity)
+                   stakeholder known YES (Sarah Chen isSelected)
+                   thin evidence     NO  (90 ≥ 50)
+                 = 6.44 → 6.4
 priorityEfficiency = $32,400 / 6.4 = $5,063/hr
 
 Next action: prepare_outreach (all gates met)
@@ -585,6 +633,47 @@ Auto-close as no_bid if no partner by {now + 4 days}.
 
 **The system reached a defensible no-bid-as-prime in ten minutes** and kept a genuinely
 attractive sub path alive with a hard expiry. That is the entire value of the RFP module.
+
+---
+
+### 14.6 Consolidated fixture table — authoritative for POIS-105E
+
+Every value below is derived from §4–§10. **Assert these exact numbers.** If the
+implementation disagrees, the implementation is wrong; if these disagree with §4–§10, this
+table is wrong and must be corrected before implementation (§3A).
+
+| # | Example | Type | fit | evid | access | urg | est. value | prob | EV | hours | **PE** |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 14.1 | PA modernization, cold, no stakeholder | `assessment` | 100 | 65 | 0 | 50 | $40,250 | 14% | $5,635 | 6.0 | **$939** |
+| 14.2 | Stalled program, warm history | `consulting` | 94 | 90 | 82 | 20 | $54,000 | 60% | $32,400 | 6.4 | **$5,063** |
+| 14.3 | Assessment, cold, moderate fit | `assessment` | 62 | 55 | 38 | 15 | $30,500 | 22% | $6,710 | 6.0 | **$1,118** |
+| 14.4 | SI subcontract | `partnership` | 78 | 60 | 45 | 10 | $37,000 | 18% | $6,660 | 6.5 | **$1,025** |
+| 14.5 | Medicaid RFP, as sub | `rfp` | — | — | — | — | $400,000 | 6% | $24,000 | 13.0 | **$1,846** |
+
+**Effort derivation** (§8.5), stated so no judgment is required:
+
+| # | Base | Reuse ×0.7 | Stakeholder ×0.8 | Thin evid ×1.5 | Result |
+|---|---|---|---|---|---|
+| 14.1 | 6.0 | no — initiative created in the same ingestion | no | no — 65 ≥ 50 | **6.0** |
+| 14.2 | 11.5 | **yes** — initiative predates the opportunity | **yes** — Sarah Chen selected | no — 90 ≥ 50 | **6.4** |
+| 14.3 | 6.0 | no | no | no — 55 ≥ 50 | **6.0** |
+| 14.4 | 6.5 | no | no | no — 60 ≥ 50 | **6.5** |
+| 14.5 | 13.0 | no | no | n/a | **13.0** |
+
+**Required PE ordering** (POIS-105E asserts this exact sequence):
+
+```
+14.2 ($5,063) > 14.5 ($1,846) > 14.3 ($1,118) > 14.4 ($1,025) > 14.1 ($939)
+```
+
+**Rounding:** `estimatedValue` and `expectedValue` round to the nearest dollar;
+`conversionProbability` to the nearest whole percent; `remainingHours` to one decimal;
+`priorityEfficiency` to the nearest dollar. Round **once**, at the end of each computation —
+never on intermediates.
+
+> **§8.6's "Worked comparison" table is illustrative only.** It uses a different, hypothetical
+> set of opportunities to show how PE inverts intuition. **It is not a fixture set** and
+> POIS-105E must not assert against it.
 
 ---
 

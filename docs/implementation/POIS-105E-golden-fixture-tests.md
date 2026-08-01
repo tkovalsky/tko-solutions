@@ -56,11 +56,24 @@ scoring-logic checkpoints; the composite score becomes visible to Todd in POIS-1
 
 **Included:**
 - Golden fixture tests against `commercial/score/index.ts` (built in POIS-105D) reproducing all
-  five worked examples in `POIS-SCORING-AND-DECISION-MODEL.md` §14, each asserting every axis
-  value, the computed `$/hr` value, probability, expected value (EV), estimated hours, and PE.
+  five worked examples, each asserting every axis value, the computed `$/hr` value, probability,
+  expected value (EV), estimated hours, and PE.
+
+> **Authoritative source: `POIS-SCORING-AND-DECISION-MODEL.md` §14.6** — the consolidated
+> fixture table. Assert against §14.6, not against the prose in §14.1–§14.5 and not against
+> §8.6 (which is illustrative only and is not a fixture set).
+>
+> §14.6 states, for all five fixtures: every axis value, the effort derivation showing which
+> §8.5 adjustments apply and why, the required PE ordering, and the rounding rules.
+>
+> Per §3A, **the rules (§4–§10) are authoritative over the examples.** If any §14.6 number
+> cannot be derived from §4–§10, stop and report it — do not special-case the implementation
+> to reproduce it. Three such conflicts were found and fixed on 2026-08-01 (see
+> `POIS-DECISIONS.md` D-031); §14.6 exists so they cannot recur silently.
 - A test for the assessment-expansion arithmetic: `$6,500 + 0.40 × $60,000 = $30,500`.
 - A determinism test: the same input scored 100 times produces identical output every time.
-- A test that the §14 PE ordering holds when the five worked examples are sorted by PE.
+- A test that the PE ordering in §14.6 holds when the five fixtures are sorted by PE:
+  `14.2 ($5,063) > 14.5 ($1,846) > 14.3 ($1,118) > 14.4 ($1,025) > 14.1 ($939)`.
 
 **Excluded:**
 - No changes to `index.ts` or any axis file — this story is tests only, against logic that

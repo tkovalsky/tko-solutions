@@ -38,6 +38,7 @@ else is a technical decision Codex may act on.
 | D-028 | RFP path deferred to post-October-1 | ⛔ **Todd's approval — cuts a path** |
 | D-029 | Milestone 1 has zero AI dependency | ✅ Yes |
 | D-030 | All schema ships in one Milestone 0 migration | ✅ Yes |
+| D-031 | Rules are authoritative over worked examples; §14 fixtures corrected | ✅ Yes |
 | D-031 | Story backlog split into 30–90 min sub-lettered chains; Rule 1 applies to the chain, not each letter | ✅ Yes |
 
 ---
@@ -661,6 +662,64 @@ story yet scheduled to surface it. This is spelled out operationally in
 and milestone boundaries are unchanged — this is subtraction of batch size, not addition of
 work. `POIS-CODEX-TASKS.md` remains the historical record of the original task-level shape;
 `docs/implementation/*.md` is the executable authority going forward.
+
+---
+
+
+## D-031 — Rules are authoritative over worked examples
+
+**Date:** 2026-08-01 — raised by Codex as a WP-008 implementation block, before any code was
+written. The block was correct and the gate worked as designed.
+
+**Context.** POIS-105C/105E require the composite scorer to reproduce
+`POIS-SCORING-AND-DECISION-MODEL.md` §14 exactly. Codex found three internal conflicts and
+stopped rather than guessing:
+
+1. **§14.2 `fitScore = 20 + 20 + 15 + 15 + 4 + 15 + 10 = 99`** requires a 15-point urgency
+   component. §4 caps urgency at 10. **Verified: the example was wrong.** Correct fit = **94**.
+2. **§14.1 `remainingHours = 6.0 × 1.5 = 9.0`** applies the thin-evidence penalty at
+   `evidenceScore = 65`. §8.5 applies it only below 50. **Verified: the example was wrong.**
+   Correct hours = **6.0**, PE = **$939/hr** (was $626).
+3. §14.1's own probability line already said "evidence<50? NO, 65 ≥ 50 → 1.0" — contradicting
+   its hours line four lines later. Same defect as (2).
+
+**Root cause.** I conflated two distinct thresholds that share the value 50: the *outreach
+gate* (blocks outreach below 50) and the *effort penalty* (adds 50% below 50). §14.1 has an
+uncleared outreach gate for a different reason — no stakeholder — and I incorrectly attributed
+that to thin evidence. The urgency error was simple arithmetic drift while hand-writing the sum.
+
+**Decision.** **The rules (§4–§10) are authoritative. Worked examples (§14) are derived from
+them.** When they disagree, the rules win and §14 is a defect. Codex must never implement a
+§14 number that cannot be derived from §4–§10; it must stop and report, exactly as it did here.
+
+**Alternatives considered.**
+- *Raise the urgency cap to 15 to make §14.2 valid.* Rejected — it would change every fit
+  score to preserve one hand-written example, and urgency already carries dedicated weight on
+  its own axis (§7).
+- *Let §14 override §4–§10 as "the real spec."* Rejected — examples are illustrations; rules are
+  the contract. Inverting that makes the model unmaintainable.
+
+**Changes made.**
+- §3A: explicit precedence rule.
+- §4: component maxima are hard caps; no "overflow then cap."
+- §8.5: adjustment conditions rewritten as exact boolean expressions, with the initiative-reuse
+  rule pinned to `initiative.createdAt < opportunity.createdAt` (an initiative created in the
+  same ingestion is not reuse) and an explicit note separating the outreach gate from the
+  effort penalty.
+- §14.1, §14.2: corrected, with every effort adjustment shown as applied/not-applied.
+- **§14.6 (new): consolidated fixture table** — all five examples, every axis, the effort
+  derivation, the required PE ordering, and rounding rules. This is the single artifact
+  POIS-105E asserts against.
+- §8.6 labelled illustrative-only, explicitly not a fixture set.
+- Mirrors corrected in `POIS-OPERATOR-UX.md` (§3, §6) and `POIS-105F`.
+
+**Consequences.** PE ordering across the five fixtures is **unchanged** — 14.1 stays last
+($939 vs $626). No downstream multiplier changes: fit 94 is still ≥ 80, so §8.3's ×1.3 still
+applies and §14.2's probability still caps at 60%. No other example was affected.
+
+**Process consequence.** Any future hand-written arithmetic in §14 must be recomputed from
+§4–§10 before it is committed. The §14.6 table is now the only place fixtures are stated;
+prose examples reference it rather than restating numbers.
 
 ---
 

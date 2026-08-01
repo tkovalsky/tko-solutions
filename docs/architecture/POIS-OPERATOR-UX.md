@@ -98,7 +98,7 @@ WORK THESE THREE
 │     Care Management Platform Recovery                                        │
 │                                                                              │
 │     Why now: Stalled program publicly acknowledged. Warm path — Sarah Chen    │
-│     was your colleague at [prior co]. Fit 99 · Evidence 90 · Access 82.       │
+│     was your colleague at [prior co]. Fit 94 · Evidence 90 · Access 82.       │
 │     Changed: +1 signal yesterday (Q2 earnings call mention).                  │
 │                                                                              │
 │     Value $54,000 · 60% · EV $32,400 · 6.4 hrs remaining                      │
@@ -117,7 +117,7 @@ WORK THESE THREE
 │     [ Start ]   [ Open workbench ]   [ Dismiss ]                             │
 └──────────────────────────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│ 3 · Example Health Plan                              ASSESSMENT  $626/hr     │
+│ 3 · Example Health Plan                              ASSESSMENT  $939/hr     │
 │     Prior Authorization Modernization                                        │
 │                                                                              │
 │     Why now: CMS January deadline. New SVP Clinical Ops (41 days).            │
@@ -235,7 +235,7 @@ left, "you're all caught up!" would be a lie.
 │        ⚠ DISQUALIFIED: comp max $210,000 < $225,000 floor                    │
 │        Keep as a consulting signal and negotiation anchor.                    │
 │   ☑ CONSULTING — Prior Authorization Operating Diagnostic                    │
-│        Est. $40,250 · 14% · EV $5,635 · $626/hr                              │
+│        Est. $40,250 · 14% · EV $5,635 · $939/hr                              │
 │                                                                              │
 │   [ Promote selected ]   [ Watch account only ]   [ Dismiss ▾ ]              │
 └──────────────────────────────────────────────────────────────────────────────┘
@@ -335,7 +335,7 @@ needs to see that evidence is thin while he looks at the draft.
 │ Regional Payer Health                              CONSULTING · outreach_ready│
 │ Care Management Platform Recovery                                            │
 │                                                                              │
-│ Fit 99   Evidence 90   Access 82   Urgency 20        PRIORITY  $5,063/hr     │
+│ Fit 94   Evidence 90   Access 82   Urgency 20        PRIORITY  $5,063/hr     │
 │ ────────  ────────     ────────    ──                                        │
 │ Value $54,000 · 60% · EV $32,400 · 6.4 hrs remaining        [ why? ▾ ]       │
 │                                                                              │
@@ -349,20 +349,20 @@ needs to see that evidence is thin while he looks at the draft.
 
 ```
 ┌─ WHY THIS RANKS #1 ──────────────────────────────────────────────────────────┐
-│ FIT 99/100                                                                   │
+│ FIT 94/100                                                                   │
 │   Funded problem fit        20/20  Stated problem aligns with todd-v2        │
 │   Transformation mandate    20/20  "recovery", "delayed program"             │
 │   Delivery ownership        15/15  Owns platform delivery outcomes           │
 │   Domain                    15/15  Healthcare payer confirmed                │
 │   Technology                 4/10  Tech context present, no todd-v2 match    │
-│   Urgency                   15/10 → 10/10 (capped)                           │
+│   Urgency                   10/10  CMS deadline + board visibility           │
 │   Seniority scope           10/10  VP-level access confirmed                 │
 │                                                                              │
 │ ACCESS 82/100                                                                │
 │   Warm history             +20     Sarah Chen — colleague at [prior co]      │
 │   Transformation relevance +12     Level 3/3                                 │
 │   Seniority                +10     Vice President                            │
-│   … 5 more                                                                   │
+│   … 6 more                                                                   │
 │                                                                              │
 │ EXPECTED VALUE                                                               │
 │   Operational Truth Diagnostic  $15,000–$30,000  → midpoint $22,500          │
@@ -409,7 +409,7 @@ he will not follow the ranking, and the system becomes a filing cabinet.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─ RESEARCH GAPS ──────────────────────────────────────────── 1 open ────────┐
-│ ⚠ BLOCKING  Is there an incumbent SI already engaged on remediation?        │
+│ ⚠ IMPORTANT Is there an incumbent SI already engaged on remediation?        │
 │    Why: A retained incumbent changes the wedge from recovery to assessment. │
 │    Try: company newsroom · LinkedIn (VP Ops posts) · vendor press releases  │
 │    [ Resolve with a finding ]   [ Dismiss ]                        ~10 min  │
@@ -671,7 +671,7 @@ in the weekly review.
 │ [ All ] [ Watched ] [ Tier 1 ] [ Has active opportunity ]                   │
 │                                                                             │
 │ Regional Payer Health          payer   ★  2 init · 2 opp · 5 sig · $5,063/hr│
-│ Example Health Plan            payer   ★  1 init · 1 opp · 3 sig · $626/hr  │
+│ Example Health Plan            payer   ★  1 init · 1 opp · 3 sig · $939/hr  │
 │ Humana                         payer   ★  1 init · 0 opp · 4 sig · —        │
 │ Availity                     health tech  0 init · 0 opp · 2 sig · watching │
 └─────────────────────────────────────────────────────────────────────────────┘

@@ -41,7 +41,7 @@ No
 can see what an opportunity is worth and trust the number instead of treating it as a black box.
 
 **User story:** As Todd, when I review a captured opportunity, I see a score summary like
-`Fit 100 · Evidence 65 · Access 0 · $626/hr` with the value math shown beneath it.
+`Fit 100 · Evidence 65 · Access 0 · $939/hr` with the value math shown beneath it.
 
 **Commercial outcome:** This is the moment scoring becomes visible and actionable — Todd can now
 see, for any opportunity, what it's worth and why, directly on the review screen he already uses.
@@ -53,7 +53,7 @@ see, for any opportunity, what it's worth and why, directly on the review screen
 **Included:**
 - The score summary block on the intake review screen, rendering the output of
   `commercial/score/index.ts` (built in POIS-105D, proven correct in POIS-105E): axis values in
-  the format `Fit 100 · Evidence 65 · Access 0 · $626/hr`, with the value math shown beneath.
+  the format `Fit 100 · Evidence 65 · Access 0 · $939/hr`, with the value math shown beneath.
 
 **Excluded:**
 - No changes to any scoring logic file — this story is UI only.
@@ -81,7 +81,7 @@ see, for any opportunity, what it's worth and why, directly on the review screen
 
 # Acceptance Criteria
 
-- [ ] The score summary renders in the format `Fit 100 · Evidence 65 · Access 0 · $626/hr` with
+- [ ] The score summary renders in the format `Fit 100 · Evidence 65 · Access 0 · $939/hr` with
       value math shown beneath.
 - [ ] Manual test: the displayed score matches the documented worked-example values exactly for a
       known fixture.
