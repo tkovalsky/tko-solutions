@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import OpportunityWorkbenchPage from "./page";
 import { tifDb } from "@/lib/tif/db";
@@ -46,10 +46,12 @@ describe("OpportunityWorkbenchPage", () => {
     expect(screen.getByRole("link", { name: "Initiative" })).toHaveAttribute("href", "#initiative");
     expect(screen.getByRole("link", { name: "Evidence" })).toHaveAttribute("href", "#evidence");
     expect(screen.getByRole("link", { name: "Gaps" })).toHaveAttribute("href", "#gaps");
+    expect(screen.getByRole("link", { name: "Timeline" })).toHaveAttribute("href", "#timeline");
     expect(screen.getByRole("heading", { name: "Overview" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Initiative" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Evidence" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Research gaps" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Timeline" })).toBeInTheDocument();
   });
 
   it("keeps inferred hypotheses visually distinct from stated facts", async () => {
@@ -74,6 +76,42 @@ describe("OpportunityWorkbenchPage", () => {
     );
 
     expect(screen.getByText("A reason is required to move an opportunity to paused.")).toBeInTheDocument();
+  });
+
+  it("opens decision capture controls for all current decision points", async () => {
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    for (const label of ["Promote", "Qualify", "Dismiss", "Disqualify", "Pause", "Close"]) {
+      expect(screen.getAllByText(label).length).toBeGreaterThan(0);
+    }
+    expect(screen.getAllByPlaceholderText("Decision reason")).toHaveLength(6);
+  });
+
+  it("renders a timeline from existing history and an empty hint when none exists", async () => {
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.getByText("Delays platform rollout by 18 months")).toBeInTheDocument();
+    expect(screen.getByText(/Status changed from identified to qualified/)).toBeInTheDocument();
+
+    cleanup();
+    mockedDb.oiOpportunity.findUnique.mockResolvedValue({ ...opportunityFixture(), initiative: null, activities: [], decisions: [] });
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+    expect(screen.getByText(/No timeline history yet/)).toBeInTheDocument();
   });
 });
 
@@ -121,7 +159,10 @@ function opportunityFixture() {
         {
           signalId: "signal-1",
           signal: {
+            id: "signal-1",
             summary: "Delays platform rollout by 18 months",
+            occurredAt: new Date("2026-07-01T12:00:00Z"),
+            createdAt,
             source: { canonicalUrl: "https://example.com/source" },
           },
         },
@@ -178,5 +219,17 @@ function opportunityFixture() {
         resolution: null,
       },
     ],
+    activities: [
+      {
+        id: "activity-1",
+        type: "status_change",
+        summary: "Status changed.",
+        fromStatus: "identified",
+        toStatus: "qualified",
+        occurredAt: new Date("2026-07-02T12:00:00Z"),
+        externalRef: null,
+      },
+    ],
+    decisions: [],
   };
 }

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { TODD_CAPABILITY_PROFILE_V2 } from "@/lib/opportunity-intelligence/capability-profile";
 import { canTransition } from "@/lib/opportunity-intelligence/commercial/lifecycle";
 import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
+import { captureDecision } from "@/lib/opportunity-intelligence/action/decision";
 import { tifDb } from "@/lib/tif/db";
 
 const statusSchema = z.object({
@@ -49,6 +50,18 @@ const statusSchema = z.object({
     "closed",
   ]),
   reason: z.string().trim().optional(),
+  decisionType: z.enum([
+    "promote_signal",
+    "dismiss_signal",
+    "qualify_opportunity",
+    "disqualify_opportunity",
+    "pause_opportunity",
+    "close_opportunity",
+  ]).optional(),
+  decision: z.string().trim().optional(),
+  decisionReason: z.string().trim().optional(),
+  decisionConfidence: z.enum(["low", "medium", "high"]).optional(),
+  expectedOutcome: z.string().trim().optional(),
 });
 
 const opportunityIdSchema = z.object({
@@ -76,6 +89,11 @@ export async function updateOpportunityStatus(formData: FormData) {
     opportunityId: formData.get("opportunityId"),
     toStatus: formData.get("toStatus"),
     reason: formData.get("reason") || undefined,
+    decisionType: formData.get("decisionType") || undefined,
+    decision: formData.get("decision") || undefined,
+    decisionReason: formData.get("decisionReason") || undefined,
+    decisionConfidence: formData.get("decisionConfidence") || undefined,
+    expectedOutcome: formData.get("expectedOutcome") || undefined,
   });
   const path = workbenchPath(parsed.opportunityId);
   const opportunity = await tifDb.oiOpportunity.findUniqueOrThrow({
@@ -93,6 +111,16 @@ export async function updateOpportunityStatus(formData: FormData) {
   }
 
   await tifDb.$transaction(async (tx) => {
+    if (parsed.decisionType) {
+      await captureDecision(tx, {
+        opportunityId: parsed.opportunityId,
+        type: parsed.decisionType,
+        decision: parsed.decision ?? parsed.toStatus,
+        reason: parsed.decisionReason ?? "",
+        confidence: parsed.decisionConfidence ?? "medium",
+        expectedOutcome: parsed.expectedOutcome,
+      });
+    }
     await tx.oiOpportunity.update({
       where: { id: parsed.opportunityId },
       data: { status: parsed.toStatus, lastActivityAt: new Date() },
@@ -120,9 +148,31 @@ export async function approveInitiative(formData: FormData) {
     select: { initiativeId: true },
   });
   if (!opportunity.initiativeId) return;
-  await tifDb.oiInitiative.update({
-    where: { id: opportunity.initiativeId },
-    data: { status: "evidenced", approvedAt: new Date(), approvedBy: "operator" },
+  const initiativeId = opportunity.initiativeId;
+  const decision = z
+    .object({
+      decisionReason: z.string().trim().min(1, "Decision reason is required."),
+      decisionConfidence: z.enum(["low", "medium", "high"]).default("medium"),
+      expectedOutcome: z.string().trim().optional(),
+    })
+    .parse({
+      decisionReason: formData.get("decisionReason"),
+      decisionConfidence: formData.get("decisionConfidence") || "medium",
+      expectedOutcome: formData.get("expectedOutcome") || undefined,
+    });
+  await tifDb.$transaction(async (tx) => {
+    await captureDecision(tx, {
+      opportunityId: parsed.opportunityId,
+      type: "promote_signal",
+      decision: "promote",
+      reason: decision.decisionReason,
+      confidence: decision.decisionConfidence,
+      expectedOutcome: decision.expectedOutcome,
+    });
+    await tx.oiInitiative.update({
+      where: { id: initiativeId },
+      data: { status: "evidenced", approvedAt: new Date(), approvedBy: "operator" },
+    });
   });
   revalidatePath(workbenchPath(parsed.opportunityId));
 }

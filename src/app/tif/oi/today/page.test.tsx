@@ -1,11 +1,114 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import OiTodayPage from "./page";
+import { tifDb } from "@/lib/tif/db";
+
+vi.mock("@/lib/tif/db", () => ({
+  tifDb: {
+    oiOpportunity: { findMany: vi.fn() },
+    oiActivity: { findMany: vi.fn() },
+  },
+}));
+
+vi.mock("./actions", () => ({
+  completeNextAction: vi.fn(),
+  dismissOpportunity: vi.fn(),
+  snoozeOpportunity: vi.fn(),
+}));
+
+const mockedDb = vi.mocked(tifDb);
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  mockedDb.oiActivity.findMany.mockResolvedValue([]);
+});
 
 describe("OiTodayPage", () => {
-  it("renders the POIS-110 placeholder", () => {
-    render(<OiTodayPage />);
+  it("renders the header before capped opportunity cards and removes the placeholder", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue(
+      Array.from({ length: 6 }, (_, index) => opportunity(`opp-${index}`, { pe: 1000 - index })),
+    );
 
-    expect(screen.getByText("Today arrives in POIS-110")).toBeInTheDocument();
+    const { container } = render(await OiTodayPage());
+
+    expect(screen.queryByText("Today arrives in POIS-110")).not.toBeInTheDocument();
+    expect(screen.getByText(/Oct 1/)).toBeInTheDocument();
+    expect(screen.getAllByRole("article")).toHaveLength(5);
+    expect(container.querySelector("header")?.compareDocumentPosition(screen.getAllByRole("article")[0])).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+
+  it("orders overdue opportunities above all other cards", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([
+      opportunity("future", { title: "Future Action", pe: 1000, dueAt: "2026-08-10T12:00:00Z" }),
+      opportunity("overdue", { title: "Overdue Action", pe: 10, dueAt: "2026-07-01T12:00:00Z" }),
+    ]);
+
+    render(await OiTodayPage());
+
+    const articles = screen.getAllByRole("article");
+    expect(articles[0]).toHaveTextContent("Overdue Action");
+  });
+
+  it("deep-links Start to the correct workbench anchor for the action type", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([
+      opportunity("opp-1", { actionType: "close_research_gap" }),
+    ]);
+
+    render(await OiTodayPage());
+
+    expect(screen.getByRole("link", { name: "Start" })).toHaveAttribute("href", "/tif/oi/opportunities/opp-1#gaps");
+  });
+
+  it("renders a directive empty state without congratulatory text", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([]);
+
+    render(await OiTodayPage());
+
+    expect(screen.getByText("Nothing queued.")).toBeInTheDocument();
+    expect(screen.getByText(/Add a source/)).toBeInTheDocument();
+    expect(screen.queryByText(/caught up/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/congrat/i)).not.toBeInTheDocument();
   });
 });
+
+function opportunity(
+  id: string,
+  overrides: {
+    title?: string;
+    pe?: number;
+    dueAt?: string;
+    actionType?: "prepare_outreach" | "close_research_gap";
+  } = {},
+) {
+  return {
+    id,
+    title: overrides.title ?? `Opportunity ${id}`,
+    type: "consulting",
+    status: "researching",
+    lastActivityAt: new Date("2026-07-01T12:00:00Z"),
+    organization: { name: `Org ${id}` },
+    initiative: { confidence: 80, hypothesis: "Evidence moved." },
+    currentScore: {
+      fitScore: 90,
+      evidenceScore: 80,
+      accessScore: 40,
+      urgencyScore: 10,
+      estimatedValue: 54_000,
+      conversionProbability: 60,
+      expectedValue: 32_400,
+      estimatedHours: 6.4,
+      priorityEfficiency: overrides.pe ?? 500,
+    },
+    nextActions: [
+      {
+        id: `action-${id}`,
+        status: "open",
+        type: overrides.actionType ?? "prepare_outreach",
+        description: "Prepare outreach",
+        rationale: "All prerequisites are met.",
+        estimatedMinutes: 20,
+        dueAt: new Date(overrides.dueAt ?? "2099-08-01T12:00:00Z"),
+      },
+    ],
+  };
+}

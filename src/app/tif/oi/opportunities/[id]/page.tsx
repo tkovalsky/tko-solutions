@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import DecisionCapture from "@/app/tif/oi/decision-capture";
+import { buildTimeline } from "@/lib/opportunity-intelligence/action/timeline";
 import { validTargetsFor } from "@/lib/opportunity-intelligence/commercial/lifecycle";
 import { tifDb } from "@/lib/tif/db";
 import {
@@ -64,6 +66,12 @@ async function getOpportunity(id: string) {
         orderBy: [{ createdAt: "asc" }],
         take: 1,
       },
+      activities: {
+        orderBy: [{ occurredAt: "asc" }],
+      },
+      decisions: {
+        orderBy: [{ createdAt: "asc" }],
+      },
     },
   });
 }
@@ -108,6 +116,39 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
           </form>
         </div>
 
+        <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-5">
+          <StatusDecision
+            label="Qualify"
+            toStatus="qualified"
+            decisionType="qualify_opportunity"
+            opportunity={opportunity}
+          />
+          <StatusDecision
+            label="Dismiss"
+            toStatus="dismissed"
+            decisionType="disqualify_opportunity"
+            opportunity={opportunity}
+          />
+          <StatusDecision
+            label="Disqualify"
+            toStatus="dismissed"
+            decisionType="disqualify_opportunity"
+            opportunity={opportunity}
+          />
+          <StatusDecision
+            label="Pause"
+            toStatus="paused"
+            decisionType="pause_opportunity"
+            opportunity={opportunity}
+          />
+          <StatusDecision
+            label="Close"
+            toStatus="closed"
+            decisionType="close_opportunity"
+            opportunity={opportunity}
+          />
+        </div>
+
         {query.statusError ? (
           <p className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
             {query.statusError}
@@ -138,6 +179,7 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
           <a href="#initiative" className="underline">Initiative</a>
           <a href="#evidence" className="underline">Evidence</a>
           <a href="#gaps" className="underline">Gaps</a>
+          <a href="#timeline" className="underline">Timeline</a>
           <span className="text-muted">Stakeholders</span>
           <span className="text-muted">Offer</span>
           <span className="text-muted">Outreach</span>
@@ -150,8 +192,35 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
         <InitiativeSection opportunity={opportunity} />
         <EvidenceSection opportunity={opportunity} />
         <GapsSection opportunity={opportunity} />
+        <TimelineSection opportunity={opportunity} />
       </div>
     </section>
+  );
+}
+
+function StatusDecision({
+  label,
+  toStatus,
+  decisionType,
+  opportunity,
+}: {
+  label: string;
+  toStatus: string;
+  decisionType: "qualify_opportunity" | "disqualify_opportunity" | "pause_opportunity" | "close_opportunity";
+  opportunity: WorkbenchOpportunity;
+}) {
+  return (
+    <DecisionCapture
+      action={updateOpportunityStatus}
+      opportunityId={opportunity.id}
+      type={decisionType}
+      decision={toStatus}
+      label={label}
+      currentScore={opportunity.currentScore}
+    >
+      <input type="hidden" name="toStatus" value={toStatus} />
+      <input type="hidden" name="reason" value={`${label} decision captured.`} />
+    </DecisionCapture>
   );
 }
 
@@ -217,14 +286,47 @@ function InitiativeSection({ opportunity }: { opportunity: WorkbenchOpportunity 
               <button className="rounded-md border border-border px-3 py-2 text-sm font-semibold">
                 Edit hypothesis
               </button>
-              <button formAction={approveInitiative} className="rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white">
-                Approve initiative
-              </button>
             </div>
           </form>
+          <DecisionCapture
+            action={approveInitiative}
+            opportunityId={opportunity.id}
+            type="promote_signal"
+            decision="promote"
+            label="Promote"
+            currentScore={opportunity.currentScore}
+          />
         </div>
       ) : (
         <p className="mt-4 text-sm text-muted">No initiative attached.</p>
+      )}
+    </section>
+  );
+}
+
+function TimelineSection({ opportunity }: { opportunity: WorkbenchOpportunity }) {
+  const timeline = buildTimeline(opportunity);
+  return (
+    <section id="timeline" className="rounded-md border border-border bg-white p-5">
+      <h3 className="text-lg font-semibold">Timeline</h3>
+      {timeline.length > 0 ? (
+        <ol className="mt-4 grid gap-3">
+          {timeline.map((entry) => (
+            <li key={entry.id} className="grid gap-1 border-l-2 border-border pl-3 text-sm">
+              <span className="text-xs font-semibold uppercase text-muted">
+                {entry.kind} · {entry.occurredAt.toLocaleDateString("en-US")}
+              </span>
+              <span>{entry.label}</span>
+              {entry.sourceHref ? (
+                <a href={entry.sourceHref} className="underline">
+                  Source
+                </a>
+              ) : null}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="mt-3 text-sm text-muted">No timeline history yet. New signals, activities, status changes, and decisions will appear here.</p>
       )}
     </section>
   );

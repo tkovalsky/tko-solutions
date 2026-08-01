@@ -31,6 +31,24 @@ story is defective. Stop and report it as defective rather than reading further 
 
 ---
 
+## Architecture Freeze
+
+Architecture is frozen after WP-005.
+
+No redesigns.
+
+No repository-wide refactors.
+
+No renaming.
+
+No reorganizing.
+
+No "better architecture."
+
+Implementation only.
+
+---
+
 ## Completion Bias
 
 When multiple reasonable implementations exist:
