@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { OiNextActionType, OiOpportunityType } from "@prisma/client";
+import type { OiNextActionStatus, OiNextActionType, OiOpportunityType } from "@prisma/client";
 import { completeNextAction, dismissOpportunity, snoozeOpportunity } from "./actions";
 
 export type TodayCardOpportunity = {
@@ -25,8 +25,13 @@ export type TodayCardOpportunity = {
     rationale: string | null;
     estimatedMinutes: number;
     dueAt: Date | null;
+    status?: OiNextActionStatus;
+    completedAt?: Date | null;
   }>;
 };
+
+export const AWAITING_MANUAL_OUTREACH_MESSAGE =
+  "Awaiting manual outreach: outreach preparation is manual until M3; send it outside POIS, then log the reply or follow-up when it happens.";
 
 const ANCHORS: Record<OiNextActionType, string> = {
   approve_initiative: "initiative",
@@ -49,7 +54,8 @@ const ANCHORS: Record<OiNextActionType, string> = {
 };
 
 export default function OpportunityCard({ opportunity, asOf }: { opportunity: TodayCardOpportunity; asOf: Date }) {
-  const action = opportunity.nextActions[0];
+  const action = opportunity.nextActions.find((nextAction) => nextAction.status !== "completed") ?? opportunity.nextActions[0];
+  const awaitingManualOutreach = isAwaitingManualOutreach(opportunity);
   const score = opportunity.currentScore;
   const workbenchHref = `/tif/oi/opportunities/${opportunity.id}`;
   const startHref = `${workbenchHref}#${action ? ANCHORS[action.type] : "overview"}`;
@@ -77,7 +83,8 @@ export default function OpportunityCard({ opportunity, asOf }: { opportunity: To
         {formatMoney(scoreNumber(score?.expectedValue))} · {scoreNumber(score?.estimatedHours).toFixed(1)} hrs remaining
       </p>
       <p className="mt-3 text-sm font-semibold">
-        Next: {action?.description ?? "No open next action"} {action ? `${action.estimatedMinutes}min` : ""}
+        Next: {awaitingManualOutreach ? AWAITING_MANUAL_OUTREACH_MESSAGE : action?.description ?? "No open next action"}{" "}
+        {action && !awaitingManualOutreach ? `${action.estimatedMinutes}min` : ""}
       </p>
 
       <div className="mt-4 flex flex-wrap items-start gap-2 text-sm">
@@ -87,7 +94,7 @@ export default function OpportunityCard({ opportunity, asOf }: { opportunity: To
         <Link href={workbenchHref} className="rounded-md border border-border px-3 py-2 font-semibold">
           Open workbench
         </Link>
-        {action ? (
+        {action && !awaitingManualOutreach ? (
           <form action={completeNextAction}>
             <input type="hidden" name="opportunityId" value={opportunity.id} />
             <input type="hidden" name="nextActionId" value={action.id} />
@@ -111,6 +118,12 @@ export default function OpportunityCard({ opportunity, asOf }: { opportunity: To
       </div>
     </article>
   );
+}
+
+export function isAwaitingManualOutreach(opportunity: Pick<TodayCardOpportunity, "nextActions">) {
+  const hasOpenAction = opportunity.nextActions.some((action) => action.status === "open");
+  const latestCompletedAction = opportunity.nextActions.find((action) => action.status === "completed");
+  return !hasOpenAction && latestCompletedAction?.type === "prepare_outreach";
 }
 
 function scoreNumber(value?: number | string | { toNumber(): number } | null) {

@@ -57,7 +57,13 @@ describe("Today actions", () => {
         update: vi.fn(),
       },
       oiNextAction: {
-        update: vi.fn(),
+        update: vi.fn().mockResolvedValue({
+          type: "close_research_gap",
+          description: "Close the blocking research gap",
+        }),
+        create: vi.fn(),
+      },
+      oiActivity: {
         create: vi.fn(),
       },
     };
@@ -71,11 +77,73 @@ describe("Today actions", () => {
     expect(tx.oiNextAction.update).toHaveBeenCalledWith({
       where: { id: "action-1" },
       data: expect.objectContaining({ status: "completed" }),
+      select: { type: true, description: true },
     });
     expect(tx.oiNextAction.create).toHaveBeenCalledWith({
       data: expect.objectContaining({
         opportunityId: "opp-1",
         type: "identify_stakeholder",
+      }),
+    });
+    expect(tx.oiActivity.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        type: "note",
+        summary: "Completed next action: Close the blocking research gap.",
+      }),
+    });
+    expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
+      where: { id: "opp-1" },
+      data: { lastActivityAt: expect.any(Date) },
+    });
+  });
+
+  it("completes prepare outreach without creating a duplicate prepare outreach action", async () => {
+    const tx = {
+      oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "opp-1",
+          type: "consulting",
+          status: "researching",
+          offerId: "offer-1",
+          lastActivityAt: null,
+          initiative: { status: "evidenced", approvedAt: new Date("2026-08-01T12:00:00Z") },
+          researchGaps: [],
+          stakeholders: [{ isSelected: true }],
+          roleProfile: null,
+          currentScore: { evidenceScore: 80, accessScore: 80 },
+        }),
+        update: vi.fn(),
+      },
+      oiNextAction: {
+        update: vi.fn().mockResolvedValue({
+          type: "prepare_outreach",
+          description: "Prepare outreach",
+        }),
+        create: vi.fn(),
+      },
+      oiActivity: {
+        create: vi.fn(),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("nextActionId", "action-1");
+
+    await completeNextAction(formData);
+
+    expect(tx.oiNextAction.update).toHaveBeenCalledWith({
+      where: { id: "action-1" },
+      data: expect.objectContaining({ status: "completed" }),
+      select: { type: true, description: true },
+    });
+    expect(tx.oiNextAction.create).not.toHaveBeenCalled();
+    expect(tx.oiActivity.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        type: "note",
+        summary: "Completed next action: Prepare outreach.",
       }),
     });
   });

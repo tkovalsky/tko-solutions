@@ -68,9 +68,8 @@ async function getOpportunity(id: string) {
       },
       currentScore: true,
       nextActions: {
-        where: { status: "open" },
-        orderBy: [{ createdAt: "asc" }],
-        take: 1,
+        where: { status: { in: ["open", "completed"] } },
+        orderBy: [{ status: "asc" }, { completedAt: "desc" }, { createdAt: "asc" }],
       },
       activities: {
         orderBy: [{ occurredAt: "asc" }],
@@ -98,7 +97,8 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
   const [{ id }, query] = await Promise.all([params, searchParams]);
   const opportunity = await getOpportunity(id);
   if (!opportunity) notFound();
-  const nextAction = opportunity.nextActions[0];
+  const nextAction = opportunity.nextActions.find((action) => action.status === "open");
+  const awaitingManualOutreach = isAwaitingManualOutreach(opportunity);
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-10">
@@ -188,9 +188,13 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
 
         <div className="mt-5 rounded-md border border-border bg-[#f7f8fb] p-4 text-sm">
           <p className="font-semibold">
-            Next action: {nextAction?.description ?? "No open next action"}
+            Next action: {awaitingManualOutreach ? awaitingManualOutreachMessage : nextAction?.description ?? "No open next action"}
           </p>
-          {nextAction?.rationale ? <p className="mt-1 text-muted">{nextAction.rationale}</p> : null}
+          {awaitingManualOutreach ? (
+            <p className="mt-1 text-muted">Outreach preparation is manual until M3; send it outside POIS, then log the reply or follow-up when it happens.</p>
+          ) : nextAction?.rationale ? (
+            <p className="mt-1 text-muted">{nextAction.rationale}</p>
+          ) : null}
         </div>
 
         <nav className="mt-5 flex flex-wrap gap-3 text-sm font-semibold" aria-label="Workbench sections">
@@ -215,6 +219,14 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
       </div>
     </section>
   );
+}
+
+const awaitingManualOutreachMessage = "Awaiting manual outreach";
+
+function isAwaitingManualOutreach(opportunity: Pick<WorkbenchOpportunity, "nextActions">) {
+  const hasOpenAction = opportunity.nextActions.some((action) => action.status === "open");
+  const latestCompletedAction = opportunity.nextActions.find((action) => action.status === "completed");
+  return !hasOpenAction && latestCompletedAction?.type === "prepare_outreach";
 }
 
 function StatusDecision({

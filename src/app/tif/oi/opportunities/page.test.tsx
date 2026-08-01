@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { filterPipeline, isStaleNextAction } from "./page";
+import { filterPipeline, isAwaitingManualOutreach, isStaleNextAction, needsNextActionRepair } from "./page";
 
 vi.mock("@/lib/tif/db", () => ({
   tifDb: {
@@ -38,9 +38,26 @@ describe("opportunity pipeline filters", () => {
       { ...opportunity("no-action", "assessment", "researching", 20, "Example B"), nextActions: [] },
     ];
 
-    expect(rows.filter((row) => !row.nextActions.some((action) => action.status === "open")).map((row) => row.id)).toEqual([
+    expect(rows.filter(needsNextActionRepair).map((row) => row.id)).toEqual([
       "no-action",
     ]);
+  });
+
+  it("excludes awaiting manual outreach from the missing next action defect row", () => {
+    const awaiting = {
+      ...opportunity("awaiting", "consulting", "researching", 20, "Example B"),
+      nextActions: [
+        {
+          ...actionDaysOld(1),
+          status: "completed" as const,
+          type: "prepare_outreach",
+          completedAt: new Date("2026-08-01T12:00:00Z"),
+        },
+      ],
+    };
+
+    expect(isAwaitingManualOutreach(awaiting)).toBe(true);
+    expect(needsNextActionRepair(awaiting)).toBe(false);
   });
 });
 
@@ -50,6 +67,7 @@ function actionDaysOld(days: number) {
     status: "open" as const,
     type: "prepare_outreach",
     description: "Prepare outreach",
+    completedAt: null,
     createdAt: new Date(AS_OF.getTime() - days * 86_400_000),
     updatedAt: new Date(AS_OF.getTime() - days * 86_400_000),
   };

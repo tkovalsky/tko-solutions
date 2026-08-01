@@ -37,6 +37,7 @@ type PipelineOpportunity = {
     status: OiNextActionStatus;
     type: string;
     description: string;
+    completedAt?: Date | null;
     updatedAt: Date;
     createdAt: Date;
   }>;
@@ -61,6 +62,22 @@ const STATES = [
 
 export function isStaleNextAction(action: { status: OiNextActionStatus; updatedAt: Date }, asOf: Date) {
   return action.status === "open" && asOf.getTime() - action.updatedAt.getTime() >= 14 * 86_400_000;
+}
+
+export function isAwaitingManualOutreach(opportunity: Pick<PipelineOpportunity, "nextActions">) {
+  const hasOpenAction = opportunity.nextActions.some((action) => action.status === "open");
+  const latestCompletedAction = opportunity.nextActions.find((action) => action.status === "completed");
+  return !hasOpenAction && latestCompletedAction?.type === "prepare_outreach";
+}
+
+export function needsNextActionRepair(opportunity: Pick<PipelineOpportunity, "status" | "nextActions">) {
+  return (
+    !isTerminalOpportunityStatus(opportunity.status) &&
+    opportunity.status !== "dismissed" &&
+    opportunity.status !== "paused" &&
+    !isAwaitingManualOutreach(opportunity) &&
+    !opportunity.nextActions.some((action) => action.status === "open")
+  );
 }
 
 export function filterPipeline(
@@ -114,8 +131,8 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
         },
       },
       nextActions: {
-        where: { status: "open" },
-        orderBy: [{ createdAt: "asc" }],
+        where: { status: { in: ["open", "completed"] } },
+        orderBy: [{ status: "asc" }, { completedAt: "desc" }, { createdAt: "asc" }],
       },
     },
     orderBy: [{ updatedAt: "desc" }],
@@ -124,13 +141,7 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
   const stale = opportunities.filter((opportunity) =>
     opportunity.nextActions.some((action) => isStaleNextAction(action, asOf)),
   );
-  const noNextAction = opportunities.filter(
-    (opportunity) =>
-      !isTerminalOpportunityStatus(opportunity.status) &&
-      opportunity.status !== "dismissed" &&
-      opportunity.status !== "paused" &&
-      !opportunity.nextActions.some((action) => action.status === "open"),
-  );
+  const noNextAction = opportunities.filter(needsNextActionRepair);
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-10">
@@ -164,7 +175,7 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
         </div>
         {rows.length > 0 ? (
           rows.map((opportunity) => {
-            const action = opportunity.nextActions[0];
+            const action = opportunity.nextActions.find((nextAction) => nextAction.status === "open");
             return (
               <Link
                 key={opportunity.id}

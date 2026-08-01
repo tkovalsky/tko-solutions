@@ -40,6 +40,8 @@ else is a technical decision Codex may act on.
 | D-030 | All schema ships in one Milestone 0 migration | ✅ Yes |
 | D-031 | Rules are authoritative over worked examples; §14 fixtures corrected | ✅ Yes |
 | D-031 | Story backlog split into 30–90 min sub-lettered chains; Rule 1 applies to the chain, not each letter | ✅ Yes |
+| D-032 | Manual outreach completion is a derived terminal state until M3 | ✅ Yes |
+| D-033 | `bid_no_bid_decision` runs before outreach preparation | ✅ Yes |
 
 ---
 
@@ -720,6 +722,62 @@ applies and §14.2's probability still caps at 60%. No other example was affecte
 **Process consequence.** Any future hand-written arithmetic in §14 must be recomputed from
 §4–§10 before it is committed. The §14.6 table is now the only place fixtures are stated;
 prose examples reference it rather than restating numbers.
+
+---
+
+## D-032 — Manual outreach completion is a derived terminal state until M3
+
+**Context.** `deriveNextAction()` has draft-gated rows for review, send, follow-up, and reply
+logging. M1 does not create outreach drafts; WP-013 owns that capability. Completing
+`prepare_outreach` in M1 therefore derives `prepare_outreach` again, which creates an
+infinite duplicate-action loop and violates Rule 4's requirement that terminal states either
+show the next action or explicitly say the work is finished.
+
+**Decision.** If completing a next action derives a successor with the same action type as the
+completed action, no successor row is created. The completion is recorded as `OiActivity`,
+`lastActivityAt` is updated, and the opportunity is treated as **awaiting manual outreach**
+when it has zero open next actions and its most recent completed action is
+`prepare_outreach`.
+
+The workbench and Today card render that derived state explicitly: outreach preparation is
+manual until M3; Todd sends outside POIS and logs the reply or follow-up when it happens.
+
+**Alternatives considered.**
+- *Keep creating another `prepare_outreach` action.* Rejected — this preserves an infinite loop
+  and tells Todd to repeat work already completed.
+- *Add a stored `awaiting_manual_outreach` status or next-action type.* Rejected — the scope
+  requires no schema change, and the state is fully derivable from existing action history.
+- *Create draft/outreach-send capability early.* Rejected — WP-013 owns drafts, and D-005
+  explicitly forbids outbound send capability.
+
+**Consequences.** Some active opportunities intentionally have no open next action during M1.
+Pipeline defect detection must exclude this derived state so it does not appear as a broken
+"no next action" record.
+
+---
+
+## D-033 — `bid_no_bid_decision` runs before outreach preparation
+
+**Context.** POIS-ARCHITECTURE.md §7.6 is a first-match-wins table. The implemented
+`deriveNextAction()` checks urgent RFP bid/no-bid decisions before `prepare_outreach`, even
+though the table lists the draft/outreach rows before the RFP deadline row. The audit recorded
+this as finding S8: a pre-existing implementation deviation without the Rule 15 decision
+record.
+
+**Decision.** Keep the implemented behavior: for RFP opportunities with a submission deadline
+inside seven days and no bid decision, derive `bid_no_bid_decision` before
+`prepare_outreach`.
+
+**Alternatives considered.**
+- *Move `bid_no_bid_decision` back below `prepare_outreach`.* Rejected — an urgent bid/no-bid
+  gate is a prerequisite to useful outreach work on an RFP path.
+- *Change the §7.6 table order now.* Rejected — CLEANUP-002 records the deviation only and
+  explicitly does not change derivation table contents or ordering.
+- *Add a feature flag for RFP ordering.* Rejected — this is deterministic workflow policy, not
+  a rollout concern.
+
+**Consequences.** The code remains unchanged for this behavior. The deviation is now explicit,
+reviewable, and no longer silent architecture drift.
 
 ---
 

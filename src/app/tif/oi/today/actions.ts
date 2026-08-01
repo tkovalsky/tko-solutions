@@ -77,6 +77,7 @@ export async function completeNextAction(formData: FormData) {
   });
 
   await tifDb.$transaction(async (tx) => {
+    const completedAt = new Date();
     const opportunity = await tx.oiOpportunity.findUniqueOrThrow({
       where: { id: parsed.opportunityId },
       include: {
@@ -87,9 +88,10 @@ export async function completeNextAction(formData: FormData) {
         currentScore: true,
       },
     });
-    await tx.oiNextAction.update({
+    const completedAction = await tx.oiNextAction.update({
       where: { id: parsed.nextActionId },
-      data: { status: "completed", completedAt: new Date(), completedNote: parsed.completedNote ?? null },
+      data: { status: "completed", completedAt, completedNote: parsed.completedNote ?? null },
+      select: { type: true, description: true },
     });
     const next = deriveNextAction({
       opportunity: {
@@ -106,22 +108,33 @@ export async function completeNextAction(formData: FormData) {
         : null,
       score: opportunity.currentScore,
       rfpProfile: null,
-      asOf: new Date(),
+      asOf: completedAt,
     });
-    await tx.oiNextAction.create({
+    if (next.type !== completedAction.type) {
+      await tx.oiNextAction.create({
+        data: {
+          opportunityId: parsed.opportunityId,
+          type: next.type,
+          status: "open",
+          description: next.description,
+          rationale: next.rationale,
+          estimatedMinutes: next.estimatedMinutes,
+          dueAt: next.dueAt,
+        },
+      });
+    }
+    await tx.oiActivity.create({
       data: {
         opportunityId: parsed.opportunityId,
-        type: next.type,
-        status: "open",
-        description: next.description,
-        rationale: next.rationale,
-        estimatedMinutes: next.estimatedMinutes,
-        dueAt: next.dueAt,
+        type: "note",
+        occurredAt: completedAt,
+        summary: `Completed next action: ${completedAction.description}.`,
+        reason: parsed.completedNote,
       },
     });
     await tx.oiOpportunity.update({
       where: { id: parsed.opportunityId },
-      data: { lastActivityAt: new Date() },
+      data: { lastActivityAt: completedAt },
     });
   });
   revalidateTodayAndWorkbench(parsed.opportunityId);

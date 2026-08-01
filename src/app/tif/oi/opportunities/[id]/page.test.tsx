@@ -99,6 +99,32 @@ describe("OpportunityWorkbenchPage", () => {
     expect(screen.getByText("A reason is required to move an opportunity to paused.")).toBeInTheDocument();
   });
 
+  it("renders awaiting manual outreach when prepare outreach completed without an open successor", async () => {
+    mockedDb.oiOpportunity.findUnique.mockResolvedValue({
+      ...opportunityFixture(),
+      nextActions: [
+        {
+          id: "action-1",
+          status: "completed",
+          type: "prepare_outreach",
+          description: "Prepare outreach",
+          rationale: "All gates met",
+          completedAt: new Date("2026-08-01T12:00:00Z"),
+        },
+      ],
+    });
+
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.getByText(/Next action: Awaiting manual outreach/)).toBeInTheDocument();
+    expect(screen.getByText(/send it outside POIS, then log the reply or follow-up/)).toBeInTheDocument();
+  });
+
   it("opens decision capture controls for all current decision points", async () => {
     render(
       await OpportunityWorkbenchPage({
@@ -164,8 +190,10 @@ function opportunityFixture() {
       {
         id: "action-1",
         status: "open",
+        type: "prepare_outreach",
         description: "Prepare outreach",
         rationale: "All gates met",
+        completedAt: null,
       },
     ],
     initiative: {

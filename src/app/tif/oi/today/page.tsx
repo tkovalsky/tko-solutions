@@ -22,8 +22,8 @@ export default async function OiTodayPage() {
         initiative: { select: { confidence: true, hypothesis: true } },
         currentScore: true,
         nextActions: {
-          where: { status: { in: ["open", "snoozed"] } },
-          orderBy: [{ dueAt: "asc" }, { createdAt: "asc" }],
+          where: { status: { in: ["open", "snoozed", "completed"] } },
+          orderBy: [{ status: "asc" }, { dueAt: "asc" }, { completedAt: "desc" }, { createdAt: "asc" }],
         },
       },
       orderBy: [{ updatedAt: "desc" }],

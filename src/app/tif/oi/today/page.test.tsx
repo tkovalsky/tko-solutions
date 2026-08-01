@@ -59,6 +59,31 @@ describe("OiTodayPage", () => {
     expect(screen.getByRole("link", { name: "Start" })).toHaveAttribute("href", "/tif/oi/opportunities/opp-1#gaps");
   });
 
+  it("renders awaiting manual outreach when prepare outreach completed without an open successor", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([
+      opportunity("opp-1", {
+        nextActions: [
+          {
+            id: "action-opp-1",
+            status: "completed",
+            type: "prepare_outreach",
+            description: "Prepare outreach",
+            rationale: "All prerequisites are met.",
+            estimatedMinutes: 20,
+            dueAt: null,
+            completedAt: new Date("2026-08-01T12:00:00Z"),
+          },
+        ],
+      }),
+    ]);
+
+    render(await OiTodayPage());
+
+    expect(screen.getByText(/Awaiting manual outreach/)).toBeInTheDocument();
+    expect(screen.getByText(/log the reply or follow-up/)).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Complete" })).not.toBeInTheDocument();
+  });
+
   it("renders a directive empty state without congratulatory text", async () => {
     mockedDb.oiOpportunity.findMany.mockResolvedValue([]);
 
@@ -78,6 +103,16 @@ function opportunity(
     pe?: number;
     dueAt?: string;
     actionType?: "prepare_outreach" | "close_research_gap";
+    nextActions?: Array<{
+      id: string;
+      status: string;
+      type: "prepare_outreach" | "close_research_gap";
+      description: string;
+      rationale: string;
+      estimatedMinutes: number;
+      dueAt: Date | null;
+      completedAt?: Date | null;
+    }>;
   } = {},
 ) {
   return {
@@ -99,7 +134,7 @@ function opportunity(
       estimatedHours: 6.4,
       priorityEfficiency: overrides.pe ?? 500,
     },
-    nextActions: [
+    nextActions: overrides.nextActions ?? [
       {
         id: `action-${id}`,
         status: "open",
@@ -108,6 +143,7 @@ function opportunity(
         rationale: "All prerequisites are met.",
         estimatedMinutes: 20,
         dueAt: new Date(overrides.dueAt ?? "2099-08-01T12:00:00Z"),
+        completedAt: null,
       },
     ],
   };
