@@ -37,6 +37,7 @@ type PipelineOpportunity = {
     status: OiNextActionStatus;
     type: string;
     description: string;
+    snoozedUntil?: Date | null;
     completedAt?: Date | null;
     updatedAt: Date;
     createdAt: Date;
@@ -70,12 +71,19 @@ export function isAwaitingManualOutreach(opportunity: Pick<PipelineOpportunity, 
   return !hasOpenAction && latestCompletedAction?.type === "prepare_outreach";
 }
 
-export function needsNextActionRepair(opportunity: Pick<PipelineOpportunity, "status" | "nextActions">) {
+export function isCurrentlySnoozed(opportunity: Pick<PipelineOpportunity, "nextActions">, asOf: Date) {
+  return opportunity.nextActions.some(
+    (action) => action.status === "snoozed" && action.snoozedUntil && action.snoozedUntil.getTime() > asOf.getTime(),
+  );
+}
+
+export function needsNextActionRepair(opportunity: Pick<PipelineOpportunity, "status" | "nextActions">, asOf: Date) {
   return (
     !isTerminalOpportunityStatus(opportunity.status) &&
     opportunity.status !== "dismissed" &&
     opportunity.status !== "paused" &&
     !isAwaitingManualOutreach(opportunity) &&
+    !isCurrentlySnoozed(opportunity, asOf) &&
     !opportunity.nextActions.some((action) => action.status === "open")
   );
 }
@@ -131,7 +139,7 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
         },
       },
       nextActions: {
-        where: { status: { in: ["open", "completed"] } },
+        where: { status: { in: ["open", "snoozed", "completed"] } },
         orderBy: [{ status: "asc" }, { completedAt: "desc" }, { createdAt: "asc" }],
       },
     },
@@ -141,7 +149,7 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
   const stale = opportunities.filter((opportunity) =>
     opportunity.nextActions.some((action) => isStaleNextAction(action, asOf)),
   );
-  const noNextAction = opportunities.filter(needsNextActionRepair);
+  const noNextAction = opportunities.filter((opportunity) => needsNextActionRepair(opportunity, asOf));
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-10">
@@ -176,6 +184,10 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
         {rows.length > 0 ? (
           rows.map((opportunity) => {
             const action = opportunity.nextActions.find((nextAction) => nextAction.status === "open");
+            const snoozedAction = opportunity.nextActions.find(
+              (nextAction) => nextAction.status === "snoozed" && nextAction.snoozedUntil && nextAction.snoozedUntil.getTime() > asOf.getTime(),
+            );
+            const snoozedUntil = snoozedAction?.snoozedUntil;
             return (
               <Link
                 key={opportunity.id}
@@ -186,7 +198,7 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
                 <span>{opportunity.organization.name}</span>
                 <span>{opportunity.title}</span>
                 <span>{opportunity.status}</span>
-                <span>{action?.description ?? "No next action"}</span>
+                <span>{action?.description ?? (snoozedUntil ? `Snoozed until ${formatDate(snoozedUntil)}` : "No next action")}</span>
               </Link>
             );
           })
@@ -286,4 +298,8 @@ function scoreNumber(value: unknown) {
 
 function formatMoney(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+}
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date);
 }

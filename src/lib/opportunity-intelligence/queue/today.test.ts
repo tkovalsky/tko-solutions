@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildTodayQueue } from "./today";
+import { buildTodayQueue, isSnoozed } from "./today";
 
 const asOf = new Date("2026-08-01T12:00:00Z");
 
@@ -14,7 +14,7 @@ describe("buildTodayQueue", () => {
     ["dismissed", opportunity("dismissed", { status: "dismissed" })],
     ["paused", opportunity("paused", { status: "paused" })],
     ["terminal", opportunity("terminal", { status: "won" })],
-    ["snoozed", opportunity("snoozed", { actionStatus: "snoozed" })],
+    ["snoozed", opportunity("snoozed", { actionStatus: "snoozed", snoozedUntil: "2026-08-04T12:00:00Z" })],
   ])("suppresses %s opportunities", (_label, candidate) => {
     expect(buildTodayQueue([candidate, opportunity("active")], asOf).map((item) => item.id)).toEqual(["active"]);
   });
@@ -42,6 +42,26 @@ describe("buildTodayQueue", () => {
     expect(queue).toHaveLength(5);
     expect(queue.some((item) => item.type === "fte")).toBe(true);
   });
+
+  it.each([
+    ["3d", "2026-08-04T12:00:00Z"],
+    ["1w", "2026-08-08T12:00:00Z"],
+    ["2w", "2026-08-15T12:00:00Z"],
+  ])("suppresses only before %s snooze expiry and requeues at the boundary", (_duration, expiry) => {
+    const candidate = opportunity("snoozed", { actionStatus: "snoozed", snoozedUntil: expiry });
+    const oneSecondBefore = new Date(new Date(expiry).getTime() - 1_000);
+    const atExpiry = new Date(expiry);
+    const oneSecondAfter = new Date(new Date(expiry).getTime() + 1_000);
+
+    expect(isSnoozed(candidate.nextActions[0], oneSecondBefore)).toBe(true);
+    expect(buildTodayQueue([candidate], oneSecondBefore)).toEqual([]);
+
+    expect(isSnoozed(candidate.nextActions[0], atExpiry)).toBe(false);
+    expect(buildTodayQueue([candidate], atExpiry).map((item) => item.id)).toEqual(["snoozed"]);
+
+    expect(isSnoozed(candidate.nextActions[0], oneSecondAfter)).toBe(false);
+    expect(buildTodayQueue([candidate], oneSecondAfter).map((item) => item.id)).toEqual(["snoozed"]);
+  });
 });
 
 function opportunity(
@@ -53,6 +73,7 @@ function opportunity(
     confidence?: number;
     dueAt?: string;
     actionStatus?: "open" | "snoozed";
+    snoozedUntil?: string;
   } = {},
 ) {
   return {
@@ -62,6 +83,12 @@ function opportunity(
     lastActivityAt: "2026-07-01T12:00:00Z",
     initiative: { confidence: overrides.confidence ?? 80 },
     currentScore: { priorityEfficiency: overrides.pe ?? 500, urgencyScore: 10 },
-    nextActions: [{ status: overrides.actionStatus ?? "open", dueAt: overrides.dueAt ?? "2026-08-02T12:00:00Z" }],
+    nextActions: [
+      {
+        status: overrides.actionStatus ?? "open",
+        dueAt: overrides.dueAt ?? "2026-08-02T12:00:00Z",
+        snoozedUntil: overrides.snoozedUntil,
+      },
+    ],
   };
 }

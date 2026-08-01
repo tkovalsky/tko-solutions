@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { filterPipeline, isAwaitingManualOutreach, isStaleNextAction, needsNextActionRepair } from "./page";
+import { filterPipeline, isAwaitingManualOutreach, isCurrentlySnoozed, isStaleNextAction, needsNextActionRepair } from "./page";
 
 vi.mock("@/lib/tif/db", () => ({
   tifDb: {
@@ -38,7 +38,7 @@ describe("opportunity pipeline filters", () => {
       { ...opportunity("no-action", "assessment", "researching", 20, "Example B"), nextActions: [] },
     ];
 
-    expect(rows.filter(needsNextActionRepair).map((row) => row.id)).toEqual([
+    expect(rows.filter((row) => needsNextActionRepair(row, AS_OF)).map((row) => row.id)).toEqual([
       "no-action",
     ]);
   });
@@ -57,7 +57,23 @@ describe("opportunity pipeline filters", () => {
     };
 
     expect(isAwaitingManualOutreach(awaiting)).toBe(true);
-    expect(needsNextActionRepair(awaiting)).toBe(false);
+    expect(needsNextActionRepair(awaiting, AS_OF)).toBe(false);
+  });
+
+  it("excludes currently snoozed opportunities from the missing next action defect row", () => {
+    const snoozed = {
+      ...opportunity("snoozed", "consulting", "researching", 20, "Example C"),
+      nextActions: [
+        {
+          ...actionDaysOld(1),
+          status: "snoozed" as const,
+          snoozedUntil: new Date("2026-08-04T12:00:00Z"),
+        },
+      ],
+    };
+
+    expect(isCurrentlySnoozed(snoozed, AS_OF)).toBe(true);
+    expect(needsNextActionRepair(snoozed, AS_OF)).toBe(false);
   });
 });
 
@@ -67,6 +83,7 @@ function actionDaysOld(days: number) {
     status: "open" as const,
     type: "prepare_outreach",
     description: "Prepare outreach",
+    snoozedUntil: null,
     completedAt: null,
     createdAt: new Date(AS_OF.getTime() - days * 86_400_000),
     updatedAt: new Date(AS_OF.getTime() - days * 86_400_000),

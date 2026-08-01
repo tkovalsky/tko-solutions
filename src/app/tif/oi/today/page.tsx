@@ -35,8 +35,25 @@ export default async function OiTodayPage() {
       take: 12,
     }),
   ]);
-  const queue = buildTodayQueue(opportunities, asOf);
-  const summary = buildPipelineSummary(opportunities);
+  const restoredActionIds = opportunities.flatMap((opportunity) =>
+    opportunity.nextActions
+      .filter((action) => action.status === "snoozed" && action.snoozedUntil && action.snoozedUntil.getTime() <= asOf.getTime())
+      .map((action) => action.id),
+  );
+  if (restoredActionIds.length > 0) {
+    await tifDb.oiNextAction.updateMany({
+      where: { id: { in: restoredActionIds }, status: "snoozed" },
+      data: { status: "open", snoozedUntil: null },
+    });
+  }
+  const queueInput = opportunities.map((opportunity) => ({
+    ...opportunity,
+    nextActions: opportunity.nextActions.map((action) =>
+      restoredActionIds.includes(action.id) ? { ...action, status: "open" as const, snoozedUntil: null } : action,
+    ),
+  }));
+  const queue = buildTodayQueue(queueInput, asOf);
+  const summary = buildPipelineSummary(queueInput);
   const changes = buildRecentChanges(
     recentActivities.map((activity) => ({
       id: activity.id,

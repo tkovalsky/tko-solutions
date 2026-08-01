@@ -80,8 +80,8 @@ function enforcePathDiversity<T extends TodayQueueOpportunity>(ranked: T[], elig
   return [...top.slice(0, MAX_TODAY_QUEUE - 1), replacement];
 }
 
-function isSnoozed(action: { status: OiNextActionStatus; snoozedUntil?: Date | string | null }, asOf: Date) {
-  return action.status === "snoozed" || Boolean(action.snoozedUntil && new Date(action.snoozedUntil).getTime() > asOf.getTime());
+export function isSnoozed(action: { status: OiNextActionStatus; snoozedUntil?: Date | string | null }, asOf: Date) {
+  return action.status === "snoozed" && Boolean(action.snoozedUntil && new Date(action.snoozedUntil).getTime() > asOf.getTime());
 }
 
 function numeric(value: TodayQueueOpportunity["currentScore"] extends infer Score ? Score extends object ? Score[keyof Score] : never : never) {

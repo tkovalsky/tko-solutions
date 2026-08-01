@@ -7,6 +7,7 @@ vi.mock("@/lib/tif/db", () => ({
   tifDb: {
     oiOpportunity: { findMany: vi.fn() },
     oiActivity: { findMany: vi.fn() },
+    oiNextAction: { updateMany: vi.fn() },
   },
 }));
 
@@ -35,6 +36,34 @@ describe("OiTodayPage", () => {
     expect(screen.getByText(/Oct 1/)).toBeInTheDocument();
     expect(screen.getAllByRole("article")).toHaveLength(5);
     expect(container.querySelector("header")?.compareDocumentPosition(screen.getAllByRole("article")[0])).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+
+  it("restores expired snoozed actions to open before building the queue", async () => {
+    const expired = opportunity("expired", {
+      nextActions: [
+        {
+          id: "action-expired",
+          status: "snoozed",
+          type: "prepare_outreach",
+          description: "Prepare outreach",
+          rationale: "All prerequisites are met.",
+          estimatedMinutes: 20,
+          dueAt: new Date("2026-08-01T12:00:00Z"),
+          snoozedUntil: new Date("2026-07-31T12:00:00Z"),
+          completedAt: null,
+        },
+      ],
+    });
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([expired]);
+
+    render(await OiTodayPage());
+
+    expect(mockedDb.oiNextAction.updateMany).toHaveBeenCalledWith({
+      where: { id: { in: ["action-expired"] }, status: "snoozed" },
+      data: { status: "open", snoozedUntil: null },
+    });
+    expect(screen.getByText("Opportunity expired")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Complete" })).toBeInTheDocument();
   });
 
   it("orders overdue opportunities above all other cards", async () => {
@@ -111,6 +140,7 @@ function opportunity(
       rationale: string;
       estimatedMinutes: number;
       dueAt: Date | null;
+      snoozedUntil?: Date | null;
       completedAt?: Date | null;
     }>;
   } = {},
@@ -143,6 +173,7 @@ function opportunity(
         rationale: "All prerequisites are met.",
         estimatedMinutes: 20,
         dueAt: new Date(overrides.dueAt ?? "2099-08-01T12:00:00Z"),
+        snoozedUntil: null,
         completedAt: null,
       },
     ],
