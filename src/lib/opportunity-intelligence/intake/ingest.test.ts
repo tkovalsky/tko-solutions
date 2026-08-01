@@ -51,6 +51,9 @@ function createDatabaseDouble() {
         .mockResolvedValueOnce(null),
       create: vi.fn().mockResolvedValue({ id: "source-1", rawContent: RAW_SOURCE }),
     },
+    oiSignal: {
+      create: vi.fn().mockResolvedValue({ id: "signal-1" }),
+    },
     oiOpportunity: {
       create: vi.fn().mockResolvedValue({ id: "opportunity-1", operatorThesis: null }),
       findUniqueOrThrow: vi.fn(),
@@ -136,6 +139,16 @@ describe("ingestPastedOpportunity", () => {
       },
     });
     expect(tx.oiScore.create).toHaveBeenCalledTimes(1);
+    expect(tx.oiSignal.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          tier: "tier_1",
+          signalType: "senior_role_posting",
+          sourceId: "source-1",
+          organizationId: "org-1",
+        }),
+      }),
+    );
     expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
       where: { id: "opportunity-1" },
       data: { currentScoreId: "score-1" },

@@ -83,7 +83,9 @@ opportunity in the pipeline.
 
 # Referenced Documents
 
-- `POIS-OPERATOR-UX.md` §18 (Worked Examples A and C, for the end-to-end manual test).
+- `POIS-SCORING-AND-DECISION-MODEL.md` §14.1 (FTE below comp floor fixture).
+- `POIS-SCORING-AND-DECISION-MODEL.md` §2 and §3.3 (leadership appointment watch-only
+  behavior for Example C fixture).
 
 ---
 
@@ -94,9 +96,12 @@ opportunity in the pipeline.
 - [ ] Dismissing a candidate with an empty reason is rejected.
 - [ ] `promoteSignal` persists `OiInitiative` (when approved), one `OiOpportunity` per selected
       type, and the corresponding `OiOpportunitySource` links.
-- [ ] Worked Example A (from §18) produces two candidates with the FTE one disqualified.
-- [ ] Worked Example C (from §18) produces no opportunity and sets an account watch.
-- [ ] Manual test: Worked Examples A and C run end to end and match the documented outcomes.
+- [ ] The FTE below-comp-floor fixture from §14.1 produces two candidates with the FTE one
+      disqualified.
+- [ ] The leadership-appointment watch-only fixture from §2 and §3.3 produces no opportunity
+      and sets an account watch.
+- [ ] Manual test: the below-comp-floor and leadership-appointment watch-only fixtures run end
+      to end and match the documented outcomes.
 - [ ] This is the final letter in the POIS-104 chain — the capability is now visible and usable
       by Todd.
 

@@ -8,12 +8,36 @@ vi.mock("@/lib/tif/db", () => ({
       findUnique: vi.fn().mockResolvedValue({
         id: "opportunity-1",
         title: "Director, Healthcare Transformation",
-        organization: { name: "Example Health" },
+        organization: {
+          name: "Example Health",
+          domain: "example.com",
+          website: "https://example.com",
+          tier: 1,
+          isWatched: false,
+          kind: "payer",
+          signals: [
+            {
+              id: "signal-1",
+              tier: "tier_1",
+              signalType: "senior_role_posting",
+              summary: "Director, Healthcare Transformation",
+              occurredAt: new Date("2026-07-31T12:00:00Z"),
+              createdAt: new Date("2026-07-31T12:00:00Z"),
+              domainTags: ["interoperability", "workflow_modernization"],
+              source: {
+                canonicalUrl: "https://example.com/jobs/123",
+                retrievedAt: new Date("2026-07-31T12:00:00Z"),
+              },
+            },
+          ],
+          initiatives: [],
+        },
         facts: [
           {
             id: "fact-1",
             field: "technology",
             value: "FHIR",
+            normalizedValue: "fhir",
             confidence: 95,
             evidence: {
               excerpt: "Own delivery using FHIR.",
@@ -29,7 +53,28 @@ vi.mock("@/lib/tif/db", () => ({
             reason: "Budget authority is not yet clear.",
           },
         ],
-        sources: [{ id: "source-1" }],
+        sources: [
+          {
+            id: "source-1",
+            sourceType: "job_posting",
+            canonicalUrl: "https://example.com/jobs/123",
+            rawContent:
+              "Director, Healthcare Transformation. Reports to the COO. Own delivery using FHIR and workflow modernization. Compensation is $240,000 per year.",
+            publishedAt: new Date("2026-07-31T12:00:00Z"),
+            retrievedAt: new Date("2026-07-31T12:00:00Z"),
+            signals: [
+              {
+                id: "signal-1",
+                tier: "tier_1",
+                signalType: "senior_role_posting",
+                summary: "Director, Healthcare Transformation",
+                occurredAt: new Date("2026-07-31T12:00:00Z"),
+                createdAt: new Date("2026-07-31T12:00:00Z"),
+                domainTags: ["interoperability", "workflow_modernization"],
+              },
+            ],
+          },
+        ],
       }),
     },
   },
@@ -37,6 +82,10 @@ vi.mock("@/lib/tif/db", () => ({
 
 vi.mock("./actions", () => ({
   captureManualIntake: vi.fn(),
+  dismissSignal: vi.fn(),
+  promoteProposedInitiative: vi.fn(),
+  promoteSignal: vi.fn(),
+  watchAccount: vi.fn(),
 }));
 
 describe("OiIntakePage", () => {
@@ -63,6 +112,8 @@ describe("OiIntakePage", () => {
     );
 
     expect(screen.getByText("Example Health · Director, Healthcare Transformation")).toBeInTheDocument();
+    expect(screen.getByText("Tier 1 · Senior role posting · strength 100")).toBeInTheDocument();
+    expect(screen.getByText("Review candidates")).toBeInTheDocument();
     expect(screen.getByText("FHIR")).toBeInTheDocument();
     expect(screen.getByText("Own delivery using FHIR.")).toBeInTheDocument();
     expect(screen.getByText("Who owns or sponsors this work?")).toBeInTheDocument();

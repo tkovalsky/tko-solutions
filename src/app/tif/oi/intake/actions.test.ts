@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { captureManualIntake } from "./actions";
+import { captureManualIntake, dismissSignal } from "./actions";
 import { ingestPastedOpportunity } from "@/lib/opportunity-intelligence/intake/ingest";
 import { tifDb } from "@/lib/tif/db";
 
@@ -79,6 +79,19 @@ describe("captureManualIntake", () => {
 
     await expect(captureManualIntake(validForm())).rejects.toThrow(
       "REDIRECT:/tif/oi/intake?capture=duplicate&sourceId=source-existing&opportunityId=opportunity-existing",
+    );
+  });
+});
+
+describe("dismissSignal", () => {
+  it("rejects an empty dismiss reason", async () => {
+    const formData = new FormData();
+    formData.set("sourceId", "source-1");
+    formData.set("opportunityId", "opportunity-1");
+    formData.set("reason", " ");
+
+    await expect(dismissSignal(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?error=Dismiss%20reason%20is%20required.",
     );
   });
 });

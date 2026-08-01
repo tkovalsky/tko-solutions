@@ -80,7 +80,9 @@ follows (POIS-104B) has correct data to render.
 # Referenced Documents
 
 - `POIS-SCORING-AND-DECISION-MODEL.md` §2 (opportunity classification rules table only).
-- `POIS-OPERATOR-UX.md` §18 (Worked Examples A and C, for test fixtures only).
+- `POIS-SCORING-AND-DECISION-MODEL.md` §14.1 (FTE below comp floor fixture).
+- `POIS-SCORING-AND-DECISION-MODEL.md` §2 and §3.3 (leadership appointment watch-only
+  behavior for Example C fixture).
 
 ---
 
@@ -89,8 +91,8 @@ follows (POIS-104B) has correct data to render.
 - [ ] Every classification rule in §2 is covered by an isolated test.
 - [ ] A Director-level posting at a payer organization yields both `fte` and `consulting`
       candidates.
-- [ ] A lone `leadership_appointment` signal yields an empty candidate list, matching Worked
-      Example C.
+- [ ] A lone `leadership_appointment` signal yields an empty candidate list, matching the
+      watch-only behavior documented in §2 and §3.3.
 - [ ] A signal from a procurement domain yields an `rfp` candidate.
 - [ ] Dismiss logic (validated in POIS-104B) rejecting an empty reason is not implemented here —
       only the classification rules are in scope for this story.

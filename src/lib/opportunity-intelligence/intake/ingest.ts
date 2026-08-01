@@ -9,6 +9,7 @@ import {
   hashSourceContent,
   normalizeSourceContent,
 } from "./normalize";
+import { classifySignal } from "./classify-signal";
 
 type OiOrganizationKind = "payer" | "health_tech" | "health_system" | "consulting" | "other";
 type OiSourceType =
@@ -208,6 +209,48 @@ async function rebuildFromSource(
   return scoreSnapshot;
 }
 
+async function persistSignalForSource(
+  tx: TransactionClient,
+  input: PastedOpportunityInput,
+  organization: {
+    id: string;
+    domain?: string | null;
+    website?: string | null;
+    tier?: number | null;
+    isWatched?: boolean | null;
+  },
+  source: {
+    id: string;
+    rawContent: string;
+  },
+) {
+  const extracted = extractOpportunity(source.rawContent);
+  const classified = classifySignal({
+    sourceType: input.sourceType ?? "pasted_text",
+    title: input.title,
+    rawContent: source.rawContent,
+    canonicalUrl: input.canonicalUrl,
+    occurredAt: input.publishedAt ?? input.retrievedAt ?? null,
+    retrievedAt: input.retrievedAt ?? null,
+    organization,
+    facts: extracted.facts,
+  });
+
+  await tx.oiSignal.create({
+    data: {
+      tier: classified.tier,
+      signalType: classified.signalType,
+      status: "classified",
+      summary: input.title.trim(),
+      occurredAt: input.publishedAt ?? input.retrievedAt ?? null,
+      confidence: classified.confidence,
+      domainTags: classified.domainTags,
+      sourceId: source.id,
+      organizationId: organization.id,
+    },
+  });
+}
+
 async function getIngestionReview(
   tx: TransactionClient,
   opportunityId: string,
@@ -381,6 +424,7 @@ export async function ingestPastedOpportunity(
       },
       select: { id: true, rawContent: true },
     });
+    await persistSignalForSource(tx, input, organization, source);
     const score = await rebuildFromSource(tx, opportunity, source);
 
     return {
