@@ -51,7 +51,7 @@ async function getReviewResult(sourceId?: string, opportunityId?: string) {
         },
       },
       facts: {
-        where: { evidence: { sourceId } },
+        where: { OR: [{ evidence: { sourceId } }, { opportunityId }] },
         include: {
           evidence: {
             select: {
@@ -71,6 +71,23 @@ async function getReviewResult(sourceId?: string, opportunityId?: string) {
         include: {
           signals: true,
         },
+        take: 1,
+      },
+      sourceLinks: {
+        where: { sourceId },
+        include: {
+          source: {
+            include: {
+              signals: true,
+            },
+          },
+        },
+        take: 1,
+      },
+      currentScore: true,
+      nextActions: {
+        where: { status: "open" },
+        orderBy: [{ createdAt: "asc" }],
         take: 1,
       },
     },
@@ -198,7 +215,7 @@ function DuplicateNotice({
 }
 
 function ReviewPanel({ review }: { review: NonNullable<ReviewResult> }) {
-  const source = review.sources[0];
+  const source = review.sources[0] ?? review.sourceLinks[0]?.source;
   const signal = source?.signals[0] ?? null;
   const facts = review.facts.map((fact) => ({
     field: fact.field,
@@ -240,6 +257,9 @@ function ReviewPanel({ review }: { review: NonNullable<ReviewResult> }) {
 
   return (
     <div className="grid gap-5">
+      {review.currentScore ? <ScoreSummary score={review.currentScore} /> : null}
+      {review.nextActions[0] ? <NextActionSummary action={review.nextActions[0]} /> : null}
+
       {source && signal && signalReview ? (
         <section className="rounded-md border border-border bg-white p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
@@ -462,6 +482,45 @@ function ReviewPanel({ review }: { review: NonNullable<ReviewResult> }) {
   );
 }
 
+function ScoreSummary({ score }: { score: NonNullable<NonNullable<ReviewResult>["currentScore"]> }) {
+  const hourly = score.priorityEfficiency === null ? "n/a" : `$${Math.round(Number(score.priorityEfficiency)).toLocaleString("en-US")}/hr`;
+  return (
+    <section className="rounded-md border border-border bg-white p-6">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+        Score summary
+      </p>
+      <h2 className="mt-1 text-xl font-semibold">
+        Fit {score.fitScore} · Evidence {score.evidenceScore} · Access {score.accessScore} · {hourly}
+      </h2>
+      <p className="mt-3 text-sm text-muted">
+        Value {formatMoney(score.estimatedValue)} × probability {score.conversionProbability ?? "n/a"}% =
+        EV {formatMoney(score.expectedValue)} over {score.estimatedHours === null ? "n/a" : `${Number(score.estimatedHours).toFixed(1)}h`}.
+      </p>
+      {score.isDisqualified ? (
+        <p className="mt-3 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-900">
+          Disqualified: {score.disqualifyingRules.join(", ")}
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
+function NextActionSummary({ action }: { action: NonNullable<ReviewResult>["nextActions"][number] }) {
+  return (
+    <section className="rounded-md border border-[#17375e] bg-white p-6">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+        Next action
+      </p>
+      <h2 className="mt-1 text-xl font-semibold">{humanize(action.type)}</h2>
+      <p className="mt-2 text-sm text-muted">{action.description}</p>
+      {action.rationale ? <p className="mt-2 text-sm text-muted">{action.rationale}</p> : null}
+      <p className="mt-3 text-sm font-semibold">
+        {action.estimatedMinutes} min · {action.dueAt ? `due ${formatDate(action.dueAt)}` : "no due date"}
+      </p>
+    </section>
+  );
+}
+
 function humanize(value: string) {
   return value.replaceAll("_", " ");
 }
@@ -473,4 +532,8 @@ function tierDisplay(tier: string) {
 function formatDate(date?: Date | null) {
   if (!date) return "date unknown";
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+
+function formatMoney(value?: number | null) {
+  return value === null || value === undefined ? "n/a" : `$${value.toLocaleString("en-US")}`;
 }

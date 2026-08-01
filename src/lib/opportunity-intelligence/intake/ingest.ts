@@ -1,8 +1,9 @@
 import type { Prisma, PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
+import { TODD_CAPABILITY_PROFILE_V2 } from "../capability-profile";
 import type { OpportunityFactForScoring } from "../contracts";
 import { extractOpportunity, verifyEvidenceOffsets } from "./extract";
-import { scoreOpportunityFit } from "../commercial/score/fit";
+import { persistOpportunityScore, scoreOpportunity } from "../commercial/score";
 import { planResearchGapReconciliation } from "../intelligence/research-gaps";
 import {
   canonicalizeSourceUrl,
@@ -70,10 +71,19 @@ async function rebuildFromSource(
   opportunity: {
     id: string;
     operatorThesis: string | null;
+    type: string;
+    status?: string | null;
+    estimatedValueLow?: number | null;
+    estimatedValueHigh?: number | null;
+    conversionProbability?: number | null;
+    estimatedHours?: Prisma.Decimal | number | null;
+    disqualifiedReason?: string | null;
   },
   source: {
     id: string;
     rawContent: string;
+    publishedAt?: Date | null;
+    retrievedAt?: Date | null;
   },
 ) {
   const extraction = extractOpportunity(source.rawContent);
@@ -181,29 +191,42 @@ async function rebuildFromSource(
       isOperatorOverride: true,
     },
   });
-  const score = scoreOpportunityFit({
-    facts: persistedFacts as OpportunityFactForScoring[],
-    operatorThesis: opportunity.operatorThesis,
+  const openGaps = await tx.oiResearchGap.findMany({
+    where: { opportunityId: opportunity.id },
+    select: { status: true, blocksOutreach: true },
   });
-  const scoreSnapshot = await tx.oiScore.create({
-    data: {
-      opportunityId: opportunity.id,
-      total: score.total,
-      completeness: score.completeness,
-      components: score.components,
-      inputSnapshot: score.inputSnapshot,
-      scorePolicyVersion: score.scorePolicyVersion,
-      capabilityProfileVersion: score.capabilityProfileVersion,
-      fitScore: 0,
-      evidenceScore: 0,
-      accessScore: 0,
-      urgencyScore: 0,
+  const score = scoreOpportunity({
+    opportunity: {
+      id: opportunity.id,
+      type: opportunity.type,
+      status: opportunity.status,
+      estimatedValueLow: opportunity.estimatedValueLow,
+      estimatedValueHigh: opportunity.estimatedValueHigh,
+      conversionProbabilityOverride: opportunity.conversionProbability,
+      estimatedHoursOverride: opportunity.estimatedHours ? Number(opportunity.estimatedHours) : null,
+      disqualifiedReason: opportunity.disqualifiedReason,
     },
+    facts: persistedFacts as OpportunityFactForScoring[],
+    initiative: null,
+    stakeholders: [],
+    sources: [
+      {
+        publishedAt: source.publishedAt,
+        retrievedAt: source.retrievedAt,
+        isPrimary: true,
+      },
+    ],
+    researchGaps: openGaps,
+    offer: null,
+    roleProfile: null,
+    rfpProfile: null,
+    profile: TODD_CAPABILITY_PROFILE_V2,
+    asOf: source.retrievedAt ?? new Date(),
   });
-
-  await tx.oiOpportunity.update({
-    where: { id: opportunity.id },
-    data: { currentScoreId: scoreSnapshot.id },
+  const scoreSnapshot = await persistOpportunityScore(tx, opportunity.id, score, {
+    sourceId: source.id,
+    factCount: persistedFacts.length,
+    operatorThesisPresent: Boolean(opportunity.operatorThesis?.trim()),
   });
 
   return scoreSnapshot;
@@ -399,7 +422,17 @@ export async function ingestPastedOpportunity(
     const opportunity = priorSnapshot?.opportunityId
       ? await tx.oiOpportunity.findUniqueOrThrow({
           where: { id: priorSnapshot.opportunityId },
-          select: { id: true, operatorThesis: true },
+          select: {
+            id: true,
+            operatorThesis: true,
+            type: true,
+            status: true,
+            estimatedValueLow: true,
+            estimatedValueHigh: true,
+            conversionProbability: true,
+            estimatedHours: true,
+            disqualifiedReason: true,
+          },
         })
       : await tx.oiOpportunity.create({
           data: {
@@ -407,7 +440,17 @@ export async function ingestPastedOpportunity(
             title,
             type: "consulting",
           },
-          select: { id: true, operatorThesis: true },
+          select: {
+            id: true,
+            operatorThesis: true,
+            type: true,
+            status: true,
+            estimatedValueLow: true,
+            estimatedValueHigh: true,
+            conversionProbability: true,
+            estimatedHours: true,
+            disqualifiedReason: true,
+          },
         });
 
     const source = await tx.oiSource.create({
@@ -422,7 +465,7 @@ export async function ingestPastedOpportunity(
         retrievedAt: input.retrievedAt ?? new Date(),
         publishedAt: input.publishedAt,
       },
-      select: { id: true, rawContent: true },
+      select: { id: true, rawContent: true, publishedAt: true, retrievedAt: true },
     });
     await persistSignalForSource(tx, input, organization, source);
     const score = await rebuildFromSource(tx, opportunity, source);
@@ -445,12 +488,22 @@ export async function rerunOpportunityExtraction(
   return db.$transaction(async (tx) => {
     const opportunity = await tx.oiOpportunity.findUniqueOrThrow({
       where: { id: opportunityId },
-      select: { id: true, operatorThesis: true },
+      select: {
+        id: true,
+        operatorThesis: true,
+        type: true,
+        status: true,
+        estimatedValueLow: true,
+        estimatedValueHigh: true,
+        conversionProbability: true,
+        estimatedHours: true,
+        disqualifiedReason: true,
+      },
     });
     const source = await tx.oiSource.findFirstOrThrow({
       where: { opportunityId },
       orderBy: [{ retrievedAt: "desc" }, { createdAt: "desc" }],
-      select: { id: true, rawContent: true },
+      select: { id: true, rawContent: true, publishedAt: true, retrievedAt: true },
     });
     const score = await rebuildFromSource(tx, opportunity, source);
 

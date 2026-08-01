@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { captureManualIntake, dismissSignal } from "./actions";
+import { captureManualIntake, dismissSignal, promoteSignal } from "./actions";
 import { ingestPastedOpportunity } from "@/lib/opportunity-intelligence/intake/ingest";
 import { tifDb } from "@/lib/tif/db";
 
@@ -18,10 +18,13 @@ vi.mock("@/lib/opportunity-intelligence/intake/ingest", () => ({
 }));
 
 vi.mock("@/lib/tif/db", () => ({
-  tifDb: {},
+  tifDb: {
+    $transaction: vi.fn(),
+  },
 }));
 
 const mockedIngest = vi.mocked(ingestPastedOpportunity);
+const mockedDb = vi.mocked(tifDb);
 
 const LONG_SOURCE = `${"Director, Healthcare Transformation. ".repeat(8)}
 Reports to the COO and owns immediate modernization using FHIR. Compensation is $240,000 per year.`;
@@ -92,6 +95,87 @@ describe("dismissSignal", () => {
 
     await expect(dismissSignal(formData)).rejects.toThrow(
       "REDIRECT:/tif/oi/intake?error=Dismiss%20reason%20is%20required.",
+    );
+  });
+});
+
+describe("promoteSignal", () => {
+  it("rejects malformed input when no opportunity type is selected", async () => {
+    const formData = new FormData();
+    formData.set("sourceId", "source-1");
+    formData.set("opportunityId", "opportunity-1");
+
+    await expect(promoteSignal(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?error=Select%20at%20least%20one%20opportunity%20type%20to%20promote.",
+    );
+    expect(mockedDb.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("creates exactly one open next action for a promoted opportunity", async () => {
+    const tx = {
+      oiSource: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "source-1",
+          publishedAt: new Date("2026-08-01T12:00:00Z"),
+          retrievedAt: new Date("2026-08-01T12:00:00Z"),
+          organizationId: "org-1",
+          organization: { id: "org-1", name: "Example Health", tier: 1, signals: [], initiatives: [] },
+          signals: [{ id: "signal-1", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
+          opportunity: { facts: [], researchGaps: [] },
+        }),
+      },
+      oiOpportunity: {
+        create: vi.fn().mockResolvedValue({
+          id: "promoted-1",
+          type: "assessment",
+          status: "identified",
+          estimatedValueLow: null,
+          estimatedValueHigh: null,
+          conversionProbability: null,
+          estimatedHours: null,
+          disqualifiedReason: null,
+          offerId: null,
+          lastActivityAt: null,
+          createdAt: new Date("2026-08-01T12:00:00Z"),
+        }),
+        update: vi.fn().mockResolvedValue({ id: "promoted-1" }),
+      },
+      oiOpportunitySource: {
+        create: vi.fn().mockResolvedValue({}),
+      },
+      oiScore: {
+        create: vi.fn().mockResolvedValue({ id: "score-1" }),
+      },
+      oiNextAction: {
+        findFirst: vi.fn().mockResolvedValue(null),
+        create: vi.fn().mockResolvedValue({ id: "action-1" }),
+      },
+      oiSignal: {
+        update: vi.fn().mockResolvedValue({}),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("sourceId", "source-1");
+    formData.set("opportunityId", "opportunity-1");
+    formData.append("opportunityType", "assessment");
+
+    await expect(promoteSignal(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?capture=reviewed&sourceId=source-1&opportunityId=promoted-1",
+    );
+    expect(tx.oiNextAction.findFirst).toHaveBeenCalledWith({
+      where: { opportunityId: "promoted-1", status: "open" },
+      select: { id: true },
+    });
+    expect(tx.oiNextAction.create).toHaveBeenCalledTimes(1);
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          opportunityId: "promoted-1",
+          type: "approve_initiative",
+          estimatedMinutes: 5,
+        }),
+      }),
     );
   });
 });

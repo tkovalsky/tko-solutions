@@ -3,6 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { TODD_CAPABILITY_PROFILE_V2 } from "@/lib/opportunity-intelligence/capability-profile";
+import { deriveNextAction } from "@/lib/opportunity-intelligence/commercial/next-action";
+import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
 import { inferInitiatives } from "@/lib/opportunity-intelligence/intelligence/initiative-inference";
 import { ingestPastedOpportunity } from "@/lib/opportunity-intelligence/intake/ingest";
 import { tifDb } from "@/lib/tif/db";
@@ -170,13 +173,19 @@ export async function promoteSignal(formData: FormData) {
     redirectWithError("Select at least one opportunity type to promote.");
   }
 
+  let reviewOpportunityId = parsed.opportunityId;
   await tifDb.$transaction(async (tx) => {
     const source = await tx.oiSource.findUniqueOrThrow({
       where: { id: parsed.sourceId },
       include: {
         organization: true,
         signals: true,
-        opportunity: true,
+        opportunity: {
+          include: {
+            facts: true,
+            researchGaps: true,
+          },
+        },
       },
     });
     const signal = source.signals[0];
@@ -250,6 +259,7 @@ export async function promoteSignal(formData: FormData) {
           firstSignalAt: signal.occurredAt ?? signal.createdAt,
         },
       });
+      reviewOpportunityId = reviewOpportunityId === parsed.opportunityId ? opportunity.id : reviewOpportunityId;
       await tx.oiOpportunitySource.create({
         data: {
           opportunityId: opportunity.id,
@@ -257,6 +267,77 @@ export async function promoteSignal(formData: FormData) {
           isPrimary: true,
         },
       });
+      const facts = source.opportunity?.facts ?? [];
+      const researchGaps = source.opportunity?.researchGaps ?? [];
+      const score = scoreOpportunity({
+        opportunity: {
+          id: opportunity.id,
+          type: opportunity.type,
+          status: opportunity.status,
+          estimatedValueLow: opportunity.estimatedValueLow,
+          estimatedValueHigh: opportunity.estimatedValueHigh,
+          conversionProbabilityOverride: opportunity.conversionProbability,
+          estimatedHoursOverride: opportunity.estimatedHours ? Number(opportunity.estimatedHours) : null,
+          disqualifiedReason: opportunity.disqualifiedReason,
+        },
+        facts,
+        initiative: initiativeId
+          ? {
+              status: "evidenced",
+              approvedAt: new Date(),
+            }
+          : null,
+        stakeholders: [],
+        sources: [
+          {
+            publishedAt: source.publishedAt,
+            retrievedAt: source.retrievedAt,
+            isPrimary: true,
+          },
+        ],
+        researchGaps,
+        offer: null,
+        roleProfile: null,
+        rfpProfile: null,
+        profile: TODD_CAPABILITY_PROFILE_V2,
+        organization: { tier: source.organization.tier },
+        asOf: new Date(),
+      });
+      await persistOpportunityScore(tx, opportunity.id, score, {
+        sourceId: source.id,
+        promotedFromOpportunityId: parsed.opportunityId,
+        factCount: facts.length,
+      });
+      const nextAction = deriveNextAction({
+        opportunity: {
+          type: opportunity.type,
+          status: opportunity.status,
+          offerId: opportunity.offerId,
+          lastActivityAt: opportunity.lastActivityAt ?? opportunity.createdAt,
+        },
+        initiative: initiativeId ? { status: "evidenced", approvedAt: new Date() } : null,
+        researchGaps,
+        stakeholders: [],
+        roleProfile: null,
+        draft: { exists: false },
+        asOf: new Date(),
+      });
+      const existingOpenAction = await tx.oiNextAction.findFirst({
+        where: { opportunityId: opportunity.id, status: "open" },
+        select: { id: true },
+      });
+      if (!existingOpenAction) {
+        await tx.oiNextAction.create({
+          data: {
+            opportunityId: opportunity.id,
+            type: nextAction.type,
+            description: nextAction.description,
+            rationale: nextAction.rationale,
+            estimatedMinutes: nextAction.estimatedMinutes,
+            dueAt: nextAction.dueAt,
+          },
+        });
+      }
     }
 
     await tx.oiSignal.update({
@@ -266,7 +347,7 @@ export async function promoteSignal(formData: FormData) {
   });
 
   revalidatePath(INTAKE_PATH);
-  redirectToReview(parsed);
+  redirectToReview({ ...parsed, opportunityId: reviewOpportunityId });
 }
 
 export async function dismissSignal(formData: FormData) {

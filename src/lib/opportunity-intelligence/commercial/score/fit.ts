@@ -1,11 +1,11 @@
-import { TODD_CAPABILITY_PROFILE } from "../../capability-profile";
+import { TODD_CAPABILITY_PROFILE_V2 } from "../../capability-profile";
 import type {
   OpportunityFactForScoring,
   OpportunityFitScore,
   OpportunityScoreComponent,
 } from "../../contracts";
 
-export const OPPORTUNITY_SCORE_POLICY_VERSION = "opportunity-fit-v1";
+export const OPPORTUNITY_SCORE_POLICY_VERSION = "pois-v1";
 
 type ScoreOpportunityFitInput = {
   facts: OpportunityFactForScoring[];
@@ -41,11 +41,13 @@ export function scoreOpportunityFit({
   const problems = grouped.business_problem ?? [];
   const transformations = grouped.transformation_language ?? [];
   const responsibilities = grouped.responsibility ?? [];
+  const domains = [...(grouped.domain ?? []), ...(grouped.business_problem ?? [])];
   const technologies = grouped.technology ?? [];
+  const senioritySignals = [...(grouped.seniority_scope ?? []), ...(grouped.opportunity_title ?? [])];
 
   const problemAligned =
-    includesAny(problems, TODD_CAPABILITY_PROFILE.businessProblems) ||
-    includesAny(problems, TODD_CAPABILITY_PROFILE.domains);
+    includesAny(problems, TODD_CAPABILITY_PROFILE_V2.businessProblems) ||
+    includesAny(problems, TODD_CAPABILITY_PROFILE_V2.domains);
   component(
     "business_problem",
     "Funded problem fit",
@@ -54,13 +56,13 @@ export function scoreOpportunityFit({
     problems.length === 0
       ? "No business problem was stated."
       : problemAligned
-        ? "The stated problem aligns with todd-v1."
+        ? "The stated problem aligns with todd-v2."
         : "A problem is stated, but its alignment still needs operator review.",
   );
 
   const transformationAligned = includesAny(
     transformations,
-    TODD_CAPABILITY_PROFILE.transformationLanguage,
+    TODD_CAPABILITY_PROFILE_V2.transformationLanguage,
   );
   component(
     "transformation",
@@ -70,13 +72,13 @@ export function scoreOpportunityFit({
     transformations.length === 0
       ? "No transformation mandate was found."
       : transformationAligned
-        ? "The source uses transformation language aligned with todd-v1."
+        ? "The source uses transformation language aligned with todd-v2."
         : "Change language exists, but the mandate is not yet clearly aligned.",
   );
 
   const responsibilityAligned = includesAny(
     responsibilities,
-    TODD_CAPABILITY_PROFILE.responsibilities,
+    TODD_CAPABILITY_PROFILE_V2.responsibilities,
   );
   component(
     "responsibility",
@@ -86,11 +88,31 @@ export function scoreOpportunityFit({
     responsibilities.length === 0
       ? "No accountable outcomes were found."
       : responsibilityAligned
-        ? "The opportunity owns delivery work aligned with todd-v1."
+        ? "The opportunity owns delivery work aligned with todd-v2."
         : "Responsibilities exist but need fit review.",
   );
 
-  const technologyAligned = includesAny(technologies, TODD_CAPABILITY_PROFILE.technologies);
+  const domainAligned = includesAny(domains, TODD_CAPABILITY_PROFILE_V2.domains);
+  const adjacentDomain = includesAny(domains, [
+    "regulated operations",
+    "financial services",
+    "insurance",
+  ]);
+  component(
+    "domain",
+    "Domain fit",
+    domains.length === 0 ? 0 : domainAligned ? 15 : adjacentDomain ? 8 : 0,
+    15,
+    domains.length === 0
+      ? "No domain context was found."
+      : domainAligned
+        ? "The source confirms a todd-v2 healthcare or regulated-operations domain."
+        : adjacentDomain
+          ? "The source is adjacent to Todd's regulated-operations focus."
+          : "The domain is not yet aligned.",
+  );
+
+  const technologyAligned = includesAny(technologies, TODD_CAPABILITY_PROFILE_V2.technologies);
   component(
     "technology",
     "Technology alignment",
@@ -99,60 +121,69 @@ export function scoreOpportunityFit({
     technologies.length === 0
       ? "No technology context was found."
       : technologyAligned
-        ? "At least one stated technology aligns with todd-v1."
-        : "Technology context exists without a known todd-v1 match.",
+        ? "At least one stated technology aligns with todd-v2."
+        : "Technology context exists without a known todd-v2 match.",
   );
 
   component(
     "urgency",
     "Urgency",
-    (grouped.urgency?.length ?? 0) > 0 ? 10 : 0,
+    includesAny(grouped.urgency ?? [], [
+      "regulatory",
+      "cms",
+      "deadline",
+      "first 90 days",
+      "stalled",
+      "delayed",
+      "at risk",
+    ])
+      ? 10
+      : 0,
     10,
-    (grouped.urgency?.length ?? 0) > 0
-      ? "The source contains a timing or urgency signal."
-      : "No timing signal was found.",
+    includesAny(grouped.urgency ?? [], [
+      "regulatory",
+      "cms",
+      "deadline",
+      "first 90 days",
+      "stalled",
+      "delayed",
+      "at risk",
+    ])
+      ? "The source contains a concrete timing or urgency signal."
+      : "No concrete timing signal was found.",
   );
 
+  const hasDirectorScope = includesAny(senioritySignals, [
+    "director",
+    "vice president",
+    "vp",
+    "svp",
+    "chief",
+    "c-suite",
+    "executive",
+  ]);
+  const hasManagerScope = includesAny(senioritySignals, ["manager", "lead"]);
   component(
-    "reporting_line",
-    "Sponsor proximity",
-    (grouped.reporting_line?.length ?? 0) > 0 ? 10 : 0,
+    "seniority_scope",
+    "Seniority scope",
+    senioritySignals.length === 0 ? 0 : hasDirectorScope ? 10 : hasManagerScope ? 5 : 0,
     10,
-    (grouped.reporting_line?.length ?? 0) > 0
-      ? "A reporting or sponsorship line is stated."
-      : "The sponsor or reporting line is unknown.",
-  );
-
-  component(
-    "compensation",
-    "Economic signal",
-    (grouped.compensation?.length ?? 0) > 0 ? 10 : 0,
-    10,
-    (grouped.compensation?.length ?? 0) > 0
-      ? "The source includes compensation or value evidence."
-      : "No compensation or engagement value was found.",
-  );
-
-  const strongEvidenceCount = facts.filter(
-    (fact) => fact.confidence >= 80 || fact.isOperatorOverride,
-  ).length;
-  component(
-    "evidence_strength",
-    "Evidence strength",
-    strongEvidenceCount >= 4 ? 5 : strongEvidenceCount >= 2 ? 3 : 0,
-    5,
-    strongEvidenceCount >= 4
-      ? "At least four high-confidence or operator-verified facts support the score."
-      : "More high-confidence facts are needed.",
+    senioritySignals.length === 0
+      ? "No seniority or executive-access signal was found."
+      : hasDirectorScope
+        ? "The opportunity indicates Director+ scope or executive access."
+        : hasManagerScope
+          ? "The opportunity indicates manager-level scope."
+          : "The seniority scope is below the current fit threshold.",
   );
 
   const completenessFields = [
-    "reporting_line",
     "business_problem",
+    "domain",
     "technology",
     "urgency",
+    "seniority_scope",
     "responsibility",
-    "compensation",
     "transformation_language",
   ];
   const completeCount = completenessFields.filter(
@@ -163,7 +194,7 @@ export function scoreOpportunityFit({
     total: components.reduce((sum, item) => sum + item.points, 0),
     completeness: Math.round((completeCount / completenessFields.length) * 100),
     scorePolicyVersion: OPPORTUNITY_SCORE_POLICY_VERSION,
-    capabilityProfileVersion: TODD_CAPABILITY_PROFILE.version,
+    capabilityProfileVersion: TODD_CAPABILITY_PROFILE_V2.version,
     components,
     inputSnapshot: {
       fields: Object.fromEntries(

@@ -17,10 +17,10 @@ describe("scoreOpportunityFit", () => {
       fact("business_problem", "Prior authorization operational recovery"),
       fact("transformation_language", "Enterprise transformation and modernization"),
       fact("responsibility", "Lead and deliver implementation"),
+      fact("domain", "Healthcare payer"),
       fact("technology", "FHIR"),
       fact("urgency", "First 90 days"),
-      fact("reporting_line", "Reports to the COO"),
-      fact("compensation", "$250,000 per year"),
+      fact("seniority_scope", "Director with executive access"),
     ];
 
     const first = scoreOpportunityFit({ facts });
@@ -29,8 +29,17 @@ describe("scoreOpportunityFit", () => {
     expect(first).toEqual(second);
     expect(first.total).toBe(100);
     expect(first.completeness).toBe(100);
-    expect(first.scorePolicyVersion).toBe("opportunity-fit-v1");
-    expect(first.capabilityProfileVersion).toBe("todd-v1");
+    expect(first.scorePolicyVersion).toBe("pois-v1");
+    expect(first.capabilityProfileVersion).toBe("todd-v2");
+    expect(first.components.map((item) => item.key)).toEqual([
+      "business_problem",
+      "transformation",
+      "responsibility",
+      "domain",
+      "technology",
+      "urgency",
+      "seniority_scope",
+    ]);
   });
 
   it("scores missing evidence as zero without hiding incomplete inputs", () => {
@@ -40,6 +49,7 @@ describe("scoreOpportunityFit", () => {
 
     expect(result.total).toBeLessThan(30);
     expect(result.completeness).toBe(14);
-    expect(result.components.find((item) => item.key === "compensation")?.points).toBe(0);
+    expect(result.components.find((item) => item.key === "domain")?.points).toBe(0);
+    expect(result.components.find((item) => item.key === "seniority_scope")?.points).toBe(0);
   });
 });

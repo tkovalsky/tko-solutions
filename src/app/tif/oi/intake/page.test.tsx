@@ -53,6 +53,30 @@ vi.mock("@/lib/tif/db", () => ({
             reason: "Budget authority is not yet clear.",
           },
         ],
+        currentScore: {
+          id: "score-1",
+          fitScore: 100,
+          evidenceScore: 65,
+          accessScore: 0,
+          urgencyScore: 50,
+          priorityEfficiency: 939,
+          estimatedValue: 40250,
+          conversionProbability: 14,
+          expectedValue: 5635,
+          estimatedHours: 6,
+          isDisqualified: false,
+          disqualifyingRules: [],
+        },
+        nextActions: [
+          {
+            id: "action-1",
+            type: "identify_stakeholder",
+            description: "Identify the right stakeholder",
+            rationale: "No stakeholder is identified for this opportunity.",
+            estimatedMinutes: 15,
+            dueAt: new Date("2026-08-01T12:00:00Z"),
+          },
+        ],
         sources: [
           {
             id: "source-1",
@@ -75,6 +99,7 @@ vi.mock("@/lib/tif/db", () => ({
             ],
           },
         ],
+        sourceLinks: [],
       }),
     },
   },
@@ -114,6 +139,10 @@ describe("OiIntakePage", () => {
     expect(screen.getByText("Example Health · Director, Healthcare Transformation")).toBeInTheDocument();
     expect(screen.getByText("Tier 1 · Senior role posting · strength 100")).toBeInTheDocument();
     expect(screen.getByText("Review candidates")).toBeInTheDocument();
+    expect(screen.getByText("Fit 100 · Evidence 65 · Access 0 · $939/hr")).toBeInTheDocument();
+    expect(screen.getByText(/Value \$40,250 × probability 14% = EV \$5,635 over 6.0h/)).toBeInTheDocument();
+    expect(screen.getByText("identify stakeholder")).toBeInTheDocument();
+    expect(screen.getByText("15 min · due Aug 1, 2026")).toBeInTheDocument();
     expect(screen.getByText("FHIR")).toBeInTheDocument();
     expect(screen.getByText("Own delivery using FHIR.")).toBeInTheDocument();
     expect(screen.getByText("Who owns or sponsors this work?")).toBeInTheDocument();
