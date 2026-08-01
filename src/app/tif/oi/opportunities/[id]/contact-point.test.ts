@@ -47,11 +47,23 @@ describe("contact-point provenance", () => {
   });
 
   it("stores pattern-inferred contact points but excludes them from outreach eligibility", async () => {
+    const tx = {
+      oiContactPoint: { create: vi.fn() },
+      oiOpportunity: { findUniqueOrThrow: vi.fn().mockResolvedValue(scoreInputOpportunity()), update: vi.fn() },
+      oiNextAction: {
+        findFirst: vi.fn().mockResolvedValue({
+          id: "next-1",
+          type: "close_research_gap",
+          description: "Close the blocking research gap",
+          dueAt: new Date("2026-07-31T12:00:00Z"),
+        }),
+        updateMany: vi.fn(),
+        create: vi.fn(),
+      },
+      oiScore: { create: vi.fn().mockResolvedValue({ id: "score-1" }) },
+    };
     mockedDb.$transaction.mockImplementationOnce(async (callback) =>
-      callback({
-        oiOpportunity: { findUniqueOrThrow: vi.fn().mockResolvedValue(scoreInputOpportunity()), update: vi.fn() },
-        oiScore: { create: vi.fn().mockResolvedValue({ id: "score-1" }) },
-      }),
+      callback(tx),
     );
     const formData = new FormData();
     formData.set("opportunityId", "opp-1");
@@ -62,8 +74,12 @@ describe("contact-point provenance", () => {
 
     await addContactPoint(formData);
 
-    expect(mockedDb.oiContactPoint.create).toHaveBeenCalledWith({
+    expect(tx.oiContactPoint.create).toHaveBeenCalledWith({
       data: expect.objectContaining({ personId: "person-1", provenance: "pattern_inferred" }),
+    });
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledWith({
+      where: { opportunityId: "opp-1", status: "open" },
+      data: { status: "cancelled" },
     });
     expect(isContactPointOutreachEligible({ status: "active", provenance: "pattern_inferred" })).toBe(false);
   });
@@ -74,6 +90,7 @@ function scoreInputOpportunity() {
     id: "opp-1",
     type: "consulting",
     status: "researching",
+    offerId: null,
     estimatedValueLow: null,
     estimatedValueHigh: null,
     conversionProbability: null,

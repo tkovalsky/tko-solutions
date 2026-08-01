@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { TODD_CAPABILITY_PROFILE_V2 } from "@/lib/opportunity-intelligence/capability-profile";
 import { canTransition } from "@/lib/opportunity-intelligence/commercial/lifecycle";
+import { deriveNextAction } from "@/lib/opportunity-intelligence/commercial/next-action";
 import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
 import { captureDecision } from "@/lib/opportunity-intelligence/action/decision";
 import { tifDb } from "@/lib/tif/db";
@@ -190,6 +191,8 @@ export async function updateOpportunityStatus(formData: FormData) {
         reason: parsed.reason,
       },
     });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
 
   revalidatePath(path);
@@ -282,6 +285,7 @@ export async function resolveResearchGap(formData: FormData) {
       },
     });
     await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
 
   revalidatePath(workbenchPath(parsed.opportunityId));
@@ -299,9 +303,13 @@ export async function dismissResearchGap(formData: FormData) {
       gapId: formData.get("gapId"),
       operatorNotes: formData.get("operatorNotes") || undefined,
     });
-  await tifDb.oiResearchGap.update({
-    where: { id: parsed.gapId },
-    data: { status: "dismissed", operatorNotes: parsed.operatorNotes, resolvedAt: new Date() },
+  await tifDb.$transaction(async (tx) => {
+    await tx.oiResearchGap.update({
+      where: { id: parsed.gapId },
+      data: { status: "dismissed", operatorNotes: parsed.operatorNotes, resolvedAt: new Date() },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
   revalidatePath(workbenchPath(parsed.opportunityId));
 }
@@ -313,18 +321,22 @@ export async function addOperatorFact(formData: FormData) {
     value: formData.get("value"),
     confidence: formData.get("confidence") || 85,
   });
-  await tifDb.oiOpportunityFact.create({
-    data: {
-      opportunityId: parsed.opportunityId,
-      field: parsed.field,
-      value: parsed.value,
-      normalizedValue: parsed.value.toLowerCase(),
-      basis: "operator",
-      confidence: parsed.confidence,
-      isOperatorOverride: true,
-    },
+  await tifDb.$transaction(async (tx) => {
+    await tx.oiOpportunityFact.create({
+      data: {
+        opportunityId: parsed.opportunityId,
+        field: parsed.field,
+        value: parsed.value,
+        normalizedValue: parsed.value.toLowerCase(),
+        basis: "operator",
+        confidence: parsed.confidence,
+        isOperatorOverride: true,
+      },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
-  await recomputeScoreAction(parsed.opportunityId);
+  revalidatePath(workbenchPath(parsed.opportunityId));
 }
 
 export async function addStakeholder(formData: FormData) {
@@ -379,6 +391,7 @@ export async function addStakeholder(formData: FormData) {
       },
     });
     await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
   revalidateWorkbenchSurfaces(parsed.opportunityId);
 }
@@ -414,6 +427,7 @@ export async function updateStakeholder(formData: FormData) {
       },
     });
     await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
   revalidateWorkbenchSurfaces(parsed.opportunityId);
 }
@@ -443,6 +457,7 @@ export async function selectStakeholder(formData: FormData) {
       data: { isSelected: true, selectedAt: new Date() },
     });
     await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
   revalidateWorkbenchSurfaces(parsed.opportunityId);
 }
@@ -466,6 +481,7 @@ export async function markDoNotContact(formData: FormData) {
       data: { isSelected: false, selectedAt: null },
     });
     await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
   revalidateWorkbenchSurfaces(parsed.opportunityId);
 }
@@ -479,16 +495,20 @@ export async function addContactPoint(formData: FormData) {
     provenance: formData.get("provenance"),
     sourceLabel: formData.get("sourceLabel") || undefined,
   });
-  await tifDb.oiContactPoint.create({
-    data: {
-      personId: parsed.personId,
-      type: parsed.type,
-      value: parsed.value,
-      provenance: parsed.provenance,
-      sourceLabel: parsed.sourceLabel,
-    },
+  await tifDb.$transaction(async (tx) => {
+    await tx.oiContactPoint.create({
+      data: {
+        personId: parsed.personId,
+        type: parsed.type,
+        value: parsed.value,
+        provenance: parsed.provenance,
+        sourceLabel: parsed.sourceLabel,
+      },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
   });
-  await recomputeScoreAction(parsed.opportunityId);
+  revalidatePath(workbenchPath(parsed.opportunityId));
 }
 
 export async function addPersonFact(formData: FormData) {
@@ -522,6 +542,7 @@ export async function recomputeScore(formData: FormData) {
 async function recomputeScoreAction(opportunityId: string) {
   await tifDb.$transaction(async (tx) => {
     await recomputeScoreInTransaction(tx, opportunityId);
+    await refreshNextAction(tx, opportunityId);
   });
   revalidatePath(workbenchPath(opportunityId));
 }
@@ -534,6 +555,56 @@ async function recomputeScoreInTransaction(tx: Prisma.TransactionClient, opportu
     recomputedAt: new Date().toISOString(),
     factCount: input.facts.length,
     researchGapCount: input.researchGaps.length,
+  });
+}
+
+async function refreshNextAction(tx: Prisma.TransactionClient, opportunityId: string) {
+  const input = await loadScoreInput(tx, opportunityId);
+  const next = deriveNextAction({
+    opportunity: {
+      type: input.opportunity.type,
+      status: input.opportunity.status,
+      offerId: input.opportunity.offerId,
+      lastActivityAt: input.opportunity.lastActivityAt,
+    },
+    initiative: input.initiative,
+    researchGaps: input.researchGaps,
+    stakeholders: input.stakeholders,
+    roleProfile: input.roleProfile
+      ? { isComplete: Boolean(input.roleProfile.compMax && input.roleProfile.reportsToTitle) }
+      : null,
+    rfpProfile: input.rfpProfile,
+    draft: { exists: false },
+    asOf: input.asOf,
+  });
+  const existingOpenAction = await tx.oiNextAction.findFirst({
+    where: { opportunityId, status: "open" },
+    select: { id: true, type: true, description: true, dueAt: true },
+  });
+  if (
+    existingOpenAction &&
+    existingOpenAction.type === next.type &&
+    existingOpenAction.description === next.description &&
+    sameDueAt(existingOpenAction.dueAt, next.dueAt)
+  ) {
+    return;
+  }
+  if (existingOpenAction) {
+    await tx.oiNextAction.updateMany({
+      where: { opportunityId, status: "open" },
+      data: { status: "cancelled" },
+    });
+  }
+  await tx.oiNextAction.create({
+    data: {
+      opportunityId,
+      type: next.type,
+      status: "open",
+      description: next.description,
+      rationale: next.rationale,
+      estimatedMinutes: next.estimatedMinutes,
+      dueAt: next.dueAt,
+    },
   });
 }
 
@@ -565,6 +636,7 @@ async function loadScoreInput(tx: Prisma.TransactionClient, opportunityId: strin
       id: opportunity.id,
       type: opportunity.type,
       status: opportunity.status,
+      offerId: opportunity.offerId,
       estimatedValueLow: opportunity.estimatedValueLow,
       estimatedValueHigh: opportunity.estimatedValueHigh,
       conversionProbabilityOverride: opportunity.conversionProbability,
@@ -597,6 +669,12 @@ async function loadScoreInput(tx: Prisma.TransactionClient, opportunityId: strin
     organization: opportunity.organization,
     asOf: new Date(),
   };
+}
+
+function sameDueAt(left?: Date | string | null, right?: Date | string | null) {
+  if (!left && !right) return true;
+  if (!left || !right) return false;
+  return new Date(left).getTime() === new Date(right).getTime();
 }
 
 function workbenchPath(opportunityId: string) {

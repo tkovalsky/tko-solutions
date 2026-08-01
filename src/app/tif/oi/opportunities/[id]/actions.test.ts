@@ -4,7 +4,18 @@ import { canTransition } from "@/lib/opportunity-intelligence/commercial/lifecyc
 import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
 import { isContactPointOutreachEligible } from "@/lib/opportunity-intelligence/intelligence/contact-point";
 import { tifDb } from "@/lib/tif/db";
-import { addContactPoint, addPersonFact, resolveResearchGap, selectStakeholder, updateOpportunityStatus } from "./actions";
+import {
+  addContactPoint,
+  addOperatorFact,
+  addPersonFact,
+  addStakeholder,
+  dismissResearchGap,
+  markDoNotContact,
+  resolveResearchGap,
+  selectStakeholder,
+  updateOpportunityStatus,
+  updateStakeholder,
+} from "./actions";
 
 vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
@@ -61,6 +72,12 @@ vi.mock("@/lib/tif/db", () => ({
     oiOpportunityFact: {
       create: vi.fn(),
     },
+    oiResearchGap: {
+      update: vi.fn(),
+    },
+    oiContactPoint: {
+      create: vi.fn(),
+    },
   },
 }));
 
@@ -70,6 +87,7 @@ const mockedPersist = vi.mocked(persistOpportunityScore);
 
 beforeEach(() => {
   vi.clearAllMocks();
+  vi.useRealTimers();
   mockedDb.oiOpportunity.findUniqueOrThrow.mockResolvedValue({ id: "opp-1", type: "consulting", status: "researching" });
   mockedPersist.mockResolvedValue({ id: "score-1" });
 });
@@ -103,6 +121,10 @@ describe("workbench actions", () => {
         findUniqueOrThrow: vi.fn().mockResolvedValue(scoreInputOpportunity()),
         update: vi.fn(),
       },
+      oiNextAction: nextActionTx({
+        type: "close_research_gap",
+        description: "Close the blocking research gap",
+      }),
       oiScore: {
         create: vi.fn().mockResolvedValue({ id: "score-1" }),
       },
@@ -134,6 +156,18 @@ describe("workbench actions", () => {
     });
     expect(scoreOpportunity).toHaveBeenCalled();
     expect(mockedPersist).toHaveBeenCalledWith(tx, "opp-1", expect.any(Object), expect.objectContaining({ opportunityId: "opp-1" }));
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledWith({
+      where: { opportunityId: "opp-1", status: "open" },
+      data: { status: "cancelled" },
+    });
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        status: "open",
+        type: "approve_initiative",
+        description: "Approve the initiative",
+      }),
+    });
   });
 
   it("prevents selecting a stakeholder with no evidence and no operator confirmation", async () => {
@@ -199,6 +233,169 @@ describe("workbench actions", () => {
     expect(isContactPointOutreachEligible({ status: "active", provenance: "publicly_listed" })).toBe(true);
   });
 
+  it("adds a stakeholder and replaces identify-stakeholder with select-stakeholder", async () => {
+    const tx = workbenchTx({
+      existingAction: {
+        type: "identify_stakeholder",
+        description: "Identify the right stakeholder",
+      },
+      scoreInput: scoreInputOpportunity({
+        initiative: { status: "active", approvedAt: new Date("2026-08-01T12:00:00Z") },
+        stakeholders: [{ isSelected: false }],
+      }),
+    });
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+
+    await addStakeholder(stakeholderForm());
+
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledBefore(tx.oiNextAction.create);
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        type: "select_stakeholder",
+        description: "Select the target stakeholder",
+      }),
+    });
+  });
+
+  it("selects a stakeholder and replaces select-stakeholder with select-offer", async () => {
+    const tx = workbenchTx({
+      existingAction: {
+        type: "select_stakeholder",
+        description: "Select the target stakeholder",
+      },
+      scoreInput: scoreInputOpportunity({
+        initiative: { status: "active", approvedAt: new Date("2026-08-01T12:00:00Z") },
+        stakeholders: [{ isSelected: true }],
+      }),
+    });
+    tx.oiStakeholder.findUniqueOrThrow.mockResolvedValue({
+      id: "stakeholder-1",
+      roleEvidenceUrl: "https://example.com",
+      roleEvidenceLabel: null,
+      roleConfidence: 100,
+      person: { doNotContact: false },
+    });
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("stakeholderId", "stakeholder-1");
+    await selectStakeholder(formData);
+
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledBefore(tx.oiNextAction.create);
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        type: "select_offer",
+        description: "Select the offer",
+      }),
+    });
+  });
+
+  it("re-derives the next action on status change", async () => {
+    mockedTransition.mockReturnValueOnce({ ok: true, requiresReason: false });
+    const tx = workbenchTx({
+      existingAction: {
+        type: "review_stale",
+        description: "Review stale opportunity",
+      },
+      scoreInput: scoreInputOpportunity({
+        status: "qualified",
+        initiative: { status: "active", approvedAt: new Date("2026-08-01T12:00:00Z") },
+        stakeholders: [{ isSelected: true }],
+      }),
+    });
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("toStatus", "qualified");
+
+    await updateOpportunityStatus(formData);
+
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledBefore(tx.oiNextAction.create);
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        type: "select_offer",
+        description: "Select the offer",
+      }),
+    });
+  });
+
+  it("does not create a new row when the derived action is unchanged", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-08-01T12:00:00Z"));
+    const createdAt = new Date("2026-07-31T12:00:00Z");
+    const dueAt = new Date("2026-08-01T12:00:00Z");
+    const tx = workbenchTx({
+      existingAction: {
+        type: "approve_initiative",
+        description: "Approve the initiative",
+        dueAt,
+        createdAt,
+      },
+      scoreInput: scoreInputOpportunity(),
+    });
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+
+    await addOperatorFact(factForm());
+
+    expect(tx.oiNextAction.updateMany).not.toHaveBeenCalled();
+    expect(tx.oiNextAction.create).not.toHaveBeenCalled();
+    expect(tx.oiNextAction.findFirst).toHaveBeenCalledWith({
+      where: { opportunityId: "opp-1", status: "open" },
+      select: { id: true, type: true, description: true, dueAt: true },
+    });
+  });
+
+  it.each([
+    ["resolveResearchGap", () => resolveResearchGap(gapForm()), (tx: ReturnType<typeof workbenchTx>) => tx],
+    ["dismissResearchGap", () => dismissResearchGap(dismissGapForm()), (tx: ReturnType<typeof workbenchTx>) => tx],
+    ["addOperatorFact", () => addOperatorFact(factForm()), (tx: ReturnType<typeof workbenchTx>) => tx],
+    ["addStakeholder", () => addStakeholder(stakeholderForm()), (tx: ReturnType<typeof workbenchTx>) => tx],
+    ["updateStakeholder", () => updateStakeholder(stakeholderForm("stakeholder-1")), (tx: ReturnType<typeof workbenchTx>) => tx],
+    ["selectStakeholder", () => selectStakeholder(selectStakeholderForm()), (tx: ReturnType<typeof workbenchTx>) => {
+      tx.oiStakeholder.findUniqueOrThrow.mockResolvedValue({
+        id: "stakeholder-1",
+        roleEvidenceUrl: "https://example.com",
+        roleEvidenceLabel: null,
+        roleConfidence: 100,
+        person: { doNotContact: false },
+      });
+      return tx;
+    }],
+    ["markDoNotContact", () => markDoNotContact(selectStakeholderForm()), (tx: ReturnType<typeof workbenchTx>) => tx],
+    ["addContactPoint", () => addContactPoint(contactPointForm()), (tx: ReturnType<typeof workbenchTx>) => tx],
+    ["updateOpportunityStatus", () => {
+      mockedTransition.mockReturnValueOnce({ ok: true, requiresReason: false });
+      const formData = new FormData();
+      formData.set("opportunityId", "opp-1");
+      formData.set("toStatus", "qualified");
+      return updateOpportunityStatus(formData);
+    }, (tx: ReturnType<typeof workbenchTx>) => tx],
+  ])("%s cancels the open next action before creating the successor", async (_name, action, prepareTx) => {
+    const tx = prepareTx(
+      workbenchTx({
+        existingAction: {
+          type: "close_research_gap",
+          description: "Close the blocking research gap",
+        },
+        scoreInput: scoreInputOpportunity({
+          initiative: { status: "active", approvedAt: new Date("2026-08-01T12:00:00Z") },
+          stakeholders: [{ isSelected: false }],
+        }),
+      }),
+    );
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+
+    await action();
+
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledWith({
+      where: { opportunityId: "opp-1", status: "open" },
+      data: { status: "cancelled" },
+    });
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledBefore(tx.oiNextAction.create);
+    expect(tx.oiNextAction.create).toHaveBeenCalledTimes(1);
+  });
+
   it("writes person facts with only personId set", async () => {
     const formData = new FormData();
     formData.set("personId", "person-1");
@@ -221,11 +418,124 @@ describe("workbench actions", () => {
   });
 });
 
-function scoreInputOpportunity() {
+function workbenchTx({
+  existingAction,
+  scoreInput = scoreInputOpportunity(),
+}: {
+  existingAction: { type: string; description: string; dueAt?: Date | null; createdAt?: Date };
+  scoreInput?: ReturnType<typeof scoreInputOpportunity>;
+}) {
+  return {
+    oiOpportunityFact: {
+      create: vi.fn(),
+    },
+    oiResearchGap: {
+      update: vi.fn(),
+    },
+    oiOpportunity: {
+      findUniqueOrThrow: vi.fn().mockResolvedValue(scoreInput),
+      update: vi.fn(),
+    },
+    oiActivity: {
+      create: vi.fn(),
+    },
+    oiContactPoint: {
+      create: vi.fn(),
+    },
+    oiPerson: {
+      upsert: vi.fn().mockResolvedValue({ id: "person-1" }),
+      update: vi.fn(),
+    },
+    oiStakeholder: {
+      upsert: vi.fn(),
+      update: vi.fn().mockResolvedValue({ personId: "person-1" }),
+      updateMany: vi.fn(),
+      findUniqueOrThrow: vi.fn().mockResolvedValue({ personId: "person-1" }),
+    },
+    oiNextAction: nextActionTx(existingAction),
+    oiScore: {
+      create: vi.fn().mockResolvedValue({ id: "score-1" }),
+    },
+  };
+}
+
+function nextActionTx(existingAction: { type: string; description: string; dueAt?: Date | null; createdAt?: Date }) {
+  return {
+    findFirst: vi.fn().mockResolvedValue({
+      id: "next-1",
+      type: existingAction.type,
+      description: existingAction.description,
+      dueAt: existingAction.dueAt ?? new Date("2026-07-31T12:00:00Z"),
+      createdAt: existingAction.createdAt ?? new Date("2026-07-30T12:00:00Z"),
+    }),
+    updateMany: vi.fn(),
+    create: vi.fn(),
+  };
+}
+
+function gapForm() {
+  const formData = new FormData();
+  formData.set("opportunityId", "opp-1");
+  formData.set("gapId", "gap-1");
+  formData.set("field", "incumbent");
+  formData.set("finding", "No incumbent SI found.");
+  return formData;
+}
+
+function dismissGapForm() {
+  const formData = new FormData();
+  formData.set("opportunityId", "opp-1");
+  formData.set("gapId", "gap-1");
+  formData.set("operatorNotes", "Not needed.");
+  return formData;
+}
+
+function factForm() {
+  const formData = new FormData();
+  formData.set("opportunityId", "opp-1");
+  formData.set("field", "incumbent");
+  formData.set("value", "No incumbent SI found.");
+  formData.set("confidence", "90");
+  return formData;
+}
+
+function stakeholderForm(stakeholderId?: string) {
+  const formData = new FormData();
+  formData.set("opportunityId", "opp-1");
+  if (stakeholderId) formData.set("stakeholderId", stakeholderId);
+  formData.set("personName", "Taylor Buyer");
+  formData.set("title", "VP Operations");
+  formData.set("role", "economic_buyer");
+  formData.set("authority", "high");
+  formData.set("relationshipType", "cold");
+  formData.set("roleConfidence", "100");
+  formData.set("operatorConfirmed", "on");
+  return formData;
+}
+
+function selectStakeholderForm() {
+  const formData = new FormData();
+  formData.set("opportunityId", "opp-1");
+  formData.set("stakeholderId", "stakeholder-1");
+  return formData;
+}
+
+function contactPointForm() {
+  const formData = new FormData();
+  formData.set("opportunityId", "opp-1");
+  formData.set("personId", "person-1");
+  formData.set("type", "email");
+  formData.set("value", "person@example.com");
+  formData.set("provenance", "publicly_listed");
+  return formData;
+}
+
+function scoreInputOpportunity(overrides: Partial<ReturnType<typeof scoreInputOpportunity>> = {}) {
   return {
     id: "opp-1",
     type: "consulting",
     status: "researching",
+    offerId: null,
     estimatedValueLow: null,
     estimatedValueHigh: null,
     conversionProbability: null,
@@ -249,5 +559,6 @@ function scoreInputOpportunity() {
     offer: null,
     roleProfile: null,
     stakeholders: [],
+    ...overrides,
   };
 }
