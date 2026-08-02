@@ -195,6 +195,10 @@ async function rebuildFromSource(
     where: { opportunityId: opportunity.id },
     select: { status: true, blocksOutreach: true },
   });
+  const sourceLinks = await tx.oiOpportunitySource.findMany({
+    where: { opportunityId: opportunity.id },
+    include: { source: { select: { publishedAt: true, retrievedAt: true } } },
+  });
   const score = scoreOpportunity({
     opportunity: {
       id: opportunity.id,
@@ -209,13 +213,11 @@ async function rebuildFromSource(
     facts: persistedFacts as OpportunityFactForScoring[],
     initiative: null,
     stakeholders: [],
-    sources: [
-      {
-        publishedAt: source.publishedAt,
-        retrievedAt: source.retrievedAt,
-        isPrimary: true,
-      },
-    ],
+    sources: sourceLinks.map((link) => ({
+      publishedAt: link.source.publishedAt,
+      retrievedAt: link.source.retrievedAt,
+      isPrimary: link.isPrimary,
+    })),
     researchGaps: openGaps,
     offer: null,
     roleProfile: null,
@@ -467,6 +469,20 @@ export async function ingestPastedOpportunity(
       },
       select: { id: true, rawContent: true, publishedAt: true, retrievedAt: true },
     });
+    await tx.oiOpportunitySource.upsert({
+      where: {
+        opportunityId_sourceId: {
+          opportunityId: opportunity.id,
+          sourceId: source.id,
+        },
+      },
+      update: { isPrimary: true },
+      create: {
+        opportunityId: opportunity.id,
+        sourceId: source.id,
+        isPrimary: true,
+      },
+    });
     await persistSignalForSource(tx, input, organization, source);
     const score = await rebuildFromSource(tx, opportunity, source);
 
@@ -500,16 +516,20 @@ export async function rerunOpportunityExtraction(
         disqualifiedReason: true,
       },
     });
-    const source = await tx.oiSource.findFirstOrThrow({
+    const sourceLink = await tx.oiOpportunitySource.findFirstOrThrow({
       where: { opportunityId },
-      orderBy: [{ retrievedAt: "desc" }, { createdAt: "desc" }],
-      select: { id: true, rawContent: true, publishedAt: true, retrievedAt: true },
+      orderBy: [{ source: { retrievedAt: "desc" } }, { createdAt: "desc" }],
+      include: {
+        source: {
+          select: { id: true, rawContent: true, publishedAt: true, retrievedAt: true },
+        },
+      },
     });
-    const score = await rebuildFromSource(tx, opportunity, source);
+    const score = await rebuildFromSource(tx, opportunity, sourceLink.source);
 
     return {
       opportunityId,
-      sourceId: source.id,
+      sourceId: sourceLink.source.id,
       scoreId: score.id,
     };
   });

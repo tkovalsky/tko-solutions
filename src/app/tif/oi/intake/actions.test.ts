@@ -121,12 +121,13 @@ describe("promoteSignal", () => {
           organizationId: "org-1",
           organization: { id: "org-1", name: "Example Health", tier: 1, signals: [], initiatives: [] },
           signals: [{ id: "signal-1", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
-          opportunity: { facts: [], researchGaps: [] },
+          opportunity: { id: "opportunity-1", facts: [], evidence: [], researchGaps: [] },
         }),
       },
       oiOpportunity: {
-        create: vi.fn().mockResolvedValue({
-          id: "promoted-1",
+        create: vi.fn(),
+        update: vi.fn().mockResolvedValue({
+          id: "opportunity-1",
           type: "assessment",
           status: "identified",
           estimatedValueLow: null,
@@ -138,10 +139,23 @@ describe("promoteSignal", () => {
           lastActivityAt: null,
           createdAt: new Date("2026-08-01T12:00:00Z"),
         }),
-        update: vi.fn().mockResolvedValue({ id: "promoted-1" }),
       },
       oiOpportunitySource: {
-        create: vi.fn().mockResolvedValue({}),
+        upsert: vi.fn().mockResolvedValue({}),
+        findMany: vi.fn().mockResolvedValue([
+          {
+            isPrimary: true,
+            source: { publishedAt: new Date("2026-08-01T12:00:00Z"), retrievedAt: new Date("2026-08-01T12:00:00Z") },
+          },
+        ]),
+      },
+      oiOpportunityFact: {
+        findMany: vi.fn().mockResolvedValue([]),
+        createMany: vi.fn(),
+      },
+      oiResearchGap: {
+        findMany: vi.fn().mockResolvedValue([]),
+        createMany: vi.fn(),
       },
       oiScore: {
         create: vi.fn().mockResolvedValue({ id: "score-1" }),
@@ -161,22 +175,185 @@ describe("promoteSignal", () => {
     formData.append("opportunityType", "assessment");
 
     await expect(promoteSignal(formData)).rejects.toThrow(
-      "REDIRECT:/tif/oi/intake?capture=reviewed&sourceId=source-1&opportunityId=promoted-1",
+      "REDIRECT:/tif/oi/intake?capture=reviewed&sourceId=source-1&opportunityId=opportunity-1",
     );
+    expect(tx.oiOpportunity.create).not.toHaveBeenCalled();
+    expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
+      where: { id: "opportunity-1" },
+      data: expect.objectContaining({
+        title: "Example Health assessment opportunity",
+        type: "assessment",
+        status: "identified",
+      }),
+    });
+    expect(tx.oiOpportunitySource.upsert).toHaveBeenCalledWith({
+      where: {
+        opportunityId_sourceId: {
+          opportunityId: "opportunity-1",
+          sourceId: "source-1",
+        },
+      },
+      update: { isPrimary: true },
+      create: {
+        opportunityId: "opportunity-1",
+        sourceId: "source-1",
+        isPrimary: true,
+      },
+    });
     expect(tx.oiNextAction.findFirst).toHaveBeenCalledWith({
-      where: { opportunityId: "promoted-1", status: "open" },
+      where: { opportunityId: "opportunity-1", status: "open" },
       select: { id: true },
     });
     expect(tx.oiNextAction.create).toHaveBeenCalledTimes(1);
     expect(tx.oiNextAction.create).toHaveBeenCalledWith(
       expect.objectContaining({
         data: expect.objectContaining({
-          opportunityId: "promoted-1",
+          opportunityId: "opportunity-1",
           type: "approve_initiative",
           estimatedMinutes: 5,
         }),
       }),
     );
+  });
+
+  it("converts the staging opportunity and copies facts and gaps to additional selected types", async () => {
+    const fact = {
+      field: "business_problem",
+      value: "Claims modernization is delayed.",
+      normalizedValue: "claims modernization is delayed.",
+      ordinal: 0,
+      basis: "stated",
+      confidence: 95,
+      isOperatorOverride: false,
+      aiGenerated: false,
+      aiModel: null,
+      promptVersion: null,
+      evidenceId: "evidence-1",
+    };
+    const gap = {
+      gapKey: "stakeholder_missing",
+      question: "Who owns the work?",
+      reason: "Outreach needs an owner.",
+      status: "open",
+      resolution: null,
+      operatorNotes: null,
+      resolvedAt: null,
+      priority: 2,
+      blocksOutreach: true,
+      suggestedSources: ["leadership page"],
+    };
+    const tx = {
+      oiSource: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "source-1",
+          publishedAt: new Date("2026-08-01T12:00:00Z"),
+          retrievedAt: new Date("2026-08-01T12:00:00Z"),
+          organizationId: "org-1",
+          organization: { id: "org-1", name: "Example Health", tier: 1, signals: [], initiatives: [] },
+          signals: [{ id: "signal-1", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
+          opportunity: { id: "opportunity-1", facts: [fact], evidence: [{ id: "evidence-1" }], researchGaps: [gap] },
+        }),
+      },
+      oiOpportunity: {
+        update: vi.fn().mockResolvedValue({
+          id: "opportunity-1",
+          type: "consulting",
+          status: "identified",
+          estimatedValueLow: null,
+          estimatedValueHigh: null,
+          conversionProbability: null,
+          estimatedHours: null,
+          disqualifiedReason: null,
+          offerId: null,
+          lastActivityAt: null,
+          createdAt: new Date("2026-08-01T12:00:00Z"),
+        }),
+        create: vi.fn().mockResolvedValue({
+          id: "opportunity-2",
+          type: "assessment",
+          status: "identified",
+          estimatedValueLow: null,
+          estimatedValueHigh: null,
+          conversionProbability: null,
+          estimatedHours: null,
+          disqualifiedReason: null,
+          offerId: null,
+          lastActivityAt: null,
+          createdAt: new Date("2026-08-01T12:00:00Z"),
+        }),
+      },
+      oiOpportunitySource: {
+        upsert: vi.fn().mockResolvedValue({}),
+        findMany: vi.fn().mockResolvedValue([
+          {
+            isPrimary: true,
+            source: { publishedAt: new Date("2026-08-01T12:00:00Z"), retrievedAt: new Date("2026-08-01T12:00:00Z") },
+          },
+        ]),
+      },
+      oiOpportunityFact: {
+        findMany: vi
+          .fn()
+          .mockResolvedValueOnce([fact])
+          .mockResolvedValueOnce([fact]),
+        createMany: vi.fn(),
+      },
+      oiResearchGap: {
+        findMany: vi
+          .fn()
+          .mockResolvedValueOnce([{ status: "open", blocksOutreach: true }])
+          .mockResolvedValueOnce([{ status: "open", blocksOutreach: true }]),
+        createMany: vi.fn(),
+      },
+      oiScore: {
+        create: vi.fn().mockResolvedValue({ id: "score-1" }),
+      },
+      oiNextAction: {
+        findFirst: vi.fn().mockResolvedValue(null),
+        create: vi.fn().mockResolvedValue({ id: "action-1" }),
+      },
+      oiSignal: {
+        update: vi.fn().mockResolvedValue({}),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("sourceId", "source-1");
+    formData.set("opportunityId", "opportunity-1");
+    formData.append("opportunityType", "consulting");
+    formData.append("opportunityType", "assessment");
+
+    await expect(promoteSignal(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?capture=reviewed&sourceId=source-1&opportunityId=opportunity-1",
+    );
+
+    expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
+      where: { id: "opportunity-1" },
+      data: expect.objectContaining({
+        type: "consulting",
+        status: "identified",
+      }),
+    });
+    expect(tx.oiOpportunity.create).toHaveBeenCalledTimes(1);
+    expect(tx.oiOpportunitySource.upsert).toHaveBeenCalledTimes(2);
+    expect(tx.oiOpportunityFact.createMany).toHaveBeenCalledWith({
+      data: [
+        expect.objectContaining({
+          opportunityId: "opportunity-2",
+          field: "business_problem",
+          evidenceId: "evidence-1",
+        }),
+      ],
+    });
+    expect(tx.oiResearchGap.createMany).toHaveBeenCalledWith({
+      data: [
+        expect.objectContaining({
+          opportunityId: "opportunity-2",
+          gapKey: "stakeholder_missing",
+          blocksOutreach: true,
+        }),
+      ],
+    });
   });
 });
 

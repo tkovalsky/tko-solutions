@@ -1,5 +1,6 @@
 "use server";
 
+import type { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -11,6 +12,7 @@ import { ingestPastedOpportunity } from "@/lib/opportunity-intelligence/intake/i
 import { tifDb } from "@/lib/tif/db";
 
 const INTAKE_PATH = "/tif/oi/intake";
+type TransactionClient = Prisma.TransactionClient;
 
 const intakeSchema = z.object({
   rawContent: z.string().trim().min(200, "Too short to extract from"),
@@ -183,6 +185,7 @@ export async function promoteSignal(formData: FormData) {
         opportunity: {
           include: {
             facts: true,
+            evidence: true,
             researchGaps: true,
           },
         },
@@ -191,6 +194,9 @@ export async function promoteSignal(formData: FormData) {
     const signal = source.signals[0];
     if (!signal) {
       throw new Error("Source is missing its classified signal.");
+    }
+    if (!source.opportunity || source.opportunity.id !== parsed.opportunityId) {
+      throw new Error("Source is missing its staging opportunity.");
     }
 
     let initiativeId: string | undefined;
@@ -248,7 +254,30 @@ export async function promoteSignal(formData: FormData) {
       }
     }
 
-    for (const type of selectedTypes) {
+    const stagingFacts = source.opportunity.facts;
+    const stagingResearchGaps = source.opportunity.researchGaps;
+    const primaryType = selectedTypes[0];
+    const primaryOpportunity = await tx.oiOpportunity.update({
+      where: { id: parsed.opportunityId },
+      data: {
+        initiativeId,
+        title: `${source.organization.name} ${primaryType} opportunity`,
+        type: primaryType,
+        status: "identified",
+        firstSignalAt: signal.occurredAt ?? signal.createdAt,
+      },
+    });
+    reviewOpportunityId = primaryOpportunity.id;
+    await upsertOpportunitySource(tx, primaryOpportunity.id, source.id);
+    await scoreAndCreateNextAction(tx, {
+      opportunity: primaryOpportunity,
+      initiativeId,
+      sourceId: source.id,
+      promotedFromOpportunityId: parsed.opportunityId,
+      organizationTier: source.organization.tier,
+    });
+
+    for (const type of selectedTypes.slice(1)) {
       const opportunity = await tx.oiOpportunity.create({
         data: {
           organizationId: source.organizationId,
@@ -259,85 +288,19 @@ export async function promoteSignal(formData: FormData) {
           firstSignalAt: signal.occurredAt ?? signal.createdAt,
         },
       });
-      reviewOpportunityId = reviewOpportunityId === parsed.opportunityId ? opportunity.id : reviewOpportunityId;
-      await tx.oiOpportunitySource.create({
-        data: {
-          opportunityId: opportunity.id,
-          sourceId: source.id,
-          isPrimary: true,
-        },
+      await upsertOpportunitySource(tx, opportunity.id, source.id);
+      await copyOpportunityEvidenceSet(tx, {
+        toOpportunityId: opportunity.id,
+        facts: stagingFacts,
+        researchGaps: stagingResearchGaps,
       });
-      const facts = source.opportunity?.facts ?? [];
-      const researchGaps = source.opportunity?.researchGaps ?? [];
-      const score = scoreOpportunity({
-        opportunity: {
-          id: opportunity.id,
-          type: opportunity.type,
-          status: opportunity.status,
-          estimatedValueLow: opportunity.estimatedValueLow,
-          estimatedValueHigh: opportunity.estimatedValueHigh,
-          conversionProbabilityOverride: opportunity.conversionProbability,
-          estimatedHoursOverride: opportunity.estimatedHours ? Number(opportunity.estimatedHours) : null,
-          disqualifiedReason: opportunity.disqualifiedReason,
-        },
-        facts,
-        initiative: initiativeId
-          ? {
-              status: "evidenced",
-              approvedAt: new Date(),
-            }
-          : null,
-        stakeholders: [],
-        sources: [
-          {
-            publishedAt: source.publishedAt,
-            retrievedAt: source.retrievedAt,
-            isPrimary: true,
-          },
-        ],
-        researchGaps,
-        offer: null,
-        roleProfile: null,
-        rfpProfile: null,
-        profile: TODD_CAPABILITY_PROFILE_V2,
-        organization: { tier: source.organization.tier },
-        asOf: new Date(),
-      });
-      await persistOpportunityScore(tx, opportunity.id, score, {
+      await scoreAndCreateNextAction(tx, {
+        opportunity,
+        initiativeId,
         sourceId: source.id,
         promotedFromOpportunityId: parsed.opportunityId,
-        factCount: facts.length,
+        organizationTier: source.organization.tier,
       });
-      const nextAction = deriveNextAction({
-        opportunity: {
-          type: opportunity.type,
-          status: opportunity.status,
-          offerId: opportunity.offerId,
-          lastActivityAt: opportunity.lastActivityAt ?? opportunity.createdAt,
-        },
-        initiative: initiativeId ? { status: "evidenced", approvedAt: new Date() } : null,
-        researchGaps,
-        stakeholders: [],
-        roleProfile: null,
-        draft: { exists: false },
-        asOf: new Date(),
-      });
-      const existingOpenAction = await tx.oiNextAction.findFirst({
-        where: { opportunityId: opportunity.id, status: "open" },
-        select: { id: true },
-      });
-      if (!existingOpenAction) {
-        await tx.oiNextAction.create({
-          data: {
-            opportunityId: opportunity.id,
-            type: nextAction.type,
-            description: nextAction.description,
-            rationale: nextAction.rationale,
-            estimatedMinutes: nextAction.estimatedMinutes,
-            dueAt: nextAction.dueAt,
-          },
-        });
-      }
     }
 
     await tx.oiSignal.update({
@@ -396,6 +359,204 @@ export async function watchAccount(formData: FormData) {
 
   revalidatePath(INTAKE_PATH);
   redirectToReview(parsed);
+}
+
+async function upsertOpportunitySource(tx: TransactionClient, opportunityId: string, sourceId: string) {
+  await tx.oiOpportunitySource.upsert({
+    where: {
+      opportunityId_sourceId: {
+        opportunityId,
+        sourceId,
+      },
+    },
+    update: { isPrimary: true },
+    create: {
+      opportunityId,
+      sourceId,
+      isPrimary: true,
+    },
+  });
+}
+
+async function copyOpportunityEvidenceSet(
+  tx: TransactionClient,
+  input: {
+    toOpportunityId: string;
+    facts: Array<{
+      field: string;
+      value: string;
+      normalizedValue: string;
+      ordinal: number;
+      basis: "stated" | "inferred" | "operator";
+      confidence: number;
+      isOperatorOverride: boolean;
+      aiGenerated: boolean;
+      aiModel: string | null;
+      promptVersion: string | null;
+      evidenceId: string | null;
+    }>;
+    researchGaps: Array<{
+      gapKey: string;
+      question: string;
+      reason: string;
+      status: "open" | "resolved" | "dismissed";
+      resolution: string | null;
+      operatorNotes: string | null;
+      resolvedAt: Date | null;
+      priority: number;
+      blocksOutreach: boolean;
+      suggestedSources: string[];
+    }>;
+  },
+) {
+  if (input.facts.length > 0) {
+    await tx.oiOpportunityFact.createMany({
+      data: input.facts.map((fact) => ({
+        opportunityId: input.toOpportunityId,
+        field: fact.field,
+        value: fact.value,
+        normalizedValue: fact.normalizedValue,
+        ordinal: fact.ordinal,
+        basis: fact.basis,
+        confidence: fact.confidence,
+        isOperatorOverride: fact.isOperatorOverride,
+        aiGenerated: fact.aiGenerated,
+        aiModel: fact.aiModel,
+        promptVersion: fact.promptVersion,
+        evidenceId: fact.evidenceId,
+      })),
+    });
+  }
+  if (input.researchGaps.length > 0) {
+    await tx.oiResearchGap.createMany({
+      data: input.researchGaps.map((gap) => ({
+        opportunityId: input.toOpportunityId,
+        gapKey: gap.gapKey,
+        question: gap.question,
+        reason: gap.reason,
+        status: gap.status,
+        resolution: gap.resolution,
+        operatorNotes: gap.operatorNotes,
+        resolvedAt: gap.resolvedAt,
+        priority: gap.priority,
+        blocksOutreach: gap.blocksOutreach,
+        suggestedSources: gap.suggestedSources,
+      })),
+    });
+  }
+}
+
+async function scoreAndCreateNextAction(
+  tx: TransactionClient,
+  input: {
+    opportunity: {
+      id: string;
+      type: string;
+      status: string;
+      estimatedValueLow?: number | null;
+      estimatedValueHigh?: number | null;
+      conversionProbability?: number | null;
+      estimatedHours?: { toNumber(): number } | number | null;
+      disqualifiedReason?: string | null;
+      offerId?: string | null;
+      lastActivityAt?: Date | null;
+      createdAt?: Date;
+    };
+    initiativeId?: string;
+    sourceId: string;
+    promotedFromOpportunityId: string;
+    organizationTier?: number | null;
+  },
+) {
+  const [facts, researchGaps, sourceLinks] = await Promise.all([
+    tx.oiOpportunityFact.findMany({
+      where: { opportunityId: input.opportunity.id },
+      select: {
+        field: true,
+        value: true,
+        normalizedValue: true,
+        basis: true,
+        confidence: true,
+        isOperatorOverride: true,
+      },
+    }),
+    tx.oiResearchGap.findMany({
+      where: { opportunityId: input.opportunity.id },
+      select: { status: true, blocksOutreach: true },
+    }),
+    tx.oiOpportunitySource.findMany({
+      where: { opportunityId: input.opportunity.id },
+      include: { source: { select: { publishedAt: true, retrievedAt: true } } },
+    }),
+  ]);
+  const asOf = new Date();
+  const score = scoreOpportunity({
+    opportunity: {
+      id: input.opportunity.id,
+      type: input.opportunity.type,
+      status: input.opportunity.status,
+      estimatedValueLow: input.opportunity.estimatedValueLow,
+      estimatedValueHigh: input.opportunity.estimatedValueHigh,
+      conversionProbabilityOverride: input.opportunity.conversionProbability,
+      estimatedHoursOverride: input.opportunity.estimatedHours ? Number(input.opportunity.estimatedHours) : null,
+      disqualifiedReason: input.opportunity.disqualifiedReason,
+    },
+    facts,
+    initiative: input.initiativeId
+      ? {
+          status: "evidenced",
+          approvedAt: asOf,
+        }
+      : null,
+    stakeholders: [],
+    sources: sourceLinks.map((link) => ({
+      publishedAt: link.source.publishedAt,
+      retrievedAt: link.source.retrievedAt,
+      isPrimary: link.isPrimary,
+    })),
+    researchGaps,
+    offer: null,
+    roleProfile: null,
+    rfpProfile: null,
+    profile: TODD_CAPABILITY_PROFILE_V2,
+    organization: { tier: input.organizationTier },
+    asOf,
+  });
+  await persistOpportunityScore(tx, input.opportunity.id, score, {
+    sourceId: input.sourceId,
+    promotedFromOpportunityId: input.promotedFromOpportunityId,
+    factCount: facts.length,
+  });
+  const nextAction = deriveNextAction({
+    opportunity: {
+      type: input.opportunity.type,
+      status: input.opportunity.status,
+      offerId: input.opportunity.offerId,
+      lastActivityAt: input.opportunity.lastActivityAt ?? input.opportunity.createdAt,
+    },
+    initiative: input.initiativeId ? { status: "evidenced", approvedAt: asOf } : null,
+    researchGaps,
+    stakeholders: [],
+    roleProfile: null,
+    draft: { exists: false },
+    asOf,
+  });
+  const existingOpenAction = await tx.oiNextAction.findFirst({
+    where: { opportunityId: input.opportunity.id, status: "open" },
+    select: { id: true },
+  });
+  if (!existingOpenAction) {
+    await tx.oiNextAction.create({
+      data: {
+        opportunityId: input.opportunity.id,
+        type: nextAction.type,
+        description: nextAction.description,
+        rationale: nextAction.rationale,
+        estimatedMinutes: nextAction.estimatedMinutes,
+        dueAt: nextAction.dueAt,
+      },
+    });
+  }
 }
 
 function redirectToReview(params: z.infer<typeof sourceReviewSchema>): never {

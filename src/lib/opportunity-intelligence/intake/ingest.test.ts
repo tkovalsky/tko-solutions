@@ -59,6 +59,18 @@ function createDatabaseDouble() {
       findUniqueOrThrow: vi.fn(),
       update: vi.fn().mockResolvedValue({ id: "opportunity-1" }),
     },
+    oiOpportunitySource: {
+      upsert: vi.fn().mockResolvedValue({}),
+      findMany: vi.fn().mockResolvedValue([
+        {
+          isPrimary: true,
+          source: { publishedAt: null, retrievedAt: new Date("2026-08-01T12:00:00Z") },
+        },
+      ]),
+      findFirstOrThrow: vi.fn().mockResolvedValue({
+        source: { id: "source-1", rawContent: RAW_SOURCE, publishedAt: null, retrievedAt: new Date("2026-08-01T12:00:00Z") },
+      }),
+    },
     oiOpportunityFact: {
       deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
       create: vi.fn().mockResolvedValue({ id: "fact-1" }),
@@ -153,6 +165,20 @@ describe("ingestPastedOpportunity", () => {
       where: { id: "opportunity-1" },
       data: { currentScoreId: "score-1" },
     });
+    expect(tx.oiOpportunitySource.upsert).toHaveBeenCalledWith({
+      where: {
+        opportunityId_sourceId: {
+          opportunityId: "opportunity-1",
+          sourceId: "source-1",
+        },
+      },
+      update: { isPrimary: true },
+      create: {
+        opportunityId: "opportunity-1",
+        sourceId: "source-1",
+        isPrimary: true,
+      },
+    });
     expect(
       tx.oiScore.create.mock.invocationCallOrder[0],
     ).toBeLessThan(tx.oiOpportunity.update.mock.invocationCallOrder[0]);
@@ -229,6 +255,16 @@ describe("ingestPastedOpportunity", () => {
           opportunityId: "opportunity-existing",
           canonicalUrl: "https://example.com/jobs/123",
         }),
+      }),
+    );
+    expect(tx.oiOpportunitySource.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          opportunityId_sourceId: {
+            opportunityId: "opportunity-existing",
+            sourceId: "source-1",
+          },
+        },
       }),
     );
   });
