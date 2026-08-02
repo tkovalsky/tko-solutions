@@ -25,10 +25,12 @@ type IntakePageProps = {
     error?: string;
     sourceId?: string;
     opportunityId?: string;
+    triage?: "all" | "tier1";
   }>;
 };
 
 type ReviewResult = Awaited<ReturnType<typeof getReviewResult>>;
+type TriageSignal = Awaited<ReturnType<typeof getTriageQueue>>[number];
 
 const inputClass =
   "w-full rounded-md border border-input-border bg-white px-3 py-2 text-sm text-foreground";
@@ -94,9 +96,38 @@ async function getReviewResult(sourceId?: string, opportunityId?: string) {
   });
 }
 
+async function getTriageQueue(showAll: boolean) {
+  return tifDb.oiSignal.findMany({
+    where: {
+      status: { in: ["captured", "classified"] },
+      ...(showAll ? {} : { tier: "tier_1" as const }),
+    },
+    include: {
+      source: {
+        select: {
+          id: true,
+          opportunityId: true,
+          canonicalUrl: true,
+        },
+      },
+      organization: {
+        include: {
+          initiatives: {
+            orderBy: [{ confidence: "desc" }, { updatedAt: "desc" }],
+            take: 1,
+          },
+        },
+      },
+    },
+    orderBy: [{ occurredAt: "desc" }, { createdAt: "desc" }],
+  });
+}
+
 export default async function OiIntakePage({ searchParams }: IntakePageProps) {
   const params = await searchParams;
+  const showAllTriage = params.triage === "all";
   const review = await getReviewResult(params.sourceId, params.opportunityId);
+  const triageSignals = await getTriageQueue(showAllTriage);
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-10">
@@ -163,6 +194,8 @@ export default async function OiIntakePage({ searchParams }: IntakePageProps) {
           {review ? <ReviewPanel review={review} /> : <EmptyReview />}
         </section>
       </div>
+
+      <TriageQueue signals={triageSignals} showAll={showAllTriage} />
     </section>
   );
 }
@@ -181,6 +214,128 @@ function EmptyReview() {
     <div className="rounded-md border border-dashed border-border bg-white p-6 text-sm text-muted">
       Captured facts and research gaps will appear here after a valid source is submitted.
     </div>
+  );
+}
+
+function TriageQueue({ signals, showAll }: { signals: TriageSignal[]; showAll: boolean }) {
+  return (
+    <section className="mt-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+            Intake triage
+          </p>
+          <h2 className="mt-1 text-xl font-semibold">Untriaged signals</h2>
+        </div>
+        <div className="flex rounded-md border border-border p-1 text-sm font-semibold">
+          <a
+            href="/tif/oi/intake?triage=tier1"
+            aria-current={showAll ? undefined : "page"}
+            className={`rounded px-3 py-1.5 ${showAll ? "text-muted hover:text-foreground" : "bg-[#17375e] text-white"}`}
+          >
+            Tier 1 only
+          </a>
+          <a
+            href="/tif/oi/intake?triage=all"
+            aria-current={showAll ? "page" : undefined}
+            className={`rounded px-3 py-1.5 ${showAll ? "bg-[#17375e] text-white" : "text-muted hover:text-foreground"}`}
+          >
+            All
+          </a>
+        </div>
+      </div>
+
+      {signals.length === 0 ? (
+        <p className="mt-5 rounded-md border border-dashed border-border bg-white p-4 text-sm text-muted">
+          Paste a source above, or switch to All to review lower-priority captures.
+        </p>
+      ) : (
+        <ul className="mt-5 grid gap-3">
+          {signals.map((signal) => (
+            <TriageSignalRow key={signal.id} signal={signal} />
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+
+function TriageSignalRow({ signal }: { signal: TriageSignal }) {
+  const initiative = signal.organization.initiatives[0] ?? null;
+
+  return (
+    <li className="rounded-md border border-border p-4">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto]">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+            <span>{tierDisplay(signal.tier)}</span>
+            <span>{signal.organization.name}</span>
+            <span>{formatAge(signal.occurredAt ?? signal.createdAt)}</span>
+            <span>strength {signal.confidence}</span>
+          </div>
+          <p className="mt-2 text-base font-semibold">{signal.summary}</p>
+          <p className="mt-2 text-sm text-muted">
+            {initiative
+              ? `Matching initiative: ${initiative.name} · confidence ${initiative.confidence}%`
+              : "No matching initiative yet"}
+          </p>
+          {signal.source.canonicalUrl ? (
+            <a className="mt-2 inline-block text-sm text-[#17375e] underline" href={signal.source.canonicalUrl}>
+              Source
+            </a>
+          ) : null}
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-3 lg:w-[32rem]">
+          <form action={promoteSignal} className="grid gap-2">
+            <input type="hidden" name="sourceId" value={signal.source.id} />
+            <input type="hidden" name="opportunityId" value={signal.source.opportunityId ?? ""} />
+            <label className="grid gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+              Type
+              <select name="opportunityType" className={inputClass} defaultValue="consulting">
+                <option value="consulting">Consulting</option>
+                <option value="assessment">Assessment</option>
+                <option value="fractional">Fractional</option>
+                <option value="fte">FTE</option>
+                <option value="partnership">Partnership</option>
+                <option value="rfp">RFP</option>
+              </select>
+            </label>
+            <button
+              type="submit"
+              className="rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white hover:bg-[#0f2948]"
+            >
+              Promote
+            </button>
+          </form>
+
+          <form action={watchAccount} className="grid content-start gap-2">
+            <input type="hidden" name="sourceId" value={signal.source.id} />
+            <input type="hidden" name="opportunityId" value={signal.source.opportunityId ?? ""} />
+            <button type="submit" className="rounded-md border border-border px-3 py-2 text-sm font-semibold">
+              Watch
+            </button>
+          </form>
+
+          <form action={dismissSignal} className="grid gap-2">
+            <input type="hidden" name="sourceId" value={signal.source.id} />
+            <input type="hidden" name="opportunityId" value={signal.source.opportunityId ?? ""} />
+            <label className="grid gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+              Reason
+              <input
+                name="reason"
+                required
+                className={inputClass}
+                placeholder="Why this is not an opportunity"
+              />
+            </label>
+            <button type="submit" className="rounded-md border border-border px-3 py-2 text-sm font-semibold">
+              Dismiss
+            </button>
+          </form>
+        </div>
+      </div>
+    </li>
   );
 }
 
@@ -532,6 +687,14 @@ function tierDisplay(tier: string) {
 function formatDate(date?: Date | null) {
   if (!date) return "date unknown";
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+
+function formatAge(date?: Date | null) {
+  if (!date) return "age unknown";
+  const elapsedMs = Date.now() - date.getTime();
+  if (elapsedMs < 60 * 60 * 1000) return "less than 1h old";
+  if (elapsedMs < 24 * 60 * 60 * 1000) return `${Math.floor(elapsedMs / (60 * 60 * 1000))}h old`;
+  return `${Math.floor(elapsedMs / (24 * 60 * 60 * 1000))}d old`;
 }
 
 function formatMoney(value?: number | null) {
