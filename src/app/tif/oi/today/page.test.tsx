@@ -8,6 +8,8 @@ vi.mock("@/lib/tif/db", () => ({
     oiOpportunity: { findMany: vi.fn() },
     oiActivity: { findMany: vi.fn() },
     oiNextAction: { updateMany: vi.fn() },
+    oiSignal: { count: vi.fn(), findMany: vi.fn() },
+    oiOrganization: { findMany: vi.fn() },
   },
 }));
 
@@ -22,6 +24,9 @@ const mockedDb = vi.mocked(tifDb);
 beforeEach(() => {
   vi.clearAllMocks();
   mockedDb.oiActivity.findMany.mockResolvedValue([]);
+  mockedDb.oiSignal.count.mockResolvedValue(0);
+  mockedDb.oiSignal.findMany.mockResolvedValue([]);
+  mockedDb.oiOrganization.findMany.mockResolvedValue([]);
 });
 
 describe("OiTodayPage", () => {
@@ -123,6 +128,75 @@ describe("OiTodayPage", () => {
     expect(screen.queryByText(/caught up/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/congrat/i)).not.toBeInTheDocument();
   });
+
+  it("renders new signals count, top three signals, and intake link while excluding tier 3 from the count", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([]);
+    mockedDb.oiSignal.count.mockResolvedValue(4);
+    mockedDb.oiSignal.findMany.mockResolvedValue([
+      signal("signal-1", { tier: "tier_1", summary: "Senior transformation role", organizationName: "Alpha Health" }),
+      signal("signal-2", { tier: "tier_2", summary: "Operational problem stated", organizationName: "Beta Care" }),
+      signal("signal-3", { tier: "tier_1", summary: "Modernization announcement", organizationName: "Care Gamma" }),
+    ]);
+
+    render(await OiTodayPage());
+
+    expect(screen.getByText("New signals")).toBeInTheDocument();
+    expect(screen.getByText("4 untriaged")).toBeInTheDocument();
+    expect(screen.getByText("Tier 1 · Alpha Health", { exact: false })).toBeInTheDocument();
+    expect(screen.getByText("Tier 2 · Beta Care", { exact: false })).toBeInTheDocument();
+    expect(screen.getByText("Modernization announcement")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Go to intake →" })).toHaveAttribute("href", "/tif/oi/intake");
+    expect(mockedDb.oiSignal.count).toHaveBeenCalledWith({
+      where: {
+        status: { in: ["captured", "classified"] },
+        tier: { in: ["tier_1", "tier_2"] },
+      },
+    });
+    expect(mockedDb.oiSignal.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          status: { in: ["captured", "classified"] },
+          tier: { in: ["tier_1", "tier_2"] },
+        },
+        take: 3,
+      }),
+    );
+  });
+
+  it("renders watched accounts collapsed by default with days watched", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([]);
+    mockedDb.oiOrganization.findMany.mockResolvedValue([
+      {
+        id: "org-1",
+        name: "Watched Health",
+        updatedAt: new Date(Date.now() - 2 * 86_400_000),
+        signals: [{ updatedAt: new Date(Date.now() - 3 * 86_400_000) }],
+      },
+    ]);
+
+    const { container } = render(await OiTodayPage());
+
+    expect(screen.getByText("Watch")).toBeInTheDocument();
+    expect(screen.getByText("1 watched accounts")).toBeInTheDocument();
+    expect(screen.getByText("expand")).toBeInTheDocument();
+    expect(container.querySelector("details")?.hasAttribute("open")).toBe(false);
+    expect(screen.getByText("Watched Health")).toBeInTheDocument();
+    expect(screen.getByText("3 days watched")).toBeInTheDocument();
+    expect(mockedDb.oiOrganization.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { isWatched: true },
+      }),
+    );
+  });
+
+  it("renders explicit empty states for new signals and watch", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([]);
+
+    render(await OiTodayPage());
+
+    expect(screen.getByText("No Tier 1 or Tier 2 signals are waiting for triage.")).toBeInTheDocument();
+    expect(screen.getByText("No accounts are being watched.")).toBeInTheDocument();
+  });
 });
 
 function opportunity(
@@ -177,5 +251,23 @@ function opportunity(
         completedAt: null,
       },
     ],
+  };
+}
+
+function signal(
+  id: string,
+  overrides: {
+    tier?: "tier_1" | "tier_2";
+    summary?: string;
+    organizationName?: string;
+  } = {},
+) {
+  return {
+    id,
+    tier: overrides.tier ?? "tier_1",
+    summary: overrides.summary ?? `Signal ${id}`,
+    occurredAt: new Date("2026-08-01T12:00:00Z"),
+    createdAt: new Date("2026-08-01T12:00:00Z"),
+    organization: { name: overrides.organizationName ?? `Org ${id}` },
   };
 }

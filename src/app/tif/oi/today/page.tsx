@@ -13,9 +13,12 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+type NewSignal = Awaited<ReturnType<typeof getTopUntriagedSignals>>[number];
+type WatchedAccount = Awaited<ReturnType<typeof getWatchedAccounts>>[number];
+
 export default async function OiTodayPage() {
   const asOf = new Date();
-  const [opportunities, recentActivities] = await Promise.all([
+  const [opportunities, recentActivities, untriagedSignalCount, topUntriagedSignals, watchedAccounts] = await Promise.all([
     tifDb.oiOpportunity.findMany({
       include: {
         organization: { select: { name: true } },
@@ -34,6 +37,14 @@ export default async function OiTodayPage() {
       orderBy: [{ occurredAt: "desc" }],
       take: 12,
     }),
+    tifDb.oiSignal.count({
+      where: {
+        status: { in: ["captured", "classified"] },
+        tier: { in: ["tier_1", "tier_2"] },
+      },
+    }),
+    getTopUntriagedSignals(),
+    getWatchedAccounts(),
   ]);
   const restoredActionIds = opportunities.flatMap((opportunity) =>
     opportunity.nextActions
@@ -87,6 +98,11 @@ export default async function OiTodayPage() {
         </div>
       </header>
 
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <NewSignalsBlock count={untriagedSignalCount} signals={topUntriagedSignals} asOf={asOf} />
+        <WatchBlock accounts={watchedAccounts} asOf={asOf} />
+      </div>
+
       {queue.length === 0 ? (
         <EmptyState activeCount={opportunities.length} summary={summary} />
       ) : (
@@ -112,6 +128,95 @@ export default async function OiTodayPage() {
           <p className="mt-3 text-sm text-muted">No material changes in the last 48 hours.</p>
         )}
       </section>
+    </section>
+  );
+}
+
+async function getTopUntriagedSignals() {
+  return tifDb.oiSignal.findMany({
+    where: {
+      status: { in: ["captured", "classified"] },
+      tier: { in: ["tier_1", "tier_2"] },
+    },
+    include: {
+      organization: { select: { name: true } },
+    },
+    orderBy: [{ occurredAt: "desc" }, { createdAt: "desc" }],
+    take: 3,
+  });
+}
+
+async function getWatchedAccounts() {
+  return tifDb.oiOrganization.findMany({
+    where: { isWatched: true },
+    select: {
+      id: true,
+      name: true,
+      updatedAt: true,
+      signals: {
+        where: { status: "watched" },
+        select: { updatedAt: true },
+        orderBy: [{ updatedAt: "asc" }],
+        take: 1,
+      },
+    },
+    orderBy: [{ updatedAt: "desc" }],
+  });
+}
+
+function NewSignalsBlock({ count, signals, asOf }: { count: number; signals: NewSignal[]; asOf: Date }) {
+  return (
+    <section className="rounded-md border border-border bg-white p-5">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">New signals</p>
+          <h3 className="mt-1 text-lg font-semibold">{count} untriaged</h3>
+        </div>
+        <Link href="/tif/oi/intake" className="text-sm font-semibold text-[#17375e] underline">
+          Go to intake →
+        </Link>
+      </div>
+      {signals.length > 0 ? (
+        <ul className="mt-4 grid gap-3 text-sm">
+          {signals.map((signal) => (
+            <li key={signal.id} className="border-t border-border pt-3 first:border-t-0 first:pt-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+                {tierDisplay(signal.tier)} · {signal.organization.name} · {formatAge(signal.occurredAt ?? signal.createdAt, asOf)}
+              </p>
+              <p className="mt-1 font-medium">{signal.summary}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-4 text-sm text-muted">No Tier 1 or Tier 2 signals are waiting for triage.</p>
+      )}
+    </section>
+  );
+}
+
+function WatchBlock({ accounts, asOf }: { accounts: WatchedAccount[]; asOf: Date }) {
+  return (
+    <section className="rounded-md border border-border bg-white p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Watch</p>
+      <h3 className="mt-1 text-lg font-semibold">{accounts.length} watched accounts</h3>
+      {accounts.length > 0 ? (
+        <details className="mt-4">
+          <summary className="cursor-pointer text-sm font-semibold text-[#17375e]">expand</summary>
+          <ul className="mt-3 grid gap-2 text-sm">
+            {accounts.map((account) => {
+              const watchedSince = account.signals[0]?.updatedAt ?? account.updatedAt;
+              return (
+                <li key={account.id} className="flex items-center justify-between gap-4 border-t border-border pt-2 first:border-t-0 first:pt-0">
+                  <span className="font-medium">{account.name}</span>
+                  <span className="text-muted">{formatDaysWatched(watchedSince, asOf)}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
+      ) : (
+        <p className="mt-4 text-sm text-muted">No accounts are being watched.</p>
+      )}
     </section>
   );
 }
@@ -148,6 +253,23 @@ function daysUntilOct1(asOf: Date) {
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(date);
+}
+
+function formatAge(date: Date | null, asOf: Date) {
+  if (!date) return "age unknown";
+  const elapsedMs = asOf.getTime() - date.getTime();
+  if (elapsedMs < 60 * 60 * 1000) return "less than 1h old";
+  if (elapsedMs < 24 * 60 * 60 * 1000) return `${Math.floor(elapsedMs / (60 * 60 * 1000))}h old`;
+  return `${Math.floor(elapsedMs / 86_400_000)}d old`;
+}
+
+function formatDaysWatched(date: Date, asOf: Date) {
+  const days = Math.max(0, Math.floor((asOf.getTime() - date.getTime()) / 86_400_000));
+  return days === 1 ? "1 day watched" : `${days} days watched`;
+}
+
+function tierDisplay(tier: string) {
+  return tier.replace("tier_", "Tier ");
 }
 
 function formatMoney(value: number) {
