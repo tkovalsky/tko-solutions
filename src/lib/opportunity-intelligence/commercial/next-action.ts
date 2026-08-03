@@ -58,6 +58,17 @@ function action(
   return { type, description, rationale, estimatedMinutes, dueAt };
 }
 
+// D-032: completing `prepare_outreach` derives `prepare_outreach` again because M1 creates no
+// drafts, so no successor row is written and the opportunity reads as "awaiting manual
+// outreach". That exemption is specific to the outreach hand-off — for every other action the
+// work genuinely is not done, so re-deriving the same type must keep an action open rather
+// than leave the opportunity with zero (a Rule 10 defect).
+const DERIVED_TERMINAL_ACTION_TYPES = new Set<DerivedNextAction["type"]>(["prepare_outreach"]);
+
+export function isDerivedTerminalAction(type: string) {
+  return DERIVED_TERMINAL_ACTION_TYPES.has(type as DerivedNextAction["type"]);
+}
+
 export function deriveNextAction(input: NextActionInput): DerivedNextAction {
   const initiativeApproved =
     input.initiative?.status === "active" ||

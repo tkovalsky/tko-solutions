@@ -233,4 +233,94 @@ describe("Today actions", () => {
       }),
     });
   });
+
+  it("keeps select_offer open when it is completed without an offer actually being selected", async () => {
+    const tx = {
+      oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "opp-1",
+          type: "consulting",
+          status: "researching",
+          offerId: null,
+          lastActivityAt: null,
+          initiative: { status: "evidenced", approvedAt: new Date("2026-08-01T12:00:00Z") },
+          researchGaps: [],
+          stakeholders: [{ isSelected: true }],
+          roleProfile: null,
+          currentScore: { evidenceScore: 80, accessScore: 80 },
+        }),
+        update: vi.fn(),
+      },
+      oiNextAction: {
+        update: vi.fn().mockResolvedValue({
+          type: "select_offer",
+          description: "Select the offer",
+        }),
+        create: vi.fn(),
+      },
+      oiActivity: {
+        create: vi.fn(),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("nextActionId", "action-1");
+
+    await completeNextAction(formData);
+
+    // Unlike the D-032 outreach hand-off, the precondition is genuinely unmet, so the
+    // opportunity must not be left with zero open next actions.
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        status: "open",
+        type: "select_offer",
+      }),
+    });
+  });
+
+  it("advances to prepare_outreach when select_offer is completed after an offer is selected", async () => {
+    const tx = {
+      oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "opp-1",
+          type: "consulting",
+          status: "researching",
+          offerId: "offer-1",
+          lastActivityAt: null,
+          initiative: { status: "evidenced", approvedAt: new Date("2026-08-01T12:00:00Z") },
+          researchGaps: [],
+          stakeholders: [{ isSelected: true }],
+          roleProfile: null,
+          currentScore: { evidenceScore: 80, accessScore: 80 },
+        }),
+        update: vi.fn(),
+      },
+      oiNextAction: {
+        update: vi.fn().mockResolvedValue({
+          type: "select_offer",
+          description: "Select the offer",
+        }),
+        create: vi.fn(),
+      },
+      oiActivity: {
+        create: vi.fn(),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("nextActionId", "action-1");
+
+    await completeNextAction(formData);
+
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        status: "open",
+        type: "prepare_outreach",
+      }),
+    });
+  });
 });

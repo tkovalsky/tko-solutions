@@ -69,7 +69,7 @@ scoring-logic checkpoints; the composite score becomes visible to Todd in POIS-1
 > Per §3A, **the rules (§4–§10) are authoritative over the examples.** If any §14.6 number
 > cannot be derived from §4–§10, stop and report it — do not special-case the implementation
 > to reproduce it. Three such conflicts were found and fixed on 2026-08-01 (see
-> `POIS-DECISIONS.md` D-031); §14.6 exists so they cannot recur silently.
+> `POIS-DECISIONS.md` D-034); §14.6 exists so they cannot recur silently.
 - A test for the assessment-expansion arithmetic: `$6,500 + 0.40 × $60,000 = $30,500`.
 - A determinism test: the same input scored 100 times produces identical output every time.
 - A test that the PE ordering in §14.6 holds when the five fixtures are sorted by PE:

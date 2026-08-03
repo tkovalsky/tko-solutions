@@ -12,6 +12,7 @@ import {
   dismissResearchGap,
   markDoNotContact,
   resolveResearchGap,
+  selectOffer,
   selectStakeholder,
   updateOpportunityStatus,
   updateStakeholder,
@@ -66,9 +67,6 @@ vi.mock("@/lib/tif/db", () => ({
     oiOpportunity: {
       findUniqueOrThrow: vi.fn(),
     },
-    oiContactPoint: {
-      create: vi.fn(),
-    },
     oiOpportunityFact: {
       create: vi.fn(),
     },
@@ -77,6 +75,15 @@ vi.mock("@/lib/tif/db", () => ({
     },
     oiContactPoint: {
       create: vi.fn(),
+    },
+    oiOffer: {
+      findUnique: vi.fn(),
+    },
+    oiSource: {
+      findUnique: vi.fn(),
+    },
+    oiEvidence: {
+      upsert: vi.fn(),
     },
   },
 }));
@@ -89,6 +96,11 @@ beforeEach(() => {
   vi.clearAllMocks();
   vi.useRealTimers();
   mockedDb.oiOpportunity.findUniqueOrThrow.mockResolvedValue({ id: "opp-1", type: "consulting", status: "researching" });
+  mockedDb.oiOffer.findUnique.mockResolvedValue({
+    id: "offer-1",
+    name: "Operational Recovery Assessment",
+    isActive: true,
+  });
   mockedPersist.mockResolvedValue({ id: "score-1" });
 });
 
@@ -481,6 +493,123 @@ describe("workbench actions", () => {
     expect(tx.oiNextAction.create).toHaveBeenCalledTimes(1);
   });
 
+  it("selects an offer and advances the consulting opportunity past select_offer", async () => {
+    const tx = workbenchTx({
+      existingAction: {
+        type: "select_offer",
+        description: "Select the offer",
+      },
+      // The score input reflects post-selection state: initiative approved, stakeholder
+      // selected, offer now set.
+      scoreInput: scoreInputOpportunity({
+        offerId: "offer-1",
+        offer: { valueLow: 18_000, valueHigh: 26_000 },
+        initiative: { status: "active", approvedAt: new Date("2026-08-01T12:00:00Z") },
+        stakeholders: [{ isSelected: true }],
+      }),
+    });
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("offerId", "offer-1");
+    await selectOffer(formData);
+
+    expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
+      where: { id: "opp-1" },
+      data: expect.objectContaining({ offerId: "offer-1" }),
+    });
+    expect(tx.oiActivity.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        summary: "Selected offer: Operational Recovery Assessment.",
+      }),
+    });
+    expect(tx.oiNextAction.updateMany).toHaveBeenCalledBefore(tx.oiNextAction.create);
+    expect(tx.oiNextAction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        status: "open",
+        type: "prepare_outreach",
+      }),
+    });
+  });
+
+  it("rejects an offer id that does not resolve to an active offer", async () => {
+    mockedDb.oiOffer.findUnique.mockResolvedValueOnce({ id: "offer-1", name: "Retired offer", isActive: false });
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("offerId", "offer-1");
+
+    await expect(selectOffer(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=That%20offer%20is%20not%20active.",
+    );
+    expect(mockedDb.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("rejects an offer selection with no offer id", async () => {
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+
+    await expect(selectOffer(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=An%20offer%20is%20required.",
+    );
+    expect(mockedDb.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("blocks a pause transition that carries no decision reason", async () => {
+    mockedTransition.mockReturnValueOnce({ ok: true, requiresReason: true });
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("toStatus", "paused");
+
+    await expect(updateOpportunityStatus(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?statusError=A%20decision%20reason%20is%20required%20to%20move%20an%20opportunity%20to%20paused.",
+    );
+    expect(mockedDb.$transaction).not.toHaveBeenCalled();
+  });
+
+  it.each(["paused", "dismissed", "closed"] as const)(
+    "captures a decision for a %s transition made from the generic status form",
+    async (toStatus) => {
+      mockedTransition.mockReturnValueOnce({ ok: true, requiresReason: true });
+      const tx = workbenchTx({
+        existingAction: { type: "review_stale", description: "Review stale opportunity" },
+        scoreInput: scoreInputOpportunity({ status: toStatus }),
+      });
+      tx.oiOpportunity.findUniqueOrThrow
+        .mockResolvedValueOnce({
+          id: "opp-1",
+          currentScore: {
+            id: "score-current",
+            expectedValue: 1200,
+            estimatedHours: 3,
+            conversionProbability: 40,
+          },
+        })
+        .mockResolvedValue(scoreInputOpportunity({ status: toStatus }));
+      mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+
+      // No decisionType and no decisionReason — only the generic form's `reason` field.
+      const formData = new FormData();
+      formData.set("opportunityId", "opp-1");
+      formData.set("toStatus", toStatus);
+      formData.set("reason", "No budget confirmed this quarter.");
+
+      await updateOpportunityStatus(formData);
+
+      expect(tx.oiDecision.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          opportunityId: "opp-1",
+          type: toStatus === "paused" ? "pause_opportunity" : toStatus === "dismissed" ? "disqualify_opportunity" : "close_opportunity",
+          reason: "No budget confirmed this quarter.",
+          scoreIdAtDecision: "score-current",
+          expectedValue: 1200,
+        }),
+      });
+    },
+  );
+
   it("writes person facts with only personId set", async () => {
     const formData = new FormData();
     formData.set("personId", "person-1");
@@ -500,6 +629,93 @@ describe("workbench actions", () => {
     });
     expect(mockedDb.oiOpportunityFact.create.mock.calls[0][0].data).not.toHaveProperty("opportunityId");
     expect(mockedDb.oiOpportunityFact.create.mock.calls[0][0].data).not.toHaveProperty("initiativeId");
+  });
+
+  it("rejects a stated person fact submitted with no source reference", async () => {
+    const formData = new FormData();
+    formData.set("personId", "person-1");
+    formData.set("field", "career");
+    formData.set("value", "VP Operations at Regional Payer Health");
+    formData.set("basis", "stated");
+    formData.set("confidence", "95");
+
+    await expect(addPersonFact(formData)).rejects.toThrow(
+      /A stated fact requires sourceId, startOffset, endOffset, and excerpt/,
+    );
+    expect(mockedDb.oiOpportunityFact.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects a stated person fact whose offsets do not resolve in the source text", async () => {
+    mockedDb.oiSource.findUnique.mockResolvedValue({
+      id: "source-1",
+      rawContent: "Sarah Chen leads care management operations.",
+    });
+    const formData = new FormData();
+    formData.set("personId", "person-1");
+    formData.set("field", "career");
+    formData.set("value", "Runs the PMO");
+    formData.set("basis", "stated");
+    formData.set("sourceId", "source-1");
+    formData.set("startOffset", "0");
+    formData.set("endOffset", "11");
+    formData.set("excerpt", "Runs the PMO");
+
+    await expect(addPersonFact(formData)).rejects.toThrow(
+      "Stated fact offsets do not resolve to the supplied excerpt in the source text.",
+    );
+    expect(mockedDb.oiEvidence.upsert).not.toHaveBeenCalled();
+    expect(mockedDb.oiOpportunityFact.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects a stated person fact pointing at a source that does not exist", async () => {
+    mockedDb.oiSource.findUnique.mockResolvedValue(null);
+    const formData = new FormData();
+    formData.set("personId", "person-1");
+    formData.set("field", "career");
+    formData.set("value", "Sarah Chen");
+    formData.set("basis", "stated");
+    formData.set("sourceId", "missing-source");
+    formData.set("startOffset", "0");
+    formData.set("endOffset", "10");
+    formData.set("excerpt", "Sarah Chen");
+
+    await expect(addPersonFact(formData)).rejects.toThrow("A stated fact requires an existing source.");
+    expect(mockedDb.oiOpportunityFact.create).not.toHaveBeenCalled();
+  });
+
+  it("accepts a stated person fact whose offsets round-trip against the source", async () => {
+    mockedDb.oiSource.findUnique.mockResolvedValue({
+      id: "source-1",
+      rawContent: "Sarah Chen leads care management operations.",
+    });
+    mockedDb.oiEvidence.upsert.mockResolvedValue({ id: "evidence-1" });
+    const formData = new FormData();
+    formData.set("personId", "person-1");
+    formData.set("field", "career");
+    formData.set("value", "Sarah Chen");
+    formData.set("basis", "stated");
+    formData.set("sourceId", "source-1");
+    formData.set("startOffset", "0");
+    formData.set("endOffset", "10");
+    formData.set("excerpt", "Sarah Chen");
+
+    await addPersonFact(formData);
+
+    expect(mockedDb.oiEvidence.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          sourceId_startOffset_endOffset: { sourceId: "source-1", startOffset: 0, endOffset: 10 },
+        },
+      }),
+    );
+    expect(mockedDb.oiOpportunityFact.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        personId: "person-1",
+        basis: "stated",
+        evidenceId: "evidence-1",
+        isOperatorOverride: false,
+      }),
+    });
   });
 });
 

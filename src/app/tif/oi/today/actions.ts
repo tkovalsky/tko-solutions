@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { captureDecision } from "@/lib/opportunity-intelligence/action/decision";
 import { canTransition } from "@/lib/opportunity-intelligence/commercial/lifecycle";
-import { deriveNextAction } from "@/lib/opportunity-intelligence/commercial/next-action";
+import { deriveNextAction, isDerivedTerminalAction } from "@/lib/opportunity-intelligence/commercial/next-action";
 import { tifDb } from "@/lib/tif/db";
 
 const snoozeSchema = z.object({
@@ -133,7 +133,10 @@ export async function completeNextAction(formData: FormData) {
       rfpProfile: null,
       asOf: completedAt,
     });
-    if (next.type !== completedAction.type) {
+    // Suppress the successor only for the D-032 outreach hand-off. Any other unchanged
+    // derivation means the precondition still is not met, so the action stays open instead of
+    // leaving the opportunity with zero open next actions.
+    if (next.type !== completedAction.type || !isDerivedTerminalAction(completedAction.type)) {
       await tx.oiNextAction.create({
         data: {
           opportunityId: parsed.opportunityId,

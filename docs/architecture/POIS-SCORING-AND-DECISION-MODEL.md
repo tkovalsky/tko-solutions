@@ -149,7 +149,7 @@ Codex must not implement a number from §14 that cannot be derived from §4–§
 is found: stop, report it, and fix §14 — do not special-case the implementation to reproduce
 a bad example.
 
-*Applied 2026-08-01 to resolve the WP-008 block. See `POIS-DECISIONS.md` D-031.*
+*Applied 2026-08-01 to resolve the WP-008 block. See `POIS-DECISIONS.md` D-034.*
 
 ### `todd-v2` capability profile
 

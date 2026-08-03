@@ -24,6 +24,10 @@ slice, not every letter in it).
 ordering, and milestone boundaries are unchanged — this is subtraction of batch size, not
 addition of work.
 
+> **Merged status is not tracked in this file.** See `docs/CURRENT_STATE.md` for which work
+> packages are complete. As of 2026-08-03, WP-001 through WP-011 (59 stories) are merged and
+> WP-012 through WP-014 remain.
+
 ---
 
 ## Story Metadata block

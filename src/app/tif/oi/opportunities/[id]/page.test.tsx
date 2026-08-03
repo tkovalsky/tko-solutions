@@ -8,6 +8,9 @@ vi.mock("@/lib/tif/db", () => ({
     oiOpportunity: {
       findUnique: vi.fn(),
     },
+    oiOffer: {
+      findMany: vi.fn(),
+    },
   },
 }));
 
@@ -27,6 +30,7 @@ vi.mock("./actions", () => ({
   markDoNotContact: vi.fn(),
   recomputeScore: vi.fn(),
   resolveResearchGap: vi.fn(),
+  selectOffer: vi.fn(),
   selectStakeholder: vi.fn(),
   updateOpportunityStatus: vi.fn(),
   updateStakeholder: vi.fn(),
@@ -37,6 +41,7 @@ const mockedDb = vi.mocked(tifDb);
 beforeEach(() => {
   vi.clearAllMocks();
   mockedDb.oiOpportunity.findUnique.mockResolvedValue(opportunityFixture());
+  mockedDb.oiOffer.findMany.mockResolvedValue(offerCatalogueFixture());
 });
 
 describe("OpportunityWorkbenchPage", () => {
@@ -53,7 +58,9 @@ describe("OpportunityWorkbenchPage", () => {
     expect(screen.getByRole("link", { name: "Gaps" })).toHaveAttribute("href", "#gaps");
     expect(screen.getByRole("link", { name: "Stakeholders" })).toHaveAttribute("href", "#stakeholders");
     expect(screen.getByRole("link", { name: "Log" })).toHaveAttribute("href", "#log");
-    expect(screen.queryByText("Offer")).not.toBeInTheDocument();
+    // Offer selection is now a real workbench section — it is the surface that lets a
+    // consulting opportunity clear the `select_offer` next action.
+    expect(screen.getByRole("link", { name: "Offer" })).toHaveAttribute("href", "#offer");
     expect(screen.queryByText("Outreach")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Overview" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Initiative" })).toBeInTheDocument();
@@ -61,7 +68,7 @@ describe("OpportunityWorkbenchPage", () => {
     expect(screen.getByRole("heading", { name: "Research gaps" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Stakeholders" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Timeline" })).toBeInTheDocument();
-    for (const id of ["overview", "initiative", "evidence", "gaps", "stakeholders", "log"]) {
+    for (const id of ["overview", "initiative", "evidence", "gaps", "stakeholders", "offer", "log"]) {
       expect(document.getElementById(id)).toBeInTheDocument();
     }
   });
@@ -176,7 +183,105 @@ describe("OpportunityWorkbenchPage", () => {
     );
     expect(screen.getByText(/No timeline history yet/)).toBeInTheDocument();
   });
+
+  it("offers every seeded offer as a selectable option when none is chosen", async () => {
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.getByText(/No offer is selected/)).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /Operational Recovery Assessment/ })).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /Fractional Operational Advisor/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Select offer" })).toBeInTheDocument();
+    expect(mockedDb.oiOffer.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { isActive: true } }),
+    );
+  });
+
+  it("shows the selected offer and pre-checks it in the change form", async () => {
+    mockedDb.oiOpportunity.findUnique.mockResolvedValue({
+      ...opportunityFixture(),
+      offer: {
+        id: "offer-1",
+        name: "Operational Recovery Assessment",
+        kind: "assessment",
+        description: "Two-week diagnostic of a stalled program.",
+        valueLow: 18_000,
+        valueHigh: 26_000,
+        isRecurring: false,
+        typicalWeeks: 2,
+      },
+    });
+
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.queryByText(/No offer is selected/)).not.toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: /Operational Recovery Assessment/ })).toBeChecked();
+    expect(screen.getByRole("button", { name: "Change offer" })).toBeInTheDocument();
+  });
+
+  it("tells Todd how to seed the catalogue when no active offers exist", async () => {
+    mockedDb.oiOffer.findMany.mockResolvedValue([]);
+
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.getByText(/No active offers are seeded/)).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Select offer" })).not.toBeInTheDocument();
+  });
+
+  it("hides the offer section for an FTE opportunity, which never derives select_offer", async () => {
+    mockedDb.oiOpportunity.findUnique.mockResolvedValue({ ...opportunityFixture(), type: "fte" });
+
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.queryByRole("link", { name: "Offer" })).not.toBeInTheDocument();
+    expect(document.getElementById("offer")).not.toBeInTheDocument();
+    expect(mockedDb.oiOffer.findMany).not.toHaveBeenCalled();
+  });
 });
+
+function offerCatalogueFixture() {
+  return [
+    {
+      id: "offer-1",
+      name: "Operational Recovery Assessment",
+      kind: "assessment",
+      description: "Two-week diagnostic of a stalled program.",
+      valueLow: 18_000,
+      valueHigh: 26_000,
+      isRecurring: false,
+      typicalWeeks: 2,
+    },
+    {
+      id: "offer-2",
+      name: "Fractional Operational Advisor",
+      kind: "fractional",
+      description: "Ongoing operating cadence for an executive team.",
+      valueLow: 144_000,
+      valueHigh: 300_000,
+      isRecurring: true,
+      typicalWeeks: null,
+    },
+  ];
+}
 
 function opportunityFixture() {
   const createdAt = new Date("2026-08-01T12:00:00Z");
@@ -185,6 +290,7 @@ function opportunityFixture() {
     title: "Care Management Platform Recovery",
     type: "consulting",
     status: "researching",
+    offer: null,
     operatorThesis: "Worth pursuing",
     organization: { id: "org-1", name: "Regional Payer Health" },
     currentScore: {

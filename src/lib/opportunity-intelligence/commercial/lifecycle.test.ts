@@ -1,6 +1,12 @@
 import type { OiOpportunityStatus, OiOpportunityType } from "@prisma/client";
 import { describe, expect, it } from "vitest";
-import { canTransition, isTerminalOpportunityStatus, validTargetsFor } from "./lifecycle";
+import {
+  canTransition,
+  decisionTypeForStatus,
+  isTerminalOpportunityStatus,
+  requiresDecisionCapture,
+  validTargetsFor,
+} from "./lifecycle";
 
 const validByType: Record<OiOpportunityType, Array<[OiOpportunityStatus, OiOpportunityStatus]>> = {
   consulting: [
@@ -169,6 +175,46 @@ describe("canTransition", () => {
       ok: true,
       requiresReason: false,
     });
+  });
+});
+
+describe("decision capture gating", () => {
+  it("requires decision capture for exactly the pause and terminal statuses", () => {
+    expect(requiresDecisionCapture("paused")).toBe(true);
+    for (const status of ["closed", "dismissed", "won", "accepted", "lost", "declined", "rejected", "no_bid", "no_response"] as const) {
+      expect(requiresDecisionCapture(status)).toBe(true);
+    }
+    for (const status of ["qualified", "researching", "contacted", "conversation", "applied"] as const) {
+      expect(requiresDecisionCapture(status)).toBe(false);
+    }
+  });
+
+  it("maps every decision-requiring status to a decision type so no transition can skip capture", () => {
+    const allStatuses: OiOpportunityStatus[] = [
+      ...nonTerminalStatuses,
+      "closed",
+      "dismissed",
+      "won",
+      "accepted",
+      "lost",
+      "declined",
+      "rejected",
+      "no_bid",
+      "no_response",
+    ];
+    for (const status of allStatuses) {
+      if (!requiresDecisionCapture(status)) continue;
+      expect(decisionTypeForStatus(status)).not.toBeNull();
+    }
+  });
+
+  it("derives the same decision type the workbench buttons declare", () => {
+    expect(decisionTypeForStatus("qualified")).toBe("qualify_opportunity");
+    expect(decisionTypeForStatus("dismissed")).toBe("disqualify_opportunity");
+    expect(decisionTypeForStatus("paused")).toBe("pause_opportunity");
+    expect(decisionTypeForStatus("closed")).toBe("close_opportunity");
+    expect(decisionTypeForStatus("won")).toBe("close_opportunity");
+    expect(decisionTypeForStatus("researching")).toBeNull();
   });
 });
 

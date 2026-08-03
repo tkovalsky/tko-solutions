@@ -74,14 +74,19 @@ export default async function ExecutiveBriefPage({ params }: PeoplePageProps) {
             <option value="conference_talks">Conference talks</option>
           </select>
           <input name="value" className={inputClass} placeholder="Fact" />
+          {/* `stated` is deliberately absent: it requires offsets into immutable source text
+              (Rule 5), which this form cannot supply. Stated person facts come from intake
+              extraction. The server rejects a forged `stated` submission regardless. */}
           <select name="basis" className={inputClass} defaultValue="operator">
             <option value="operator">operator</option>
-            <option value="stated">stated</option>
             <option value="inferred">inferred</option>
           </select>
           <input name="confidence" className={inputClass} type="number" min="1" max="100" defaultValue="85" />
           <button className="rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white">Add fact</button>
         </form>
+        <p className="mt-3 text-xs text-muted">
+          Sourced (&ldquo;stated&rdquo;) facts are captured through intake, where the exact source offsets are recorded.
+        </p>
       </section>
     </section>
   );

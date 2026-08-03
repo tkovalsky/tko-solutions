@@ -215,9 +215,11 @@ export function extractOpportunity(rawContent: string): OpportunityExtraction {
   return { facts, researchGaps };
 }
 
+// Structural input so any offset-bearing candidate can be verified against immutable source
+// text, not just extractor output. Rule 5: a `stated` fact must resolve to exact offsets.
 export function verifyEvidenceOffsets(
   rawContent: string,
-  fact: ExtractedOpportunityFact,
+  fact: { startOffset: number; endOffset: number; excerpt: string },
 ): boolean {
   return rawContent.slice(fact.startOffset, fact.endOffset) === fact.excerpt;
 }

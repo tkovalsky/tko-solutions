@@ -16,6 +16,7 @@ import {
   markDoNotContact,
   recomputeScore,
   resolveResearchGap,
+  selectOffer,
   selectStakeholder,
   updateOpportunityStatus,
   updateStakeholder,
@@ -35,8 +36,30 @@ type WorkbenchPageProps = {
 };
 
 type WorkbenchOpportunity = NonNullable<Awaited<ReturnType<typeof getOpportunity>>>;
+type SelectableOffer = Awaited<ReturnType<typeof getSelectableOffers>>[number];
 
 const inputClass = "w-full rounded-md border border-input-border bg-white px-3 py-2 text-sm";
+
+// Offers are only a prerequisite for the commercial paths; FTE and RFP never derive
+// `select_offer`, so the section is not rendered for them.
+const OFFER_REQUIRED_TYPES = ["consulting", "assessment", "fractional", "partnership"];
+
+function getSelectableOffers() {
+  return tifDb.oiOffer.findMany({
+    where: { isActive: true },
+    orderBy: [{ kind: "asc" }, { name: "asc" }],
+    select: {
+      id: true,
+      name: true,
+      kind: true,
+      description: true,
+      valueLow: true,
+      valueHigh: true,
+      isRecurring: true,
+      typicalWeeks: true,
+    },
+  });
+}
 
 async function getOpportunity(id: string) {
   return tifDb.oiOpportunity.findUnique({
@@ -66,6 +89,7 @@ async function getOpportunity(id: string) {
       researchGaps: {
         orderBy: [{ status: "asc" }, { priority: "asc" }, { createdAt: "asc" }],
       },
+      offer: true,
       currentScore: true,
       nextActions: {
         where: { status: { in: ["open", "completed"] } },
@@ -99,6 +123,8 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
   if (!opportunity) notFound();
   const nextAction = opportunity.nextActions.find((action) => action.status === "open");
   const awaitingManualOutreach = isAwaitingManualOutreach(opportunity);
+  const offerRequired = OFFER_REQUIRED_TYPES.includes(opportunity.type);
+  const offers = offerRequired ? await getSelectableOffers() : [];
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-10">
@@ -127,10 +153,18 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
                 </option>
               ))}
             </select>
-            <input name="reason" className={inputClass} placeholder="Reason when required" />
+            <input name="reason" className={inputClass} placeholder="Reason (required to pause or close)" />
+            <select name="decisionConfidence" className={inputClass} defaultValue="medium">
+              <option value="low">low confidence</option>
+              <option value="medium">medium confidence</option>
+              <option value="high">high confidence</option>
+            </select>
             <button className="rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white">
               Update status
             </button>
+            <p className="text-xs text-muted">
+              Pausing or closing records a decision with the current score snapshot.
+            </p>
           </form>
         </div>
 
@@ -207,6 +241,7 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
           <a href="#evidence" className="underline">Evidence</a>
           <a href="#gaps" className="underline">Gaps</a>
           <a href="#stakeholders" className="underline">Stakeholders</a>
+          {offerRequired ? <a href="#offer" className="underline">Offer</a> : null}
           <a href="#log" className="underline">Log</a>
         </nav>
       </header>
@@ -217,6 +252,7 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
         <EvidenceSection opportunity={opportunity} />
         <GapsSection opportunity={opportunity} />
         <StakeholdersSection opportunity={opportunity} />
+        {offerRequired ? <OfferSection opportunity={opportunity} offers={offers} /> : null}
         <TimelineSection opportunity={opportunity} />
       </div>
     </section>
@@ -331,6 +367,85 @@ function InitiativeSection({ opportunity }: { opportunity: WorkbenchOpportunity 
         </div>
       ) : (
         <p className="mt-4 text-sm text-muted">No initiative attached.</p>
+      )}
+    </section>
+  );
+}
+
+function OfferSection({
+  opportunity,
+  offers,
+}: {
+  opportunity: WorkbenchOpportunity;
+  offers: SelectableOffer[];
+}) {
+  const selected = opportunity.offer;
+
+  return (
+    <section id="offer" className="rounded-md border border-border bg-white p-5">
+      <div className="flex items-start justify-between gap-4">
+        <h3 className="text-lg font-semibold">Offer</h3>
+        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+          {selected ? "Selected" : "Required before outreach"}
+        </span>
+      </div>
+
+      {selected ? (
+        <div className="mt-4 rounded-md border border-border bg-[#f7f8fb] p-4 text-sm">
+          <p className="font-semibold">{selected.name}</p>
+          <p className="mt-1 text-muted">
+            {label(selected.kind)} · {money(selected.valueLow)}–{money(selected.valueHigh)}
+            {selected.isRecurring ? " · recurring" : ""}
+            {selected.typicalWeeks ? ` · ~${selected.typicalWeeks} weeks` : ""}
+          </p>
+          <p className="mt-2">{selected.description}</p>
+        </div>
+      ) : (
+        <p className="mt-4 text-sm text-muted">
+          No offer is selected. Outreach preparation stays blocked until one is chosen.
+        </p>
+      )}
+
+      {offers.length === 0 ? (
+        <p className="mt-4 rounded-md border border-dashed border-border p-4 text-sm text-muted">
+          No active offers are seeded. Run <code>npm run oi:seed</code> to load the offer catalogue.
+        </p>
+      ) : (
+        <form action={selectOffer} className="mt-4 grid gap-3">
+          <input type="hidden" name="opportunityId" value={opportunity.id} />
+          <fieldset className="grid gap-2">
+            <legend className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+              {selected ? "Change offer" : "Select an offer"}
+            </legend>
+            {offers.map((offer) => (
+              <label
+                key={offer.id}
+                className="flex items-start gap-3 rounded-md border border-border p-3 text-sm hover:border-[#17375e]"
+              >
+                <input
+                  type="radio"
+                  name="offerId"
+                  value={offer.id}
+                  defaultChecked={offer.id === selected?.id}
+                  required
+                  className="mt-1"
+                />
+                <span>
+                  <span className="font-semibold">{offer.name}</span>
+                  <span className="mt-1 block text-muted">
+                    {label(offer.kind)} · {money(offer.valueLow)}–{money(offer.valueHigh)}
+                    {offer.isRecurring ? " · recurring" : ""}
+                    {offer.typicalWeeks ? ` · ~${offer.typicalWeeks} weeks` : ""}
+                  </span>
+                  <span className="mt-1 block">{offer.description}</span>
+                </span>
+              </label>
+            ))}
+          </fieldset>
+          <button className="justify-self-start rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white">
+            {selected ? "Change offer" : "Select offer"}
+          </button>
+        </form>
       )}
     </section>
   );

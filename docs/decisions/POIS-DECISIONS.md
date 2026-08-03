@@ -38,10 +38,11 @@ else is a technical decision Codex may act on.
 | D-028 | RFP path deferred to post-October-1 | ⛔ **Todd's approval — cuts a path** |
 | D-029 | Milestone 1 has zero AI dependency | ✅ Yes |
 | D-030 | All schema ships in one Milestone 0 migration | ✅ Yes |
-| D-031 | Rules are authoritative over worked examples; §14 fixtures corrected | ✅ Yes |
 | D-031 | Story backlog split into 30–90 min sub-lettered chains; Rule 1 applies to the chain, not each letter | ✅ Yes |
 | D-032 | Manual outreach completion is a derived terminal state until M3 | ✅ Yes |
 | D-033 | `bid_no_bid_decision` runs before outreach preparation | ✅ Yes |
+| D-034 | Rules are authoritative over worked examples; §14 fixtures corrected | ✅ Yes |
+| D-035 | The D-032 successor exemption is scoped to `prepare_outreach` only | ✅ Yes |
 
 ---
 
@@ -668,7 +669,11 @@ work. `POIS-CODEX-TASKS.md` remains the historical record of the original task-l
 ---
 
 
-## D-031 — Rules are authoritative over worked examples
+## D-034 — Rules are authoritative over worked examples
+
+*Renumbered from D-031 on 2026-08-03. Two decisions were both recorded as D-031; the
+lettered-chain amendment keeps that number because the operating model and several stories
+cite it. This decision takes the next free number.*
 
 **Date:** 2026-08-01 — raised by Codex as a WP-008 implementation block, before any code was
 written. The block was correct and the gate worked as designed.
@@ -778,6 +783,37 @@ inside seven days and no bid decision, derive `bid_no_bid_decision` before
 
 **Consequences.** The code remains unchanged for this behavior. The deviation is now explicit,
 reviewable, and no longer silent architecture drift.
+
+---
+
+## D-035 — The D-032 successor exemption is scoped to `prepare_outreach` only
+
+**Date:** 2026-08-03, during the MSP reconciliation fixes.
+
+**Context.** D-032 suppressed the successor row whenever completing a next action re-derived
+the *same* action type, to stop an infinite `prepare_outreach` loop. That rule was written
+generally but reasoned about one case. In practice it also fired on `select_offer`: with no
+offer-selection UI, Todd could mark "Select the offer" complete, re-derive `select_offer`,
+get no successor, and leave the opportunity with **zero open next actions** — which Rule 10
+defines as a defect and which the pipeline then flags as needing repair.
+
+**Decision.** The exemption applies **only** to `prepare_outreach`, the deliberate M1 hand-off
+to manual outreach. For every other action type, re-deriving the same type means the
+precondition is genuinely still unmet, so a successor row is created and the action stays
+open. `isDerivedTerminalAction()` in `commercial/next-action.ts` is the single place that set
+is declared.
+
+**Alternatives considered.**
+- *Keep the general rule.* Rejected — it silently converts an incomplete prerequisite into a
+  zero-action state, which is exactly the defect Rule 10 exists to prevent.
+- *Block completion of an action whose precondition is unmet.* Rejected — larger change, and
+  it removes Todd's ability to record that he looked at something.
+- *Add an `awaiting_*` status.* Rejected — D-032 already rejected a schema change here, and
+  the state stays fully derivable.
+
+**Consequences.** D-032's outreach behavior is unchanged and still covered by its existing
+test. `select_offer` and `complete_role_profile` now stay open until the underlying record is
+actually set.
 
 ---
 

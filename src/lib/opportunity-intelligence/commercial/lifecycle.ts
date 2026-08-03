@@ -1,4 +1,4 @@
-import type { OiOpportunityStatus, OiOpportunityType } from "@prisma/client";
+import type { OiDecisionType, OiOpportunityStatus, OiOpportunityType } from "@prisma/client";
 
 export type TransitionResult =
   | { ok: true; requiresReason: boolean }
@@ -160,4 +160,32 @@ export function validTargetsFor(type: OiOpportunityType, from: OiOpportunityStat
 
 export function isTerminalOpportunityStatus(status: OiOpportunityStatus) {
   return TERMINAL_STATUSES.has(status);
+}
+
+// Rule 9: pausing or terminating an opportunity commits Todd's time and reputation, so the
+// prediction must be recorded before the outcome is known. This is the same predicate
+// `canTransition` uses for `requiresReason` — a decision-requiring transition and a
+// reason-requiring transition are deliberately the same set.
+export function requiresDecisionCapture(status: OiOpportunityStatus) {
+  return status === "paused" || TERMINAL_STATUSES.has(status);
+}
+
+// Derived server-side so every route into a lifecycle transition writes the same decision
+// type, whether it came from a decision-gated control or the generic status form.
+const DECISION_TYPE_BY_STATUS: Partial<Record<OiOpportunityStatus, OiDecisionType>> = {
+  qualified: "qualify_opportunity",
+  dismissed: "disqualify_opportunity",
+  paused: "pause_opportunity",
+  closed: "close_opportunity",
+  won: "close_opportunity",
+  accepted: "close_opportunity",
+  lost: "close_opportunity",
+  declined: "close_opportunity",
+  rejected: "close_opportunity",
+  no_bid: "close_opportunity",
+  no_response: "close_opportunity",
+};
+
+export function decisionTypeForStatus(status: OiOpportunityStatus): OiDecisionType | null {
+  return DECISION_TYPE_BY_STATUS[status] ?? null;
 }

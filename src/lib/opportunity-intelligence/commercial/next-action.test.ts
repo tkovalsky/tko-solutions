@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { deriveNextAction, type NextActionInput } from "./next-action";
+import { deriveNextAction, isDerivedTerminalAction, type NextActionInput } from "./next-action";
 
 const AS_OF = new Date("2026-08-01T12:00:00Z");
 
@@ -61,6 +61,23 @@ describe("deriveNextAction", () => {
     );
     expect(result.type).toBe("review_stale");
     expect(result.estimatedMinutes).toBe(5);
+  });
+
+  it("advances a consulting opportunity from select_offer once an offer is set", () => {
+    const withoutOffer = deriveNextAction(withInput({ opportunity: { offerId: null } }));
+    expect(withoutOffer.type).toBe("select_offer");
+
+    const withOffer = deriveNextAction(withInput({ opportunity: { offerId: "offer-1" } }));
+    expect(withOffer.type).toBe("prepare_outreach");
+  });
+
+  it("treats only the outreach hand-off as a derived terminal action", () => {
+    // D-032 exempts prepare_outreach from creating a successor; nothing else may leave an
+    // opportunity with zero open next actions.
+    expect(isDerivedTerminalAction("prepare_outreach")).toBe(true);
+    for (const type of ["select_offer", "complete_role_profile", "select_stakeholder", "close_research_gap"]) {
+      expect(isDerivedTerminalAction(type)).toBe(false);
+    }
   });
 
   it("preserves the existing partial unique index for one open action per opportunity", () => {

@@ -5,9 +5,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { TODD_CAPABILITY_PROFILE_V2 } from "@/lib/opportunity-intelligence/capability-profile";
-import { canTransition } from "@/lib/opportunity-intelligence/commercial/lifecycle";
+import {
+  canTransition,
+  decisionTypeForStatus,
+  requiresDecisionCapture,
+} from "@/lib/opportunity-intelligence/commercial/lifecycle";
 import { deriveNextAction } from "@/lib/opportunity-intelligence/commercial/next-action";
 import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
+import { verifyEvidenceOffsets } from "@/lib/opportunity-intelligence/intake/extract";
 import { captureDecision } from "@/lib/opportunity-intelligence/action/decision";
 import { tifDb } from "@/lib/tif/db";
 
@@ -130,13 +135,43 @@ const contactPointSchema = opportunityIdSchema.extend({
   sourceLabel: z.string().trim().optional(),
 });
 
-const personFactSchema = z.object({
-  personId: z.string().trim().min(1),
-  field: z.enum(["career", "responsibilities", "public_interviews", "conference_talks"]),
-  value: z.string().trim().min(1, "Fact value is required."),
-  basis: z.enum(["stated", "inferred", "operator"]).default("operator"),
-  confidence: z.coerce.number().int().min(1).max(100).default(85),
-  sourceLabel: z.string().trim().optional(),
+// Rule 5: a `stated` fact must resolve to exact offsets in immutable source text. The person
+// surface has no source picker yet, so `stated` is only accepted when the caller supplies a
+// source reference that is then verified against that source's rawContent.
+const personFactSchema = z
+  .object({
+    personId: z.string().trim().min(1),
+    field: z.enum(["career", "responsibilities", "public_interviews", "conference_talks"]),
+    value: z.string().trim().min(1, "Fact value is required."),
+    basis: z.enum(["stated", "inferred", "operator"]).default("operator"),
+    confidence: z.coerce.number().int().min(1).max(100).default(85),
+    sourceLabel: z.string().trim().optional(),
+    sourceId: z.string().trim().min(1).optional(),
+    startOffset: z.coerce.number().int().min(0).optional(),
+    endOffset: z.coerce.number().int().min(0).optional(),
+    excerpt: z.string().optional(),
+  })
+  .superRefine((input, ctx) => {
+    if (input.basis !== "stated") return;
+    if (
+      !input.sourceId ||
+      input.startOffset === undefined ||
+      input.endOffset === undefined ||
+      !input.excerpt
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        message: "A stated fact requires sourceId, startOffset, endOffset, and excerpt.",
+      });
+      return;
+    }
+    if (input.endOffset <= input.startOffset) {
+      ctx.addIssue({ code: "custom", message: "A stated fact requires endOffset greater than startOffset." });
+    }
+  });
+
+const offerSelectionSchema = opportunityIdSchema.extend({
+  offerId: z.string().trim().min(1, "An offer is required."),
 });
 
 export async function updateOpportunityStatus(formData: FormData) {
@@ -165,13 +200,31 @@ export async function updateOpportunityStatus(formData: FormData) {
     redirect(`${path}?statusError=${encodeURIComponent(transition.blockingReason)}`);
   }
 
+  // Rule 9: derive the decision type server-side so no control can reach a decision-requiring
+  // transition without writing the prediction first. The generic status form and the
+  // decision-gated buttons both land here.
+  const decisionType = parsed.decisionType ?? decisionTypeForStatus(parsed.toStatus);
+  const decisionReason = (parsed.decisionReason ?? parsed.reason ?? "").trim();
+  const decisionRequired = requiresDecisionCapture(parsed.toStatus);
+
+  if (decisionRequired && !decisionType) {
+    redirect(
+      `${path}?statusError=${encodeURIComponent(`A decision record is required to move an opportunity to ${parsed.toStatus}.`)}`,
+    );
+  }
+  if (decisionRequired && !decisionReason) {
+    redirect(
+      `${path}?statusError=${encodeURIComponent(`A decision reason is required to move an opportunity to ${parsed.toStatus}.`)}`,
+    );
+  }
+
   await tifDb.$transaction(async (tx) => {
-    if (parsed.decisionType) {
+    if (decisionType && decisionReason) {
       await captureDecision(tx, {
         opportunityId: parsed.opportunityId,
-        type: parsed.decisionType,
+        type: decisionType,
         decision: parsed.decision ?? parsed.toStatus,
-        reason: parsed.decisionReason ?? "",
+        reason: decisionReason,
         confidence: parsed.decisionConfidence ?? "medium",
         expectedOutcome: parsed.expectedOutcome,
       });
@@ -519,7 +572,16 @@ export async function addPersonFact(formData: FormData) {
     basis: formData.get("basis") || "operator",
     confidence: formData.get("confidence") || 85,
     sourceLabel: formData.get("sourceLabel") || undefined,
+    sourceId: formData.get("sourceId") || undefined,
+    startOffset: formData.get("startOffset") ?? undefined,
+    endOffset: formData.get("endOffset") ?? undefined,
+    excerpt: formData.get("excerpt") || undefined,
   });
+
+  // Resolve the evidence span before writing, so a `stated` fact can never exist without an
+  // offset-verified anchor into immutable source text.
+  const evidenceId = parsed.basis === "stated" ? await resolveStatedFactEvidence(parsed) : null;
+
   await tifDb.oiOpportunityFact.create({
     data: {
       personId: parsed.personId,
@@ -529,9 +591,80 @@ export async function addPersonFact(formData: FormData) {
       basis: parsed.basis,
       confidence: parsed.confidence,
       isOperatorOverride: parsed.basis === "operator",
+      ...(evidenceId ? { evidenceId } : {}),
     },
   });
   revalidatePath(`/tif/oi/people/${parsed.personId}`);
+}
+
+async function resolveStatedFactEvidence(parsed: z.infer<typeof personFactSchema>) {
+  const sourceId = parsed.sourceId as string;
+  const startOffset = parsed.startOffset as number;
+  const endOffset = parsed.endOffset as number;
+  const excerpt = parsed.excerpt as string;
+
+  const source = await tifDb.oiSource.findUnique({
+    where: { id: sourceId },
+    select: { id: true, rawContent: true },
+  });
+  if (!source) {
+    throw new Error("A stated fact requires an existing source.");
+  }
+  if (!verifyEvidenceOffsets(source.rawContent, { startOffset, endOffset, excerpt })) {
+    throw new Error("Stated fact offsets do not resolve to the supplied excerpt in the source text.");
+  }
+
+  const evidence = await tifDb.oiEvidence.upsert({
+    where: {
+      sourceId_startOffset_endOffset: { sourceId, startOffset, endOffset },
+    },
+    update: {},
+    create: { sourceId, startOffset, endOffset, excerpt },
+  });
+  return evidence.id;
+}
+
+export async function selectOffer(formData: FormData) {
+  const parsed = parseWorkbenchForm(
+    offerSelectionSchema,
+    {
+      opportunityId: formData.get("opportunityId"),
+      // Coerce a missing radio selection to "" so Todd sees the operator-facing message
+      // rather than a raw type error.
+      offerId: formData.get("offerId") ?? "",
+    },
+    formData,
+  );
+
+  const offer = await tifDb.oiOffer.findUnique({
+    where: { id: parsed.offerId },
+    select: { id: true, name: true, isActive: true },
+  });
+  if (!offer) {
+    redirectWithActionError(parsed.opportunityId, "That offer no longer exists.");
+  }
+  if (!offer.isActive) {
+    redirectWithActionError(parsed.opportunityId, "That offer is not active.");
+  }
+
+  await tifDb.$transaction(async (tx) => {
+    await tx.oiOpportunity.update({
+      where: { id: parsed.opportunityId },
+      data: { offerId: offer.id, lastActivityAt: new Date() },
+    });
+    await tx.oiActivity.create({
+      data: {
+        opportunityId: parsed.opportunityId,
+        type: "note",
+        occurredAt: new Date(),
+        summary: `Selected offer: ${offer.name}.`,
+      },
+    });
+    await recomputeScoreInTransaction(tx, parsed.opportunityId);
+    await refreshNextAction(tx, parsed.opportunityId);
+  });
+
+  revalidateWorkbenchSurfaces(parsed.opportunityId);
 }
 
 export async function recomputeScore(formData: FormData) {
