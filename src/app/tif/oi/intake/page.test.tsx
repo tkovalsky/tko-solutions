@@ -267,7 +267,7 @@ describe("OiIntakePage", () => {
     expect(screen.getByRole("button", { name: "Promote" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Watch" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Dismiss" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Reason")).toBeRequired();
+    expect(screen.getAllByPlaceholderText("Decision reason")[0]).toBeRequired();
   });
 
   it("renders a directive for an empty triage queue", async () => {

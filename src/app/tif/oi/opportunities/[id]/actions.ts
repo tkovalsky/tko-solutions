@@ -143,7 +143,7 @@ export async function updateOpportunityStatus(formData: FormData) {
   const parsed = statusSchema.parse({
     opportunityId: formData.get("opportunityId"),
     toStatus: formData.get("toStatus"),
-    reason: formData.get("reason") || undefined,
+    reason: formData.get("reason") || formData.get("decisionReason") || undefined,
     decisionType: formData.get("decisionType") || undefined,
     decision: formData.get("decision") || undefined,
     decisionReason: formData.get("decisionReason") || undefined,

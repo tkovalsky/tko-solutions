@@ -4,6 +4,7 @@ import OpportunityCard from "./opportunity-card";
 import { buildPipelineSummary } from "@/lib/opportunity-intelligence/reporting/pipeline-summary";
 import { buildRecentChanges } from "@/lib/opportunity-intelligence/queue/changes";
 import { buildTodayQueue } from "@/lib/opportunity-intelligence/queue/today";
+import { daysUntilOct1 } from "@/lib/opportunity-intelligence/date/oct1";
 import { tifDb } from "@/lib/tif/db";
 
 export const metadata: Metadata = {
@@ -244,11 +245,6 @@ function EmptyState({
       </p>
     </section>
   );
-}
-
-function daysUntilOct1(asOf: Date) {
-  const target = new Date(Date.UTC(asOf.getUTCFullYear(), 9, 1));
-  return Math.max(0, Math.ceil((target.getTime() - asOf.getTime()) / 86_400_000));
 }
 
 function formatDate(date: Date) {

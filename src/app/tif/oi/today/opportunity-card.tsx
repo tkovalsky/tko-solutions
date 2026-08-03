@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { OiNextActionStatus, OiNextActionType, OiOpportunityType } from "@prisma/client";
+import DecisionCapture from "@/app/tif/oi/decision-capture";
 import { completeNextAction, dismissOpportunity, snoozeOpportunity } from "./actions";
 
 export type TodayCardOpportunity = {
@@ -109,11 +110,16 @@ export default function OpportunityCard({ opportunity, asOf }: { opportunity: To
         </form>
         <details className="min-w-56">
           <summary className="cursor-pointer rounded-md border border-border px-3 py-2 font-semibold">Dismiss</summary>
-          <form action={dismissOpportunity} className="mt-2 grid gap-2 rounded-md border border-border bg-[#f7f8fb] p-3">
-            <input type="hidden" name="opportunityId" value={opportunity.id} />
-            <textarea name="reason" required className="rounded-md border border-input-border px-3 py-2" placeholder="Reason" />
-            <button className="rounded-md bg-[#17375e] px-3 py-2 font-semibold text-white">Dismiss</button>
-          </form>
+          <div className="mt-2">
+            <DecisionCapture
+              action={dismissOpportunity}
+              opportunityId={opportunity.id}
+              type="disqualify_opportunity"
+              decision="dismissed"
+              label="Dismiss"
+              currentScore={opportunity.currentScore}
+            />
+          </div>
         </details>
       </div>
     </article>

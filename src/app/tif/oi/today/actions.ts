@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { captureDecision } from "@/lib/opportunity-intelligence/action/decision";
+import { canTransition } from "@/lib/opportunity-intelligence/commercial/lifecycle";
 import { deriveNextAction } from "@/lib/opportunity-intelligence/commercial/next-action";
 import { tifDb } from "@/lib/tif/db";
 
@@ -12,7 +14,9 @@ const snoozeSchema = z.object({
 
 const dismissSchema = z.object({
   opportunityId: z.string().trim().min(1),
-  reason: z.string().trim().min(1, "Dismiss reason is required."),
+  decisionReason: z.string().trim().min(1, "Dismiss reason is required."),
+  decisionConfidence: z.enum(["low", "medium", "high"]).default("medium"),
+  expectedOutcome: z.string().trim().optional(),
 });
 
 const completeSchema = z.object({
@@ -38,17 +42,36 @@ export async function snoozeOpportunity(formData: FormData) {
 export async function dismissOpportunity(formData: FormData) {
   const parsed = dismissSchema.parse({
     opportunityId: formData.get("opportunityId"),
-    reason: formData.get("reason"),
+    decisionReason: formData.get("decisionReason") || formData.get("reason"),
+    decisionConfidence: formData.get("decisionConfidence") || "medium",
+    expectedOutcome: formData.get("expectedOutcome") || undefined,
   });
 
   await tifDb.$transaction(async (tx) => {
     const opportunity = await tx.oiOpportunity.findUniqueOrThrow({
       where: { id: parsed.opportunityId },
-      select: { status: true },
+      select: { type: true, status: true },
+    });
+    const transition = canTransition({
+      type: opportunity.type,
+      from: opportunity.status,
+      to: "dismissed",
+      reason: parsed.decisionReason,
+    });
+    if (!transition.ok) {
+      throw new Error(transition.blockingReason);
+    }
+    await captureDecision(tx, {
+      opportunityId: parsed.opportunityId,
+      type: "disqualify_opportunity",
+      decision: "dismissed",
+      reason: parsed.decisionReason,
+      confidence: parsed.decisionConfidence,
+      expectedOutcome: parsed.expectedOutcome,
     });
     await tx.oiOpportunity.update({
       where: { id: parsed.opportunityId },
-      data: { status: "dismissed", disqualifiedReason: parsed.reason, lastActivityAt: new Date() },
+      data: { status: "dismissed", disqualifiedReason: parsed.decisionReason, lastActivityAt: new Date() },
     });
     await tx.oiNextAction.updateMany({
       where: { opportunityId: parsed.opportunityId, status: "open" },
@@ -62,7 +85,7 @@ export async function dismissOpportunity(formData: FormData) {
         summary: "Opportunity dismissed from Today.",
         fromStatus: opportunity.status,
         toStatus: "dismissed",
-        reason: parsed.reason,
+        reason: parsed.decisionReason,
       },
     });
   });

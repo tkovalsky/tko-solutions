@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { daysUntilOct1 } from "@/lib/opportunity-intelligence/date/oct1";
 import { tifDb } from "@/lib/tif/db";
 
 export const metadata: Metadata = {
@@ -18,35 +19,51 @@ type BadgeCounts = {
   today: number;
   intake: number;
   pipeline: number;
-  accounts: number;
 };
 
 const navItems = [
   { label: "Today", href: "/tif/oi/today", badge: "today" },
   { label: "Intake", href: "/tif/oi/intake", badge: "intake" },
   { label: "Pipeline", href: "/tif/oi/opportunities", badge: "pipeline" },
-  { label: "Accounts", href: "/tif/oi/accounts", badge: "accounts" },
 ] as const;
 
 async function getBadgeCounts(): Promise<BadgeCounts> {
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
   const [counts] = await tifDb.$queryRaw<BadgeCounts[]>`
     SELECT
-      0::int AS "today",
-      (SELECT COUNT(*)::int FROM "OiSource") AS "intake",
-      (SELECT COUNT(*)::int FROM "OiOpportunity") AS "pipeline",
-      (SELECT COUNT(*)::int FROM "OiOrganization") AS "accounts"
+      (
+        SELECT COUNT(*)::int
+        FROM "OiNextAction"
+        WHERE "status" = 'open'
+          AND "dueAt" IS NOT NULL
+          AND "dueAt" <= ${endOfToday}
+      ) AS "today",
+      (
+        SELECT COUNT(*)::int
+        FROM "OiSignal"
+        WHERE "status" IN ('captured', 'classified')
+          AND "tier" IN ('tier_1', 'tier_2')
+      ) AS "intake",
+      (
+        SELECT COUNT(*)::int
+        FROM "OiOpportunity"
+        WHERE "status" NOT IN (
+          'dismissed',
+          'paused',
+          'closed',
+          'won',
+          'accepted',
+          'lost',
+          'declined',
+          'rejected',
+          'no_bid',
+          'no_response'
+        )
+      ) AS "pipeline"
   `;
 
-  return counts ?? { today: 0, intake: 0, pipeline: 0, accounts: 0 };
-}
-
-function daysUntilOct1() {
-  const now = new Date();
-  const targetYear = now.getMonth() > 9 || (now.getMonth() === 9 && now.getDate() > 1)
-    ? now.getFullYear() + 1
-    : now.getFullYear();
-  const target = new Date(targetYear, 9, 1);
-  return Math.max(0, Math.ceil((target.getTime() - now.getTime()) / 86_400_000));
+  return counts ?? { today: 0, intake: 0, pipeline: 0 };
 }
 
 export default async function OiLayout({ children }: OiShellProps) {

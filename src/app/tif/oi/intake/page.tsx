@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import DecisionCapture from "@/app/tif/oi/decision-capture";
 import { classifyOpportunity } from "@/lib/opportunity-intelligence/commercial/classify-opportunity";
 import { inferInitiatives } from "@/lib/opportunity-intelligence/intelligence/initiative-inference";
 import { classifySignal, signalTypeLabel } from "@/lib/opportunity-intelligence/intake/classify-signal";
@@ -108,6 +109,9 @@ async function getTriageQueue(showAll: boolean) {
           id: true,
           opportunityId: true,
           canonicalUrl: true,
+          opportunity: {
+            select: { currentScore: true },
+          },
         },
       },
       organization: {
@@ -287,9 +291,15 @@ function TriageSignalRow({ signal }: { signal: TriageSignal }) {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3 lg:w-[32rem]">
-          <form action={promoteSignal} className="grid gap-2">
+          <DecisionCapture
+            action={promoteSignal}
+            opportunityId={signal.source.opportunityId ?? ""}
+            type="promote_signal"
+            decision="promote"
+            label="Promote"
+            currentScore={signal.source.opportunity?.currentScore ?? null}
+          >
             <input type="hidden" name="sourceId" value={signal.source.id} />
-            <input type="hidden" name="opportunityId" value={signal.source.opportunityId ?? ""} />
             <label className="grid gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
               Type
               <select name="opportunityType" className={inputClass} defaultValue="consulting">
@@ -301,13 +311,7 @@ function TriageSignalRow({ signal }: { signal: TriageSignal }) {
                 <option value="rfp">RFP</option>
               </select>
             </label>
-            <button
-              type="submit"
-              className="rounded-md bg-[#17375e] px-3 py-2 text-sm font-semibold text-white hover:bg-[#0f2948]"
-            >
-              Promote
-            </button>
-          </form>
+          </DecisionCapture>
 
           <form action={watchAccount} className="grid content-start gap-2">
             <input type="hidden" name="sourceId" value={signal.source.id} />
@@ -317,22 +321,16 @@ function TriageSignalRow({ signal }: { signal: TriageSignal }) {
             </button>
           </form>
 
-          <form action={dismissSignal} className="grid gap-2">
+          <DecisionCapture
+            action={dismissSignal}
+            opportunityId={signal.source.opportunityId ?? ""}
+            type="dismiss_signal"
+            decision="dismiss"
+            label="Dismiss"
+            currentScore={signal.source.opportunity?.currentScore ?? null}
+          >
             <input type="hidden" name="sourceId" value={signal.source.id} />
-            <input type="hidden" name="opportunityId" value={signal.source.opportunityId ?? ""} />
-            <label className="grid gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
-              Reason
-              <input
-                name="reason"
-                required
-                className={inputClass}
-                placeholder="Why this is not an opportunity"
-              />
-            </label>
-            <button type="submit" className="rounded-md border border-border px-3 py-2 text-sm font-semibold">
-              Dismiss
-            </button>
-          </form>
+          </DecisionCapture>
         </div>
       </div>
     </li>
@@ -500,9 +498,15 @@ function ReviewPanel({ review }: { review: NonNullable<ReviewResult> }) {
           </p>
           <h2 className="mt-1 text-xl font-semibold">Review candidates</h2>
           {opportunityCandidates.length > 0 ? (
-            <form action={promoteSignal} className="mt-4 grid gap-3">
+            <DecisionCapture
+              action={promoteSignal}
+              opportunityId={review.id}
+              type="promote_signal"
+              decision="promote"
+              label="Promote selected"
+              currentScore={review.currentScore}
+            >
               <input type="hidden" name="sourceId" value={source.id} />
-              <input type="hidden" name="opportunityId" value={review.id} />
               {opportunityCandidates.map((candidate) => (
                 <label key={candidate.type} className="rounded-md border border-border p-3 text-sm">
                   <span className="flex items-start gap-3">
@@ -531,13 +535,7 @@ function ReviewPanel({ review }: { review: NonNullable<ReviewResult> }) {
                   Approve proposed initiative with selected opportunities
                 </label>
               ) : null}
-              <button
-                type="submit"
-                className="w-fit rounded-md bg-[#17375e] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0f2948]"
-              >
-                Promote selected
-              </button>
-            </form>
+            </DecisionCapture>
           ) : (
             <div className="mt-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
               No opportunity candidate was produced. Watch the account instead.
@@ -545,20 +543,16 @@ function ReviewPanel({ review }: { review: NonNullable<ReviewResult> }) {
           )}
 
           <div className="mt-5 grid gap-3 border-t border-border pt-5">
-            <form action={dismissSignal} className="grid gap-2">
+            <DecisionCapture
+              action={dismissSignal}
+              opportunityId={review.id}
+              type="dismiss_signal"
+              decision="dismiss"
+              label="Dismiss signal"
+              currentScore={review.currentScore}
+            >
               <input type="hidden" name="sourceId" value={source.id} />
-              <input type="hidden" name="opportunityId" value={review.id} />
-              <label className="grid gap-1 text-sm font-medium">
-                Dismiss reason
-                <input name="reason" className={inputClass} placeholder="Why this should not become an opportunity" />
-              </label>
-              <button
-                type="submit"
-                className="w-fit rounded-md border border-border px-4 py-2 text-sm font-semibold"
-              >
-                Dismiss signal
-              </button>
-            </form>
+            </DecisionCapture>
             <form action={watchAccount}>
               <input type="hidden" name="sourceId" value={source.id} />
               <input type="hidden" name="opportunityId" value={review.id} />

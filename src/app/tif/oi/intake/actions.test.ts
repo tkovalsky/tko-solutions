@@ -91,11 +91,63 @@ describe("dismissSignal", () => {
     const formData = new FormData();
     formData.set("sourceId", "source-1");
     formData.set("opportunityId", "opportunity-1");
-    formData.set("reason", " ");
+    formData.set("decisionReason", " ");
 
     await expect(dismissSignal(formData)).rejects.toThrow(
       "REDIRECT:/tif/oi/intake?error=Dismiss%20reason%20is%20required.",
     );
+  });
+
+  it("captures a dismiss-signal decision before dismissing the signal", async () => {
+    const tx = {
+      oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "opportunity-1",
+          currentScore: {
+            id: "score-1",
+            expectedValue: 1000,
+            estimatedHours: 2,
+            conversionProbability: 30,
+          },
+        }),
+      },
+      oiDecision: {
+        create: vi.fn(),
+      },
+      oiSignal: {
+        updateMany: vi.fn(),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("sourceId", "source-1");
+    formData.set("opportunityId", "opportunity-1");
+    formData.set("decisionReason", "Not relevant.");
+    formData.set("decisionConfidence", "high");
+    formData.set("expectedOutcome", "No pursuit.");
+
+    await expect(dismissSignal(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?capture=reviewed&sourceId=source-1&opportunityId=opportunity-1",
+    );
+
+    expect(tx.oiDecision.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opportunity-1",
+        type: "dismiss_signal",
+        decision: "dismiss",
+        reason: "Not relevant.",
+        confidence: "high",
+        expectedOutcome: "No pursuit.",
+        scoreIdAtDecision: "score-1",
+      }),
+    });
+    expect(tx.oiSignal.updateMany).toHaveBeenCalledWith({
+      where: { sourceId: "source-1" },
+      data: expect.objectContaining({
+        status: "dismissed",
+        dismissedReason: "Not relevant.",
+      }),
+    });
   });
 });
 
@@ -125,6 +177,15 @@ describe("promoteSignal", () => {
         }),
       },
       oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "opportunity-1",
+          currentScore: {
+            id: "score-1",
+            expectedValue: 1000,
+            estimatedHours: 2,
+            conversionProbability: 30,
+          },
+        }),
         create: vi.fn(),
         update: vi.fn().mockResolvedValue({
           id: "opportunity-1",
@@ -167,17 +228,32 @@ describe("promoteSignal", () => {
       oiSignal: {
         update: vi.fn().mockResolvedValue({}),
       },
+      oiDecision: {
+        create: vi.fn(),
+      },
     };
     mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
     const formData = new FormData();
     formData.set("sourceId", "source-1");
     formData.set("opportunityId", "opportunity-1");
     formData.append("opportunityType", "assessment");
+    formData.set("decisionReason", "Worth pursuing.");
+    formData.set("decisionConfidence", "medium");
 
     await expect(promoteSignal(formData)).rejects.toThrow(
       "REDIRECT:/tif/oi/intake?capture=reviewed&sourceId=source-1&opportunityId=opportunity-1",
     );
     expect(tx.oiOpportunity.create).not.toHaveBeenCalled();
+    expect(tx.oiDecision.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opportunity-1",
+        type: "promote_signal",
+        decision: "assessment",
+        reason: "Worth pursuing.",
+        confidence: "medium",
+        scoreIdAtDecision: "score-1",
+      }),
+    });
     expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
       where: { id: "opportunity-1" },
       data: expect.objectContaining({
@@ -255,6 +331,15 @@ describe("promoteSignal", () => {
         }),
       },
       oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "opportunity-1",
+          currentScore: {
+            id: "score-1",
+            expectedValue: 1000,
+            estimatedHours: 2,
+            conversionProbability: 30,
+          },
+        }),
         update: vi.fn().mockResolvedValue({
           id: "opportunity-1",
           type: "consulting",
@@ -315,6 +400,9 @@ describe("promoteSignal", () => {
       oiSignal: {
         update: vi.fn().mockResolvedValue({}),
       },
+      oiDecision: {
+        create: vi.fn(),
+      },
     };
     mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
     const formData = new FormData();
@@ -322,6 +410,8 @@ describe("promoteSignal", () => {
     formData.set("opportunityId", "opportunity-1");
     formData.append("opportunityType", "consulting");
     formData.append("opportunityType", "assessment");
+    formData.set("decisionReason", "Two viable paths.");
+    formData.set("decisionConfidence", "high");
 
     await expect(promoteSignal(formData)).rejects.toThrow(
       "REDIRECT:/tif/oi/intake?capture=reviewed&sourceId=source-1&opportunityId=opportunity-1",
@@ -332,6 +422,15 @@ describe("promoteSignal", () => {
       data: expect.objectContaining({
         type: "consulting",
         status: "identified",
+      }),
+    });
+    expect(tx.oiDecision.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opportunity-1",
+        type: "promote_signal",
+        decision: "consulting,assessment",
+        reason: "Two viable paths.",
+        confidence: "high",
       }),
     });
     expect(tx.oiOpportunity.create).toHaveBeenCalledTimes(1);

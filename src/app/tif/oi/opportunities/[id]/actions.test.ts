@@ -320,6 +320,73 @@ describe("workbench actions", () => {
     });
   });
 
+  it.each([
+    ["qualify_opportunity", "qualified"],
+    ["disqualify_opportunity", "dismissed"],
+    ["close_opportunity", "closed"],
+    ["pause_opportunity", "paused"],
+  ] as const)("captures a %s decision with the score snapshot", async (decisionType, toStatus) => {
+    mockedTransition.mockReturnValueOnce({ ok: true, requiresReason: ["dismissed", "closed", "paused"].includes(toStatus) });
+    const tx = workbenchTx({
+      existingAction: {
+        type: "review_stale",
+        description: "Review stale opportunity",
+      },
+      scoreInput: scoreInputOpportunity({
+        status: toStatus,
+        initiative: { status: "active", approvedAt: new Date("2026-08-01T12:00:00Z") },
+        stakeholders: [{ isSelected: true }],
+      }),
+    });
+    tx.oiOpportunity.findUniqueOrThrow
+      .mockResolvedValueOnce({
+        id: "opp-1",
+        currentScore: {
+          id: "score-current",
+          expectedValue: 1200,
+          estimatedHours: 3,
+          conversionProbability: 40,
+        },
+      })
+      .mockResolvedValue(scoreInputOpportunity({
+        status: toStatus,
+        initiative: { status: "active", approvedAt: new Date("2026-08-01T12:00:00Z") },
+        stakeholders: [{ isSelected: true }],
+      }));
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("toStatus", toStatus);
+    formData.set("decisionType", decisionType);
+    formData.set("decision", toStatus);
+    formData.set("decisionReason", "Operator made this decision.");
+    formData.set("decisionConfidence", "high");
+    formData.set("expectedOutcome", "Expected result.");
+
+    await updateOpportunityStatus(formData);
+
+    expect(mockedTransition).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: toStatus,
+        reason: "Operator made this decision.",
+      }),
+    );
+    expect(tx.oiDecision.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        type: decisionType,
+        decision: toStatus,
+        reason: "Operator made this decision.",
+        confidence: "high",
+        expectedOutcome: "Expected result.",
+        scoreIdAtDecision: "score-current",
+        expectedValue: 1200,
+        expectedEffortHours: 3,
+        expectedProbability: 40,
+      }),
+    });
+  });
+
   it("does not create a new row when the derived action is unchanged", async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-08-01T12:00:00Z"));
@@ -437,6 +504,9 @@ function workbenchTx({
       update: vi.fn(),
     },
     oiActivity: {
+      create: vi.fn(),
+    },
+    oiDecision: {
       create: vi.fn(),
     },
     oiContactPoint: {

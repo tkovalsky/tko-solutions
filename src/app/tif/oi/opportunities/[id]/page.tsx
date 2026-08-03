@@ -250,7 +250,6 @@ function StatusDecision({
       currentScore={opportunity.currentScore}
     >
       <input type="hidden" name="toStatus" value={toStatus} />
-      <input type="hidden" name="reason" value={`${label} decision captured.`} />
     </DecisionCapture>
   );
 }

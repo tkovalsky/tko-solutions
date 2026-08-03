@@ -5,6 +5,7 @@ export type TransitionResult =
   | { ok: false; blockingReason: string; requiresReason: boolean };
 
 const TERMINAL_STATUSES = new Set<OiOpportunityStatus>([
+  "closed",
   "dismissed",
   "won",
   "accepted",
@@ -16,9 +17,9 @@ const TERMINAL_STATUSES = new Set<OiOpportunityStatus>([
 ]);
 
 const SHARED_TRANSITIONS: Partial<Record<OiOpportunityStatus, OiOpportunityStatus[]>> = {
-  identified: ["qualifying", "dismissed"],
-  reviewing: ["qualifying", "dismissed"],
-  qualifying: ["qualified", "dismissed"],
+  identified: ["qualifying"],
+  reviewing: ["qualifying"],
+  qualifying: ["qualified"],
 };
 
 const TYPE_TRANSITIONS: Record<OiOpportunityType, Partial<Record<OiOpportunityStatus, OiOpportunityStatus[]>>> = {
@@ -57,34 +58,66 @@ const TYPE_TRANSITIONS: Record<OiOpportunityType, Partial<Record<OiOpportunitySt
   },
   fte: {
     qualified: ["researching"],
-    researching: ["application_ready"],
+    researching: ["application_ready", "paused"],
     application_ready: ["applied"],
-    applied: ["recruiter_screen", "no_response"],
-    recruiter_screen: ["hiring_manager", "rejected"],
-    hiring_manager: ["interview_loop"],
-    interview_loop: ["offer", "rejected"],
-    offer: ["accepted", "declined"],
+    applied: ["recruiter_screen", "no_response", "paused"],
+    recruiter_screen: ["hiring_manager", "rejected", "paused"],
+    hiring_manager: ["interview_loop", "paused"],
+    interview_loop: ["offer", "rejected", "paused"],
+    offer: ["accepted", "declined", "paused"],
+    paused: ["researching"],
   },
   rfp: {
-    identified: ["rfp_intake", "dismissed"],
+    identified: ["rfp_intake"],
     rfp_intake: ["qualifying"],
-    qualifying: ["no_bid", "bid_as_prime", "seeking_partner"],
-    seeking_partner: ["bid_as_sub", "no_bid"],
-    bid_as_prime: ["submitted"],
-    bid_as_sub: ["submitted"],
-    submitted: ["shortlisted", "lost"],
-    shortlisted: ["won", "lost"],
+    qualifying: ["no_bid", "bid_as_prime", "seeking_partner", "paused"],
+    seeking_partner: ["bid_as_sub", "no_bid", "paused"],
+    bid_as_prime: ["submitted", "paused"],
+    bid_as_sub: ["submitted", "paused"],
+    submitted: ["shortlisted", "lost", "paused"],
+    shortlisted: ["won", "lost", "paused"],
+    paused: ["rfp_intake"],
   },
   partnership: {
     qualified: ["researching"],
-    researching: ["outreach_ready"],
+    researching: ["outreach_ready", "paused"],
     outreach_ready: ["contacted"],
-    contacted: ["capability_shared", "nurturing"],
-    capability_shared: ["agreement_discussion"],
-    agreement_discussion: ["won", "lost"],
+    contacted: ["capability_shared", "nurturing", "paused"],
+    capability_shared: ["agreement_discussion", "paused"],
+    agreement_discussion: ["won", "lost", "paused"],
     nurturing: ["contacted"],
+    paused: ["researching"],
   },
 };
+
+const ALL_NON_TERMINAL_STATUSES: OiOpportunityStatus[] = [
+  "identified",
+  "reviewing",
+  "qualifying",
+  "qualified",
+  "researching",
+  "paused",
+  "outreach_ready",
+  "contacted",
+  "conversation",
+  "nurturing",
+  "diagnostic_scoped",
+  "proposal_sent",
+  "capability_shared",
+  "agreement_discussion",
+  "application_ready",
+  "applied",
+  "recruiter_screen",
+  "hiring_manager",
+  "interview_loop",
+  "offer",
+  "rfp_intake",
+  "seeking_partner",
+  "bid_as_prime",
+  "bid_as_sub",
+  "submitted",
+  "shortlisted",
+];
 
 export function canTransition(input: {
   type: OiOpportunityType;
@@ -118,9 +151,11 @@ export function canTransition(input: {
 }
 
 export function validTargetsFor(type: OiOpportunityType, from: OiOpportunityStatus): OiOpportunityStatus[] {
+  if (TERMINAL_STATUSES.has(from)) return [];
   const shared = type === "rfp" ? [] : SHARED_TRANSITIONS[from] ?? [];
   const specific = TYPE_TRANSITIONS[type][from] ?? [];
-  return [...new Set([...shared, ...specific])];
+  const universal = ALL_NON_TERMINAL_STATUSES.includes(from) ? (["closed", "dismissed"] as OiOpportunityStatus[]) : [];
+  return [...new Set([...shared, ...specific, ...universal])];
 }
 
 export function isTerminalOpportunityStatus(status: OiOpportunityStatus) {

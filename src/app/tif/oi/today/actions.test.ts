@@ -34,9 +34,95 @@ describe("Today actions", () => {
   it("rejects an empty dismiss reason", async () => {
     const formData = new FormData();
     formData.set("opportunityId", "opp-1");
-    formData.set("reason", " ");
+    formData.set("decisionReason", " ");
 
     await expect(dismissOpportunity(formData)).rejects.toThrow();
+  });
+
+  it("captures a disqualify decision before dismissing an opportunity from Today", async () => {
+    const tx = {
+      oiOpportunity: {
+        findUniqueOrThrow: vi
+          .fn()
+          .mockResolvedValueOnce({ id: "opp-1", type: "consulting", status: "researching" })
+          .mockResolvedValueOnce({
+            id: "opp-1",
+            currentScore: {
+              id: "score-1",
+              expectedValue: 1000,
+              estimatedHours: 2,
+              conversionProbability: 25,
+            },
+          }),
+        update: vi.fn(),
+      },
+      oiDecision: {
+        create: vi.fn(),
+      },
+      oiNextAction: {
+        updateMany: vi.fn(),
+      },
+      oiActivity: {
+        create: vi.fn(),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("decisionReason", "Not worth pursuing.");
+    formData.set("decisionConfidence", "high");
+    formData.set("expectedOutcome", "No conversion.");
+
+    await dismissOpportunity(formData);
+
+    expect(tx.oiDecision.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        opportunityId: "opp-1",
+        type: "disqualify_opportunity",
+        decision: "dismissed",
+        reason: "Not worth pursuing.",
+        confidence: "high",
+        expectedOutcome: "No conversion.",
+        scoreIdAtDecision: "score-1",
+        expectedValue: 1000,
+        expectedEffortHours: 2,
+        expectedProbability: 25,
+      }),
+    });
+    expect(tx.oiOpportunity.update).toHaveBeenCalledWith({
+      where: { id: "opp-1" },
+      data: expect.objectContaining({
+        status: "dismissed",
+        disqualifiedReason: "Not worth pursuing.",
+      }),
+    });
+  });
+
+  it("rejects Today dismissal when the lifecycle transition is blocked", async () => {
+    const tx = {
+      oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({ id: "opp-1", type: "consulting", status: "closed" }),
+        update: vi.fn(),
+      },
+      oiDecision: {
+        create: vi.fn(),
+      },
+      oiNextAction: {
+        updateMany: vi.fn(),
+      },
+      oiActivity: {
+        create: vi.fn(),
+      },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("decisionReason", "Not worth pursuing.");
+    formData.set("decisionConfidence", "medium");
+
+    await expect(dismissOpportunity(formData)).rejects.toThrow("Cannot transition from terminal status closed.");
+    expect(tx.oiDecision.create).not.toHaveBeenCalled();
+    expect(tx.oiOpportunity.update).not.toHaveBeenCalled();
   });
 
   it("completes the current action and creates the derived successor action", async () => {

@@ -4,6 +4,7 @@ import type { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { captureDecision } from "@/lib/opportunity-intelligence/action/decision";
 import { TODD_CAPABILITY_PROFILE_V2 } from "@/lib/opportunity-intelligence/capability-profile";
 import { deriveNextAction } from "@/lib/opportunity-intelligence/commercial/next-action";
 import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
@@ -29,6 +30,12 @@ const intakeSchema = z.object({
 const sourceReviewSchema = z.object({
   sourceId: z.string().trim().min(1),
   opportunityId: z.string().trim().min(1),
+});
+
+const decisionCaptureSchema = z.object({
+  decisionReason: z.string().trim().min(1, "Decision reason is required."),
+  decisionConfidence: z.enum(["low", "medium", "high"]).default("medium"),
+  expectedOutcome: z.string().trim().optional(),
 });
 
 function redirectWithError(message: string): never {
@@ -174,9 +181,23 @@ export async function promoteSignal(formData: FormData) {
   if (selectedTypes.length === 0) {
     redirectWithError("Select at least one opportunity type to promote.");
   }
+  const decision = decisionCaptureSchema.parse({
+    decisionReason: formData.get("decisionReason"),
+    decisionConfidence: formData.get("decisionConfidence") || "medium",
+    expectedOutcome: formData.get("expectedOutcome") || undefined,
+  });
 
   let reviewOpportunityId = parsed.opportunityId;
   await tifDb.$transaction(async (tx) => {
+    await captureDecision(tx, {
+      opportunityId: parsed.opportunityId,
+      type: "promote_signal",
+      decision: selectedTypes.join(","),
+      reason: decision.decisionReason,
+      confidence: decision.decisionConfidence,
+      expectedOutcome: decision.expectedOutcome,
+    });
+
     const source = await tx.oiSource.findUniqueOrThrow({
       where: { id: parsed.sourceId },
       include: {
@@ -318,18 +339,33 @@ export async function dismissSignal(formData: FormData) {
     sourceId: formData.get("sourceId"),
     opportunityId: formData.get("opportunityId"),
   });
-  const reason = z.string().trim().min(1, "Dismiss reason is required.").safeParse(formData.get("reason"));
+  const reason = z.string().trim().min(1, "Dismiss reason is required.").safeParse(formData.get("decisionReason") || formData.get("reason"));
   if (!reason.success) {
     redirectWithError(reason.error.issues[0]?.message ?? "Dismiss reason is required.");
   }
+  const decision = decisionCaptureSchema.parse({
+    decisionReason: reason.data,
+    decisionConfidence: formData.get("decisionConfidence") || "medium",
+    expectedOutcome: formData.get("expectedOutcome") || undefined,
+  });
 
-  await tifDb.oiSignal.updateMany({
-    where: { sourceId: parsed.sourceId },
-    data: {
-      status: "dismissed",
-      dismissedReason: reason.data,
-      dismissedAt: new Date(),
-    },
+  await tifDb.$transaction(async (tx) => {
+    await captureDecision(tx, {
+      opportunityId: parsed.opportunityId,
+      type: "dismiss_signal",
+      decision: "dismiss",
+      reason: decision.decisionReason,
+      confidence: decision.decisionConfidence,
+      expectedOutcome: decision.expectedOutcome,
+    });
+    await tx.oiSignal.updateMany({
+      where: { sourceId: parsed.sourceId },
+      data: {
+        status: "dismissed",
+        dismissedReason: decision.decisionReason,
+        dismissedAt: new Date(),
+      },
+    });
   });
 
   revalidatePath(INTAKE_PATH);

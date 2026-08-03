@@ -1,6 +1,6 @@
 import type { OiOpportunityStatus, OiOpportunityType } from "@prisma/client";
 import { describe, expect, it } from "vitest";
-import { canTransition, validTargetsFor } from "./lifecycle";
+import { canTransition, isTerminalOpportunityStatus, validTargetsFor } from "./lifecycle";
 
 const validByType: Record<OiOpportunityType, Array<[OiOpportunityStatus, OiOpportunityStatus]>> = {
   consulting: [
@@ -120,10 +120,88 @@ describe("canTransition", () => {
   });
 
   it("exposes valid targets for the workbench status control", () => {
-    expect(validTargetsFor("assessment", "contacted")).toEqual(["conversation", "nurturing"]);
+    expect(validTargetsFor("assessment", "contacted")).toEqual(["conversation", "nurturing", "closed", "dismissed"]);
+  });
+
+  it("allows close and dismiss from every non-terminal status and treats closed as terminal", () => {
+    for (const type of opportunityTypes) {
+      for (const status of nonTerminalStatuses) {
+        expect(canTransition({ type, from: status, to: "closed", reason: "done" })).toEqual({
+          ok: true,
+          requiresReason: true,
+        });
+        expect(canTransition({ type, from: status, to: "dismissed", reason: "not a fit" })).toEqual({
+          ok: true,
+          requiresReason: true,
+        });
+      }
+    }
+
+    expect(isTerminalOpportunityStatus("closed")).toBe(true);
+    expect(canTransition({ type: "consulting", from: "closed", to: "researching", reason: "reopen" })).toMatchObject({
+      ok: false,
+      blockingReason: "Cannot transition from terminal status closed.",
+    });
+  });
+
+  it("allows pause and un-pause for fte, rfp, and partnership", () => {
+    expect(canTransition({ type: "fte", from: "applied", to: "paused", reason: "waiting" })).toEqual({
+      ok: true,
+      requiresReason: true,
+    });
+    expect(canTransition({ type: "fte", from: "paused", to: "researching" })).toEqual({
+      ok: true,
+      requiresReason: false,
+    });
+    expect(canTransition({ type: "rfp", from: "submitted", to: "paused", reason: "waiting" })).toEqual({
+      ok: true,
+      requiresReason: true,
+    });
+    expect(canTransition({ type: "rfp", from: "paused", to: "rfp_intake" })).toEqual({
+      ok: true,
+      requiresReason: false,
+    });
+    expect(canTransition({ type: "partnership", from: "contacted", to: "paused", reason: "waiting" })).toEqual({
+      ok: true,
+      requiresReason: true,
+    });
+    expect(canTransition({ type: "partnership", from: "paused", to: "researching" })).toEqual({
+      ok: true,
+      requiresReason: false,
+    });
   });
 });
 
 function terminal(status: OiOpportunityStatus) {
-  return ["dismissed", "won", "accepted", "lost", "declined", "rejected", "no_bid", "no_response"].includes(status);
+  return ["closed", "dismissed", "won", "accepted", "lost", "declined", "rejected", "no_bid", "no_response"].includes(status);
 }
+
+const opportunityTypes: OiOpportunityType[] = ["consulting", "fractional", "assessment", "fte", "rfp", "partnership"];
+const nonTerminalStatuses: OiOpportunityStatus[] = [
+  "identified",
+  "reviewing",
+  "qualifying",
+  "qualified",
+  "researching",
+  "paused",
+  "outreach_ready",
+  "contacted",
+  "conversation",
+  "nurturing",
+  "diagnostic_scoped",
+  "proposal_sent",
+  "capability_shared",
+  "agreement_discussion",
+  "application_ready",
+  "applied",
+  "recruiter_screen",
+  "hiring_manager",
+  "interview_loop",
+  "offer",
+  "rfp_intake",
+  "seeking_partner",
+  "bid_as_prime",
+  "bid_as_sub",
+  "submitted",
+  "shortlisted",
+];
