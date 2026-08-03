@@ -194,7 +194,9 @@ describe("workbench actions", () => {
     formData.set("opportunityId", "opp-1");
     formData.set("stakeholderId", "stakeholder-1");
 
-    await expect(selectStakeholder(formData)).rejects.toThrow("Selection requires role evidence or explicit operator confirmation.");
+    await expect(selectStakeholder(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=Selection%20requires%20role%20evidence%20or%20explicit%20operator%20confirmation.",
+    );
     expect(tx.oiStakeholder.update).not.toHaveBeenCalled();
   });
 
@@ -217,8 +219,22 @@ describe("workbench actions", () => {
     formData.set("opportunityId", "opp-1");
     formData.set("stakeholderId", "stakeholder-1");
 
-    await expect(selectStakeholder(formData)).rejects.toThrow("A do-not-contact stakeholder cannot be selected.");
+    await expect(selectStakeholder(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=A%20do-not-contact%20stakeholder%20cannot%20be%20selected.",
+    );
     expect(tx.oiStakeholder.update).not.toHaveBeenCalled();
+  });
+
+  it("redirects invalid operator fact input to a visible workbench message", async () => {
+    const formData = new FormData();
+    formData.set("opportunityId", "opp-1");
+    formData.set("field", " ");
+    formData.set("value", "No incumbent SI found.");
+
+    await expect(addOperatorFact(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=Fact%20field%20is%20required.",
+    );
+    expect(mockedDb.$transaction).not.toHaveBeenCalled();
   });
 
   it("requires contact point provenance and excludes pattern-inferred contact points from outreach eligibility", async () => {
@@ -228,7 +244,9 @@ describe("workbench actions", () => {
     missing.set("type", "email");
     missing.set("value", "person@example.com");
 
-    await expect(addContactPoint(missing)).rejects.toThrow();
+    await expect(addContactPoint(missing)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=Invalid%20option%3A%20expected%20one%20of%20%22pattern_inferred%22%7C%22provider_discovered%22%7C%22publicly_listed%22%7C%22directly_provided%22%7C%22verified_deliverable%22",
+    );
     expect(isContactPointOutreachEligible({ status: "active", provenance: "pattern_inferred" })).toBe(false);
     expect(isContactPointOutreachEligible({ status: "active", provenance: "publicly_listed" })).toBe(true);
   });

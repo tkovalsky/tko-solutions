@@ -52,13 +52,18 @@ describe("OpportunityWorkbenchPage", () => {
     expect(screen.getByRole("link", { name: "Evidence" })).toHaveAttribute("href", "#evidence");
     expect(screen.getByRole("link", { name: "Gaps" })).toHaveAttribute("href", "#gaps");
     expect(screen.getByRole("link", { name: "Stakeholders" })).toHaveAttribute("href", "#stakeholders");
-    expect(screen.getByRole("link", { name: "Timeline" })).toHaveAttribute("href", "#timeline");
+    expect(screen.getByRole("link", { name: "Log" })).toHaveAttribute("href", "#log");
+    expect(screen.queryByText("Offer")).not.toBeInTheDocument();
+    expect(screen.queryByText("Outreach")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Overview" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Initiative" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Evidence" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Research gaps" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Stakeholders" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Timeline" })).toBeInTheDocument();
+    for (const id of ["overview", "initiative", "evidence", "gaps", "stakeholders", "log"]) {
+      expect(document.getElementById(id)).toBeInTheDocument();
+    }
   });
 
   it("renders stakeholder suggestions, contact provenance, and selected controls", async () => {
@@ -97,6 +102,17 @@ describe("OpportunityWorkbenchPage", () => {
     );
 
     expect(screen.getByText("A reason is required to move an opportunity to paused.")).toBeInTheDocument();
+  });
+
+  it("surfaces visible workbench action errors", async () => {
+    render(
+      await OpportunityWorkbenchPage({
+        params: Promise.resolve({ id: "opp-1" }),
+        searchParams: Promise.resolve({ actionError: "Fact field is required." }),
+      }),
+    );
+
+    expect(screen.getByText("Fact field is required.")).toBeInTheDocument();
   });
 
   it("renders awaiting manual outreach when prepare outreach completed without an open successor", async () => {

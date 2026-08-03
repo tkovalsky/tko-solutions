@@ -257,12 +257,12 @@ export async function editInitiativeHypothesis(formData: FormData) {
 }
 
 export async function resolveResearchGap(formData: FormData) {
-  const parsed = gapResolutionSchema.parse({
+  const parsed = parseWorkbenchForm(gapResolutionSchema, {
     opportunityId: formData.get("opportunityId"),
     gapId: formData.get("gapId"),
     field: formData.get("field"),
     finding: formData.get("finding"),
-  });
+  }, formData);
 
   await tifDb.$transaction(async (tx) => {
     await tx.oiOpportunityFact.create({
@@ -315,12 +315,12 @@ export async function dismissResearchGap(formData: FormData) {
 }
 
 export async function addOperatorFact(formData: FormData) {
-  const parsed = factSchema.parse({
+  const parsed = parseWorkbenchForm(factSchema, {
     opportunityId: formData.get("opportunityId"),
     field: formData.get("field"),
     value: formData.get("value"),
     confidence: formData.get("confidence") || 85,
-  });
+  }, formData);
   await tifDb.$transaction(async (tx) => {
     await tx.oiOpportunityFact.create({
       data: {
@@ -433,20 +433,20 @@ export async function updateStakeholder(formData: FormData) {
 }
 
 export async function selectStakeholder(formData: FormData) {
-  const parsed = stakeholderIdSchema.parse({
+  const parsed = parseWorkbenchForm(stakeholderIdSchema, {
     opportunityId: formData.get("opportunityId"),
     stakeholderId: formData.get("stakeholderId"),
-  });
+  }, formData);
   await tifDb.$transaction(async (tx) => {
     const stakeholder = await tx.oiStakeholder.findUniqueOrThrow({
       where: { id: parsed.stakeholderId },
       include: { person: true },
     });
     if (stakeholder.person.doNotContact) {
-      throw new Error("A do-not-contact stakeholder cannot be selected.");
+      redirectWithActionError(parsed.opportunityId, "A do-not-contact stakeholder cannot be selected.");
     }
     if (!stakeholder.roleEvidenceUrl && !stakeholder.roleEvidenceLabel && stakeholder.roleConfidence < 100) {
-      throw new Error("Selection requires role evidence or explicit operator confirmation.");
+      redirectWithActionError(parsed.opportunityId, "Selection requires role evidence or explicit operator confirmation.");
     }
     await tx.oiStakeholder.updateMany({
       where: { opportunityId: parsed.opportunityId, isSelected: true },
@@ -463,10 +463,10 @@ export async function selectStakeholder(formData: FormData) {
 }
 
 export async function markDoNotContact(formData: FormData) {
-  const parsed = stakeholderIdSchema.parse({
+  const parsed = parseWorkbenchForm(stakeholderIdSchema, {
     opportunityId: formData.get("opportunityId"),
     stakeholderId: formData.get("stakeholderId"),
-  });
+  }, formData);
   await tifDb.$transaction(async (tx) => {
     const stakeholder = await tx.oiStakeholder.findUniqueOrThrow({
       where: { id: parsed.stakeholderId },
@@ -487,14 +487,14 @@ export async function markDoNotContact(formData: FormData) {
 }
 
 export async function addContactPoint(formData: FormData) {
-  const parsed = contactPointSchema.parse({
+  const parsed = parseWorkbenchForm(contactPointSchema, {
     opportunityId: formData.get("opportunityId"),
     personId: formData.get("personId"),
     type: formData.get("type"),
     value: formData.get("value"),
     provenance: formData.get("provenance"),
     sourceLabel: formData.get("sourceLabel") || undefined,
-  });
+  }, formData);
   await tifDb.$transaction(async (tx) => {
     await tx.oiContactPoint.create({
       data: {
@@ -679,6 +679,18 @@ function sameDueAt(left?: Date | string | null, right?: Date | string | null) {
 
 function workbenchPath(opportunityId: string) {
   return `/tif/oi/opportunities/${opportunityId}`;
+}
+
+function parseWorkbenchForm<T extends z.ZodTypeAny>(schema: T, input: unknown, formData: FormData): z.infer<T> {
+  const parsed = schema.safeParse(input);
+  if (parsed.success) return parsed.data;
+  const opportunityId = z.string().trim().min(1).safeParse(formData.get("opportunityId"));
+  const message = parsed.error.issues[0]?.message ?? "Invalid workbench input.";
+  redirectWithActionError(opportunityId.success ? opportunityId.data : "", message);
+}
+
+function redirectWithActionError(opportunityId: string, message: string): never {
+  redirect(`${workbenchPath(opportunityId)}?actionError=${encodeURIComponent(message)}`);
 }
 
 function revalidateWorkbenchSurfaces(opportunityId: string) {

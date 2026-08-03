@@ -27,6 +27,12 @@ type IntakePageProps = {
     sourceId?: string;
     opportunityId?: string;
     triage?: "all" | "tier1";
+    rawContent?: string;
+    canonicalUrl?: string;
+    organizationName?: string;
+    title?: string;
+    sourceType?: string;
+    publishedAt?: string;
   }>;
 };
 
@@ -150,7 +156,7 @@ export default async function OiIntakePage({ searchParams }: IntakePageProps) {
 
           <form action={captureManualIntake} noValidate className="mt-6 grid gap-4">
             <Field label="Source type">
-              <select name="sourceType" className={inputClass} defaultValue="pasted_text">
+              <select name="sourceType" className={inputClass} defaultValue={params.sourceType ?? "pasted_text"}>
                 <option value="pasted_text">Pasted text</option>
                 <option value="job_posting">Job posting</option>
                 <option value="company_announcement">Company announcement</option>
@@ -161,7 +167,7 @@ export default async function OiIntakePage({ searchParams }: IntakePageProps) {
             </Field>
 
             <Field label="Published date">
-              <input name="publishedAt" type="date" className={inputClass} />
+              <input name="publishedAt" type="date" className={inputClass} defaultValue={params.publishedAt ?? ""} />
             </Field>
 
             <Field label="Source content">
@@ -172,6 +178,7 @@ export default async function OiIntakePage({ searchParams }: IntakePageProps) {
                 rows={10}
                 className={inputClass}
                 placeholder="Paste the public posting, announcement, referral note, or other source text."
+                defaultValue={params.rawContent ?? ""}
               />
             </Field>
 
@@ -181,11 +188,12 @@ export default async function OiIntakePage({ searchParams }: IntakePageProps) {
                 type="url"
                 className={inputClass}
                 placeholder="https://example.com/opportunity"
+                defaultValue={params.canonicalUrl ?? ""}
               />
             </Field>
 
             <Field label="Organization">
-              <input name="organizationName" required className={inputClass} placeholder="Rula" />
+              <input name="organizationName" required className={inputClass} placeholder="Rula" defaultValue={params.organizationName ?? ""} />
             </Field>
 
             <Field label="Role / context">
@@ -194,6 +202,7 @@ export default async function OiIntakePage({ searchParams }: IntakePageProps) {
                 required
                 className={inputClass}
                 placeholder="Director, Healthcare Transformation"
+                defaultValue={params.title ?? ""}
               />
             </Field>
 

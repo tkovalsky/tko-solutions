@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { captureDecision } from "@/lib/opportunity-intelligence/action/decision";
 import { TODD_CAPABILITY_PROFILE_V2 } from "@/lib/opportunity-intelligence/capability-profile";
+import { classifyOpportunity } from "@/lib/opportunity-intelligence/commercial/classify-opportunity";
 import { deriveNextAction } from "@/lib/opportunity-intelligence/commercial/next-action";
 import { persistOpportunityScore, scoreOpportunity } from "@/lib/opportunity-intelligence/commercial/score";
 import { inferInitiatives } from "@/lib/opportunity-intelligence/intelligence/initiative-inference";
@@ -45,8 +46,15 @@ const decisionCaptureSchema = z.object({
   expectedOutcome: z.string().trim().optional(),
 });
 
-function redirectWithError(message: string): never {
-  redirect(`${INTAKE_PATH}?error=${encodeURIComponent(message)}`);
+function redirectWithError(message: string, formData?: FormData): never {
+  const params = new URLSearchParams({ error: message });
+  if (formData) {
+    for (const field of ["rawContent", "canonicalUrl", "organizationName", "title", "sourceType", "publishedAt"]) {
+      const value = formData.get(field);
+      if (typeof value === "string" && value) params.set(field, value);
+    }
+  }
+  redirect(`${INTAKE_PATH}?${params.toString()}`);
 }
 
 export async function captureManualIntake(formData: FormData) {
@@ -61,7 +69,7 @@ export async function captureManualIntake(formData: FormData) {
   });
 
   if (!parsed.success) {
-    redirectWithError(parsed.error.issues[0]?.message ?? "Invalid intake input.");
+    redirectWithError(parsed.error.issues[0]?.message ?? "Invalid intake input.", formData);
   }
 
   let result;
@@ -79,7 +87,7 @@ export async function captureManualIntake(formData: FormData) {
       tifDb,
     );
   } catch (error) {
-    redirectWithError(error instanceof Error ? error.message : "Intake failed.");
+    redirectWithError(error instanceof Error ? error.message : "Intake failed.", formData);
   }
 
   revalidatePath(INTAKE_PATH);
@@ -192,15 +200,6 @@ export async function promoteSignal(formData: FormData) {
 
   let reviewOpportunityId = parsed.opportunityId;
   await tifDb.$transaction(async (tx) => {
-    await captureDecision(tx, {
-      opportunityId: parsed.opportunityId,
-      type: "promote_signal",
-      decision: selectedTypes.join(","),
-      reason: decision.decisionReason,
-      confidence: decision.decisionConfidence,
-      expectedOutcome: decision.expectedOutcome,
-    });
-
     const source = await tx.oiSource.findUniqueOrThrow({
       where: { id: parsed.sourceId },
       include: {
@@ -222,6 +221,28 @@ export async function promoteSignal(formData: FormData) {
     if (!source.opportunity || source.opportunity.id !== parsed.opportunityId) {
       throw new Error("Source is missing its staging opportunity.");
     }
+    const candidates = classifyOpportunity({
+      sourceType: source.sourceType,
+      signalType: signal.signalType,
+      rawContent: source.rawContent,
+      canonicalUrl: source.canonicalUrl,
+      organization: source.organization,
+      facts: source.opportunity.facts,
+    });
+    for (const type of selectedTypes) {
+      const candidate = candidates.find((item) => item.type === type);
+      if (!candidate || candidate.disqualified) {
+        redirectWithError(candidate?.disqualificationExplanation ?? `${type} is not eligible for promotion from this signal.`);
+      }
+    }
+    await captureDecision(tx, {
+      opportunityId: parsed.opportunityId,
+      type: "promote_signal",
+      decision: selectedTypes.join(","),
+      reason: decision.decisionReason,
+      confidence: decision.decisionConfidence,
+      expectedOutcome: decision.expectedOutcome,
+    });
 
     let initiativeId: string | undefined;
     if (formData.get("approveInitiative") === "on") {

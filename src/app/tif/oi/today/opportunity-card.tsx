@@ -34,22 +34,22 @@ export type TodayCardOpportunity = {
 export const AWAITING_MANUAL_OUTREACH_MESSAGE =
   "Awaiting manual outreach: outreach preparation is manual until M3; send it outside POIS, then log the reply or follow-up when it happens.";
 
-const ANCHORS: Record<OiNextActionType, string> = {
+export const ANCHORS: Record<OiNextActionType, string> = {
   approve_initiative: "initiative",
   close_research_gap: "gaps",
   identify_stakeholder: "stakeholders",
   select_stakeholder: "stakeholders",
-  select_offer: "offer",
+  select_offer: "overview",
   complete_role_profile: "overview",
-  prepare_outreach: "outreach",
-  review_draft: "outreach",
-  send_outreach: "outreach",
-  submit_application: "outreach",
+  prepare_outreach: "stakeholders",
+  review_draft: "evidence",
+  send_outreach: "stakeholders",
+  submit_application: "overview",
   follow_up: "log",
   log_conversation: "log",
   bid_no_bid_decision: "overview",
   find_partner: "stakeholders",
-  send_proposal: "outreach",
+  send_proposal: "overview",
   review_stale: "overview",
   record_outcome: "log",
 };

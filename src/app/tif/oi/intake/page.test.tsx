@@ -165,15 +165,40 @@ describe("OiIntakePage", () => {
     expect(dynamic).toBe("force-dynamic");
   });
 
-  it("renders exactly the four manual intake fields in the empty state", async () => {
+  it("renders the manual intake fields in the empty state", async () => {
     render(await OiIntakePage({ searchParams: Promise.resolve({}) }));
 
+    expect(screen.getByLabelText("Source type")).toBeInTheDocument();
+    expect(screen.getByLabelText("Published date")).toBeInTheDocument();
     expect(screen.getByLabelText("Source content")).toBeInTheDocument();
     expect(screen.getByLabelText("Source URL / reference")).toBeInTheDocument();
     expect(screen.getByLabelText("Organization")).toBeInTheDocument();
     expect(screen.getByLabelText("Role / context")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")).toHaveLength(4);
     expect(screen.getByText(/Captured facts and research gaps/)).toBeInTheDocument();
+  });
+
+  it("preserves submitted intake content after validation errors", async () => {
+    render(
+      await OiIntakePage({
+        searchParams: Promise.resolve({
+          error: "Too short to extract from",
+          rawContent: "Short pasted posting",
+          canonicalUrl: "https://example.com/jobs/123",
+          organizationName: "Example Health",
+          title: "Director role",
+          sourceType: "job_posting",
+          publishedAt: "2026-07-15",
+        }),
+      }),
+    );
+
+    expect(screen.getByText("Too short to extract from")).toBeInTheDocument();
+    expect(screen.getByLabelText("Source content")).toHaveValue("Short pasted posting");
+    expect(screen.getByLabelText("Source URL / reference")).toHaveValue("https://example.com/jobs/123");
+    expect(screen.getByLabelText("Organization")).toHaveValue("Example Health");
+    expect(screen.getByLabelText("Role / context")).toHaveValue("Director role");
+    expect(screen.getByLabelText("Source type")).toHaveValue("job_posting");
+    expect(screen.getByLabelText("Published date")).toHaveValue("2026-07-15");
   });
 
   it("renders extracted facts, source quotes, and gaps for review", async () => {

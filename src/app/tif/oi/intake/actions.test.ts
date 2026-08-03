@@ -47,9 +47,7 @@ describe("captureManualIntake", () => {
     const formData = validForm();
     formData.set("rawContent", "Too short.");
 
-    await expect(captureManualIntake(formData)).rejects.toThrow(
-      "REDIRECT:/tif/oi/intake?error=Too%20short%20to%20extract%20from",
-    );
+    await expect(captureManualIntake(formData)).rejects.toThrow(/REDIRECT:\/tif\/oi\/intake\?error=Too\+short\+to\+extract\+from/);
     expect(mockedIngest).not.toHaveBeenCalled();
   });
 
@@ -140,7 +138,7 @@ describe("dismissSignal", () => {
     formData.set("decisionReason", " ");
 
     await expect(dismissSignal(formData)).rejects.toThrow(
-      "REDIRECT:/tif/oi/intake?error=Dismiss%20reason%20is%20required.",
+      "REDIRECT:/tif/oi/intake?error=Dismiss+reason+is+required.",
     );
   });
 
@@ -204,9 +202,50 @@ describe("promoteSignal", () => {
     formData.set("opportunityId", "opportunity-1");
 
     await expect(promoteSignal(formData)).rejects.toThrow(
-      "REDIRECT:/tif/oi/intake?error=Select%20at%20least%20one%20opportunity%20type%20to%20promote.",
+      "REDIRECT:/tif/oi/intake?error=Select+at+least+one+opportunity+type+to+promote.",
     );
     expect(mockedDb.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("rejects a selected opportunity type disqualified by server-side classification", async () => {
+    const tx = {
+      oiSource: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "source-1",
+          sourceType: "job_posting",
+          rawContent: "Director Healthcare Transformation job posting. Reports to the COO. Salary $180,000 per year. ".repeat(4),
+          canonicalUrl: "https://example.com/jobs/123",
+          publishedAt: new Date("2026-08-01T12:00:00Z"),
+          retrievedAt: new Date("2026-08-01T12:00:00Z"),
+          organizationId: "org-1",
+          organization: { id: "org-1", name: "Example Health", tier: 1, kind: "payer", signals: [], initiatives: [] },
+          signals: [{ id: "signal-1", signalType: "stated_operational_problem", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
+          opportunity: { id: "opportunity-1", facts: [], evidence: [], researchGaps: [] },
+        }),
+      },
+      oiOpportunity: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
+          id: "opportunity-1",
+          currentScore: { id: "score-1", expectedValue: 1000, estimatedHours: 2, conversionProbability: 30 },
+        }),
+        update: vi.fn(),
+        create: vi.fn(),
+      },
+      oiDecision: { create: vi.fn() },
+    };
+    mockedDb.$transaction.mockImplementationOnce(async (callback) => callback(tx));
+    const formData = new FormData();
+    formData.set("sourceId", "source-1");
+    formData.set("opportunityId", "opportunity-1");
+    formData.append("opportunityType", "fte");
+    formData.set("decisionReason", "Bypassed checkbox.");
+    formData.set("decisionConfidence", "medium");
+
+    await expect(promoteSignal(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?error=comp+max+%24180%2C000+%3C+%24225%2C000+floor%3B+keep+as+a+consulting+signal",
+    );
+    expect(tx.oiDecision.create).not.toHaveBeenCalled();
+    expect(tx.oiOpportunity.update).not.toHaveBeenCalled();
   });
 
   it("creates exactly one open next action for a promoted opportunity", async () => {
@@ -214,11 +253,14 @@ describe("promoteSignal", () => {
       oiSource: {
         findUniqueOrThrow: vi.fn().mockResolvedValue({
           id: "source-1",
+          sourceType: "job_posting",
+          rawContent: LONG_SOURCE,
+          canonicalUrl: "https://example.com/jobs/123",
           publishedAt: new Date("2026-08-01T12:00:00Z"),
           retrievedAt: new Date("2026-08-01T12:00:00Z"),
           organizationId: "org-1",
-          organization: { id: "org-1", name: "Example Health", tier: 1, signals: [], initiatives: [] },
-          signals: [{ id: "signal-1", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
+          organization: { id: "org-1", name: "Example Health", tier: 1, kind: "payer", signals: [], initiatives: [] },
+          signals: [{ id: "signal-1", signalType: "stated_operational_problem", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
           opportunity: { id: "opportunity-1", facts: [], evidence: [], researchGaps: [] },
         }),
       },
@@ -368,11 +410,14 @@ describe("promoteSignal", () => {
       oiSource: {
         findUniqueOrThrow: vi.fn().mockResolvedValue({
           id: "source-1",
+          sourceType: "job_posting",
+          rawContent: LONG_SOURCE,
+          canonicalUrl: "https://example.com/jobs/123",
           publishedAt: new Date("2026-08-01T12:00:00Z"),
           retrievedAt: new Date("2026-08-01T12:00:00Z"),
           organizationId: "org-1",
-          organization: { id: "org-1", name: "Example Health", tier: 1, signals: [], initiatives: [] },
-          signals: [{ id: "signal-1", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
+          organization: { id: "org-1", name: "Example Health", tier: 1, kind: "payer", signals: [], initiatives: [] },
+          signals: [{ id: "signal-1", signalType: "stated_operational_problem", occurredAt: new Date("2026-08-01T12:00:00Z"), createdAt: new Date("2026-08-01T12:00:00Z") }],
           opportunity: { id: "opportunity-1", facts: [fact], evidence: [{ id: "evidence-1" }], researchGaps: [gap] },
         }),
       },

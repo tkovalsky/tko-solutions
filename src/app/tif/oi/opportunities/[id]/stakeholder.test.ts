@@ -6,6 +6,12 @@ vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
 }));
 
+vi.mock("next/navigation", () => ({
+  redirect: vi.fn((url: string) => {
+    throw new Error(`REDIRECT:${url}`);
+  }),
+}));
+
 vi.mock("@/lib/opportunity-intelligence/commercial/score", () => ({
   scoreOpportunity: vi.fn(() => ({ components: [], scorePolicyVersion: "pois-v1", capabilityProfileVersion: "todd-v2" })),
   persistOpportunityScore: vi.fn(),
@@ -38,7 +44,9 @@ describe("stakeholder selection", () => {
     formData.set("opportunityId", "opp-1");
     formData.set("stakeholderId", "stakeholder-1");
 
-    await expect(selectStakeholder(formData)).rejects.toThrow("Selection requires role evidence or explicit operator confirmation.");
+    await expect(selectStakeholder(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=Selection%20requires%20role%20evidence%20or%20explicit%20operator%20confirmation.",
+    );
     expect(tx.oiStakeholder.update).not.toHaveBeenCalled();
   });
 
@@ -60,7 +68,9 @@ describe("stakeholder selection", () => {
     formData.set("opportunityId", "opp-1");
     formData.set("stakeholderId", "stakeholder-1");
 
-    await expect(selectStakeholder(formData)).rejects.toThrow("A do-not-contact stakeholder cannot be selected.");
+    await expect(selectStakeholder(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/opportunities/opp-1?actionError=A%20do-not-contact%20stakeholder%20cannot%20be%20selected.",
+    );
     expect(tx.oiStakeholder.update).not.toHaveBeenCalled();
   });
 });

@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import OiTodayPage from "./page";
+import { ANCHORS } from "./opportunity-card";
 import { tifDb } from "@/lib/tif/db";
 
 vi.mock("@/lib/tif/db", () => ({
@@ -91,6 +92,16 @@ describe("OiTodayPage", () => {
     render(await OiTodayPage());
 
     expect(screen.getByRole("link", { name: "Start" })).toHaveAttribute("href", "/tif/oi/opportunities/opp-1#gaps");
+  });
+
+  it("maps every Today action anchor to an existing workbench section", () => {
+    expect(new Set(Object.values(ANCHORS))).toEqual(new Set(["overview", "initiative", "evidence", "gaps", "stakeholders", "log"]));
+    expect(ANCHORS.select_offer).toBe("overview");
+    expect(ANCHORS.prepare_outreach).toBe("stakeholders");
+    expect(ANCHORS.review_draft).toBe("evidence");
+    expect(ANCHORS.send_outreach).toBe("stakeholders");
+    expect(ANCHORS.submit_application).toBe("overview");
+    expect(ANCHORS.send_proposal).toBe("overview");
   });
 
   it("renders awaiting manual outreach when prepare outreach completed without an open successor", async () => {

@@ -31,7 +31,7 @@ export const dynamic = "force-dynamic";
 
 type WorkbenchPageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ statusError?: string }>;
+  searchParams: Promise<{ statusError?: string; actionError?: string }>;
 };
 
 type WorkbenchOpportunity = NonNullable<Awaited<ReturnType<typeof getOpportunity>>>;
@@ -172,6 +172,11 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
             {query.statusError}
           </p>
         ) : null}
+        {query.actionError ? (
+          <p className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+            {query.actionError}
+          </p>
+        ) : null}
 
         <div className="mt-5 grid gap-3 sm:grid-cols-5">
           <Metric label="Fit" value={opportunity.currentScore?.fitScore ?? 0} />
@@ -202,10 +207,7 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
           <a href="#evidence" className="underline">Evidence</a>
           <a href="#gaps" className="underline">Gaps</a>
           <a href="#stakeholders" className="underline">Stakeholders</a>
-          <a href="#timeline" className="underline">Timeline</a>
-          <span className="text-muted">Offer</span>
-          <span className="text-muted">Outreach</span>
-          <span className="text-muted">Log</span>
+          <a href="#log" className="underline">Log</a>
         </nav>
       </header>
 
@@ -337,7 +339,7 @@ function InitiativeSection({ opportunity }: { opportunity: WorkbenchOpportunity 
 function TimelineSection({ opportunity }: { opportunity: WorkbenchOpportunity }) {
   const timeline = buildTimeline(opportunity);
   return (
-    <section id="timeline" className="rounded-md border border-border bg-white p-5">
+    <section id="log" className="rounded-md border border-border bg-white p-5">
       <h3 className="text-lg font-semibold">Timeline</h3>
       {timeline.length > 0 ? (
         <ol className="mt-4 grid gap-3">
