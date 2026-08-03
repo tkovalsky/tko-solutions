@@ -3,6 +3,7 @@ import { TODD_CAPABILITY_PROFILE_V2 } from "../../capability-profile";
 import type { OpportunityFactForScoring } from "../../contracts";
 import { disqualifyOpportunity } from "./disqualify";
 import { scoreOpportunity, type ScoreInput, type StakeholderScoreInput } from ".";
+import { estimateValue } from "./value";
 
 const AS_OF = new Date("2026-08-01T12:00:00Z");
 
@@ -233,7 +234,13 @@ describe("scoreOpportunity golden fixtures", () => {
   });
 
   it("verifies assessment expansion arithmetic", () => {
-    expect(6_500 + 0.4 * 60_000).toBe(30_500);
+    expect(
+      estimateValue({
+        opportunity: { type: "assessment" },
+        offer: { valueLow: 6_500, valueHigh: 6_500, expansionProbability: 0.4, followOnValue: 60_000 },
+        rfpProfile: null,
+      }),
+    ).toBe(30_500);
   });
 
   it("is deterministic across repeated runs", () => {

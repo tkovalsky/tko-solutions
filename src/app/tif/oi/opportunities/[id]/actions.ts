@@ -113,7 +113,7 @@ const stakeholderSchema = opportunityIdSchema.extend({
   roleEvidenceUrl: z.string().trim().optional(),
   roleEvidenceLabel: z.string().trim().optional(),
   roleConfidence: z.coerce.number().int().min(1).max(100).default(50),
-  operatorConfirmed: z.coerce.boolean().default(false),
+  operatorConfirmed: z.boolean().default(false),
   warmPathNotes: z.string().trim().optional(),
   relevanceToTodd: z.string().trim().optional(),
 });
