@@ -1,6 +1,11 @@
 import type { Prisma } from "@prisma/client";
 import type { TODD_CAPABILITY_PROFILE_V2 } from "../../capability-profile";
 import type { OpportunityFactForScoring, OpportunityScoreComponent } from "../../contracts";
+import {
+  scoreStakeholderAccess as scoreSingleStakeholderAccess,
+  type ScoreComponent as StakeholderAccessComponent,
+  type StakeholderAccessInput,
+} from "./access";
 import { disqualifyOpportunity } from "./disqualify";
 import { scoreEvidence } from "./evidence";
 import { scoreOpportunityFit } from "./fit";
@@ -24,6 +29,7 @@ export type StakeholderScoreInput = {
     transformationRelevance?: number | null;
     relationshipStrength?: number | null;
     sourceConfidence?: number | null;
+    sourcePublishedAt?: Date | string | null;
     doNotContact?: boolean | null;
     contactPoints?: Array<{ provenance?: string | null; status?: string | null }>;
   } | null;
@@ -111,14 +117,20 @@ export type PersistScoreClient = {
   };
 };
 
-const ROLE_POINTS: Record<string, number> = {
-  economic_buyer: 10,
-  executive_sponsor: 8,
-  operational_owner: 6,
-  hiring_manager: 8,
-  recruiter: 2,
-  influencer: 3,
-  blocker: -10,
+const ACCESS_COMPONENT_MAX_POINTS: Record<string, number> = {
+  seniority: 12,
+  budget: 12,
+  hiring: 9,
+  transformation: 12,
+  relationship: 12,
+  source: 6,
+  seniority_penalty: 0,
+  authority_penalty: 0,
+  source_penalty: 0,
+  freshness_penalty: 0,
+  warm_path: 25,
+  role_clarity: 10,
+  contact_reachable: 8,
 };
 
 export function scoreOpportunity(input: ScoreInput): ScoreResult {
@@ -131,7 +143,8 @@ export function scoreOpportunity(input: ScoreInput): ScoreResult {
     researchGaps: input.researchGaps,
     asOf: input.asOf,
   });
-  const accessScore = scoreStakeholderAccess(input.stakeholders);
+  const access = scoreBestStakeholderAccess(input.stakeholders, input.asOf);
+  const accessScore = access.score;
   const relationshipType = strongestRelationship(input.stakeholders);
   const urgency = scoreUrgency({
     facts: input.facts,
@@ -211,9 +224,10 @@ export function scoreOpportunity(input: ScoreInput): ScoreResult {
         maxPoints: 100,
         reason: "Best stakeholder access score for the opportunity.",
       },
+      ...access.components.map(toOpportunityAccessComponent),
       ...accessComponents({ accessScore, relationshipType, conversionProbability: priority.conversionProbability }),
     ],
-    warnings: disqualified.rules,
+    warnings: [...disqualified.rules, ...access.warnings],
     scorePolicyVersion: "pois-v1",
     capabilityProfileVersion: "todd-v2",
   };
@@ -254,38 +268,82 @@ export async function persistOpportunityScore(
   return snapshot;
 }
 
-function scoreStakeholderAccess(stakeholders: StakeholderScoreInput[]) {
-  if (stakeholders.length === 0) return 0;
-  return Math.max(...stakeholders.map(scoreOneStakeholder));
-}
-
-function scoreOneStakeholder(stakeholder: StakeholderScoreInput) {
-  const person = stakeholder.person;
-  let score = seniorityScore(person?.seniority);
-  score += Math.min(3, person?.budgetAuthority ?? 0) * 4;
-  score += Math.min(3, person?.hiringAuthority ?? 0) * 3;
-  score += Math.min(3, person?.transformationRelevance ?? 0) * 4;
-  score += Math.min(3, person?.relationshipStrength ?? 0) * 4;
-  score += Math.min(3, person?.sourceConfidence ?? 0) * 2;
-  if (stakeholder.relationshipType === "warm_referral") score += 15;
-  if (stakeholder.relationshipType === "warm_history") score += 20;
-  if (stakeholder.relationshipType === "existing_client") score += 25;
-  score += ROLE_POINTS[stakeholder.role ?? ""] ?? 0;
-  if (person?.contactPoints?.some((point) => point.status === "active" && point.provenance !== "pattern_inferred")) {
-    score += 8;
+function scoreBestStakeholderAccess(stakeholders: StakeholderScoreInput[], asOf: Date) {
+  if (stakeholders.length === 0) {
+    return { score: 0, components: [] as StakeholderAccessComponent[], warnings: [] as string[] };
   }
-  if (person?.seniority === "other") score -= 20;
-  if ((person?.budgetAuthority ?? 0) === 0 && (person?.hiringAuthority ?? 0) === 0) score -= 8;
-  if ((person?.sourceConfidence ?? 0) === 0) score -= 10;
-  return Math.min(100, Math.max(0, score));
+  return stakeholders
+    .map((stakeholder) => scoreSingleStakeholderAccess(toStakeholderAccessInput(stakeholder), asOf))
+    .reduce((best, result) => (result.score > best.score ? result : best));
 }
 
-function seniorityScore(seniority?: string | null) {
-  if (seniority === "director") return 8;
-  if (seniority === "vice_president") return 10;
-  if (seniority === "senior_vice_president") return 12;
-  if (seniority === "c_suite") return 10;
-  return 0;
+function toStakeholderAccessInput(stakeholder: StakeholderScoreInput): StakeholderAccessInput {
+  const person = stakeholder.person;
+  return {
+    seniority: normalizeSeniority(person?.seniority),
+    budgetAuthority: person?.budgetAuthority ?? 0,
+    hiringAuthority: person?.hiringAuthority ?? 0,
+    transformationRelevance: person?.transformationRelevance ?? 0,
+    relationshipStrength: person?.relationshipStrength ?? 0,
+    sourceConfidence: person?.sourceConfidence ?? 0,
+    sourcePublishedAt: normalizeDate(person?.sourcePublishedAt),
+    doNotContact: Boolean(person?.doNotContact),
+    warmPath: normalizeRelationship(stakeholder.relationshipType),
+    roleClarity: normalizeStakeholderRole(stakeholder.role),
+    contactReachable: Boolean(
+      person?.contactPoints?.some((point) => point.status === "active" && point.provenance !== "pattern_inferred"),
+    ),
+  };
+}
+
+function normalizeSeniority(value?: string | null): StakeholderAccessInput["seniority"] {
+  if (value === "director" || value === "vice_president" || value === "senior_vice_president" || value === "c_suite") {
+    return value;
+  }
+  return "other";
+}
+
+function normalizeRelationship(value?: string | null): StakeholderAccessInput["warmPath"] {
+  if (value === "warm_referral" || value === "warm_history" || value === "existing_client") {
+    return value;
+  }
+  return "cold";
+}
+
+function normalizeStakeholderRole(value?: string | null): StakeholderAccessInput["roleClarity"] {
+  if (
+    value === "economic_buyer" ||
+    value === "exec_sponsor" ||
+    value === "executive_sponsor" ||
+    value === "operational_owner" ||
+    value === "hiring_manager" ||
+    value === "recruiter" ||
+    value === "influencer" ||
+    value === "blocker" ||
+    value === "technical_owner" ||
+    value === "champion" ||
+    value === "procurement" ||
+    value === "partner"
+  ) {
+    return value;
+  }
+  return "unknown";
+}
+
+function normalizeDate(value?: Date | string | null) {
+  if (!value) return null;
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function toOpportunityAccessComponent(component: StakeholderAccessComponent): OpportunityScoreComponent {
+  return {
+    key: `access.${component.key}`,
+    label: component.label,
+    points: component.points,
+    maxPoints: ACCESS_COMPONENT_MAX_POINTS[component.key] ?? Math.max(0, component.points),
+    reason: component.reason,
+  };
 }
 
 function strongestRelationship(stakeholders: StakeholderScoreInput[]) {

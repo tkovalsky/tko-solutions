@@ -345,11 +345,40 @@ describe("disqualifyOpportunity", () => {
     expect(result.conversionProbability).toBe(60);
     expect(result.components).toEqual(
       expect.arrayContaining([
+        expect.objectContaining({ key: "access.warm_path", points: 20 }),
+        expect.objectContaining({ key: "access.role_clarity", points: 10 }),
+        expect.objectContaining({ key: "access.contact_reachable", points: 8 }),
         expect.objectContaining({ key: "access.warm_history_multiplier", reason: expect.stringContaining("x2.5") }),
         expect.objectContaining({ key: "access.high_access_multiplier", reason: expect.stringContaining("x1.4") }),
         expect.objectContaining({ key: "access.probability_cap", reason: expect.stringContaining("60%") }),
       ]),
     );
+  });
+
+  it("uses the consolidated stakeholder access scorer for source freshness", () => {
+    const result = scoreOpportunity(
+      input({
+        stakeholders: [
+          {
+            ...stakeholder45(),
+            person: {
+              seniority: "vice_president",
+              budgetAuthority: 2,
+              hiringAuthority: 2,
+              transformationRelevance: 3,
+              relationshipStrength: 1,
+              sourceConfidence: 1,
+              contactPoints: [],
+              sourcePublishedAt: new Date("2024-01-01T00:00:00Z"),
+            },
+          },
+        ],
+      }),
+    );
+
+    expect(result.accessScore).toBe(39);
+    expect(result.components).toContainEqual(expect.objectContaining({ key: "access.freshness_penalty", points: -6 }));
+    expect(result.warnings).toContain("Reverify the person's current title before contact.");
   });
 
   it("computes accessScore as the max across opportunity stakeholders", () => {
