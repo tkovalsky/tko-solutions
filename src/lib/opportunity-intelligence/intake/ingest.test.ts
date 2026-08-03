@@ -268,4 +268,48 @@ describe("ingestPastedOpportunity", () => {
       }),
     );
   });
+
+  it("uses publishedAt rather than retrievedAt for signal recency", async () => {
+    const { db, tx } = createDatabaseDouble();
+    const publishedAt = new Date("2025-01-01T12:00:00Z");
+    const retrievedAt = new Date("2026-08-01T12:00:00Z");
+    tx.oiSource.create.mockResolvedValue({
+      id: "source-1",
+      rawContent: RAW_SOURCE,
+      publishedAt,
+      retrievedAt,
+    });
+    tx.oiOpportunitySource.findMany.mockResolvedValue([
+      {
+        isPrimary: true,
+        source: { publishedAt, retrievedAt },
+      },
+    ]);
+
+    await ingestPastedOpportunity(
+      {
+        organization: { name: "Example Health", kind: "payer" },
+        title: "Director, Healthcare Transformation",
+        rawContent: RAW_SOURCE,
+        sourceType: "job_posting",
+        retrievedAt,
+        publishedAt,
+      },
+      db,
+    );
+
+    expect(tx.oiSource.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({ publishedAt, retrievedAt }),
+      }),
+    );
+    expect(tx.oiSignal.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          occurredAt: publishedAt,
+          confidence: 80,
+        }),
+      }),
+    );
+  });
 });

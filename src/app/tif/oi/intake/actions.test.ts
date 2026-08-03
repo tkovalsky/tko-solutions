@@ -63,8 +63,29 @@ describe("captureManualIntake", () => {
         organization: { name: "Example Health" },
         title: "Director, Healthcare Transformation",
         rawContent: LONG_SOURCE,
+        sourceType: "pasted_text",
         canonicalUrl: "https://example.com/jobs/123",
+        publishedAt: null,
+        allowDuplicateVersion: false,
       },
+      tifDb,
+    );
+  });
+
+  it("passes source type and published date into ingestion", async () => {
+    const formData = validForm();
+    formData.set("sourceType", "job_posting");
+    formData.set("publishedAt", "2026-07-15");
+
+    await expect(captureManualIntake(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?capture=created&sourceId=source-1&opportunityId=opportunity-1",
+    );
+
+    expect(mockedIngest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        sourceType: "job_posting",
+        publishedAt: new Date("2026-07-15T00:00:00"),
+      }),
       tifDb,
     );
   });
@@ -82,6 +103,31 @@ describe("captureManualIntake", () => {
 
     await expect(captureManualIntake(validForm())).rejects.toThrow(
       "REDIRECT:/tif/oi/intake?capture=duplicate&sourceId=source-existing&opportunityId=opportunity-existing",
+    );
+  });
+
+  it("captures a new source version when Capture anyway is submitted", async () => {
+    mockedIngest.mockResolvedValue({
+      created: true,
+      duplicate: false,
+      sourceId: "source-new",
+      opportunityId: "opportunity-existing",
+      scoreId: "score-new",
+      facts: [],
+      gaps: [],
+    });
+    const formData = validForm();
+    formData.set("intent", "captureAnyway");
+
+    await expect(captureManualIntake(formData)).rejects.toThrow(
+      "REDIRECT:/tif/oi/intake?capture=created&sourceId=source-new&opportunityId=opportunity-existing",
+    );
+
+    expect(mockedIngest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        allowDuplicateVersion: true,
+      }),
+      tifDb,
     );
   });
 });

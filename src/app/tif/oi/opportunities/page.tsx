@@ -31,6 +31,8 @@ type PipelineOpportunity = {
     evidenceScore: number;
     accessScore: number;
     urgencyScore: number;
+    isDisqualified: boolean;
+    disqualifyingRules: string[];
   } | null;
   nextActions: Array<{
     id: string;
@@ -58,6 +60,7 @@ const STATES = [
   { label: "Needs action", value: "needs_action" },
   { label: "Waiting", value: "waiting" },
   { label: "Stale", value: "stale" },
+  { label: "Disqualified", value: "disqualified" },
   { label: "Closed", value: "closed" },
 ] as const;
 
@@ -88,6 +91,15 @@ export function needsNextActionRepair(opportunity: Pick<PipelineOpportunity, "st
   );
 }
 
+export function isActivePipelineOpportunity(opportunity: Pick<PipelineOpportunity, "status" | "currentScore">) {
+  return (
+    !isTerminalOpportunityStatus(opportunity.status) &&
+    opportunity.status !== "dismissed" &&
+    opportunity.status !== "paused" &&
+    !opportunity.currentScore?.isDisqualified
+  );
+}
+
 export function filterPipeline(
   opportunities: PipelineOpportunity[],
   filters: { path: string; state: string; sort: string },
@@ -98,16 +110,18 @@ export function filterPipeline(
     const pathMatches = filters.path === "all" || opportunity.type === filters.path;
     const stateMatches =
       filters.state === "active"
-        ? !isTerminalOpportunityStatus(opportunity.status) && opportunity.status !== "dismissed" && opportunity.status !== "paused"
+        ? isActivePipelineOpportunity(opportunity)
         : filters.state === "needs_action"
           ? Boolean(openAction)
           : filters.state === "waiting"
             ? opportunity.status === "contacted" || opportunity.status === "nurturing" || opportunity.status === "submitted"
             : filters.state === "stale"
               ? Boolean(openAction && isStaleNextAction(openAction, asOf))
-              : filters.state === "closed"
-                ? isTerminalOpportunityStatus(opportunity.status)
-                : true;
+              : filters.state === "disqualified"
+                ? Boolean(opportunity.currentScore?.isDisqualified)
+                : filters.state === "closed"
+                  ? isTerminalOpportunityStatus(opportunity.status)
+                  : true;
     return pathMatches && stateMatches;
   });
 
@@ -136,6 +150,8 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
           evidenceScore: true,
           accessScore: true,
           urgencyScore: true,
+          isDisqualified: true,
+          disqualifyingRules: true,
         },
       },
       nextActions: {
@@ -146,6 +162,7 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
     orderBy: [{ updatedAt: "desc" }],
   });
   const rows = filterPipeline(opportunities, { path, state, sort }, asOf);
+  const activeCount = opportunities.filter(isActivePipelineOpportunity).length;
   const stale = opportunities.filter((opportunity) =>
     opportunity.nextActions.some((action) => isStaleNextAction(action, asOf)),
   );
@@ -157,7 +174,7 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">Pipeline</p>
           <h2 className="mt-1 text-2xl font-semibold">
-            {opportunities.length} opportunities · {stale.length} stale
+            {activeCount} active opportunities · {stale.length} stale
           </h2>
         </div>
         <p className="text-sm text-muted">Sorted by {sort === "pe" ? "PE" : "account"}</p>
@@ -198,7 +215,11 @@ export default async function OpportunitiesPipelinePage({ searchParams }: Pipeli
                 <span>{opportunity.organization.name}</span>
                 <span>{opportunity.title}</span>
                 <span>{opportunity.status}</span>
-                <span>{action?.description ?? (snoozedUntil ? `Snoozed until ${formatDate(snoozedUntil)}` : "No next action")}</span>
+                <span>
+                  {state === "disqualified" && opportunity.currentScore?.disqualifyingRules.length
+                    ? opportunity.currentScore.disqualifyingRules.join(", ")
+                    : action?.description ?? (snoozedUntil ? `Snoozed until ${formatDate(snoozedUntil)}` : "No next action")}
+                </span>
               </Link>
             );
           })

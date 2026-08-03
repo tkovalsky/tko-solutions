@@ -184,7 +184,7 @@ export default async function OpportunityWorkbenchPage({ params, searchParams }:
           Value {money(opportunity.currentScore?.estimatedValue ?? null)} · {opportunity.currentScore?.conversionProbability ?? 0}% · EV{" "}
           {money(opportunity.currentScore?.expectedValue ?? null)} · {numberValue(opportunity.currentScore?.estimatedHours).toFixed(1)} hrs remaining
         </p>
-        <ScorePanel score={opportunity.currentScore} />
+        <ScorePanel score={opportunity.currentScore} opportunityType={opportunity.type} />
 
         <div className="mt-5 rounded-md border border-border bg-[#f7f8fb] p-4 text-sm">
           <p className="font-semibold">

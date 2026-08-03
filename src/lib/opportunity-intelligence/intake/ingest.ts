@@ -33,6 +33,7 @@ export type PastedOpportunityInput = {
   canonicalUrl?: string | null;
   retrievedAt?: Date;
   publishedAt?: Date | null;
+  allowDuplicateVersion?: boolean;
 };
 
 export type OpportunityIngestionFact = {
@@ -361,7 +362,8 @@ export async function ingestPastedOpportunity(
   if (normalizedContent.length < 200) {
     throw new Error("Too short to extract from");
   }
-  const contentHash = hashSourceContent(normalizedContent);
+  const baseContentHash = hashSourceContent(normalizedContent);
+  const contentHash = input.allowDuplicateVersion ? `${baseContentHash}:version:${Date.now()}` : baseContentHash;
   const canonicalUrl = canonicalizeSourceUrl(input.canonicalUrl);
 
   return db.$transaction(async (tx) => {
@@ -377,37 +379,39 @@ export async function ingestPastedOpportunity(
       },
     });
 
-    const duplicateConditions: Prisma.OiSourceWhereInput[] = [
-      {
-        organizationId: organization.id,
-        contentHash,
-      },
-    ];
-    if (canonicalUrl) {
-      duplicateConditions.push({ canonicalUrl, contentHash });
-    }
-
-    const duplicate = await tx.oiSource.findFirst({
-      where: { OR: duplicateConditions },
-      select: {
-        id: true,
-        opportunityId: true,
-        opportunity: { select: { currentScoreId: true } },
-      },
-    });
-    if (duplicate) {
-      if (!duplicate.opportunityId || !duplicate.opportunity) {
-        throw new Error("Duplicate source is not linked to an opportunity.");
+    if (!input.allowDuplicateVersion) {
+      const duplicateConditions: Prisma.OiSourceWhereInput[] = [
+        {
+          organizationId: organization.id,
+          contentHash,
+        },
+      ];
+      if (canonicalUrl) {
+        duplicateConditions.push({ canonicalUrl, contentHash });
       }
-      const review = await getIngestionReview(tx, duplicate.opportunityId, duplicate.id);
-      return {
-        created: false,
-        duplicate: true,
-        sourceId: duplicate.id,
-        opportunityId: duplicate.opportunityId,
-        scoreId: duplicate.opportunity.currentScoreId,
-        ...review,
-      };
+
+      const duplicate = await tx.oiSource.findFirst({
+        where: { OR: duplicateConditions },
+        select: {
+          id: true,
+          opportunityId: true,
+          opportunity: { select: { currentScoreId: true } },
+        },
+      });
+      if (duplicate) {
+        if (!duplicate.opportunityId || !duplicate.opportunity) {
+          throw new Error("Duplicate source is not linked to an opportunity.");
+        }
+        const review = await getIngestionReview(tx, duplicate.opportunityId, duplicate.id);
+        return {
+          created: false,
+          duplicate: true,
+          sourceId: duplicate.id,
+          opportunityId: duplicate.opportunityId,
+          scoreId: duplicate.opportunity.currentScoreId,
+          ...review,
+        };
+      }
     }
 
     const priorSnapshot = canonicalUrl

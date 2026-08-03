@@ -16,13 +16,20 @@ const INTAKE_PATH = "/tif/oi/intake";
 type TransactionClient = Prisma.TransactionClient;
 
 const intakeSchema = z.object({
+  intent: z.string().trim().optional(),
   rawContent: z.string().trim().min(200, "Too short to extract from"),
+  sourceType: z.enum(["pasted_text", "job_posting", "company_announcement", "referral", "regulatory_event", "other"]).default("pasted_text"),
   canonicalUrl: z
     .string()
     .trim()
     .optional()
     .transform((value) => (value ? value : undefined))
     .pipe(z.string().url("Enter a valid source URL.").optional()),
+  publishedAt: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => (value ? new Date(`${value}T00:00:00`) : null)),
   organizationName: z.string().trim().min(1, "Organization is required."),
   title: z.string().trim().min(1, "Role / context is required."),
 });
@@ -43,19 +50,12 @@ function redirectWithError(message: string): never {
 }
 
 export async function captureManualIntake(formData: FormData) {
-  if (formData.get("intent") === "reviewDuplicate") {
-    const sourceId = z.string().trim().min(1).parse(formData.get("sourceId"));
-    const opportunityId = z.string().trim().min(1).parse(formData.get("opportunityId"));
-    redirect(
-      `${INTAKE_PATH}?capture=reviewed&sourceId=${encodeURIComponent(
-        sourceId,
-      )}&opportunityId=${encodeURIComponent(opportunityId)}`,
-    );
-  }
-
   const parsed = intakeSchema.safeParse({
+    intent: formData.get("intent") || undefined,
     rawContent: formData.get("rawContent"),
+    sourceType: formData.get("sourceType") || "pasted_text",
     canonicalUrl: formData.get("canonicalUrl") || undefined,
+    publishedAt: formData.get("publishedAt") || undefined,
     organizationName: formData.get("organizationName"),
     title: formData.get("title"),
   });
@@ -71,7 +71,10 @@ export async function captureManualIntake(formData: FormData) {
         organization: { name: parsed.data.organizationName },
         title: parsed.data.title,
         rawContent: parsed.data.rawContent,
+        sourceType: parsed.data.sourceType,
         canonicalUrl: parsed.data.canonicalUrl,
+        publishedAt: parsed.data.publishedAt,
+        allowDuplicateVersion: parsed.data.intent === "captureAnyway",
       },
       tifDb,
     );

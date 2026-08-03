@@ -149,6 +149,21 @@ export default async function OiIntakePage({ searchParams }: IntakePageProps) {
           ) : null}
 
           <form action={captureManualIntake} noValidate className="mt-6 grid gap-4">
+            <Field label="Source type">
+              <select name="sourceType" className={inputClass} defaultValue="pasted_text">
+                <option value="pasted_text">Pasted text</option>
+                <option value="job_posting">Job posting</option>
+                <option value="company_announcement">Company announcement</option>
+                <option value="referral">Referral</option>
+                <option value="regulatory_event">Regulatory event</option>
+                <option value="other">Other</option>
+              </select>
+            </Field>
+
+            <Field label="Published date">
+              <input name="publishedAt" type="date" className={inputClass} />
+            </Field>
+
             <Field label="Source content">
               <textarea
                 name="rawContent"
@@ -346,23 +361,33 @@ function DuplicateNotice({
   sourceId?: string;
   opportunityId?: string;
 }) {
+  const source = review.sources[0] ?? review.sourceLinks[0]?.source;
+
   return (
     <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
       <p className="font-semibold">This source has already been captured.</p>
       <p className="mt-1">
         Existing capture: {review.organization.name} · {review.title}
       </p>
-      <form action={captureManualIntake} className="mt-3">
-        <input type="hidden" name="intent" value="reviewDuplicate" />
-        <input type="hidden" name="sourceId" value={sourceId} />
-        <input type="hidden" name="opportunityId" value={opportunityId} />
-        <button
-          type="submit"
-          className="rounded-md border border-amber-300 bg-white px-3 py-1.5 text-sm font-semibold text-amber-950"
-        >
-          Capture anyway
-        </button>
-      </form>
+      {source ? (
+        <form action={captureManualIntake} className="mt-3">
+          <input type="hidden" name="intent" value="captureAnyway" />
+          <input type="hidden" name="sourceId" value={sourceId} />
+          <input type="hidden" name="opportunityId" value={opportunityId} />
+          <input type="hidden" name="sourceType" value={source.sourceType} />
+          <input type="hidden" name="publishedAt" value={source.publishedAt ? source.publishedAt.toISOString().slice(0, 10) : ""} />
+          <input type="hidden" name="canonicalUrl" value={source.canonicalUrl ?? ""} />
+          <input type="hidden" name="organizationName" value={review.organization.name} />
+          <input type="hidden" name="title" value={review.title} />
+          <input type="hidden" name="rawContent" value={source.rawContent} />
+          <button
+            type="submit"
+            className="rounded-md border border-amber-300 bg-white px-3 py-1.5 text-sm font-semibold text-amber-950"
+          >
+            Capture anyway
+          </button>
+        </form>
+      ) : null}
     </div>
   );
 }

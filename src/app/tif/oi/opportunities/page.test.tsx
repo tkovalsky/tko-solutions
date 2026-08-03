@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { filterPipeline, isAwaitingManualOutreach, isCurrentlySnoozed, isStaleNextAction, needsNextActionRepair } from "./page";
+import { filterPipeline, isActivePipelineOpportunity, isAwaitingManualOutreach, isCurrentlySnoozed, isStaleNextAction, needsNextActionRepair } from "./page";
 
 vi.mock("@/lib/tif/db", () => ({
   tifDb: {
@@ -24,6 +24,39 @@ describe("opportunity pipeline filters", () => {
     );
 
     expect(rows.map((row) => row.id)).toEqual(["fte-2", "fte-1"]);
+  });
+
+  it("excludes disqualified opportunities from Active and lists them under Disqualified", () => {
+    const active = opportunity("active", "consulting", "researching", 1000, "Example A");
+    const disqualified = {
+      ...opportunity("disqualified", "consulting", "researching", 0, "Example B"),
+      currentScore: {
+        ...opportunity("disqualified", "consulting", "researching", 0, "Example B").currentScore,
+        isDisqualified: true,
+        disqualifyingRules: ["DQ_VALUE_FLOOR"],
+      },
+    };
+
+    expect(filterPipeline([active, disqualified], { path: "all", state: "active", sort: "pe" }, AS_OF).map((row) => row.id)).toEqual(["active"]);
+    expect(filterPipeline([active, disqualified], { path: "all", state: "disqualified", sort: "pe" }, AS_OF).map((row) => row.id)).toEqual(["disqualified"]);
+    expect(disqualified.currentScore.disqualifyingRules).toEqual(["DQ_VALUE_FLOOR"]);
+  });
+
+  it("uses the same active predicate for the pipeline header count", () => {
+    const rows = [
+      opportunity("active", "assessment", "researching", 10, "Example A"),
+      { ...opportunity("closed", "assessment", "closed", 20, "Example B"), status: "closed" as const },
+      {
+        ...opportunity("disqualified", "assessment", "researching", 30, "Example C"),
+        currentScore: {
+          ...opportunity("disqualified", "assessment", "researching", 30, "Example C").currentScore,
+          isDisqualified: true,
+          disqualifyingRules: ["DQ_NO_ACCESS_PATH"],
+        },
+      },
+    ];
+
+    expect(rows.filter(isActivePipelineOpportunity).map((row) => row.id)).toEqual(["active"]);
   });
 
   it("fires stale detection at the 14 day boundary", () => {
@@ -90,7 +123,7 @@ function actionDaysOld(days: number) {
   };
 }
 
-function opportunity(id: string, type: "consulting" | "fte" | "assessment", status: "researching" | "qualified" | "contacted", pe: number, account: string) {
+function opportunity(id: string, type: "consulting" | "fte" | "assessment", status: "researching" | "qualified" | "contacted" | "closed", pe: number, account: string) {
   return {
     id,
     title: `${account} opportunity`,
@@ -103,6 +136,8 @@ function opportunity(id: string, type: "consulting" | "fte" | "assessment", stat
       evidenceScore: 80,
       accessScore: 50,
       urgencyScore: 10,
+      isDisqualified: false,
+      disqualifyingRules: [],
     },
     nextActions: [actionDaysOld(1)],
   };
