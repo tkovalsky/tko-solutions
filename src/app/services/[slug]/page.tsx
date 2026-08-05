@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
           url: site.socialImage,
           width: 1200,
           height: 630,
-          alt: `${site.name} — ${offer.name}.`,
+          alt: `${site.name}: ${offer.name}.`,
         },
       ],
     },

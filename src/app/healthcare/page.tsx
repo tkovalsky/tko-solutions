@@ -91,7 +91,7 @@ export default function HealthcarePage() {
         <SectionHeader
           eyebrow="Recognizable operating problems"
           title="The technology layer is only one part of the work."
-          description="Programs stall at the boundaries between workstreams, where dependencies and decision rights are owned by no one. Prior authorization makes that failure concrete and measurable, which is why it is the sharpest proof domain — but the same structure appears in every operating domain below."
+          description="Programs stall at the boundaries between workstreams, where dependencies and decision rights are owned by no one. Prior authorization makes that failure concrete and measurable, which is why it is the sharpest proof domain. The same structure appears in every operating domain below."
         />
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {operatingProblems.map((item) => (
@@ -107,7 +107,7 @@ export default function HealthcarePage() {
         <SectionHeader
           eyebrow="Why I am relevant here"
           title="Operations, product, regulation, technology, and implementation in one operating view."
-          description="Each of these on its own is common. The combination is what lets me tell whether a stalled program is a scope problem, an authority problem, an adoption problem, or a technology problem — usually within the first week."
+          description="Each of these on its own is common. The combination is what lets me tell whether a stalled program is a scope problem, an authority problem, an adoption problem, or a technology problem, usually within the first week."
         />
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {credibility.map(([title, body]) => (

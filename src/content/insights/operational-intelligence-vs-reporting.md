@@ -10,7 +10,7 @@ date: "2026-07-02"
 slug: operational-intelligence-vs-reporting
 # Deprioritized 2026-08-05: removed from TKO's primary commercial pathway because the
 # thesis is not differentiated enough to earn an executive's forward. The content is
-# preserved, not destroyed — its strongest argument (status reporting hides enterprise
+# preserved, not destroyed. Its strongest argument (status reporting hides enterprise
 # risk) is carried in why-healthcare-transformation-programs-stall. Re-publishing
 # requires a completed guide brief and a differentiated point of view.
 status: draft

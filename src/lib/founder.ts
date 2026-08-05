@@ -26,7 +26,7 @@ export const careerTimeline: TimelineEntry[] = [
     role: "Operations Analyst / Operations Manager",
     era: "Financial-services operations",
     scope: "Leveraged-loan settlement, LSTA secondary trades, BondCo V–VII build-out, and REIT operations through the post-2008 restructuring cycle.",
-    buyerRelevance: "Complex work becomes reliable when controls, ownership, and exception paths are explicit—not when the system of record merely contains the transaction.",
+    buyerRelevance: "Complex work becomes reliable when controls, ownership, and exception paths are explicit. A system of record that merely contains the transaction is not enough.",
   },
   {
     years: "2012–2015",

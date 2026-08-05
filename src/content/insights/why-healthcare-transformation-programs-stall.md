@@ -1,6 +1,6 @@
 ---
 title: "Why Healthcare Transformation Programs Stall"
-description: "Large healthcare programs rarely fail at the workstream level. They stall at the boundaries between workstreams — and status reporting is designed not to show it."
+description: "Large healthcare programs rarely fail at the workstream level. They stall at the boundaries between workstreams, and status reporting is designed not to show it."
 business_unit: tko
 voice: tko-advisory
 cluster: stalled-healthcare-transformation
@@ -20,7 +20,7 @@ search_intent: >-
 problem_hypothesis: >-
   Healthcare transformation programs rarely fail inside a workstream. They fail at the
   boundaries between workstreams, where dependencies, decision rights, and operating-model
-  changes are owned by no one — and conventional status reporting is structurally incapable
+  changes are owned by no one, and conventional status reporting is structurally incapable
   of showing it.
 point_of_view: >-
   Adding governance to a stalled program usually makes it slower, not better. The useful
@@ -89,11 +89,11 @@ The practical consequence is that program risk accumulates silently, and becomes
 
 ### 1. Unmade decisions with no accountable owner
 
-The most common single cause. A decision is required that spans functions — eligibility logic, member communication policy, clinical criteria, data ownership, who absorbs an operational cost. No individual has authority over the whole of it. It escalates to a forum. The forum defers it for more analysis. The analysis is produced. The forum defers again.
+The most common single cause. A decision is required that spans functions: eligibility logic, member communication policy, clinical criteria, data ownership, who absorbs an operational cost. No individual has authority over the whole of it. It escalates to a forum. The forum defers it for more analysis. The analysis is produced. The forum defers again.
 
 Meanwhile every dependent workstream builds to an assumption, and the assumptions diverge.
 
-In a recovery, this is the first thing to look for and it is usually findable in a day: pull every decision the program has been waiting on for more than thirty days and ask who owns each. The list is typically short — five to fifteen items — and a meaningful share of the program's delay traces to it.
+In a recovery, this is the first thing to look for and it is usually findable in a day: pull every decision the program has been waiting on for more than thirty days and ask who owns each. The list is typically short, five to fifteen items, and a meaningful share of the program's delay traces to it.
 
 ### 2. Operating-model change that no line executive agreed to own
 
@@ -105,7 +105,7 @@ The diagnostic question is blunt: *which line executive has agreed, in writing, 
 
 ### 3. Adoption treated as a delivery milestone
 
-Related but distinct. Delivery and adoption are separate accountabilities with separate timelines and separate failure modes. Programs that fold adoption into the delivery plan — "training complete" as a milestone — systematically underinvest in it, because training completion is easy to achieve and tells you nothing.
+Related but distinct. Delivery and adoption are separate accountabilities with separate timelines and separate failure modes. Programs that fold adoption into the delivery plan, with "training complete" as a milestone, systematically underinvest in it, because training completion is easy to achieve and tells you nothing.
 
 In healthcare this is especially costly, because the people whose behavior must change are clinical and operational staff under existing production pressure, and their workarounds exist for reasons. A change that makes their day harder will be rejected regardless of the business case behind it.
 
@@ -115,13 +115,13 @@ Multi-year programs are approved against assumptions: a regulatory deadline, a v
 
 Very few programs have a mechanism to notice. The business case is an approval artifact, not a living document, and revisiting it feels like an attack on the program rather than governance of it.
 
-A program running against an expired assumption can execute flawlessly and still destroy value. The honest recovery finding is sometimes that the program should be stopped or substantially descoped — and that finding is far cheaper in month eighteen than in month thirty-six.
+A program running against an expired assumption can execute flawlessly and still destroy value. The honest recovery finding is sometimes that the program should be stopped or substantially descoped. That finding is far cheaper in month eighteen than in month thirty-six.
 
 ## Why Adding Governance Usually Makes It Worse
 
 The instinctive response to a stalled program is more oversight: another steering committee, a weekly deep-dive, an expanded PMO, a more detailed reporting pack.
 
-This reliably makes things slower. It adds meetings for people who are already the constraint, increases the reporting burden on delivery teams, and — critically — does not change the thing that is actually blocking the program, which is that specific decisions have no owner.
+This reliably makes things slower. It adds meetings for people who are already the constraint, increases the reporting burden on delivery teams, and, critically, does not change the thing that is actually blocking the program, which is that specific decisions have no owner.
 
 Governance is a mechanism for making decisions. Adding governance to a program that cannot make decisions adds process to a decision-making failure.
 
@@ -129,11 +129,11 @@ The narrower intervention is better: find the unowned decisions, assign each to 
 
 ## Where AI Fits in a Recovery
 
-AI is genuinely useful in the analytical work of a recovery. Issue logs, risk registers, meeting minutes, and status packs accumulate into volumes no reviewer can read exhaustively — clustering them to find repeated causes is exactly the kind of work machines do well. Summarizing several hundred pages of program documentation in a day is a real acceleration. Drafting the written artifacts a recovery produces saves meaningful time.
+AI is genuinely useful in the analytical work of a recovery. Issue logs, risk registers, meeting minutes, and status packs accumulate into volumes no reviewer can read exhaustively. Clustering them to find repeated causes is exactly the kind of work machines do well. Summarizing several hundred pages of program documentation in a day is a real acceleration. Drafting the written artifacts a recovery produces saves meaningful time.
 
 What AI does not do is resolve the program, because the binding constraint is an unmade decision with no accountable owner. That is a governance and authority problem, and no amount of analysis substitutes for someone with authority deciding.
 
-There is a specific failure mode worth naming: adding an AI workstream to a program that is already failing on decision latency. It is superficially attractive — it signals modernization and it is fundable. It adds a dependency, a vendor, and a new set of cross-functional decisions to a program that is already stalled on exactly that. Programs in recovery should be reducing dependency count, not increasing it.
+There is a specific failure mode worth naming: adding an AI workstream to a program that is already failing on decision latency. It is superficially attractive, because it signals modernization and it is fundable. It adds a dependency, a vendor, and a new set of cross-functional decisions to a program that is already stalled on exactly that. Programs in recovery should be reducing dependency count, not increasing it.
 
 ## An Executive Diagnostic
 
@@ -142,7 +142,7 @@ Six questions. Each has a documentary answer or it does not, and the pattern of 
 1. **Which decisions has this program been waiting on for more than thirty days, and who owns each one?** *A list longer than fifteen, or owners expressed as committees, locates the problem.*
 2. **Name every workstream reporting green whose deliverable another workstream is currently blocked on.** *If nobody can produce this from existing reporting, the reporting is not showing enterprise risk.*
 3. **What operating-model change does this program require, and which line executive has agreed to own it?** *No named line owner means the technical delivery will land on an unchanged operation.*
-4. **If the program were cancelled tomorrow, what would the organization have permanently gained?** *If the honest answer is "very little," the sequencing put all value at the end — which is a recoverable design error, but only if it is named.*
+4. **If the program were cancelled tomorrow, what would the organization have permanently gained?** *If the honest answer is "very little," the sequencing put all value at the end, which is a recoverable design error, but only if it is named.*
 5. **Which assumption in the original business case is no longer true, and when did it stop being true?** *"None" after eighteen months in healthcare usually means nobody has checked.*
 6. **Who is accountable for adoption, as distinct from delivery, and what are they measured on?** *If it is the same person on the same measures, adoption is not being managed.*
 
@@ -153,7 +153,7 @@ The [Program Recovery Readiness Check](/program-recovery-readiness-check) expand
 Recovery is less dramatic than it sounds. In most cases it consists of four things:
 
 - **An honest, independent diagnosis** produced quickly enough to still be relevant, by someone with no stake in the program's continuation.
-- **Decision assignment** — the unowned decisions given to named individuals with authority and dates.
+- **Decision assignment**: the unowned decisions given to named individuals with authority and dates.
 - **Resequencing for early value** so the program can demonstrate something real within a quarter, which is usually what restores executive confidence.
 - **A named operating-model owner** in the line organization, with agreed measures.
 

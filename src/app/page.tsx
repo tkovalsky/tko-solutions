@@ -42,7 +42,7 @@ const whyTko = [
   },
   {
     title: "Twenty years of operating depth",
-    body: "Regulated operations, healthcare product ownership, CMS interoperability, and enterprise transformation delivery — plus a production system I built and operate. I have had to make recommendations like these work.",
+    body: "Regulated operations, healthcare product ownership, CMS interoperability, and enterprise transformation delivery, plus a production system I built and operate. I have had to make recommendations like these work.",
   },
   {
     title: "A direct answer on AI",
@@ -136,7 +136,7 @@ export default function HomePage() {
           <SectionHeader
             eyebrow="The recognizable problem"
             title="Programs fail at the seams, where nobody reports."
-            description="Workstream status answers a local question honestly. The enterprise question — whether the pieces are converging into an operating change — belongs to nobody, so risk accumulates at the boundaries and surfaces a quarter after it started."
+            description="Workstream status answers a local question honestly. The enterprise question, whether the pieces are converging into an operating change, belongs to nobody. Risk accumulates at the boundaries and surfaces a quarter after it started."
           />
           <ul className="grid gap-3">
             {symptoms.map((symptom) => (
@@ -296,8 +296,8 @@ export default function HomePage() {
             </p>
             <p className="mt-4 text-base leading-7 text-muted">
               RachelOS is an operating system I built and run independently. It demonstrates how I
-              make workflow, evidence, approvals, and handoffs explicit — the same discipline I
-              apply after a Recovery Review.
+              make workflow, evidence, approvals, and handoffs explicit. That is the same
+              discipline I apply after a Recovery Review.
             </p>
           </div>
           <LinkButton href="/selected-work/from-crm-to-operating-system" variant="secondary">

@@ -47,7 +47,7 @@ export const caseStudies: CaseStudy[] = [
       "Specific artifacts included workflow tiers, escalation logic, audit requirements, and adoption considerations.",
     ],
     evidenceLimit:
-      "Employment-period experience, described anonymously. Client identity, workflow artifacts, baselines, and post-implementation measures are covered by confidentiality and are not published. The evidence supports scope and mechanism, not a quantified client outcome.",
+      "Employment-period experience, described anonymously. Confidentiality covers the client identity, workflow artifacts, baselines, and post-implementation measures, so I do not publish them. The evidence supports scope and mechanism, not a quantified client outcome.",
     relevance:
       "It shows why I begin with a measured workflow and exception baseline before assessing whether software, staffing, or AI is the answer.",
     relatedOffer: "Program Recovery Review",
@@ -77,7 +77,7 @@ export const caseStudies: CaseStudy[] = [
       "Defined role in transformation governance, dependency visibility, and executive decision support.",
     ],
     evidenceLimit:
-      "Employment-period enterprise experience rather than a named TKO client engagement. Public artifacts and quantified outcomes are covered by confidentiality and are not published.",
+      "Employment-period enterprise experience rather than a named TKO client engagement. Confidentiality covers the artifacts and the quantified outcomes, so I do not publish them.",
     relevance:
       "This is the pattern the Program Recovery Review is built to find: risk accumulating at the boundaries between workstreams while each workstream reports honestly on its own scope.",
     relatedOffer: "Program Recovery Review",
@@ -101,13 +101,13 @@ export const caseStudies: CaseStudy[] = [
     intervention:
       "The work connected technical exchange requirements to access controls, auditability, governance, onboarding, and delivery coordination.",
     result:
-      "Regulatory requirements became implementable product behaviour and operating controls — access, auditability, onboarding, and governance designed together rather than sequenced after the API.",
+      "Access, auditability, onboarding, and governance were designed together rather than sequenced after the API, which turned the regulatory requirements into implementable product behaviour and working operating controls.",
     evidence: [
       "Verifiable employment history in healthcare interoperability product management.",
       "Specific scope covering FHIR, access control, auditability, data governance, and payer-facing platform requirements.",
     ],
     evidenceLimit:
-      "Employment history establishes the scope of the role; it is not an endorsement by the employer or its clients. Confidential program artifacts and outcome measures are not published.",
+      "Employment history establishes the scope of the role. Neither the employer nor its clients endorse this practice, and I do not publish confidential program artifacts or outcome measures.",
     relevance:
       "Translating policy and technical requirements into controlled operating behaviour is the same capability a prior-authorization or interoperability program needs when evidence, access, exceptions, and auditability all have to hold together.",
     relatedOffer: "Specialist Subcontract",
@@ -140,7 +140,7 @@ export const caseStudies: CaseStudy[] = [
     evidenceLimit:
       "One independently operated, non-healthcare environment. It supports implementation and governance discipline. It is not evidence of enterprise scale, healthcare compliance, prior-authorization performance, or a financial outcome.",
     relevance:
-      "You can inspect how I turn fragmented work into explicit workflow, evidence, controls, and handoff-ready artifacts — the same discipline I apply after a Recovery Review.",
+      "You can inspect how I turn fragmented work into explicit workflow, evidence, controls, and handoff-ready artifacts. That is the same discipline I apply after a Recovery Review.",
     relatedOffer: "Fractional Transformation Lead",
     relatedOfferHref: "/services/fractional-transformation-lead",
   },

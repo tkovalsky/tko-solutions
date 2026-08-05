@@ -23,7 +23,7 @@ export function Footer() {
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
             TKO recovers healthcare transformation programs that are behind, over budget, or
-            about to fund automation on top of a workflow that does not work yet — for health
+            about to fund automation on top of a workflow that does not work yet. For health
             plans, healthcare services organizations, managed-care organizations, and PE-backed
             provider platforms.
           </p>

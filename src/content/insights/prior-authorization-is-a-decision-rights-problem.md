@@ -39,7 +39,7 @@ ai_not_answer: >-
   ambiguous, or where the organization cannot reconstruct why a decision was made. Applied
   there, it industrializes an authority gap and creates a new audit problem.
 diagnostic_questions:
-  - "Which prior authorization decisions are routine, which are exceptions, and which require clinical review — and can you produce that list today?"
+  - "Which prior authorization decisions are routine, which are exceptions, and which require clinical review, and can you produce that list today?"
   - "Who holds authority at each tier, and where is that authority written down rather than remembered?"
   - "When a case leaves the standard path, what routes it, and what happens if that person is unavailable?"
   - "Can you reconstruct the source, owner, evidence, and rationale for an important decision made ninety days ago?"
@@ -67,7 +67,7 @@ featured: true
 
 # Prior Authorization Is a Decision-Rights Problem
 
-A prior authorization request arrives. Whether it is approved, delayed, or denied may depend less on the clinical facts than on which staff member picks it up — what they know, who they call when the case does not fit the standard pattern, and how they were trained to handle exceptions.
+A prior authorization request arrives. Whether it is approved, delayed, or denied may depend less on the clinical facts than on which staff member picks it up: what they know, who they call when the case does not fit the standard pattern, and how they were trained to handle exceptions.
 
 None of that authority model is visible to most systems. That is the business problem.
 
@@ -79,7 +79,7 @@ The two most common explanations for prior authorization cost are that the team 
 
 Add staff to a workflow with implicit decision rights and you add people who each develop their own version of the rules. Consistency gets worse, not better, and the organization now has more individuals whose absence creates delay.
 
-Add automation to the same workflow and the standard path gets faster while the exception path — which is where the cost concentrates — stays exactly as it was. Worse, automation tends to increase exception volume in the short term, because a faster standard path surfaces the cases that never fit it.
+Add automation to the same workflow and the standard path gets faster while the exception path, which is where the cost concentrates, stays exactly as it was. Worse, automation tends to increase exception volume in the short term, because a faster standard path surfaces the cases that never fit it.
 
 CMS has been explicit that certain requests will continue to require clinical review even as prior authorization APIs become standard. An API changes how a request moves. It does not decide who has authority when the request does not fit.
 
@@ -101,7 +101,7 @@ The pattern is simple: a person becomes the interface to critical operational kn
 
 In prior authorization, that person knows payer-specific requirements, escalation paths, documentation details, exception rules, and the practical order in which work should move. The organization depends on them because the actual decision model was never captured anywhere else.
 
-This is not a criticism of the individual. It is usually a sign that someone competent absorbed the complexity the operating model failed to handle. But it means the organization's authorization performance is a function of one person's availability — and that is a structural risk, not a personnel issue.
+This is not a criticism of the individual. It is usually a sign that someone competent absorbed the complexity the operating model failed to handle. But it means the organization's authorization performance is a function of one person's availability. That is a structural risk, not a personnel issue.
 
 ### A concrete example
 
@@ -120,14 +120,14 @@ Exception routing deserves to be designed explicitly:
 - **What qualifies as an exception**, stated as categories rather than as a residual "everything else" bucket.
 - **Where each category routes**, to a role rather than to a named individual.
 - **What evidence each category requires** before it can move.
-- **What happens when the route is unavailable** — the fallback, not the informal workaround.
+- **What happens when the route is unavailable**: the fallback, not the informal workaround.
 - **How long a category may sit** before it escalates automatically.
 
 An organization that cannot produce that table does not have an exception process. It has a set of habits that happen to work while the experienced people are present.
 
 ## Workflow Ownership
 
-Decision rights answer *who decides*. Workflow ownership answers *who is accountable for the workflow working at all* — a different question that is frequently unassigned.
+Decision rights answer *who decides*. Workflow ownership answers *who is accountable for the workflow working at all*, a different question that is frequently unassigned.
 
 Prior authorization typically spans intake, clinical review, revenue cycle, provider relations, technology, and compliance. Each function owns a segment. Very often no single role owns the end-to-end result, which means no one is accountable when the handoffs are the problem.
 
@@ -164,11 +164,11 @@ Treating all three as one automation opportunity would hide the real work. The f
 
 AI earns its place in prior authorization where the task is bounded, the output is reviewable, and a named human remains accountable:
 
-- **Missing-information detection at intake** — identifying what a request lacks before it is submitted, which is among the highest-value administrative capabilities available.
-- **Case summarization for human reviewers** — assembling scattered documentation into a reviewable summary, shortening preparation without moving the decision.
-- **Denial classification for root-cause analysis** — clustering denial reasons at volumes no analyst would work through manually.
-- **Draft documentation and correspondence** — producing a first draft a qualified person edits and approves.
-- **Prioritization support** — surfacing which cases need attention now and what each is waiting on.
+- **Missing-information detection at intake**: identifying what a request lacks before it is submitted, which is among the highest-value administrative capabilities available.
+- **Case summarization for human reviewers**: assembling scattered documentation into a reviewable summary, shortening preparation without moving the decision.
+- **Denial classification for root-cause analysis**: clustering denial reasons at volumes no analyst would work through manually.
+- **Draft documentation and correspondence**: producing a first draft a qualified person edits and approves.
+- **Prioritization support**: surfacing which cases need attention now and what each is waiting on.
 
 The common thread: the machine assembles, detects, drafts, and ranks. It does not decide.
 
@@ -180,7 +180,7 @@ The same technology becomes a liability under three conditions.
 
 **When exception authority is ambiguous.** Automating the standard path while leaving exceptions to informal routing increases exception volume and removes the slack the experienced staff were using to absorb it.
 
-**When decisions cannot be reconstructed.** If an organization cannot show the evidence, the rule applied, the human who approved it, and the reason, then AI-assisted determinations create an audit problem that did not previously exist. This risk is highest precisely where organizations are most eager to deploy — high-volume administrative determinations.
+**When decisions cannot be reconstructed.** If an organization cannot show the evidence, the rule applied, the human who approved it, and the reason, then AI-assisted determinations create an audit problem that did not previously exist. This risk is highest precisely where organizations are most eager to deploy: high-volume administrative determinations.
 
 There is a fourth, quieter risk: automation makes the human API dependency invisible rather than resolving it. The organization stops noticing that one person is still the only one who knows why the exception rule exists, because throughput improved.
 
@@ -192,13 +192,13 @@ Before committing to a prior authorization platform, an automation vendor, a Gol
 
 **2. Authority map.** For each decision class, who holds authority, and is that recorded anywhere other than in practice? *If authority is only observable, it cannot be governed, delegated, or audited.*
 
-**3. Exception routing table.** For each exception category: the route, the required evidence, the time limit, and the fallback. *If exceptions route to individuals rather than roles, the workflow has a bus-factor problem, not a technology problem.*
+**3. Exception routing table.** For each exception category: the route, the required evidence, the time limit, and the fallback. *If exceptions route to individuals rather than roles, the workflow has a bus-factor problem. Technology will not fix it.*
 
 **4. Evidence and reconstruction test.** Take one significant decision from ninety days ago and reconstruct it: inputs, rule applied, approver, rationale. *If you cannot, adding machine-assisted determinations will make the audit position worse.*
 
 **5. Ownership test.** If end-to-end performance degrades next quarter, whose objective is missed? *If the answer is not one name, the workflow is unowned.*
 
-An organization that can answer all five is genuinely ready to evaluate automation, and will buy better because it knows what it is buying. An organization that cannot has just found its actual first project — and it is considerably cheaper than the platform.
+An organization that can answer all five is genuinely ready to evaluate automation, and will buy better because it knows what it is buying. An organization that cannot has just found its actual first project. It is considerably cheaper than the platform.
 
 For the program-level version of this diagnostic, the [Program Recovery Readiness Check](/program-recovery-readiness-check) covers twelve questions across outcomes, decision rights, workflow ownership, dependencies, operating measures, and AI readiness.
 
@@ -222,9 +222,9 @@ For the portable version of the underlying pattern, read [Human APIs Become Orga
 
 ## Public Sources and Claim Boundaries
 
-- [CMS Interoperability and Prior Authorization Final Rule (CMS-0057-F)](https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f) — requirements, compliance dates, and payer reporting context.
-- [CMS Prior Authorization API frequently asked questions](https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/frequently-asked-questions/prior-authorization-api) — implementation guidance and the continued role of clinical review.
-- [AMA prior authorization physician survey](https://www.ama-assn.org/practice-management/prior-authorization/ama-prior-authorization-physician-survey) — directional evidence of physician-reported administrative burden.
+- [CMS Interoperability and Prior Authorization Final Rule (CMS-0057-F)](https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f): requirements, compliance dates, and payer reporting context.
+- [CMS Prior Authorization API frequently asked questions](https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/frequently-asked-questions/prior-authorization-api): implementation guidance and the continued role of clinical review.
+- [AMA prior authorization physician survey](https://www.ama-assn.org/practice-management/prior-authorization/ama-prior-authorization-physician-survey): directional evidence of physician-reported administrative burden.
 
 The measurement model, diagnostic framework, and examples above are TKO advisory guidance. They are not CMS requirements, client results, or evidence that any specific intervention caused a financial outcome.
 

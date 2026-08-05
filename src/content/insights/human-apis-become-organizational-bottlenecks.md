@@ -23,12 +23,12 @@ problem_hypothesis: >-
   ambiguity the operating model failed to handle.
 point_of_view: >-
   Organizations compensate for broken decision systems by making people behave like APIs.
-  The dependency is a symptom to diagnose, not a personnel problem to manage — and replacing
+  The dependency is a symptom to diagnose, not a personnel problem to manage. Replacing
   the person with a tool preserves the risk at higher speed.
 relevant_proof: >-
-  The pattern recurs across enterprise healthcare operations — prior authorization,
-  utilization management, care management, interoperability, and transformation governance —
-  and was addressed directly in RachelOS, where a durable relationship-memory layer replaced
+  The pattern recurs across enterprise healthcare operations: prior authorization,
+  utilization management, care management, interoperability, and transformation governance.
+  I addressed it directly in RachelOS, where a durable relationship-memory layer replaced
   knowledge previously held by one operator.
 ai_useful: >-
   AI is well suited to the reconstruction work a human API performs constantly: assembling
@@ -43,7 +43,7 @@ diagnostic_questions:
   - "What questions do other people bring to that person, and how many are facts versus judgment calls?"
   - "Which of those answers exist in writing, and of those, which are current enough to be trusted?"
   - "Where must a human decision remain explicit no matter how good the tooling becomes?"
-  - "If that person left in thirty days, what would you do first — and what would you not be able to do at all?"
+  - "If that person left in thirty days, what would you do first, and what would you not be able to do at all?"
 recommended_action: >-
   Run a bounded key-person audit on the single workflow where the dependency is most
   expensive, and separate captureable facts and rules from genuine judgment before selecting
@@ -70,7 +70,7 @@ They know which exception matters, which payer requires the extra document, whic
 
 That knowledge is valuable. It is also risky when the organization cannot operate without it.
 
-When critical operational knowledge lives in a person instead of a system, that person becomes a **human API**. Other people query them for context. Work routes through them for judgment. Exceptions wait for them. When they are overloaded, unavailable, or leave, the workflow slows down — because the operating model was never captured anywhere else.
+When critical operational knowledge lives in a person instead of a system, that person becomes a **human API**. Other people query them for context. Work routes through them for judgment. Exceptions wait for them. When they are overloaded, unavailable, or leave, the workflow slows down, because the operating model was never captured anywhere else.
 
 ## The Thesis
 
@@ -86,13 +86,13 @@ This matters for what you do next. If you treat it as a documentation problem, y
 
 Human API dependency rarely presents as dysfunction. It presents as competence.
 
-The expert gets things done. The team trusts them. Leaders rely on them. The process works, because one person knows the missing details and fills the gaps. Their performance reviews are excellent. They are frequently the person leadership would least want to lose — which is precisely the measure of the exposure.
+The expert gets things done. The team trusts them. Leaders rely on them. The process works, because one person knows the missing details and fills the gaps. Their performance reviews are excellent. They are frequently the person leadership would least want to lose, which is precisely the measure of the exposure.
 
 The organization mistakes that person's effort for operational capability. The two are only equivalent while the person is present.
 
 In healthcare operations the pattern appears wherever judgment sits between policy and execution: prior authorization exception handling, utilization-management prioritization, care-coordination follow-through, interoperability onboarding, and transformation governance. The official process exists. The usable process lives in individual heads.
 
-In RachelOS — a different domain entirely — the same shape appeared around relationship knowledge. Tools and records existed. The practical memory of who mattered, what had changed, and what needed attention remained human-held until a durable memory layer made it persistent. The domain was different. The structure was identical.
+In RachelOS, a different domain entirely, the same shape appeared around relationship knowledge. Tools and records existed. The practical memory of who mattered, what had changed, and what needed attention remained human-held until a durable memory layer made it persistent. The domain was different. The structure was identical.
 
 ## The Three Operating Risks
 
@@ -104,9 +104,9 @@ In RachelOS — a different domain entirely — the same shape appeared around r
 
 The third risk is the expensive one. It is how an organization spends seven figures and arrives at the same operating position with better screens.
 
-## Where AI Fits — and Where It Does Not
+## Where AI Fits, and Where It Does Not
 
-The reconstruction work a human API performs is genuinely well suited to machine assistance. Assembling scattered context, detecting missing information, surfacing what needs attention, drafting routine output — these are bounded, reviewable tasks, and automating them gives the expert their time back.
+The reconstruction work a human API performs is genuinely well suited to machine assistance. Assembling scattered context, detecting missing information, surfacing what needs attention, drafting routine output. These are bounded, reviewable tasks, and automating them gives the expert their time back.
 
 What AI cannot do is supply an authority model that does not exist.
 
@@ -118,19 +118,19 @@ The sequence that works: make the decision model explicit first, then automate t
 
 This is a bounded exercise. On one workflow it takes days, not months.
 
-1. **Identify the workflow** where work demonstrably slows when one person is unavailable. Vacation and sick-leave periods are natural experiments — the data usually already exists.
+1. **Identify the workflow** where work demonstrably slows when one person is unavailable. Vacation and sick-leave periods are natural experiments, and the data usually already exists.
 2. **List the questions** other people bring to that person over two weeks. Have them keep the list; do not reconstruct it from memory.
 3. **Separate the list** into facts, rules, exceptions, judgment calls, and escalation paths. Most organizations are surprised by how much is fact and rule rather than judgment.
 4. **Mark what is documented, what is current, and what is trusted.** These are three different questions, and the gap between "documented" and "trusted" is where the real dependency lives.
 5. **Decide where human approval must remain explicit** regardless of tooling. Name it deliberately rather than letting it be determined by what happens to be automatable.
 
-The goal is not to remove the expert. It is to stop making the expert the only interface to the operating model — so their judgment goes to the cases that need judgment, rather than to reconstruction work.
+The goal is not to remove the expert. It is to stop making the expert the only interface to the operating model, so their judgment goes to the cases that need judgment rather than to reconstruction work.
 
 ## What Good Looks Like
 
 An organization that has resolved a human API dependency can do four things it could not do before:
 
-- State who decides what, at which tier, on what evidence — in writing.
+- State who decides what, at which tier, and on what evidence, in writing.
 - Route an exception to a role rather than to a name.
 - Reconstruct a significant past decision without asking the person who made it.
 - Absorb the loss of any single operator without a step change in throughput or quality.

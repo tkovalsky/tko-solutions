@@ -12,7 +12,7 @@ export const READINESS_CHECK_PATH = "/program-recovery-readiness-check";
 export type ReadinessQuestion = {
   number: number;
   question: string;
-  /** What a weak answer sounds like — the tell that this area needs work. */
+  /** What a weak answer sounds like: the tell that this area needs work. */
   weakAnswer: string;
 };
 
@@ -105,7 +105,7 @@ export const readinessThemes: ReadinessTheme[] = [
       {
         number: 8,
         question:
-          "Which external dependency — a vendor, a regulator, another program — could stop this work, and who is managing it?",
+          "Which external dependency (a vendor, a regulator, another program) could stop this work, and who is managing it?",
         weakAnswer:
           "The risk is documented in a register but no individual is actively working it.",
       },
@@ -141,14 +141,14 @@ export const readinessThemes: ReadinessTheme[] = [
       {
         number: 11,
         question:
-          "For the workflow you intend to automate, can you produce the decision inventory — which decisions are routine, which are exceptions, and which require clinical or expert judgment?",
+          "For the workflow you intend to automate, can you produce the decision inventory: which decisions are routine, which are exceptions, and which require clinical or expert judgment?",
         weakAnswer:
           "No such list exists. Without it the automation scope cannot be defined, only estimated.",
       },
       {
         number: 12,
         question:
-          "Take one significant decision from ninety days ago and reconstruct it — the inputs, the rule applied, the approver, and the rationale. Can you?",
+          "Take one significant decision from ninety days ago and reconstruct it: the inputs, the rule applied, the approver, and the rationale. Can you?",
         weakAnswer:
           "You cannot. Adding machine-assisted determinations on top of that will make the audit position worse, not better.",
       },

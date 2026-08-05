@@ -47,7 +47,7 @@ export const PROGRAM_RECOVERY_CONVERSATION = {
   summary:
     "A structured 45-minute working conversation about one program that is behind, over budget, or about to fund automation on top of an unstable workflow.",
   // The free conversation qualifies the problem. Stated once, calmly, so the
-  // scope conversation is short — not repeated as a disclaimer across the site.
+  // scope conversation is short, and not repeated as a disclaimer across the site.
   boundary:
     "The conversation covers what you already know about the program and what should happen next. Document review, stakeholder interviews, and a written recovery plan are the paid engagement.",
   outputs: [
@@ -76,7 +76,7 @@ export const offers: Offer[] = [
     audience:
       "For a COO, Chief Transformation Officer, CIO, or SVP/VP Operations accountable for a healthcare transformation program that is behind schedule, over budget, or losing executive confidence.",
     summary:
-      "Three weeks, one accountable senior reviewer, one written executive answer. The Review establishes what is actually failing — scope, sequencing, decision rights, operating design, adoption, or vendor performance — and what the next 90 days should contain.",
+      "Three weeks, one accountable senior reviewer, one written executive answer. The Review establishes what is actually failing: scope, sequencing, decision rights, operating design, adoption, or vendor performance. It also sets out what the next 90 days should contain.",
     metaDescription:
       "A three-week, $18,000–$25,000 fixed-fee review that tells healthcare executives whether a stalled transformation program is recoverable, what is actually wrong, and what the next 90 days should contain.",
     triggers: [
@@ -87,7 +87,7 @@ export const offers: Offer[] = [
       "A new executive has inherited a program and needs an independent read before committing to it.",
     ],
     deliverables: [
-      "Executive diagnosis — what is actually wrong, stated plainly",
+      "Executive diagnosis: what is actually wrong, stated plainly",
       "Program risk map with severity and accumulation path",
       "Recovery priorities, sequenced and bounded",
       "Decision-rights and escalation findings",
@@ -97,7 +97,7 @@ export const offers: Offer[] = [
       "Executive readout session",
     ],
     boundaries: [
-      "Scope is one program and one accountable sponsor. Additional programs, workstream families, or data remediation are scoped separately.",
+      "Scope is one program and one accountable sponsor. I scope additional programs, workstream families, or data remediation separately.",
       "The Review sets a defensible baseline and target. Committing to a specific denial, cost, turnaround, or revenue number before that baseline exists would not be credible.",
       "I may recommend internal execution, an existing vendor, a specialist partner, or no further investment. There is no obligation to continue with TKO.",
       "Standard scope works from existing documentation, reports, de-identified examples, and interviews. Production-system access and PHI handling are agreed separately if they become necessary.",
@@ -105,7 +105,7 @@ export const offers: Offer[] = [
     faqs: [
       {
         q: "Why three weeks rather than a longer discovery phase?",
-        a: "Three weeks is enough to interview the people who know, read what already exists, and form an accountable opinion. A longer discovery phase usually reflects the cost of coordinating a team, not the difficulty of the question. One reviewer removes that overhead.",
+        a: "Three weeks is enough to interview the people who know, read what already exists, and form an accountable opinion. A longer discovery phase usually reflects the cost of coordinating a team. One reviewer removes that overhead.",
       },
       {
         q: "What if the honest answer is that the program is not recoverable?",
@@ -130,7 +130,7 @@ export const offers: Offer[] = [
         period: "Week 1",
         title: "Frame and read in",
         description:
-          "I confirm the decision leadership needs to make, agree the program boundary and the sponsor, and read the material that already exists — status packs, issue and risk logs, the business case, vendor agreements, and program artifacts.",
+          "I confirm the decision leadership needs to make, then agree the program boundary and the sponsor. I read the material that already exists: status packs, issue and risk logs, the business case, vendor agreements, and program artifacts.",
       },
       {
         period: "Week 2",
@@ -146,7 +146,7 @@ export const offers: Offer[] = [
       },
     ],
     feeBoundary:
-      "The fixed fee buys the diagnosis and the 90-day action plan. It does not buy the recovery itself — executing the plan is separate work, and it belongs to whoever is best placed to do it, which is often the internal team.",
+      "The fixed fee buys the diagnosis and the 90-day action plan. It does not buy the recovery itself. Executing the plan is separate work, and it belongs to whoever is best placed to do it, which is often the internal team.",
     feeFraming:
       "The fixed price of the decision, not the recovery: what it costs to learn whether the program is worth continuing, before the next seven-figure funding call.",
   },
@@ -178,12 +178,12 @@ export const offers: Offer[] = [
       "Executive and sponsor reporting that reflects real delivery risk",
       "Recovery-plan execution and re-sequencing as conditions change",
       "Vendor and partner performance oversight",
-      "AI and automation adoption judgment — what to fund, defer, or stop",
+      "AI and automation adoption judgment: what to fund, defer, or stop",
       "Capability transfer to the permanent internal owner",
     ],
     boundaries: [
       "This is senior leadership capacity. Staff augmentation and outsourced delivery are different purchases, and I am the wrong supplier for both.",
-      "Engagements are part-time and explicitly scoped by days per month. Full-time interim leadership is a different arrangement.",
+      "Engagements are part-time, and I scope them explicitly by days per month. Full-time interim leadership is a different arrangement.",
       "A three-month minimum applies because program recovery cannot be evidenced in less.",
       "TKO does not act as a licensed clinical, legal, or regulatory advisor. Those judgments stay with the client's qualified functions.",
     ],
@@ -202,7 +202,7 @@ export const offers: Offer[] = [
       },
       {
         q: "Do you take over the program from internal leaders?",
-        a: "No. The role adds senior accountability where it is missing and transfers capability to the permanent owner. Displacing capable internal leaders is a failure mode, not a goal.",
+        a: "No. The role adds senior accountability where it is missing and transfers capability to the permanent owner. Displacing capable internal leaders is a failure mode.",
       },
     ],
     ctaLabel: "Request a Program Recovery Conversation",
@@ -219,7 +219,7 @@ export const offers: Offer[] = [
     audience:
       "For healthcare consultancies, system integrators, advisory firms, and technology partners who already hold the client relationship and need senior specialist depth on a named engagement.",
     summary:
-      "Senior specialist capacity delivered under your brand and your client agreement. Prior authorization, utilization management, interoperability, operational recovery, and practical AI adoption — brought in as depth on an engagement you own.",
+      "You keep the client relationship and the brand, and I bring the senior specialist depth. That covers prior authorization, utilization management, interoperability, operational recovery, and practical AI adoption on an engagement you own.",
     metaDescription:
       "Senior healthcare transformation specialist available for subcontract to consultancies and system integrators. Prior authorization, utilization management, interoperability, operational recovery, and practical AI adoption.",
     triggers: [
@@ -237,10 +237,10 @@ export const offers: Offer[] = [
       "Executive-grade written deliverables and readouts",
     ],
     boundaries: [
-      "Work is delivered under the prime firm's client agreement, brand, and quality process.",
+      "I deliver the work under the prime firm's client agreement, brand, and quality process.",
       "TKO does not approach the prime's clients directly for competing work during or after the engagement, subject to the terms agreed.",
       "Rates are indicative and confirmed per engagement based on scope, duration, location, and commitment.",
-      "Availability is limited and allocated in advance.",
+      "Availability is limited, and I allocate it in advance.",
     ],
     faqs: [
       {

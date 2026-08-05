@@ -142,7 +142,7 @@ export default function ServicesPage() {
             <p>
               The <strong className="font-semibold text-foreground">Program Recovery Review</strong> answers
               whether a program is recoverable and what should happen next. It creates no obligation to
-              continue — I may recommend internal execution, an existing vendor, a specialist partner, or no
+              continue. I may recommend internal execution, an existing vendor, a specialist partner, or no
               further investment.
             </p>
             <p>
@@ -156,10 +156,10 @@ export default function ServicesPage() {
               firm&rsquo;s agreement and brand.
             </p>
             <p>
-              Work outside this scope — outsourced authorization operations, staff augmentation,
-              clinical-policy or legal advice, EHR implementation, and general-purpose AI consulting —
-              is better served elsewhere, and I will say so. Sensitive data handling, specialist
-              partners, travel, licenses, and expanded scope are agreed separately.
+              Some work is better served elsewhere, and I will say so: outsourced authorization
+              operations, staff augmentation, clinical-policy or legal advice, EHR implementation,
+              and general-purpose AI consulting. Sensitive data handling, specialist partners,
+              travel, licenses, and expanded scope are agreed separately.
             </p>
           </div>
         </div>

@@ -68,7 +68,7 @@ export default function SelectedWorkPage() {
             <p>
               What travels between them is the disciplined work of tracing a workflow, clarifying
               evidence and authority, designing controls, and measuring the change. Domain logic
-              and performance results stay where they were earned — a real-estate system does not
+              and performance results stay where they were earned. A real-estate system does not
               predict a healthcare result, and one enterprise program does not predict yours.
             </p>
           </div>

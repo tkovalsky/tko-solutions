@@ -13,7 +13,7 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Todd Kovalsky | Founder & Principal",
   description:
-    "Twenty years across regulated operations, healthcare product, CMS interoperability, and enterprise transformation — and how I work, including capacity, conflicts, and confidentiality.",
+    "Twenty years across regulated operations, healthcare product, CMS interoperability, and enterprise transformation. How I work, including capacity, conflicts, and confidentiality.",
   alternates: { canonical: "/founder" },
   openGraph: {
     title: "Todd Kovalsky | Founder & Principal, TKO Solutions",
@@ -181,11 +181,11 @@ export default function FounderPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Referral language</p>
             <h2 className="mt-4 text-3xl font-semibold">Who to introduce me to</h2>
             <p className="mt-4 max-w-[68ch] text-lg leading-8 text-muted">
-              An executive at a health plan, healthcare services organization, managed-care
-              organization, PE-backed provider platform, or large provider organization whose
-              transformation program is behind, over budget, or about to fund automation on top of
-              a workflow nobody has mapped. Also consultancies and integrators who need senior
-              healthcare specialist depth on an account they already hold.
+              An executive whose transformation program is behind, over budget, or about to fund
+              automation on top of a workflow nobody has mapped. That is usually a health plan,
+              healthcare services organization, managed-care organization, PE-backed provider
+              platform, or large provider organization. Consultancies and integrators are welcome
+              too, where an account they already hold needs senior healthcare specialist depth.
             </p>
           </div>
           <Link
