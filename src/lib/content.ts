@@ -37,20 +37,19 @@ export const caseStudies: CaseStudy[] = [
     conventionalLimits:
       "Adding automation to an undefined workflow would have preserved inconsistent routing and hidden decision rights.",
     role:
-      "Todd contributed healthcare workflow, product, governance, and transformation experience within enterprise operating environments. No organization or client is named.",
+      "I contributed healthcare workflow, product, governance, and transformation experience inside enterprise operating environments.",
     intervention:
       "The work decomposed the workflow into review tiers, exception paths, escalation, audit requirements, and human decision points before considering machine assistance.",
     result:
-      "The operating requirements and control boundaries became explicit enough to support a responsible implementation decision. No measured denial, turnaround, capacity, or financial result is claimed.",
+      "The operating requirements and control boundaries became explicit enough to support a responsible implementation decision, with review tiers and escalation paths defined before machine assistance was considered.",
     evidence: [
       "Documented experience across prior authorization, utilization management, provider operations, compliance logic, and payer/provider workflow complexity.",
       "Specific artifacts included workflow tiers, escalation logic, audit requirements, and adoption considerations.",
-      "The public evidence supports scope and mechanism only; it does not support a quantified client outcome.",
     ],
     evidenceLimit:
-      "The experience is anonymized and employment-based. Client identity, workflow artifacts, baselines, and post-implementation measures are not publishable.",
+      "Employment-period experience, described anonymously. Client identity, workflow artifacts, baselines, and post-implementation measures are covered by confidentiality and are not published. The evidence supports scope and mechanism, not a quantified client outcome.",
     relevance:
-      "It shows why TKO begins with a measured workflow and exception baseline rather than assuming software, staffing, or AI is the answer.",
+      "It shows why I begin with a measured workflow and exception baseline before assessing whether software, staffing, or AI is the answer.",
     relatedOffer: "Program Recovery Review",
     relatedOfferHref: "/services/program-recovery-review",
   },
@@ -68,20 +67,19 @@ export const caseStudies: CaseStudy[] = [
     conventionalLimits:
       "More status reporting would have repeated local progress without exposing the decisions and dependencies between teams.",
     role:
-      "Todd worked in healthcare transformation strategy, delivery governance, dependency management, executive reporting, and cross-functional coordination.",
+      "I worked across healthcare transformation strategy, delivery governance, dependency management, executive reporting, and cross-functional coordination.",
     intervention:
       "The work made cross-workstream constraints, accountable decisions, and escalation needs visible in the operating cadence.",
     result:
-      "Leadership received a clearer basis for sequencing and governing the work. No client, program, delivery-time, cost, or outcome metric is published.",
+      "Leadership received a clearer basis for sequencing and governing the work, with cross-workstream constraints and accountable decisions visible in the operating cadence.",
     evidence: [
       "Documented enterprise scope across several healthcare operating domains.",
       "Defined role in transformation governance, dependency visibility, and executive decision support.",
-      "Qualitative operating mechanism only; no attributable performance result is available for publication.",
     ],
     evidenceLimit:
-      "This is employment-period enterprise experience, not a named TKO client case. Public artifacts and quantified outcomes are unavailable.",
+      "Employment-period enterprise experience rather than a named TKO client engagement. Public artifacts and quantified outcomes are covered by confidentiality and are not published.",
     relevance:
-      "Prior-authorization improvement also crosses operations, clinical review, revenue cycle, technology, and leadership; the Diagnostic makes those dependencies explicit within one bounded workflow.",
+      "This is the pattern the Program Recovery Review is built to find: risk accumulating at the boundaries between workstreams while each workstream reports honestly on its own scope.",
     relatedOffer: "Program Recovery Review",
     relatedOfferHref: "/services/program-recovery-review",
   },
@@ -99,20 +97,19 @@ export const caseStudies: CaseStudy[] = [
     conventionalLimits:
       "Treating the initiative as an API-only project would have left onboarding, authority, audit, and day-to-day operating requirements unresolved.",
     role:
-      "Todd owned payer-facing product requirements and functional design for CMS Cures Act and FHIR interoperability work during verified employment at ELLKAY.",
+      "I owned payer-facing product requirements and functional design for CMS Cures Act and FHIR interoperability work at ELLKAY.",
     intervention:
       "The work connected technical exchange requirements to access controls, auditability, governance, onboarding, and delivery coordination.",
     result:
-      "It established buyer-relevant experience translating regulated healthcare requirements into implementable product and operating controls. No client implementation or business-result metric is claimed.",
+      "Regulatory requirements became implementable product behaviour and operating controls — access, auditability, onboarding, and governance designed together rather than sequenced after the API.",
     evidence: [
       "Verifiable employment history in healthcare interoperability product management.",
       "Specific scope covering FHIR, access control, auditability, data governance, and payer-facing platform requirements.",
-      "The evidence establishes relevant experience, not a quantified TKO client result.",
     ],
     evidenceLimit:
-      "Employer and client endorsement is not implied. Confidential program artifacts and outcome measures are not published.",
+      "Employment history establishes the scope of the role; it is not an endorsement by the employer or its clients. Confidential program artifacts and outcome measures are not published.",
     relevance:
-      "It demonstrates the ability to translate policy and technical requirements into controlled operating behavior—important when prior-authorization automation depends on evidence, access, exceptions, and auditability.",
+      "Translating policy and technical requirements into controlled operating behaviour is the same capability a prior-authorization or interoperability program needs when evidence, access, exceptions, and auditability all have to hold together.",
     relatedOffer: "Specialist Subcontract",
     relatedOfferHref: "/services/specialist-subcontract",
   },
@@ -130,20 +127,20 @@ export const caseStudies: CaseStudy[] = [
     conventionalLimits:
       "A cleaner CRM view would still have stored activity without resolving priority, source authority, approval, or the next action.",
     role:
-      "Todd designed, built, operated, and audited the system. This is founder-built proof, not a client engagement.",
+      "I designed, built, operate, and audit the system myself.",
     intervention:
       "RachelOS introduced durable relationship memory, source-aware facts, prioritized work, visible missing information, human-approved outreach, and system-health checks. AI assists with bounded extraction and drafting; it does not act autonomously.",
     result:
-      "The operating environment now makes context, priority, approval, and system health inspectable in daily work. It demonstrates implementation capability and governance discipline, not healthcare performance or client ROI.",
+      "Context, priority, approval state, and system health are inspectable in daily work. It is a working demonstration of how I make workflow, evidence, approvals, and handoffs explicit.",
     evidence: [
       "Current, redacted operating screens for the queue, relationship memory, human approval, daily work, and system health.",
       "Repository-backed implementation history and tests supporting the published operating mechanisms.",
       "Visible controls that keep consequential outbound actions under human approval.",
     ],
     evidenceLimit:
-      "RachelOS is one founder-operated, non-healthcare environment. It does not establish enterprise scale, healthcare compliance, prior-authorization performance, or causal financial outcomes.",
+      "One independently operated, non-healthcare environment. It supports implementation and governance discipline. It is not evidence of enterprise scale, healthcare compliance, prior-authorization performance, or a financial outcome.",
     relevance:
-      "A buyer can inspect how Todd turns fragmented work into explicit workflow, evidence, controls, and handoff-ready operating artifacts—the same implementation discipline applied after a Diagnostic.",
+      "You can inspect how I turn fragmented work into explicit workflow, evidence, controls, and handoff-ready artifacts — the same discipline I apply after a Recovery Review.",
     relatedOffer: "Fractional Transformation Lead",
     relatedOfferHref: "/services/fractional-transformation-lead",
   },
@@ -161,20 +158,19 @@ export const caseStudies: CaseStudy[] = [
     conventionalLimits:
       "Producing more reports would have created more documents without making the underlying judgment reusable.",
     role:
-      "TKO modeled the information and decision structure. This is method-portability evidence, not healthcare or client-outcome proof.",
+      "I modelled the information and decision structure.",
     intervention:
       "The model separated entity facts, observations, risks, opportunities, recommendations, comparisons, and report outputs into reusable, traceable structures.",
     result:
-      "The work demonstrates that expert knowledge can be structured for reuse across a different domain. It does not establish commercial or market performance.",
+      "Expert judgment that had been reconstructed document by document became a reusable, traceable structure in a domain unrelated to healthcare.",
     evidence: [
       "Inspectable information model and traceability structure.",
       "A distinct non-healthcare environment in which knowledge concentration created the operating constraint.",
-      "No commercial, client, or market-performance outcome is asserted.",
     ],
     evidenceLimit:
-      "This is supporting method evidence. It should not be read as equivalent to verified client outcomes or healthcare implementation proof.",
+      "Supporting method evidence. It carries less weight than the healthcare experience above and asserts no commercial, client, or market-performance outcome.",
     relevance:
-      "It answers the portability objection narrowly: the method for making expert judgment explicit can travel, while the domain logic and performance claims do not.",
+      "It answers one narrow objection: the method for making expert judgment explicit travels between domains, even though the domain logic does not.",
     relatedOffer: "Program Recovery Review",
     relatedOfferHref: "/services/program-recovery-review",
   },

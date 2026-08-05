@@ -100,4 +100,4 @@ A useful test for any "built with AI" claim, whether from a vendor or your own t
 
 One deployment does not prove the model generalizes, and we do not claim it does. What transfers is the method: an evidence hierarchy in which code and production records outrank documentation, activation gates that keep judgment human, and an audit that publishes its own failures.
 
-The full evidence base — including the failures — is in the [RachelOS delivery-model case study](/selected-work/rachelos-delivery-model).
+The full evidence base — including the failures — is in the [RachelOS delivery-model case study](/selected-work/from-crm-to-operating-system).

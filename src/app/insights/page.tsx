@@ -13,12 +13,12 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Guides",
   description:
-    "Evidence-backed guides on stalled healthcare transformation, prior authorization operations, decision rights, and where AI genuinely helps — organized by the executive problem they address.",
+    "Evidence-backed guides on stalled healthcare transformation, prior authorization operations, decision rights, and where AI genuinely helps, organized by the executive problem each one addresses.",
   alternates: { canonical: "/insights" },
   openGraph: {
     title: "Guides",
     description:
-      "Guides organized around expensive executive problems, not thought-leadership categories.",
+      "Guides organized around the expensive executive problems they address.",
     url: absoluteUrl("/insights"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation guides." }],
   },

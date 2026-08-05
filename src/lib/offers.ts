@@ -10,6 +10,12 @@ export type OfferSlug =
   | "fractional-transformation-lead"
   | "specialist-subcontract";
 
+export type OfferTimelineStep = {
+  period: string;
+  title: string;
+  description: string;
+};
+
 export type Offer = {
   slug: OfferSlug;
   name: string;
@@ -26,6 +32,12 @@ export type Offer = {
   boundaries: string[];
   faqs: { q: string; a: string }[];
   ctaLabel: string;
+  /** Week-by-week shape of the engagement. Rendered as the "what it produces" section. */
+  timeline?: OfferTimelineStep[];
+  /** What the fixed fee buys, and where it stops. */
+  feeBoundary?: string;
+  /** One line framing what the fee actually decides, rendered under the commercial terms. */
+  feeFraming?: string;
 };
 
 export const PROGRAM_RECOVERY_CONVERSATION = {
@@ -34,15 +46,15 @@ export const PROGRAM_RECOVERY_CONVERSATION = {
   duration: "45 minutes",
   summary:
     "A structured 45-minute working conversation about one program that is behind, over budget, or about to fund automation on top of an unstable workflow.",
-  // Boundary language matters commercially: the free conversation qualifies the
-  // problem, it is not an unpaid mini-engagement.
+  // The free conversation qualifies the problem. Stated once, calmly, so the
+  // scope conversation is short — not repeated as a disclaimer across the site.
   boundary:
-    "The conversation is a qualifying discussion, not a free assessment. It produces a concise written readout of what was discussed and the recommended next step. It does not include document review, stakeholder interviews, data analysis, or a written recovery plan — that work is scoped and paid.",
+    "The conversation covers what you already know about the program and what should happen next. Document review, stakeholder interviews, and a written recovery plan are the paid engagement.",
   outputs: [
     "A shared statement of the problem as it is currently understood",
     "The two or three questions that most need answering before further spend",
-    "An honest read on whether TKO is the right help, and what else might be",
-    "A one-page written readout after the call",
+    "A direct read on whether I am the right help, and what else might be",
+    "A one-page written summary after the call",
   ],
 } as const;
 
@@ -85,10 +97,10 @@ export const offers: Offer[] = [
       "Executive readout session",
     ],
     boundaries: [
-      "The Review produces a diagnosis and a plan. It does not include implementation, staffing, or vendor management.",
-      "No denial, cost, turnaround, staffing, or revenue outcome is guaranteed. The Review establishes the baseline and the case required to set a responsible target.",
-      "TKO may recommend internal execution, an existing vendor, a specialist partner, or no further investment. The Review creates no obligation to continue with TKO.",
-      "Standard scope works from existing documentation, reports, appropriately de-identified examples, and stakeholder interviews. No production-system access or PHI ingestion is required.",
+      "Scope is one program and one accountable sponsor. Additional programs, workstream families, or data remediation are scoped separately.",
+      "The Review sets a defensible baseline and target. Committing to a specific denial, cost, turnaround, or revenue number before that baseline exists would not be credible.",
+      "I may recommend internal execution, an existing vendor, a specialist partner, or no further investment. There is no obligation to continue with TKO.",
+      "Standard scope works from existing documentation, reports, de-identified examples, and interviews. Production-system access and PHI handling are agreed separately if they become necessary.",
     ],
     faqs: [
       {
@@ -113,6 +125,30 @@ export const offers: Offer[] = [
       },
     ],
     ctaLabel: "Request a Program Recovery Conversation",
+    timeline: [
+      {
+        period: "Week 1",
+        title: "Frame and read in",
+        description:
+          "I confirm the decision leadership needs to make, agree the program boundary and the sponsor, and read the material that already exists — status packs, issue and risk logs, the business case, vendor agreements, and program artifacts.",
+      },
+      {
+        period: "Week 2",
+        title: "Interview and trace",
+        description:
+          "I interview the people who know: workstream leads, line owners, the vendor, and the staff whose work actually changes. I trace decisions that are waiting, dependencies that cross workstreams, and where the operating model was assumed rather than agreed.",
+      },
+      {
+        period: "Week 3",
+        title: "Diagnose, sequence, and read out",
+        description:
+          "I separate symptoms from causes, size what is recoverable, write the diagnosis and the 90-day plan, and present it to leadership. Final artifacts incorporate agreed factual corrections.",
+      },
+    ],
+    feeBoundary:
+      "The fixed fee buys the diagnosis and the 90-day action plan. It does not buy the recovery itself — executing the plan is separate work, and it belongs to whoever is best placed to do it, which is often the internal team.",
+    feeFraming:
+      "The fixed price of the decision, not the recovery: what it costs to learn whether the program is worth continuing, before the next seven-figure funding call.",
   },
   {
     slug: "fractional-transformation-lead",
@@ -146,7 +182,7 @@ export const offers: Offer[] = [
       "Capability transfer to the permanent internal owner",
     ],
     boundaries: [
-      "This is senior leadership capacity, not staff augmentation and not an outsourced delivery team.",
+      "This is senior leadership capacity. Staff augmentation and outsourced delivery are different purchases, and I am the wrong supplier for both.",
       "Engagements are part-time and explicitly scoped by days per month. Full-time interim leadership is a different arrangement.",
       "A three-month minimum applies because program recovery cannot be evidenced in less.",
       "TKO does not act as a licensed clinical, legal, or regulatory advisor. Those judgments stay with the client's qualified functions.",

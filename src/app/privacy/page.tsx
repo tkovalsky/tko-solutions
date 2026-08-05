@@ -82,7 +82,7 @@ export default function PrivacyPage() {
           <p>
             You may ask TKO to correct or delete business contact information,
             subject to any legal or recordkeeping obligations. You may also choose
-            not to use the form and contact Todd directly by email without sending
+            not to use the form and contact me directly by email without sending
             sensitive information.
           </p>
 

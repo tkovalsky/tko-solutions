@@ -78,11 +78,31 @@ export const credibilityStrip = [
 ];
 
 export const executiveSummary = {
-  headline: "Buyer diligence on the operator behind the work.",
+  headline: "I'm Todd Kovalsky, and I recover healthcare transformation programs that are stalling.",
   facts: [
     "20+ years across regulated operations, enterprise transformation, product ownership, healthcare interoperability, and healthcare transformation.",
-    "Healthcare experience spanning prior authorization, utilization management, payer/provider operations, interoperability, and administrative workflow change.",
+    "Healthcare experience spanning prior authorization, utilization management, payer and provider operations, interoperability, and administrative workflow change.",
     "Product and implementation experience translating operating requirements into usable workflows, controls, and delivery decisions.",
-    "RachelOS provides inspectable internal proof of implementation and governance discipline, with its non-healthcare and non-client limits stated explicitly.",
+    "RachelOS, an operating system I built and run, shows the same implementation and governance discipline applied end to end.",
   ],
 };
+
+/** Answers the practical questions a buyer asks before engaging an independent principal. */
+export const howIWork = [
+  {
+    title: "I lead the engagement personally",
+    body: "Every TKO engagement is delivered by me. There is no associate team, no offshore analyst pool, and nobody to hand the work to after the kickoff.",
+  },
+  {
+    title: "Capacity is deliberately limited",
+    body: "I hold a small number of concurrent engagements so each one gets senior attention throughout. Availability is confirmed against current commitments before a proposal is issued, not after.",
+  },
+  {
+    title: "Conflicts are screened first",
+    body: "Before any work begins I check the account, the vendors involved, and the program against my existing and prior commitments. If there is a conflict, I say so and decline.",
+  },
+  {
+    title: "Scope and confidentiality are set in writing",
+    body: "Scope, timing, availability, data handling, and confidentiality are agreed in writing before the engagement starts. Where sensitive data is involved, handling is defined before anyone touches it.",
+  },
+];

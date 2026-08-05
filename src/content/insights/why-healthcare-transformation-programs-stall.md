@@ -146,6 +146,8 @@ Six questions. Each has a documentary answer or it does not, and the pattern of 
 5. **Which assumption in the original business case is no longer true, and when did it stop being true?** *"None" after eighteen months in healthcare usually means nobody has checked.*
 6. **Who is accountable for adoption, as distinct from delivery, and what are they measured on?** *If it is the same person on the same measures, adoption is not being managed.*
 
+The [Program Recovery Readiness Check](/program-recovery-readiness-check) expands these into twelve questions across six themes, with the weak answer to watch for in each. It takes about ninety minutes with your program leadership and requires nothing from me.
+
 ## What Recovery Actually Requires
 
 Recovery is less dramatic than it sounds. In most cases it consists of four things:

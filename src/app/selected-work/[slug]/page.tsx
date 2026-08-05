@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
+import { EvidenceNoteLink } from "@/components/site/evidence-note";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
@@ -48,7 +49,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   return {
     title: study.title,
-    description: `${study.trigger} ${study.evidenceLimit}`,
+    description: `${study.trigger} ${study.relevance}`,
     alternates: { canonical: `/selected-work/${study.slug}` },
     openGraph: {
       type: "article",
@@ -84,14 +85,14 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         primaryHref="/services/program-recovery-review"
         primaryLabel="See the Program Recovery Review"
         secondaryHref="/selected-work"
-        secondaryLabel="Review Selected Work"
+        secondaryLabel="Review the Evidence"
       />
 
       <Section className="bg-surface !py-12 md:!py-16">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <EvidenceSummary title="What this is" body={study.classification} />
-          <EvidenceSummary title="What it supports" body={study.relevance} />
-          <EvidenceSummary title="What it does not prove" body={study.evidenceLimit} />
+          <EvidenceSummary title="My role" body={study.role} />
+          <EvidenceSummary title="Why it matters here" body={study.relevance} />
         </div>
       </Section>
 
@@ -102,7 +103,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Related engagement</p>
               <p className="mt-4 text-xl font-semibold">{study.relatedOffer}</p>
               <p className="mt-4 text-sm leading-6 text-muted">
-                The first paid engagement establishes the workflow baseline and the responsible implementation case. This evidence does not replace that client-specific work.
+                Experience shapes where I look first. The engagement establishes what is true in your program.
               </p>
             </Card>
           </aside>
@@ -111,11 +112,10 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
             <WorkSection title="2. Triggering problem" body={study.trigger} />
             <WorkSection title="3. What was breaking" body={study.breaking} />
             <WorkSection title="4. Why conventional approaches were insufficient" body={study.conventionalLimits} />
-            <WorkSection title="5. Todd's role" body={study.role} />
+            <WorkSection title="5. My role" body={study.role} />
             <WorkSection title="6. Intervention" body={study.intervention} />
             <WorkSection title="7. Evidence or result" body={study.result} />
-            <WorkSection title="8. Limits of the available evidence" body={study.evidenceLimit} />
-            <WorkSection title="9. Why this matters to a prospective buyer" body={study.relevance} />
+            <WorkSection title="8. Why this matters to a prospective buyer" body={study.relevance} />
           </div>
         </div>
       </Section>
@@ -124,7 +124,6 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         <SectionHeader
           eyebrow="Evidence record"
           title="What can be supported publicly."
-          description="These statements establish operating scope, mechanisms, or implementation capability. They do not create a quantified prior-authorization outcome claim."
         />
         <div className="mt-10 grid gap-3 md:grid-cols-3">
           {study.evidence.map((item) => (
@@ -138,9 +137,9 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       {study.slug === "from-crm-to-operating-system" ? (
         <Section>
           <SectionHeader
-            eyebrow="Inspectable internal proof"
-            title="A working environment, shown with its limits."
-            description="These current, redacted screens demonstrate operating mechanisms. They are not a healthcare implementation or a proxy for prior-authorization results."
+            eyebrow="Inspectable proof"
+            title="The operating mechanisms, in current screens."
+            description="Redacted views of the system as it runs today."
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
             {rachelosProofAssets.map((asset) => (
@@ -158,11 +157,21 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         </Section>
       ) : null}
 
+      <Section className="!py-10">
+        <details className="max-w-[72ch] border border-border bg-white p-6">
+          <summary className="cursor-pointer text-base font-semibold">
+            Limits of this evidence
+          </summary>
+          <p className="mt-4 text-base leading-7 text-muted">{study.evidenceLimit}</p>
+          <EvidenceNoteLink className="mt-4" />
+        </details>
+      </Section>
+
       <CtaBand
-        title="See how the evidence becomes a client-specific baseline."
+        title="Bring one program under pressure."
         description="The Program Recovery Review establishes what is actually wrong with one program, separates symptoms from addressable causes, and gives leadership a 90-day action plan."
         primaryHref={study.relatedOfferHref}
-        primaryLabel="See the Program Recovery Review"
+        primaryLabel={`See the ${study.relatedOffer}`}
         secondaryHref="/contact"
         secondaryLabel="Request a Program Recovery Conversation"
       />

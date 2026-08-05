@@ -11,6 +11,7 @@ import {
   PROGRAM_RECOVERY_CONVERSATION,
   SPECIALIST_CONVERSATION,
 } from "@/lib/offers";
+import { READINESS_CHECK_PATH } from "@/lib/readiness-check";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -77,7 +78,7 @@ export default function ServicesPage() {
               </dl>
               <p className="mt-6 text-base leading-7 text-muted">{offer.summary}</p>
               <LinkButton href={offerHref(offer.slug)} className="mt-8 self-start">
-                {offer.shortName} Detail
+                {offer.timeline ? `What a ${offer.shortName} Produces` : `${offer.shortName} Detail`}
               </LinkButton>
             </Card>
           ))}
@@ -102,14 +103,35 @@ export default function ServicesPage() {
             <p className="mt-6 border-l-2 border-border bg-surface p-5 text-sm leading-6 text-muted">
               {PROGRAM_RECOVERY_CONVERSATION.boundary}
             </p>
-            <LinkButton href={PROGRAM_RECOVERY_CONVERSATION.href} className="mt-7">
-              {site.cta}
-            </LinkButton>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <LinkButton href={PROGRAM_RECOVERY_CONVERSATION.href}>{site.cta}</LinkButton>
+              <LinkButton href={READINESS_CHECK_PATH} variant="secondary">
+                Use the Readiness Check
+              </LinkButton>
+            </div>
           </div>
         </div>
       </Section>
 
       <Section className="bg-surface !py-14 md:!py-20">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <SectionHeader
+            eyebrow="Before you contact anyone"
+            title="Program Recovery Readiness Check."
+            description="Twelve questions to answer before approving another dollar of transformation spend, covering outcomes, decision rights, workflow ownership, dependencies, operating measures, and AI readiness."
+          />
+          <div className="space-y-5 text-base leading-7 text-muted">
+            <p>
+              Work through them with your program leadership. It takes about ninety minutes and
+              requires no email address, form, or call. Where several answers come back unclear,
+              that pattern is the argument for an independent review.
+            </p>
+            <LinkButton href={READINESS_CHECK_PATH}>Open the Readiness Check</LinkButton>
+          </div>
+        </div>
+      </Section>
+
+      <Section className="!py-14 md:!py-20">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader
             eyebrow="How the three relate"
@@ -120,7 +142,7 @@ export default function ServicesPage() {
             <p>
               The <strong className="font-semibold text-foreground">Program Recovery Review</strong> answers
               whether a program is recoverable and what should happen next. It creates no obligation to
-              continue. TKO may recommend internal execution, an existing vendor, a specialist partner, or no
+              continue — I may recommend internal execution, an existing vendor, a specialist partner, or no
               further investment.
             </p>
             <p>
@@ -134,10 +156,10 @@ export default function ServicesPage() {
               firm&rsquo;s agreement and brand.
             </p>
             <p>
-              TKO is not an outsourced authorization department, a staff-augmentation provider, a
-              clinical-policy or legal advisor, an EHR implementation team, or a general-purpose AI
-              consultancy. Sensitive data handling, specialist partners, travel, licenses, and expanded scope
-              are agreed separately.
+              Work outside this scope — outsourced authorization operations, staff augmentation,
+              clinical-policy or legal advice, EHR implementation, and general-purpose AI consulting —
+              is better served elsewhere, and I will say so. Sensitive data handling, specialist
+              partners, travel, licenses, and expanded scope are agreed separately.
             </p>
           </div>
         </div>
@@ -145,7 +167,7 @@ export default function ServicesPage() {
 
       <CtaBand
         title="Which of the three fits the problem you actually have?"
-        description="Describe the program, the pressure, and the decision leadership needs to make. Todd will respond within one business day and say plainly whether TKO is the right help."
+        description="Describe the program, the pressure, and the decision leadership needs to make. I will respond within one business day and say plainly whether I am the right help."
         primaryLabel={site.cta}
         secondaryHref={SPECIALIST_CONVERSATION.href}
         secondaryLabel={site.secondaryCta}

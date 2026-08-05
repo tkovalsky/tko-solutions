@@ -15,8 +15,8 @@ export function CaseStudyCards() {
           <h3 className="mt-6 text-2xl font-semibold">{study.title}</h3>
           <p className="mt-4 text-base leading-7 text-muted">{study.trigger}</p>
           <p className="mt-5 border-t border-border pt-5 text-sm leading-6 text-foreground">
-            <span className="font-semibold text-primary">Evidence boundary: </span>
-            {study.evidenceLimit}
+            <span className="font-semibold text-primary">My role: </span>
+            {study.role}
           </p>
           <ArrowLink href={`/selected-work/${study.slug}`} className="mt-8">
             Review the evidence

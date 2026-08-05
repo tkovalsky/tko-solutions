@@ -36,7 +36,7 @@ export function CredibilityStrip() {
           </ul>
         </div>
         <p className="mt-6 text-xs leading-5 text-muted">
-          Employment history, not client endorsements. Each role is publicly verifiable on{" "}
+          Each role is publicly verifiable on{" "}
           <a
             href={site.linkedin}
             target="_blank"

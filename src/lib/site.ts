@@ -8,7 +8,7 @@ export const site = {
   positioning:
     "I recover healthcare transformation programs that are behind, over budget, or about to fund automation on top of a workflow that does not work yet.",
   differentiation:
-    "Todd spent his career inside large consulting firms. He will tell you what an engagement team is rarely positioned to say: whether the program is actually recoverable, and what it will cost to find out the slow way. One accountable senior leader — not a pyramid, a staffing ramp, or a quarter-long discovery phase.",
+    "I have worked inside large consulting firms, which is why I will tell you what an engagement team is rarely positioned to say: whether the program is actually recoverable, and what it will cost to find out the slow way. One accountable senior leader, no staffing ramp, no quarter-long discovery phase.",
   cta: PROGRAM_RECOVERY_CONVERSATION.label,
   ctaHref: PROGRAM_RECOVERY_CONVERSATION.href,
   secondaryCta: SPECIALIST_CONVERSATION.label,

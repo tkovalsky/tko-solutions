@@ -92,6 +92,11 @@ export default async function OfferPage({ params }: Params) {
           <p>{offer.commercial}</p>
           <p>Principal-led, one accountable senior leader</p>
         </div>
+        {offer.feeFraming ? (
+          <div className="mx-auto w-full max-w-7xl px-6 pb-6 lg:px-8">
+            <p className="max-w-[72ch] text-sm leading-6 font-normal text-muted">{offer.feeFraming}</p>
+          </div>
+        ) : null}
       </section>
 
       <Section className="!py-14 md:!py-18">
@@ -107,9 +112,9 @@ export default async function OfferPage({ params }: Params) {
         </div>
       </Section>
 
-      <Section className="bg-surface !py-14 md:!py-18">
+      <Section className="bg-surface !py-14 md:!py-18" id="what-it-produces">
         <SectionHeader
-          eyebrow="What you get"
+          eyebrow={offer.timeline ? `What a ${offer.shortName} produces` : "What you get"}
           title={isSpecialist ? "Capability brought to your engagement." : "What the engagement produces."}
         />
         <ul className="mt-10 grid gap-3 sm:grid-cols-2">
@@ -119,6 +124,32 @@ export default async function OfferPage({ params }: Params) {
             </li>
           ))}
         </ul>
+
+        {offer.timeline ? (
+          <div className="mt-14">
+            <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
+              How the three weeks run
+            </h3>
+            <ol className="mt-8 grid gap-4 lg:grid-cols-3">
+              {offer.timeline.map((step) => (
+                <li key={step.period} className="border border-border bg-white p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.12em] text-primary">
+                    {step.period}
+                  </p>
+                  <h4 className="mt-4 text-xl font-semibold leading-tight">{step.title}</h4>
+                  <p className="mt-3 text-base leading-7 text-muted">{step.description}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ) : null}
+
+        {offer.feeBoundary ? (
+          <p className="mt-10 max-w-[72ch] border-l-2 border-primary bg-white p-6 text-base leading-7 text-foreground">
+            <span className="font-semibold">What the fee buys. </span>
+            {offer.feeBoundary}
+          </p>
+        ) : null}
       </Section>
 
       <Section className="!py-14 md:!py-18">
@@ -172,7 +203,7 @@ export default async function OfferPage({ params }: Params) {
         }
         description={
           isSpecialist
-            ? "Tell Todd about the account, the capability gap, and the timing. He will respond within one business day with current availability."
+            ? "Tell me about the account, the capability gap, and the timing. I will respond within one business day with current availability."
             : PROGRAM_RECOVERY_CONVERSATION.summary
         }
         primaryHref={primaryHref}

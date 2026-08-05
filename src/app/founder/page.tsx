@@ -6,13 +6,14 @@ import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { careerTimeline, executiveSummary } from "@/lib/founder";
+import { careerTimeline, executiveSummary, howIWork } from "@/lib/founder";
+import { offerHref, PROGRAM_RECOVERY_CONVERSATION } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Todd Kovalsky | Founder & Principal",
   description:
-    "Buyer-relevant diligence on Todd Kovalsky's experience across healthcare operations, prior authorization, interoperability, product, transformation, technology, and implementation.",
+    "Twenty years across regulated operations, healthcare product, CMS interoperability, and enterprise transformation — and how I work, including capacity, conflicts, and confidentiality.",
   alternates: { canonical: "/founder" },
   openGraph: {
     title: "Todd Kovalsky | Founder & Principal, TKO Solutions",
@@ -33,10 +34,9 @@ const operatingIntersection = [
 ];
 
 const engagementRole = [
-  "Todd leads every engagement personally; nothing is delegated to a junior assessment team.",
-  "He frames the decision, reviews evidence, interviews stakeholders, traces the workflow, and leads the executive readout.",
-  "Where continued senior accountability is warranted, he holds it himself as Fractional Transformation Lead.",
-  "TKO may recommend internal execution, an existing vendor, a specialist partner, or no further investment. A Review creates no obligation to continue.",
+  "I frame the decision, read the program artifacts, interview stakeholders, trace the workflow, and present the readout.",
+  "Where continued senior accountability is warranted, I hold it myself as Fractional Transformation Lead.",
+  "I may recommend internal execution, an existing vendor, a specialist partner, or no further investment. A Review creates no obligation to continue.",
 ];
 
 export default function FounderPage() {
@@ -51,10 +51,16 @@ export default function FounderPage() {
           mainEntity: {
             "@type": "Person",
             name: "Todd Kovalsky",
-            jobTitle: "Founder & Principal, Prior Authorization Operations Advisor",
+            jobTitle: "Founder & Principal, Healthcare Transformation Recovery",
             worksFor: { "@type": "Organization", name: site.name, url: site.url },
             sameAs: [site.linkedin],
-            knowsAbout: ["Prior Authorization", "Utilization Management", "Healthcare Operations", "Healthcare Interoperability", "Workflow Improvement"],
+            knowsAbout: [
+              "Healthcare Transformation",
+              "Program Recovery",
+              "Prior Authorization",
+              "Utilization Management",
+              "Healthcare Interoperability",
+            ],
           },
         }}
       />
@@ -62,9 +68,9 @@ export default function FounderPage() {
       <PageHero
         eyebrow="Founder & principal"
         title={executiveSummary.headline}
-        description="Todd Kovalsky brings an uncommon combination of regulated operations, healthcare workflow, product ownership, transformation governance, technology, and hands-on implementation. That intersection matters because prior-authorization performance rarely belongs to one department or one system."
-        primaryHref="/contact"
-        primaryLabel="Request a Program Recovery Conversation"
+        description="I spent twenty years in regulated operations, healthcare product ownership, CMS interoperability, and enterprise transformation delivery. That combination matters because a stalled transformation program rarely belongs to one department or one system, and the people who can see all of it are usually the ones who have worked in most of it."
+        primaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
+        primaryLabel={site.cta}
         secondaryHref="/selected-work"
         secondaryLabel="Review the Evidence"
       />
@@ -77,21 +83,13 @@ export default function FounderPage() {
             </div>
           ))}
         </div>
-        <p className="mt-6 text-xs leading-5 text-muted">
-          Employment history is verifiable and is presented as experience—not employer endorsement, client endorsement, or evidence of a quantified TKO result.
-        </p>
-        <p className="mt-3 max-w-[78ch] text-sm leading-6 text-muted">
-          TKO is a separate, limited-capacity advisory practice. Todd accepts fixed-scope work he can lead personally;
-          availability and fit are confirmed before contracting. Current employment and client work are not TKO
-          engagements or endorsements.
-        </p>
       </Section>
 
       <Section>
         <SectionHeader
           eyebrow="Why this background matters"
-          title="The expensive workflow problem sits between specialties."
-          description="A prior-authorization improvement can fail because operations, clinical review, revenue cycle, policy, technology, and change adoption each see only part of the workflow. Todd's role is to connect those views into one measured operating decision."
+          title="The expensive problem sits between specialties."
+          description="A transformation program fails when operations, clinical review, revenue cycle, policy, technology, and change adoption each see only part of it. My job is to connect those views into one operating decision leadership can act on."
         />
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {operatingIntersection.map(([title, body]) => (
@@ -103,11 +101,36 @@ export default function FounderPage() {
         </div>
       </Section>
 
-      <Section className="bg-surface">
+      <Section id="how-i-work" className="bg-surface">
         <SectionHeader
-          eyebrow="Verified career record"
-          title="Each chapter contributes a buyer-relevant operating capability."
-          description="This is a diligence record, not a list of logos presented as endorsements."
+          eyebrow="How I work"
+          title="Capacity, conflicts, and confidentiality."
+          description="The practical questions buyers ask before engaging an independent principal, answered directly."
+        />
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {howIWork.map((item) => (
+            <Card key={item.title} className="bg-white">
+              <h2 className="text-xl font-semibold leading-tight">{item.title}</h2>
+              <p className="mt-3 text-base leading-7 text-muted">{item.body}</p>
+            </Card>
+          ))}
+        </div>
+        <p className="mt-8 max-w-[76ch] text-base leading-7 text-muted">
+          TKO is deliberately limited-capacity. I take a small number of fixed-scope engagements I
+          can lead personally, and I confirm availability before contracting. My current enterprise
+          healthcare work keeps the perspective current; it is walled off from TKO engagements by
+          scope and agreement.
+        </p>
+        <p className="mt-4 max-w-[76ch] text-sm leading-6 text-muted">
+          The career record below is verifiable on LinkedIn and is presented as experience. No
+          employer or client endorses this practice.
+        </p>
+      </Section>
+
+      <Section>
+        <SectionHeader
+          eyebrow="Career record"
+          title="What each chapter contributes."
         />
         <ol className="mt-10 space-y-0 border-l-2 border-border">
           {careerTimeline.map((entry) => (
@@ -137,12 +160,12 @@ export default function FounderPage() {
         </a>
       </Section>
 
-      <Section>
+      <Section className="bg-surface">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr]">
           <SectionHeader
-            eyebrow="What the client is buying"
-            title="Senior accountability from fit call through executive readout."
-            description="The commercial value is not access to a résumé. It is a principal-led engagement with a bounded decision, explicit evidence, and a clear next step."
+            eyebrow="What you are buying"
+            title="Senior attention from first call to readout."
+            description="The value is a principal-led engagement with a bounded decision, explicit evidence, and a clear next step."
           />
           <ul className="grid gap-3">
             {engagementRole.map((item) => (
@@ -152,17 +175,21 @@ export default function FounderPage() {
         </div>
       </Section>
 
-      <Section className="bg-surface !py-12 md:!py-16">
+      <Section className="!py-12 md:!py-16">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Referral language</p>
-            <h2 className="mt-4 text-3xl font-semibold">Who to introduce to Todd</h2>
+            <h2 className="mt-4 text-3xl font-semibold">Who to introduce me to</h2>
             <p className="mt-4 max-w-[68ch] text-lg leading-8 text-muted">
-              Introduce Todd to an executive at a health plan, healthcare services organization, managed-care organization, PE-backed provider platform, or large provider organization when a transformation program is behind, over budget, or about to fund automation on top of a workflow nobody has mapped. Also introduce him to consultancies and integrators who need senior healthcare specialist depth on an account they already hold.
+              An executive at a health plan, healthcare services organization, managed-care
+              organization, PE-backed provider platform, or large provider organization whose
+              transformation program is behind, over budget, or about to fund automation on top of
+              a workflow nobody has mapped. Also consultancies and integrators who need senior
+              healthcare specialist depth on an account they already hold.
             </p>
           </div>
           <Link
-            href="/services/program-recovery-review"
+            href={offerHref("program-recovery-review")}
             className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
           >
             See the Program Recovery Review
@@ -172,10 +199,10 @@ export default function FounderPage() {
       </Section>
 
       <CtaBand
-        title="Discuss the operating problem with the principal who will lead the work."
-        description="The first step is a 45-minute Program Recovery Conversation about the program, the trigger, the evidence available, and who owns the decision."
-        primaryLabel="Request a Program Recovery Conversation"
-        secondaryHref="/services/program-recovery-review"
+        title="Talk to the person who will do the work."
+        description={PROGRAM_RECOVERY_CONVERSATION.summary}
+        primaryLabel={site.cta}
+        secondaryHref={offerHref("program-recovery-review")}
         secondaryLabel="See Scope & Pricing"
       />
     </>

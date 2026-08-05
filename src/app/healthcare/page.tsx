@@ -45,7 +45,7 @@ const credibility = [
   ["Prior authorization and utilization management", "Experience with payer/provider coordination, review tiers, exceptions, escalation, auditability, and human decision points."],
   ["Healthcare interoperability", "Verified product ownership covering CMS Cures Act, FHIR, access control, auditability, governance, and payer-facing requirements."],
   ["Enterprise healthcare transformation", "Experience in delivery governance, executive reporting, dependency management, workflow transformation, and AI-enabled operating improvement."],
-  ["Implementation under controls", "RachelOS supplies inspectable, non-healthcare evidence of workflow design, source authority, human approval, operating health, and bounded AI assistance."],
+  ["Implementation under controls", "RachelOS, an operating system I built and run, shows workflow design, source authority, human approval, operating health, and bounded AI assistance in a working environment."],
 ];
 
 const diagnosticQuestions = [
@@ -72,7 +72,7 @@ export default function HealthcarePage() {
       <PageHero
         eyebrow="Healthcare specialization"
         title="Transformation recovery is the work. Prior authorization is where it is sharpest."
-        description="TKO works with health plans, healthcare services organizations, managed-care organizations, PE-backed provider platforms, and large provider organizations when a transformation program is behind, over budget, or about to fund automation on top of an unstable workflow. Prior authorization and utilization management are the sharpest proof domains, not the boundary of the practice."
+        description="I work with health plans, healthcare services organizations, managed-care organizations, PE-backed provider platforms, and large provider organizations when a transformation program is behind, over budget, or about to fund automation on top of an unstable workflow. Prior authorization and utilization management are where my experience is sharpest; the practice extends across the operating domains below."
         primaryHref="/contact"
         primaryLabel="Request a Program Recovery Conversation"
         secondaryHref="/services/program-recovery-review"
@@ -105,9 +105,9 @@ export default function HealthcarePage() {
 
       <Section className="bg-surface">
         <SectionHeader
-          eyebrow="Why Todd is relevant"
+          eyebrow="Why I am relevant here"
           title="Operations, product, regulation, technology, and implementation in one operating view."
-          description="The credibility is the intersection, not a claim that every prior role produced a publishable client result. Employment history establishes experience. Selected Work states the available evidence and its limits."
+          description="Each of these on its own is common. The combination is what lets me tell whether a stalled program is a scope problem, an authority problem, an adoption problem, or a technology problem — usually within the first week."
         />
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {credibility.map(([title, body]) => (
@@ -121,7 +121,7 @@ export default function HealthcarePage() {
           href="/selected-work"
           className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
         >
-          Review the evidence and its limits
+          Review the evidence
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </Section>

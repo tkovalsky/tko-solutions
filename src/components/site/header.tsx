@@ -6,6 +6,7 @@ import { site } from "@/lib/site";
 
 const navItems = [
   { href: "/services", label: "Engagements" },
+  { href: "/program-recovery-readiness-check", label: "Readiness Check" },
   { href: "/healthcare", label: "Healthcare" },
   { href: "/selected-work", label: "Evidence" },
   { href: "/insights", label: "Guides" },
@@ -17,7 +18,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-6 px-6 lg:px-8">
         <Logo />
-        <nav aria-label="Primary navigation" className="hidden items-center gap-8 lg:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-5 lg:flex xl:gap-8">
           {navItems.map((item) => (
             <Link
               key={item.href}

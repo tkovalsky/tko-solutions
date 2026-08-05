@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { CredibilityStrip } from "@/components/site/credibility-strip";
 import { CtaBand } from "@/components/site/cta-band";
+import { EvidenceNoteLink } from "@/components/site/evidence-note";
 import { JsonLd } from "@/components/site/json-ld";
 import { LinkButton } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { offerHref, offers, PROGRAM_RECOVERY_CONVERSATION, SPECIALIST_CONVERSATION } from "@/lib/offers";
+import { READINESS_CHECK_PATH } from "@/lib/readiness-check";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -31,28 +33,28 @@ const symptoms = [
 
 const whyTko = [
   {
-    title: "Direct senior accountability",
-    body: "One accountable senior leader in the room from week one — not a partner who appears at the readout and a team you have not met. The person who diagnoses the problem is the person who signs the finding.",
+    title: "I lead the work myself",
+    body: "The person who interviews your team, reads your program artifacts, and writes the diagnosis is the person who signs it. There is no engagement team to onboard and no partner who appears only at the readout.",
   },
   {
-    title: "Fast, fixed-scope diagnosis",
-    body: "Three weeks and a fixed fee, not a discovery phase billed by the quarter. A diagnosis that takes six months is describing a program that no longer exists in that form.",
+    title: "Three weeks to a written answer",
+    body: "A diagnosis that takes six months describes a program that no longer exists in that form. Three weeks is enough to read what exists, interview the people who know, and take a position.",
   },
   {
-    title: "Operational and implementation depth",
-    body: "Twenty years across regulated operations, healthcare product, interoperability, and enterprise transformation — plus a production system built and operated end to end. The recommendations come from someone who has had to make them work.",
+    title: "Twenty years of operating depth",
+    body: "Regulated operations, healthcare product ownership, CMS interoperability, and enterprise transformation delivery — plus a production system I built and operate. I have had to make recommendations like these work.",
   },
   {
-    title: "An honest read on AI",
-    body: "Whether AI is appropriate is one of the questions answered, not the assumption the work starts from. Automating a workflow whose authority model was never written down makes the ambiguity faster, not cheaper.",
+    title: "A direct answer on AI",
+    body: "Whether AI is appropriate here is one of the questions I answer. Automating a workflow whose authority model was never written down makes the ambiguity faster and more expensive.",
   },
   {
-    title: "No staffing pyramid",
-    body: "TKO does not sell a bench, a ramp, or a follow-on implementation team. If the right answer is internal execution, an existing vendor, or stopping the program, that is the answer you get.",
+    title: "No bench to sell you",
+    body: "TKO has no staffing ramp and no implementation team waiting downstream. If the right answer is internal execution, your existing vendor, or stopping the program, that is what the report says.",
   },
   {
-    title: "No technology-first recommendation",
-    body: "The operating problem is established before a platform, vendor, or automation decision is discussed. Sequencing is the difference between a program that changes the operation and one that changes the screens.",
+    title: "The operating problem comes first",
+    body: "I establish what is actually failing before any platform, vendor, or automation decision is discussed. Sequencing is what separates a program that changes the operation from one that changes the screens.",
   },
 ];
 
@@ -93,33 +95,29 @@ export default function HomePage() {
             <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
               Every workstream is green. Nothing has changed.
             </h1>
-            <p className="mt-6 max-w-[65ch] text-lg leading-8 text-white/70 sm:text-xl sm:leading-9">
-              TKO recovers healthcare transformation programs that are behind, over budget, or
-              about to fund automation on top of a workflow that does not work yet — for health
-              plans, healthcare services organizations, managed-care organizations, and PE-backed
-              provider platforms.
-            </p>
-            <p className="mt-6 max-w-[62ch] border-l-2 border-primary-light/50 pl-5 text-base leading-8 text-white/60">
-              Twenty years inside large consulting firms and enterprise healthcare, including
-              prior authorization, utilization management, CMS interoperability, and
-              transformation delivery. That background is why the answer here is a direct one:
-              whether the program is actually recoverable, and what it will cost to find out the
-              slow way. One accountable senior leader — not a pyramid, a staffing ramp, or a
-              quarter-long discovery phase.
+            <p className="mt-6 max-w-[68ch] text-lg leading-8 text-white/70 sm:text-xl sm:leading-9">
+              I recover healthcare transformation programs that are behind, over budget, or about
+              to fund automation on top of a workflow that does not work yet. One question comes
+              first: whether the program is actually recoverable, and what the next ninety days
+              should contain.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <LinkButton href={PROGRAM_RECOVERY_CONVERSATION.href} ctaLocation="homepage_hero">
                 {site.cta}
               </LinkButton>
               <LinkButton
-                href={SPECIALIST_CONVERSATION.href}
+                href={READINESS_CHECK_PATH}
                 ctaLocation="homepage_hero"
                 variant="secondary"
                 className="border-white/35 text-white hover:border-white/60 hover:bg-white/10"
               >
-                {site.secondaryCta}
+                Use the Readiness Check
               </LinkButton>
             </div>
+            <p className="mt-6 text-sm leading-6 text-white/50">
+              Not ready for a conversation? The Readiness Check is twelve questions you can work
+              through with your own leadership. No email required.
+            </p>
           </div>
         </div>
       </section>
@@ -128,8 +126,8 @@ export default function HomePage() {
         <div className="mx-auto grid w-full max-w-7xl gap-3 px-6 py-6 text-sm font-semibold sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
           <p>3-week Recovery Review</p>
           <p>$18,000–$25,000 fixed fee</p>
-          <p>Fractional lead from $15,000/mo</p>
-          <p>Principal-led throughout</p>
+          <p>Personally led, start to finish</p>
+          <p>One program, one sponsor</p>
         </div>
       </section>
 
@@ -137,8 +135,8 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr]">
           <SectionHeader
             eyebrow="The recognizable problem"
-            title="Programs rarely fail inside a workstream. They fail at the seams."
-            description="Workstream status answers a local question honestly. Nobody owns the enterprise one — whether the pieces are converging into an operating change. Risk migrates to the boundaries, and the boundaries have no reporting line."
+            title="Programs fail at the seams, where nobody reports."
+            description="Workstream status answers a local question honestly. The enterprise question — whether the pieces are converging into an operating change — belongs to nobody, so risk accumulates at the boundaries and surfaces a quarter after it started."
           />
           <ul className="grid gap-3">
             {symptoms.map((symptom) => (
@@ -150,27 +148,11 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="bg-surface !py-14 md:!py-18" id="why-tko">
-        <SectionHeader
-          eyebrow="Why TKO"
-          title="Why hire one senior person instead of a firm."
-          description="A large firm sells a team and bills the ramp. That is the right purchase for some problems. It is the wrong purchase when the question is whether the program should continue at all."
-        />
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {whyTko.map((reason) => (
-            <Card key={reason.title}>
-              <h3 className="text-xl font-semibold leading-tight">{reason.title}</h3>
-              <p className="mt-4 text-base leading-7 text-muted">{reason.body}</p>
-            </Card>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="!py-14 md:!py-18">
+      <Section className="bg-surface !py-14 md:!py-18" id="the-review">
         <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr]">
           <div>
             <SectionHeader
-              eyebrow="Start here"
+              eyebrow="The core engagement"
               title={recoveryReview.name}
               description={recoveryReview.question}
             />
@@ -184,9 +166,13 @@ export default function HomePage() {
                 <dd className="mt-1 font-semibold">{recoveryReview.commercial}</dd>
               </div>
             </dl>
-            <LinkButton href={offerHref(recoveryReview.slug)} className="mt-7">
-              See Scope &amp; Pricing
-            </LinkButton>
+            <p className="mt-6 text-base leading-7 text-muted">{recoveryReview.feeBoundary}</p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <LinkButton href={offerHref(recoveryReview.slug)}>See Scope &amp; Pricing</LinkButton>
+              <LinkButton href={`${offerHref(recoveryReview.slug)}#what-it-produces`} variant="secondary">
+                What It Produces
+              </LinkButton>
+            </div>
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-primary">You leave with</p>
@@ -201,13 +187,29 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <Section className="!py-14 md:!py-18" id="why-tko">
+        <SectionHeader
+          eyebrow="Why TKO"
+          title="Why hire one senior person instead of a firm."
+          description="A large firm sells a team and bills the ramp, which is the right purchase for some problems. It is the wrong purchase when the question is whether the program should continue at all."
+        />
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {whyTko.map((reason) => (
+            <Card key={reason.title}>
+              <h3 className="text-xl font-semibold leading-tight">{reason.title}</h3>
+              <p className="mt-4 text-base leading-7 text-muted">{reason.body}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
       <CredibilityStrip />
 
       <Section className="!py-14 md:!py-18">
         <SectionHeader
-          eyebrow="Healthcare proof"
-          title="Enterprise healthcare experience, with the claim boundary stated."
-          description="Prior authorization, utilization management, healthcare transformation, operational recovery, and CMS interoperability — described as mechanism and role. Employment history establishes experience, not employer or client endorsement, and no quantified client outcome is claimed."
+          eyebrow="Healthcare experience"
+          title="Where the judgment comes from."
+          description="Prior authorization, utilization management, transformation recovery, and CMS interoperability, inside enterprise healthcare organizations."
         />
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           <Card>
@@ -224,7 +226,7 @@ export default function HomePage() {
             </p>
             <p className="mt-4 text-sm leading-6 text-muted">
               Delivery and coordination role. Qualification methodology and medical policy were
-              owned by separate teams. No scale or outcome is claimed.
+              owned by separate teams.
             </p>
             <LinkButton href="/selected-work/prior-authorization-modernization" variant="secondary" className="mt-6">
               Review the Experience
@@ -237,57 +239,34 @@ export default function HomePage() {
             <h3 className="mt-4 text-xl font-semibold leading-tight">Enterprise Program Recovery</h3>
             <p className="mt-4 text-base leading-7 text-muted">
               Multi-workstream healthcare modernization across claims, care management, provider
-              experience, clinical workflow, eligibility, and member operations — where healthy
-              local status coexisted with unresolved portfolio risk.
-            </p>
-            <p className="mt-4 text-sm leading-6 text-muted">
-              Qualitative operating mechanism only. No client, cost, delivery-time, or outcome
-              metric is published.
+              experience, clinical workflow, eligibility, and member operations, where healthy local
+              status coexisted with unresolved portfolio risk.
             </p>
             <LinkButton href="/selected-work/enterprise-care-management-modernization" variant="secondary" className="mt-6">
               Review the Experience
             </LinkButton>
           </Card>
           <Card>
-            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
-              Interoperability
-            </p>
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Interoperability</p>
             <h3 className="mt-4 text-xl font-semibold leading-tight">Regulated Implementation</h3>
             <p className="mt-4 text-base leading-7 text-muted">
               Payer-facing CMS Cures Act and FHIR interoperability ownership, connecting technical
               exchange to onboarding, access control, auditability, and operating governance.
-            </p>
-            <p className="mt-4 text-sm leading-6 text-muted">
-              Establishes relevant regulated-implementation experience, not a claimed client result.
             </p>
             <LinkButton href="/selected-work/healthcare-interoperability-platform" variant="secondary" className="mt-6">
               Review the Experience
             </LinkButton>
           </Card>
         </div>
+        <p className="mt-8 max-w-[72ch] text-sm leading-6 text-muted">
+          These describe my role and the operating mechanism. Employment history establishes
+          experience, not employer or client endorsement, and confidential client outcomes stay
+          unpublished.
+        </p>
+        <EvidenceNoteLink className="mt-2" />
       </Section>
 
       <Section className="bg-surface !py-14 md:!py-18">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
-          <SectionHeader
-            eyebrow="Secondary proof"
-            title="He builds, not only advises."
-            description="RachelOS is a deployed, founder-built operating system with durable memory, prioritized work, visible missing information, and human-approved AI. It is secondary proof and it carries a stated boundary: one founder-operated, non-healthcare environment. It does not establish enterprise scale, healthcare compliance, or a causal financial outcome."
-          />
-          <Card>
-            <p className="text-base leading-7 text-muted">
-              Its relevance is narrow and specific: a buyer can inspect how Todd turns fragmented
-              work into explicit workflow, evidence, controls, and handoff-ready operating
-              artifacts — the same discipline applied after a Recovery Review.
-            </p>
-            <LinkButton href="/selected-work/from-crm-to-operating-system" variant="secondary" className="mt-6">
-              Inspect the System
-            </LinkButton>
-          </Card>
-        </div>
-      </Section>
-
-      <Section className="!py-14 md:!py-18">
         <div className="grid gap-4 lg:grid-cols-2">
           <Card>
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Who this is for</p>
@@ -309,13 +288,43 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <Section className="!py-12 md:!py-14">
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="max-w-[72ch]">
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">
+              Supporting evidence
+            </p>
+            <p className="mt-4 text-base leading-7 text-muted">
+              RachelOS is an operating system I built and run independently. It demonstrates how I
+              make workflow, evidence, approvals, and handoffs explicit — the same discipline I
+              apply after a Recovery Review.
+            </p>
+          </div>
+          <LinkButton href="/selected-work/from-crm-to-operating-system" variant="secondary">
+            Inspect the System
+          </LinkButton>
+        </div>
+      </Section>
+
       <CtaBand
         title="Get an independent read before the next funding decision."
         description={PROGRAM_RECOVERY_CONVERSATION.summary}
         primaryLabel={site.cta}
-        secondaryHref="/services"
-        secondaryLabel="Compare All Three Offers"
+        secondaryHref={READINESS_CHECK_PATH}
+        secondaryLabel="Use the Readiness Check"
       />
+
+      <section aria-label="For consulting firms" className="border-t border-border bg-surface">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-6 py-8 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+          <p className="max-w-[60ch] text-base leading-7 text-muted">
+            For consultancies and integrators: I take subcontract work on accounts you already
+            hold, delivered under your agreement and brand.
+          </p>
+          <LinkButton href={SPECIALIST_CONVERSATION.href} variant="secondary" ctaLocation="homepage_specialist">
+            {site.secondaryCta}
+          </LinkButton>
+        </div>
+      </section>
     </>
   );
 }

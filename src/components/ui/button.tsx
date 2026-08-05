@@ -45,7 +45,9 @@ export function LinkButton({
   eventName,
   ctaLocation = "link_button",
 }: LinkButtonProps) {
-  const referencedService = href.startsWith("/services/") ? href.split("/").pop() : undefined;
+  const referencedService = href.startsWith("/services/")
+    ? href.split("#")[0].split("/").pop()
+    : undefined;
   const label = typeof children === "string" ? children : undefined;
   return (
     <Link

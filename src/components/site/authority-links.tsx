@@ -4,9 +4,10 @@ import { Card } from "@/components/ui/card";
 
 const links = [
   { title: "Program Recovery Review", body: "See the three-week scope, fixed fee, deliverables, and stated evidence boundary.", href: "/services/program-recovery-review", label: "See scope and pricing" },
-  { title: "Selected Work", body: "Review healthcare experience, live operating proof, and the limits of each claim.", href: "/selected-work", label: "Review the evidence" },
+  { title: "Evidence", body: "The healthcare programs behind the practice, and my role in each.", href: "/selected-work", label: "Review the evidence" },
   { title: "Healthcare practice", body: "See how transformation recovery, prior authorization, utilization management, and interoperability connect.", href: "/healthcare", label: "How TKO helps" },
-  { title: "Founder diligence", body: "Review Todd's verified career record and buyer-relevant operating experience.", href: "/founder", label: "Meet the principal" },
+  { title: "Readiness Check", body: "Twelve questions to answer before approving another dollar of transformation spend.", href: "/program-recovery-readiness-check", label: "Run the check" },
+  { title: "Founder diligence", body: "My career record, and how I work on capacity, conflicts, and confidentiality.", href: "/founder", label: "Meet the principal" },
 ];
 
 export function AuthorityLinks({ current }: { current?: string }) {

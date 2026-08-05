@@ -16,7 +16,7 @@ type CtaBandProps = {
 
 export function CtaBand({
   title = "Is the program recoverable?",
-  description = "Bring one program that is behind, over budget, or about to fund automation on top of an unstable workflow. Todd will say plainly whether TKO is the right help.",
+  description = "Bring one program that is behind, over budget, or about to fund automation on top of an unstable workflow. I will say plainly whether I am the right help.",
   primaryHref = "/contact",
   primaryLabel = DEFAULT_CTA_LABEL,
   secondaryHref = null,
