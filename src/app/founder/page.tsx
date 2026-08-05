@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Todd Kovalsky | Founder & Principal, TKO Solutions",
     description:
-      "The operator behind TKO's Prior Authorization Performance Diagnostic and 90-Day Improvement Sprint.",
+      "The senior operator behind TKO's Program Recovery Review, Fractional Transformation Lead, and Specialist Subcontract engagements.",
     url: absoluteUrl("/founder"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation program recovery." }],
   },
 };
 
@@ -33,10 +33,10 @@ const operatingIntersection = [
 ];
 
 const engagementRole = [
-  "Todd leads the Diagnostic personally; it is not delegated to a junior assessment team.",
+  "Todd leads every engagement personally; nothing is delegated to a junior assessment team.",
   "He frames the decision, reviews evidence, interviews stakeholders, traces the workflow, and leads the executive readout.",
-  "If implementation is warranted, he remains accountable for the 90-Day Sprint, pilot measures, and handoff.",
-  "TKO may recommend internal execution, an existing vendor, a specialist partner, no further implementation, or the Sprint.",
+  "Where continued senior accountability is warranted, he holds it himself as Fractional Transformation Lead.",
+  "TKO may recommend internal execution, an existing vendor, a specialist partner, or no further investment. A Review creates no obligation to continue.",
 ];
 
 export default function FounderPage() {
@@ -64,7 +64,7 @@ export default function FounderPage() {
         title={executiveSummary.headline}
         description="Todd Kovalsky brings an uncommon combination of regulated operations, healthcare workflow, product ownership, transformation governance, technology, and hands-on implementation. That intersection matters because prior-authorization performance rarely belongs to one department or one system."
         primaryHref="/contact"
-        primaryLabel="Request a Diagnostic Fit Call"
+        primaryLabel="Request a Program Recovery Conversation"
         secondaryHref="/selected-work"
         secondaryLabel="Review the Evidence"
       />
@@ -158,14 +158,14 @@ export default function FounderPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Referral language</p>
             <h2 className="mt-4 text-3xl font-semibold">Who to introduce to Todd</h2>
             <p className="mt-4 max-w-[68ch] text-lg leading-8 text-muted">
-              Introduce Todd to a specialty medical group, MSO, or provider-side healthcare operator when prior-authorization delays, rework, avoidable denials, inconsistent payer handling, or reliance on a few experienced staff is forcing a technology, staffing, or operating decision.
+              Introduce Todd to an executive at a health plan, healthcare services organization, managed-care organization, PE-backed provider platform, or large provider organization when a transformation program is behind, over budget, or about to fund automation on top of a workflow nobody has mapped. Also introduce him to consultancies and integrators who need senior healthcare specialist depth on an account they already hold.
             </p>
           </div>
           <Link
-            href="/services/diagnostic"
+            href="/services/program-recovery-review"
             className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark"
           >
-            See the Prior Authorization Diagnostic
+            See the Program Recovery Review
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
@@ -173,9 +173,9 @@ export default function FounderPage() {
 
       <CtaBand
         title="Discuss the operating problem with the principal who will lead the work."
-        description="The first step is a qualified 30-minute conversation about the workflow, trigger, evidence, decision owner, and fit for the $25,000 Diagnostic."
-        primaryLabel="Request a Diagnostic Fit Call"
-        secondaryHref="/services/diagnostic"
+        description="The first step is a 45-minute Program Recovery Conversation about the program, the trigger, the evidence available, and who owns the decision."
+        primaryLabel="Request a Program Recovery Conversation"
+        secondaryHref="/services/program-recovery-review"
         secondaryLabel="See Scope & Pricing"
       />
     </>

@@ -75,3 +75,20 @@ Daily development starts here, then moves to `WORK_PACKAGES.md`, `IMPLEMENTATION
 
 The feature backlog is the POIS story set in `implementation/`. Older plans, audits, wireframes,
 and reports are preserved in `archive/` for context only.
+
+---
+
+## PAUSED — 2026-08-05
+
+**Opportunity Intelligence / POIS feature development is paused.** No further stories are
+being worked, including WP-012 through WP-014. Decision D-004 (paid AI service) does not need
+to be resolved while the work it gates is paused.
+
+Existing code is preserved and continues to run. Permitted changes are limited to security and
+production stability.
+
+The target account list moved to `content/outreach/target-accounts.csv` — a spreadsheet is
+sufficient for the current pursuit volume. Reopening condition: more than twenty concurrent
+live pursuits.
+
+See `docs/OPERATING-BOUNDARIES.md`.

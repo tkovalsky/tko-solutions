@@ -1,43 +1,73 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import InsightsPage from "./page";
 
 const insightState = vi.hoisted(() => ({
-  items: [] as Array<Record<string, unknown>>,
+  byCluster: new Map<string, Array<Record<string, unknown>>>(),
 }));
 
 vi.mock("@/lib/insights", () => ({
-  getInsights: () => insightState.items,
+  getInsightsByCluster: () => insightState.byCluster,
 }));
 
 describe("InsightsPage", () => {
-  it("lists published articles in library order with reading time and source count", () => {
-    insightState.items = [
-      insight("featured", "Featured Insight", "2026-06-01", true, 2),
-      insight("standard", "Standard Insight", "2026-07-01", false, 0),
-    ];
+  it("groups published guides under their problem cluster", () => {
+    insightState.byCluster = new Map([
+      [
+        "prior-authorization-operations",
+        [
+          insight("featured", "Featured Guide", "2026-06-01", true, 2),
+          insight("standard", "Standard Guide", "2026-07-01", false, 0),
+        ],
+      ],
+    ]);
 
-    render(<InsightsPage />);
+    const { container } = render(<InsightsPage />);
 
-    const headings = screen.getAllByRole("heading", { level: 2 });
-    expect(headings.map((heading) => heading.textContent)).toEqual([
-      "Featured Insight",
-      "Standard Insight",
+    // Clusters are h2; the guides inside them are h3.
+    expect(screen.getByRole("heading", { level: 2, name: "Prior authorization operations" })).toBeInTheDocument();
+
+    const cluster = container.querySelector("#prior-authorization-operations");
+    const guideHeadings = within(cluster as HTMLElement).getAllByRole("heading", { level: 3 });
+    expect(guideHeadings.map((heading) => heading.textContent)).toEqual([
+      "Featured Guide",
+      "Standard Guide",
     ]);
     expect(screen.getByText("Featured")).toBeInTheDocument();
     expect(screen.getAllByText("3 min read")).toHaveLength(2);
     expect(screen.getByText("Based on 2 sources")).toBeInTheDocument();
   });
 
-  it("renders an empty state when no insights exist", () => {
-    insightState.items = [];
+  it("renders guides that carry no cluster under an 'Other guides' heading", () => {
+    insightState.byCluster = new Map([
+      ["unclustered", [insight("legacy", "Legacy Guide", "2026-05-01", false, 1)]],
+    ]);
+
+    render(<InsightsPage />);
+
+    expect(screen.getByRole("heading", { level: 2, name: "Other guides" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 3, name: "Legacy Guide" })).toBeInTheDocument();
+  });
+
+  it("hides clusters that have no published guide", () => {
+    insightState.byCluster = new Map([
+      ["prior-authorization-operations", [insight("only", "Only Guide", "2026-06-01", false, 1)]],
+    ]);
 
     render(<InsightsPage />);
 
     expect(
-      screen.getByRole("heading", {
-        name: "Insights will appear here when markdown articles are added.",
-      }),
+      screen.queryByRole("heading", { name: "Stalled healthcare transformation" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders an empty state when no guides exist", () => {
+    insightState.byCluster = new Map();
+
+    render(<InsightsPage />);
+
+    expect(
+      screen.getByRole("heading", { name: "Guides appear here once they pass review." }),
     ).toBeInTheDocument();
   });
 });

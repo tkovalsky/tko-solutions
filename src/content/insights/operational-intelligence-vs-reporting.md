@@ -8,8 +8,14 @@ sources:
   - tko:ev-operational-intelligence-vs-reporting
 date: "2026-07-02"
 slug: operational-intelligence-vs-reporting
-published: true
-featured: true
+# Deprioritized 2026-08-05: removed from TKO's primary commercial pathway because the
+# thesis is not differentiated enough to earn an executive's forward. The content is
+# preserved, not destroyed — its strongest argument (status reporting hides enterprise
+# risk) is carried in why-healthcare-transformation-programs-stall. Re-publishing
+# requires a completed guide brief and a differentiated point of view.
+status: draft
+published: false
+featured: false
 ---
 
 # Operational Intelligence vs. Reporting

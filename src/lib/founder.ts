@@ -65,7 +65,7 @@ export const careerTimeline: TimelineEntry[] = [
     organization: "TKO Solutions",
     role: "Founder & Principal",
     era: "Independent advisory",
-    scope: "Principal-led diagnostic and implementation work, now focused on prior-authorization performance for specialty medical groups, MSOs, and provider-side healthcare operators.",
+    scope: "Principal-led recovery, advisory, and implementation work, now focused on healthcare transformation program recovery for health plans, healthcare services organizations, managed-care organizations, PE-backed provider platforms, and large provider organizations.",
     buyerRelevance: "Combines the operating, product, healthcare, technology, governance, and implementation perspectives inside one accountable engagement lead.",
   },
 ];

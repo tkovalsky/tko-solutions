@@ -9,16 +9,16 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Prior Authorization Operations for Specialty Medical Groups",
+  title: "Healthcare Practice",
   description:
-    "TKO helps specialty medical groups, MSOs, and provider-side healthcare operators identify the workflow causes of prior-authorization delay, rework, denials, and staff dependency.",
+    "Healthcare transformation recovery for health plans, healthcare services organizations, managed-care organizations, PE-backed provider platforms, and large provider organizations.",
   alternates: { canonical: "/healthcare" },
   openGraph: {
-    title: "Prior Authorization Operations | TKO Solutions",
+    title: "Healthcare Practice | TKO Solutions",
     description:
-      "Healthcare operating experience behind a fixed-fee prior-authorization workflow Diagnostic.",
+      "Enterprise healthcare operating experience behind a fixed-fee, three-week Program Recovery Review.",
     url: absoluteUrl("/healthcare"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation program recovery." }],
   },
 };
 
@@ -63,26 +63,26 @@ export default function HealthcarePage() {
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "Prior Authorization Operations for Specialty Medical Groups",
+          name: "TKO Solutions Healthcare Practice",
           url: absoluteUrl("/healthcare"),
           description: metadata.description,
-          about: ["Prior Authorization", "Utilization Management", "Provider Operations", "Healthcare Interoperability", "Administrative Burden"],
+          about: ["Healthcare Transformation", "Program Recovery", "Prior Authorization", "Utilization Management", "Healthcare Interoperability", "Administrative Cost"],
         }}
       />
       <PageHero
         eyebrow="Healthcare specialization"
-        title="Prior authorization is the commercial focus. Healthcare operating experience is the foundation."
-        description="TKO works with specialty medical groups, MSOs, and provider-side healthcare operators when prior-authorization delay, rework, denials, inconsistent payer handling, or staff dependency is creating an expensive operating problem. The first engagement is a 15-business-day Diagnostic—not a broad transformation program or technology pitch."
+        title="Transformation recovery is the work. Prior authorization is where it is sharpest."
+        description="TKO works with health plans, healthcare services organizations, managed-care organizations, PE-backed provider platforms, and large provider organizations when a transformation program is behind, over budget, or about to fund automation on top of an unstable workflow. Prior authorization and utilization management are the sharpest proof domains, not the boundary of the practice."
         primaryHref="/contact"
-        primaryLabel="Request a Diagnostic Fit Call"
-        secondaryHref="/services/diagnostic"
+        primaryLabel="Request a Program Recovery Conversation"
+        secondaryHref="/services/program-recovery-review"
         secondaryLabel="See Scope & Pricing"
       />
 
       <Section className="bg-surface !py-12 md:!py-16">
         <div className="grid gap-5 md:grid-cols-3">
-          <Credential title="Primary specialization" body="Provider-side prior-authorization performance" />
-          <Credential title="Starting engagement" body="15 business days · $25,000 fixed fee" />
+          <Credential title="Primary focus" body="Healthcare transformation program recovery" />
+          <Credential title="Starting engagement" body="3 weeks · $18,000–$25,000 fixed fee" />
           <Credential title="Operating principle" body="Fix the workflow before funding more automation" />
         </div>
       </Section>
@@ -91,7 +91,7 @@ export default function HealthcarePage() {
         <SectionHeader
           eyebrow="Recognizable operating problems"
           title="The technology layer is only one part of the work."
-          description="Prior authorization is the entry wedge because it makes the operating failure concrete and measurable. Related healthcare experience matters when it helps leadership understand workflow, evidence, authority, controls, and implementation—not as a separate menu of services."
+          description="Programs stall at the boundaries between workstreams, where dependencies and decision rights are owned by no one. Prior authorization makes that failure concrete and measurable, which is why it is the sharpest proof domain — but the same structure appears in every operating domain below."
         />
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {operatingProblems.map((item) => (
@@ -129,7 +129,7 @@ export default function HealthcarePage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeader
-            eyebrow="What the Diagnostic resolves"
+            eyebrow="What the Recovery Review resolves"
             title="A client-specific baseline before an implementation decision."
             description="The engagement stays within one organization and one defined PA workflow or specialty/payer segment. It produces evidence leadership can use whether TKO implements the next step or not."
           />
@@ -166,9 +166,9 @@ export default function HealthcarePage() {
 
       <CtaBand
         title="Bring one prior-authorization workflow under pressure."
-        description="If leadership needs to understand the operating causes before making another technology, staffing, or vendor decision, request a Diagnostic Fit Call."
-        primaryLabel="Request a Diagnostic Fit Call"
-        secondaryHref="/services/diagnostic"
+        description="If leadership needs to understand the operating causes before making another technology, staffing, or vendor decision, start with a 45-minute Program Recovery Conversation."
+        primaryLabel="Request a Program Recovery Conversation"
+        secondaryHref="/services/program-recovery-review"
         secondaryLabel="See Scope & Pricing"
       />
     </>

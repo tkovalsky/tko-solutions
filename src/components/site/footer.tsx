@@ -3,13 +3,14 @@ import { Logo } from "@/components/site/logo";
 import { site } from "@/lib/site";
 
 const footerLinks = [
-  { href: "/services/diagnostic", label: "Prior Authorization Performance Diagnostic" },
-  { href: "/services/operating-system-build", label: "90-Day Improvement Sprint" },
-  { href: "/healthcare", label: "How We Help" },
+  { href: "/services/program-recovery-review", label: "Program Recovery Review" },
+  { href: "/services/fractional-transformation-lead", label: "Fractional Transformation Lead" },
+  { href: "/services/specialist-subcontract", label: "Specialist Subcontract" },
+  { href: "/healthcare", label: "Healthcare Practice" },
   { href: "/selected-work", label: "Evidence & Experience" },
+  { href: "/insights", label: "Guides" },
   { href: "/founder", label: "About" },
-  { href: "/insights", label: "Insights" },
-  { href: "/contact", label: "Request a Fit Call" },
+  { href: "/contact", label: "Request a Program Recovery Conversation" },
   { href: "/privacy", label: "Privacy" },
 ];
 
@@ -20,12 +21,13 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            TKO helps specialty medical groups, MSOs, and provider-side healthcare
-            operators identify the operational causes of prior-authorization delays,
-            avoidable denials, rework, and staff dependency before they fund more automation.
+            TKO recovers healthcare transformation programs that are behind, over budget, or
+            about to fund automation on top of a workflow that does not work yet — for health
+            plans, healthcare services organizations, managed-care organizations, and PE-backed
+            provider platforms.
           </p>
           <p className="mt-4 max-w-sm text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
-            15 business days · $25,000 fixed fee · Principal-led
+            3-week Recovery Review · $18K–$25K fixed fee · Principal-led
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
             <a href={`mailto:${site.email}`} data-conversion-event="email_link_click" data-cta-location="footer" data-cta-label="email" className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">

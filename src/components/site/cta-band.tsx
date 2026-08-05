@@ -15,8 +15,8 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "Fix the workflow before you fund more automation.",
-  description = "Bring one prior-authorization workflow under pressure. TKO will determine whether the fixed-fee Diagnostic is the right next move.",
+  title = "Is the program recoverable?",
+  description = "Bring one program that is behind, over budget, or about to fund automation on top of an unstable workflow. Todd will say plainly whether TKO is the right help.",
   primaryHref = "/contact",
   primaryLabel = DEFAULT_CTA_LABEL,
   secondaryHref = null,
@@ -34,7 +34,7 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Diagnostic fit call
+            Program Recovery Conversation
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}

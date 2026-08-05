@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       title: study.title,
       description: study.trigger,
       url: absoluteUrl(`/selected-work/${study.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation program recovery." }],
     },
   };
 }
@@ -81,8 +81,8 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         eyebrow={`${study.classification} / ${study.industry}`}
         title={study.title}
         description={study.trigger}
-        primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
+        primaryHref="/services/program-recovery-review"
+        primaryLabel="See the Program Recovery Review"
         secondaryHref="/selected-work"
         secondaryLabel="Review Selected Work"
       />
@@ -160,11 +160,11 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
 
       <CtaBand
         title="See how the evidence becomes a client-specific baseline."
-        description="The Prior Authorization Performance Diagnostic measures one defined workflow, separates symptoms from addressable causes, and gives leadership a 90-day improvement plan."
+        description="The Program Recovery Review establishes what is actually wrong with one program, separates symptoms from addressable causes, and gives leadership a 90-day action plan."
         primaryHref={study.relatedOfferHref}
-        primaryLabel="See the Prior Authorization Diagnostic"
+        primaryLabel="See the Program Recovery Review"
         secondaryHref="/contact"
-        secondaryLabel="Request a Diagnostic Fit Call"
+        secondaryLabel="Request a Program Recovery Conversation"
       />
     </>
   );

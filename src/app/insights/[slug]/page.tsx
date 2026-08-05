@@ -9,6 +9,8 @@ import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsight, getInsights, getRelatedInsights, type Insight } from "@/lib/insights";
+import { getGuideCluster } from "@/lib/guide-clusters";
+import { getOffer, offerHref, offers, PROGRAM_RECOVERY_CONVERSATION } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Params = {
@@ -35,7 +37,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: "article",
       publishedTime: insight.date,
       url: absoluteUrl(`/insights/${insight.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation guides." }],
     },
   };
 }
@@ -49,6 +51,11 @@ export default async function InsightPage({ params }: Params) {
   }
 
   const related = getRelatedInsights(insight.slug);
+  // Every guide maps to one offer. Falling back to the Recovery Review keeps the
+  // page renderable for legacy guides authored before the brief existed.
+  const offer = getOffer(insight.brief?.offer ?? "") ?? offers[0];
+  const cluster = getGuideCluster(insight.brief?.cluster ?? "");
+  const ctaLabel = insight.brief?.cta ?? site.cta;
 
   return (
     <>
@@ -64,13 +71,13 @@ export default async function InsightPage({ params }: Params) {
         }}
       />
       <PageHero
-        eyebrow="Insight"
+        eyebrow={cluster ? cluster.name : "Guide"}
         title={insight.title}
         description={insight.description}
-        primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
-        secondaryHref="/contact"
-        secondaryLabel="Request a Diagnostic Fit Call"
+        primaryHref={offerHref(offer.slug)}
+        primaryLabel={`See the ${offer.name}`}
+        secondaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
+        secondaryLabel={ctaLabel}
       />
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
@@ -108,7 +115,7 @@ export default async function InsightPage({ params }: Params) {
       </Section>
       {related.length > 0 ? (
         <Section className="bg-surface">
-          <SectionHeader eyebrow="Related Insights" title="More operating patterns." />
+          <SectionHeader eyebrow="Related guides" title="More operating patterns." />
           <div className="mt-10 grid gap-4 lg:grid-cols-3">
             {related.map((relatedInsight) => (
               <RelatedInsightCard key={relatedInsight.slug} insight={relatedInsight} />
@@ -118,12 +125,12 @@ export default async function InsightPage({ params }: Params) {
       ) : null}
       <AuthorityLinks current={`/insights/${insight.slug}`} />
       <CtaBand
-        title="See how the operating problem becomes a measured Diagnostic."
-        description="The Prior Authorization Performance Diagnostic establishes the workflow baseline, root causes, target workflow, and responsible 90-day plan."
-        primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
-        secondaryHref="/contact"
-        secondaryLabel="Request a Diagnostic Fit Call"
+        title={`If this describes your situation, the ${offer.name} is the vehicle.`}
+        description={offer.summary}
+        primaryHref={offerHref(offer.slug)}
+        primaryLabel={`See the ${offer.name}`}
+        secondaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
+        secondaryLabel={ctaLabel}
       />
     </>
   );
@@ -141,7 +148,7 @@ function RelatedInsightCard({ insight }: { insight: Insight }) {
         href={`/insights/${insight.slug}`}
         className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:text-primary-dark"
       >
-        Read insight
+        Read guide
         <ArrowRight
           className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
           aria-hidden="true"

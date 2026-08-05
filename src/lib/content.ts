@@ -24,37 +24,6 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "from-crm-to-operating-system",
-    title: "RachelOS: A Live Operating Environment",
-    classification: "Live operating environment",
-    industry: "Live operating environment",
-    buyerContext:
-      "A relationship-driven operating environment with active work spread across records, messages, notes, and one experienced operator's memory.",
-    trigger:
-      "Follow-up, prioritization, and context reconstruction depended on the operator being available.",
-    breaking:
-      "The underlying records existed, but the current context, next action, missing information, and approval state were not visible in one working surface.",
-    conventionalLimits:
-      "A cleaner CRM view would still have stored activity without resolving priority, source authority, approval, or the next action.",
-    role:
-      "Todd designed, built, operated, and audited the system. This is founder-built proof, not a client engagement.",
-    intervention:
-      "RachelOS introduced durable relationship memory, source-aware facts, prioritized work, visible missing information, human-approved outreach, and system-health checks. AI assists with bounded extraction and drafting; it does not act autonomously.",
-    result:
-      "The operating environment now makes context, priority, approval, and system health inspectable in daily work. It demonstrates implementation capability and governance discipline, not healthcare performance or client ROI.",
-    evidence: [
-      "Current, redacted operating screens for the queue, relationship memory, human approval, daily work, and system health.",
-      "Repository-backed implementation history and tests supporting the published operating mechanisms.",
-      "Visible controls that keep consequential outbound actions under human approval.",
-    ],
-    evidenceLimit:
-      "RachelOS is one founder-operated, non-healthcare environment. It does not establish enterprise scale, healthcare compliance, prior-authorization performance, or causal financial outcomes.",
-    relevance:
-      "A buyer can inspect how Todd turns fragmented work into explicit workflow, evidence, controls, and handoff-ready operating artifacts—the same implementation discipline applied after a Diagnostic.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
-  },
-  {
     slug: "prior-authorization-modernization",
     title: "Prior Authorization Workflow Design Experience",
     classification: "Client or enterprise experience",
@@ -82,8 +51,8 @@ export const caseStudies: CaseStudy[] = [
       "The experience is anonymized and employment-based. Client identity, workflow artifacts, baselines, and post-implementation measures are not publishable.",
     relevance:
       "It shows why TKO begins with a measured workflow and exception baseline rather than assuming software, staffing, or AI is the answer.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
+    relatedOffer: "Program Recovery Review",
+    relatedOfferHref: "/services/program-recovery-review",
   },
   {
     slug: "enterprise-care-management-modernization",
@@ -113,8 +82,8 @@ export const caseStudies: CaseStudy[] = [
       "This is employment-period enterprise experience, not a named TKO client case. Public artifacts and quantified outcomes are unavailable.",
     relevance:
       "Prior-authorization improvement also crosses operations, clinical review, revenue cycle, technology, and leadership; the Diagnostic makes those dependencies explicit within one bounded workflow.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
+    relatedOffer: "Program Recovery Review",
+    relatedOfferHref: "/services/program-recovery-review",
   },
   {
     slug: "healthcare-interoperability-platform",
@@ -144,8 +113,39 @@ export const caseStudies: CaseStudy[] = [
       "Employer and client endorsement is not implied. Confidential program artifacts and outcome measures are not published.",
     relevance:
       "It demonstrates the ability to translate policy and technical requirements into controlled operating behavior—important when prior-authorization automation depends on evidence, access, exceptions, and auditability.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
+    relatedOffer: "Specialist Subcontract",
+    relatedOfferHref: "/services/specialist-subcontract",
+  },
+  {
+    slug: "from-crm-to-operating-system",
+    title: "RachelOS: A Live Operating Environment",
+    classification: "Live operating environment",
+    industry: "Live operating environment",
+    buyerContext:
+      "A relationship-driven operating environment with active work spread across records, messages, notes, and one experienced operator's memory.",
+    trigger:
+      "Follow-up, prioritization, and context reconstruction depended on the operator being available.",
+    breaking:
+      "The underlying records existed, but the current context, next action, missing information, and approval state were not visible in one working surface.",
+    conventionalLimits:
+      "A cleaner CRM view would still have stored activity without resolving priority, source authority, approval, or the next action.",
+    role:
+      "Todd designed, built, operated, and audited the system. This is founder-built proof, not a client engagement.",
+    intervention:
+      "RachelOS introduced durable relationship memory, source-aware facts, prioritized work, visible missing information, human-approved outreach, and system-health checks. AI assists with bounded extraction and drafting; it does not act autonomously.",
+    result:
+      "The operating environment now makes context, priority, approval, and system health inspectable in daily work. It demonstrates implementation capability and governance discipline, not healthcare performance or client ROI.",
+    evidence: [
+      "Current, redacted operating screens for the queue, relationship memory, human approval, daily work, and system health.",
+      "Repository-backed implementation history and tests supporting the published operating mechanisms.",
+      "Visible controls that keep consequential outbound actions under human approval.",
+    ],
+    evidenceLimit:
+      "RachelOS is one founder-operated, non-healthcare environment. It does not establish enterprise scale, healthcare compliance, prior-authorization performance, or causal financial outcomes.",
+    relevance:
+      "A buyer can inspect how Todd turns fragmented work into explicit workflow, evidence, controls, and handoff-ready operating artifacts—the same implementation discipline applied after a Diagnostic.",
+    relatedOffer: "Fractional Transformation Lead",
+    relatedOfferHref: "/services/fractional-transformation-lead",
   },
   {
     slug: "cre-intelligence-model",
@@ -175,8 +175,8 @@ export const caseStudies: CaseStudy[] = [
       "This is supporting method evidence. It should not be read as equivalent to verified client outcomes or healthcare implementation proof.",
     relevance:
       "It answers the portability objection narrowly: the method for making expert judgment explicit can travel, while the domain logic and performance claims do not.",
-    relatedOffer: "Prior Authorization Performance Diagnostic",
-    relatedOfferHref: "/services/diagnostic",
+    relatedOffer: "Program Recovery Review",
+    relatedOfferHref: "/services/program-recovery-review",
   },
 ];
 

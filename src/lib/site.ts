@@ -1,9 +1,18 @@
+import { PROGRAM_RECOVERY_CONVERSATION, SPECIALIST_CONVERSATION } from "@/lib/offers";
+
 export const site = {
   name: "TKO Solutions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tko.solutions",
   description:
-    "TKO helps specialty medical groups, MSOs, and provider-side healthcare operators identify the operational causes of prior-authorization delays, avoidable denials, rework, and staff dependency before they fund more automation.",
-  cta: "Request a Diagnostic Fit Call",
+    "TKO recovers healthcare transformation programs that are behind, over budget, or about to fund automation on top of a workflow that does not work yet. Senior, accountable, fixed-scope work for health plans, healthcare services organizations, and PE-backed provider platforms.",
+  positioning:
+    "I recover healthcare transformation programs that are behind, over budget, or about to fund automation on top of a workflow that does not work yet.",
+  differentiation:
+    "Todd spent his career inside large consulting firms. He will tell you what an engagement team is rarely positioned to say: whether the program is actually recoverable, and what it will cost to find out the slow way. One accountable senior leader — not a pyramid, a staffing ramp, or a quarter-long discovery phase.",
+  cta: PROGRAM_RECOVERY_CONVERSATION.label,
+  ctaHref: PROGRAM_RECOVERY_CONVERSATION.href,
+  secondaryCta: SPECIALIST_CONVERSATION.label,
+  secondaryCtaHref: SPECIALIST_CONVERSATION.href,
   socialImage: "/og-pa-v2.png",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "t.e.kovalsky@gmail.com",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "https://www.linkedin.com/in/toddkovalsky",

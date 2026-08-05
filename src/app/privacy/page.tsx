@@ -18,7 +18,7 @@ export const metadata: Metadata = {
       url: site.socialImage,
       width: 1200,
       height: 630,
-      alt: "TKO Solutions prior authorization performance advisory.",
+      alt: "TKO Solutions healthcare transformation program recovery.",
     }],
   },
 };

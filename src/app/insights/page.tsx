@@ -5,54 +5,86 @@ import { PageHero } from "@/components/site/page-hero";
 import { AuthorityLinks } from "@/components/site/authority-links";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { getInsights, type Insight } from "@/lib/insights";
+import { getInsightsByCluster, type Insight } from "@/lib/insights";
+import { guideClusters } from "@/lib/guide-clusters";
+import { PROGRAM_RECOVERY_CONVERSATION } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Insights",
+  title: "Guides",
   description:
-    "TKO insights on prior-authorization workflow, healthcare operating quality, staff dependency, evidence, and responsible automation.",
+    "Evidence-backed guides on stalled healthcare transformation, prior authorization operations, decision rights, and where AI genuinely helps — organized by the executive problem they address.",
   alternates: { canonical: "/insights" },
   openGraph: {
-    title: "Insights",
+    title: "Guides",
     description:
-      "Evidence-led notes on prior-authorization workflow and responsible operating improvement.",
+      "Guides organized around expensive executive problems, not thought-leadership categories.",
     url: absoluteUrl("/insights"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation guides." }],
   },
 };
 
 export default function InsightsPage() {
-  const insights = getInsights();
+  const byCluster = getInsightsByCluster();
+  // Only clusters that already have a real guide are rendered. Empty clusters are
+  // a content plan, not a public promise.
+  const populated = guideClusters.filter((cluster) => (byCluster.get(cluster.slug) ?? []).length > 0);
+  const unclustered = byCluster.get("unclustered") ?? [];
+  const total = [...byCluster.values()].reduce((count, guides) => count + guides.length, 0);
 
   return (
     <>
       <PageHero
-        eyebrow="Insights"
-        title="Prior-authorization operating problems, written plainly."
-        description="Evidence-led notes on workflow quality, decision rights, staff dependency, exception handling, and the controls required before automation can improve execution."
-        primaryHref="/services/diagnostic"
-        primaryLabel="See the Prior Authorization Diagnostic"
+        eyebrow="Guides"
+        title="Written for the problem, not for the algorithm."
+        description="Each guide addresses one expensive executive problem, states a point of view, separates evidence from inference, and says where AI helps and where it adds risk. Fewer guides, each worth forwarding."
+        primaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
+        primaryLabel={site.cta}
         secondaryHref="/selected-work"
-        secondaryLabel="Review Selected Work"
+        secondaryLabel="Review the Evidence"
       />
-      <Section>
-        {insights.length > 0 ? (
-          <div className="grid gap-4 lg:grid-cols-2">
-            {insights.map((insight) => (
-              <InsightCard key={insight.slug} insight={insight} />
+
+      {total > 0 ? (
+        <Section>
+          <div className="space-y-16">
+            {populated.map((cluster) => (
+              <div key={cluster.slug} id={cluster.slug}>
+                <SectionHeader
+                  eyebrow="Problem cluster"
+                  title={cluster.name}
+                  description={cluster.executiveProblem}
+                />
+                <div className="mt-8 grid gap-4 lg:grid-cols-2">
+                  {(byCluster.get(cluster.slug) ?? []).map((insight) => (
+                    <InsightCard key={insight.slug} insight={insight} />
+                  ))}
+                </div>
+              </div>
             ))}
+            {unclustered.length > 0 ? (
+              <div>
+                <SectionHeader eyebrow="Additional" title="Other guides" />
+                <div className="mt-8 grid gap-4 lg:grid-cols-2">
+                  {unclustered.map((insight) => (
+                    <InsightCard key={insight.slug} insight={insight} />
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
-        ) : (
+        </Section>
+      ) : (
+        <Section>
           <div className="border border-dashed border-border bg-surface p-8 md:p-10">
             <SectionHeader
-              eyebrow="No Published Insights"
-              title="Insights will appear here when markdown articles are added."
-              description="Add a published markdown file to src/content/insights and rebuild the site to publish the article."
+              eyebrow="No Published Guides"
+              title="Guides appear here once they pass review."
+              description="Add a markdown file to src/content/insights with a complete guide brief and status: published. The guide-brief validation gate blocks publication until every required field and a named human reviewer are recorded."
             />
           </div>
-        )}
-      </Section>
+        </Section>
+      )}
+
       <AuthorityLinks current="/insights" />
     </>
   );
@@ -67,21 +99,16 @@ function InsightCard({ insight }: { insight: Insight }) {
         {insight.sourceCount > 0 ? <span>Based on {insight.sourceCount} sources</span> : null}
       </div>
       {insight.featured ? (
-        <p className="mt-5 text-sm font-semibold uppercase tracking-[0.1em] text-primary">
-          Featured
-        </p>
+        <p className="mt-5 text-sm font-semibold uppercase tracking-[0.1em] text-primary">Featured</p>
       ) : null}
-      <h2 className="mt-5 text-2xl font-semibold leading-tight">{insight.title}</h2>
+      <h3 className="mt-5 text-2xl font-semibold leading-tight">{insight.title}</h3>
       <p className="mt-4 text-base leading-7 text-muted">{insight.description}</p>
       <Link
         href={`/insights/${insight.slug}`}
         className="group mt-auto inline-flex items-center gap-2 pt-8 text-sm font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:text-primary-dark"
       >
-        Read insight
-        <ArrowRight
-          className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
-          aria-hidden="true"
-        />
+        Read guide
+        <ArrowRight className="size-4 shrink-0 transition-transform group-hover:translate-x-1" aria-hidden="true" />
       </Link>
     </Card>
   );

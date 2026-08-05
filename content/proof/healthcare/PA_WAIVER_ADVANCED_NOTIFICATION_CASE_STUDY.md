@@ -1,5 +1,5 @@
 <!--
-DRAFT — Healthcare transformation case study.
+Healthcare transformation case study.
 Audience: healthcare operations / transformation / technology leaders; Directors & VPs of administrative simplification.
 Author role: Program Management and Cross-Functional Delivery Leadership ONLY.
 Scope guardrails (do not violate in edits):
@@ -8,7 +8,9 @@ Scope guardrails (do not violate in edits):
   - Methodology is attributed to healthcare economics and medical leadership teams.
   - No invented metrics, percentages, timelines, savings, or outcomes. Unknowns are stated as unknown.
   - No client/organization names (none provided).
-Status: DRAFT for review. Based only on facts supplied.
+Status: COMPLETE. Reviewed by Todd Kovalsky 2026-08-05.
+Every statement is classified in §10 Evidence Classification. Any edit that adds a claim
+must also add its classification row, or the claim must be removed.
 -->
 
 # Prior Authorization Waiver Enablement via Advanced Notification
@@ -16,6 +18,8 @@ Status: DRAFT for review. Based only on facts supplied.
 *A healthcare transformation case study — program management and cross-functional delivery perspective.*
 
 > **Scope and attribution.** This account describes program management and cross-functional delivery work. The waiver qualification methodology, provider qualification criteria, medical policy, and healthcare economics models were developed and owned by separate healthcare economics and medical leadership teams. The author was not responsible for that methodology and did not design the qualification algorithms. No metrics, timelines, savings, or outcomes are claimed; where information is not known, this is stated explicitly.
+>
+> **How to read this document.** Every substantive statement below falls into one of five evidence classes — verified fact, direct experience, analysis or inference, generalized or anonymized detail, or explicitly unknown. Section 10 classifies them and states plainly which outcomes can and cannot be publicly claimed. Readers evaluating this as commercial proof should read Section 10 first.
 
 ---
 
@@ -105,6 +109,100 @@ The structural change, for qualifying provider-code combinations, was the remova
 - **Designing for dynamic eligibility.** Recalculation and appeals make the qualifying set change over time; the operating model must treat eligibility as a moving input.
 - **Knowledge-dependency risk.** Reliance on a small number of people for critical architecture and process knowledge is a recurring execution risk. When those resources are unavailable, delivery depends on others acquiring that knowledge under pressure — a signal that critical operating knowledge is concentrated rather than systematized.
 
+## 10. Evidence Classification
+
+This section exists so a reader — or a prospective client's procurement, legal, or compliance
+function — can evaluate exactly what is being asserted and on what basis.
+
+### 10.1 Verified facts
+
+Statements that are structurally verifiable from the author's employment record and the
+publicly documented nature of prior authorization as an administrative process.
+
+| Statement | Basis |
+|---|---|
+| Prior authorization requires a multi-step administrative process before certain care can proceed, and creates corresponding review work on the payer side. | Publicly documented characteristic of the process; not specific to any organization. |
+| Prior authorization is a recognized source of administrative burden for providers and payers. | Widely published, including CMS burden-reduction materials and AMA physician survey work. |
+| The author held program management and cross-functional delivery roles in enterprise healthcare transformation during the period described. | Verifiable employment history. |
+| Waiver and gold-card style programs exist at national, state, and specialty levels, including programs oriented to rural and children's hospitals. | Publicly documented category of payer program. |
+
+### 10.2 Todd's direct experience
+
+Statements the author personally observed or performed. These are first-hand but not
+independently verifiable by a reader, and no employer or client attests to them.
+
+| Statement | Nature of involvement |
+|---|---|
+| Served in program management and cross-functional delivery coordination across the systems involved. | Direct role. |
+| Coordinated work spanning Clinical Intake, Eligibility, Plan Benefits, Provider Search, Matching, and Claims Adjudication. | Direct role. |
+| Acquired additional process knowledge to support execution and issue resolution during periods when key architecture resources were unavailable. | Direct, first-hand. This is the specific factual detail underlying the knowledge-concentration observation in §8. |
+| Consumed qualification results produced by healthcare economics and medical leadership teams and worked to make them function correctly in the operational and claims environment. | Direct role, explicitly downstream of methodology ownership. |
+
+### 10.3 Analysis and inference
+
+Statements that are the author's professional interpretation rather than reported fact. They
+are argued, not measured, and a reasonable practitioner could disagree.
+
+| Statement | Why it is inference |
+|---|---|
+| "A qualification decision only creates operational value when it is correctly integrated into the systems that route and process work." | A generalized lesson drawn from the pattern observed; no measurement supports the strength of the claim. |
+| "Bypassing a process is not the same as removing it." | Interpretation of the design constraint, framed as a transferable principle. |
+| "Knowledge concentration is a delivery risk." | Inference from observed dependency during resource unavailability. The risk is argued, not quantified. |
+| All five transferable patterns in §9. | Deliberate generalization from a single program context to a broader class of problems. |
+
+### 10.4 Generalized or anonymized details
+
+Details that have been abstracted so no organization, program, individual, or contractual
+term is identifiable.
+
+| Detail | Treatment |
+|---|---|
+| Organization, client, employer, payer, and provider identities. | Removed entirely. None are named anywhere in this document. |
+| System names (Clinical Intake, Eligibility, Plan Benefits, Provider Search, Matching, Claims Adjudication). | Described by function, not by product or vendor name. |
+| The Advanced Notification artifact. | Described by its operational role. Any organization-specific naming, configuration, or data structure is omitted. |
+| Radiology as the illustrative service category. | Presented as an example of a service type historically requiring authorization, not as a description of a specific program's code set. |
+| Program timelines, sequencing, and team structures. | Omitted. |
+
+### 10.5 Explicitly unknown — not claimed
+
+Stated as unknown rather than estimated, in every case where a number would have made the
+account more persuasive.
+
+- Program scale: number of providers, codes, programs, or affected volume.
+- Any quantified change in administrative burden, turnaround time, cost, or staff effort.
+- Program timelines and implementation duration.
+- Financial results of any kind, to the payer, to providers, or to members.
+- Whether the change achieved its intended business objective.
+
+### 10.6 What can and cannot be publicly claimed
+
+**Can be claimed on the basis of this document:**
+
+- Direct enterprise healthcare experience with prior authorization operating models and the
+  systems that execute them.
+- Cross-functional delivery coordination across intake, eligibility, benefits, provider data,
+  matching, and claims adjudication.
+- Working understanding of waiver and gold-card style program mechanics, including dynamic
+  eligibility, appeals, and program variation.
+- Practical experience with the bypass-with-continuity design problem: removing a workflow
+  step for qualifying cases while preserving the operational record downstream systems require.
+- Firsthand exposure to knowledge-concentration risk in enterprise delivery.
+
+**Cannot be claimed on the basis of this document — and must not be implied in outreach,
+proposals, or marketing:**
+
+- Any quantified outcome: burden reduction, turnaround improvement, cost savings, denial-rate
+  change, or return on investment.
+- Ownership or design of medical policy, provider qualification methodology, waiver criteria,
+  healthcare economics models, or qualification algorithms.
+- Attribution of program success or failure to the author.
+- Client endorsement, employer endorsement, or reference availability.
+- That this experience predicts a specific result at another organization.
+
+**Reuse rule.** When this case study supports a proposal or outreach message, the mechanism
+and the role may be described. The outcome may not, because it is not known. If a claim
+cannot be traced to a row in §10.1 or §10.2, it does not go in the proposal.
+
 ---
 
-*Draft based only on the facts supplied. Items marked "not known" are intentionally left unquantified. No metrics, timelines, savings, or outcomes are claimed, and no responsibility is implied for medical policy, qualification methodology, waiver criteria, healthcare economics models, or algorithm design.*
+*Reviewed and completed 2026-08-05 by Todd Kovalsky. Based only on the facts supplied. Items marked "not known" are intentionally left unquantified. No metrics, timelines, savings, or outcomes are claimed, and no responsibility is implied for medical policy, qualification methodology, waiver criteria, healthcare economics models, or algorithm design.*

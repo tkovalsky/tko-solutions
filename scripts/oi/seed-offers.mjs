@@ -1,209 +1,142 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
+// The public catalogue in src/lib/offers.ts is the source of truth. This file mirrors
+// it for the internal Opportunity Intelligence tables, which cannot import TypeScript.
+// If the two disagree, offers.ts wins — update this file to match, not the reverse.
+//
+// Opportunity Intelligence is PAUSED as a software product (docs/OPERATING-BOUNDARIES.md).
+// This is data alignment so the seeded catalogue cannot contradict the public site; it is
+// not new capability.
+
 export const offerSeeds = [
   {
-    slug: "operational-recovery-assessment",
-    name: "Operational Recovery Assessment",
+    slug: "program-recovery-review",
+    name: "Program Recovery Review",
     kind: "assessment",
     description:
-      "Placeholder seed offer for a focused recovery assessment. Todd should replace this with the final CURRENT_REALITY service language.",
-    valueLow: 5000,
-    valueHigh: 8000,
+      "Three-week, fixed-fee review answering whether a healthcare transformation program is recoverable, what is actually wrong, and what the next 90 days should contain.",
+    valueLow: 18000,
+    valueHigh: 25000,
     isRecurring: false,
-    typicalWeeks: 2,
-    domainTags: ["healthcare", "operations", "recovery"],
-    problemTags: ["operational-drag", "workflow-breakdown"],
+    typicalWeeks: 3,
+    domainTags: ["healthcare", "transformation", "program-recovery", "operations"],
+    problemTags: [
+      "stalled-program",
+      "missed-milestones",
+      "unowned-decisions",
+      "premature-automation",
+      "adoption-risk",
+    ],
     idealBuyer:
-      "Placeholder: healthcare operator facing visible execution slippage or recovery pressure.",
+      "COO, Chief Transformation Officer, CIO, or SVP/VP Operations at a health plan, healthcare services organization, managed-care organization, PE-backed provider platform, or large provider organization, accountable for a program that is behind, over budget, or losing executive confidence.",
     problemSolved:
-      "Placeholder: identifies operational breakdowns, recovery priorities, and near-term corrective actions.",
+      "Establishes an independent diagnosis of what is actually blocking the program — scope, sequencing, decision rights, operating design, adoption, or vendor performance — and a bounded 90-day action plan.",
     deliverables: [
-      "Placeholder recovery findings summary",
-      "Placeholder prioritized action map",
-      "Placeholder operator review session",
+      "Executive diagnosis",
+      "Program risk map",
+      "Recovery priorities, sequenced and bounded",
+      "Decision-rights and escalation findings",
+      "Operating-model and workflow-ownership gaps",
+      "Explicit read on where AI helps and where it adds risk",
+      "90-day action plan with owners, measures, and decision gates",
+      "Executive readout session",
     ],
     typicalObjections: [
-      "Placeholder: internal team already knows the problem",
-      "Placeholder: limited budget for assessment work",
+      "We already know what is wrong",
+      "Three weeks is not enough to understand a program this size",
+      "We have an incumbent firm on this account",
+      "We would rather wait for the current phase to complete",
     ],
     proofItemIds: [],
     positioningNotes:
-      "Placeholder: frame as a fast path to operational clarity before larger remediation spend.",
+      "Position as an independent read before the next funding decision, not as a discovery phase. The finding that the program should be stopped or descoped is a legitimate outcome and should be said out loud in the pitch.",
   },
   {
-    slug: "prior-auth-operational-assessment",
-    name: "Prior Authorization Operational Assessment",
-    kind: "assessment",
-    description:
-      "Placeholder seed offer for prior authorization workflow assessment. Todd should replace this with final healthcare framework language.",
-    valueLow: 5000,
-    valueHigh: 8000,
-    isRecurring: false,
-    typicalWeeks: 2,
-    domainTags: ["healthcare", "prior-authorization", "payer-operations"],
-    problemTags: ["denials", "rework", "administrative-cost"],
-    idealBuyer:
-      "Placeholder: payer, provider, or healthcare technology leader accountable for prior authorization performance.",
-    problemSolved:
-      "Placeholder: surfaces bottlenecks, rework drivers, and operational risk in prior authorization processes.",
-    deliverables: [
-      "Placeholder prior authorization workflow review",
-      "Placeholder friction and rework map",
-      "Placeholder modernization opportunity list",
-    ],
-    typicalObjections: [
-      "Placeholder: current vendor already covers this",
-      "Placeholder: compliance deadlines are not yet urgent",
-    ],
-    proofItemIds: [],
-    positioningNotes:
-      "Placeholder: connect workflow improvement to denial reduction, compliance readiness, and member/provider experience.",
-  },
-  {
-    slug: "operational-truth-diagnostic",
-    name: "Operational Truth Diagnostic",
-    kind: "diagnostic",
-    description:
-      "Placeholder seed offer for a deeper diagnostic of operational truth, handoffs, and execution reality.",
-    valueLow: 15000,
-    valueHigh: 30000,
-    isRecurring: false,
-    typicalWeeks: 4,
-    domainTags: ["healthcare", "operations", "executive-alignment"],
-    problemTags: ["visibility-gap", "misaligned-execution", "unclear-kpis"],
-    idealBuyer:
-      "Placeholder: executive sponsor who needs a reliable view of operating reality before funding or transformation decisions.",
-    problemSolved:
-      "Placeholder: reconciles stated priorities with actual workflows, incentives, constraints, and execution gaps.",
-    deliverables: [
-      "Placeholder operating reality brief",
-      "Placeholder evidence-backed gap register",
-      "Placeholder decision recommendations",
-    ],
-    typicalObjections: [
-      "Placeholder: leadership already has dashboards",
-      "Placeholder: concern that discovery will slow execution",
-    ],
-    proofItemIds: [],
-    positioningNotes:
-      "Placeholder: position as decision support for leaders who cannot afford another abstract strategy exercise.",
-  },
-  {
-    slug: "decision-layer-build-sprint",
-    name: "Decision Layer Build Sprint",
-    kind: "build",
-    description:
-      "Placeholder seed offer for building a focused decision layer around an operational workflow.",
-    valueLow: 45000,
-    valueHigh: 150000,
-    isRecurring: false,
-    typicalWeeks: 8,
-    domainTags: ["healthcare", "decision-support", "operations"],
-    problemTags: ["manual-decisioning", "workflow-friction", "poor-traceability"],
-    idealBuyer:
-      "Placeholder: transformation, product, or operations leader funding a concrete workflow improvement.",
-    problemSolved:
-      "Placeholder: converts operational judgment into a repeatable, traceable decision workflow.",
-    deliverables: [
-      "Placeholder decision model",
-      "Placeholder workflow implementation plan",
-      "Placeholder pilot-ready operating artifact",
-    ],
-    typicalObjections: [
-      "Placeholder: internal engineering capacity is constrained",
-      "Placeholder: need proof before committing build budget",
-    ],
-    proofItemIds: [],
-    positioningNotes:
-      "Placeholder: lead with measurable workflow progress rather than platform language.",
-  },
-  {
-    slug: "fractional-operational-advisor",
-    name: "Fractional Operational Advisor",
+    slug: "fractional-transformation-lead",
+    name: "Fractional Transformation Lead",
     kind: "fractional",
     description:
-      "Placeholder seed offer for recurring advisory support around operational transformation and execution.",
-    valueLow: 12000,
+      "Named senior accountability for a stalled or high-risk transformation program. Part-time, scoped by days per month, three-to-six-month minimum. The primary recurring-income offer.",
+    valueLow: 15000,
     valueHigh: 25000,
     isRecurring: true,
-    typicalWeeks: null,
-    domainTags: ["healthcare", "operations", "advisory"],
-    problemTags: ["execution-risk", "leadership-gap", "operating-rhythm"],
+    typicalWeeks: 26,
+    domainTags: ["healthcare", "transformation", "leadership", "governance"],
+    problemTags: [
+      "no-accountable-owner",
+      "vacant-executive-seat",
+      "decision-latency",
+      "cross-functional-stall",
+      "sponsor-visibility",
+    ],
     idealBuyer:
-      "Placeholder: executive team that needs senior operational judgment without adding a full-time leader.",
+      "Executive sponsor or PE operating partner carrying a high-risk transformation program with no single accountable owner above the workstream leads, or bridging an executive search.",
     problemSolved:
-      "Placeholder: provides recurring executive-level operating support, decision framing, and initiative recovery guidance.",
+      "Supplies senior leadership capacity inside the operating cadence — holding decisions, dependencies, sequencing, escalation, and vendor performance — and transfers capability to the permanent internal owner.",
     deliverables: [
-      "Placeholder monthly advisory cadence",
-      "Placeholder executive decision support",
-      "Placeholder initiative recovery guidance",
+      "Named senior accountability in the operating cadence",
+      "Decision, dependency, and escalation management",
+      "Executive and sponsor reporting that reflects real delivery risk",
+      "Recovery-plan execution and re-sequencing",
+      "Vendor and partner performance oversight",
+      "AI and automation adoption judgment",
+      "Capability transfer to the permanent owner",
     ],
     typicalObjections: [
-      "Placeholder: preference for full-time hire",
-      "Placeholder: unclear advisory scope boundaries",
+      "We would rather hire full-time",
+      "Part-time leadership will not have enough context",
+      "Our internal leaders will see this as a vote of no confidence",
+      "Three-month minimum is longer than we want to commit",
     ],
     proofItemIds: [],
     positioningNotes:
-      "Placeholder: frame as senior operating leverage while the organization decides whether to hire, build, or recover.",
-  },
-  {
-    slug: "executive-briefing-workshop",
-    name: "Executive Briefing Workshop",
-    kind: "workshop",
-    description:
-      "Placeholder seed offer for a short executive workshop on operational opportunity and decision framing.",
-    valueLow: 3000,
-    valueHigh: 6000,
-    isRecurring: false,
-    typicalWeeks: 1,
-    domainTags: ["healthcare", "executive-briefing", "strategy"],
-    problemTags: ["unclear-options", "stakeholder-alignment", "decision-delay"],
-    idealBuyer:
-      "Placeholder: executive sponsor who needs quick alignment before committing to a larger effort.",
-    problemSolved:
-      "Placeholder: clarifies the operational problem, options, tradeoffs, and next decision.",
-    deliverables: [
-      "Placeholder briefing deck",
-      "Placeholder facilitated workshop",
-      "Placeholder next-decision summary",
-    ],
-    typicalObjections: [
-      "Placeholder: workshop may not create enough tangible output",
-      "Placeholder: stakeholders are hard to schedule",
-    ],
-    proofItemIds: [],
-    positioningNotes:
-      "Placeholder: use as a low-friction entry offer when the buyer needs alignment more than a full diagnostic.",
+      "This is the income-replacement offer. Lead with the cost comparison against an executive hire plus search fee, and with the fact that it can convert to permanent without a placement fee.",
   },
   {
     slug: "specialist-subcontract",
     name: "Specialist Subcontract",
     kind: "subcontract",
     description:
-      "Placeholder seed offer for subcontracted specialist support on healthcare operations, prior authorization, or recovery work.",
-    valueLow: 10000,
-    valueHigh: 40000,
+      "Senior healthcare transformation specialist capacity delivered under a prime firm's client agreement and brand. Sold to consultancies and integrators, not to end clients.",
+    valueLow: 175,
+    valueHigh: 250,
     isRecurring: false,
-    typicalWeeks: 6,
-    domainTags: ["healthcare", "subcontract", "specialist-support"],
-    problemTags: ["delivery-capacity", "domain-expertise", "proposal-support"],
+    typicalWeeks: 12,
+    domainTags: [
+      "healthcare",
+      "prior-authorization",
+      "utilization-management",
+      "interoperability",
+      "ai-adoption",
+    ],
+    problemTags: [
+      "bench-capability-gap",
+      "pursuit-support",
+      "delivery-risk",
+      "specialist-depth",
+    ],
     idealBuyer:
-      "Placeholder: prime contractor, consulting firm, or partner needing healthcare operations depth.",
+      "Practice leader, delivery leader, or account partner at a healthcare consultancy, system integrator, advisory firm, or technology partner who already holds the client relationship.",
     problemSolved:
-      "Placeholder: supplies specialist operating judgment and deliverable support without expanding the prime team.",
+      "Adds credible senior healthcare operations depth to an engagement or pursuit the prime firm owns, without the prime carrying the capability on its permanent bench.",
     deliverables: [
-      "Placeholder specialist workstream support",
-      "Placeholder domain review notes",
-      "Placeholder client-ready contribution",
+      "Prior authorization and utilization-management operating design",
+      "Healthcare transformation and program recovery",
+      "Interoperability and regulated implementation (CMS, FHIR, access control, auditability)",
+      "Operating-model, decision-rights, and exception-routing design",
+      "Practical AI adoption judgment and readiness assessment",
+      "Executive-grade written deliverables and readouts",
     ],
     typicalObjections: [
-      "Placeholder: margin pressure on subcontract budget",
-      "Placeholder: concern about client-facing role clarity",
+      "Margin pressure on the subcontract rate",
+      "Concern about client-facing role clarity",
+      "Preference for a known subcontractor",
+      "Procurement onboarding takes too long",
     ],
     proofItemIds: [],
     positioningNotes:
-      "Placeholder: position as de-risked specialist capacity for a defined workstream.",
+      "Fastest path to billable revenue because the prime already owns the relationship. Note rate is hourly and indicative, confirmed per engagement. Emphasize working under the prime's brand and the non-solicitation posture.",
   },
 ];
 
@@ -238,6 +171,6 @@ async function main() {
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch((error) => {
     console.error(error);
-    process.exit(1);
+    process.exitCode = 1;
   });
 }

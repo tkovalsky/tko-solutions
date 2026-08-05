@@ -3,6 +3,52 @@ title: "What AI-Assisted Delivery Compresses — and What It Cannot"
 description: "Ten months of evidence from a production system built through an operator-led, AI-assisted delivery model: coordination collapsed, judgment did not."
 business_unit: tko
 voice: tko-advisory
+cluster: ai-readiness-for-healthcare-workflows
+primary_buyer: >-
+  CIO, CTO, Chief Transformation Officer, and consulting-firm practice and delivery leaders
+  evaluating what AI-assisted delivery actually changes about cost, staffing, and risk.
+buyer_problem: >-
+  Leadership is being asked to fund AI-assisted delivery against claims about productivity
+  that nobody can audit, and cannot tell which parts of the claim are real.
+trigger_signal: >-
+  An AI delivery-tooling investment, a vendor productivity claim entering a business case, or
+  a staffing model being resized on the assumption that AI reduces headcount requirements.
+search_intent: >-
+  What AI-assisted software delivery genuinely compresses, what it does not, and how to
+  evaluate a productivity claim.
+problem_hypothesis: >-
+  What AI compresses is coordination overhead, not judgment. Business cases that assume the
+  opposite resize the wrong part of the delivery model and expose the organization on exactly
+  the dimensions that were never the constraint.
+point_of_view: >-
+  Construction was never the binding constraint in enterprise delivery — coordination was.
+  Once that is understood, the interesting question stops being how many engineers AI
+  replaces and becomes which decisions still require an accountable human.
+relevant_proof: >-
+  Ten months of auditable delivery evidence from RachelOS, a production system with a
+  single-author commit history, a numbered decision log, and published limits on what the
+  delivery model did not compress.
+ai_useful: >-
+  AI reliably compresses coordination overhead, construction throughput, and the production of
+  routine artifacts — the categories where the work is well-specified and the output is
+  immediately verifiable.
+ai_not_answer: >-
+  AI does not compress judgment, accountability, domain understanding, or the cost of being
+  wrong. A delivery model that removes the humans holding those responsibilities has moved
+  risk rather than removing it.
+diagnostic_questions:
+  - "In your delivery model, what proportion of elapsed time is construction versus coordination and decision latency?"
+  - "Which decisions in your current programs would you be unwilling to have an unaccountable system make?"
+  - "If a vendor claims an AI productivity multiple, what artifact would let you audit it?"
+  - "What is your bus factor today, and does the AI-assisted model raise or lower it?"
+recommended_action: >-
+  Before resizing a delivery model around an AI productivity assumption, measure where elapsed
+  time actually goes and require an auditable artifact behind any claimed multiple.
+offer: specialist-subcontract
+cta: "Discuss Specialist Availability"
+status: published
+reviewer: "Todd Kovalsky"
+reviewed_date: "2026-08-05"
 sources:
   - rachelos-delivery-model:dm-cadence
   - rachelos-delivery-model:dm-competency-map

@@ -2,43 +2,47 @@ import type { Metadata } from "next";
 import { Mail } from "lucide-react";
 import { submitDiagnosticIntake } from "@/app/contact/actions";
 import { DiagnosticForm } from "@/components/site/diagnostic-form";
+import { PROGRAM_RECOVERY_CONVERSATION } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Request a Diagnostic Fit Call",
+  title: "Request a Program Recovery Conversation",
   description:
-    "Request a qualified 30-minute conversation about the $25,000 Prior Authorization Performance Diagnostic.",
+    "A structured 45-minute conversation about one healthcare transformation program that is behind, over budget, or about to fund automation on top of an unstable workflow.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Request a Diagnostic Fit Call",
+    title: "Request a Program Recovery Conversation",
     description:
-      "Tell Todd where prior authorization is losing time or capacity and what decision leadership needs to make.",
+      "Tell Todd which program is under pressure and what decision leadership needs to make.",
     url: absoluteUrl("/contact"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions prior authorization performance advisory." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation program recovery." }],
   },
 };
 
 type SearchParams = {
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; intent?: string }>;
 };
 
 export default async function ContactPage({ searchParams }: SearchParams) {
-  const { status } = await searchParams;
+  const { status, intent } = await searchParams;
+  const isSpecialist = intent === "specialist";
 
   return (
     <section className="py-12 md:py-16">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-[60ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">
-            Diagnostic fit call
+            {isSpecialist ? "Specialist availability" : "Program Recovery Conversation"}
           </p>
           <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-foreground md:text-5xl">
-            Tell Todd where prior authorization is losing time or capacity.
+            {isSpecialist
+              ? "Tell Todd about the engagement and the window."
+              : "Tell Todd which program is under pressure."}
           </h1>
           <p className="mt-5 text-lg leading-8 text-muted">
-            If the problem fits the 15-day Diagnostic, Todd will reply within one
-            business day to schedule a 30-minute working conversation. The
-            Diagnostic is a $25,000 fixed-fee engagement.
+            {isSpecialist
+              ? "For consultancies, system integrators, and advisory firms that already hold the client relationship and need senior healthcare specialist depth. Describe the account, the capability gap, and the timing. Todd will reply within one business day with current availability."
+              : "A structured 45-minute working conversation about one program that is behind, over budget, or about to fund automation on top of a workflow that does not work yet. Todd will reply within one business day."}
           </p>
         </div>
 
@@ -47,15 +51,22 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             <h2 className="text-xl font-semibold text-foreground">What happens next</h2>
             <ol className="mt-5 space-y-4 text-base leading-7 text-muted">
               <li><span className="font-semibold text-foreground">1.</span> Todd reviews every submission personally.</li>
-              <li><span className="font-semibold text-foreground">2.</span> If the scope appears plausible, he replies within one business day with a 30-minute call invitation.</li>
-              <li><span className="font-semibold text-foreground">3.</span> The call tests the trigger, workflow boundary, sponsor, evidence, timing, and decision required.</li>
-              <li><span className="font-semibold text-foreground">4.</span> If there is mutual fit, TKO sends a short scope and fixed-fee proposal. If not, Todd will say so directly.</li>
+              <li><span className="font-semibold text-foreground">2.</span> If the scope appears plausible, he replies within one business day to schedule the 45-minute conversation.</li>
+              <li><span className="font-semibold text-foreground">3.</span> The call tests the trigger, the program boundary, the sponsor, the evidence available, and the decision required.</li>
+              <li><span className="font-semibold text-foreground">4.</span> You receive a one-page written readout afterward. If there is mutual fit, a short scope and fixed-fee proposal follows. If not, Todd will say so directly.</li>
             </ol>
             <div className="mt-8 border border-border bg-surface p-5">
               <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Good starting point</p>
               <p className="mt-3 text-sm leading-6 text-muted">
-                An active prior-authorization performance issue, a named decision
-                owner, a bounded workflow or segment, and intent to act within 90 days.
+                {isSpecialist
+                  ? "A named engagement or active pursuit, a defined capability gap, and a start window."
+                  : "A program under active pressure, a named executive sponsor, a bounded starting point, and intent to act within 90 days."}
+              </p>
+            </div>
+            <div className="mt-5 border-l-2 border-border bg-surface p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted">Scope of the conversation</p>
+              <p className="mt-3 text-sm leading-6 text-muted">
+                {PROGRAM_RECOVERY_CONVERSATION.boundary}
               </p>
             </div>
           </aside>
@@ -66,8 +77,8 @@ export default async function ContactPage({ searchParams }: SearchParams) {
                 <p className="font-semibold text-foreground">Request received.</p>
                 <p className="mt-2 text-sm leading-6 text-muted">
                   Todd personally reviews every submission and will respond within
-                  one business day. If the Diagnostic appears to fit, the next step
-                  is a 30-minute working call, not a generic sales presentation.
+                  one business day. If there is a plausible fit, the next step is a
+                  45-minute working conversation, not a generic sales presentation.
                 </p>
               </div>
             ) : null}

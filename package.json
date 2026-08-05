@@ -15,7 +15,8 @@
     "tif:inventory": "node --env-file=.env.local scripts/tif/inventory-scan.mjs",
     "oi:backfill": "node --env-file=.env.local scripts/oi/backfill-pursuits.mjs",
     "oi:seed": "node --env-file=.env.local scripts/oi/seed-offers.mjs && node --env-file=.env.local scripts/oi/seed-proof.mjs && node --env-file=.env.local scripts/oi/seed-playbooks.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "guides:validate": "vitest run src/lib/guide-validation.test.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

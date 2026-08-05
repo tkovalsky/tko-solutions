@@ -30,27 +30,46 @@ const nextConfig: NextConfig = {
       // Retire the parallel /offers and /assessment namespaces into the single
       // /services commercial path. Assessments become entry offers within a lane.
       { source: "/offers", destination: "/services", permanent: true },
-      { source: "/offers/executive-recovery", destination: "/services/diagnostic", permanent: true },
-      { source: "/offers/program-recovery", destination: "/services/diagnostic", permanent: true },
-      { source: "/offers/portfolio-recovery", destination: "/services/diagnostic", permanent: true },
-      { source: "/offers/operational-intelligence", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/executive-recovery", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/offers/program-recovery", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/offers/portfolio-recovery", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/offers/operational-intelligence", destination: "/services/program-recovery-review", permanent: true },
       { source: "/offers/executive-ai", destination: "/services", permanent: true },
       { source: "/offers/healthcare-operating", destination: "/healthcare", permanent: true },
-      { source: "/offers/prior-authorization", destination: "/services/diagnostic", permanent: true },
-      { source: "/offers/decision-rights-workshop", destination: "/services/diagnostic", permanent: true },
-      { source: "/offers/executive-operating-review", destination: "/services/operating-system-build", permanent: true },
-      { source: "/assessment", destination: "/services/diagnostic", permanent: true },
+      { source: "/offers/prior-authorization", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/offers/decision-rights-workshop", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/offers/executive-operating-review", destination: "/services/fractional-transformation-lead", permanent: true },
+      { source: "/assessment", destination: "/services/program-recovery-review", permanent: true },
       { source: "/assessment/ai-delivery", destination: "/services", permanent: true },
 
-      { source: "/services/recovery", destination: "/services/diagnostic", permanent: true },
-      { source: "/services/fractional-leadership", destination: "/services/operating-system-build", permanent: true },
+      { source: "/services/recovery", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/services/fractional-leadership", destination: "/services/fractional-transformation-lead", permanent: true },
       { source: "/services/enterprise-ai", destination: "/services", permanent: true },
       { source: "/services/product", destination: "/services", permanent: true },
 
       // One public entry offer and one bounded expansion path.
-      { source: "/services/prior-authorization-assessment", destination: "/services/diagnostic", permanent: true },
-      { source: "/services/recovery-assessment", destination: "/services/diagnostic", permanent: true },
-      { source: "/services/fractional-advisor", destination: "/services/operating-system-build", permanent: true },
+      { source: "/services/prior-authorization-assessment", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/services/recovery-assessment", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/services/fractional-advisor", destination: "/services/fractional-transformation-lead", permanent: true },
+
+      // --- Offer collapse (2026-08-05) ---
+      // The catalogue is now three offers: Program Recovery Review, Fractional
+      // Transformation Lead, and Specialist Subcontract. The prior-auth-only
+      // Diagnostic and the 90-Day Sprint are retired as sold products; prior
+      // authorization remains a proof domain, not the company category.
+      { source: "/services/diagnostic", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/services/operating-system-build", destination: "/services/fractional-transformation-lead", permanent: true },
+      { source: "/services/specialist", destination: "/services/specialist-subcontract", permanent: true },
+      { source: "/services/subcontract", destination: "/services/specialist-subcontract", permanent: true },
+
+      // Two prior-authorization articles merged into one flagship guide.
+      {
+        source: "/insights/prior-authorization-operational-quality-problem",
+        destination: "/insights/prior-authorization-is-a-decision-rights-problem",
+        permanent: true,
+      },
+      // Deprioritized from the primary commercial pathway; content preserved unpublished.
+      { source: "/insights/operational-intelligence-vs-reporting", destination: "/insights", permanent: true },
 
       // Evidence consolidation: Selected Work is the single public proof center.
       { source: "/proof", destination: "/selected-work", permanent: true },

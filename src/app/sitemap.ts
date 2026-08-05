@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { caseStudies } from "@/lib/content";
 import { getInsights } from "@/lib/insights";
+import { offerHref, offers } from "@/lib/offers";
 import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/insights",
   ];
 
-  const serviceRoutes = ["/services/diagnostic", "/services/operating-system-build"];
+  const serviceRoutes = offers.map((offer) => offerHref(offer.slug));
   const caseStudyRoutes = caseStudies.map((study) => `/selected-work/${study.slug}`);
   const insightEntries = getInsights().map((insight) => ({
     url: absoluteUrl(`/insights/${insight.slug}`),

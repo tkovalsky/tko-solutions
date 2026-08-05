@@ -3,9 +3,9 @@ import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const links = [
-  { title: "Prior Authorization Diagnostic", body: "See the fixed fee, 15-business-day scope, deliverables, and evidence boundary.", href: "/services/diagnostic", label: "See scope and pricing" },
+  { title: "Program Recovery Review", body: "See the three-week scope, fixed fee, deliverables, and stated evidence boundary.", href: "/services/program-recovery-review", label: "See scope and pricing" },
   { title: "Selected Work", body: "Review healthcare experience, live operating proof, and the limits of each claim.", href: "/selected-work", label: "Review the evidence" },
-  { title: "Healthcare specialization", body: "See how prior authorization, utilization management, interoperability, and administrative transformation connect.", href: "/healthcare", label: "How TKO helps" },
+  { title: "Healthcare practice", body: "See how transformation recovery, prior authorization, utilization management, and interoperability connect.", href: "/healthcare", label: "How TKO helps" },
   { title: "Founder diligence", body: "Review Todd's verified career record and buyer-relevant operating experience.", href: "/founder", label: "Meet the principal" },
 ];
 

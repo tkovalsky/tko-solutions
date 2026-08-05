@@ -92,6 +92,9 @@ export default async function TifConsolePage() {
           Review → Revision → Approval → Publish → Derivatives.
         </p>
         <div className="mt-4 flex flex-wrap gap-4 text-sm">
+          <Link href="/tif/guides" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Guide Workbench →
+          </Link>
           <Link href="/tif/deliverables" className="font-semibold text-primary underline-offset-2 hover:underline">
             Deliverables →
           </Link>
