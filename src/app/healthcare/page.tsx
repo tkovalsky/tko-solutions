@@ -31,7 +31,7 @@ export default function HealthcarePage() {
 
       <Section><div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]"><SectionHeader eyebrow="Defensible experience" title="Enterprise healthcare work, described by role." description="Todd has led governance, delivery orchestration, dependency management, reporting, readiness, testing coordination, escalation, and cross-team alignment; influenced design and implementation choices; and supported strategies and architectures owned elsewhere." /><div><p className="text-base leading-7 text-muted">Evidence includes prior-authorization and provider initiatives, large governance environments, dozens of interdependent applications and workstreams, CMS/FHIR interoperability product ownership, and a live independent governed-decision system.</p><LinkButton href="/selected-work" className="mt-8">Review Selected Work</LinkButton></div></div></Section>
 
-      <CtaBand title="What is changing—and where is the operating model starting to break?" description="Bring one bounded transformation, workflow, or decision under pressure." primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with a Diagnostic" />
+      <CtaBand title="What is changing—and where is the operating model starting to break?" description="Bring one bounded transformation, workflow, or decision under pressure." primaryLabel="Discuss a Transformation" secondaryHref="/services" secondaryLabel="Compare Engagements" />
     </>
   );
 }

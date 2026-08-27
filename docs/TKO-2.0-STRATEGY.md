@@ -1,6 +1,6 @@
 # TKO 2.0 Strategy
 
-Status: canonical strategy for the public TKO site. Updated 2026-08-21.
+Status: canonical strategy for the public TKO site. Updated 2026-08-27.
 
 ## Position
 
@@ -68,13 +68,14 @@ Signals → structured facts → current state → priority → recommendation �
 
 ## Offer Ladder
 
-Public pages show starting prices only. Upper ranges, effort economics, and revenue targets remain internal.
+Public pages show starting prices for the first three offers and the approved $20K–$50K/month complexity range for Transformation Execution Authority. Effort economics and revenue targets remain internal.
 
-1. **Executive Diagnostic** — 1–2 weeks, starting at $5K. A tightly bounded paid entry point for one problem, limited interviews, artifact review, findings, and an executive readout.
-2. **Transformation Diagnostic** — 2–3 weeks, starting at $10K. The standard entry offer; includes current-state model, friction and dependency analysis, risks, value hypothesis, interventions, and roadmap. Program recovery is a use case within this offer.
+1. **Executive Diagnostic** — 1–2 weeks, starting at $5K. A tightly bounded paid entry point for one problem, limited stakeholder input, artifact review, prioritized findings, and an executive readout.
+2. **Transformation Diagnostic** — 2–3 weeks, starting at $10K. The standard entry engagement maps the current operating model, friction, controls, dependencies, and transformation risks, then determines why the work is stalled and what leadership should do next.
 3. **Operating Model & Transformation Design Sprint** — 4–6 weeks, starting at $20K. Produces the target operating model, future-state workflows, decision rights, controls, governance, technology implications, roadmap, KPIs, and business case.
-4. **Principal Transformation Advisor** — three-month initial term, starting at $8K/month. Senior advisory without routine PM administration, ticket ownership, or unlimited availability.
-5. **Transformation Leadership & Implementation Advisory** — starting at $20K/month or fixed-project scope. Reserved for material responsibility for execution architecture, recovery, orchestration, and implementation governance.
+4. **Transformation Execution Authority** — scope-dependent, starting at $20K/month and ranging to $50K/month by complexity. TKO becomes the integration and operational-truth layer for accepted execution mandates: reconstructing ownership, governing dependencies and decisions, testing reported status against evidence, and establishing readiness across the transformation.
+
+Recovery is a use case that can span diagnosis and execution. The **Transformation Diagnostic** identifies why a program stalled and recommends the next decision. If leadership accepts a restructuring or recovery mandate, **Transformation Execution Authority** governs the resulting recovery, integration, and readiness work. Diagnosis does not imply automatic expansion into execution.
 
 Internal commercial objective: build toward $20K–$40K/month in outside consulting revenue through a small number of high-value enterprise relationships. The immediate objective is one credible $5K–$10K paid diagnostic, then a second engagement and evidence-based expansion.
 
@@ -100,7 +101,7 @@ Never imply sole ownership of business strategy, architecture, funding, regulato
 
 Canonical public routes: `/`, `/healthcare`, `/services`, `/approach`, `/selected-work`, `/insights`, `/founder`, and `/contact`.
 
-Primary CTA: **Discuss a Transformation**. Secondary CTA: **Start with a Diagnostic**. The readiness check remains a targeted resource rather than a top-level category.
+Primary CTA: **Discuss a Transformation**. Generic secondary exploration routes to `/services` using language such as **Compare Engagements** or **See the Advisory Ladder**. Problem-specific pages may link directly to the relevant diagnostic. The readiness check remains a targeted resource rather than a top-level category.
 
 The contact path asks what is changing, what is stuck, where burden appears, which teams and systems are involved, what has been tried, and what happens if nothing changes. It does not request sensitive or patient information.
 

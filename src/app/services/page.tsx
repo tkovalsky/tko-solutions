@@ -13,7 +13,7 @@ export default function ServicesPage() {
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: "TKO Solutions advisory services", url: absoluteUrl("/services"), itemListElement: offers.map((offer, index) => ({ "@type": "ListItem", position: index + 1, item: { "@type": "Service", name: offer.name, url: absoluteUrl(offerHref(offer.slug)), provider: { "@type": "Organization", name: site.name } } })) }} />
-      <PageHero eyebrow="Advisory services" title="Start with a bounded problem. Expand only when the evidence supports it." description="TKO is designed for paid discovery, executable future-state design, and accountability for execution on transformations no single team owns—not hourly freelancing, staff augmentation, or an open-ended consulting bench." primaryHref="/contact" primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with a Diagnostic" />
+      <PageHero eyebrow="Advisory services" title="Start with a bounded problem. Expand only when the evidence supports it." description="TKO is designed for paid discovery, executable future-state design, and accountability for execution on transformations no single team owns—not hourly freelancing, staff augmentation, or an open-ended consulting bench." primaryHref="/contact" primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with the Executive Diagnostic" />
 
       <Section className="bg-surface !py-14 md:!py-20">
         <ol className="space-y-5">
@@ -39,7 +39,7 @@ export default function ServicesPage() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]"><SectionHeader eyebrow="Delivery partners" title="TKO can work alongside internal teams and established firms." description="Todd can define the operating model, govern decisions and dependencies, and provide healthcare specialist depth while the appropriate internal, engineering, or integration teams retain delivery accountability." /><div><p className="text-base leading-7 text-muted">Partner arrangements are scoped around a named transformation and capability need. TKO is not marketed as low-cost subcontract labor and does not publish an hourly rate card.</p><LinkButton href="/contact?intent=partner" variant="secondary" className="mt-7">Discuss Delivery-Partner Support</LinkButton></div></div>
       </Section>
 
-      <CtaBand title="Start with the decision leadership needs to make." description={TRANSFORMATION_CONVERSATION.summary} primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with a Diagnostic" />
+      <CtaBand title="Start with the decision leadership needs to make." description={TRANSFORMATION_CONVERSATION.summary} primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with the Executive Diagnostic" />
     </>
   );
 }

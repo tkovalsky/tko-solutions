@@ -7,7 +7,7 @@ three parallel paths:
 
 1. Executive or senior leadership roles
 2. Specialist subcontracting through healthcare consultancies and integrators
-3. Fractional transformation leadership and fixed-fee Program Recovery Reviews
+3. Transformation Diagnostic, Operating Model & Transformation Design Sprint, and Transformation Execution Authority engagements
 
 The website and TIF exist to serve those paths. They are not independent products and do not
 get their own growth strategies. Every boundary below follows from that.

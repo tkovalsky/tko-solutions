@@ -23,17 +23,17 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "prior-authorization-modernization",
-    title: "Coordinating a Rural Prior-Authorization Initiative",
+    title: "Establishing Enterprise Readiness for a Rural Prior-Authorization Initiative",
     classification: "Anonymized enterprise experience",
     industry: "Healthcare payer operations",
     situation:
       "A public commitment to reduce provider administrative burden required multiple claims, utilization-management, reporting, provider-communications, and technology teams to align against a program deadline.",
     complexity:
-      "The operating outcome crossed many applications and owners. Readiness depended on coordinated planning, integration, validation, communications, and escalation rather than one team completing its own work.",
+      "The operating outcome crossed many applications and owners. Readiness depended on integrated planning, validation, communications, dependency management, and escalation rather than one team completing its own work.",
     role:
-      "Todd led recurring governance, planning, reporting, testing coordination, integration forums, technical delivery coordination, stakeholder orchestration, and readiness oversight.",
+      "Todd led recurring governance, integrated planning and reporting, testing coordination, cross-team integration forums, stakeholder orchestration, and readiness oversight.",
     intervention:
-      "He created a common delivery cadence, connected workstreams, surfaced unresolved dependencies, coordinated validation, and gave leaders an integrated view of readiness and escalation needs.",
+      "He established a common delivery cadence, connected workstreams, surfaced unresolved dependencies, aligned validation activity, and gave leaders an integrated view of readiness and escalation needs.",
     result:
       "The initiative moved toward enterprise implementation readiness with previously fragmented work governed as one cross-functional delivery problem.",
     lesson:

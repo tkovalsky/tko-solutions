@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ExternalLink } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { LinkButton } from "@/components/ui/button";
@@ -36,6 +37,7 @@ const proof = [
   "Healthcare experience across payer operations, provider workflows, prior authorization, UM, and interoperability",
   "Delivery environments involving dozens of applications and workstreams",
   "Governance contexts involving more than 100 cross-functional participants",
+  "Designer and operator of a live governed decision system he built and runs himself",
 ] as const;
 
 export default function HomePage() {
@@ -52,7 +54,7 @@ export default function HomePage() {
             <p className="mt-7 max-w-[66ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">Large healthcare transformations rarely fail because nobody is working. They fail because the outcome is distributed across dozens of teams, systems, decisions, and dependencies—and therefore owned by nobody end to end. TKO becomes the integration and operational-truth layer that closes that gap.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <LinkButton href="/contact" ctaLocation="homepage_hero">Discuss a Transformation</LinkButton>
-              <LinkButton href="/services/executive-diagnostic" ctaLocation="homepage_hero" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">Start with a Diagnostic</LinkButton>
+              <LinkButton href="/services" ctaLocation="homepage_hero" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">Compare Engagements</LinkButton>
             </div>
           </div>
           <div className="self-end border-l border-white/25 pl-6 lg:pl-8">
@@ -93,11 +95,11 @@ export default function HomePage() {
 
       <Section className="!py-14 md:!py-18">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Why Todd" title="The work happens between specialties." description="Todd operates where healthcare operations, provider experience, technology, controls, governance, and implementation collide. He has served as the integration point across business, operations, technology, compliance, finance, provider workflows, testing, and production readiness on deadline-driven enterprise programs." />
+          <SectionHeader eyebrow="Why Todd Kovalsky" title="The work happens between specialties." description="Todd Kovalsky, Founder & Principal of TKO Solutions, operates where healthcare operations, provider experience, technology, controls, governance, and implementation collide. He has served as the integration point across business, operations, technology, compliance, finance, provider workflows, testing, and production readiness on deadline-driven enterprise programs." />
           <div>
             <ul className="grid gap-3 sm:grid-cols-2">{proof.map((item) => <li key={item} className="border-l-2 border-primary bg-surface p-5 text-sm leading-6 text-muted">{item}</li>)}</ul>
             <p className="mt-6 text-sm leading-6 text-muted">Employment history establishes experience, not employer endorsement. Enterprise work is anonymized and bounded to Todd’s actual role.</p>
-            <div className="mt-7 flex gap-3"><LinkButton href="/founder" variant="secondary">About Todd</LinkButton><LinkButton href="/selected-work" variant="secondary">Review the Evidence</LinkButton></div>
+            <div className="mt-7 flex flex-wrap gap-3"><LinkButton href="/founder" variant="secondary">About Todd</LinkButton><LinkButton href="/selected-work" variant="secondary">Review the Evidence</LinkButton><a href={site.linkedin} target="_blank" rel="noreferrer" data-conversion-event="linkedin_click" data-cta-location="homepage_why_todd" data-cta-label="LinkedIn" className="inline-flex min-h-11 items-center justify-center gap-2 border border-foreground/20 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors hover:border-foreground/40 hover:bg-foreground/[0.03]">LinkedIn <ExternalLink className="size-4" aria-hidden /></a></div>
           </div>
         </div>
       </Section>
@@ -119,7 +121,7 @@ export default function HomePage() {
         <LinkButton href="/approach" variant="secondary" className="mt-10">Explore the Approach</LinkButton>
       </Section>
 
-      <CtaBand title="Bring the messy problem." description="What is changing? What is stuck? Where is the burden? Which teams and systems are involved? Start there." primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with a Diagnostic" />
+      <CtaBand title="Bring the messy problem." description="What is changing? What is stuck? Where is the burden? Which teams and systems are involved? Start there." primaryLabel="Discuss a Transformation" secondaryHref="/services" secondaryLabel="Compare Engagements" />
     </>
   );
 }

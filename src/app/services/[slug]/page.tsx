@@ -19,7 +19,7 @@ export default async function OfferPage({ params }: Params) {
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Service", name: offer.name, description: offer.metaDescription, url: absoluteUrl(offerHref(offer.slug)), serviceType: "Healthcare transformation and operating-model advisory", provider: { "@type": "Organization", name: site.name, url: site.url } }} />
-      <PageHero eyebrow={`${offer.level} · ${offer.step}`} title={offer.question} description={offer.summary} primaryHref="/contact" primaryLabel={offer.ctaLabel} secondaryHref="/services" secondaryLabel="Compare Services" />
+      <PageHero eyebrow={`${offer.level} · ${offer.step}`} title={offer.question} description={offer.summary} primaryHref="/contact" primaryLabel={offer.ctaLabel} secondaryHref="/services" secondaryLabel="Compare Engagements" />
       <section aria-label="Commercial terms" className="border-y border-border bg-surface"><div className="mx-auto grid w-full max-w-7xl gap-3 px-6 py-6 text-sm font-semibold sm:grid-cols-3 lg:px-8"><p>{offer.duration}</p><p>{offer.commercial}</p><p>Principal-led with explicit scope boundaries</p></div></section>
 
       <Section className="!py-14 md:!py-18"><div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]"><SectionHeader eyebrow="The buyer and the moment" title="Who this is for." description={offer.audience} /><ul className="border-t border-border">{offer.triggers.map((trigger) => <li key={trigger} className="border-b border-border py-5 text-base leading-7 text-muted">{trigger}</li>)}</ul></div></Section>
@@ -31,7 +31,7 @@ export default async function OfferPage({ params }: Params) {
       <Section className="bg-surface"><SectionHeader eyebrow="Capabilities" title="What this engagement draws on." /><div className="mt-8 flex flex-wrap gap-3">{offer.capabilityTags.map((tag) => <span key={tag} className="border border-border bg-white px-4 py-3 text-sm font-semibold">{tag}</span>)}</div><div className="mt-12"><Faq items={offer.faqs} /></div></Section>
 
       <Section className="!py-14"><SectionHeader eyebrow="Other entry points" title="Use the smallest engagement that can answer the question." /><div className="mt-8 grid gap-3 sm:grid-cols-2">{otherOffers.map((item) => <LinkButton key={item.slug} href={offerHref(item.slug)} variant="secondary">{item.name} · {item.commercial}</LinkButton>)}</div></Section>
-      <CtaBand title="Start with the transformation question." description={TRANSFORMATION_CONVERSATION.summary} primaryLabel={offer.ctaLabel} secondaryHref="/services" secondaryLabel="Compare Services" />
+      <CtaBand title="Start with the transformation question." description={TRANSFORMATION_CONVERSATION.summary} primaryLabel={offer.ctaLabel} secondaryHref="/services" secondaryLabel="Compare Engagements" />
     </>
   );
 }
