@@ -92,7 +92,7 @@ export default function InsightsPage() {
 
 function InsightCard({ insight }: { insight: Insight }) {
   return (
-    <Card className="flex min-h-80 flex-col rounded-lg">
+    <Card className="flex min-h-72 flex-col rounded-lg">
       <div className="flex flex-wrap gap-x-3 gap-y-2 text-sm font-semibold uppercase tracking-[0.1em] text-muted">
         <time dateTime={insight.date}>{formatDate(insight.date)}</time>
         <span>{insight.readingTime} min read</span>

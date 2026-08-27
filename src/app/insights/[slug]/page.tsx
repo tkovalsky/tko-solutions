@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
-import { AuthorityLinks } from "@/components/site/authority-links";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Card } from "@/components/ui/card";
@@ -80,35 +79,20 @@ export default async function InsightPage({ params }: Params) {
         secondaryLabel={ctaLabel}
       />
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
-          <aside className="space-y-4">
-            <Card className="rounded-lg">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
-                Published
-              </p>
-              <time dateTime={insight.date} className="mt-4 block text-xl font-semibold">
-                {formatDate(insight.date)}
-              </time>
-            </Card>
-            <Card className="rounded-lg">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
-                Reading Time
-              </p>
-              <p className="mt-4 text-xl font-semibold">{insight.readingTime} min read</p>
-            </Card>
+        <div className="max-w-[72ch]">
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border pb-5 text-sm font-semibold uppercase tracking-[0.1em] text-muted">
+            <time dateTime={insight.date}>{formatDate(insight.date)}</time>
+            <span aria-hidden="true">·</span>
+            <span>{insight.readingTime} min read</span>
             {insight.sourceCount > 0 ? (
-              <Card className="rounded-lg">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
-                  Evidence
-                </p>
-                <p className="mt-4 text-xl font-semibold">
-                  Based on {insight.sourceCount} sources
-                </p>
-              </Card>
+              <>
+                <span aria-hidden="true">·</span>
+                <span className="text-primary">Based on {insight.sourceCount} sources</span>
+              </>
             ) : null}
-          </aside>
+          </p>
           <article
-            className="prose-tko"
+            className="prose-tko mt-10"
             dangerouslySetInnerHTML={{ __html: insight.html }}
           />
         </div>
@@ -123,7 +107,6 @@ export default async function InsightPage({ params }: Params) {
           </div>
         </Section>
       ) : null}
-      <AuthorityLinks current={`/insights/${insight.slug}`} />
       <CtaBand
         title={`If this describes your situation, the ${offer.name} is the vehicle.`}
         description={offer.summary}

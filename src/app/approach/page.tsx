@@ -26,7 +26,7 @@ export default function ApproachPage() {
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "WebPage", name: "The TKO Approach", url: absoluteUrl("/approach"), description: metadata.description }} />
-      <PageHero eyebrow="The TKO approach" title="Redesign the system before you accelerate it." description="Healthcare organizations are under pressure to eliminate administrative burden. They cannot simply eliminate controls. TKO determines what work is necessary, what can change, how decisions remain governed, and how the resulting model becomes executable." primaryHref="/contact" primaryLabel="Discuss a Transformation" secondaryHref="/services" secondaryLabel="Compare Engagements" />
+      <PageHero eyebrow="The TKO approach" title="Redesign the system before you accelerate it." description="Healthcare organizations are under pressure to eliminate administrative burden. They cannot simply eliminate controls. I determine what work is necessary, what can change, how decisions remain governed, and how the resulting model becomes executable." primaryHref="/contact" primaryLabel="Discuss a Transformation" secondaryHref="/services" secondaryLabel="Compare Engagements" />
 
       <Section className="bg-surface !py-14 md:!py-18">
         <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
@@ -54,7 +54,7 @@ export default function ApproachPage() {
         <LinkButton href="/selected-work/from-crm-to-operating-system" variant="secondary" className="mt-10">Inspect the RachelOS Evidence</LinkButton>
       </Section>
 
-      <CtaBand title="Bring the messy problem." description="Start with the workflow, decision, or transformation under pressure. TKO will help determine what must change before implementation accelerates." primaryLabel="Discuss a Transformation" secondaryHref="/services" secondaryLabel="Compare Engagements" />
+      <CtaBand title="Bring the messy problem." description="Start with the workflow, decision, or transformation under pressure. I will help determine what must change before implementation accelerates." primaryLabel="Discuss a Transformation" secondaryHref="/services" secondaryLabel="Compare Engagements" />
     </>
   );
 }

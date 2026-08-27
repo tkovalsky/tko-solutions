@@ -153,21 +153,20 @@ export default function ReadinessCheckPage() {
             See what the Diagnostic produces
           </LinkButton>
         </div>
-      </Section>
-
-      <Section className="bg-surface !py-14 md:!py-20">
-        <SectionHeader
-          eyebrow="Related reading"
-          title="Where these questions come from."
-          description="The check condenses the diagnostic sections of two guides. Both are longer and explain the reasoning behind each question."
-        />
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <LinkButton href="/insights/why-healthcare-transformation-programs-stall" variant="secondary">
-            Why Healthcare Transformation Programs Stall
-          </LinkButton>
-          <LinkButton href="/insights/prior-authorization-is-a-decision-rights-problem" variant="secondary">
-            Prior Authorization Is a Decision-Rights Problem
-          </LinkButton>
+        <div className="mt-14 border-t border-border pt-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-primary">Where these questions come from</p>
+          <p className="mt-4 max-w-[72ch] text-base leading-7 text-muted">
+            The check condenses the diagnostic sections of two guides. Both are longer and explain
+            the reasoning behind each question.
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <LinkButton href="/insights/why-healthcare-transformation-programs-stall" variant="secondary">
+              Why Healthcare Transformation Programs Stall
+            </LinkButton>
+            <LinkButton href="/insights/prior-authorization-is-a-decision-rights-problem" variant="secondary">
+              Prior Authorization Is a Decision-Rights Problem
+            </LinkButton>
+          </div>
         </div>
       </Section>
 
