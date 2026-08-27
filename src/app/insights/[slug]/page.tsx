@@ -51,7 +51,7 @@ export default async function InsightPage({ params }: Params) {
   }
 
   const related = getRelatedInsights(insight.slug);
-  // Every guide maps to one offer. Falling back to the Recovery Review keeps the
+  // Every guide maps to one offer. Falling back to the Executive Diagnostic keeps the
   // page renderable for legacy guides authored before the brief existed.
   const offer = getOffer(insight.brief?.offer ?? "") ?? offers[0];
   const cluster = getGuideCluster(insight.brief?.cluster ?? "");

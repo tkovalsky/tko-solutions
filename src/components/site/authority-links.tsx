@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const links = [
-  { title: "Program Recovery Review", body: "See the three-week scope, fixed fee, deliverables, and stated evidence boundary.", href: "/services/program-recovery-review", label: "See scope and pricing" },
+  { title: "Transformation Diagnostic", body: "See the bounded diagnostic scope, starting price, deliverables, and evidence boundary.", href: "/services/transformation-diagnostic", label: "See scope and pricing" },
   { title: "Evidence", body: "The healthcare programs behind the practice, and my role in each.", href: "/selected-work", label: "Review the evidence" },
   { title: "Healthcare practice", body: "See how transformation recovery, prior authorization, utilization management, and interoperability connect.", href: "/healthcare", label: "How TKO helps" },
   { title: "Readiness Check", body: "Twelve questions to answer before approving another dollar of transformation spend.", href: "/program-recovery-readiness-check", label: "Run the check" },

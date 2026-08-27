@@ -3,175 +3,43 @@ import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { LinkButton } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
-import {
-  offerHref,
-  offers,
-  PROGRAM_RECOVERY_CONVERSATION,
-  SPECIALIST_CONVERSATION,
-} from "@/lib/offers";
-import { READINESS_CHECK_PATH } from "@/lib/readiness-check";
+import { offerHref, offers, TRANSFORMATION_CONVERSATION } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Engagements",
-  description:
-    "Three ways to work with TKO: a fixed-fee Program Recovery Review, a Fractional Transformation Lead engagement, and specialist subcontract capacity for consultancies and integrators.",
-  alternates: { canonical: "/services" },
-  openGraph: {
-    title: `Engagements | ${site.name}`,
-    description:
-      "A three-week fixed-fee recovery diagnosis, fractional senior leadership, or specialist subcontract capacity.",
-    url: absoluteUrl("/services"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation engagements." }],
-  },
-};
+export const metadata: Metadata = { title: "Healthcare Transformation Advisory Services", description: "A land-and-expand advisory ladder from paid diagnostic through operating-model design to execution authority on complex healthcare transformations.", alternates: { canonical: "/services" }, openGraph: { title: "Healthcare Transformation Advisory Services | TKO Solutions", description: "Start with a bounded problem. Expand only when evidence supports it.", url: absoluteUrl("/services"), images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions advisory services." }] } };
 
 export default function ServicesPage() {
   return (
     <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "TKO Solutions engagements",
-          url: absoluteUrl("/services"),
-          itemListElement: offers.map((offer, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            item: {
-              "@type": "Service",
-              name: offer.name,
-              url: absoluteUrl(offerHref(offer.slug)),
-              provider: { "@type": "Organization", name: site.name },
-            },
-          })),
-        }}
-      />
-
-      <PageHero
-        eyebrow="Engagements"
-        title="Three ways to work together. No open-ended retainer."
-        description="Every engagement has a fixed scope, a stated commercial model, and one accountable senior leader. There is no staffing ramp, no discovery phase to fund, and no obligation to continue after a diagnosis."
-        primaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
-        primaryLabel={site.cta}
-        secondaryHref={SPECIALIST_CONVERSATION.href}
-        secondaryLabel={site.secondaryCta}
-      />
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: "TKO Solutions advisory services", url: absoluteUrl("/services"), itemListElement: offers.map((offer, index) => ({ "@type": "ListItem", position: index + 1, item: { "@type": "Service", name: offer.name, url: absoluteUrl(offerHref(offer.slug)), provider: { "@type": "Organization", name: site.name } } })) }} />
+      <PageHero eyebrow="Advisory services" title="Start with a bounded problem. Expand only when the evidence supports it." description="TKO is designed for paid discovery, executable future-state design, and accountability for execution on transformations no single team owns—not hourly freelancing, staff augmentation, or an open-ended consulting bench." primaryHref="/contact" primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with a Diagnostic" />
 
       <Section className="bg-surface !py-14 md:!py-20">
-        <div className="grid gap-5 lg:grid-cols-3">
-          {offers.map((offer) => (
-            <Card key={offer.slug} className="flex flex-col">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">{offer.step}</p>
-              <h2 className="mt-5 text-2xl font-semibold leading-tight">{offer.name}</h2>
-              <dl className="mt-6 grid gap-4 border-y border-border py-5 text-sm">
-                <div>
-                  <dt className="text-muted">Duration</dt>
-                  <dd className="mt-1 font-semibold">{offer.duration}</dd>
-                </div>
-                <div>
-                  <dt className="text-muted">Commercial model</dt>
-                  <dd className="mt-1 font-semibold">{offer.commercial}</dd>
-                </div>
-              </dl>
-              <p className="mt-6 text-base leading-7 text-muted">{offer.summary}</p>
-              <LinkButton href={offerHref(offer.slug)} className="mt-8 self-start">
-                {offer.timeline ? `What a ${offer.shortName} Produces` : `${offer.shortName} Detail`}
-              </LinkButton>
-            </Card>
+        <ol className="space-y-5">
+          {offers.map((offer, index) => (
+            <li key={offer.slug} className="grid gap-6 border border-border bg-white p-6 md:grid-cols-[4rem_1fr_1.4fr_0.65fr] md:p-8">
+              <p className="font-mono text-sm font-semibold text-primary">{String(index + 1).padStart(2, "0")}</p>
+              <div><p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">{offer.step}</p><h2 className="mt-3 text-2xl font-semibold leading-tight">{offer.name}</h2><p className="mt-4 text-sm font-semibold">{offer.duration}<br />{offer.commercial}</p></div>
+              <div><p className="text-lg font-semibold leading-7">{offer.question}</p><p className="mt-4 text-base leading-7 text-muted">{offer.summary}</p><p className="mt-4 text-sm leading-6 text-muted"><span className="font-semibold text-foreground">Expansion decision: </span>{offer.expansionPath}</p></div>
+              <LinkButton href={offerHref(offer.slug)} variant="secondary" className="self-start">See Scope</LinkButton>
+            </li>
           ))}
+        </ol>
+      </Section>
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <SectionHeader eyebrow="Commercial model" title="Price the problem and accountability—not the founder’s hours." description="TKO estimates effort internally. Public scopes are priced around the problem, outcome, access, complexity, and risk reduction." />
+          <div className="space-y-5 text-base leading-7 text-muted"><p>Every engagement states the objective, deliverables, timeline, client responsibilities, included access, exclusions, and the decision for handoff or expansion.</p><p>The diagnostic delivers meaningful standalone value. Its commercial purpose is also to establish evidence: quantify the problem, reveal the true scope, and determine whether future-state design or implementation support is justified.</p><p>TKO does not sell Jira administration, outsourced staffing, generic AI consulting, or unlimited fractional labor.</p></div>
         </div>
       </Section>
 
-      <Section className="!py-14 md:!py-20">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader
-            eyebrow="Start here"
-            title="The Program Recovery Conversation."
-            description={PROGRAM_RECOVERY_CONVERSATION.summary}
-          />
-          <div>
-            <ul className="grid gap-3">
-              {PROGRAM_RECOVERY_CONVERSATION.outputs.map((output) => (
-                <li key={output} className="border border-border bg-white p-5 text-base leading-7 text-foreground">
-                  {output}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 border-l-2 border-border bg-surface p-5 text-sm leading-6 text-muted">
-              {PROGRAM_RECOVERY_CONVERSATION.boundary}
-            </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <LinkButton href={PROGRAM_RECOVERY_CONVERSATION.href}>{site.cta}</LinkButton>
-              <LinkButton href={READINESS_CHECK_PATH} variant="secondary">
-                Use the Readiness Check
-              </LinkButton>
-            </div>
-          </div>
-        </div>
+      <Section id="delivery-partners" className="bg-surface !py-14 md:!py-18">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]"><SectionHeader eyebrow="Delivery partners" title="TKO can work alongside internal teams and established firms." description="Todd can define the operating model, govern decisions and dependencies, and provide healthcare specialist depth while the appropriate internal, engineering, or integration teams retain delivery accountability." /><div><p className="text-base leading-7 text-muted">Partner arrangements are scoped around a named transformation and capability need. TKO is not marketed as low-cost subcontract labor and does not publish an hourly rate card.</p><LinkButton href="/contact?intent=partner" variant="secondary" className="mt-7">Discuss Delivery-Partner Support</LinkButton></div></div>
       </Section>
 
-      <Section className="bg-surface !py-14 md:!py-20">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <SectionHeader
-            eyebrow="Before you contact anyone"
-            title="Program Recovery Readiness Check."
-            description="Twelve questions to answer before approving another dollar of transformation spend, covering outcomes, decision rights, workflow ownership, dependencies, operating measures, and AI readiness."
-          />
-          <div className="space-y-5 text-base leading-7 text-muted">
-            <p>
-              Work through them with your program leadership. It takes about ninety minutes and
-              requires no email address, form, or call. Where several answers come back unclear,
-              that pattern is the argument for an independent review.
-            </p>
-            <LinkButton href={READINESS_CHECK_PATH}>Open the Readiness Check</LinkButton>
-          </div>
-        </div>
-      </Section>
-
-      <Section className="!py-14 md:!py-20">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader
-            eyebrow="How the three relate"
-            title="Diagnose, then hold it, or reinforce someone else's team."
-            description="The three offers are not a funnel you are expected to walk. Most engagements use one."
-          />
-          <div className="space-y-5 text-base leading-7 text-muted">
-            <p>
-              The <strong className="font-semibold text-foreground">Program Recovery Review</strong> answers
-              whether a program is recoverable and what should happen next. It creates no obligation to
-              continue. I may recommend internal execution, an existing vendor, a specialist partner, or no
-              further investment.
-            </p>
-            <p>
-              The <strong className="font-semibold text-foreground">Fractional Transformation Lead</strong>{" "}
-              engagement applies where the recovery plan is understood but no one senior is accountable for
-              executing it. It is the primary recurring engagement.
-            </p>
-            <p>
-              The <strong className="font-semibold text-foreground">Specialist Subcontract</strong> is sold to
-              consultancies and integrators rather than to end clients, and is delivered under the prime
-              firm&rsquo;s agreement and brand.
-            </p>
-            <p>
-              Some work is better served elsewhere, and I will say so: outsourced authorization
-              operations, staff augmentation, clinical-policy or legal advice, EHR implementation,
-              and general-purpose AI consulting. Sensitive data handling, specialist partners,
-              travel, licenses, and expanded scope are agreed separately.
-            </p>
-          </div>
-        </div>
-      </Section>
-
-      <CtaBand
-        title="Which of the three fits the problem you actually have?"
-        description="Describe the program, the pressure, and the decision leadership needs to make. I will respond within one business day and say plainly whether I am the right help."
-        primaryLabel={site.cta}
-        secondaryHref={SPECIALIST_CONVERSATION.href}
-        secondaryLabel={site.secondaryCta}
-      />
+      <CtaBand title="Start with the decision leadership needs to make." description={TRANSFORMATION_CONVERSATION.summary} primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with a Diagnostic" />
     </>
   );
 }

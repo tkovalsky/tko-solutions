@@ -65,7 +65,7 @@ export const careerTimeline: TimelineEntry[] = [
     organization: "TKO Solutions",
     role: "Founder & Principal",
     era: "Independent advisory",
-    scope: "Principal-led recovery, advisory, and implementation work, now focused on healthcare transformation program recovery for health plans, healthcare services organizations, managed-care organizations, PE-backed provider platforms, and large provider organizations.",
+    scope: "Principal-led healthcare transformation and operating-model advisory for organizations working across administrative burden, regulated workflows, technology modernization, and complex execution.",
     buyerRelevance: "Combines the operating, product, healthcare, technology, governance, and implementation perspectives inside one accountable engagement lead.",
   },
 ];
@@ -78,14 +78,34 @@ export const credibilityStrip = [
 ];
 
 export const executiveSummary = {
-  headline: "I'm Todd Kovalsky, and I recover healthcare transformation programs that are stalling.",
+  headline: "I'm Todd Kovalsky. I become the integration point on transformations that no single team owns end to end.",
   facts: [
-    "20+ years across regulated operations, enterprise transformation, product ownership, healthcare interoperability, and healthcare transformation.",
+    "20+ years across regulated operations, enterprise transformation, product ownership, healthcare interoperability, and implementation.",
+    "Enterprise programs spanning dozens of interdependent applications and workstreams, with governance environments involving more than 100 cross-functional participants.",
     "Healthcare experience spanning prior authorization, utilization management, payer and provider operations, interoperability, and administrative workflow change.",
     "Product and implementation experience translating operating requirements into usable workflows, controls, and delivery decisions.",
     "RachelOS, an operating system I built and run, shows the same implementation and governance discipline applied end to end.",
   ],
 };
+
+export const founderArchetypes = [
+  {
+    title: "Integration point",
+    body: "Serves as the single point where business, operations, technology, compliance, finance, provider workflows, communications, testing, and production readiness actually meet—on programs with a fixed enterprise deadline and no one role accountable for the whole.",
+  },
+  {
+    title: "Operational truth",
+    body: "Establishes the governance and dependency architecture a program is missing: who owns what, what depends on what, which decision is unresolved, and whether reported status is supported by evidence.",
+  },
+  {
+    title: "Failure modes, firsthand",
+    body: "Recognizes where large healthcare implementations break down because of having operated inside them—ownership gaps, dependencies discovered by collision, decisions that stall, and testing that lacks the right data.",
+  },
+  {
+    title: "Translator",
+    body: "Connects healthcare operations, business objectives, technology, controls, risk, provider experience, and implementation so that a target operating model survives contact with delivery.",
+  },
+];
 
 /** Answers the practical questions a buyer asks before engaging an independent principal. */
 export const howIWork = [

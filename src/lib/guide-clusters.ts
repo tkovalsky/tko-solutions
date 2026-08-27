@@ -41,7 +41,7 @@ export const guideClusters: GuideCluster[] = [
       "Diagnostic — an executive is trying to name the cause before committing more money or people.",
     boundary:
       "Diagnosis only. What to do once the cause is known belongs to transformation-program-recovery.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "transformation-diagnostic",
   },
   {
     slug: "transformation-program-recovery",
@@ -52,7 +52,7 @@ export const guideClusters: GuideCluster[] = [
       "Prescriptive — an executive is looking for the mechanics of a recovery, not the diagnosis.",
     boundary:
       "Recovery mechanics only. Naming why a program stalled belongs to stalled-healthcare-transformation.",
-    primaryOffer: "fractional-transformation-lead",
+    primaryOffer: "transformation-leadership",
   },
   {
     slug: "prior-authorization-operations",
@@ -63,7 +63,7 @@ export const guideClusters: GuideCluster[] = [
       "Operational — a leader is looking for how to measure, sequence, and improve the PA workflow.",
     boundary:
       "The PA workflow end to end. The authority model underneath it belongs to decision-rights-and-exception-routing.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "transformation-diagnostic",
   },
   {
     slug: "utilization-management-operations",
@@ -74,7 +74,7 @@ export const guideClusters: GuideCluster[] = [
       "Operational — prioritization, missing-information detection, and reviewer consistency.",
     boundary:
       "Clinical review operations. Administrative authorization submission belongs to prior-authorization-operations.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "transformation-diagnostic",
   },
   {
     slug: "decision-rights-and-exception-routing",
@@ -85,7 +85,7 @@ export const guideClusters: GuideCluster[] = [
       "Structural — a leader is looking for how to make an implicit authority model explicit.",
     boundary:
       "The authority and escalation model itself, in any workflow. Domain-specific application belongs to the domain cluster.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "operating-model-design",
   },
   {
     slug: "ai-readiness-for-healthcare-workflows",
@@ -96,7 +96,7 @@ export const guideClusters: GuideCluster[] = [
       "Evaluative — an executive is testing whether to fund, defer, or stop an AI initiative.",
     boundary:
       "Whether and when AI is appropriate. How AI changed delivery economics belongs to the delivery-model evidence in this cluster's supporting guides.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "transformation-diagnostic",
   },
   {
     slug: "human-workarounds-and-human-apis",
@@ -107,7 +107,7 @@ export const guideClusters: GuideCluster[] = [
       "Conceptual — a leader recognizes the symptom and is looking for a name and a remedy for it.",
     boundary:
       "The portable pattern across industries. Healthcare-specific instances belong to their domain cluster.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "executive-diagnostic",
   },
   {
     slug: "interoperability-implementation",
@@ -118,7 +118,7 @@ export const guideClusters: GuideCluster[] = [
       "Implementation — CMS, FHIR, access control, auditability, and onboarding as operating problems.",
     boundary:
       "Regulated data exchange and its operating controls. Prior authorization APIs are referenced here but owned by prior-authorization-operations.",
-    primaryOffer: "specialist-subcontract",
+    primaryOffer: "operating-model-design",
   },
   {
     slug: "provider-performance-and-network-operations",
@@ -129,7 +129,7 @@ export const guideClusters: GuideCluster[] = [
       "Operational — network, provider experience, and program administration.",
     boundary:
       "Provider-facing operations. Internal clinical review belongs to utilization-management-operations.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "transformation-diagnostic",
   },
   {
     slug: "administrative-cost-reduction",
@@ -140,7 +140,7 @@ export const guideClusters: GuideCluster[] = [
       "Financial — an executive is looking for where administrative cost is actually created.",
     boundary:
       "Cost causation and sizing. The workflow remedies belong to the relevant operational cluster.",
-    primaryOffer: "program-recovery-review",
+    primaryOffer: "executive-diagnostic",
   },
 ];
 

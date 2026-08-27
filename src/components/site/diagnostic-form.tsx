@@ -112,20 +112,21 @@ export function DiagnosticForm({
       </div>
 
       <Field
-        id="workflowSegment"
-        label="Which prior-authorization workflow is under pressure?"
-        placeholder="Describe the workflow, specialty, payer segment, location, or team involved. Use de-identified operating context only."
+        id="transformationContext"
+        label="What is changing, and what is stuck?"
+        placeholder="Describe the transformation, workflow, operating pressure, or decision. Use de-identified operating context only."
         textarea
       />
 
-      <SelectField id="currentTrigger" label="What is the primary trigger or problem?">
+      <SelectField id="currentPressure" label="Where is the primary pressure?">
         <option value="">Select one</option>
-        <option value="denials">Avoidable denials or inconsistent outcomes</option>
-        <option value="turnaround-backlog">Turnaround time or backlog</option>
-        <option value="staff-capacity">Staff capacity or rework</option>
-        <option value="inconsistent-workflow">Inconsistent payer or specialty workflow</option>
-        <option value="key-person-dependency">Knowledge concentrated in experienced staff</option>
-        <option value="automation-decision">Vendor, automation, or headcount decision</option>
+        <option value="administrative-burden">Administrative burden or operating cost</option>
+        <option value="provider-experience">Provider experience or abrasion</option>
+        <option value="regulatory-change">Regulatory or policy change</option>
+        <option value="stalled-transformation">Stalled or fragmented transformation</option>
+        <option value="workflow-modernization">Workflow or platform modernization</option>
+        <option value="automation-ai-decision">Automation or AI investment decision</option>
+        <option value="operating-model">Operating model, controls, or decision rights</option>
         <option value="other">Other</option>
       </SelectField>
 
@@ -139,8 +140,16 @@ export function DiagnosticForm({
 
       <Field
         id="message"
-        label="What changed, and what has already been tried? (optional)"
-        placeholder="Describe the operating pressure, decision approaching, and evidence available."
+        label="Which teams, systems, and controls are involved? (optional)"
+        placeholder="Describe the organizational boundaries, technology, evidence, or dependencies already visible."
+        textarea
+        required={false}
+      />
+
+      <Field
+        id="consequence"
+        label="What happens if nothing changes? (optional)"
+        placeholder="Describe the cost, delay, provider impact, compliance risk, or investment decision approaching."
         textarea
         required={false}
       />

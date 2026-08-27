@@ -48,8 +48,8 @@ diagnostic_questions:
 recommended_action: >-
   Establish an operational baseline and an explicit authority map for one bounded workflow
   before committing further platform, staffing, or automation spend.
-offer: program-recovery-review
-cta: "Request a Program Recovery Conversation"
+offer: transformation-diagnostic
+cta: "Discuss a Transformation"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
@@ -216,7 +216,7 @@ Most organizations discover in step three that a meaningful share of the delay t
 
 ---
 
-**If a program is already underway and not producing the expected result**, the [Program Recovery Review](/services/program-recovery-review) is a three-week, fixed-fee engagement that establishes what is actually wrong and what the next ninety days should contain.
+**If a program is already underway and not producing the expected result**, the [Transformation Diagnostic](/services/transformation-diagnostic) is a bounded engagement that establishes what is actually wrong, which controls and dependencies matter, and what should happen next.
 
 For the portable version of the underlying pattern, read [Human APIs Become Organizational Bottlenecks](/insights/human-apis-become-organizational-bottlenecks).
 

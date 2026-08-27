@@ -3,15 +3,14 @@ import { Logo } from "@/components/site/logo";
 import { site } from "@/lib/site";
 
 const footerLinks = [
-  { href: "/services/program-recovery-review", label: "Program Recovery Review" },
-  { href: "/services/fractional-transformation-lead", label: "Fractional Transformation Lead" },
-  { href: "/services/specialist-subcontract", label: "Specialist Subcontract" },
-  { href: "/program-recovery-readiness-check", label: "Program Recovery Readiness Check" },
   { href: "/healthcare", label: "Healthcare Practice" },
-  { href: "/selected-work", label: "Evidence" },
-  { href: "/insights", label: "Guides" },
-  { href: "/founder", label: "About" },
-  { href: "/contact", label: "Request a Program Recovery Conversation" },
+  { href: "/services", label: "Services" },
+  { href: "/approach", label: "Approach" },
+  { href: "/selected-work", label: "Selected Work" },
+  { href: "/insights", label: "Insights" },
+  { href: "/founder", label: "About Todd" },
+  { href: "/program-recovery-readiness-check", label: "Transformation Readiness Check" },
+  { href: "/contact", label: "Discuss a Transformation" },
   { href: "/privacy", label: "Privacy" },
 ];
 
@@ -22,13 +21,11 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            TKO recovers healthcare transformation programs that are behind, over budget, or
-            about to fund automation on top of a workflow that does not work yet. For health
-            plans, healthcare services organizations, managed-care organizations, and PE-backed
-            provider platforms.
+            Principal-led healthcare transformation and operating-model advisory for complex,
+            regulated change.
           </p>
           <p className="mt-4 max-w-sm text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
-            3-week Recovery Review · $18K–$25K fixed fee · Principal-led
+            Reduce the burden · Preserve the control · Redesign the system
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
             <a href={`mailto:${site.email}`} data-conversion-event="email_link_click" data-cta-location="footer" data-cta-label="email" className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">
@@ -48,7 +45,6 @@ export function Footer() {
               data-conversion-event={link.href === "/contact" ? "primary_cta_click" : "secondary_cta_click"}
               data-cta-location="footer"
               data-cta-label={link.label}
-              data-referenced-service={link.href.startsWith("/services/") ? link.href.split("/").pop() : undefined}
               className="text-sm font-medium text-white/75 transition-colors hover:text-white"
             >
               {link.label}

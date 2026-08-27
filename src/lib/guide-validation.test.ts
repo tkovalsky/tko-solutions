@@ -126,7 +126,7 @@ function completeGuide(
 ) {
   const {
     cluster = "prior-authorization-operations",
-    offer = "program-recovery-review",
+    offer = "transformation-diagnostic",
     reviewer = "Todd Kovalsky",
     reviewedDate = "2026-08-05",
   } = overrides;
@@ -150,7 +150,7 @@ diagnostic_questions:
   - "Third diagnostic question?"
 recommended_action: "The practical next step."
 offer: ${offer}
-cta: "Request a Program Recovery Conversation"
+cta: "Discuss a Transformation"
 status: published
 reviewer: "${reviewer}"
 reviewed_date: "${reviewedDate}"

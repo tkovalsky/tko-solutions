@@ -4,84 +4,10 @@ import { CtaBand } from "@/components/site/cta-band";
 import { EvidenceNote } from "@/components/site/evidence-note";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { offerHref, PROGRAM_RECOVERY_CONVERSATION } from "@/lib/offers";
-import { READINESS_CHECK_PATH } from "@/lib/readiness-check";
 import { absoluteUrl, site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Evidence",
-  description:
-    "Healthcare transformation, prior authorization, utilization management, and interoperability experience behind the Program Recovery Review, with my role in each described plainly.",
-  alternates: { canonical: "/selected-work" },
-  openGraph: {
-    title: "Evidence",
-    description:
-      "The healthcare experience and implementation record behind the Program Recovery Review.",
-    url: absoluteUrl("/selected-work"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation program recovery." }],
-  },
-};
+export const metadata: Metadata = { title: "Selected Work & Evidence", description: "Anonymized healthcare transformation experience, healthcare product work, and inspectable independent systems evidence—with Todd's role and evidence limits stated plainly.", alternates: { canonical: "/selected-work" }, openGraph: { title: "Selected Work & Evidence | TKO Solutions", description: "The evidence behind TKO's healthcare transformation and operating-model advisory practice.", url: absoluteUrl("/selected-work"), images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions selected work and evidence." }] } };
 
 export default function SelectedWorkPage() {
-  return (
-    <>
-      <PageHero
-        eyebrow="Evidence"
-        title="Where the judgment comes from."
-        description="Enterprise healthcare programs, described by the operating problem I was brought into and what I did about it. Prior authorization, utilization management, transformation recovery, and CMS interoperability carry the domain weight. RachelOS shows the implementation discipline."
-        primaryHref={offerHref("program-recovery-review")}
-        primaryLabel="See the Program Recovery Review"
-        secondaryHref={READINESS_CHECK_PATH}
-        secondaryLabel="Use the Readiness Check"
-      />
-
-      <Section>
-        <SectionHeader
-          eyebrow="Evidence record"
-          title="Start with the case closest to your operating question."
-        />
-        <div className="mt-10">
-          <CaseStudyCards />
-        </div>
-      </Section>
-
-      <Section id="how-to-read-this-evidence" className="bg-surface !py-12 md:!py-16">
-        <EvidenceNote />
-        <p className="mt-6 max-w-[72ch] text-sm leading-6 text-muted">
-          Each case page carries the specific limits of its own evidence in a short expandable
-          note at the end.
-        </p>
-      </Section>
-
-      <Section id="method-portability">
-        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <SectionHeader
-            eyebrow="Does this apply here?"
-            title="What transfers is the operating mechanism."
-          />
-          <div className="space-y-5 text-base leading-7 text-muted">
-            <p>
-              Healthcare transformation and the supporting environments above share one structure:
-              work crosses systems and roles, exceptions depend on experienced staff, and
-              leadership needs reliable evidence before changing the workflow.
-            </p>
-            <p>
-              What travels between them is the disciplined work of tracing a workflow, clarifying
-              evidence and authority, designing controls, and measuring the change. Domain logic
-              and performance results stay where they were earned. A real-estate system does not
-              predict a healthcare result, and one enterprise program does not predict yours.
-            </p>
-          </div>
-        </div>
-      </Section>
-
-      <CtaBand
-        title="Bring one program under pressure."
-        description={PROGRAM_RECOVERY_CONVERSATION.summary}
-        primaryLabel={site.cta}
-        secondaryHref={offerHref("program-recovery-review")}
-        secondaryLabel="See the Program Recovery Review"
-      />
-    </>
-  );
+  return <><PageHero eyebrow="Selected work" title="Evidence, described by role—not résumé inflation." description="Enterprise healthcare experience shows the domain and execution judgment. RachelOS shows the systems underneath the strategy. CRE remains secondary evidence that the method can travel while domain claims stay bounded." primaryHref="/contact" primaryLabel="Discuss a Transformation" secondaryHref="/services/transformation-diagnostic" secondaryLabel="Start with a Diagnostic" /><Section><SectionHeader eyebrow="Evidence record" title="Start with the operating problem closest to yours." description="Every case separates the situation, complexity, Todd's actual role, intervention, result, reusable lesson, and limits of the evidence." /><div className="mt-10"><CaseStudyCards /></div></Section><Section id="how-to-read-this-evidence" className="bg-surface !py-12 md:!py-16"><EvidenceNote /><p className="mt-6 max-w-[72ch] text-sm leading-6 text-muted">Led refers to governance, orchestration, dependencies, readiness, reporting, escalation, and coordination. Influenced refers to design and implementation choices. Strategy, architecture, funding, sponsorship, and regulatory commitments owned elsewhere are not attributed to Todd.</p></Section><Section id="method-portability"><div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]"><SectionHeader eyebrow="What transfers" title="The operating mechanism travels. Domain outcomes do not." /><div className="space-y-5 text-base leading-7 text-muted"><p>Across healthcare and independent systems work, value comes from making evidence, state, authority, dependencies, exceptions, human review, action, and feedback explicit.</p><p>A live independent system does not prove a healthcare result. One enterprise environment does not predict another. Each engagement establishes its own baseline and evidence.</p></div></div></Section><CtaBand title="Bring one operating problem under pressure." description="TKO will help determine what is actually happening, which control or dependency matters, and what leadership should do next." primaryLabel="Discuss a Transformation" secondaryHref="/services/executive-diagnostic" secondaryLabel="Start with a Diagnostic" /></>;
 }

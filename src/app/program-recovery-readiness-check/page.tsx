@@ -14,7 +14,7 @@ import {
 } from "@/lib/readiness-check";
 import { absoluteUrl, site } from "@/lib/site";
 
-const TITLE = "Program Recovery Readiness Check";
+const TITLE = "Transformation Readiness Check";
 const SUBTITLE = "Twelve questions to answer before approving another dollar of transformation spend.";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: `${TITLE} | ${site.name}`,
     description: SUBTITLE,
     url: absoluteUrl(READINESS_CHECK_PATH),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation program recovery." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation readiness check." }],
   },
 };
 
@@ -57,8 +57,8 @@ export default function ReadinessCheckPage() {
         description={`${SUBTITLE} Work through them with your program leadership. Nothing here requires an email address, a form, or a call.`}
         primaryHref="#questions"
         primaryLabel="Start the check"
-        secondaryHref={offerHref("program-recovery-review")}
-        secondaryLabel="See the Program Recovery Review"
+        secondaryHref={offerHref("transformation-diagnostic")}
+        secondaryLabel="See the Transformation Diagnostic"
       />
 
       <Section className="!py-12 md:!py-16">
@@ -133,10 +133,10 @@ export default function ReadinessCheckPage() {
           ))}
         </div>
         <p className="mt-10 max-w-[72ch] border-l-2 border-primary bg-surface p-6 text-base leading-7 text-foreground">
-          If several answers are unclear, the program most likely needs an independent recovery
-          review before the next funding or automation decision. That review is what the{" "}
-          <Link href={offerHref("program-recovery-review")} className="font-semibold text-primary underline-offset-4 hover:underline">
-            Program Recovery Review
+          If several answers are unclear, the program most likely needs an independent diagnostic
+          before the next funding or automation decision. That is what the{" "}
+          <Link href={offerHref("transformation-diagnostic")} className="font-semibold text-primary underline-offset-4 hover:underline">
+            Transformation Diagnostic
           </Link>{" "}
           is for: three weeks, a fixed fee, and a written answer on what is wrong and what the next
           ninety days should contain.
@@ -146,11 +146,11 @@ export default function ReadinessCheckPage() {
             Discuss one program under pressure
           </LinkButton>
           <LinkButton
-            href={`${offerHref("program-recovery-review")}#what-it-produces`}
+            href={`${offerHref("transformation-diagnostic")}#what-it-produces`}
             variant="secondary"
             ctaLocation="readiness_check_result"
           >
-            See what a Recovery Review produces
+            See what the Diagnostic produces
           </LinkButton>
         </div>
       </Section>
@@ -175,8 +175,8 @@ export default function ReadinessCheckPage() {
         title="Discuss one program under pressure."
         description={PROGRAM_RECOVERY_CONVERSATION.summary}
         primaryLabel="Discuss one program under pressure"
-        secondaryHref={offerHref("program-recovery-review")}
-        secondaryLabel="See the Program Recovery Review"
+        secondaryHref={offerHref("transformation-diagnostic")}
+        secondaryLabel="See the Transformation Diagnostic"
       />
     </>
   );

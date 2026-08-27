@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
         destination: "/selected-work/from-crm-to-operating-system",
         permanent: true,
       },
+      // TKO 2.0 commercial migration.
+      { source: "/services/program-recovery-review", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/services/fractional-transformation-lead", destination: "/services/transformation-leadership", permanent: true },
+      { source: "/services/specialist-subcontract", destination: "/services#delivery-partners", permanent: true },
+      // Principal Transformation Advisor retired (2026-08-27); the ladder ends at execution authority.
+      { source: "/services/principal-transformation-advisor", destination: "/services/transformation-leadership", permanent: true },
       {
         source: "/case-studies/rachelos-delivery-model",
         destination: "/selected-work/from-crm-to-operating-system",
@@ -30,37 +36,37 @@ const nextConfig: NextConfig = {
       // Retire the parallel /offers and /assessment namespaces into the single
       // /services commercial path. Assessments become entry offers within a lane.
       { source: "/offers", destination: "/services", permanent: true },
-      { source: "/offers/executive-recovery", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/offers/program-recovery", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/offers/portfolio-recovery", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/offers/operational-intelligence", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/offers/executive-recovery", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/offers/program-recovery", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/offers/portfolio-recovery", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/offers/operational-intelligence", destination: "/services/transformation-diagnostic", permanent: true },
       { source: "/offers/executive-ai", destination: "/services", permanent: true },
       { source: "/offers/healthcare-operating", destination: "/healthcare", permanent: true },
-      { source: "/offers/prior-authorization", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/offers/decision-rights-workshop", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/offers/executive-operating-review", destination: "/services/fractional-transformation-lead", permanent: true },
-      { source: "/assessment", destination: "/services/program-recovery-review", permanent: true },
+      { source: "/offers/prior-authorization", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/offers/decision-rights-workshop", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/offers/executive-operating-review", destination: "/services/transformation-leadership", permanent: true },
+      { source: "/assessment", destination: "/services/executive-diagnostic", permanent: true },
       { source: "/assessment/ai-delivery", destination: "/services", permanent: true },
 
-      { source: "/services/recovery", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/services/fractional-leadership", destination: "/services/fractional-transformation-lead", permanent: true },
+      { source: "/services/recovery", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/services/fractional-leadership", destination: "/services/transformation-leadership", permanent: true },
       { source: "/services/enterprise-ai", destination: "/services", permanent: true },
       { source: "/services/product", destination: "/services", permanent: true },
 
       // One public entry offer and one bounded expansion path.
-      { source: "/services/prior-authorization-assessment", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/services/recovery-assessment", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/services/fractional-advisor", destination: "/services/fractional-transformation-lead", permanent: true },
+      { source: "/services/prior-authorization-assessment", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/services/recovery-assessment", destination: "/services/transformation-diagnostic", permanent: true },
+      { source: "/services/fractional-advisor", destination: "/services/transformation-leadership", permanent: true },
 
       // --- Offer collapse (2026-08-05) ---
       // The catalogue is now three offers: Program Recovery Review, Fractional
       // Transformation Lead, and Specialist Subcontract. The prior-auth-only
       // Diagnostic and the 90-Day Sprint are retired as sold products; prior
       // authorization remains a proof domain, not the company category.
-      { source: "/services/diagnostic", destination: "/services/program-recovery-review", permanent: true },
-      { source: "/services/operating-system-build", destination: "/services/fractional-transformation-lead", permanent: true },
-      { source: "/services/specialist", destination: "/services/specialist-subcontract", permanent: true },
-      { source: "/services/subcontract", destination: "/services/specialist-subcontract", permanent: true },
+      { source: "/services/diagnostic", destination: "/services/executive-diagnostic", permanent: true },
+      { source: "/services/operating-system-build", destination: "/services/operating-model-design", permanent: true },
+      { source: "/services/specialist", destination: "/services#delivery-partners", permanent: true },
+      { source: "/services/subcontract", destination: "/services#delivery-partners", permanent: true },
 
       // Two prior-authorization articles merged into one flagship guide.
       {

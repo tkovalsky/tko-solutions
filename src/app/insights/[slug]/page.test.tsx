@@ -45,7 +45,7 @@ describe("InsightPage", () => {
     });
   });
 
-  it("renders markdown HTML, source metadata, related insights, and the program assessment CTA", async () => {
+  it("renders markdown HTML, source metadata, related insights, and the diagnostic CTA", async () => {
     insightState.items = [insight("first", "First"), insight("related", "Related")];
 
     render(await InsightPage({ params: Promise.resolve({ slug: "first" }) }));
@@ -55,7 +55,7 @@ describe("InsightPage", () => {
     expect(screen.getByText("2 min read")).toBeInTheDocument();
     expect(screen.getByText("Based on 2 sources")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Related" })).toBeInTheDocument();
-    expect(screen.getAllByText("See the Program Recovery Review").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("See the Transformation Diagnostic").length).toBeGreaterThan(0);
   });
 
   it("returns a 404 for unknown slugs", async () => {
@@ -78,8 +78,8 @@ function insight(slug: string, title: string) {
     html: "<h2>Rendered Markdown</h2><p>Body text.</p>",
     brief: {
       cluster: "prior-authorization-operations",
-      offer: "program-recovery-review",
-      cta: "Request a Program Recovery Conversation",
+      offer: "transformation-diagnostic",
+      cta: "Discuss a Transformation",
       diagnosticQuestions: [],
     },
   };

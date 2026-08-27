@@ -44,8 +44,8 @@ diagnostic_questions:
 recommended_action: >-
   Before resizing a delivery model around an AI productivity assumption, measure where elapsed
   time actually goes and require an auditable artifact behind any claimed multiple.
-offer: specialist-subcontract
-cta: "Discuss Specialist Availability"
+offer: operating-model-design
+cta: "Discuss a Transformation"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"

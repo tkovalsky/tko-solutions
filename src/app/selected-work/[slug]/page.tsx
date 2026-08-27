@@ -49,14 +49,14 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   return {
     title: study.title,
-    description: `${study.trigger} ${study.relevance}`,
+    description: `${study.situation} ${study.relevance}`,
     alternates: { canonical: `/selected-work/${study.slug}` },
     openGraph: {
       type: "article",
       title: study.title,
-      description: study.trigger,
+      description: study.situation,
       url: absoluteUrl(`/selected-work/${study.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation program recovery." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions selected work and evidence." }],
     },
   };
 }
@@ -72,18 +72,18 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: study.title,
-          description: study.trigger,
+          description: study.situation,
           url: absoluteUrl(`/selected-work/${study.slug}`),
           publisher: { "@type": "Organization", name: site.name, url: site.url },
-          about: [study.industry, study.classification, "Prior authorization workflow improvement"],
+          about: [study.industry, study.classification, "Healthcare transformation", "Operating model design"],
         }}
       />
       <PageHero
         eyebrow={`${study.classification} / ${study.industry}`}
         title={study.title}
-        description={study.trigger}
-        primaryHref="/services/program-recovery-review"
-        primaryLabel="See the Program Recovery Review"
+        description={study.situation}
+        primaryHref={study.relatedOfferHref}
+        primaryLabel={`See the ${study.relatedOffer}`}
         secondaryHref="/selected-work"
         secondaryLabel="Review the Evidence"
       />
@@ -108,14 +108,13 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
             </Card>
           </aside>
           <div className="space-y-10">
-            <WorkSection title="1. Buyer or operating context" body={study.buyerContext} />
-            <WorkSection title="2. Triggering problem" body={study.trigger} />
-            <WorkSection title="3. What was breaking" body={study.breaking} />
-            <WorkSection title="4. Why conventional approaches were insufficient" body={study.conventionalLimits} />
-            <WorkSection title="5. My role" body={study.role} />
-            <WorkSection title="6. Intervention" body={study.intervention} />
-            <WorkSection title="7. Evidence or result" body={study.result} />
-            <WorkSection title="8. Why this matters to a prospective buyer" body={study.relevance} />
+            <WorkSection title="1. Situation" body={study.situation} />
+            <WorkSection title="2. Complexity" body={study.complexity} />
+            <WorkSection title="3. Todd's role" body={study.role} />
+            <WorkSection title="4. Intervention" body={study.intervention} />
+            <WorkSection title="5. Result" body={study.result} />
+            <WorkSection title="6. Generalized lesson" body={study.lesson} />
+            <WorkSection title="7. Why this matters to a prospective buyer" body={study.relevance} />
           </div>
         </div>
       </Section>
@@ -168,12 +167,12 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       </Section>
 
       <CtaBand
-        title="Bring one program under pressure."
-        description="The Program Recovery Review establishes what is actually wrong with one program, separates symptoms from addressable causes, and gives leadership a 90-day action plan."
+        title="Bring one operating problem under pressure."
+        description="Experience shapes where TKO looks first. A diagnostic establishes what is true in your environment and what leadership should do next."
         primaryHref={study.relatedOfferHref}
         primaryLabel={`See the ${study.relatedOffer}`}
         secondaryHref="/contact"
-        secondaryLabel="Request a Program Recovery Conversation"
+        secondaryLabel="Discuss a Transformation"
       />
     </>
   );

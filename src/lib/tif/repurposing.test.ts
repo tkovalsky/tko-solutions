@@ -13,7 +13,7 @@ describe("buildRepurposingPack", () => {
     expect(pack.executiveEmailAngle).toContain("Position:");
     expect(pack.executiveEmailAngle).toContain("Ask:");
     expect(pack.networkPost).toContain("Full piece: /insights/example-guide");
-    expect(pack.proposalExcerpt).toContain("Proposed vehicle: Program Recovery Review.");
+    expect(pack.proposalExcerpt).toContain("Proposed vehicle: Transformation Diagnostic.");
   });
 
   it("returns exactly three conversation prompts and carries the rest forward", () => {
@@ -27,7 +27,7 @@ describe("buildRepurposingPack", () => {
     const pack = buildRepurposingPack(guide(), [guide(), sibling(), otherCluster()]);
 
     expect(pack.suggestedInternalLinks.map((link) => link.href)).toEqual([
-      "/services/program-recovery-review",
+      "/services/transformation-diagnostic",
       "/insights/sibling-guide",
     ]);
   });
@@ -75,8 +75,8 @@ function insight(slug: string, title: string, cluster: string): Insight {
       aiNotAnswer: "AI does not resolve an unmade decision",
       diagnosticQuestions: ["Q1?", "Q2?", "Q3?", "Q4?"],
       recommendedAction: "Get an independent read before approving more funding",
-      offer: "program-recovery-review",
-      cta: "Request a Program Recovery Conversation",
+      offer: "transformation-diagnostic",
+      cta: "Discuss a Transformation",
       reviewer: "Todd Kovalsky",
       reviewedDate: "2026-08-05",
     },

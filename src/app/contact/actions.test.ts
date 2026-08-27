@@ -90,11 +90,12 @@ describe("submitDiagnosticIntake", () => {
         email: "todd@example.com",
         company: "Example Co",
         role: "COO",
-        workflowSegment: "Cardiology prior authorizations for two high-volume payers.",
-        currentTrigger: "turnaround-backlog",
+        transformationContext: "Provider operations workflow spanning two payer platforms.",
+        currentPressure: "administrative-burden",
         timing: "31-90",
         privacyConsent: true,
         message: "We need a defensible next move.",
+        consequence: "Provider abrasion and operating cost will continue to rise.",
       },
       submittedAt: expect.any(Date),
     });
@@ -155,10 +156,11 @@ function validFormData() {
   formData.set("email", "todd@example.com");
   formData.set("company", "Example Co");
   formData.set("role", "COO");
-  formData.set("workflowSegment", "Cardiology prior authorizations for two high-volume payers.");
-  formData.set("currentTrigger", "turnaround-backlog");
+  formData.set("transformationContext", "Provider operations workflow spanning two payer platforms.");
+  formData.set("currentPressure", "administrative-burden");
   formData.set("timing", "31-90");
   formData.set("privacyConsent", "on");
   formData.set("message", "We need a defensible next move.");
+  formData.set("consequence", "Provider abrasion and operating cost will continue to rise.");
   return formData;
 }

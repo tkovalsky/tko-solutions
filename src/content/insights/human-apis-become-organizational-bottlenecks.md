@@ -48,8 +48,8 @@ recommended_action: >-
   Run a bounded key-person audit on the single workflow where the dependency is most
   expensive, and separate captureable facts and rules from genuine judgment before selecting
   any tool.
-offer: program-recovery-review
-cta: "Request a Program Recovery Conversation"
+offer: executive-diagnostic
+cta: "Discuss a Transformation"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
@@ -139,7 +139,7 @@ None of that requires removing human judgment. It requires making the model arou
 
 ---
 
-**Where this pattern is driving cost in a healthcare workflow**, the [Program Recovery Review](/services/program-recovery-review) is a three-week, fixed-fee engagement that establishes where the dependency sits, what it costs, and what should change first.
+**Where this pattern is driving cost in a healthcare workflow**, the [Executive Diagnostic](/services/executive-diagnostic) establishes where the dependency sits, what it affects, and what should change first.
 
 For the healthcare-specific version of this problem, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem).
 

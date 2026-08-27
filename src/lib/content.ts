@@ -2,19 +2,17 @@ export type CaseStudy = {
   slug: string;
   title: string;
   classification:
-    | "Client or enterprise experience"
-    | "Anonymized enterprise proof"
-    | "Live operating environment"
-    | "Internal proof"
+    | "Anonymized enterprise experience"
+    | "Healthcare product experience"
+    | "Live independent system"
     | "Method-portability evidence";
   industry: string;
-  buyerContext: string;
-  trigger: string;
-  breaking: string;
-  conventionalLimits: string;
+  situation: string;
+  complexity: string;
   role: string;
   intervention: string;
   result: string;
+  lesson: string;
   evidence: string[];
   evidenceLimit: string;
   relevance: string;
@@ -25,154 +23,175 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "prior-authorization-modernization",
-    title: "Prior Authorization Workflow Design Experience",
-    classification: "Client or enterprise experience",
-    industry: "Healthcare",
-    buyerContext:
-      "Healthcare operations spanning prior authorization, utilization management, provider-facing work, compliance, technology, and clinical review.",
-    trigger:
-      "Administrative work and exceptions were being discussed as an automation problem before the review tiers and escalation paths were explicit.",
-    breaking:
-      "Routine handling, exceptions, human review, audit requirements, and payer/provider coordination were intertwined rather than designed as distinct workflow states.",
-    conventionalLimits:
-      "Adding automation to an undefined workflow would have preserved inconsistent routing and hidden decision rights.",
+    title: "Coordinating a Rural Prior-Authorization Initiative",
+    classification: "Anonymized enterprise experience",
+    industry: "Healthcare payer operations",
+    situation:
+      "A public commitment to reduce provider administrative burden required multiple claims, utilization-management, reporting, provider-communications, and technology teams to align against a program deadline.",
+    complexity:
+      "The operating outcome crossed many applications and owners. Readiness depended on coordinated planning, integration, validation, communications, and escalation rather than one team completing its own work.",
     role:
-      "I contributed healthcare workflow, product, governance, and transformation experience inside enterprise operating environments.",
+      "Todd led recurring governance, planning, reporting, testing coordination, integration forums, technical delivery coordination, stakeholder orchestration, and readiness oversight.",
     intervention:
-      "The work decomposed the workflow into review tiers, exception paths, escalation, audit requirements, and human decision points before considering machine assistance.",
+      "He created a common delivery cadence, connected workstreams, surfaced unresolved dependencies, coordinated validation, and gave leaders an integrated view of readiness and escalation needs.",
     result:
-      "The operating requirements and control boundaries became explicit enough to support a responsible implementation decision, with review tiers and escalation paths defined before machine assistance was considered.",
+      "The initiative moved toward enterprise implementation readiness with previously fragmented work governed as one cross-functional delivery problem.",
+    lesson:
+      "Administrative-burden reform is not only a policy or technology decision. The operating model, controls, provider communication, and downstream execution have to converge.",
     evidence: [
-      "Documented experience across prior authorization, utilization management, provider operations, compliance logic, and payer/provider workflow complexity.",
-      "Specific artifacts included workflow tiers, escalation logic, audit requirements, and adoption considerations.",
+      "Leadership of recurring cross-functional governance and program reporting.",
+      "Coordination of testing, integration, readiness, and escalation across enterprise teams.",
+      "Prior-authorization and provider-workflow experience in a large national health-plan environment.",
     ],
     evidenceLimit:
-      "Employment-period experience, described anonymously. Confidentiality covers the client identity, workflow artifacts, baselines, and post-implementation measures, so I do not publish them. The evidence supports scope and mechanism, not a quantified client outcome.",
+      "Employment-period experience described anonymously. Todd did not originate the enterprise business strategy, medical policy, architecture, funding decision, or regulatory commitment. No private application names or unpublished metrics are disclosed.",
     relevance:
-      "It shows why I begin with a measured workflow and exception baseline before assessing whether software, staffing, or AI is the answer.",
-    relatedOffer: "Program Recovery Review",
-    relatedOfferHref: "/services/program-recovery-review",
+      "Shows the ability to translate a burden-reduction objective into the governance, dependencies, testing, and readiness structures required for execution.",
+    relatedOffer: "Transformation Diagnostic",
+    relatedOfferHref: "/services/transformation-diagnostic",
+  },
+  {
+    slug: "provider-eligibility-modernization",
+    title: "Connecting Provider Eligibility Modernization Across Programs",
+    classification: "Anonymized enterprise experience",
+    industry: "Healthcare payer operations",
+    situation:
+      "Provider eligibility logic, provider experience, claims processing, and adjacent modernization efforts were advancing through separate programs with limited shared dependency visibility.",
+    complexity:
+      "Release teams, platforms, testing groups, and business owners each held part of the implementation truth. Changes in one area could create downstream effects that no local plan fully represented.",
+    role:
+      "Todd connected programs, surfaced dependencies, aligned release teams, coordinated testing, managed integrated status reporting, and drove integration discussions.",
+    intervention:
+      "He exposed cross-platform impacts, created forums for shared decisions, and treated eligibility capability as part of broader enterprise workflows rather than a set of isolated implementations.",
+    result:
+      "Hidden dependencies became visible, assigned, governed, escalated, and tracked across large cross-functional governance environments.",
+    lesson:
+      "Trust-based or differentiated controls succeed only when qualification, workflow, claims effects, provider experience, monitoring, and requalification operate as one system.",
+    evidence: [
+      "Cross-program alignment in enterprise provider and claims environments.",
+      "Integrated reporting and dependency management across numerous application and release teams.",
+      "Governance contexts involving more than 100 participants.",
+    ],
+    evidenceLimit:
+      "Anonymized employment-period experience. The evidence supports delivery orchestration and solution influence, not sole ownership of Gold Card strategy, eligibility methodology, architecture, or funding.",
+    relevance:
+      "Demonstrates the core TKO capability: finding execution risk at organizational and system boundaries before it becomes a release failure.",
+    relatedOffer: "Operating Model & Transformation Design Sprint",
+    relatedOfferHref: "/services/operating-model-design",
   },
   {
     slug: "enterprise-care-management-modernization",
-    title: "Enterprise Program Recovery",
-    classification: "Client or enterprise experience",
-    industry: "Healthcare",
-    buyerContext:
-      "A multi-workstream healthcare modernization spanning claims, care management, provider experience, clinical workflow, eligibility, and member operations.",
-    trigger:
-      "Local workstream status did not explain where enterprise delivery risk was accumulating.",
-    breaking:
-      "Dependencies, decisions, and ownership crossed workstreams, so individually healthy reports could coexist with unresolved portfolio risk.",
-    conventionalLimits:
-      "More status reporting would have repeated local progress without exposing the decisions and dependencies between teams.",
+    title: "Creating Integrated Governance and Readiness",
+    classification: "Anonymized enterprise experience",
+    industry: "Enterprise healthcare transformation",
+    situation:
+      "Status, testing, release, and dependency information was fragmented across teams, tickets, applications, and workstream plans in a complex healthcare transformation.",
+    complexity:
+      "Dozens of applications and workstreams spanning claims, care management, behavioral health, utilization management, provider workflows, and integration required synchronized validation amid changing dates and requirements.",
     role:
-      "I worked across healthcare transformation strategy, delivery governance, dependency management, executive reporting, and cross-functional coordination.",
+      "Todd led governance, product-level and executive reporting, dependency and release tracking, escalation structures, and coordinated system, end-to-end, test-data, and readiness activity.",
     intervention:
-      "The work made cross-workstream constraints, accountable decisions, and escalation needs visible in the operating cadence.",
+      "He moved reporting from local status collection toward an integrated governance architecture that connected decisions, dependencies, evidence, testing, and release readiness.",
     result:
-      "Leadership received a clearer basis for sequencing and governing the work, with cross-workstream constraints and accountable decisions visible in the operating cadence.",
+      "Teams gained a common reporting and readiness structure; risks that had been distributed across local plans became visible at program level.",
+    lesson:
+      "Governance creates value when it resolves decisions and exposes accumulating risk—not when it merely restates workstream status.",
     evidence: [
-      "Documented enterprise scope across several healthcare operating domains.",
-      "Defined role in transformation governance, dependency visibility, and executive decision support.",
+      "Executive and product-level reporting across complex delivery environments.",
+      "Coordination of SIT, end-to-end validation, test data, evidence, and release readiness.",
+      "Dependency and escalation management across dozens of applications and workstreams.",
     ],
     evidenceLimit:
-      "Employment-period enterprise experience rather than a named TKO client engagement. Confidentiality covers the artifacts and the quantified outcomes, so I do not publish them.",
+      "Anonymized employment-period experience. No confidential program metrics, internal application names, architecture, or client endorsement are published.",
     relevance:
-      "This is the pattern the Program Recovery Review is built to find: risk accumulating at the boundaries between workstreams while each workstream reports honestly on its own scope.",
-    relatedOffer: "Program Recovery Review",
-    relatedOfferHref: "/services/program-recovery-review",
+      "Shows how TKO creates integrated truth when a transformation is moving but not converging.",
+    relatedOffer: "Transformation Execution Authority",
+    relatedOfferHref: "/services/transformation-leadership",
   },
   {
     slug: "healthcare-interoperability-platform",
     title: "Healthcare Interoperability Modernization",
-    classification: "Client or enterprise experience",
-    industry: "Healthcare",
-    buyerContext:
-      "A payer-facing healthcare interoperability platform operating under CMS requirements, access-control needs, auditability, and data-governance constraints.",
-    trigger:
-      "Regulatory and interoperability requirements had to become working platform behavior rather than remain policy or documentation.",
-    breaking:
-      "Data exchange, onboarding, access control, governance, and operational adoption had to work together across external parties.",
-    conventionalLimits:
-      "Treating the initiative as an API-only project would have left onboarding, authority, audit, and day-to-day operating requirements unresolved.",
+    classification: "Healthcare product experience",
+    industry: "Healthcare technology",
+    situation:
+      "Payer-facing CMS Cures Act and FHIR requirements had to become a usable, governed product and operating capability.",
+    complexity:
+      "Technical exchange alone could not resolve onboarding, access, consent, auditability, data governance, exception handling, and accountable operating ownership.",
     role:
-      "I owned payer-facing product requirements and functional design for CMS Cures Act and FHIR interoperability work at ELLKAY.",
+      "Todd owned product responsibilities that translated payer requirements, regulatory constraints, controls, and technical delivery into an operable platform roadmap.",
     intervention:
-      "The work connected technical exchange requirements to access controls, auditability, governance, onboarding, and delivery coordination.",
+      "He connected API and data requirements to access control, auditability, governance, customer onboarding, and implementation decisions.",
     result:
-      "Access, auditability, onboarding, and governance were designed together rather than sequenced after the API, which turned the regulatory requirements into implementable product behaviour and working operating controls.",
+      "Regulatory and technical requirements became a product and operating model that enterprise teams could implement and support.",
+    lesson:
+      "Interoperability makes information available; the operating model still determines who acts, how exceptions are handled, and how decisions remain governed.",
     evidence: [
-      "Verifiable employment history in healthcare interoperability product management.",
-      "Specific scope covering FHIR, access control, auditability, data governance, and payer-facing platform requirements.",
+      "Verified healthcare interoperability product ownership.",
+      "Experience with FHIR APIs, CMS Cures Act requirements, access control, auditability, and data governance.",
     ],
     evidenceLimit:
-      "Employment history establishes the scope of the role. Neither the employer nor its clients endorse this practice, and I do not publish confidential program artifacts or outcome measures.",
+      "Employment-period product experience. It does not claim ownership of the employer's enterprise strategy or proprietary architecture and does not imply employer endorsement.",
     relevance:
-      "Translating policy and technical requirements into controlled operating behaviour is the same capability a prior-authorization or interoperability program needs when evidence, access, exceptions, and auditability all have to hold together.",
-    relatedOffer: "Specialist Subcontract",
-    relatedOfferHref: "/services/specialist-subcontract",
+      "Demonstrates business, regulation, operations, and technology translation in a controlled healthcare environment.",
+    relatedOffer: "Operating Model & Transformation Design Sprint",
+    relatedOfferHref: "/services/operating-model-design",
   },
   {
     slug: "from-crm-to-operating-system",
-    title: "RachelOS: A Live Operating Environment",
-    classification: "Live operating environment",
-    industry: "Live operating environment",
-    buyerContext:
-      "A relationship-driven operating environment with active work spread across records, messages, notes, and one experienced operator's memory.",
-    trigger:
-      "Follow-up, prioritization, and context reconstruction depended on the operator being available.",
-    breaking:
-      "The underlying records existed, but the current context, next action, missing information, and approval state were not visible in one working surface.",
-    conventionalLimits:
-      "A cleaner CRM view would still have stored activity without resolving priority, source authority, approval, or the next action.",
+    title: "RachelOS: A Live Governed Decision System",
+    classification: "Live independent system",
+    industry: "Independent product and operations",
+    situation:
+      "A relationship-driven business needed to turn scattered signals, facts, commitments, and follow-up work into reliable daily action.",
+    complexity:
+      "The system had to distinguish evidence from inference, maintain current state, prioritize work, preserve human approval, route exceptions, and learn from outcomes without losing operator control.",
     role:
-      "I designed, built, operate, and audit the system myself.",
+      "Todd designed, built, and operates RachelOS independently, including the workflow, decision, evidence, approval, and feedback mechanisms shown in the redacted screens.",
     intervention:
-      "RachelOS introduced durable relationship memory, source-aware facts, prioritized work, visible missing information, human-approved outreach, and system-health checks. AI assists with bounded extraction and drafting; it does not act autonomously.",
+      "He implemented relationship memory, a canonical queue, deterministic next actions, human approval, evidence authority, system health, and feedback loops as one operating system.",
     result:
-      "Context, priority, approval state, and system health are inspectable in daily work. It is a working demonstration of how I make workflow, evidence, approvals, and handoffs explicit.",
+      "The business now has an inspectable operating environment that turns signals into governed action while keeping consequential decisions under human control.",
+    lesson:
+      "Human-in-the-loop is an operating model, not an AI feature. The value comes from the full decision and feedback system around the model.",
     evidence: [
-      "Current, redacted operating screens for the queue, relationship memory, human approval, daily work, and system health.",
-      "Repository-backed implementation history and tests supporting the published operating mechanisms.",
-      "Visible controls that keep consequential outbound actions under human approval.",
+      "Current redacted product screens.",
+      "Inspectable workflow, approval, queue, relationship-memory, and system-health mechanisms.",
+      "Direct founder ownership of product design, implementation, and operation.",
     ],
     evidenceLimit:
-      "One independently operated, non-healthcare environment. It supports implementation and governance discipline. It is not evidence of enterprise scale, healthcare compliance, prior-authorization performance, or a financial outcome.",
+      "RachelOS is independent system proof, not a healthcare client result. It demonstrates implementation discipline and governed-decision-system design, not healthcare compliance or outcome claims.",
     relevance:
-      "You can inspect how I turn fragmented work into explicit workflow, evidence, controls, and handoff-ready artifacts. That is the same discipline I apply after a Recovery Review.",
-    relatedOffer: "Fractional Transformation Lead",
-    relatedOfferHref: "/services/fractional-transformation-lead",
+      "Shows that Todd can reason about and build the systems underneath an operating-model strategy, not only describe them in a deck.",
+    relatedOffer: "Operating Model & Transformation Design Sprint",
+    relatedOfferHref: "/services/operating-model-design",
   },
   {
     slug: "cre-intelligence-model",
     title: "CRE Intelligence Model",
     classification: "Method-portability evidence",
-    industry: "Method portability",
-    buyerContext:
-      "A research workflow where analyst observations and recommendations were repeatedly reconstructed in one-off documents.",
-    trigger:
-      "Knowledge left with the analyst and could not be reused consistently across subsequent questions or decisions.",
-    breaking:
-      "Facts, observations, risks, opportunities, and recommendations had no durable structure or traceable relationship.",
-    conventionalLimits:
-      "Producing more reports would have created more documents without making the underlying judgment reusable.",
+    industry: "Commercial real estate",
+    situation:
+      "A commercial-real-estate advisory workflow needed consistent evidence capture, prioritization, and follow-through across market and relationship signals.",
+    complexity:
+      "Useful action depended on joining incomplete information, source authority, relationship context, and operator judgment without pretending inference was fact.",
     role:
-      "I modelled the information and decision structure.",
+      "Todd designed the analytical and workflow model as independent work outside healthcare.",
     intervention:
-      "The model separated entity facts, observations, risks, opportunities, recommendations, comparisons, and report outputs into reusable, traceable structures.",
+      "The model separated signals, facts, state, priority, recommended action, human review, and outcome feedback.",
     result:
-      "Expert judgment that had been reconstructed document by document became a reusable, traceable structure in a domain unrelated to healthcare.",
+      "The work demonstrated that the governed-decision pattern transfers across domains when domain logic and evidence limits remain explicit.",
+    lesson:
+      "Method can travel; domain claims and performance outcomes cannot.",
     evidence: [
-      "Inspectable information model and traceability structure.",
-      "A distinct non-healthcare environment in which knowledge concentration created the operating constraint.",
+      "Documented independent workflow and decision-model work.",
+      "Explicit separation of stated facts, inference, operator judgment, and next action.",
     ],
     evidenceLimit:
-      "Supporting method evidence. It carries less weight than the healthcare experience above and asserts no commercial, client, or market-performance outcome.",
+      "This is cross-domain method evidence. It does not establish healthcare performance, compliance, or client outcomes.",
     relevance:
-      "It answers one narrow objection: the method for making expert judgment explicit travels between domains, even though the domain logic does not.",
-    relatedOffer: "Program Recovery Review",
-    relatedOfferHref: "/services/program-recovery-review",
+      "Provides secondary evidence that TKO's systems-thinking method is portable without diluting the healthcare practice focus.",
+    relatedOffer: "Executive Diagnostic",
+    relatedOfferHref: "/services/executive-diagnostic",
   },
 ];
 

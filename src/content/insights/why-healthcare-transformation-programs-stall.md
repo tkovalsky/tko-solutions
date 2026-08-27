@@ -49,8 +49,8 @@ diagnostic_questions:
 recommended_action: >-
   Establish an independent, time-boxed read on what is actually blocking the program before
   approving additional funding, scope reduction, or a vendor change.
-offer: program-recovery-review
-cta: "Request a Program Recovery Conversation"
+offer: transformation-diagnostic
+cta: "Discuss a Transformation"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
@@ -163,7 +163,7 @@ The single most valuable property of a recovery is speed. A diagnosis that takes
 
 ---
 
-**If a program is behind, over budget, or about to fund automation on top of an unstable workflow**, the [Program Recovery Review](/services/program-recovery-review) is a three-week, fixed-fee engagement that answers whether it is recoverable, what is actually wrong, and what the next ninety days should contain.
+**If a program is behind, over budget, or about to fund automation on top of an unstable workflow**, the [Transformation Diagnostic](/services/transformation-diagnostic) establishes what is actually wrong, which dependencies and decisions are blocking progress, and what should happen next.
 
 Where the stall traces to key-person dependency, read [Human APIs Become Organizational Bottlenecks](/insights/human-apis-become-organizational-bottlenecks). Where it traces to an authorization or utilization workflow, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem).
 
