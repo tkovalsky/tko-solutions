@@ -91,19 +91,19 @@ export const executiveSummary = {
 export const founderArchetypes = [
   {
     title: "Integration point",
-    body: "Serves as the single point where business, operations, technology, compliance, finance, provider workflows, communications, testing, and production readiness actually meet—on programs with a fixed enterprise deadline and no one role accountable for the whole.",
+    body: "I am the single point where business, operations, technology, compliance, finance, provider workflows, communications, testing, and production readiness actually meet—on programs with a fixed enterprise deadline and no one role accountable for the whole.",
   },
   {
     title: "Operational truth",
-    body: "Establishes the governance and dependency architecture a program is missing: who owns what, what depends on what, which decision is unresolved, and whether reported status is supported by evidence.",
+    body: "I establish the governance and dependency architecture a program is missing: who owns what, what depends on what, which decision is unresolved, and whether reported status is supported by evidence.",
   },
   {
     title: "Failure modes, firsthand",
-    body: "Recognizes where large healthcare implementations break down because of having operated inside them—ownership gaps, dependencies discovered by collision, decisions that stall, and testing that lacks the right data.",
+    body: "I recognize where large healthcare implementations break down because I have operated inside them—ownership gaps, dependencies discovered by collision, decisions that stall, and testing that lacks the right data.",
   },
   {
     title: "Translator",
-    body: "Connects healthcare operations, business objectives, technology, controls, risk, provider experience, and implementation so that a target operating model survives contact with delivery.",
+    body: "I connect healthcare operations, business objectives, technology, controls, risk, provider experience, and implementation so that a target operating model survives contact with delivery.",
   },
 ];
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
+import { CredibilityStrip } from "@/components/site/credibility-strip";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { LinkButton } from "@/components/ui/button";
@@ -37,7 +38,7 @@ const proof = [
   "Healthcare experience across payer operations, provider workflows, prior authorization, UM, and interoperability",
   "Delivery environments involving dozens of applications and workstreams",
   "Governance contexts involving more than 100 cross-functional participants",
-  "Designer and operator of a live governed decision system he built and runs himself",
+  "A live governed decision system I designed, built, and run myself",
 ] as const;
 
 export default function HomePage() {
@@ -64,6 +65,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <CredibilityStrip />
 
       <Section className="!py-14 md:!py-18">
         <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
@@ -95,10 +98,9 @@ export default function HomePage() {
 
       <Section className="!py-14 md:!py-18">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Why Todd Kovalsky" title="The work happens between specialties." description="Todd Kovalsky, Founder & Principal of TKO Solutions, operates where healthcare operations, provider experience, technology, controls, governance, and implementation collide. He has served as the integration point across business, operations, technology, compliance, finance, provider workflows, testing, and production readiness on deadline-driven enterprise programs." />
+          <SectionHeader eyebrow="Why Todd Kovalsky" title="The work happens between specialties." description="I'm Todd Kovalsky, Founder and Principal of TKO Solutions. I work where healthcare operations, provider experience, technology, controls, governance, and implementation collide, and I have been the integration point across business, operations, technology, compliance, finance, provider workflows, testing, and production readiness on deadline-driven enterprise programs." />
           <div>
             <ul className="grid gap-3 sm:grid-cols-2">{proof.map((item) => <li key={item} className="border-l-2 border-primary bg-surface p-5 text-sm leading-6 text-muted">{item}</li>)}</ul>
-            <p className="mt-6 text-sm leading-6 text-muted">Employment history establishes experience, not employer endorsement. Enterprise work is anonymized and bounded to Todd’s actual role.</p>
             <div className="mt-7 flex flex-wrap gap-3"><LinkButton href="/founder" variant="secondary">About Todd</LinkButton><LinkButton href="/selected-work" variant="secondary">Review the Evidence</LinkButton><a href={site.linkedin} target="_blank" rel="noreferrer" data-conversion-event="linkedin_click" data-cta-location="homepage_why_todd" data-cta-label="LinkedIn" className="inline-flex min-h-11 items-center justify-center gap-2 border border-foreground/20 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors hover:border-foreground/40 hover:bg-foreground/[0.03]">LinkedIn <ExternalLink className="size-4" aria-hidden /></a></div>
           </div>
         </div>
