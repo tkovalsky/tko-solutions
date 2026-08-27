@@ -61,9 +61,10 @@ date: "2026-08-04"
 slug: why-healthcare-transformation-programs-stall
 published: true
 featured: true
+# Internal evidence trail (not rendered):
+# - Healthy workstream status can coexist with unresolved enterprise delivery risk. Evidence: healthcare:prior-auth-decision-rights and /selected-work/enterprise-care-management-modernization. Guard: qualitative employment-period mechanism; no client, program, cost, timing, or outcome metric.
+# - Critical operating knowledge and decision rights can sit outside the governed process. Evidence: healthcare:ev-healthcare-human-api-dependency; content/proof/healthcare/evidence.yaml#human-api-root-pattern and the cross-cutting experience-library pattern. Guard: advisory pattern, no organization or metric.
 ---
-
-# Why Healthcare Transformation Programs Stall
 
 A large healthcare transformation program is eighteen months in. Every workstream reports green or amber. The steering committee meets monthly. The vendor is delivering to contract. Spend is roughly on plan.
 
@@ -166,12 +167,5 @@ The single most valuable property of a recovery is speed. A diagnosis that takes
 **If a program is behind, over budget, or about to fund automation on top of an unstable workflow**, the [Transformation Diagnostic](/services/transformation-diagnostic) establishes what is actually wrong, which dependencies and decisions are blocking progress, and what should happen next.
 
 Where the stall traces to key-person dependency, read [Human APIs Become Organizational Bottlenecks](/insights/human-apis-become-organizational-bottlenecks). Where it traces to an authorization or utilization workflow, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem).
-
-## Evidence Trail
-
-| Claim | Evidence record | Proof basis | Claim guard |
-|---|---|---|---|
-| Individually healthy workstream status can coexist with unresolved enterprise-level delivery risk. | healthcare:prior-auth-decision-rights | Enterprise healthcare transformation experience across claims, care management, provider experience, clinical workflow, eligibility, and member operations; see /selected-work/enterprise-care-management-modernization. | Employment-period enterprise experience; qualitative operating mechanism only. No client, program, cost, delivery-time, or outcome metric is claimed or published. |
-| Critical operating knowledge and decision rights frequently sit outside the governed process. | healthcare:ev-healthcare-human-api-dependency | content/proof/healthcare/evidence.yaml#human-api-root-pattern; HEALTHCARE_EXPERIENCE_LIBRARY.md cross-cutting pattern. | Advisory experience; pattern not metric; no organizations named. |
 
 The diagnostic framework, failure patterns, and recovery model above are TKO advisory guidance derived from experience. They are not measured research findings, and no claim is made that applying them produced a specific result at a specific organization.

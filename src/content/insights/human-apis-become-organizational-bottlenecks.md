@@ -60,9 +60,10 @@ date: "2026-08-05"
 slug: human-apis-become-organizational-bottlenecks
 published: true
 featured: false
+# Internal evidence trail (not rendered):
+# - Critical operational knowledge and decision-making often live inside individuals instead of governed systems. Evidence: healthcare:ev-healthcare-human-api-dependency; content/proof/healthcare/evidence.yaml#human-api-root-pattern. Guard: advisory experience, pattern not metric, no organizations named.
+# - Relationship memory can live in a system instead of one person's head. Evidence: rachelos:ev-rachelos-relationship-memory; content/proof/rachelos/evidence.yaml#relationship-memory. Guard: code-backed founder-operated non-healthcare system, with no outcome metric implied.
 ---
-
-# Human APIs Become Organizational Bottlenecks
 
 Every organization has people who know how things really work.
 
@@ -142,10 +143,3 @@ None of that requires removing human judgment. It requires making the model arou
 **Where this pattern is driving cost in a healthcare workflow**, the [Executive Diagnostic](/services/executive-diagnostic) establishes where the dependency sits, what it affects, and what should change first.
 
 For the healthcare-specific version of this problem, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem).
-
-## Evidence Trail
-
-| Claim | Evidence record | Proof basis | Claim guard |
-|---|---|---|---|
-| Critical operational knowledge and decision-making often live inside individuals instead of governed systems. | healthcare:ev-healthcare-human-api-dependency | content/proof/healthcare/evidence.yaml#human-api-root-pattern. | Advisory experience; pattern not metric; no organizations named. |
-| Relationship memory can live in a system instead of one person's head. | rachelos:ev-rachelos-relationship-memory | content/proof/rachelos/evidence.yaml#relationship-memory. | Code-backed memory layer in a founder-operated, non-healthcare environment; no outcome metric implied. |

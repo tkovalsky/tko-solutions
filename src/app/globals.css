@@ -204,6 +204,80 @@
 
 .prose-tko ul,
 .prose-tko ol {
+  margin-block: 1.5rem;
+  padding-left: 1.5rem;
   color: var(--muted);
   line-height: 1.8;
+}
+
+.prose-tko ul {
+  list-style: disc;
+}
+
+.prose-tko ol {
+  list-style: decimal;
+}
+
+.prose-tko li + li {
+  margin-top: 0.5rem;
+}
+
+.prose-tko li::marker {
+  color: var(--primary);
+}
+
+.prose-tko a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+}
+
+.prose-tko a:hover {
+  color: var(--primary-dark);
+}
+
+.prose-tko a:focus-visible {
+  border-radius: 0.125rem;
+}
+
+.prose-tko strong {
+  color: var(--foreground);
+  font-weight: 650;
+}
+
+.prose-tko blockquote {
+  margin-block: 2rem;
+  border-left: 3px solid var(--primary);
+  padding-left: 1.25rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose-tko table {
+  display: block;
+  width: 100%;
+  margin-block: 2rem;
+  overflow-x: auto;
+  border-collapse: collapse;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose-tko th,
+.prose-tko td {
+  min-width: 10rem;
+  border: 1px solid var(--border);
+  padding: 0.75rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-tko th {
+  background: var(--surface);
+  color: var(--foreground);
+  font-weight: 650;
 }

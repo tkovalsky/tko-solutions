@@ -63,9 +63,12 @@ date: "2026-08-05"
 slug: prior-authorization-is-a-decision-rights-problem
 published: true
 featured: true
+# Internal evidence trail (not rendered):
+# - Decision handling varies when authority lives in individual heads. Evidence: healthcare:prior-auth-decision-rights; content/proof/healthcare/evidence.yaml#prior-auth-decision-rights and HEALTHCARE_EXPERIENCE_LIBRARY.md section 1. Guard: advisory pattern, no organization or metric.
+# - Human API dependency recurs across healthcare operations. Evidence: healthcare:human-api-root-pattern; content/proof/healthcare/evidence.yaml#human-api-root-pattern and the cross-cutting experience-library pattern. Guard: advisory pattern, no organization or metric.
+# - Certain requests continue to require clinical review under the CMS prior-authorization rule. Evidence: public CMS guidance cited in the guide. Guard: no organization-specific compliance interpretation.
+# - Physicians report substantial administrative burden from prior authorization. Evidence: public AMA physician survey cited in the guide. Guard: directional self-reported evidence, not an organization-specific measure.
 ---
-
-# Prior Authorization Is a Decision-Rights Problem
 
 A prior authorization request arrives. Whether it is approved, delayed, or denied may depend less on the clinical facts than on which staff member picks it up: what they know, who they call when the case does not fit the standard pattern, and how they were trained to handle exceptions.
 
@@ -227,12 +230,3 @@ For the portable version of the underlying pattern, read [Human APIs Become Orga
 - [AMA prior authorization physician survey](https://www.ama-assn.org/practice-management/prior-authorization/ama-prior-authorization-physician-survey): directional evidence of physician-reported administrative burden.
 
 The measurement model, diagnostic framework, and examples above are TKO advisory guidance. They are not CMS requirements, client results, or evidence that any specific intervention caused a financial outcome.
-
-## Evidence Trail
-
-| Claim | Evidence record | Proof basis | Claim guard |
-|---|---|---|---|
-| The same case can move differently depending on who handles it, because the authority model lives in individual heads. | healthcare:prior-auth-decision-rights | content/proof/healthcare/evidence.yaml#prior-auth-decision-rights; HEALTHCARE_EXPERIENCE_LIBRARY.md §1 Prior Authorization. | Advisory experience; pattern not metric; no organizations named; establishes decision latency, not model quality. |
-| The human API pattern recurs across healthcare operations work. | healthcare:human-api-root-pattern | content/proof/healthcare/evidence.yaml#human-api-root-pattern; HEALTHCARE_EXPERIENCE_LIBRARY.md cross-cutting pattern. | Advisory experience; pattern not metric; no organizations named. |
-| Certain requests continue to require clinical review under the CMS prior authorization rule. | CMS Prior Authorization API FAQ | Public CMS guidance, cited above. | Public regulatory source; no interpretation of compliance obligation for a specific organization. |
-| Physicians report substantial administrative burden from prior authorization. | AMA prior authorization physician survey | Public AMA survey, cited above. | Directional, self-reported survey evidence; not a measure of any specific organization's performance. |

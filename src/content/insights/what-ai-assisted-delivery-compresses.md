@@ -62,8 +62,6 @@ published: true
 featured: false
 ---
 
-# What AI-Assisted Delivery Compresses, and What It Cannot
-
 The argument about AI-assisted software delivery is usually conducted with anecdotes. Here is a data point you can audit instead.
 
 RachelOS is a production relationship-intelligence and revenue-operations system. Over ten months it accumulated 1,528 commits, every one from the same author, plus 67 database migrations, 25 operator screens, and 1,341 test cases, while serving real production leads the entire time. The scope crosses eighteen distinct professional competencies, the kind of work conventionally distributed across 12 to 18 roles.
