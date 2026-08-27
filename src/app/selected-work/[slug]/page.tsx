@@ -5,9 +5,8 @@ import { CtaBand } from "@/components/site/cta-band";
 import { EvidenceNoteLink } from "@/components/site/evidence-note";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
-import { Card } from "@/components/ui/card";
-import { Section, SectionHeader } from "@/components/ui/section";
-import { caseStudies, getCaseStudy } from "@/lib/content";
+import { Section } from "@/components/ui/section";
+import { caseStudies, getCaseStudy, leadParagraph } from "@/lib/content";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -47,14 +46,16 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
   if (!study) return {};
 
+  const lead = leadParagraph(study.situation);
+
   return {
     title: study.title,
-    description: `${study.situation} ${study.relevance}`,
+    description: lead,
     alternates: { canonical: `/selected-work/${study.slug}` },
     openGraph: {
       type: "article",
       title: study.title,
-      description: study.situation,
+      description: lead,
       url: absoluteUrl(`/selected-work/${study.slug}`),
       images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions selected work and evidence." }],
     },
@@ -65,6 +66,10 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
   const study = getCaseStudy((await params).slug);
   if (!study) notFound();
 
+  // The hero carries the opening of the situation, so the body picks up from
+  // whatever is left. Nothing in the case is rendered to the reader twice.
+  const [situationLead, ...situationRest] = study.situation.split("\n\n");
+
   return (
     <>
       <JsonLd
@@ -72,74 +77,47 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: study.title,
-          description: study.situation,
+          description: leadParagraph(study.situation),
           url: absoluteUrl(`/selected-work/${study.slug}`),
           publisher: { "@type": "Organization", name: site.name, url: site.url },
           about: [study.industry, study.classification, "Healthcare transformation", "Operating model design"],
         }}
       />
       <PageHero
-        eyebrow={`${study.classification} / ${study.industry}`}
+        eyebrow={study.industry}
         title={study.title}
-        description={study.situation}
+        description={situationLead}
         primaryHref={study.relatedOfferHref}
         primaryLabel={`See the ${study.relatedOffer}`}
-        secondaryHref="/selected-work"
-        secondaryLabel="Review the Evidence"
+        secondaryHref="/contact"
+        secondaryLabel="Discuss a Transformation"
       />
 
-      <Section className="bg-surface !py-12 md:!py-16">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <EvidenceSummary title="What this is" body={study.classification} />
-          <EvidenceSummary title="My role" body={study.role} />
-          <EvidenceSummary title="Why it matters here" body={study.relevance} />
-        </div>
-      </Section>
-
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
-          <aside>
-            <Card className="sticky top-28">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Related engagement</p>
-              <p className="mt-4 text-xl font-semibold">{study.relatedOffer}</p>
-              <p className="mt-4 text-sm leading-6 text-muted">
-                Experience shapes where I look first. The engagement establishes what is true in your program.
-              </p>
-            </Card>
-          </aside>
-          <div className="space-y-10">
-            <WorkSection title="1. Situation" body={study.situation} />
-            <WorkSection title="2. Complexity" body={study.complexity} />
-            <WorkSection title="3. Todd's role" body={study.role} />
-            <WorkSection title="4. Intervention" body={study.intervention} />
-            <WorkSection title="5. Result" body={study.result} />
-            <WorkSection title="6. Generalized lesson" body={study.lesson} />
-            <WorkSection title="7. Why this matters to a prospective buyer" body={study.relevance} />
-          </div>
-        </div>
-      </Section>
-
-      <Section className="bg-surface">
-        <SectionHeader
-          eyebrow="Evidence record"
-          title="What can be supported publicly."
-        />
-        <div className="mt-10 grid gap-3 md:grid-cols-3">
-          {study.evidence.map((item) => (
-            <div key={item} className="border border-border bg-white p-5 text-sm leading-6 text-muted">
-              {item}
-            </div>
-          ))}
+        <div className="max-w-[72ch] space-y-10">
+          {situationRest.length > 0 ? (
+            <WorkSection title="Situation" body={situationRest.join("\n\n")} />
+          ) : null}
+          <WorkSection title="Complexity" body={study.complexity} />
+          <WorkSection title="My role" body={study.role} />
+          <WorkSection title="What I changed" body={study.intervention} />
+          <WorkSection title="Result" body={study.result} />
+          <WorkSection
+            title="What this means for your transformation"
+            body={`${study.lesson}\n\n${study.relevance}`}
+          />
         </div>
       </Section>
 
       {study.slug === "from-crm-to-operating-system" ? (
-        <Section>
-          <SectionHeader
-            eyebrow="Inspectable proof"
-            title="The operating mechanisms, in current screens."
-            description="Redacted views of the system as it runs today."
-          />
+        <Section className="bg-surface">
+          <div className="max-w-[72ch]">
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Inspectable proof</p>
+            <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+              The operating mechanisms, in current screens.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-muted">Redacted views of the system as it runs today.</p>
+          </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
             {rachelosProofAssets.map((asset) => (
               <article key={asset.title} className="overflow-hidden border border-border bg-white">
@@ -147,7 +125,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
                   <Image src={asset.image} alt={asset.alt} fill className="object-cover object-top" sizes="(min-width: 1024px) 50vw, 100vw" />
                 </div>
                 <div className="p-6">
-                  <h2 className="text-xl font-semibold">{asset.title}</h2>
+                  <h3 className="text-xl font-semibold">{asset.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted">{asset.description}</p>
                 </div>
               </article>
@@ -156,19 +134,17 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         </Section>
       ) : null}
 
-      <Section className="!py-10">
-        <details className="max-w-[72ch] border border-border bg-white p-6">
-          <summary className="cursor-pointer text-base font-semibold">
-            Limits of this evidence
-          </summary>
-          <p className="mt-4 text-base leading-7 text-muted">{study.evidenceLimit}</p>
-          <EvidenceNoteLink className="mt-4" />
-        </details>
+      <Section className="!py-12 md:!py-14">
+        <div className="max-w-[72ch] border-l-2 border-border pl-6">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">About this work</h2>
+          <p className="mt-4 text-sm leading-6 text-muted">{study.evidenceLimit}</p>
+          <EvidenceNoteLink className="mt-3" />
+        </div>
       </Section>
 
       <CtaBand
         title="Bring one operating problem under pressure."
-        description="Experience shapes where TKO looks first. A diagnostic establishes what is true in your environment and what leadership should do next."
+        description="Experience shapes where I look first. A diagnostic establishes what is true in your environment and what leadership should do next."
         primaryHref={study.relatedOfferHref}
         primaryLabel={`See the ${study.relatedOffer}`}
         secondaryHref="/contact"
@@ -182,16 +158,11 @@ function WorkSection({ title, body }: { title: string; body: string }) {
   return (
     <section className="border-b border-border pb-10 last:border-0">
       <h2 className="text-2xl font-semibold md:text-3xl">{title}</h2>
-      <p className="mt-4 max-w-[68ch] text-lg leading-8 text-muted">{body}</p>
+      {body.split("\n\n").map((paragraph) => (
+        <p key={paragraph} className="mt-4 text-lg leading-8 text-muted">
+          {paragraph}
+        </p>
+      ))}
     </section>
-  );
-}
-
-function EvidenceSummary({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="border border-border bg-white p-5">
-      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">{title}</p>
-      <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
-    </div>
   );
 }

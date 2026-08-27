@@ -19,7 +19,27 @@ const notes = [
   },
 ];
 
-export function EvidenceNote({ className }: { className?: string }) {
+/**
+ * Compact by default: two sentences at the foot of a page. The expanded list is
+ * available for surfaces where the boundary itself is the subject.
+ */
+export function EvidenceNote({ className, expanded = false }: { className?: string; expanded?: boolean }) {
+  if (!expanded) {
+    return (
+      <div className={className}>
+        <div className="max-w-[72ch] border-l-2 border-border pl-6">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">How I describe this work</h2>
+          <p className="mt-4 text-sm leading-6 text-muted">
+            Enterprise programs carry confidentiality obligations that outlast the engagement. Where a
+            result cannot be published, I describe the mechanism and my own role and leave the number
+            out rather than estimate it. Employment history establishes experience, not employer or
+            client endorsement.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={className}>
       <div className="border border-border bg-white p-6 md:p-8">
@@ -45,7 +65,7 @@ export function EvidenceNoteLink({ className }: { className?: string }) {
         href="/selected-work#how-to-read-this-evidence"
         className="text-sm text-muted underline-offset-4 hover:text-foreground hover:underline"
       >
-        How to read this evidence
+        How I describe evidence
       </Link>
     </p>
   );
