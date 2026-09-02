@@ -66,6 +66,24 @@ The AI thesis is equally specific: the hard part is not calling a model; it is r
 
 Signals → structured facts → current state → priority → recommendation → human review when needed → action → outcome → feedback.
 
+## Applied-AI and Forward-Deployed Market Evidence
+
+Enterprise payer roles described as applied-AI, forward-deployed, solution, product, or transformation leadership provide useful market evidence for an emerging buyer need: one accountable operator who can move from ambiguous operating problem through problem framing, operating-model design, solution strategy, architecture challenge, implementation, adoption, and measurable outcome.
+
+TKO should use that market signal to strengthen capability evidence and content—not to optimize the public practice for one employer, one internal level, or the literal title **Forward Deployed Engineer**.
+
+The credible bridge is:
+
+> Healthcare domain depth + operating-model transformation + systems thinking + product judgment + technical fluency + governed applied AI + enterprise execution.
+
+Public evidence may demonstrate APIs, integrations, data models, workflow orchestration, decision logic, state management, observability, human controls, failure handling, deployment tradeoffs, and prototype-to-production judgment where implemented evidence exists. It must not portray Todd as a career software engineer, machine-learning engineer, data scientist, or generic AI expert.
+
+The capability lifecycle is an evidence and development roadmap:
+
+Discovery → problem framing → operating-model design → solution strategy → architecture and prototype evidence → deployment → adoption → measured outcome.
+
+The current site does not need a competing Applied AI or systems-of-action category. Governed AI remains a problem domain and methodology within Healthcare Transformation & Operating Model Advisory. RachelOS remains inspectable independent-system proof, not a healthcare client outcome. Systems-of-action and Human API language may support articles, diagnostics, and executive briefings without replacing the company thesis.
+
 ## Offer Ladder
 
 Public pages show starting prices for the first three offers and the approved $20K–$50K/month complexity range for Transformation Execution Authority. Effort economics and revenue targets remain internal.
