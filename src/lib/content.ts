@@ -31,7 +31,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "prior-authorization-modernization",
-    title: "Making a Prior-Authorization Waiver Work Inside the Claims System",
+    title: "Establishing Enterprise Readiness for a Rural Prior-Authorization Initiative",
     classification: "Anonymized enterprise experience",
     industry: "Healthcare payer operations",
     situation:
@@ -39,11 +39,11 @@ export const caseStudies: CaseStudy[] = [
     complexity:
       "The waiver could not simply delete a step. Claims adjudication and legacy processing still expected an authorization record; removing the review without producing that artifact would have broken payment.\n\nQualification results had to become provider-code relationships that clinical intake, eligibility, plan benefits, provider search, matching, and claims adjudication would each route on consistently. Eligibility was recalculated periodically and providers could appeal, so the qualifying set moved rather than being configured once.\n\nEvery one of those systems had a capable owner. The end-to-end outcome had none.",
     role:
-      "I ran program management and cross-functional delivery: the recurring governance forums, integrated planning and reporting, testing coordination, dependency and escalation management, and readiness oversight across the teams involved.\n\nI did not own the qualification methodology, medical policy, waiver criteria, or the economics models behind them. My work sat downstream of that decision — making those results function correctly across the operational and claims environment.",
+      "I led the recurring governance and integrated delivery across planning, reporting, testing coordination, dependency and escalation management, and readiness oversight. I connected the business, operations, technology, provider, and validation work that no individual team owned end to end.\n\nI did not own the qualification methodology, medical policy, waiver criteria, or the economics models behind them. My work sat downstream of those decisions, where the operating and claims environment had to converge around one implementation path.",
     intervention:
-      "I established a common delivery cadence across teams that had been planning separately, connected the workstreams into one integrated view of readiness, surfaced dependencies that no single team's plan represented, and aligned validation so the new path was tested as one flow rather than six.\n\nWhen key architecture resources were unavailable, I learned enough of the workflow and system behavior myself to keep execution moving and resolve issues, rather than letting the program wait.",
+      "I established a common delivery cadence across teams that had been planning separately, connected the workstreams into one integrated readiness view, surfaced dependencies that no local plan represented, and aligned validation around the end-to-end path.\n\nWhen key architecture resources were unavailable, I traced enough of the workflow and system behavior to keep issues moving while the accountable architecture and delivery owners retained their roles.",
     result:
-      "In the resulting operating model, a qualifying provider-code combination no longer entered traditional review. It produced an advanced notification instead: the operational record downstream claims and legacy systems still required. Radiology services that historically required prior authorization could, under qualifying circumstances, follow that path.\n\nWork that had been governed locally by each team became one cross-functional delivery problem with visible dependencies, assigned ownership, and an integrated readiness view.",
+      "The initiative moved toward enterprise implementation readiness with work that had been governed locally by each team treated as one cross-functional delivery problem. Qualification outputs, the advanced-notification path, downstream claims requirements, dependencies, ownership, and validation were represented in one integrated readiness view.",
     lesson:
       "Administrative-burden reform is not a policy decision or a technology decision. It becomes real at the integration boundaries — the record downstream systems still need, the eligibility that keeps changing, the program variation nobody carried through to the operational layer.",
     relevance:
