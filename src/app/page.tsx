@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
-import { CredibilityStrip } from "@/components/site/credibility-strip";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { LinkButton } from "@/components/ui/button";
@@ -65,8 +64,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <CredibilityStrip />
 
       <Section className="!py-14 md:!py-18">
         <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
