@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { tifDb } from "@/lib/tif/db";
 import OiIntakePage, { dynamic, metadata } from "./page";
 
@@ -155,9 +155,15 @@ function getTriageFindManyMock() {
 
 describe("OiIntakePage", () => {
   beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-08-01T12:00:00Z"));
     vi.clearAllMocks();
     vi.mocked(tifDb.oiOpportunity.findUnique).mockResolvedValue(reviewFixture as never);
     getTriageFindManyMock().mockResolvedValue([]);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it("keeps intake out of search indexes and forces dynamic rendering", () => {

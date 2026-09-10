@@ -41,6 +41,9 @@ jobs:
       - name: Validate Prisma schema
         run: npx prisma validate
 
+      - name: Generate Prisma client
+        run: npx prisma generate
+
       - name: Test
         run: npm test
 

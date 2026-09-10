@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { z } from "zod";
 import { TIF_COMPOSE_CONTRACT_VERSION, type ComposeSourceUsage } from "./contract";
 
@@ -18,6 +19,19 @@ const ArtifactSchema = z.enum([
   "transferability_assessment_page",
 ]);
 const VoiceSchema = z.enum(["rachel", "consumer", "todd", "commercial_operator"]);
+const RequirementRoleSchema = z.enum(["voice", "persona", "strategy", "page_contract", "validation", "baseline"]);
+const GenerationRequirementsSchema = z.object({
+  version: z.string().min(1).max(50),
+  digest: z.string().regex(/^[a-f0-9]{64}$/),
+  contentType: z.enum(["guide", "development", "neighborhood"]),
+  archetype: z.enum(["standard", "portfolio_guide"]),
+  sources: z.array(z.object({
+    role: RequirementRoleSchema,
+    path: z.string().min(1).max(500),
+    sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    content: z.string().min(1).max(100_000),
+  }).strict()).min(5).max(8),
+}).strict();
 
 const ComposeContextSchema = z.object({
   contentType: z.string().min(1).optional(),
@@ -44,6 +58,7 @@ const ComposeDraftRequestSchema = z.object({
       facts: z.string().max(100_000).optional(),
       notes: z.string().max(20_000).optional(),
       revisionFeedback: z.string().max(20_000).optional(),
+      generationRequirements: GenerationRequirementsSchema.optional(),
       // Compatibility aliases remain explicit while RachelOS moves to the canonical fields.
       knownFacts: z.string().max(100_000).optional(),
       operatorNotes: z.string().max(20_000).optional(),
@@ -137,6 +152,38 @@ function extractFactReferences(facts: string | undefined) {
 
   return Array.from(facts.matchAll(/\[Fact\s+(\d+)\s+v(\d+)\]/gi), (match) => `Fact ${match[1]} v${match[2]}`)
     .filter((value, index, values) => values.indexOf(value) === index);
+}
+
+function sha256(value: string) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function validateGenerationRequirements(request: ParsedRequest) {
+  const requirements = request.inputs.generationRequirements;
+  if (!requirements) return null;
+
+  const roles = new Set(requirements.sources.map((source) => source.role));
+  for (const required of ["voice", "persona", "strategy", "page_contract", "validation"] as const) {
+    if (!roles.has(required)) throw new Error(`generationRequirements is missing the ${required} source.`);
+  }
+  if (requirements.archetype === "portfolio_guide" && !roles.has("baseline")) {
+    throw new Error("portfolio_guide requirements must include a baseline source.");
+  }
+  for (const source of requirements.sources) {
+    if (sha256(source.content) !== source.sha256) {
+      throw new Error(`generationRequirements source hash mismatch for ${source.path}.`);
+    }
+  }
+  const expectedDigest = sha256(JSON.stringify({
+    version: requirements.version,
+    contentType: requirements.contentType,
+    archetype: requirements.archetype,
+    sources: requirements.sources.map(({ role, path, sha256: sourceHash }) => ({ role, path, sha256: sourceHash })),
+  }));
+  if (requirements.digest !== expectedDigest) {
+    throw new Error("generationRequirements digest mismatch.");
+  }
+  return requirements;
 }
 
 function sourceContextMarkdown(request: ParsedRequest) {
@@ -777,6 +824,7 @@ ${isExit
 
 export function composeDraft(payload: ComposeDraftRequest): ComposeDraftResult {
   const request = normalizeRequest(payload);
+  const generationRequirements = validateGenerationRequirements(request);
   const validationErrors = validateRequest(request);
   if (validationErrors.length > 0) {
     throw new Error(validationErrors.join(" "));
@@ -813,6 +861,8 @@ export function composeDraft(payload: ComposeDraftRequest): ComposeDraftResult {
     notesIncluded: Boolean(request.inputs.notes?.trim()),
     revisionFeedbackIncluded: Boolean(request.inputs.revisionFeedback?.trim()),
     voiceApplied: false,
+    requirementsAccepted: Boolean(generationRequirements),
+    requirementsDigest: generationRequirements?.digest ?? null,
   };
 
   return {
