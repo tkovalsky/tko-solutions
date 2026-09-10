@@ -49,6 +49,22 @@ export interface ComposeInputs extends Record<string, unknown> {
   facts?: string;
   notes?: string;
   revisionFeedback?: string;
+  generationRequirements?: GenerationRequirements;
+}
+
+export interface GenerationRequirementSource {
+  role: "voice" | "persona" | "strategy" | "page_contract" | "validation" | "baseline";
+  path: string;
+  sha256: string;
+  content: string;
+}
+
+export interface GenerationRequirements {
+  version: string;
+  digest: string;
+  contentType: "guide" | "development" | "neighborhood";
+  archetype: "standard" | "portfolio_guide";
+  sources: GenerationRequirementSource[];
 }
 
 // Mirrors AssetStatus in prisma/schema.prisma. v0.1 only ever produces `draft`.
@@ -68,6 +84,8 @@ export interface ComposeSourceUsage {
   notesIncluded: boolean;
   revisionFeedbackIncluded: boolean;
   voiceApplied: boolean;
+  requirementsAccepted: boolean;
+  requirementsDigest: string | null;
 }
 
 export interface ComposeResponse {

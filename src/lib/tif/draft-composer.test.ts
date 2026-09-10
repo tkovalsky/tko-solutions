@@ -1,6 +1,8 @@
+import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { ZodError } from "zod";
 import { composeDraft } from "./draft-composer";
+import type { GenerationRequirementSource } from "./contract";
 
 describe("TIF core draft composer", () => {
   it("composes a pre-license commercial corridor page from the CRE framework", () => {
@@ -81,8 +83,49 @@ describe("TIF core draft composer", () => {
       notesIncluded: true,
       revisionFeedbackIncluded: true,
       voiceApplied: false,
+      requirementsAccepted: false,
+      requirementsDigest: null,
     });
     expect(result.warnings).toContain('Voice "rachel" is recorded as metadata only; automated voice refinement is not operational.');
+  });
+
+  it("accepts an intact generation requirements bundle and echoes its digest", () => {
+    const content = "Canonical source content for testing.";
+    const sourceHash = createHash("sha256").update(content).digest("hex");
+    const roles: GenerationRequirementSource["role"][] = ["voice", "persona", "strategy", "page_contract", "validation"];
+    const sources = roles.map((role) => ({
+      role,
+      path: `docs/${role}.md`,
+      sha256: sourceHash,
+      content,
+    }));
+    const identity = { version: "2026-09-09", contentType: "development", archetype: "standard", sources: sources.map(({ role, path, sha256 }) => ({ role, path, sha256 })) };
+    const digest = createHash("sha256").update(JSON.stringify(identity)).digest("hex");
+    const result = composeDraft({
+      framework: "rachel_community",
+      artifact: "community_page",
+      inputs: { community: "Avenir", county: "Palm Beach County", generationRequirements: { ...identity, digest, sources } },
+    });
+    expect(result.sourceUsage).toMatchObject({ requirementsAccepted: true, requirementsDigest: digest, voiceApplied: false });
+  });
+
+  it("rejects a tampered generation requirements source", () => {
+    const source = { role: "voice" as const, path: "docs/voice.md", sha256: "0".repeat(64), content: "Tampered" };
+    expect(() => composeDraft({
+      framework: "rachel_community",
+      artifact: "community_page",
+      inputs: {
+        community: "Avenir",
+        county: "Palm Beach County",
+        generationRequirements: {
+          version: "2026-09-09",
+          digest: "0".repeat(64),
+          contentType: "development",
+          archetype: "standard",
+          sources: [source, { ...source, role: "persona" }, { ...source, role: "strategy" }, { ...source, role: "page_contract" }, { ...source, role: "validation" }],
+        },
+      },
+    })).toThrow("source hash mismatch");
   });
 
   it("changes the draft when the supplied approved fact version changes", () => {
