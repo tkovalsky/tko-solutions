@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import OiTodayPage from "./page";
 import { ANCHORS } from "./opportunity-card";
 import { tifDb } from "@/lib/tif/db";
@@ -23,11 +23,17 @@ vi.mock("./actions", () => ({
 const mockedDb = vi.mocked(tifDb);
 
 beforeEach(() => {
+  vi.useFakeTimers();
+  vi.setSystemTime(new Date("2026-08-01T12:00:00Z"));
   vi.clearAllMocks();
   mockedDb.oiActivity.findMany.mockResolvedValue([]);
   mockedDb.oiSignal.count.mockResolvedValue(0);
   mockedDb.oiSignal.findMany.mockResolvedValue([]);
   mockedDb.oiOrganization.findMany.mockResolvedValue([]);
+});
+
+afterEach(() => {
+  vi.useRealTimers();
 });
 
 describe("OiTodayPage", () => {
