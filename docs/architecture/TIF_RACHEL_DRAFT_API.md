@@ -74,6 +74,23 @@ or:
 x-tif-access-key: <TIF_ACCESS_KEY>
 ```
 
+### Required execution identity
+
+Every authenticated compose request must also carry this controlled operational tuple:
+
+```http
+x-ai-workload: product.content_generation
+x-ai-environment: local | test | development | preview | production | github_actions
+x-ai-execution-source: http_request | manual_cli | scheduled_job | queue_worker | github_actions
+```
+
+TIF rejects missing or unsupported values before it parses or composes publisher content. These
+headers are not request content and cannot contain prompts, customer data, or credentials. TIF
+returns the accepted tuple as `executionIdentity`; Rachel must reject a response whose tuple does
+not exactly match the one it sent. This attests the boundary for the current in-process run only;
+durable Run/Draft persistence remains intentionally outside this contract and is not introduced by
+the identity work.
+
 ## Supported First Slice
 
 Frameworks:
@@ -118,6 +135,8 @@ Voices:
 ```json
 {
   "contractVersion": "2026-07-22",
+  "runId": "run_...",
+  "draftId": "draft_...",
   "framework": "rachel_community",
   "artifact": "comparison_guide",
   "voice": "rachel",
@@ -175,6 +194,11 @@ Voices:
     "voiceApplied": false,
     "requirementsAccepted": true,
     "requirementsDigest": "<sha256>"
+  },
+  "executionIdentity": {
+    "workload": "product.content_generation",
+    "environment": "preview",
+    "executionSource": "http_request"
   }
 }
 ```
