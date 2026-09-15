@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { runCompose } from "@/lib/tif/execution";
+import { parseTifExecutionIdentity } from "@/lib/tif/execution-identity";
 
 export const runtime = "nodejs";
 
@@ -20,8 +21,11 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // Validate operational attribution before parsing/composing publisher content.
+    // Unknown or absent identity is never allowed to reach the composer.
+    const executionIdentity = parseTifExecutionIdentity(request.headers);
     const payload = await request.json();
-    const result = runCompose(payload);
+    const result = runCompose(payload, executionIdentity);
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof ZodError) {
@@ -44,4 +48,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
