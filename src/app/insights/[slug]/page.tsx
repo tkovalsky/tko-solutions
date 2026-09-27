@@ -99,7 +99,7 @@ export default async function InsightPage({ params }: Params) {
       </Section>
       {related.length > 0 ? (
         <Section className="bg-surface">
-          <SectionHeader eyebrow="Related guides" title="More operating patterns." />
+          <SectionHeader eyebrow="Keep reading" title="Related guides." />
           <div className="mt-10 grid gap-4 lg:grid-cols-3">
             {related.map((relatedInsight) => (
               <RelatedInsightCard key={relatedInsight.slug} insight={relatedInsight} />
@@ -108,7 +108,7 @@ export default async function InsightPage({ params }: Params) {
         </Section>
       ) : null}
       <CtaBand
-        title={`If this describes your situation, the ${offer.name} is the vehicle.`}
+        title="Sound like your business?"
         description={offer.summary}
         primaryHref={offerHref(offer.slug)}
         primaryLabel={`See the ${offer.name}`}
