@@ -50,7 +50,8 @@ recommended_action: >-
   before committing further platform, staffing, or automation spend.
 offer: transformation-diagnostic
 cta: "Discuss a Transformation"
-status: published
+# Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
+status: draft
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
 sources:
@@ -61,7 +62,7 @@ sources:
   - https://www.ama-assn.org/practice-management/prior-authorization/ama-prior-authorization-physician-survey
 date: "2026-08-05"
 slug: prior-authorization-is-a-decision-rights-problem
-published: true
+published: false
 featured: true
 # Internal evidence trail (not rendered):
 # - Decision handling varies when authority lives in individual heads. Evidence: healthcare:prior-auth-decision-rights; content/proof/healthcare/evidence.yaml#prior-auth-decision-rights and HEALTHCARE_EXPERIENCE_LIBRARY.md section 1. Guard: advisory pattern, no organization or metric.

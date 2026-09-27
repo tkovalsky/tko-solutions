@@ -4,121 +4,39 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async redirects() {
+    // v1 repositioning (2026-09-27): the site was not yet indexed, so the legacy
+    // redirect map was replaced with this small set that catches old shared links.
+    // Every destination is a live page; none is itself a redirect source.
+    const retiredCaseStudies = [
+      "prior-authorization-modernization",
+      "provider-eligibility-modernization",
+      "enterprise-care-management-modernization",
+      "healthcare-interoperability-platform",
+      "cre-intelligence-model",
+      "rachelos-delivery-model",
+    ];
+    const retiredGuides = [
+      "prior-authorization-is-a-decision-rights-problem",
+      "prior-authorization-operational-quality-problem",
+      "why-healthcare-transformation-programs-stall",
+      "human-apis-become-organizational-bottlenecks",
+      "operational-intelligence-vs-reporting",
+    ];
     return [
-      {
-        source: "/case-studies/racheldelray-operating-system",
-        destination: "/selected-work/from-crm-to-operating-system",
-        permanent: true,
-      },
-      // TKO 2.0 commercial migration.
-      { source: "/services/program-recovery-review", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/services/fractional-transformation-lead", destination: "/services/transformation-leadership", permanent: true },
-      { source: "/services/specialist-subcontract", destination: "/services#delivery-partners", permanent: true },
-      // Principal Transformation Advisor retired (2026-08-27); the ladder ends at execution authority.
-      { source: "/services/principal-transformation-advisor", destination: "/services/transformation-leadership", permanent: true },
-      {
-        source: "/case-studies/rachelos-delivery-model",
-        destination: "/selected-work/from-crm-to-operating-system",
-        permanent: true,
-      },
-      {
-        source: "/case-studies",
-        destination: "/selected-work",
-        permanent: true,
-      },
-      {
-        source: "/case-studies/:slug",
-        destination: "/selected-work/:slug",
-        permanent: true,
-      },
-
-      // --- Commercial path consolidation (Phase A) ---
-      // Retire the parallel /offers and /assessment namespaces into the single
-      // /services commercial path. Assessments become entry offers within a lane.
-      { source: "/offers", destination: "/services", permanent: true },
-      { source: "/offers/executive-recovery", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/offers/program-recovery", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/offers/portfolio-recovery", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/offers/operational-intelligence", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/offers/executive-ai", destination: "/services", permanent: true },
-      { source: "/offers/healthcare-operating", destination: "/healthcare", permanent: true },
-      { source: "/offers/prior-authorization", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/offers/decision-rights-workshop", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/offers/executive-operating-review", destination: "/services/transformation-leadership", permanent: true },
-      { source: "/assessment", destination: "/services/executive-diagnostic", permanent: true },
-      { source: "/assessment/ai-delivery", destination: "/services", permanent: true },
-
-      { source: "/services/recovery", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/services/fractional-leadership", destination: "/services/transformation-leadership", permanent: true },
-      { source: "/services/enterprise-ai", destination: "/services", permanent: true },
-      { source: "/services/product", destination: "/services", permanent: true },
-
-      // One public entry offer and one bounded expansion path.
-      { source: "/services/prior-authorization-assessment", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/services/recovery-assessment", destination: "/services/transformation-diagnostic", permanent: true },
-      { source: "/services/fractional-advisor", destination: "/services/transformation-leadership", permanent: true },
-
-      // --- Offer collapse (2026-08-05) ---
-      // The catalogue is now three offers: Program Recovery Review, Fractional
-      // Transformation Lead, and Specialist Subcontract. The prior-auth-only
-      // Diagnostic and the 90-Day Sprint are retired as sold products; prior
-      // authorization remains a proof domain, not the company category.
-      { source: "/services/diagnostic", destination: "/services/executive-diagnostic", permanent: true },
-      { source: "/services/operating-system-build", destination: "/services/operating-model-design", permanent: true },
-      { source: "/services/specialist", destination: "/services#delivery-partners", permanent: true },
-      { source: "/services/subcontract", destination: "/services#delivery-partners", permanent: true },
-
-      // Two prior-authorization articles merged into one flagship guide.
-      {
-        source: "/insights/prior-authorization-operational-quality-problem",
-        destination: "/insights/prior-authorization-is-a-decision-rights-problem",
-        permanent: true,
-      },
-      // Deprioritized from the primary commercial pathway; content preserved unpublished.
-      { source: "/insights/operational-intelligence-vs-reporting", destination: "/insights", permanent: true },
-
-      // Evidence consolidation: Selected Work is the single public proof center.
-      { source: "/proof", destination: "/selected-work", permanent: true },
-      { source: "/proof/rachelos", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
-      { source: "/proof/transfer", destination: "/selected-work#method-portability", permanent: true },
-      { source: "/proof/prior-authorization", destination: "/healthcare", permanent: true },
-      { source: "/proof/gold-card", destination: "/healthcare", permanent: true },
-      { source: "/proof/program-recovery", destination: "/selected-work/enterprise-care-management-modernization", permanent: true },
-      { source: "/proof/executive-operating-system", destination: "/selected-work", permanent: true },
-      { source: "/proof/ai-governance", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
-
-      // Frameworks are supporting method content, not a parallel product library.
-      { source: "/frameworks", destination: "/healthcare", permanent: true },
-      { source: "/frameworks/prior-authorization", destination: "/healthcare", permanent: true },
-      { source: "/frameworks/gold-card", destination: "/healthcare", permanent: true },
-      { source: "/frameworks/program-recovery", destination: "/selected-work/enterprise-care-management-modernization", permanent: true },
-      { source: "/frameworks/executive-operating-system", destination: "/selected-work", permanent: true },
-      { source: "/frameworks/ai-governance", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
-      { source: "/frameworks/:slug", destination: "/healthcare", permanent: true },
-
-      // Two RachelOS narratives are merged into one bounded case study.
-      { source: "/selected-work/rachelos-delivery-model", destination: "/selected-work/from-crm-to-operating-system", permanent: true },
-
-      // Broad taxonomies now resolve into the healthcare specialization.
-      { source: "/industries", destination: "/healthcare", permanent: true },
-      { source: "/problems", destination: "/healthcare", permanent: true },
-      { source: "/diagrams", destination: "/healthcare", permanent: true },
-      { source: "/diagrams/:slug", destination: "/healthcare", permanent: true },
-
-      // --- Founder consolidation (Credibility Sprint, 2026-07-17) ---
-      // One canonical founder destination. /about, /proof/founder, and the
-      // eight /founder/* taxonomy pages merge into /founder (anchored sections).
+      { source: "/healthcare", destination: "/", permanent: true },
+      { source: "/approach", destination: "/services", permanent: true },
+      { source: "/program-recovery-readiness-check", destination: "/services/constraint-diagnostic", permanent: true },
       { source: "/about", destination: "/founder", permanent: true },
-      { source: "/proof/founder", destination: "/founder", permanent: true },
-      { source: "/founder/what-i-have-built", destination: "/founder#experience", permanent: true },
-      { source: "/founder/what-i-have-owned", destination: "/founder#timeline", permanent: true },
-      { source: "/founder/how-i-think", destination: "/founder#philosophy", permanent: true },
-      { source: "/founder/operating-principles", destination: "/founder#philosophy", permanent: true },
-      { source: "/founder/difficult-decisions", destination: "/founder#philosophy", permanent: true },
-      { source: "/founder/what-i-got-wrong", destination: "/founder#philosophy", permanent: true },
-      { source: "/founder/healthcare", destination: "/founder#experience", permanent: true },
-      { source: "/founder/ai-delivery", destination: "/founder#capabilities", permanent: true },
       { source: "/founder/:slug", destination: "/founder", permanent: true },
+      { source: "/proof", destination: "/selected-work", permanent: true },
+      { source: "/case-studies", destination: "/selected-work", permanent: true },
+      { source: "/case-studies/:slug", destination: "/selected-work", permanent: true },
+      { source: "/services/executive-diagnostic", destination: "/services/constraint-diagnostic", permanent: true },
+      { source: "/services/transformation-diagnostic", destination: "/services/constraint-diagnostic", permanent: true },
+      { source: "/services/operating-model-design", destination: "/services/operating-system-build", permanent: true },
+      { source: "/services/transformation-leadership", destination: "/services", permanent: true },
+      ...retiredCaseStudies.map((slug) => ({ source: `/selected-work/${slug}`, destination: "/selected-work", permanent: true })),
+      ...retiredGuides.map((slug) => ({ source: `/insights/${slug}`, destination: "/insights", permanent: true })),
     ];
   },
 };

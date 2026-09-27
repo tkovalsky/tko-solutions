@@ -65,45 +65,38 @@ export const careerTimeline: TimelineEntry[] = [
     organization: "TKO Solutions",
     role: "Founder & Principal",
     era: "Independent advisory",
-    scope: "Principal-led healthcare transformation and operating-model advisory for organizations working across administrative burden, regulated workflows, technology modernization, and complex execution.",
-    buyerRelevance: "Combines the operating, product, healthcare, technology, governance, and implementation perspectives inside one accountable engagement lead.",
+    scope: "Business operating systems for growing companies: diagnosing the constraint across process, people, data, and technology, and building the system that removes it. Includes RachelOS, designed, built, and operated end to end.",
+    buyerRelevance: "Combines operating, product, technology, and implementation perspectives in one person who both diagnoses the problem and builds the fix.",
   },
-];
-
-export const credibilityStrip = [
-  { name: "Apollo Global Management", detail: "regulated operations and exception handling" },
-  { name: "Sapient", detail: "institutional platform transformation" },
-  { name: "ELLKAY", detail: "CMS Cures Act and FHIR interoperability" },
-  { name: "Cognizant", detail: "healthcare transformation and payer operations" },
 ];
 
 export const executiveSummary = {
-  headline: "I'm Todd Kovalsky. I become the integration point on transformations that no single team owns end to end.",
+  headline: "I'm Todd Kovalsky. I find why the machine isn't working, and then I build the fix.",
   facts: [
-    "20+ years across regulated operations, enterprise transformation, product ownership, healthcare interoperability, and implementation.",
-    "Enterprise programs spanning dozens of interdependent applications and workstreams, with governance environments involving more than 100 cross-functional participants.",
-    "Healthcare experience spanning prior authorization, utilization management, payer and provider operations, interoperability, and administrative workflow change.",
-    "Product and implementation experience translating operating requirements into usable workflows, controls, and delivery decisions.",
-    "RachelOS, an operating system I built and run, shows the same implementation and governance discipline applied end to end.",
+    "20+ years across financial-services operations, enterprise programs, product ownership, and healthcare transformation.",
+    "Designed, built, and run RachelOS: a production operating system with 1,600+ commits and 100+ recorded design decisions.",
+    "Work across process, CRM and data, automation, and AI, instead of handing each piece to a different specialist.",
+    "Product and program experience translating how work actually happens into systems people use.",
   ],
 };
 
+/** Patterns I recognize, stated the way an owner would notice them. */
 export const founderArchetypes = [
   {
-    title: "Integration point",
-    body: "I am the single point where business, operations, technology, compliance, finance, provider workflows, communications, testing, and production readiness actually meet—on programs with a fixed enterprise deadline and no one role accountable for the whole.",
+    title: "The person who is the system",
+    body: "The owner, the operations manager, or the one employee everyone asks. The business works because they remember and decide. It stalls when they're busy, and it breaks when they leave.",
   },
   {
-    title: "Operational truth",
-    body: "I establish the governance and dependency architecture a program is missing: who owns what, what depends on what, which decision is unresolved, and whether reported status is supported by evidence.",
+    title: "Tools without an operating model",
+    body: "A CRM, a project tool, dashboards, and AI subscriptions, each fine on its own. Nobody decided how information should turn into action, so people do that job by hand.",
   },
   {
-    title: "Failure modes, firsthand",
-    body: "I recognize where large healthcare implementations break down because I have operated inside them—ownership gaps, dependencies discovered by collision, decisions that stall, and testing that lacks the right data.",
+    title: "Automating the wrong thing",
+    body: "Automation layered on a process nobody examined runs the broken steps faster. The first question is what should happen and who decides, not which tool to connect.",
   },
   {
-    title: "Translator",
-    body: "I connect healthcare operations, business objectives, technology, controls, risk, provider experience, and implementation so that a target operating model survives contact with delivery.",
+    title: "The constraint that moves",
+    body: "Fix follow-up and the bottleneck shifts to qualification; fix that and it shifts to conversion. Good systems are built to be changed, not declared finished.",
   },
 ];
 

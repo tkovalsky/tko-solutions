@@ -1,6 +1,14 @@
 # TKO Repositioning Decision Pack
 
-**Status:** PROPOSED. Awaiting Todd's review. This pack authorizes no site changes.
+**Status:** APPROVED IN SIMPLIFIED FORM (2026-09-27). Todd confirmed the site was not yet
+indexed and directed a clean v1 over the phased plan. v1 shipped: new category and hero, the
+three-step ladder (Constraint Diagnostic $7,500 / $5,000 founding, Operating System Build from
+$15K, Operate & Improve $3K–$6K/mo), RachelOS as the flagship constraint-evolution case, new
+About and contact, SMB guide clusters, and a minimal redirect map. Healthcare pages, enterprise
+offers, and healthcare guides were removed from the public site; their content remains in git.
+Deferred to later iterations: problem pages, `/enterprise`, `/south-florida`, new guides,
+analytics provider. The acquisition channel is search-led (RachelDelray model) rather than
+warm-network-led, which raises the priority of section H.
 **Date:** 2026-09-27
 **Supersedes on approval:** `docs/TKO-2.0-STRATEGY.md` (healthcare category), the category
 verdicts in `docs/TKO_P0_AUDIT_RECONCILED_2026_08_27.md`, the "Primary Position" section of

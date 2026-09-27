@@ -10,12 +10,12 @@ const notes = [
     body: "Roles and scope are verifiable and are presented as experience. No employer or client endorses this practice or its conclusions.",
   },
   {
-    title: "Client outcomes are not published without permission",
-    body: "Enterprise programs carry confidentiality obligations that outlast the engagement. Where a result cannot be published, the mechanism and my role are described and the number is left out rather than estimated.",
+    title: "Numbers are published only when they are verified",
+    body: "Where a result can't be measured or published yet, the mechanism and my role are described and the number is left out rather than estimated.",
   },
   {
-    title: "Each case supports a specific capability",
-    body: "Healthcare cases establish domain and operating experience. RachelOS shows implementation discipline in an environment I built and run. They answer different questions and are not interchangeable.",
+    title: "Built is different from advised",
+    body: "RachelOS is a system I built and run. Earlier enterprise roles are experience, described by the role I actually held. They answer different questions and are not interchangeable.",
   },
 ];
 
@@ -30,10 +30,10 @@ export function EvidenceNote({ className, expanded = false }: { className?: stri
         <div className="max-w-[72ch] border-l-2 border-border pl-6">
           <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">How I describe this work</h2>
           <p className="mt-4 text-sm leading-6 text-muted">
-            Enterprise programs carry confidentiality obligations that outlast the engagement. Where a
-            result cannot be published, I describe the mechanism and my own role and leave the number
-            out rather than estimate it. Employment history establishes experience, not employer or
-            client endorsement.
+            I publish numbers only when they are verified. Where a result can&apos;t be measured or
+            published yet, I describe the mechanism and my own role and leave the number out rather
+            than estimate it. Employment history establishes experience, not employer or client
+            endorsement.
           </p>
         </div>
       </div>

@@ -14,7 +14,7 @@ describe("InsightsPage", () => {
   it("groups published guides under their problem cluster", () => {
     insightState.byCluster = new Map([
       [
-        "prior-authorization-operations",
+        "lead-follow-up-and-revenue-leakage",
         [
           insight("featured", "Featured Guide", "2026-06-01", true, 2),
           insight("standard", "Standard Guide", "2026-07-01", false, 0),
@@ -25,9 +25,9 @@ describe("InsightsPage", () => {
     const { container } = render(<InsightsPage />);
 
     // Clusters are h2; the guides inside them are h3.
-    expect(screen.getByRole("heading", { level: 2, name: "Prior authorization operations" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Lead follow-up and revenue leakage" })).toBeInTheDocument();
 
-    const cluster = container.querySelector("#prior-authorization-operations");
+    const cluster = container.querySelector("#lead-follow-up-and-revenue-leakage");
     const guideHeadings = within(cluster as HTMLElement).getAllByRole("heading", { level: 3 });
     expect(guideHeadings.map((heading) => heading.textContent)).toEqual([
       "Featured Guide",
@@ -51,13 +51,13 @@ describe("InsightsPage", () => {
 
   it("hides clusters that have no published guide", () => {
     insightState.byCluster = new Map([
-      ["prior-authorization-operations", [insight("only", "Only Guide", "2026-06-01", false, 1)]],
+      ["lead-follow-up-and-revenue-leakage", [insight("only", "Only Guide", "2026-06-01", false, 1)]],
     ]);
 
     render(<InsightsPage />);
 
     expect(
-      screen.queryByRole("heading", { name: "Stalled healthcare transformation" }),
+      screen.queryByRole("heading", { name: "Systems that don't drive action" }),
     ).not.toBeInTheDocument();
   });
 

@@ -71,8 +71,9 @@ export function DiagnosticForm({
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     const formData = new FormData(event.currentTarget);
     const activeTiming = formData.get("timing") !== "exploring";
+    const revenueFit = ["5-20m", "20-100m", "100m-plus"].includes(String(formData.get("revenueBand")));
     trackConversion("contact_form_submit_attempt", { ctaLocation: "contact_form" });
-    trackConversion("qualified_intake_indicator", { qualified: activeTiming });
+    trackConversion("qualified_intake_indicator", { qualified: activeTiming && revenueFit });
   }
 
   function handleInvalid() {
@@ -102,7 +103,7 @@ export function DiagnosticForm({
       <div className="grid gap-6 md:grid-cols-2">
         <Field id="name" label="Name" autoComplete="name" />
         <Field id="email" label="Business email" type="email" autoComplete="email" />
-        <Field id="company" label="Organization" autoComplete="organization" />
+        <Field id="company" label="Company" autoComplete="organization" />
         <Field
           id="role"
           label="Title / role (optional)"
@@ -113,35 +114,46 @@ export function DiagnosticForm({
 
       <Field
         id="transformationContext"
-        label="What is changing, and what is stuck?"
-        placeholder="Describe the transformation, workflow, operating pressure, or decision. Use de-identified operating context only."
+        label="What's stuck?"
+        placeholder="In your own words: where do leads, work, or decisions get stuck, and what have you already tried?"
         textarea
       />
 
-      <SelectField id="currentPressure" label="Where is the primary pressure?">
+      <SelectField id="currentPressure" label="Which sounds most like your business?">
         <option value="">Select one</option>
-        <option value="administrative-burden">Administrative burden or operating cost</option>
-        <option value="provider-experience">Provider experience or abrasion</option>
-        <option value="regulatory-change">Regulatory or policy change</option>
-        <option value="stalled-transformation">Stalled or fragmented transformation</option>
-        <option value="workflow-modernization">Workflow or platform modernization</option>
-        <option value="automation-ai-decision">Automation or AI investment decision</option>
-        <option value="operating-model">Operating model, controls, or decision rights</option>
-        <option value="other">Other</option>
+        <option value="leads-follow-up">Leads come in, but follow-up is inconsistent</option>
+        <option value="owner-bottleneck">Everything routes through the owner or COO</option>
+        <option value="crm-trust">We have a CRM, but nobody trusts it or uses it well</option>
+        <option value="manual-work">People copy information between systems by hand</option>
+        <option value="ai-tools">We bought AI tools and nothing changed</option>
+        <option value="reporting-to-action">Reports don&apos;t tell anyone what to do</option>
+        <option value="knowledge-risk">Too much depends on a few key people</option>
+        <option value="other">Something else</option>
       </SelectField>
 
-      <SelectField id="timing" label="When does leadership need a decision?">
-        <option value="">Select one</option>
-        <option value="now">Active now</option>
-        <option value="30">Within 30 days</option>
-        <option value="31-90">Within 31–90 days</option>
-        <option value="exploring">Exploring only</option>
-      </SelectField>
+      <div className="grid gap-6 md:grid-cols-2">
+        <SelectField id="revenueBand" label="Annual revenue">
+          <option value="">Select one</option>
+          <option value="under-2m">Under $2M</option>
+          <option value="2-5m">$2M–$5M</option>
+          <option value="5-20m">$5M–$20M</option>
+          <option value="20-100m">$20M–$100M</option>
+          <option value="100m-plus">Over $100M</option>
+        </SelectField>
+
+        <SelectField id="timing" label="When do you want this fixed?">
+          <option value="">Select one</option>
+          <option value="now">Now</option>
+          <option value="30">Within 30 days</option>
+          <option value="31-90">Within 90 days</option>
+          <option value="exploring">Just exploring</option>
+        </SelectField>
+      </div>
 
       <Field
         id="message"
-        label="Which teams, systems, and controls are involved? (optional)"
-        placeholder="Describe the organizational boundaries, technology, evidence, or dependencies already visible."
+        label="Which tools do you run on? (optional)"
+        placeholder="For example: HubSpot, spreadsheets, QuickBooks, Gmail, an industry CRM, a few AI tools."
         textarea
         required={false}
       />
@@ -149,16 +161,14 @@ export function DiagnosticForm({
       <Field
         id="consequence"
         label="What happens if nothing changes? (optional)"
-        placeholder="Describe the cost, delay, provider impact, compliance risk, or investment decision approaching."
+        placeholder="Lost deals, owner hours, a key person leaving, a growth plan the current setup can't support."
         textarea
         required={false}
       />
 
       <div className="rounded-md border border-border bg-surface p-4 text-sm leading-6 text-muted">
-        Do not submit PHI, patient identifiers, credentials, personal financial
-        information, confidential client information, or other sensitive data.
-        Appropriately de-identified artifacts can be discussed after scope and
-        handling controls are agreed.
+        Please don&apos;t include passwords, customer personal data, or other sensitive
+        information. Details can be shared safely once we agree to work together.
       </div>
 
       <div className="flex items-start gap-3">
@@ -179,7 +189,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Request the Fit Call
+        Send
       </Button>
     </form>
   );

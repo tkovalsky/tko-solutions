@@ -1,7 +1,7 @@
 // Problem and intent clusters for TKO guides.
 //
-// Guides are organized around expensive executive problems, not generic
-// thought-leadership categories. Each cluster owns one pillar guide; supporting
+// Guides are organized around the problems growing-business owners and operators
+// actually search for, not generic thought-leadership categories. Each cluster owns one pillar guide; supporting
 // guides are added only when they answer a genuinely distinct question.
 //
 // Cannibalization rule: two clusters may share vocabulary but must not share
@@ -11,16 +11,11 @@
 import type { OfferSlug } from "@/lib/offers";
 
 export type GuideClusterSlug =
-  | "stalled-healthcare-transformation"
-  | "transformation-program-recovery"
-  | "prior-authorization-operations"
-  | "utilization-management-operations"
-  | "decision-rights-and-exception-routing"
-  | "ai-readiness-for-healthcare-workflows"
-  | "human-workarounds-and-human-apis"
-  | "interoperability-implementation"
-  | "provider-performance-and-network-operations"
-  | "administrative-cost-reduction";
+  | "lead-follow-up-and-revenue-leakage"
+  | "owner-as-operating-system"
+  | "systems-that-dont-drive-action"
+  | "ai-in-operations"
+  | "what-to-fix-first";
 
 export type GuideCluster = {
   slug: GuideClusterSlug;
@@ -33,114 +28,59 @@ export type GuideCluster = {
 
 export const guideClusters: GuideCluster[] = [
   {
-    slug: "stalled-healthcare-transformation",
-    name: "Stalled healthcare transformation",
+    slug: "lead-follow-up-and-revenue-leakage",
+    name: "Lead follow-up and revenue leakage",
     executiveProblem:
-      "A funded program has stopped producing visible progress and leadership cannot agree on why.",
+      "Leads come in, follow-up depends on who remembers, and revenue leaks between first contact and close.",
     searchIntent:
-      "Diagnostic — an executive is trying to name the cause before committing more money or people.",
+      "Problem-aware: an owner or sales leader wants to know why leads disappear and how to stop it.",
     boundary:
-      "Diagnosis only. What to do once the cause is known belongs to transformation-program-recovery.",
-    primaryOffer: "transformation-diagnostic",
+      "The path from first contact to closed business and referral. The owner's general bottleneck belongs to owner-as-operating-system.",
+    primaryOffer: "constraint-diagnostic",
   },
   {
-    slug: "transformation-program-recovery",
-    name: "Transformation program recovery",
+    slug: "owner-as-operating-system",
+    name: "When a person is the operating system",
     executiveProblem:
-      "The cause is understood and leadership now has to decide how to restructure, resequence, or stop the program.",
+      "The owner, COO, or a few key people hold the judgment that connects the business, so everything waits on them.",
     searchIntent:
-      "Prescriptive — an executive is looking for the mechanics of a recovery, not the diagnosis.",
+      "Problem-aware: a leader recognizes the bottleneck or key-person risk and wants a name and a remedy.",
     boundary:
-      "Recovery mechanics only. Naming why a program stalled belongs to stalled-healthcare-transformation.",
-    primaryOffer: "transformation-leadership",
+      "Key-person dependency and institutional knowledge across the business. Lead-specific follow-up belongs to lead-follow-up-and-revenue-leakage.",
+    primaryOffer: "constraint-diagnostic",
   },
   {
-    slug: "prior-authorization-operations",
-    name: "Prior authorization operations",
+    slug: "systems-that-dont-drive-action",
+    name: "Systems that don't drive action",
     executiveProblem:
-      "Prior authorization consumes staff effort and produces inconsistent results that automation has not fixed.",
+      "The CRM, dashboards, and apps hold information, but none of them tell anyone what to do next.",
     searchIntent:
-      "Operational — a leader is looking for how to measure, sequence, and improve the PA workflow.",
+      "Problem- and solution-aware: why CRM implementations disappoint, why dashboards don't change behavior, systems of record versus systems of action.",
     boundary:
-      "The PA workflow end to end. The authority model underneath it belongs to decision-rights-and-exception-routing.",
-    primaryOffer: "transformation-diagnostic",
+      "The gap between stored information and executed work. Whether and how to add AI belongs to ai-in-operations.",
+    primaryOffer: "operating-system-build",
   },
   {
-    slug: "utilization-management-operations",
-    name: "Utilization management operations",
+    slug: "ai-in-operations",
+    name: "AI in operations",
     executiveProblem:
-      "Review throughput and consistency depend on which experienced reviewer is working.",
+      "AI tools are multiplying without an operating model, and nothing measurable has changed.",
     searchIntent:
-      "Operational — prioritization, missing-information detection, and reviewer consistency.",
+      "Solution-aware: how to use AI in day-to-day operations without an AI team and without losing human judgment.",
     boundary:
-      "Clinical review operations. Administrative authorization submission belongs to prior-authorization-operations.",
-    primaryOffer: "transformation-diagnostic",
+      "Where AI belongs in a workflow and how it is governed. General system fragmentation belongs to systems-that-dont-drive-action.",
+    primaryOffer: "operating-system-build",
   },
   {
-    slug: "decision-rights-and-exception-routing",
-    name: "Decision rights and exception routing",
+    slug: "what-to-fix-first",
+    name: "What to fix first",
     executiveProblem:
-      "Nobody can state who is authorized to decide what, so exceptions stall and decisions cannot be audited.",
+      "There are too many things to fix and no defensible way to pick the one that matters most.",
     searchIntent:
-      "Structural — a leader is looking for how to make an implicit authority model explicit.",
+      "Solution-aware: what to automate first, how to find workflow and automation opportunities, how to reduce manual work.",
     boundary:
-      "The authority and escalation model itself, in any workflow. Domain-specific application belongs to the domain cluster.",
-    primaryOffer: "operating-model-design",
-  },
-  {
-    slug: "ai-readiness-for-healthcare-workflows",
-    name: "AI readiness for healthcare workflows",
-    executiveProblem:
-      "An AI investment is being proposed and leadership cannot tell whether the workflow underneath it is ready.",
-    searchIntent:
-      "Evaluative — an executive is testing whether to fund, defer, or stop an AI initiative.",
-    boundary:
-      "Whether and when AI is appropriate. How AI changed delivery economics belongs to the delivery-model evidence in this cluster's supporting guides.",
-    primaryOffer: "transformation-diagnostic",
-  },
-  {
-    slug: "human-workarounds-and-human-apis",
-    name: "Human workarounds and human APIs",
-    executiveProblem:
-      "Critical operational knowledge lives in a few people, so the organization cannot operate without them.",
-    searchIntent:
-      "Conceptual — a leader recognizes the symptom and is looking for a name and a remedy for it.",
-    boundary:
-      "The portable pattern across industries. Healthcare-specific instances belong to their domain cluster.",
-    primaryOffer: "executive-diagnostic",
-  },
-  {
-    slug: "interoperability-implementation",
-    name: "Interoperability implementation",
-    executiveProblem:
-      "Regulatory data-exchange requirements have to become working operational behavior, not documentation.",
-    searchIntent:
-      "Implementation — CMS, FHIR, access control, auditability, and onboarding as operating problems.",
-    boundary:
-      "Regulated data exchange and its operating controls. Prior authorization APIs are referenced here but owned by prior-authorization-operations.",
-    primaryOffer: "operating-model-design",
-  },
-  {
-    slug: "provider-performance-and-network-operations",
-    name: "Provider performance and network operations",
-    executiveProblem:
-      "Provider-facing programs vary in performance and the operating causes are not visible.",
-    searchIntent:
-      "Operational — network, provider experience, and program administration.",
-    boundary:
-      "Provider-facing operations. Internal clinical review belongs to utilization-management-operations.",
-    primaryOffer: "transformation-diagnostic",
-  },
-  {
-    slug: "administrative-cost-reduction",
-    name: "Administrative cost reduction",
-    executiveProblem:
-      "Administrative expense is a board-level target and the addressable causes have not been separated from the fixed ones.",
-    searchIntent:
-      "Financial — an executive is looking for where administrative cost is actually created.",
-    boundary:
-      "Cost causation and sizing. The workflow remedies belong to the relevant operational cluster.",
-    primaryOffer: "executive-diagnostic",
+      "Prioritization and sizing across the business. The remedies belong to the relevant problem cluster.",
+    primaryOffer: "constraint-diagnostic",
   },
 ];
 

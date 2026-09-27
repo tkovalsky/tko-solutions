@@ -55,7 +55,7 @@ describe("InsightPage", () => {
     expect(screen.getByText("2 min read")).toBeInTheDocument();
     expect(screen.getByText("Based on 2 sources")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Related" })).toBeInTheDocument();
-    expect(screen.getAllByText("See the Transformation Diagnostic").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("See the Constraint Diagnostic").length).toBeGreaterThan(0);
   });
 
   it("returns a 404 for unknown slugs", async () => {
@@ -77,9 +77,9 @@ function insight(slug: string, title: string) {
     readingTime: 2,
     html: "<h2>Rendered Markdown</h2><p>Body text.</p>",
     brief: {
-      cluster: "prior-authorization-operations",
-      offer: "transformation-diagnostic",
-      cta: "Discuss a Transformation",
+      cluster: "lead-follow-up-and-revenue-leakage",
+      offer: "constraint-diagnostic",
+      cta: "Book a 30-Minute Call",
       diagnosticQuestions: [],
     },
   };

@@ -3,10 +3,10 @@ title: "What AI-Assisted Delivery Compresses, and What It Cannot"
 description: "Ten months of evidence from a production system built through an operator-led, AI-assisted delivery model: coordination collapsed, judgment did not."
 business_unit: tko
 voice: tko-advisory
-cluster: ai-readiness-for-healthcare-workflows
+cluster: ai-in-operations
 primary_buyer: >-
-  CIO, CTO, Chief Transformation Officer, and consulting-firm practice and delivery leaders
-  evaluating what AI-assisted delivery actually changes about cost, staffing, and risk.
+  Owners, COOs, and CTOs of growing businesses, and delivery leaders, evaluating what
+  AI-assisted building actually changes about cost, staffing, and risk.
 buyer_problem: >-
   Leadership is being asked to fund AI-assisted delivery against claims about productivity
   that nobody can audit, and cannot tell which parts of the claim are real.
@@ -44,8 +44,8 @@ diagnostic_questions:
 recommended_action: >-
   Before resizing a delivery model around an AI productivity assumption, measure where elapsed
   time actually goes and require an auditable artifact behind any claimed multiple.
-offer: operating-model-design
-cta: "Discuss a Transformation"
+offer: operating-system-build
+cta: "Book a 30-Minute Call"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
