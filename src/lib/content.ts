@@ -54,7 +54,7 @@ export const caseStudies: CaseStudy[] = [
     relevance:
       "If your leads, customers, or jobs depend on someone remembering what happened and deciding what comes next, your business has the same shape. The industry changes the vocabulary, not the mechanism.",
     evidence: [
-      "Direct founder design, implementation, and operation, with a single-author commit history (1,600+ commits from September 2025 to July 2026).",
+      "Direct founder design, implementation, and operation, with a single-author commit history (1,600+ commits since September 2025; recount in the next audit).",
       "Production mechanisms visible in redacted screens: queue, approval, relationship memory, and system health.",
       "86 database migrations, 240+ test files, and 100+ numbered design decisions, including recorded reversals.",
     ],

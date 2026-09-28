@@ -53,6 +53,9 @@ offer: constraint-diagnostic
 cta: "Book a 30-Minute Call"
 # In review: not rendered publicly until Todd reviews it, fills `reviewer` and
 # `reviewed_date`, and sets `status: published`.
+# BLOCKED (2026-09-28): do not publish until every figure is re-verified by the full RachelOS
+# re-audit (docs/strategy/CODEX_PROMPT_REVIEW_AND_REAUDIT.md). The July 2026 numbers below are
+# placeholders from the last audit, not current facts.
 # REVIEW NOTES FOR TODD
 # - Numbers are from the RachelOS snapshot of 2026-07-11 (claim audit 07_CLAIM_AUDIT.md). Replace
 #   with the Codex evidence refresh when it lands, and update the "as of" date in the text.
