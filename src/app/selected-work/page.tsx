@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { CtaBand } from "@/components/site/cta-band";
-import { EvidenceNote } from "@/components/site/evidence-note";
 import { PageHero } from "@/components/site/page-hero";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { Section, SectionHeader } from "@/components/ui/section";
@@ -10,22 +9,22 @@ import { CONSTRAINT_CALL, offerHref } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Proof",
+  title: "RachelOS",
   description:
-    "RachelOS: a production operating system built and run by Todd Kovalsky, plus the operating experience behind TKO. What is claimed, what isn't, and why.",
+    "RachelOS is the clearest example of how TKO turns scattered information and person-held judgment into a practical operating system.",
   alternates: { canonical: "/selected-work" },
   openGraph: {
-    title: "Proof | TKO Solutions",
-    description: "A system built and run, not a slide about one.",
+    title: "RachelOS | TKO Solutions",
+    description: "A real operating problem, turned into a working system.",
     url: absoluteUrl("/selected-work"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions proof." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "RachelOS by TKO Solutions." }],
   },
 };
 
 const experience = [
-  ["Financial-services operations", "Loan settlement and fund operations at Apollo and earlier firms, where every exception had to be reconciled and owned. A system of record that holds the transaction is not the same as one that runs the work."],
-  ["Enterprise programs", "Platform programs for large asset managers, and healthcare transformation programs spanning dozens of applications and teams. Every workstream had an owner. The end-to-end outcome often didn't."],
-  ["Product ownership", "Advisor, CRM, and healthcare-interoperability platforms, where requirements, controls, and day-to-day behavior had to be designed together to work in production."],
+  ["Operations", "Years inside work where ownership, controls, and exception handling had to be explicit—not left to memory."],
+  ["Product", "Experience translating how people actually work into systems, workflows, and decisions a team can use."],
+  ["Implementation", "RachelOS brought those disciplines together in one system designed and built from the operating problem outward."],
 ] as const;
 
 export default function SelectedWorkPage() {
@@ -33,9 +32,9 @@ export default function SelectedWorkPage() {
   return (
     <>
       <PageHero
-        eyebrow="Proof"
-        title="A system built and run, not a slide about one."
-        description="The best evidence that I can build your operating layer is one I built for a real business, still run, and keep improving. Here it is, including what it doesn't prove yet."
+        eyebrow="Selected work"
+        title="A real operating problem, turned into a working system."
+        description="RachelOS is the clearest example of how I work: understand the decisions people are carrying, make the work visible, and build the missing layer around the tools already in place."
         primaryHref={CONSTRAINT_CALL.href}
         primaryLabel={CONSTRAINT_CALL.label}
         secondaryHref={offerHref("constraint-diagnostic")}
@@ -81,7 +80,7 @@ export default function SelectedWorkPage() {
 
       <Section className="!py-14 md:!py-18">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Where the pattern was learned" title="Twenty years inside operations that had to work." description="Before RachelOS, I saw the same failure from the inside of much larger organizations: information everywhere, and people doing the integration by hand." />
+          <SectionHeader eyebrow="Why this work" title="Built from an operator's point of view." description="The work combines operating discipline, product thinking, and hands-on implementation. That mix is the point of TKO." />
           <div className="border-t border-border">
             {experience.map(([heading, body]) => (
               <article key={heading} className="border-b border-border py-6">
@@ -95,17 +94,13 @@ export default function SelectedWorkPage() {
 
       <Section className="bg-surface !py-14 md:!py-18">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Founding clients" title="The next case study could be yours." />
+          <SectionHeader eyebrow="Founding clients" title="Bring me the workflow everyone complains about." />
           <div className="space-y-5 text-base leading-7 text-muted">
-            <p>TKO is taking on its first outside clients now. The first three diagnostics are offered at a founding rate of $5,000 instead of $7,500, in exchange for permission to publish the results (anonymized if you prefer) and a short reference call.</p>
-            <p>Every engagement starts with a baseline, so whatever changes can be measured and shown, not just described.</p>
+            <p>I am opening a small number of founding-client engagements. The first three diagnostics are $5,000 instead of $7,500 in exchange for permission to describe the work publicly, anonymously if needed, and a short reference call if the engagement earns it.</p>
+            <p>The goal is simple: identify one meaningful bottleneck and leave you with a practical decision about what to fix.</p>
             <ArrowLink href={offerHref("constraint-diagnostic")}>See the Diagnostic</ArrowLink>
           </div>
         </div>
-      </Section>
-
-      <Section id="how-to-read-this-evidence" className="!py-12 md:!py-16">
-        <EvidenceNote />
       </Section>
 
       <CtaBand description={CONSTRAINT_CALL.summary} secondaryHref="/services" secondaryLabel="Services and Pricing" />

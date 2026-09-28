@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
-import { EvidenceNoteLink } from "@/components/site/evidence-note";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Section } from "@/components/ui/section";
@@ -12,7 +11,7 @@ import { absoluteUrl, site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
 
-const rachelosProofAssets = [
+const rachelosScreens = [
   {
     title: "Prioritized work",
     description: "The queue makes active work, next actions, and operating lanes visible.",
@@ -25,18 +24,6 @@ const rachelosProofAssets = [
     image: "/proof/rachelos/human-approval.png",
     alt: "Redacted RachelOS review surface showing human approval controls.",
   },
-  {
-    title: "Durable context",
-    description: "Current context, recent activity, and the next recommended action share one working surface.",
-    image: "/proof/rachelos/relationship-memory.png",
-    alt: "Redacted RachelOS workspace showing relationship context and next action.",
-  },
-  {
-    title: "Operating health",
-    description: "System checks and execution status make failures visible instead of leaving them to operator intuition.",
-    image: "/proof/rachelos/system-health.png",
-    alt: "Redacted RachelOS system-health view showing operating checks.",
-  },
 ];
 
 export function generateStaticParams() {
@@ -47,18 +34,23 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
   if (!study) return {};
 
-  const lead = leadParagraph(study.situation);
+  const title = study.slug === "from-crm-to-operating-system"
+    ? "RachelOS: From Scattered Follow-Up to a Working System"
+    : study.title;
+  const lead = study.slug === "from-crm-to-operating-system"
+    ? "How person-held context became a practical operating system for relationship-driven work."
+    : leadParagraph(study.situation);
 
   return {
-    title: study.title,
+    title,
     description: lead,
     alternates: { canonical: `/selected-work/${study.slug}` },
     openGraph: {
       type: "article",
-      title: study.title,
+      title,
       description: lead,
       url: absoluteUrl(`/selected-work/${study.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: `${study.title} | TKO Solutions` }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: `${title} | TKO Solutions` }],
     },
   };
 }
@@ -129,14 +121,14 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       {study.slug === "from-crm-to-operating-system" ? (
         <Section className="bg-surface">
           <div className="max-w-[72ch]">
-            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Inspectable proof</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Inside the system</p>
             <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-              The operating mechanisms, in current screens.
+              Two views of the operating layer.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-muted">Redacted views of the system as it runs today.</p>
+            <p className="mt-5 text-lg leading-8 text-muted">The queue makes the work visible. The review surface keeps the person in the decision.</p>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {rachelosProofAssets.map((asset) => (
+            {rachelosScreens.map((asset) => (
               <article key={asset.title} className="overflow-hidden border border-border bg-white">
                 <div className="relative aspect-[16/10] border-b border-border bg-surface">
                   <Image src={asset.image} alt={asset.alt} fill className="object-cover object-top" sizes="(min-width: 1024px) 50vw, 100vw" />
@@ -150,14 +142,6 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           </div>
         </Section>
       ) : null}
-
-      <Section className="!py-12 md:!py-14">
-        <div className="max-w-[72ch] border-l-2 border-border pl-6">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">What is and isn&apos;t claimed</h2>
-          <p className="mt-4 text-sm leading-6 text-muted">{study.evidenceLimit}</p>
-          <EvidenceNoteLink className="mt-3" />
-        </div>
-      </Section>
 
       <CtaBand
         title="Does your business run on someone's memory?"

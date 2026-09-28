@@ -10,11 +10,11 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services and Pricing",
   description:
-    "A fixed-price diagnostic to find the constraint, a build to fix it, and monthly operation to keep it working. Published prices for growing businesses.",
+    "A focused diagnostic, a fixed-price build, and ongoing care for growing businesses that have outgrown the way work gets done today.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "Services and Pricing | TKO Solutions",
-    description: "Find the constraint. Build the fix. Keep it working.",
+    description: "Start with what is stuck. Build the first useful fix. Keep it working as the business changes.",
     url: absoluteUrl("/services"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions services and pricing." }],
   },
@@ -24,7 +24,7 @@ export default function ServicesPage() {
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: "TKO Solutions services", url: absoluteUrl("/services"), itemListElement: offers.map((offer, index) => ({ "@type": "ListItem", position: index + 1, item: { "@type": "Service", name: offer.name, description: offer.metaDescription, url: absoluteUrl(offerHref(offer.slug)), provider: { "@type": "ProfessionalService", name: site.name, url: site.url } } })) }} />
-      <PageHero eyebrow="Services and pricing" title="Find the constraint. Build the fix. Keep it working." description="Three steps, each priced up front and useful on its own. Most clients start with the diagnostic. Nobody is locked into the next step." primaryHref={CONSTRAINT_CALL.href} primaryLabel={CONSTRAINT_CALL.label} secondaryHref="/services/constraint-diagnostic" secondaryLabel="See the Diagnostic" />
+      <PageHero eyebrow="Services and pricing" title="Start with what is stuck. Build only what helps." description="Three straightforward ways to work together. Start with the diagnostic if the problem is not clear; start with a build if it is. Each step is useful on its own." primaryHref={CONSTRAINT_CALL.href} primaryLabel={CONSTRAINT_CALL.label} secondaryHref="/services/constraint-diagnostic" secondaryLabel="See the Diagnostic" />
 
       <Section className="bg-surface !py-14 md:!py-20">
         <ol className="space-y-5">
@@ -41,25 +41,24 @@ export default function ServicesPage() {
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="How pricing works" title="You pay for the problem solved, not for hours." description="Every engagement states the objective, the metric it should move, what's in and out of scope, and what you own at the end, before any work starts." />
+          <SectionHeader eyebrow="How pricing works" title="Clear scope before the work starts." description="Every engagement states the problem, the outcome we are aiming for, what is in and out of scope, and what you own at the end." />
           <div className="space-y-5 text-base leading-7 text-muted">
-            <p>The diagnostic is the smallest useful step. It shows where the business is losing time and money, puts a number on it using your own data, and ends with a fixed-price plan for the first fix. If building isn&apos;t worth it, the report says so.</p>
-            <p>Builds are fixed-price per phase. I build on the tools you already use wherever possible, so the money goes into the operating layer rather than a migration.</p>
-            <p>Operate & Improve exists because systems drift. The business changes, and someone has to keep the system matched to how work is actually done.</p>
-            <p>Need senior operating help beyond the system itself? A fractional operating-partner arrangement is available for a small number of clients, and is scoped individually.</p>
+            <p>The diagnostic is the smallest useful step when the business feels stuck but the first fix is not obvious.</p>
+            <p>Builds are fixed-price by phase. I use the tools you already have wherever they fit, so the work goes into the missing workflow rather than an unnecessary migration.</p>
+            <p>Operate & Improve is optional. It keeps the system matched to the business after launch, without turning the engagement into open-ended consulting.</p>
           </div>
         </div>
       </Section>
 
       <Section className="bg-surface !py-14 md:!py-18">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Not a fit" title="What TKO doesn't do." />
+          <SectionHeader eyebrow="Not a fit" title="What this is not." />
           <ul className="border-t border-border">
             {[
               "Hourly staff augmentation or an open-ended bench of consultants.",
-              "Chatbots or AI pilots with no operating change behind them.",
+              "An AI pilot looking for a business problem.",
               "Replacing your CRM because a vendor said so.",
-              "Fully autonomous systems where a person's judgment belongs.",
+              "Automation for decisions that still need human judgment.",
               "General IT support.",
             ].map((item) => <li key={item} className="border-b border-border py-4 text-base leading-7 text-muted">{item}</li>)}
           </ul>

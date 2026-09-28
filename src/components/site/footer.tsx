@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 const footerLinks = [
   { href: "/services", label: "Services" },
   { href: "/services/constraint-diagnostic", label: "Constraint Diagnostic" },
-  { href: "/selected-work", label: "Proof" },
+  { href: "/selected-work", label: "RachelOS" },
   { href: "/selected-work/from-crm-to-operating-system", label: "RachelOS Case Study" },
   { href: "/insights", label: "Guides" },
   { href: "/founder", label: "About Todd" },
@@ -20,11 +20,11 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Business operating systems for growing companies. Based in South Florida, working
-            in person locally and remotely everywhere else.
+            Practical operating systems for growing businesses. Based in South Florida,
+            working in person locally and remotely everywhere else.
           </p>
           <p className="mt-4 max-w-sm text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
-            Find the constraint · Build the fix · Prove it
+            Find what is stuck · Build the fix · Make it usable
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
             <a href={`mailto:${site.email}`} data-conversion-event="email_link_click" data-cta-location="footer" data-cta-label="email" className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">

@@ -18,7 +18,7 @@ export default async function OfferPage({ params }: Params) {
   const otherOffers = offers.filter((item) => item.slug !== offer.slug);
   return (
     <>
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "Service", name: offer.name, description: offer.metaDescription, url: absoluteUrl(offerHref(offer.slug)), serviceType: "Business operations consulting and systems implementation", provider: { "@type": "ProfessionalService", name: site.name, url: site.url }, areaServed: "United States", offers: { "@type": "Offer", price: offer.startingPrice.replace(/[^0-9]/g, ""), priceCurrency: "USD", description: offer.commercial } }} />
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "Service", name: offer.name, description: offer.metaDescription, url: absoluteUrl(offerHref(offer.slug)), serviceType: "Business operating system design and implementation", provider: { "@type": "ProfessionalService", name: site.name, url: site.url }, areaServed: "United States", offers: { "@type": "Offer", price: offer.startingPrice.replace(/[^0-9]/g, ""), priceCurrency: "USD", description: offer.commercial } }} />
       <PageHero eyebrow={`${offer.level} · ${offer.step}`} title={offer.question} description={offer.summary} primaryHref={CONSTRAINT_CALL.href} primaryLabel={offer.ctaLabel} secondaryHref="/services" secondaryLabel="All Services and Pricing" />
       <section aria-label="Commercial terms" className="border-y border-border bg-surface"><div className="mx-auto grid w-full max-w-7xl gap-3 px-6 py-6 text-sm font-semibold sm:grid-cols-3 lg:px-8"><p>{offer.duration}</p><p>{offer.commercial}</p><p>One principal · Scope agreed in writing</p></div></section>
 

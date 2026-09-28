@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { caseStudies, getCaseStudy, leadParagraph } from "@/lib/content";
 
-describe("TKO evidence catalogue", () => {
-  it("states role, evidence, lesson, and limits for every case", () => {
+describe("TKO case studies", () => {
+  it("includes the narrative and next step for every case", () => {
     expect(caseStudies.length).toBeGreaterThanOrEqual(1);
     expect(new Set(caseStudies.map((study) => study.slug)).size).toBe(caseStudies.length);
     for (const study of caseStudies) {
@@ -11,23 +11,19 @@ describe("TKO evidence catalogue", () => {
       expect(study.role.length).toBeGreaterThan(40);
       expect(study.lesson.length).toBeGreaterThan(40);
       expect(study.relevance.length).toBeGreaterThan(40);
-      expect(study.evidence.length).toBeGreaterThanOrEqual(2);
-      expect(study.evidenceLimit.length).toBeGreaterThan(60);
       expect(study.relatedOfferHref).toMatch(/^\/services\//);
       expect(getCaseStudy(study.slug)).toBe(study);
     }
   });
 
-  it("leads with RachelOS as a live independent system with a constraint history", () => {
+  it("leads with RachelOS and shows how the build progressed", () => {
     const rachelos = getCaseStudy("from-crm-to-operating-system");
     expect(caseStudies[0]).toBe(rachelos);
-    expect(rachelos?.classification).toBe("Live independent system");
     expect(rachelos?.stages?.length).toBeGreaterThanOrEqual(3);
   });
 
   it("does not claim revenue outcomes for RachelOS", () => {
     const rachelos = getCaseStudy("from-crm-to-operating-system");
-    expect(rachelos?.evidenceLimit).toMatch(/No revenue/);
     expect(JSON.stringify(rachelos)).not.toMatch(/ROI of|\d+% (more|increase)|10x/i);
   });
 

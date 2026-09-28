@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "TKO Solutions | Business Operating Systems for Growing Companies",
+    default: "TKO Solutions | Operating Systems for Growing Businesses",
     template: "%s | TKO Solutions",
   },
   description: site.description,
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     type: "website",
     url: absoluteUrl("/"),
     siteName: site.name,
-    title: "TKO Solutions | Business Operating Systems for Growing Companies",
+    title: "TKO Solutions | Operating Systems for Growing Businesses",
     description: site.description,
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions: business operating systems for growing companies." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TKO Solutions | Business Operating Systems for Growing Companies",
+    title: "TKO Solutions | Operating Systems for Growing Businesses",
     description: site.description,
     images: [site.socialImage],
   },

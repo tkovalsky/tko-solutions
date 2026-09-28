@@ -9,14 +9,14 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { CONSTRAINT_CALL, offerHref, offers } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
-const title = "Business Operating Systems for Growing Companies";
+const title = "Build the Operating System Your Business Is Missing";
 
 export const metadata: Metadata = {
   title: { absolute: `TKO Solutions | ${title}` },
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Your business has systems. A person is still the operating system.",
+    title: "Your business should not need you to remember everything.",
     description: site.description,
     url: absoluteUrl("/"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions: business operating systems for growing companies." }],
@@ -24,51 +24,50 @@ export const metadata: Metadata = {
 };
 
 const symptoms = [
-  ["Leads go quiet", "They come in, someone means to follow up, and nobody can say which ones mattered or where they went."],
-  ["Everything routes through you", "The owner or COO is the only place where the whole picture exists, so every decision waits on one calendar."],
-  ["The CRM is a filing cabinet", "It holds records. It doesn't tell anyone what to do next, and half the team doesn't trust what's in it."],
-  ["People are the integration", "Hours every week go to copying information between the CRM, the inbox, spreadsheets, and whatever else was bought."],
-  ["AI made it messier", "New tools, new subscriptions, new logins. Nothing measurable changed about how the work gets done."],
-  ["Knowledge walks out the door", "When one person is out or leaves, part of how the business works goes with them."],
+  ["Good opportunities go quiet", "The lead, request, or follow-up exists somewhere, but nobody owns what should happen next."],
+  ["The team waits for you", "People can do the work, but the context and judgment needed to move it forward still live with the owner or COO."],
+  ["The CRM records more than it runs", "It stores activity, but it does not give the team a reliable way to decide what matters today."],
+  ["People connect the tools by hand", "The real workflow lives between the inbox, spreadsheets, the CRM, and conversations nobody else can see."],
+  ["Automation added motion, not control", "More reminders and integrations made the stack busier without making ownership or decisions clearer."],
+  ["One absence changes everything", "When a key person is unavailable, the work slows because part of the operating system left with them."],
 ] as const;
 
 const missingLayer = [
-  "What is true right now",
-  "What matters most",
-  "What should happen next",
-  "Who does it, and by when",
-  "Whether it worked",
+  "One shared view of what is happening",
+  "Clear ownership for the next step",
+  "Rules for routine decisions",
+  "A short list of what needs attention",
+  "A simple way to see whether the fix worked",
 ] as const;
 
 const method = [
-  ["Find the constraint", "Trace where leads, work, and decisions actually stall, and what that costs in money and hours."],
-  ["Build the fix", "Build the missing operating layer on the tools you already have: statuses, rules, queues, automation, and AI with human approval."],
-  ["Prove it", "Measure against a baseline taken before anything changed. If the numbers didn't move, we say so."],
-  ["Find the next one", "Remove one constraint and the next becomes visible. The system grows with the business instead of pretending to be finished."],
+  ["See the work", "Follow one important flow end to end and find where it slows, disappears, or waits for one person."],
+  ["Choose the first fix", "Define the smallest useful change: a clearer state, a better handoff, a queue, a rule, or a missing connection."],
+  ["Build it into the work", "Use the tools you already have where they fit. Add only the layer the team actually needs."],
+  ["Measure and improve", "Compare the new way of working with the starting point, then decide what is worth fixing next."],
 ] as const;
 
-const constraintTimeline = [
-  ["Foundation", "Every call, text, email, and site visit lands in one relationship record. Facts are kept separate from guesses."],
-  ["Visibility", "One ranked queue and a daily email answer the only question that matters each morning: who needs attention, and why."],
-  ["Follow-up", "The system drafts outreach and flags missing information. A person approves anything that goes out."],
-  ["Conversion (now)", "The constraint moved. The work now is measuring and improving every step from first response to closed deal and referral."],
+const rachelosBuild = [
+  ["Make the work visible", "Bring lead activity, relationship context, and next steps into one working view."],
+  ["Keep the context", "Turn what one person remembers into information the system and the team can use."],
+  ["Support the next action", "Show what needs attention and give the operator a practical place to act."],
+  ["Keep judgment human", "Use automation to prepare the work without pretending every relationship decision should be automatic."],
 ] as const;
 
 const builds = [
-  ["Lead and revenue follow-up systems", "Every lead gets a status, an owner, and a next action. Nothing ages silently."],
-  ["A daily action queue", "One ranked list of what needs attention today and why, assembled from the CRM, inbox, and pipeline."],
-  ["A CRM your team trusts", "Stages that mean something, data rules that hold, and next actions instead of empty fields."],
-  ["AI that drafts, people who decide", "Drafting, summarizing, and sorting handled automatically, with a person approving anything consequential."],
-  ["Institutional memory", "The facts about customers, deals, and processes that live in one person's head, captured where the team works."],
-  ["Reporting tied to action", "Every number has an owner, a threshold, and a next step when it moves the wrong way."],
+  ["Lead and customer follow-up", "Clear ownership, next steps, and a workable way to find the relationships that need attention."],
+  ["Action queues", "One useful view of today's work instead of another dashboard people have to interpret."],
+  ["CRM operating layers", "Simple states, rules, and handoffs that make the CRM useful to the people doing the work."],
+  ["Institutional memory", "Important context captured in the workflow instead of depending on one person's recall."],
+  ["Practical automation", "Routine preparation, reminders, and routing where they remove work without removing judgment."],
+  ["Management visibility", "A small set of measures connected to an owner and a decision, not reporting for its own sake."],
 ] as const;
 
-const alternatives = [
-  ["A consultant", "Diagnoses the problem and leaves a plan. Nobody builds it, so the business drifts back."],
-  ["An automation agency", "Connects your tools quickly, and automates the broken steps along with the good ones."],
-  ["A developer", "Builds what you specify. The hard part is the specification, because the logic lives in your head."],
-  ["Another AI tool", "Adds one more system to a stack that is already fragmented."],
-  ["A new operations hire", "Six figures and months to impact, and rarely someone who can both run the operation and build the system."],
+const differences = [
+  ["Start with the operating problem", "The first question is where work gets stuck, not which software to buy."],
+  ["Diagnosis and build stay together", "The person who learns how the business works is also responsible for turning that understanding into a working system."],
+  ["Use what already works", "A new platform is not the default. The goal is to make the current stack behave like one system."],
+  ["Leave the team with something usable", "The work includes the rules, ownership, documentation, and training needed to keep it useful."],
 ] as const;
 
 export default function HomePage() {
@@ -80,25 +79,25 @@ export default function HomePage() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgb(var(--accent-rgb)/0.18),_transparent_58%)]" />
         <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-24">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Business operating systems for growing companies</p>
-            <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.25rem]">Your business has systems. A person is still the operating system.</h1>
-            <p className="mt-7 max-w-[62ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">CRM, email, spreadsheets, a dozen apps, maybe some AI. But deciding what matters, what happens next, and who does it still runs through you and a few key people. TKO finds where that is costing you, builds the missing operating layer, and proves it changed the numbers.</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Operating systems for growing businesses</p>
+            <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.25rem]">Your business should not need you to remember everything.</h1>
+            <p className="mt-7 max-w-[62ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">When leads, decisions, and follow-up live across a CRM, inboxes, spreadsheets, and people&apos;s heads, growth creates more chasing instead of more control. TKO finds the bottleneck and builds the practical system that gets the work moving.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <LinkButton href={CONSTRAINT_CALL.href} ctaLocation="homepage_hero">{CONSTRAINT_CALL.label}</LinkButton>
               <LinkButton href={site.secondaryCtaHref} ctaLocation="homepage_hero" eventName="secondary_cta_click" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">{site.secondaryCta}</LinkButton>
             </div>
-            <p className="mt-6 text-sm text-white/55">For owner-led and growing businesses, typically $5M+ in revenue.</p>
+            <p className="mt-6 text-sm text-white/55">For owner-led businesses that have outgrown the way work gets done today.</p>
           </div>
           <div className="self-end border-l border-white/25 pl-6 lg:pl-8">
             <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary-light">The pattern</p>
-            <p className="mt-5 text-2xl font-semibold leading-snug">Your systems hold the information.<br />A person holds the judgment.</p>
-            <p className="mt-5 text-sm leading-6 text-white/65">Someone has to notice the signal, remember the history, decide what matters, and make sure it happens. When that someone is you, the business can only move as fast as your calendar.</p>
+            <p className="mt-5 text-2xl font-semibold leading-snug">When work lives between the tools,<br />people become the system.</p>
+            <p className="mt-5 text-sm leading-6 text-white/65">Someone notices the signal, carries the context, decides what matters, and makes sure it happens. TKO turns that invisible job into a way of working the team can see and use.</p>
           </div>
         </div>
       </section>
 
       <Section className="!py-14 md:!py-18">
-        <SectionHeader eyebrow="Sound familiar?" title="The problem is rarely a missing tool." description="It's the work between the tools, done by people, from memory." />
+        <SectionHeader eyebrow="Sound familiar?" title="The business grew. The way the work gets done did not." description="The gaps show up as missed follow-up, slow decisions, repeated questions, and too much work routing through a few people." />
         <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
           {symptoms.map(([heading, body]) => (
             <article key={heading} className="bg-white p-6">
@@ -111,7 +110,7 @@ export default function HomePage() {
 
       <Section className="bg-surface !py-14 md:!py-20">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <SectionHeader eyebrow="Why it happens" title="You have systems of record. You're missing the system of action." description="Your tools are good at storing what happened. None of them decide what should happen next. So a person does that job every day: reconciling, remembering, prioritizing, chasing. That work is invisible until the person is busy, out, or gone." />
+          <SectionHeader eyebrow="What is missing" title="The tools are there. The operating layer is not." description="The CRM, inbox, spreadsheets, and apps each hold part of the picture. The missing piece is the shared logic that turns that information into ownership, priorities, and next steps." />
           <div className="border border-border bg-white p-6 md:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Your systems</p>
             <p className="mt-2 text-base font-semibold">CRM · inbox · spreadsheets · apps · AI tools</p>
@@ -128,7 +127,7 @@ export default function HomePage() {
       </Section>
 
       <Section className="!py-14 md:!py-18">
-        <SectionHeader eyebrow="How TKO works" title="Find the constraint. Build the fix. Prove it. Repeat." description="No imaginary end state. Real businesses change, so the constraint moves. The system moves with it." />
+        <SectionHeader eyebrow="How TKO works" title="Fix the bottleneck, not the whole company." description="Start with one important flow, build the smallest useful operating loop, and expand only when it earns the right to grow." />
         <ol className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {method.map(([heading, body], index) => (
             <li key={heading} className="border-t-2 border-primary bg-surface p-6">
@@ -143,9 +142,9 @@ export default function HomePage() {
       <Section className="bg-surface !py-14 md:!py-20">
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
           <div>
-            <SectionHeader eyebrow="Proof: RachelOS" title="When the owner was the operating system." description="A South Florida real-estate business had a CRM, notes, emails, texts, a website, and plenty of leads. The judgment that connected them lived in one person: who mattered, what had happened, what to send, and when to follow up. I built the system that holds that judgment now, and I still run it." />
+            <SectionHeader eyebrow="Built, not just advised" title="RachelOS started with the same problem." description="The tools existed, but the operating logic lived in one person's head: which relationships mattered, what had happened, and what should happen next. I designed and built the layer that made that work visible and usable." />
             <ol className="mt-8 border-t border-border">
-              {constraintTimeline.map(([stage, body], index) => (
+              {rachelosBuild.map(([stage, body], index) => (
                 <li key={stage} className="grid gap-2 border-b border-border py-4 sm:grid-cols-[2rem_9rem_1fr]">
                   <span className="font-mono text-sm text-primary">{index + 1}</span>
                   <p className="font-semibold">{stage}</p>
@@ -195,12 +194,12 @@ export default function HomePage() {
 
       <Section className="!py-14 md:!py-18">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Who you'll work with" title="Todd Kovalsky. The person who diagnoses it builds it." description="I've spent twenty years inside operations that had to work: loan settlement at Apollo, asset-management platform programs at Sapient, advisor and CRM platforms at FolioDynamix, and large healthcare programs with dozens of teams and systems. The pattern was the same everywhere. The information existed. Someone still had to turn it into the next action by hand." />
+          <SectionHeader eyebrow="Who you'll work with" title="Todd Kovalsky. One person from diagnosis through build." description="I have spent more than twenty years across operations, product, and systems delivery. TKO brings that experience into one focused engagement instead of splitting the problem across an advisor, a developer, and an automation vendor." />
           <div>
             <ul className="grid gap-3 sm:grid-cols-2">
               {[
-                "Operations, product, and program leadership across financial services and healthcare",
-                "Built and runs RachelOS: 1,600+ commits, 100+ recorded design decisions, and a daily production run",
+                "20+ years across operations, product, and complex systems delivery",
+                "Designed and built RachelOS, a working operating system for relationship-driven work",
                 "Works across process, data, CRM, automation, and AI instead of one specialty",
                 "One principal on every engagement, and deliberately few clients at a time",
               ].map((item) => <li key={item} className="border-l-2 border-primary bg-surface p-5 text-sm leading-6 text-muted">{item}</li>)}
@@ -214,18 +213,14 @@ export default function HomePage() {
       </Section>
 
       <Section className="bg-surface !py-14 md:!py-18">
-        <SectionHeader eyebrow="Why not just…" title="Each alternative owns one slice. The problem lives between them." />
+        <SectionHeader eyebrow="Why TKO" title="The diagnosis and the build stay connected." description="The job is not to install more software. It is to understand how the work really moves and turn that into a system people can use." />
         <div className="mt-10 border-t border-border">
-          {alternatives.map(([option, gap]) => (
+          {differences.map(([option, gap]) => (
             <div key={option} className="grid gap-2 border-b border-border py-5 sm:grid-cols-[14rem_1fr] sm:gap-8">
               <p className="text-base font-semibold">{option}</p>
               <p className="text-base leading-7 text-muted">{gap}</p>
             </div>
           ))}
-          <div className="grid gap-2 py-5 sm:grid-cols-[14rem_1fr] sm:gap-8">
-            <p className="text-base font-semibold text-primary">TKO</p>
-            <p className="text-base font-semibold leading-7">Finds the constraint across process, people, data, and technology, builds the fix, measures it, and keeps going.</p>
-          </div>
         </div>
       </Section>
 
