@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsight, getInsights, getRelatedInsights, type Insight } from "@/lib/insights";
 import { getGuideCluster } from "@/lib/guide-clusters";
-import { getOffer, offerHref, offers, PROGRAM_RECOVERY_CONVERSATION } from "@/lib/offers";
+import { getOffer, offerHref, offers, CONSTRAINT_CALL } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Params = {
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: "article",
       publishedTime: insight.date,
       url: absoluteUrl(`/insights/${insight.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation guides." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions guides." }],
     },
   };
 }
@@ -75,7 +75,7 @@ export default async function InsightPage({ params }: Params) {
         description={insight.description}
         primaryHref={offerHref(offer.slug)}
         primaryLabel={`See the ${offer.name}`}
-        secondaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
+        secondaryHref={CONSTRAINT_CALL.href}
         secondaryLabel={ctaLabel}
       />
       <Section>
@@ -99,7 +99,7 @@ export default async function InsightPage({ params }: Params) {
       </Section>
       {related.length > 0 ? (
         <Section className="bg-surface">
-          <SectionHeader eyebrow="Related guides" title="More operating patterns." />
+          <SectionHeader eyebrow="Keep reading" title="Related guides." />
           <div className="mt-10 grid gap-4 lg:grid-cols-3">
             {related.map((relatedInsight) => (
               <RelatedInsightCard key={relatedInsight.slug} insight={relatedInsight} />
@@ -108,11 +108,11 @@ export default async function InsightPage({ params }: Params) {
         </Section>
       ) : null}
       <CtaBand
-        title={`If this describes your situation, the ${offer.name} is the vehicle.`}
+        title="Sound like your business?"
         description={offer.summary}
         primaryHref={offerHref(offer.slug)}
         primaryLabel={`See the ${offer.name}`}
-        secondaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
+        secondaryHref={CONSTRAINT_CALL.href}
         secondaryLabel={ctaLabel}
       />
     </>

@@ -90,12 +90,13 @@ describe("submitDiagnosticIntake", () => {
         email: "todd@example.com",
         company: "Example Co",
         role: "COO",
-        transformationContext: "Provider operations workflow spanning two payer platforms.",
-        currentPressure: "administrative-burden",
+        transformationContext: "Leads sit in the CRM for days before anyone follows up.",
+        currentPressure: "leads-follow-up",
+        revenueBand: "5-20m",
         timing: "31-90",
         privacyConsent: true,
         message: "We need a defensible next move.",
-        consequence: "Provider abrasion and operating cost will continue to rise.",
+        consequence: "We keep losing deals we already paid to generate.",
       },
       submittedAt: expect.any(Date),
     });
@@ -156,11 +157,12 @@ function validFormData() {
   formData.set("email", "todd@example.com");
   formData.set("company", "Example Co");
   formData.set("role", "COO");
-  formData.set("transformationContext", "Provider operations workflow spanning two payer platforms.");
-  formData.set("currentPressure", "administrative-burden");
+  formData.set("transformationContext", "Leads sit in the CRM for days before anyone follows up.");
+  formData.set("currentPressure", "leads-follow-up");
+  formData.set("revenueBand", "5-20m");
   formData.set("timing", "31-90");
   formData.set("privacyConsent", "on");
   formData.set("message", "We need a defensible next move.");
-  formData.set("consequence", "Provider abrasion and operating cost will continue to rise.");
+  formData.set("consequence", "We keep losing deals we already paid to generate.");
   return formData;
 }

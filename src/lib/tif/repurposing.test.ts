@@ -13,7 +13,7 @@ describe("buildRepurposingPack", () => {
     expect(pack.executiveEmailAngle).toContain("Position:");
     expect(pack.executiveEmailAngle).toContain("Ask:");
     expect(pack.networkPost).toContain("Full piece: /insights/example-guide");
-    expect(pack.proposalExcerpt).toContain("Proposed vehicle: Transformation Diagnostic.");
+    expect(pack.proposalExcerpt).toContain("Proposed vehicle: Constraint Diagnostic.");
   });
 
   it("returns exactly three conversation prompts and carries the rest forward", () => {
@@ -27,7 +27,7 @@ describe("buildRepurposingPack", () => {
     const pack = buildRepurposingPack(guide(), [guide(), sibling(), otherCluster()]);
 
     expect(pack.suggestedInternalLinks.map((link) => link.href)).toEqual([
-      "/services/transformation-diagnostic",
+      "/services/constraint-diagnostic",
       "/insights/sibling-guide",
     ]);
   });
@@ -41,15 +41,15 @@ describe("buildRepurposingPack", () => {
 });
 
 function guide(): Insight {
-  return insight("example-guide", "Example Guide", "stalled-healthcare-transformation");
+  return insight("example-guide", "Example Guide", "systems-that-dont-drive-action");
 }
 
 function sibling(): Insight {
-  return insight("sibling-guide", "Sibling Guide", "stalled-healthcare-transformation");
+  return insight("sibling-guide", "Sibling Guide", "systems-that-dont-drive-action");
 }
 
 function otherCluster(): Insight {
-  return insight("other-guide", "Other Guide", "prior-authorization-operations");
+  return insight("other-guide", "Other Guide", "lead-follow-up-and-revenue-leakage");
 }
 
 function insight(slug: string, title: string, cluster: string): Insight {
@@ -75,8 +75,8 @@ function insight(slug: string, title: string, cluster: string): Insight {
       aiNotAnswer: "AI does not resolve an unmade decision",
       diagnosticQuestions: ["Q1?", "Q2?", "Q3?", "Q4?"],
       recommendedAction: "Get an independent read before approving more funding",
-      offer: "transformation-diagnostic",
-      cta: "Discuss a Transformation",
+      offer: "constraint-diagnostic",
+      cta: "Book a 30-Minute Call",
       reviewer: "Todd Kovalsky",
       reviewedDate: "2026-08-05",
     },

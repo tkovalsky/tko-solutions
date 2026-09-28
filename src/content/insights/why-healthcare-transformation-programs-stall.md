@@ -51,7 +51,8 @@ recommended_action: >-
   approving additional funding, scope reduction, or a vendor change.
 offer: transformation-diagnostic
 cta: "Discuss a Transformation"
-status: published
+# Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
+status: draft
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
 sources:
@@ -59,7 +60,7 @@ sources:
   - healthcare:prior-auth-decision-rights
 date: "2026-08-04"
 slug: why-healthcare-transformation-programs-stall
-published: true
+published: false
 featured: true
 # Internal evidence trail (not rendered):
 # - Healthy workstream status can coexist with unresolved enterprise delivery risk. Evidence: healthcare:prior-auth-decision-rights and /selected-work/enterprise-care-management-modernization. Guard: qualitative employment-period mechanism; no client, program, cost, timing, or outcome metric.

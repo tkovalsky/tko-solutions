@@ -7,15 +7,12 @@ import { absoluteUrl } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "/",
-    "/healthcare",
-    "/founder",
     "/services",
-    "/approach",
     "/selected-work",
+    "/insights",
+    "/founder",
     "/contact",
     "/privacy",
-    "/insights",
-    "/program-recovery-readiness-check",
   ];
 
   const serviceRoutes = offers.map((offer) => offerHref(offer.slug));
@@ -27,8 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // Selected Work is the canonical evidence center. /proof, /frameworks,
-  // /case-studies, /offers, and /assessment are redirect-only namespaces.
   const pageEntries = [...new Set([...staticRoutes, ...serviceRoutes, ...caseStudyRoutes])].map((route) => ({
     url: absoluteUrl(route),
     changeFrequency: "monthly" as const,

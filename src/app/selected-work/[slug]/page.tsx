@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Section } from "@/components/ui/section";
 import { caseStudies, getCaseStudy, leadParagraph } from "@/lib/content";
+import { CONSTRAINT_CALL } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -57,7 +58,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       title: study.title,
       description: lead,
       url: absoluteUrl(`/selected-work/${study.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions selected work and evidence." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: `${study.title} | TKO Solutions` }],
     },
   };
 }
@@ -79,18 +80,19 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           headline: study.title,
           description: leadParagraph(study.situation),
           url: absoluteUrl(`/selected-work/${study.slug}`),
+          author: { "@type": "Person", name: "Todd Kovalsky", url: absoluteUrl("/founder") },
           publisher: { "@type": "Organization", name: site.name, url: site.url },
-          about: [study.industry, study.classification, "Healthcare transformation", "Operating model design"],
+          about: [study.industry, "Business operating systems", "Lead follow-up", "Human-in-the-loop AI"],
         }}
       />
       <PageHero
         eyebrow={study.industry}
         title={study.title}
         description={situationLead}
-        primaryHref={study.relatedOfferHref}
-        primaryLabel={`See the ${study.relatedOffer}`}
-        secondaryHref="/contact"
-        secondaryLabel="Discuss a Transformation"
+        primaryHref={CONSTRAINT_CALL.href}
+        primaryLabel={CONSTRAINT_CALL.label}
+        secondaryHref={study.relatedOfferHref}
+        secondaryLabel={`See the ${study.relatedOffer}`}
       />
 
       <Section>
@@ -98,12 +100,27 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           {situationRest.length > 0 ? (
             <WorkSection title="Situation" body={situationRest.join("\n\n")} />
           ) : null}
-          <WorkSection title="Complexity" body={study.complexity} />
+          <WorkSection title="Why it was hard" body={study.complexity} />
           <WorkSection title="My role" body={study.role} />
-          <WorkSection title="What I changed" body={study.intervention} />
-          <WorkSection title="Result" body={study.result} />
+          <WorkSection title="How it was built" body={study.intervention} />
+        </div>
+        {study.stages ? (
+          <ol className="mt-10 max-w-[72ch] border-t border-border">
+            {study.stages.map((stage, index) => (
+              <li key={stage.name} className="grid gap-3 border-b border-border py-6 sm:grid-cols-[3rem_1fr]">
+                <span className="font-mono text-sm text-primary">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-xl font-semibold">{stage.name}</h3>
+                  <p className="mt-2 text-base leading-7 text-muted">{stage.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        ) : null}
+        <div className="mt-10 max-w-[72ch] space-y-10">
+          <WorkSection title="Where it stands" body={study.result} />
           <WorkSection
-            title="What this means for your transformation"
+            title="What this means for your business"
             body={`${study.lesson}\n\n${study.relevance}`}
           />
         </div>
@@ -136,19 +153,17 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
 
       <Section className="!py-12 md:!py-14">
         <div className="max-w-[72ch] border-l-2 border-border pl-6">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">About this work</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">What is and isn&apos;t claimed</h2>
           <p className="mt-4 text-sm leading-6 text-muted">{study.evidenceLimit}</p>
           <EvidenceNoteLink className="mt-3" />
         </div>
       </Section>
 
       <CtaBand
-        title="Bring one operating problem under pressure."
-        description="Experience shapes where I look first. A diagnostic establishes what is true in your environment and what leadership should do next."
-        primaryHref={study.relatedOfferHref}
-        primaryLabel={`See the ${study.relatedOffer}`}
-        secondaryHref="/contact"
-        secondaryLabel="Discuss a Transformation"
+        title="Does your business run on someone's memory?"
+        description="The mechanism is the same in most growing businesses. A diagnostic finds where it's costing you, in your own numbers."
+        secondaryHref={study.relatedOfferHref}
+        secondaryLabel={`See the ${study.relatedOffer}`}
       />
     </>
   );
