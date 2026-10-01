@@ -7,7 +7,7 @@ import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Book a 30-Minute Call",
-  description: "Tell me where the business keeps slowing down. In 30 minutes, we will decide whether there is a useful next step.",
+  description: "Discuss a workflow problem, automation project, or AI use case with Todd Kovalsky. A free 30-minute conversation to find the right starting point.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: "Book a 30-Minute Call | TKO Solutions",
@@ -25,8 +25,9 @@ export default async function ContactPage({ searchParams }: SearchParams) {
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-[64ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Book a call</p>
-          <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">Where does the work keep slowing down?</h1>
+          <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">Bring the problem. We will find the starting point.</h1>
           <p className="mt-5 text-lg leading-8 text-muted">{CONSTRAINT_CALL.summary}</p>
+          <p className="mt-4 text-base leading-7 text-muted">A few sentences are enough. Projects for this year or next are welcome; scope and start dates are agreed around your priorities and available capacity.</p>
           {site.scheduling ? (
             <a href={site.scheduling} target="_blank" rel="noreferrer" data-conversion-event="primary_cta_click" data-cta-location="contact_scheduling" data-cta-label="Pick a time" className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 border border-primary bg-primary px-5 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:border-primary-dark hover:bg-primary-dark">
               <CalendarDays className="size-4" aria-hidden /> Pick a time
@@ -38,7 +39,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             <h2 className="text-xl font-semibold">What happens next</h2>
             <ol className="mt-5 space-y-4 text-base leading-7 text-muted">
               <li><span className="font-semibold text-foreground">1.</span> I read the message myself and reply within two business days.</li>
-              <li><span className="font-semibold text-foreground">2.</span> We spend 30 minutes on the workflow, where it breaks, and what you have already tried.</li>
+              <li><span className="font-semibold text-foreground">2.</span> We spend 30 minutes on the workflow or AI use case, what should change, and your timeline.</li>
               <li><span className="font-semibold text-foreground">3.</span> I tell you where I would look first and whether a diagnostic, a build, or no engagement makes sense.</li>
               <li><span className="font-semibold text-foreground">4.</span> If TKO is not the right fit, I will say so plainly.</li>
             </ol>

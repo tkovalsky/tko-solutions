@@ -37,9 +37,9 @@ export const CONSTRAINT_CALL = {
   href: "/contact",
   duration: "30 minutes",
   summary:
-    "Thirty minutes, no pitch deck. Tell me where the business keeps slowing down; I will tell you where I would look first and whether TKO is likely to help.",
+    "Bring one workflow that keeps slowing you down, or an AI idea you want to put to work. In 30 minutes, we will talk through the problem, the tools involved, and whether a diagnostic or a scoped build is the right next step.",
   boundary:
-    "The call is free and has no pitch deck. If a diagnostic isn't worth the money for your situation, I'll say so.",
+    "The first call is free. You do not need a finished brief or a technical specification. We will decide whether there is a useful project to scope.",
   outputs: [
     "A clearer way to frame the problem",
     "Where I would look first",
@@ -61,7 +61,7 @@ export const offers: Offer[] = [
     audience:
       "For an owner, COO, or department leader who can feel the drag—missed follow-up, slow handoffs, repeated decisions, too much work routing through one person—but cannot yet see the first fix clearly.",
     summary:
-      "In two weeks, I follow one important flow end to end, talk with the people doing the work, and inspect the tools and handoffs around it. You leave with a clear diagnosis, a practical first build, and a starting point for measuring whether it helped.",
+      "In two weeks, I follow one important workflow, talk with the people doing it, and inspect the tools and handoffs. You leave with the diagnosis, a build specification, a fixed-price proposal, and a starting measure. The diagnostic defines the fix; implementation is a separate step.",
     metaDescription:
       "A two-week, fixed-price diagnostic for growing businesses: find where work gets stuck and define the smallest useful system to fix it. $7,500.",
     triggers: [
@@ -128,7 +128,7 @@ export const offers: Offer[] = [
       },
     ],
     feeBoundary:
-      "Founding-client rate: the first three diagnostics are $5,000 in exchange for permission to publish the results (anonymized if you prefer) and a short reference call.",
+      "Founding-client rate: the first three diagnostics are $5,000 in exchange for permission to describe the work publicly, anonymously if preferred. A reference call is requested only if the work earns your recommendation.",
   },
   {
     slug: "operating-system-build",
@@ -139,24 +139,24 @@ export const offers: Offer[] = [
     duration: "4–8 weeks",
     startingPrice: "$15,000",
     commercial: "From $15,000 · fixed price per phase",
-    question: "Turn the diagnosis into a working system your team can use.",
+    question: "Turn a workflow problem or an AI use case into a working system.",
     audience:
-      "For a business that understands the bottleneck and wants someone to design, build, and launch the practical fix—not hand over another deck.",
+      "For an owner or team leader with a defined workflow problem, automation need, or AI use case and the authority to put the solution into use.",
     summary:
-      "I design and build the missing operating loop around the tools you already use: clear states, ownership, queues, handoffs, alerts, and only the automation that makes the work easier. Then we launch it with the people who will use it.",
+      "I design, build, and launch a focused system around your existing tools. That might be a follow-up workflow, a CRM integration, an internal workspace, or AI that drafts, summarizes, or extracts information inside a real process. We agree on the scope and how to judge the result before building.",
     metaDescription:
-      "Fixed-price operating-system builds for growing businesses: follow-up systems, CRM operating layers, action queues, handoffs, and practical automation. From $15,000.",
+      "Workflow systems, CRM integrations, internal tools, and practical AI applications. Design through launch with Todd Kovalsky. Builds from $15,000.",
     triggers: [
-      "A diagnostic identified the constraint and the first fix.",
+      "A diagnostic or your own analysis has identified a specific workflow to improve.",
       "You know the problem, but earlier tools, agencies, or hires didn't fix it.",
       "The owner or COO wants to stop being the routing layer for the business.",
-      "You want useful automation without handing important judgment to a black box.",
+      "You have an AI use case and need it connected to the tools and process your team actually uses.",
     ],
     deliverables: [
       "A working system in production, built around your existing tools wherever possible",
       "A clear state, owner, and next step for the work in scope",
-      "A useful action view for what needs attention",
-      "Automation for repeatable preparation, routing, and reminders",
+      "An interface or action view matched to the workflow",
+      "Integrations, automation, and AI assistance where the agreed use case calls for them",
       "Documentation and hands-on training for the people who use it",
       "A post-launch review against the starting baseline",
     ],
@@ -172,7 +172,7 @@ export const offers: Offer[] = [
       "Lead and customer follow-up systems",
       "CRM operating layers",
       "Action queues and handoffs",
-      "Practical automation",
+      "Workflow automation and practical AI",
       "Institutional memory",
       "Reporting tied to action",
     ],
@@ -189,10 +189,18 @@ export const offers: Offer[] = [
         q: "Who actually builds it?",
         a: "I do. The same person who learns the workflow is responsible for designing and building the fix.",
       },
+      {
+        q: "Do we need the diagnostic first?",
+        a: "If the workflow, problem, and desired result are already clear, we can start with build scoping. If we need to understand why the work is breaking down, the diagnostic is the better first step.",
+      },
+      {
+        q: "Can we plan a project for next year?",
+        a: "Yes. We can discuss scope and dependencies now, then agree on a start date against your timeline and my availability. Work begins only after scope, timing, and price are agreed.",
+      },
     ],
     ctaLabel: CONSTRAINT_CALL.label,
     feeFraming:
-      "Builds start at $15,000. A typical first build is $18,000–$30,000; larger or multi-phase work is priced from the diagnostic.",
+      "Builds start at $15,000. Price depends on the workflow, integrations, data, and review requirements. You receive a fixed-price proposal before implementation starts.",
     feeBoundary:
       "Every build states the objective, the metric it should move, what is in and out of scope, and what you own at the end.",
   },

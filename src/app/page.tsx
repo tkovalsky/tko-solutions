@@ -9,14 +9,14 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { CONSTRAINT_CALL, offerHref, offers } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
-const title = "Build the Operating System Your Business Is Missing";
+const title = "Workflow Systems, Automation & Practical AI";
 
 export const metadata: Metadata = {
   title: { absolute: `TKO Solutions | ${title}` },
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Your business should not need you to remember everything.",
+    title: "Less chasing. Better follow-through. A business that moves.",
     description: site.description,
     url: absoluteUrl("/"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions: business operating systems for growing companies." }],
@@ -55,12 +55,12 @@ const rachelosBuild = [
 ] as const;
 
 const builds = [
-  ["Lead and customer follow-up", "Clear ownership, next steps, and a workable way to find the relationships that need attention."],
-  ["Action queues", "One useful view of today's work instead of another dashboard people have to interpret."],
-  ["CRM operating layers", "Simple states, rules, and handoffs that make the CRM useful to the people doing the work."],
-  ["Institutional memory", "Important context captured in the workflow instead of depending on one person's recall."],
-  ["Practical automation", "Routine preparation, reminders, and routing where they remove work without removing judgment."],
-  ["Management visibility", "A small set of measures connected to an owner and a decision, not reporting for its own sake."],
+  ["Follow-up your team can run", "A shared view of leads and customers, an owner for each next step, and a queue that makes overdue work visible."],
+  ["Tools that work together", "Connect the CRM, inbox, forms, and internal tools so people can spend less time copying information and rebuilding context."],
+  ["AI inside a useful workflow", "Draft replies, summarize history, or extract useful facts from documents—with a review step and a clear way to check the output."],
+  ["Internal tools built for the job", "A focused workspace for approvals, exceptions, intake, or handoffs that your current software does not handle well."],
+  ["Knowledge the team can use", "Capture customer context, operating rules, and repeat decisions where people do the work."],
+  ["A clear view of what needs attention", "Connect activity to ownership, next steps, and a few measures that help you decide what to change."],
 ] as const;
 
 const differences = [
@@ -79,19 +79,19 @@ export default function HomePage() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgb(var(--accent-rgb)/0.18),_transparent_58%)]" />
         <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-24">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Operating systems for growing businesses</p>
-            <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.25rem]">Your business should not need you to remember everything.</h1>
-            <p className="mt-7 max-w-[62ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">When leads, decisions, and follow-up live across a CRM, inboxes, spreadsheets, and people&apos;s heads, growth creates more chasing instead of more control. TKO finds the bottleneck and builds the practical system that gets the work moving.</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Workflow systems · Automation · Practical AI</p>
+            <h1 className="mt-6 max-w-4xl text-[1.875rem] font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem]">Less chasing.<br />Better follow-through.<br />A business that moves.</h1>
+            <p className="mt-7 max-w-[62ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">Missed follow-up. Manual handoffs. Decisions waiting on you. TKO turns the work scattered across your CRM, inbox, spreadsheets, and team into a system people can use. I find the bottleneck, design the workflow, and build the fix.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <LinkButton href={CONSTRAINT_CALL.href} ctaLocation="homepage_hero">{CONSTRAINT_CALL.label}</LinkButton>
               <LinkButton href={site.secondaryCtaHref} ctaLocation="homepage_hero" eventName="secondary_cta_click" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">{site.secondaryCta}</LinkButton>
             </div>
-            <p className="mt-6 text-sm text-white/55">For owner-led businesses that have outgrown the way work gets done today.</p>
+            <p className="mt-6 text-sm text-white/55">For owners, COOs, and team leaders ready to fix a workflow that is holding the business back.</p>
           </div>
           <div className="self-end border-l border-white/25 pl-6 lg:pl-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary-light">The pattern</p>
-            <p className="mt-5 text-2xl font-semibold leading-snug">When work lives between the tools,<br />people become the system.</p>
-            <p className="mt-5 text-sm leading-6 text-white/65">Someone notices the signal, carries the context, decides what matters, and makes sure it happens. TKO turns that invisible job into a way of working the team can see and use.</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary-light">Work directly with the builder</p>
+            <p className="mt-5 text-2xl font-semibold leading-snug">Todd Kovalsky.<br />From the messy problem<br />to the working system.</p>
+            <p className="mt-5 text-sm leading-6 text-white/65">Start with one workflow. Agree on the scope, price, and what should change. Build around the tools you already use, with AI where it helps.</p>
           </div>
         </div>
       </section>
@@ -110,7 +110,7 @@ export default function HomePage() {
 
       <Section className="bg-surface !py-14 md:!py-20">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <SectionHeader eyebrow="What is missing" title="The tools are there. The operating layer is not." description="The CRM, inbox, spreadsheets, and apps each hold part of the picture. The missing piece is the shared logic that turns that information into ownership, priorities, and next steps." />
+          <SectionHeader eyebrow="What changes" title="Your business should not need you to remember everything." description="Give the team a shared view of the work, clear ownership, and a next step. Connect the tools, capture the context, and put routine decisions into the workflow." />
           <div className="border border-border bg-white p-6 md:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Your systems</p>
             <p className="mt-2 text-base font-semibold">CRM · inbox · spreadsheets · apps · AI tools</p>
@@ -127,7 +127,7 @@ export default function HomePage() {
       </Section>
 
       <Section className="!py-14 md:!py-18">
-        <SectionHeader eyebrow="How TKO works" title="Fix the bottleneck, not the whole company." description="Start with one important flow, build the smallest useful operating loop, and expand only when it earns the right to grow." />
+        <SectionHeader eyebrow="How TKO works" title="One workflow. A clear scope. A working fix." description="Start with the work that matters most. Agree on what a useful result looks like, build it with the team, and check it against the starting point." />
         <ol className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {method.map(([heading, body], index) => (
             <li key={heading} className="border-t-2 border-primary bg-surface p-6">
@@ -166,7 +166,7 @@ export default function HomePage() {
       </Section>
 
       <Section className="!py-14 md:!py-18">
-        <SectionHeader eyebrow="What gets built" title="Named for what changes, not for the software." />
+        <SectionHeader eyebrow="What I can build for you" title="Bring the follow-up gap, the manual process, or the AI idea." description="These are examples of work TKO can scope around your business. The first conversation identifies a useful starting point." />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {builds.map(([heading, body]) => (
             <article key={heading} className="border-l-2 border-primary bg-surface p-6">
@@ -178,7 +178,7 @@ export default function HomePage() {
       </Section>
 
       <Section className="bg-surface !py-14 md:!py-20">
-        <SectionHeader eyebrow="How engagements work" title="Start small. Expand only when it's working." description="Every step is useful on its own, is priced up front, and makes the next decision obvious." />
+        <SectionHeader eyebrow="How engagements work" title="Start where you are." description="An unclear problem starts with a diagnostic. A defined workflow or AI use case can go straight to build scoping. Ongoing support is available after launch." />
         <ol className="mt-12 border-t border-border">
           {offers.map((offer, index) => (
             <li key={offer.slug} className="grid gap-4 border-b border-border py-7 md:grid-cols-[3rem_0.9fr_1.4fr_0.6fr_auto] md:items-center">
@@ -224,7 +224,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <CtaBand title="Tell me what's stuck." description={CONSTRAINT_CALL.summary} secondaryHref="/services/constraint-diagnostic" secondaryLabel="See the Diagnostic" />
+      <CtaBand title="Which workflow would you fix first?" description={CONSTRAINT_CALL.summary} secondaryHref="/services" secondaryLabel="See Scope and Pricing" />
     </>
   );
 }

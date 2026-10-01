@@ -20,7 +20,7 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Practical operating systems for growing businesses. Based in South Florida,
+            Workflow systems, automation, and practical AI for growing businesses. Based in South Florida,
             working in person locally and remotely everywhere else.
           </p>
           <p className="mt-4 max-w-sm text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
