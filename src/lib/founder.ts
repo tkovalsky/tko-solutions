@@ -71,32 +71,32 @@ export const careerTimeline: TimelineEntry[] = [
 ];
 
 export const executiveSummary = {
-  headline: "I'm Todd Kovalsky. I find why the machine isn't working, and then I build the fix.",
+  headline: "I find the work holding the business together by hand—and build a better way to run it.",
   facts: [
-    "20+ years across financial-services operations, enterprise programs, product ownership, and healthcare transformation.",
-    "Designed, built, and run RachelOS: a production operating system with 1,600+ commits and 100+ recorded design decisions.",
-    "Work across process, CRM and data, automation, and AI, instead of handing each piece to a different specialist.",
-    "Product and program experience translating how work actually happens into systems people use.",
+    "20+ years across operations, product ownership, systems delivery, and complex transformation work.",
+    "Designed and built RachelOS end to end, from operating rules and data to the screens people use.",
+    "One person stays responsible from diagnosis through implementation.",
+    "A small client load, with scope and availability agreed before the work starts.",
   ],
 };
 
 /** Patterns I recognize, stated the way an owner would notice them. */
 export const founderArchetypes = [
   {
-    title: "The person who is the system",
-    body: "The owner, the operations manager, or the one employee everyone asks. The business works because they remember and decide. It stalls when they're busy, and it breaks when they leave.",
+    title: "The owner bottleneck",
+    body: "The team can do the work, but too many decisions still wait for the one person who carries the full picture.",
   },
   {
-    title: "Tools without an operating model",
-    body: "A CRM, a project tool, dashboards, and AI subscriptions, each fine on its own. Nobody decided how information should turn into action, so people do that job by hand.",
+    title: "Tools that do not add up",
+    body: "The CRM, inbox, spreadsheets, and dashboards each hold part of the truth. People still have to connect them by hand.",
   },
   {
-    title: "Automating the wrong thing",
-    body: "Automation layered on a process nobody examined runs the broken steps faster. The first question is what should happen and who decides, not which tool to connect.",
+    title: "The missing exception path",
+    body: "The happy path looks fine. The real cost appears when something is late, unclear, incomplete, or outside the standard process and nobody owns the next decision.",
   },
   {
-    title: "The constraint that moves",
-    body: "Fix follow-up and the bottleneck shifts to qualification; fix that and it shifts to conversion. Good systems are built to be changed, not declared finished.",
+    title: "The first useful fix",
+    body: "The business does not need a grand redesign. It needs the smallest change that removes a real bottleneck and gives the team a better way to work.",
   },
 ];
 

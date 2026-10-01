@@ -7,11 +7,11 @@ import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Book a 30-Minute Call",
-  description: "Tell me what's stuck in your business. Thirty minutes, no pitch deck: where I'd look first, and whether a diagnostic is worth it.",
+  description: "Discuss a workflow problem, automation project, or AI use case with Todd Kovalsky. A free 30-minute conversation to find the right starting point.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: "Book a 30-Minute Call | TKO Solutions",
-    description: "Tell me what's stuck. I'll tell you where I'd look first.",
+    description: "Tell me where the work keeps getting stuck.",
     url: absoluteUrl("/contact"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "Book a call with TKO Solutions." }],
   },
@@ -25,8 +25,9 @@ export default async function ContactPage({ searchParams }: SearchParams) {
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-[64ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Book a call</p>
-          <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">Tell me what&apos;s stuck.</h1>
+          <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">Bring the problem. We will find the starting point.</h1>
           <p className="mt-5 text-lg leading-8 text-muted">{CONSTRAINT_CALL.summary}</p>
+          <p className="mt-4 text-base leading-7 text-muted">A few sentences are enough. Projects for this year or next are welcome; scope and start dates are agreed around your priorities and available capacity.</p>
           {site.scheduling ? (
             <a href={site.scheduling} target="_blank" rel="noreferrer" data-conversion-event="primary_cta_click" data-cta-location="contact_scheduling" data-cta-label="Pick a time" className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 border border-primary bg-primary px-5 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:border-primary-dark hover:bg-primary-dark">
               <CalendarDays className="size-4" aria-hidden /> Pick a time
@@ -37,10 +38,10 @@ export default async function ContactPage({ searchParams }: SearchParams) {
           <aside>
             <h2 className="text-xl font-semibold">What happens next</h2>
             <ol className="mt-5 space-y-4 text-base leading-7 text-muted">
-              <li><span className="font-semibold text-foreground">1.</span> I read every message myself and reply within one business day.</li>
-              <li><span className="font-semibold text-foreground">2.</span> We talk for 30 minutes about what&apos;s stuck, what it costs, and what you&apos;ve tried.</li>
-              <li><span className="font-semibold text-foreground">3.</span> I tell you where I&apos;d look first, and whether the paid diagnostic is worth it for you.</li>
-              <li><span className="font-semibold text-foreground">4.</span> If it isn&apos;t, I&apos;ll say so, and point you somewhere better if I can.</li>
+              <li><span className="font-semibold text-foreground">1.</span> I read the message myself and reply within two business days.</li>
+              <li><span className="font-semibold text-foreground">2.</span> We spend 30 minutes on the workflow or AI use case, what should change, and your timeline.</li>
+              <li><span className="font-semibold text-foreground">3.</span> I tell you where I would look first and whether a diagnostic, a build, or no engagement makes sense.</li>
+              <li><span className="font-semibold text-foreground">4.</span> If TKO is not the right fit, I will say so plainly.</li>
             </ol>
             <div className="mt-8 border-l-2 border-primary bg-surface p-5">
               <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">About the call</p>
@@ -48,7 +49,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             </div>
           </aside>
           <div>
-            {status === "submitted" ? <Notice title="Got it." body="I'll reply within one business day to set up the call." /> : null}
+            {status === "submitted" ? <Notice title="Got it." body="I'll reply within two business days to set up the call." /> : null}
             {status === "invalid" ? <Notice title="A little more detail, please." body="Complete the required fields and describe what's stuck in a sentence or two." /> : null}
             {status === "error" ? <Notice title="That didn't go through." body="Please try again, or email me directly." /> : null}
             {status === "notification-error" ? <Notice title="Your message was saved, but I couldn't confirm the notification." body="Please email me directly as well so it isn't missed." /> : null}

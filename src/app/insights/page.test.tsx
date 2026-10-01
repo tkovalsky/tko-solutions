@@ -35,7 +35,7 @@ describe("InsightsPage", () => {
     ]);
     expect(screen.getByText("Featured")).toBeInTheDocument();
     expect(screen.getAllByText("3 min read")).toHaveLength(2);
-    expect(screen.getByText("Based on 2 sources")).toBeInTheDocument();
+    expect(screen.queryByText(/Based on \d+ sources?/)).not.toBeInTheDocument();
   });
 
   it("renders guides that carry no cluster under an 'Other guides' heading", () => {

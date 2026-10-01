@@ -4,10 +4,10 @@ export const site = {
   name: "TKO Solutions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tko.solutions",
   description:
-    "TKO Solutions builds business operating systems for growing companies: find the constraint costing you the most, build the system that fixes it, and prove it changed the numbers.",
-  positioning: "TKO builds the missing operating layer between your information and your execution.",
+    "TKO Solutions designs and builds workflow systems, CRM integrations, and practical AI applications for growing businesses. Work directly with Todd Kovalsky.",
+  positioning: "TKO builds the systems that turn scattered information into follow-up, decisions, and work that moves.",
   differentiation:
-    "Consultants stop at recommendations. Agencies and developers build what they are told. TKO finds the constraint and builds the fix, led by one principal who built and runs a production operating system.",
+    "Todd Kovalsky connects business operations, product design, and hands-on development in one focused engagement, from the first workflow conversation through launch.",
   cta: CONSTRAINT_CALL.label,
   ctaShort: CONSTRAINT_CALL.shortLabel,
   ctaHref: CONSTRAINT_CALL.href,

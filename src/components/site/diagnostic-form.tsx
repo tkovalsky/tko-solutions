@@ -114,8 +114,8 @@ export function DiagnosticForm({
 
       <Field
         id="transformationContext"
-        label="What's stuck?"
-        placeholder="In your own words: where do leads, work, or decisions get stuck, and what have you already tried?"
+        label="What would you like to fix or build?"
+        placeholder="A workflow that keeps breaking, follow-up that depends on memory, or an AI idea you want connected to the way your team works. A few sentences are enough."
         textarea
       />
 
@@ -125,7 +125,7 @@ export function DiagnosticForm({
         <option value="owner-bottleneck">Everything routes through the owner or COO</option>
         <option value="crm-trust">We have a CRM, but nobody trusts it or uses it well</option>
         <option value="manual-work">People copy information between systems by hand</option>
-        <option value="ai-tools">We bought AI tools and nothing changed</option>
+        <option value="ai-tools">We want to put AI to work in a specific workflow</option>
         <option value="reporting-to-action">Reports don&apos;t tell anyone what to do</option>
         <option value="knowledge-risk">Too much depends on a few key people</option>
         <option value="other">Something else</option>
@@ -146,7 +146,7 @@ export function DiagnosticForm({
           <option value="now">Now</option>
           <option value="30">Within 30 days</option>
           <option value="31-90">Within 90 days</option>
-          <option value="exploring">Just exploring</option>
+          <option value="exploring">Planning ahead / next year</option>
         </SelectField>
       </div>
 
@@ -189,7 +189,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Send
+        Request a Conversation
       </Button>
     </form>
   );

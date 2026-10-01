@@ -50,7 +50,7 @@ export default async function InsightPage({ params }: Params) {
   }
 
   const related = getRelatedInsights(insight.slug);
-  // Every guide maps to one offer. Falling back to the Executive Diagnostic keeps the
+  // Every guide maps to one offer. Falling back to the first offer keeps the
   // page renderable for legacy guides authored before the brief existed.
   const offer = getOffer(insight.brief?.offer ?? "") ?? offers[0];
   const cluster = getGuideCluster(insight.brief?.cluster ?? "");
@@ -84,12 +84,6 @@ export default async function InsightPage({ params }: Params) {
             <time dateTime={insight.date}>{formatDate(insight.date)}</time>
             <span aria-hidden="true">·</span>
             <span>{insight.readingTime} min read</span>
-            {insight.sourceCount > 0 ? (
-              <>
-                <span aria-hidden="true">·</span>
-                <span className="text-primary">Based on {insight.sourceCount} sources</span>
-              </>
-            ) : null}
           </p>
           <article
             className="prose-tko mt-10"

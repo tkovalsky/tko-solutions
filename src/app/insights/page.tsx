@@ -13,7 +13,7 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Guides",
   description:
-    "Practical guides for owners and operators of growing businesses: lead follow-up, the owner bottleneck, CRMs that don't drive action, and where AI actually helps in operations.",
+    "Practical notes for owners and operators on follow-up, handoffs, owner bottlenecks, useful systems, and where automation helps or gets in the way.",
   alternates: { canonical: "/insights" },
   openGraph: {
     title: "Guides",
@@ -36,12 +36,12 @@ export default function InsightsPage() {
     <>
       <PageHero
         eyebrow="Guides"
-        title="Written for the problem, not for the algorithm."
-        description="Each guide takes one problem growing businesses actually have, explains why it happens, and says where automation and AI help and where they add risk. Written from systems I've built and run, not from a keyword list."
+        title="Notes on making the business easier to run."
+        description="Practical thinking on owner bottlenecks, follow-up, handoffs, operating systems, and using automation without losing judgment."
         primaryHref={CONSTRAINT_CALL.href}
         primaryLabel={site.cta}
         secondaryHref="/selected-work"
-        secondaryLabel="See the Proof"
+        secondaryLabel="See RachelOS"
       />
 
       {total > 0 ? (
@@ -96,7 +96,6 @@ function InsightCard({ insight }: { insight: Insight }) {
       <div className="flex flex-wrap gap-x-3 gap-y-2 text-sm font-semibold uppercase tracking-[0.1em] text-muted">
         <time dateTime={insight.date}>{formatDate(insight.date)}</time>
         <span>{insight.readingTime} min read</span>
-        {insight.sourceCount > 0 ? <span>Based on {insight.sourceCount} sources</span> : null}
       </div>
       {insight.featured ? (
         <p className="mt-5 text-sm font-semibold uppercase tracking-[0.1em] text-primary">Featured</p>
