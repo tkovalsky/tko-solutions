@@ -51,7 +51,7 @@ But as the company approaches $10 million, the physics of the business change. T
 
 You have hit the ceiling. You are caught in the **Expertise Trap**.
 
-## The Human API
+## The Human API and Failing SOPs
 
 When a founder is the operating system, they become a human API. 
 
@@ -63,7 +63,7 @@ Because the company's software tools don't talk to each other, and because the s
 
 You feel like your team lacks initiative. You wonder why you have to make every single decision. 
 
-The truth is, your team isn't lazy. They just don't know the rules, because the rules only exist inside your head. You have never explicitly documented your risk tolerance, your pricing thresholds, or your escalation boundaries. So, to avoid making a mistake that will anger you, your employees do the safest thing possible: they ask you.
+The truth is, your team isn't lazy, and standard operating procedures (SOPs) alone won't fix this. They just don't know the rules, because the rules only exist inside your head. You have never explicitly documented your risk tolerance, your pricing thresholds, or your escalation boundaries. So, to avoid making a mistake that will anger you, your employees do the safest thing possible: they ask you.
 
 ## You Cannot Hire Your Way Out
 

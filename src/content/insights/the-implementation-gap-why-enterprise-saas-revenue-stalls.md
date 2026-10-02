@@ -49,9 +49,9 @@ But the CFO knows the truth: you can't recognize that revenue until the client a
 
 We call this **The Implementation Gap**, and it is where momentum dies.
 
-## The Swivel Chair Tax
+## The Swivel Chair Tax and SaaS Onboarding Bottlenecks
 
-The root cause of the Implementation Gap is almost never the software itself. The root cause is the operational handoff. 
+The root cause of these severe SaaS onboarding bottlenecks is almost never the software itself. The root cause is the operational handoff. 
 
 During a six-month sales cycle, the Account Executive and the Sales Engineer collected a massive amount of context. They know the client's exact pain points. They know the political dynamics of the executive sponsor. They know the specific technical requirements for the API integration.
 

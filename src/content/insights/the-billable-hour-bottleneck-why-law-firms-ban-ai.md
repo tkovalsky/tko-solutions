@@ -59,9 +59,9 @@ The client is paying for legal strategy, but they are being billed for administr
 
 This creates a hard ceiling on partner capacity. A partner can only handle so many active matters before the sheer volume of client communication causes them to drop the ball.
 
-## Intelligence vs. Governance
+## Intelligence vs. Governance: Mitigating AI Malpractice Risk
 
-Firms that ban AI are conflating two different things: using AI for *legal reasoning* versus using AI for *operational orchestration*.
+Firms that ban AI to avoid LLM hallucination liability are conflating two different things: using AI for *legal reasoning* versus using AI for *operational orchestration*.
 
 You should absolutely ban the use of AI for original legal research. 
 

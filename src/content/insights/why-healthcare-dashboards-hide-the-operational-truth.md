@@ -53,7 +53,7 @@ When the COO walked the floor, she realized why. The dashboard was telling the r
 
 The organization had not fixed the workflow. They had just purchased a very expensive stopwatch to measure how slowly their people were working.
 
-## The Dashboard Delusion
+## The Dashboard Delusion and EHR Interoperability Gaps
 
 In complex operational environments like healthcare, leaders consistently confuse **visibility** with **velocity**.
 
@@ -61,7 +61,7 @@ A dashboard is a feature of a **System of Record**. It is designed to aggregate 
 
 This is useful for the Vice President of Operations. It is completely useless for the nurse reviewer who actually has to do the work. 
 
-To the reviewer, the dashboard is just a list of chores. It does not pull the clinical data. It does not verify the provider's network status. It does not highlight the specific medical policy required to make the decision. It just sits there, demanding that the human operator act as the API between the hospital's fax machine and the health plan's core administrative system.
+To the reviewer, the dashboard is just a list of chores. It does not pull the clinical data. It does not verify the provider's network status. Because of severe EHR interoperability gaps, it does not highlight the specific medical policy required to make the decision. It just sits there, demanding that the human operator act as the API between the hospital's fax machine and the health plan's core administrative system.
 
 ## You Do Not Have a Reporting Problem. You Have a Handoff Problem.
 

@@ -51,11 +51,11 @@ When month 10 rolls around, the broker suddenly reappears with a renewal packet 
 
 This is **Silent Churn**. The client doesn't leave immediately, but the relationship has been commoditized. The moment a hungrier broker walks through the door with a proactive insight, the book of business is gone.
 
-## The Agency Management System (AMS) Trap
+## The Agency Management System (AMS) Limitations
 
 Brokerage owners know this is happening, and they blame their brokers. *"You need to be touching your clients quarterly! You need to cross-sell benefits to our P&C book!"*
 
-The brokers are not the problem. The architecture is the problem.
+The brokers are not the problem. The inherent limitations of your agency management system are the problem.
 
 Most commercial brokerages run on legacy Agency Management Systems (AMS) like Applied Epic or Vertafore. These systems are incredibly robust databases for storing policy numbers, carrier dec pages, and compliance documents. 
 

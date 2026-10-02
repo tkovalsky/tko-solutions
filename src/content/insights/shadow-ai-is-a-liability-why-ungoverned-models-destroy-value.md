@@ -5,7 +5,7 @@ business_unit: tko
 voice: tko-advisory
 cluster: ai-in-operations
 primary_buyer: >-
-  CIO, CTO, or Chief AI Officer tasked with deploying AI across the enterprise without causing a compliance disaster.
+  CIO, CTO, or Chief AI Officer tasked with deploying an enterprise Shadow AI policy without causing a compliance disaster.
 buyer_problem: >-
   Employees are using consumer AI tools to do their jobs. The company has no visibility into what data is leaving the firm, and no control over the accuracy of the AI's output in client communications.
 trigger_signal: >-
@@ -45,7 +45,7 @@ In boardrooms across the country, executives are handing down a mandate: *"We ne
 
 Usually, the IT department responds by purchasing 500 enterprise licenses for a generative AI chat tool. They run a one-hour training webinar, give the staff their logins, and declare the company "AI-enabled."
 
-This is not a strategy. This is the deployment of **Shadow AI**, and it is a massive operational liability.
+This is not a strategy. Without a strict Shadow AI policy, this deployment is a massive operational liability.
 
 When you give an employee a blank text box and say "use AI," you immediately lose control of your operating model. Your team begins pasting proprietary client data into external servers. They use the model to draft compliance responses, write code, and negotiate contracts. 
 
