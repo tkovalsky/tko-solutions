@@ -149,13 +149,13 @@ export default function PrivateClientOSPage() {
               <ShieldCheck className="w-8 h-8 text-blue-600" />
               <h3 className="font-bold text-lg text-slate-900 dark:text-slate-100">3. Governed AI Drafter & Memory</h3>
               <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                When telemetry indicates rising intent, the engine synthesizes the client's past notes and viewing history to draft a bespoke, highly personal touchpoint. The note sounds like an experienced partner writing from their desk.
+                When telemetry indicates rising intent, the engine synthesizes the client&apos;s past notes and viewing history to draft a bespoke, highly personal touchpoint. The note sounds like an experienced partner writing from their desk.
               </p>
             </div>
 
             <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
               <Smartphone className="w-8 h-8 text-blue-600" />
-              <h3 className="font-bold text-lg text-slate-900 dark:text-slate-100">4. Human-in-the-Loop "One-Tap" Queue</h3>
+              <h3 className="font-bold text-lg text-slate-900 dark:text-slate-100">4. Human-in-the-Loop &quot;One-Tap&quot; Queue</h3>
               <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                 The draft arrives in your morning action queue with full context. Tap once to send, swipe to edit, or dismiss with a single keystroke.
               </p>
