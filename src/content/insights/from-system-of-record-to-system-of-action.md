@@ -3,7 +3,7 @@ title: "From System of Record to System of Action"
 description: "Why the era of the monolithic ERP is over, and how modern organizations are decoupling their workflows from their databases using agentic orchestration."
 business_unit: tko
 voice: tko-advisory
-cluster: interoperability-implementation
+cluster: systems-that-dont-drive-action
 primary_buyer: >-
   CTO, CIO, or COO designing their 3-year technology architecture roadmap and trying to avoid another $20M monolithic migration.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Are your system integrations just moving data in bulk at midnight, or are they triggering real-time operational events?"
 recommended_action: >-
   Stop funding monolith upgrades to solve workflow problems. Fund the orchestration layer. Wrap your existing systems in APIs and move the business logic into a governed System of Action.
-offer: operating-model-design
+offer: operating-system-build
 cta: "Discuss a Design Sprint"
 status: published
 reviewer: "Todd Kovalsky"

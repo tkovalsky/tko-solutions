@@ -49,7 +49,7 @@ diagnostic_questions:
 recommended_action: >-
   Reconstruct one bounded change as an effective-dated decision context, trace it through every
   authority and downstream consumer, and define activation and burden measures before expanding.
-offer: transformation-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss a Transformation"
 status: published
 reviewer: "Todd Kovalsky"

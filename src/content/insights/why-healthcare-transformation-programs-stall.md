@@ -49,7 +49,7 @@ diagnostic_questions:
 recommended_action: >-
   Establish an independent, time-boxed read on what is actually blocking the program before
   approving additional funding, scope reduction, or a vendor change.
-offer: transformation-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss a Transformation"
 # Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
 status: draft

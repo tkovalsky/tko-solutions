@@ -3,7 +3,7 @@ title: "The Operational Recovery Audit: Diagnosing the Stalled Initiative"
 description: "Why massive strategic initiatives fail, and how to conduct a ruthless operational audit to rescue a program before the board pulls the plug."
 business_unit: tko
 voice: tko-advisory
-cluster: transformation-program-recovery
+cluster: what-to-fix-first
 primary_buyer: >-
   CEO, Board Member, or Chief Transformation Officer who needs to figure out why a multi-million dollar program is failing before they have to report it to the market.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Who is the single executive with the authority to cut scope to protect the launch date?"
 recommended_action: >-
   Pause development for two weeks. Conduct an Operational Recovery Audit. Find the undocumented dependencies, name the unresolved decisions, and test the status against actual artifacts.
-offer: transformation-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss a Transformation Recovery"
 status: published
 reviewer: "Todd Kovalsky"

@@ -3,7 +3,7 @@ title: "The Headcount Trap: Why Scaling Past $5M Breaks Your Operating Model"
 description: "Why growing companies add payroll to solve workflow friction, why it compresses EBITDA, and how to build a system of action instead of hiring more coordinators."
 business_unit: tko
 voice: tko-advisory
-cluster: human-workarounds-and-human-apis
+cluster: owner-as-operating-system
 primary_buyer: >-
   Founder, CEO, COO, or PE Operating Partner of companies between $5M and $50M revenue experiencing margin compression and operational friction.
 buyer_problem: >-
@@ -29,7 +29,7 @@ diagnostic_questions:
   - "What percentage of your team's day is spent copying and pasting data between systems that don't talk to each other?"
 recommended_action: >-
   Conduct an operational bottleneck and decision audit across your primary delivery value stream before authorizing additional administrative or coordination headcount.
-offer: executive-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss a Transformation"
 status: published
 reviewer: "Todd Kovalsky"

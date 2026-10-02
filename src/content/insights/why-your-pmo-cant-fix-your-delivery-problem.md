@@ -3,7 +3,7 @@ title: "Why Your PMO Can't Fix Your Delivery Problem"
 description: "A Project Management Office collects status. It does not establish operational truth. Why complex transformations fail even when every project is marked green."
 business_unit: tko
 voice: tko-advisory
-cluster: transformation-program-recovery
+cluster: what-to-fix-first
 primary_buyer: >-
   CEO, COO, or VP Transformation whose strategic initiatives keep missing deadlines despite having a fully staffed PMO.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Are you tracking tasks, or are you tracking decisions?"
 recommended_action: >-
   Stop managing tasks and start managing decisions. Upgrade your PMO from a reporting function to an operational governance function, or bring in an accountable execution authority.
-offer: transformation-leadership
+offer: operate-and-improve
 cta: "Discuss Execution Authority"
 status: published
 reviewer: "Todd Kovalsky"

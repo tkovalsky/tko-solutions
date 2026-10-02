@@ -3,7 +3,7 @@ title: "The 4-Week Operating Model Sprint: What Happens and What You Get"
 description: "How to reset a fragmented organization, align leadership, and build an executable target operating model in 30 days."
 business_unit: tko
 voice: tko-advisory
-cluster: transformation-program-recovery
+cluster: what-to-fix-first
 primary_buyer: >-
   COO, VP Operations, or PE Operating Partner who needs to restructure an operating model before launching a major tech or automation investment.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Do you need an academic report, or do you need an executable blueprint for the engineering team?"
 recommended_action: >-
   Stop analyzing and start sprinting. Bound the problem to one specific value stream, lock the key decision-makers in a room, and produce an executable Target Operating Model before spending a dime on code.
-offer: operating-model-design
+offer: operating-system-build
 cta: "Discuss a Design Sprint"
 status: published
 reviewer: "Todd Kovalsky"

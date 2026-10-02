@@ -5,7 +5,7 @@ description: >-
   unowned translation from policy to workflow, systems, controls, and evidence.
 business_unit: healthcare
 voice: tko-advisory
-cluster: interoperability-implementation
+cluster: systems-that-dont-drive-action
 primary_buyer: >-
   COO, CIO, Chief Transformation Officer, compliance executive, and regulatory-program sponsor
   at a health plan responsible for a cross-functional implementation.
@@ -45,7 +45,7 @@ diagnostic_questions:
 recommended_action: >-
   Establish a bounded obligation-to-evidence map for one high-consequence regulatory change,
   convert the gaps into owned backlog items, and test complete scenarios before expanding scope.
-offer: transformation-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss implementation readiness"
 status: published
 reviewer: "Todd Kovalsky"

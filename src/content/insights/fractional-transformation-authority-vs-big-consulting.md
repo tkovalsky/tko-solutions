@@ -3,7 +3,7 @@ title: "Fractional Transformation Authority vs. Big Consulting"
 description: "Why paying for a 50-person consulting army often slows down your transformation, and when to hire a single accountable principal instead."
 business_unit: tko
 voice: tko-advisory
-cluster: transformation-program-recovery
+cluster: what-to-fix-first
 primary_buyer: >-
   CEO, Board Member, or PE Operating Partner deciding how to resource a critical turnaround or modernization initiative.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Do you actually need 50 people to build the system, or do you need one person to figure out why the 50 people you already have aren't building it?"
 recommended_action: >-
   Separate the architectural and execution authority from the delivery capacity. Hire a principal to own the truth, and use internal teams or specialized vendors for the execution.
-offer: transformation-leadership
+offer: operate-and-improve
 cta: "Discuss Execution Authority"
 status: published
 reviewer: "Todd Kovalsky"

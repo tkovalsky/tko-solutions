@@ -3,7 +3,7 @@ title: "Stop Buying Software to Fix Workflow Problems"
 description: "Why your expensive Salesforce or NetSuite rollout didn't fix your operational bottlenecks, and what you actually need instead of another SaaS platform."
 business_unit: tko
 voice: tko-advisory
-cluster: human-workarounds-and-human-apis
+cluster: owner-as-operating-system
 primary_buyer: >-
   COO, VP Operations, or CEO who just spent six figures on an enterprise software rollout only to find their team is still using spreadsheets.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Who owns the spaces between your software tools?"
 recommended_action: >-
   Stop buying licenses. Decouple your workflow from your database. Map the actual sequence of decisions required to deliver value, and build an orchestration layer to govern it.
-offer: operating-model-design
+offer: operating-system-build
 cta: "Discuss a Design Sprint"
 status: published
 reviewer: "Todd Kovalsky"

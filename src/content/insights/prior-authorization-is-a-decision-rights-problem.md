@@ -48,7 +48,7 @@ diagnostic_questions:
 recommended_action: >-
   Establish an operational baseline and an explicit authority map for one bounded workflow
   before committing further platform, staffing, or automation spend.
-offer: transformation-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss a Transformation"
 # Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
 status: draft

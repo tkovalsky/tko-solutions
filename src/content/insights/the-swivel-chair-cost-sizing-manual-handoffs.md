@@ -3,7 +3,7 @@ title: "The Swivel-Chair Cost: Sizing the Invisible Tax of Manual Handoffs"
 description: "Why fragmented workflows destroy EBITDA, and how to calculate the true financial cost of humans acting as the integration layer between your systems."
 business_unit: tko
 voice: tko-advisory
-cluster: administrative-cost-reduction
+cluster: what-to-fix-first
 primary_buyer: >-
   CFO, COO, or VP Operations who is mandated to cut administrative costs without breaking delivery quality.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Do you know the exact financial cost of a single transaction flowing through your company?"
 recommended_action: >-
   Shadow a front-line operator for one hour. Count the clicks. Multiply that friction by your annual volume. Then build a business case for a System of Action to automate the integration layer.
-offer: executive-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss an Operations Diagnostic"
 status: published
 reviewer: "Todd Kovalsky"

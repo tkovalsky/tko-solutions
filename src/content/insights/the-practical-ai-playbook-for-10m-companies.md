@@ -3,7 +3,7 @@ title: "The Practical AI Playbook for $10M Companies"
 description: "How growth-stage companies can implement AI and agentic workflows without hiring a massive data science team."
 business_unit: tko
 voice: tko-advisory
-cluster: human-workarounds-and-human-apis
+cluster: owner-as-operating-system
 primary_buyer: >-
   CEO, COO, or Founder of a $5M-$50M company who is feeling pressure from the board to 'use AI' but doesn't have an enterprise IT budget.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "If the AI makes a mistake, who is operationally accountable for catching it?"
 recommended_action: >-
   Run an AI-readiness diagnostic on your primary value stream. Identify the specific, high-friction, unstructured text steps and deploy agentic workflows to handle only those narrow tasks.
-offer: transformation-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss an AI Readiness Diagnostic"
 status: published
 reviewer: "Todd Kovalsky"

@@ -3,7 +3,7 @@ title: "Human APIs Become Organizational Bottlenecks"
 description: "Organizations compensate for broken decision systems by making people behave like APIs. A guide to finding that dependency, sizing it, and deciding what to do about it."
 business_unit: tko
 voice: tko-advisory
-cluster: human-workarounds-and-human-apis
+cluster: owner-as-operating-system
 primary_buyer: >-
   COO, Chief Transformation Officer, SVP/VP Operations, and PE operating partners at health
   plans, healthcare services organizations, and PE-backed provider platforms.
@@ -48,7 +48,7 @@ recommended_action: >-
   Run a bounded key-person audit on the single workflow where the dependency is most
   expensive, and separate captureable facts and rules from genuine judgment before selecting
   any tool.
-offer: executive-diagnostic
+offer: constraint-diagnostic
 cta: "Discuss a Transformation"
 # Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
 status: draft

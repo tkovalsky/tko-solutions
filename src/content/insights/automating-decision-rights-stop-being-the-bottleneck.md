@@ -3,7 +3,7 @@ title: "Automating Decision Rights: How to Stop Being the Bottleneck"
 description: "Why Founders and CEOs become the primary bottleneck for operational velocity, and how to automate decision rights so your company can scale without you."
 business_unit: tko
 voice: tko-advisory
-cluster: decision-rights-and-exception-routing
+cluster: systems-that-dont-drive-action
 primary_buyer: >-
   Founder, CEO, or Managing Partner of a scaling business who is exhausted by making 50 routine operational decisions a day.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "Are your decision rules documented in an operating model, or do they only exist in your head?"
 recommended_action: >-
   Map your primary delivery workflow, identify the top three reasons work escalates to your desk, and publish explicit, dollar-value or risk-weighted boundaries that give your team the authority to act.
-offer: operating-model-design
+offer: operating-system-build
 cta: "Discuss a Design Sprint"
 status: published
 reviewer: "Todd Kovalsky"

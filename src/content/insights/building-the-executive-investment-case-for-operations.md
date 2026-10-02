@@ -3,7 +3,7 @@ title: "Building the Executive Investment Case for Operational Modernization"
 description: "How COOs and VP Operations can translate workflow friction into hard financial metrics to get their transformation budget approved by the board."
 business_unit: tko
 voice: tko-advisory
-cluster: administrative-cost-reduction
+cluster: what-to-fix-first
 primary_buyer: >-
   COO, VP Operations, or CTO who knows they need to modernize the operating model but is struggling to get the budget approved by the CFO or Board.
 buyer_problem: >-
@@ -28,7 +28,7 @@ diagnostic_questions:
   - "If the board gives you the money, how exactly will you measure the return on autonomy?"
 recommended_action: >-
   Run a baseline diagnostic on your primary value stream. Calculate the exact cost of the swivel-chair friction. Build the business case around deferred hiring, reduced error rates, and increased throughput.
-offer: operating-model-design
+offer: operating-system-build
 cta: "Discuss a Design Sprint"
 status: published
 reviewer: "Todd Kovalsky"

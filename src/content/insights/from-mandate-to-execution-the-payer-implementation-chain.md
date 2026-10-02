@@ -5,7 +5,7 @@ description: >-
   controls, owners, evidence, and outcomes that make implementation real.
 business_unit: healthcare
 voice: tko-advisory
-cluster: interoperability-implementation
+cluster: systems-that-dont-drive-action
 primary_buyer: >-
   CIO, CTO, COO, VP Transformation, enterprise architect, and payer program leader responsible
   for translating a healthcare requirement into coordinated delivery.
@@ -45,7 +45,7 @@ diagnostic_questions:
 recommended_action: >-
   Apply the chain to one representative, high-consequence scenario; use the resulting gaps and
   acceptance criteria to build an owned implementation backlog before broadening the program.
-offer: operating-model-design
+offer: operating-system-build
 cta: "See how to make the work executable"
 status: published
 reviewer: "Todd Kovalsky"
