@@ -28,7 +28,7 @@ export default function PrivateClientOSPage() {
           
           <div className="pt-8 flex flex-col items-center gap-4">
             <QueueWalkthroughModal>
-              <Button size="lg" className="text-lg px-8 py-6 h-auto">
+              <Button className="text-lg px-8 py-6 h-auto">
                 Request a Private Queue Walk-Through
               </Button>
             </QueueWalkthroughModal>
@@ -284,7 +284,7 @@ export default function PrivateClientOSPage() {
           </p>
           <div className="pt-8 flex flex-col items-center gap-4 w-full">
             <QueueWalkthroughModal>
-              <Button size="lg" className="w-full md:w-auto text-lg px-12 py-8 h-auto font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-xl transition-all hover:scale-105 active:scale-95">
+              <Button className="w-full md:w-auto text-lg px-12 py-8 h-auto font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-xl transition-all hover:scale-105 active:scale-95">
                 Schedule an Architectural Walk-Through
               </Button>
             </QueueWalkthroughModal>
