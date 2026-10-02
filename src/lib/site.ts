@@ -1,19 +1,19 @@
-import { TRANSFORMATION_CONVERSATION } from "@/lib/offers";
+import { CONSTRAINT_CALL } from "@/lib/offers";
 
 export const site = {
   name: "TKO Solutions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tko.solutions",
   description:
-    "Principal-led healthcare transformation and operating-model advisory for organizations reducing administrative burden, modernizing regulated workflows, governing automation, and making complex change executable.",
-  positioning:
-    "I help healthcare organizations make complex, regulated change executable.",
+    "TKO Solutions designs and builds workflow systems, CRM integrations, and practical AI applications for growing businesses. Work directly with Todd Kovalsky.",
+  positioning: "TKO builds the systems that turn scattered information into follow-up, decisions, and work that moves.",
   differentiation:
-    "When a transformation's outcome is distributed across dozens of teams, systems, and decisions, every part has an owner and the whole does not. TKO becomes the integration and operational-truth layer that closes that gap. One accountable principal leads the work.",
-  cta: TRANSFORMATION_CONVERSATION.label,
-  ctaHref: TRANSFORMATION_CONVERSATION.href,
-  secondaryCta: "Compare Engagements",
-  secondaryCtaHref: "/services",
-  socialImage: "/og-tko-2.png",
+    "Todd Kovalsky connects business operations, product design, and hands-on development in one focused engagement, from the first workflow conversation through launch.",
+  cta: CONSTRAINT_CALL.label,
+  ctaShort: CONSTRAINT_CALL.shortLabel,
+  ctaHref: CONSTRAINT_CALL.href,
+  secondaryCta: "See How RachelOS Was Built",
+  secondaryCtaHref: "/selected-work/from-crm-to-operating-system",
+  socialImage: "/og-tko-3.png",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "t.e.kovalsky@gmail.com",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "https://www.linkedin.com/in/toddkovalsky",
   scheduling: process.env.NEXT_PUBLIC_SCHEDULING_URL,

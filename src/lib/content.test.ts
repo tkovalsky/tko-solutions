@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { caseStudies, getCaseStudy, leadParagraph } from "@/lib/content";
 
-describe("TKO 2.0 evidence catalogue", () => {
-  it("states role, evidence, lesson, and limits for every case", () => {
-    expect(caseStudies.length).toBeGreaterThanOrEqual(6);
+describe("TKO case studies", () => {
+  it("includes the narrative and next step for every case", () => {
+    expect(caseStudies.length).toBeGreaterThanOrEqual(1);
     expect(new Set(caseStudies.map((study) => study.slug)).size).toBe(caseStudies.length);
     for (const study of caseStudies) {
       expect(study.situation.length).toBeGreaterThan(50);
@@ -11,16 +11,20 @@ describe("TKO 2.0 evidence catalogue", () => {
       expect(study.role.length).toBeGreaterThan(40);
       expect(study.lesson.length).toBeGreaterThan(40);
       expect(study.relevance.length).toBeGreaterThan(40);
-      expect(study.evidence.length).toBeGreaterThanOrEqual(2);
-      expect(study.evidenceLimit.length).toBeGreaterThan(60);
       expect(study.relatedOfferHref).toMatch(/^\/services\//);
       expect(getCaseStudy(study.slug)).toBe(study);
     }
   });
 
-  it("keeps independent systems distinct from enterprise experience", () => {
-    expect(getCaseStudy("from-crm-to-operating-system")?.classification).toBe("Live independent system");
-    expect(getCaseStudy("cre-intelligence-model")?.classification).toBe("Method-portability evidence");
+  it("leads with RachelOS and shows how the build progressed", () => {
+    const rachelos = getCaseStudy("from-crm-to-operating-system");
+    expect(caseStudies[0]).toBe(rachelos);
+    expect(rachelos?.stages?.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("does not claim revenue outcomes for RachelOS", () => {
+    const rachelos = getCaseStudy("from-crm-to-operating-system");
+    expect(JSON.stringify(rachelos)).not.toMatch(/ROI of|\d+% (more|increase)|10x/i);
   });
 
   // The site is founder-led: Todd describes his own work in the first person.

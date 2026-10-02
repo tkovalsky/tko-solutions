@@ -1,8 +1,4 @@
-export type OfferSlug =
-  | "executive-diagnostic"
-  | "transformation-diagnostic"
-  | "operating-model-design"
-  | "transformation-leadership";
+export type OfferSlug = "constraint-diagnostic" | "operating-system-build" | "operate-and-improve";
 
 export type OfferTimelineStep = {
   period: string;
@@ -14,7 +10,7 @@ export type Offer = {
   slug: OfferSlug;
   name: string;
   shortName: string;
-  level: "Diagnose" | "Design" | "Lead";
+  level: "Diagnose" | "Build" | "Operate";
   step: string;
   duration: string;
   startingPrice: string;
@@ -35,242 +31,227 @@ export type Offer = {
   feeFraming?: string;
 };
 
-export const TRANSFORMATION_CONVERSATION = {
-  label: "Discuss a Transformation",
+export const CONSTRAINT_CALL = {
+  label: "Book a 30-Minute Call",
+  shortLabel: "Book a Call",
   href: "/contact",
-  duration: "45 minutes",
+  duration: "30 minutes",
   summary:
-    "A focused working conversation about what is changing, what is stuck, and which decision leadership needs to make before more money or momentum is lost.",
+    "Bring one workflow that keeps slowing you down, or an AI idea you want to put to work. In 30 minutes, we will talk through the problem, the tools involved, and whether a diagnostic or a scoped build is the right next step.",
   boundary:
-    "The conversation tests the problem boundary and the most useful next step. Artifact review, stakeholder interviews, analysis, and written recommendations belong in a paid diagnostic.",
+    "The first call is free. You do not need a finished brief or a technical specification. We will decide whether there is a useful project to scope.",
   outputs: [
-    "A shared statement of the problem as it is currently understood",
-    "The questions leadership must answer before further investment",
-    "A direct read on whether TKO is the right help",
-    "A recommended diagnostic or alternative next step",
+    "A clearer way to frame the problem",
+    "Where I would look first",
+    "A plain answer on whether TKO is the right fit",
   ],
-} as const;
-
-// Compatibility export for older insight and readiness content during migration.
-export const PROGRAM_RECOVERY_CONVERSATION = TRANSFORMATION_CONVERSATION;
-
-export const SPECIALIST_CONVERSATION = {
-  label: "Discuss Delivery-Partner Support",
-  href: "/contact?intent=partner",
 } as const;
 
 export const offers: Offer[] = [
   {
-    slug: "executive-diagnostic",
-    name: "Executive Diagnostic",
-    shortName: "Executive Diagnostic",
+    slug: "constraint-diagnostic",
+    name: "Constraint Diagnostic",
+    shortName: "Diagnostic",
     level: "Diagnose",
-    step: "Paid entry point",
-    duration: "1–2 weeks",
-    startingPrice: "$5K",
-    commercial: "Starting at $5K",
-    question: "What is actually happening, and what should leadership examine next?",
+    step: "Where to start",
+    duration: "2 weeks",
+    startingPrice: "$7,500",
+    commercial: "$7,500 fixed · credited toward a build",
+    question: "What is actually slowing the business down—and what is the smallest useful fix?",
     audience:
-      "For an executive with one tightly bounded healthcare operating or transformation problem who needs an independent read before committing to a larger intervention.",
+      "For an owner, COO, or department leader who can feel the drag—missed follow-up, slow handoffs, repeated decisions, too much work routing through one person—but cannot yet see the first fix clearly.",
     summary:
-      "A focused assessment of one defined problem using existing artifacts, limited stakeholder input, dependency and friction analysis, prioritized findings, and one executive readout.",
+      "In two weeks, I follow one important workflow, talk with the people doing it, and inspect the tools and handoffs. You leave with the diagnosis, a build specification, a fixed-price proposal, and a starting measure. The diagnostic defines the fix; implementation is a separate step.",
     metaDescription:
-      "A 1–2 week principal-led healthcare transformation diagnostic, starting at $5K, for one tightly bounded operating problem.",
+      "A two-week, fixed-price diagnostic for growing businesses: find where work gets stuck and define the smallest useful system to fix it. $7,500.",
     triggers: [
-      "A new operational pressure or regulatory requirement needs rapid framing.",
-      "Leadership sees symptoms but does not yet know whether the problem is workflow, ownership, controls, technology, or execution.",
-      "A warm-network opportunity needs paid discovery without a large initial commitment.",
-      "One workflow or decision is sufficiently bounded to examine in under two weeks.",
+      "Leads, requests, or jobs enter the business but do not move consistently.",
+      "The owner or COO is still the default router for routine decisions.",
+      "The CRM holds records but does not guide the work.",
+      "Handoffs depend on messages, spreadsheets, and memory.",
+      "A key person is leaving, or the business has outgrown its current way of working.",
     ],
     deliverables: [
-      "Current-state assessment of one defined problem",
-      "Administrative-friction and dependency findings",
-      "Prioritized risks and opportunities",
-      "Executive recommendations",
-      "One readout and an explicit next-step decision",
+      "A plain-language diagnosis of where the work breaks down",
+      "A map of the workflow, handoffs, systems, and decision owners",
+      "The specific rules, states, or connections that are missing",
+      "A focused specification and fixed price for the first build",
+      "A simple baseline for judging whether the change helped",
+      "A working session to decide what to do next",
     ],
     boundaries: [
-      "One problem, limited interviews, and existing artifacts only.",
-      "This is not an enterprise-wide assessment, implementation plan, or technology selection.",
-      "No clinical, legal, actuarial, or regulatory advice is provided.",
-      "The diagnostic creates no obligation to continue with TKO.",
+      "One business unit or revenue motion. A whole-company assessment is scoped separately.",
+      "No software or data is changed during the diagnostic.",
+      "No outcome is promised before the starting point and first build are understood.",
+      "There is no obligation to build with TKO. The specification is yours to use with anyone.",
     ],
     expansionPath:
-      "If the problem is broader or economically material, expand into a Transformation Diagnostic or a bounded Operating Model & Transformation Design Sprint.",
-    capabilityTags: ["Administrative friction", "Problem framing", "Dependency analysis"],
+      "If the first fix is worth building, the diagnostic ends with a fixed-price Operating System Build. The diagnostic fee is credited if that build starts within 30 days.",
+    capabilityTags: ["Process and handoffs", "CRM and data", "Lead and customer follow-up", "Automation readiness"],
     faqs: [
-      { q: "Is this a sales workshop?", a: "No. It is a paid, bounded diagnostic with written findings and a decision-oriented readout." },
-      { q: "Can it cover more than one workflow?", a: "Only when those workflows form one coherent problem boundary. Otherwise the Transformation Diagnostic is the better vehicle." },
+      {
+        q: "Is this a sales pitch in disguise?",
+        a: "No. It is paid, fixed-scope work with a written report you keep, whether or not you hire me for anything else.",
+      },
+      {
+        q: "How much of my team's time does it take?",
+        a: "About 45 minutes each for up to six people, plus a walkthrough of your main systems. Most of the work happens on my side.",
+      },
+      {
+        q: "Our data is a mess. Is that a problem?",
+        a: "No. Messy data is usually part of the finding. The diagnostic shows which mess actually matters.",
+      },
+      {
+        q: "Do you work in person?",
+        a: "In South Florida, yes, if you prefer it. Everywhere else, the work runs remotely.",
+      },
     ],
-    ctaLabel: "Start with an Executive Diagnostic",
-    feeBoundary:
-      "The starting scope is designed for roughly one problem, limited access, and a decision that can be responsibly framed from existing evidence.",
-  },
-  {
-    slug: "transformation-diagnostic",
-    name: "Transformation Diagnostic",
-    shortName: "Transformation Diagnostic",
-    level: "Diagnose",
-    step: "Standard entry engagement",
-    duration: "2–3 weeks",
-    startingPrice: "$10K",
-    commercial: "Starting at $10K",
-    question: "What is preventing this transformation from becoming an executable operating change?",
-    audience:
-      "For a COO, Chief Transformation Officer, CIO, or healthcare operations executive facing administrative burden, provider friction, a stalled modernization effort, or an automation decision built on an unstable workflow.",
-    summary:
-      "The standard entry engagement maps the current operating model, friction, controls, dependencies, and transformation risks, then gives leadership a prioritized intervention and next-stage roadmap.",
-    metaDescription:
-      "A 2–3 week healthcare Transformation Diagnostic, starting at $10K, covering workflow friction, controls, dependencies, risk, and next-stage roadmap.",
-    triggers: [
-      "Administrative cost or provider burden is rising without a shared explanation.",
-      "Workstreams report progress while enterprise outcomes remain unchanged.",
-      "A transformation has missed milestones or lost executive confidence.",
-      "AI, automation, or a platform investment is proposed before the operating model is explicit.",
-      "A new executive needs an independent read before inheriting the current plan.",
-    ],
-    deliverables: [
-      "Current-state operating model",
-      "Workflow and administrative-friction map",
-      "Control and decision-rights analysis",
-      "Transformation dependency model",
-      "Risk and readiness findings",
-      "Economic and value hypothesis",
-      "Prioritized interventions and next-stage roadmap",
-      "Executive readout",
-    ],
-    boundaries: [
-      "The scope is one transformation, workflow family, or coherent operating problem.",
-      "The diagnostic establishes a defensible baseline; it does not guarantee savings or outcomes before evidence exists.",
-      "Implementation, detailed solution design, and vendor procurement are separate decisions.",
-      "TKO may recommend internal execution, an existing partner, a different specialist, or no further investment.",
-    ],
-    expansionPath:
-      "Validated problems can move into future-state design or into execution accountability. Expansion is evidence-based, not automatic.",
-    capabilityTags: ["Operating model", "Program recovery", "Friction economics", "Governed AI"],
-    faqs: [
-      { q: "Is this the former Program Recovery Review?", a: "Program recovery is now one use case within the broader Transformation Diagnostic. The engagement also applies before a program fails, when burden, controls, workflow, or investment choices are still being framed." },
-      { q: "Do you need production data?", a: "Not always. Existing artifacts and interviews can establish the first model. Any sensitive-data requirement is separately scoped with explicit handling controls." },
-    ],
-    ctaLabel: "Discuss a Transformation Diagnostic",
+    ctaLabel: CONSTRAINT_CALL.label,
     timeline: [
-      { period: "Stage 1", title: "Frame and read", description: "Bound the executive question, review existing artifacts, and identify evidence gaps." },
-      { period: "Stage 2", title: "Trace and test", description: "Interview the people closest to the work and trace friction, controls, decisions, and dependencies." },
-      { period: "Stage 3", title: "Diagnose and sequence", description: "Synthesize findings, prioritize interventions, and give leadership an explicit next-stage decision." },
+      {
+        period: "Week 1",
+        title: "Listen and look",
+        description:
+          "Conversations with the people doing the work, plus a walkthrough of the tools, handoffs, and records around one important flow.",
+      },
+      {
+        period: "Week 2",
+        title: "Follow the work",
+        description:
+          "Follow the work end to end. Find where it stalls, which decisions repeat, and who is compensating by hand.",
+      },
+      {
+        period: "Readout",
+        title: "Decide",
+        description:
+          "A clear diagnosis, a fixed-price plan for the first fix, a starting measure, and a plain recommendation—including if the answer is to leave it alone.",
+      },
     ],
     feeBoundary:
-      "The starting price assumes one coherent problem, existing documentation, bounded stakeholder access, and a decision-oriented executive readout.",
+      "Founding-client rate: the first three diagnostics are $5,000 in exchange for permission to describe the work publicly, anonymously if preferred. A reference call is requested only if the work earns your recommendation.",
   },
   {
-    slug: "operating-model-design",
-    name: "Operating Model & Transformation Design Sprint",
-    shortName: "Design Sprint",
-    level: "Design",
-    step: "Future-state design",
-    duration: "4–6 weeks",
-    startingPrice: "$20K",
-    commercial: "Starting at $20K",
-    question: "What should the future operating model be, and how can the enterprise implement it?",
+    slug: "operating-system-build",
+    name: "Operating System Build",
+    shortName: "Build",
+    level: "Build",
+    step: "Fix the constraint",
+    duration: "4–8 weeks",
+    startingPrice: "$15,000",
+    commercial: "From $15,000 · fixed price per phase",
+    question: "Turn a workflow problem or an AI use case into a working system.",
     audience:
-      "For healthcare leaders with a validated problem who need the future-state workflow, controls, governance, technology implications, and implementation sequence made explicit.",
+      "For an owner or team leader with a defined workflow problem, automation need, or AI use case and the authority to put the solution into use.",
     summary:
-      "A bounded design sprint that converts diagnostic evidence into an executable target operating model and transformation roadmap before automation or implementation spend accelerates.",
+      "I design, build, and launch a focused system around your existing tools. That might be a follow-up workflow, a CRM integration, an internal workspace, or AI that drafts, summarizes, or extracts information inside a real process. We agree on the scope and how to judge the result before building.",
     metaDescription:
-      "A 4–6 week healthcare operating-model and transformation design sprint, starting at $20K, covering workflows, controls, governance, technology, and roadmap.",
+      "Workflow systems, CRM integrations, internal tools, and practical AI applications. Design through launch with Todd Kovalsky. Builds from $15,000.",
     triggers: [
-      "The current-state problem is understood but teams disagree on the future model.",
-      "Automation requirements are advancing without explicit decision rights or exception handling.",
-      "Multiple products or platforms need one operating design and implementation sequence.",
-      "Leadership needs an investment case tied to operating measures and business value.",
+      "A diagnostic or your own analysis has identified a specific workflow to improve.",
+      "You know the problem, but earlier tools, agencies, or hires didn't fix it.",
+      "The owner or COO wants to stop being the routing layer for the business.",
+      "You have an AI use case and need it connected to the tools and process your team actually uses.",
     ],
     deliverables: [
-      "Target operating model",
-      "Future-state workflows and exception paths",
-      "Decision rights and control model",
-      "Governance and escalation design",
-      "Technology, data, integration, automation, and AI implications",
-      "Dependency-aware implementation roadmap",
-      "KPI framework and business case",
+      "A working system in production, built around your existing tools wherever possible",
+      "A clear state, owner, and next step for the work in scope",
+      "An interface or action view matched to the workflow",
+      "Integrations, automation, and AI assistance where the agreed use case calls for them",
+      "Documentation and hands-on training for the people who use it",
+      "A post-launch review against the starting baseline",
     ],
     boundaries: [
-      "A design sprint produces implementation-ready direction, not a full system build.",
-      "Detailed architecture and engineering remain with the accountable internal or delivery teams.",
-      "Clinical policy and regulatory interpretations remain with authorized client owners.",
-      "Material scope expansion requires a written change in objective, access, and fee.",
+      "Scope and price are fixed per phase and agreed in writing before work starts.",
+      "I build on your existing CRM and tools unless there is a clear reason not to.",
+      "Approval and change rules are agreed before customer-facing or record-changing automation is enabled.",
+      "You own what is built: code, configuration, and documentation.",
     ],
     expansionPath:
-      "TKO can carry the model into execution as Transformation Execution Authority, or hand it to the client and its delivery partners with the ownership, dependency, and readiness structures already defined.",
-    capabilityTags: ["Target operating model", "Decision rights", "Technology roadmap", "Governed automation"],
-    faqs: [
-      { q: "Must a diagnostic come first?", a: "Not if the client already has a credible evidence base and a sufficiently bounded problem. TKO validates that foundation during scoping." },
-      { q: "Do you build the software?", a: "The sprint defines the operating and technology implications. Implementation may be led by internal teams, existing vendors, delivery partners, or a separately scoped TKO role." },
+      "After launch, your team can own the system or TKO can continue with Operate & Improve. The next step is optional and separately scoped.",
+    capabilityTags: [
+      "Lead and customer follow-up systems",
+      "CRM operating layers",
+      "Action queues and handoffs",
+      "Workflow automation and practical AI",
+      "Institutional memory",
+      "Reporting tied to action",
     ],
-    ctaLabel: "Discuss a Design Sprint",
-    feeBoundary:
-      "The starting price assumes one target operating model or workflow family and an identified executive sponsor with access to operating and technology owners.",
-  },
-  {
-    slug: "transformation-leadership",
-    name: "Transformation Execution Authority",
-    shortName: "Execution Authority",
-    level: "Lead",
-    step: "Integration and operational truth",
-    duration: "Scope-dependent",
-    startingPrice: "$20K/month",
-    commercial: "Starting at $20K/month, ranging to $50K/month by complexity",
-    question:
-      "Who is accountable for the outcome end to end when it is distributed across dozens of teams, systems, decisions, and dependencies?",
-    audience:
-      "For healthcare transformations whose outcome depends on many teams, applications, vendors, and decisions at once—and where every part has an owner but the whole does not.",
-    summary:
-      "TKO becomes the integration and operational-truth layer for the program: reconstructing ownership, surfacing the dependencies nobody reported, naming the unresolved decisions preventing closure, testing whether reported status is supported by evidence, and establishing what ready means before anyone declares it.",
-    metaDescription:
-      "Principal-led healthcare transformation execution authority, $20K–$50K/month, establishing the integration and operational-truth layer complex programs depend on.",
-    triggers: [
-      "The outcome spans many applications, workflows, products, or delivery partners, and no single role is accountable for the whole.",
-      "Every workstream reports green while the enterprise date is visibly at risk.",
-      "Dependencies keep surfacing late, discovered by collision rather than by plan.",
-      "Decisions sit unresolved for weeks because no one can say who owns them.",
-      "Leadership cannot answer whether the organization is ready, only what each team reported.",
-    ],
-    deliverables: [
-      "Ownership registry naming an accountable owner for every element of the outcome, including the work currently owned by nobody",
-      "Dependency and critical-path model covering the dependencies no workstream reported",
-      "Decision and approval log that names the unresolved decisions blocking closure",
-      "Evidence-tested status: whether reported condition is supported by artifacts rather than assertion",
-      "An explicit definition of ready, and testing against it",
-      "Risk, blocker, and escalation register tied to named owners and dates",
-      "Executive decision intelligence rather than a workstream status roll-up",
-    ],
-    boundaries: [
-      "This is a control layer for execution, not a PMO, a reporting layer, or additional project administration.",
-      "Scope and price reflect business impact, complexity, access, and accountability—not founder hours.",
-      "Client executives retain line authority, budget ownership, and accountable delivery roles.",
-      "TKO does not supply a low-cost delivery bench and does not replace accountable client executives.",
-      "Technology delivery, specialist partners, travel, and sensitive-data controls are explicitly scoped.",
-    ],
-    expansionPath:
-      "The intended exit is a transformation whose ownership, dependencies, decisions, and readiness definition are established well enough that client leaders and delivery teams operate them without permanent dependence on TKO.",
-    capabilityTags: ["Operational truth", "Dependency and critical path", "Decision throughput", "Readiness accountability"],
     faqs: [
       {
-        q: "How is this different from our PMO?",
-        a: "A PMO collects reported status, tracks reported dependencies, records assigned owners, and escalates overdue actions. This role reconstructs enterprise truth: it finds the dependencies nobody reported, the work with no accountable owner, and the unresolved decision preventing closure, and it tests whether status is supported by evidence. Both are necessary. They are not the same job.",
+        q: "Will you replace our CRM?",
+        a: "Rarely. The CRM is usually fine as a record. What's missing is the layer that turns records into the next action.",
       },
       {
-        q: "Is this priced by the hour?",
-        a: "No. Pricing reflects the number of organizations and systems affected, deadline exposure, the number of delivery partners, release and testing complexity, executive-reporting requirements, and how much readiness accountability transfers to TKO. Effort is estimated internally but is not the product.",
+        q: "Is this an AI project?",
+        a: "Sometimes. It can help draft, summarize, sort, or spot missing information. If a simpler rule or workflow solves the problem, that is what I use instead.",
       },
       {
-        q: "Can TKO work with our integrator?",
-        a: "Yes. TKO establishes and governs the operational truth across the program while internal teams and delivery partners retain their appropriate delivery accountabilities.",
+        q: "Who actually builds it?",
+        a: "I do. The same person who learns the workflow is responsible for designing and building the fix.",
+      },
+      {
+        q: "Do we need the diagnostic first?",
+        a: "If the workflow, problem, and desired result are already clear, we can start with build scoping. If we need to understand why the work is breaking down, the diagnostic is the better first step.",
+      },
+      {
+        q: "Can we plan a project for next year?",
+        a: "Yes. We can discuss scope and dependencies now, then agree on a start date against your timeline and my availability. Work begins only after scope, timing, and price are agreed.",
       },
     ],
-    ctaLabel: "Discuss Execution Authority",
+    ctaLabel: CONSTRAINT_CALL.label,
     feeFraming:
-      "Fees are set against organizations and systems affected, regulatory or public deadline exposure, program spend and business consequence, number of delivery partners, degree of cross-functional accountability, testing and release complexity, executive-reporting requirements, and responsibility for readiness and escalation.",
+      "Builds start at $15,000. Price depends on the workflow, integrations, data, and review requirements. You receive a fixed-price proposal before implementation starts.",
     feeBoundary:
-      "Every engagement defines objective, deliverables, meeting and access expectations, client responsibilities, exclusions, and the decision for handoff or expansion.",
+      "Every build states the objective, the metric it should move, what is in and out of scope, and what you own at the end.",
+  },
+  {
+    slug: "operate-and-improve",
+    name: "Operate & Improve",
+    shortName: "Operate & Improve",
+    level: "Operate",
+    step: "Keep it working",
+    duration: "Monthly · 3-month minimum",
+    startingPrice: "$3,000/mo",
+    commercial: "$3,000–$6,000 per month",
+    question: "Keep the system useful after launch.",
+    audience:
+      "For a business running a system TKO built, or one TKO has taken over, that wants it maintained, measured, and improved rather than left to drift.",
+    summary:
+      "I keep the operating loop healthy, fix what drifts, review what the team is seeing, and make one focused improvement at a time as the business changes.",
+    metaDescription:
+      "Ongoing care and improvement for a business operating system: monitoring, fixes, a monthly review, and focused improvements. $3,000–$6,000/month.",
+    triggers: [
+      "A build is live and you want it to keep working.",
+      "The business changes faster than anyone updates the system.",
+      "You want one person accountable for keeping the workflow useful as the business changes.",
+    ],
+    deliverables: [
+      "Monitoring and fixes",
+      "A monthly metric review against the baseline",
+      "One improvement shipped each month",
+      "A quarterly review of what is limiting the business now",
+      "Priority changes when the business changes",
+    ],
+    boundaries: [
+      "Covers systems TKO built or has formally taken over.",
+      "Improvement work is capped each month. Larger changes are scoped as a new build.",
+      "Cancel with 30 days' notice after the minimum term.",
+      "Not a help desk for unrelated IT.",
+    ],
+    expansionPath:
+      "When the quarterly review finds a new constraint worth fixing, it becomes the next build. If you need senior operating help beyond the system, a fractional arrangement can be discussed.",
+    capabilityTags: ["Monitoring", "Measurement", "Continuous improvement", "Constraint review"],
+    faqs: [
+      {
+        q: "Why not just maintain it ourselves?",
+        a: "You can—you own it. Most teams find the system slowly drifts from how the business actually runs. This keeps someone accountable for closing that gap.",
+      },
+      {
+        q: "What determines the monthly price?",
+        a: "The number of systems and integrations involved, and how often the business changes the workflow.",
+      },
+    ],
+    ctaLabel: CONSTRAINT_CALL.label,
   },
 ];
 

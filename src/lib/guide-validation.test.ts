@@ -125,8 +125,8 @@ function completeGuide(
   overrides: Partial<{ cluster: string; offer: string; reviewer: string; reviewedDate: string }>,
 ) {
   const {
-    cluster = "prior-authorization-operations",
-    offer = "transformation-diagnostic",
+    cluster = "lead-follow-up-and-revenue-leakage",
+    offer = "constraint-diagnostic",
     reviewer = "Todd Kovalsky",
     reviewedDate = "2026-08-05",
   } = overrides;
@@ -150,7 +150,7 @@ diagnostic_questions:
   - "Third diagnostic question?"
 recommended_action: "The practical next step."
 offer: ${offer}
-cta: "Discuss a Transformation"
+cta: "Book a 30-Minute Call"
 status: published
 reviewer: "${reviewer}"
 reviewed_date: "${reviewedDate}"

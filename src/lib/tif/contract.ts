@@ -30,6 +30,38 @@ export type VoiceKey = "rachel" | "consumer" | "todd" | "commercial_operator";
 export const TIF_COMPOSE_CONTRACT_VERSION = "2026-07-22" as const;
 export type ComposeContractVersion = typeof TIF_COMPOSE_CONTRACT_VERSION;
 
+// Execution identity is carried separately from the compose body so it cannot be
+// confused with publisher-supplied content.  TIF accepts only the RachelOS
+// content-generation workload today; add a workload here only when TIF actually
+// serves that bounded invocation surface.
+export const TIF_EXECUTION_WORKLOADS = ["product.content_generation"] as const;
+export type TifExecutionWorkload = (typeof TIF_EXECUTION_WORKLOADS)[number];
+
+export const TIF_EXECUTION_ENVIRONMENTS = [
+  "local",
+  "test",
+  "development",
+  "preview",
+  "production",
+  "github_actions",
+] as const;
+export type TifExecutionEnvironment = (typeof TIF_EXECUTION_ENVIRONMENTS)[number];
+
+export const TIF_EXECUTION_SOURCES = [
+  "manual_cli",
+  "github_actions",
+  "http_request",
+  "queue_worker",
+  "scheduled_job",
+] as const;
+export type TifExecutionSource = (typeof TIF_EXECUTION_SOURCES)[number];
+
+export interface TifExecutionIdentity {
+  readonly workload: TifExecutionWorkload;
+  readonly environment: TifExecutionEnvironment;
+  readonly executionSource: TifExecutionSource;
+}
+
 export interface ComposeContext {
   contentType?: string;
   persona?: string;
@@ -49,6 +81,22 @@ export interface ComposeInputs extends Record<string, unknown> {
   facts?: string;
   notes?: string;
   revisionFeedback?: string;
+  generationRequirements?: GenerationRequirements;
+}
+
+export interface GenerationRequirementSource {
+  role: "voice" | "persona" | "strategy" | "page_contract" | "validation" | "baseline";
+  path: string;
+  sha256: string;
+  content: string;
+}
+
+export interface GenerationRequirements {
+  version: string;
+  digest: string;
+  contentType: "guide" | "development" | "neighborhood";
+  archetype: "standard" | "portfolio_guide";
+  sources: GenerationRequirementSource[];
 }
 
 // Mirrors AssetStatus in prisma/schema.prisma. v0.1 only ever produces `draft`.
@@ -68,6 +116,8 @@ export interface ComposeSourceUsage {
   notesIncluded: boolean;
   revisionFeedbackIncluded: boolean;
   voiceApplied: boolean;
+  requirementsAccepted: boolean;
+  requirementsDigest: string | null;
 }
 
 export interface ComposeResponse {
@@ -88,6 +138,9 @@ export interface ComposeResponse {
   warnings: string[];
   suggestedPath: string;
   sourceUsage: ComposeSourceUsage;
+  // Server-validated request identity. This attests the exact controlled tuple
+  // that TIF accepted for this run; it never includes caller content or secrets.
+  executionIdentity: TifExecutionIdentity;
 }
 
 export interface ComposeErrorResponse {

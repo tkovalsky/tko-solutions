@@ -5,11 +5,9 @@ import { MobileNav } from "@/components/site/mobile-nav";
 import { site } from "@/lib/site";
 
 const navItems = [
-  { href: "/healthcare", label: "Healthcare" },
   { href: "/services", label: "Services" },
-  { href: "/approach", label: "Approach" },
-  { href: "/selected-work", label: "Selected Work" },
-  { href: "/insights", label: "Insights" },
+  { href: "/selected-work", label: "RachelOS" },
+  { href: "/insights", label: "Guides" },
   { href: "/founder", label: "About" },
 ];
 
@@ -30,8 +28,8 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <LinkButton href="/contact" ctaLocation="header" className="whitespace-nowrap">
-            {site.cta}
+          <LinkButton href={site.ctaHref} ctaLocation="header" className="whitespace-nowrap">
+            {site.ctaShort}
           </LinkButton>
         </div>
         <MobileNav items={navItems} />

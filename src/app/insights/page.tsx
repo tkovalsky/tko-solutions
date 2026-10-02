@@ -2,25 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
-import { AuthorityLinks } from "@/components/site/authority-links";
+import { CtaBand } from "@/components/site/cta-band";
 import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsightsByCluster, type Insight } from "@/lib/insights";
 import { guideClusters } from "@/lib/guide-clusters";
-import { PROGRAM_RECOVERY_CONVERSATION } from "@/lib/offers";
+import { CONSTRAINT_CALL } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Guides",
   description:
-    "Evidence-backed guides on stalled healthcare transformation, prior authorization operations, decision rights, and where AI genuinely helps, organized by the executive problem each one addresses.",
+    "Practical notes for owners and operators on follow-up, handoffs, owner bottlenecks, useful systems, and where automation helps or gets in the way.",
   alternates: { canonical: "/insights" },
   openGraph: {
     title: "Guides",
     description:
-      "Guides organized around the expensive executive problems they address.",
+      "Guides for the problems growing businesses actually have.",
     url: absoluteUrl("/insights"),
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions healthcare transformation guides." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions guides." }],
   },
 };
 
@@ -36,12 +36,12 @@ export default function InsightsPage() {
     <>
       <PageHero
         eyebrow="Guides"
-        title="Written for the problem, not for the algorithm."
-        description="Each guide addresses one expensive executive problem, states a point of view, separates evidence from inference, and says where AI helps and where it adds risk. Fewer guides, each worth forwarding."
-        primaryHref={PROGRAM_RECOVERY_CONVERSATION.href}
+        title="Notes on making the business easier to run."
+        description="Practical thinking on owner bottlenecks, follow-up, handoffs, operating systems, and using automation without losing judgment."
+        primaryHref={CONSTRAINT_CALL.href}
         primaryLabel={site.cta}
         secondaryHref="/selected-work"
-        secondaryLabel="Review the Evidence"
+        secondaryLabel="See RachelOS"
       />
 
       {total > 0 ? (
@@ -50,7 +50,7 @@ export default function InsightsPage() {
             {populated.map((cluster) => (
               <div key={cluster.slug} id={cluster.slug}>
                 <SectionHeader
-                  eyebrow="Problem cluster"
+                  eyebrow="Problem"
                   title={cluster.name}
                   description={cluster.executiveProblem}
                 />
@@ -85,7 +85,7 @@ export default function InsightsPage() {
         </Section>
       )}
 
-      <AuthorityLinks current="/insights" />
+      <CtaBand description={CONSTRAINT_CALL.summary} secondaryHref="/services/constraint-diagnostic" secondaryLabel="See the Diagnostic" />
     </>
   );
 }
@@ -96,7 +96,6 @@ function InsightCard({ insight }: { insight: Insight }) {
       <div className="flex flex-wrap gap-x-3 gap-y-2 text-sm font-semibold uppercase tracking-[0.1em] text-muted">
         <time dateTime={insight.date}>{formatDate(insight.date)}</time>
         <span>{insight.readingTime} min read</span>
-        {insight.sourceCount > 0 ? <span>Based on {insight.sourceCount} sources</span> : null}
       </div>
       {insight.featured ? (
         <p className="mt-5 text-sm font-semibold uppercase tracking-[0.1em] text-primary">Featured</p>

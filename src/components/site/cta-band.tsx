@@ -15,8 +15,8 @@ type CtaBandProps = {
 };
 
 export function CtaBand({
-  title = "What needs to change before implementation accelerates?",
-  description = "Bring one bounded healthcare operating or transformation problem. I will say plainly whether I am the right help.",
+  title = "Tell me what's stuck.",
+  description = "Thirty minutes, no pitch deck. I'll tell you where I would look first, and say plainly whether I'm the right help.",
   primaryHref = "/contact",
   primaryLabel = DEFAULT_CTA_LABEL,
   secondaryHref = null,
@@ -34,7 +34,7 @@ export function CtaBand({
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_auto] md:items-end lg:px-8">
         <div className="max-w-[65ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary-light">
-            Principal-led healthcare advisory
+            One principal · Priced up front
           </p>
           <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             {title}

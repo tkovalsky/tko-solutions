@@ -65,45 +65,38 @@ export const careerTimeline: TimelineEntry[] = [
     organization: "TKO Solutions",
     role: "Founder & Principal",
     era: "Independent advisory",
-    scope: "Principal-led healthcare transformation and operating-model advisory for organizations working across administrative burden, regulated workflows, technology modernization, and complex execution.",
-    buyerRelevance: "Combines the operating, product, healthcare, technology, governance, and implementation perspectives inside one accountable engagement lead.",
+    scope: "Business operating systems for growing companies: diagnosing the constraint across process, people, data, and technology, and building the system that removes it. Includes RachelOS, designed, built, and operated end to end.",
+    buyerRelevance: "Combines operating, product, technology, and implementation perspectives in one person who both diagnoses the problem and builds the fix.",
   },
-];
-
-export const credibilityStrip = [
-  { name: "Apollo Global Management", detail: "regulated operations and exception handling" },
-  { name: "Sapient", detail: "institutional platform transformation" },
-  { name: "ELLKAY", detail: "CMS Cures Act and FHIR interoperability" },
-  { name: "Cognizant", detail: "healthcare transformation and payer operations" },
 ];
 
 export const executiveSummary = {
-  headline: "I'm Todd Kovalsky. I become the integration point on transformations that no single team owns end to end.",
+  headline: "I find the work holding the business together by hand—and build a better way to run it.",
   facts: [
-    "20+ years across regulated operations, enterprise transformation, product ownership, healthcare interoperability, and implementation.",
-    "Enterprise programs spanning dozens of interdependent applications and workstreams, with governance environments involving more than 100 cross-functional participants.",
-    "Healthcare experience spanning prior authorization, utilization management, payer and provider operations, interoperability, and administrative workflow change.",
-    "Product and implementation experience translating operating requirements into usable workflows, controls, and delivery decisions.",
-    "RachelOS, an operating system I built and run, shows the same implementation and governance discipline applied end to end.",
+    "20+ years across operations, product ownership, systems delivery, and complex transformation work.",
+    "Designed and built RachelOS end to end, from operating rules and data to the screens people use.",
+    "One person stays responsible from diagnosis through implementation.",
+    "A small client load, with scope and availability agreed before the work starts.",
   ],
 };
 
+/** Patterns I recognize, stated the way an owner would notice them. */
 export const founderArchetypes = [
   {
-    title: "Integration point",
-    body: "I am the single point where business, operations, technology, compliance, finance, provider workflows, communications, testing, and production readiness actually meet—on programs with a fixed enterprise deadline and no one role accountable for the whole.",
+    title: "The owner bottleneck",
+    body: "The team can do the work, but too many decisions still wait for the one person who carries the full picture.",
   },
   {
-    title: "Operational truth",
-    body: "I establish the governance and dependency architecture a program is missing: who owns what, what depends on what, which decision is unresolved, and whether reported status is supported by evidence.",
+    title: "Tools that do not add up",
+    body: "The CRM, inbox, spreadsheets, and dashboards each hold part of the truth. People still have to connect them by hand.",
   },
   {
-    title: "Failure modes, firsthand",
-    body: "I recognize where large healthcare implementations break down because I have operated inside them—ownership gaps, dependencies discovered by collision, decisions that stall, and testing that lacks the right data.",
+    title: "The missing exception path",
+    body: "The happy path looks fine. The real cost appears when something is late, unclear, incomplete, or outside the standard process and nobody owns the next decision.",
   },
   {
-    title: "Translator",
-    body: "I connect healthcare operations, business objectives, technology, controls, risk, provider experience, and implementation so that a target operating model survives contact with delivery.",
+    title: "The first useful fix",
+    body: "The business does not need a grand redesign. It needs the smallest change that removes a real bottleneck and gives the team a better way to work.",
   },
 ];
 

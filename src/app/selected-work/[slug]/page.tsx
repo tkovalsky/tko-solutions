@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
-import { EvidenceNoteLink } from "@/components/site/evidence-note";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { Section } from "@/components/ui/section";
 import { caseStudies, getCaseStudy, leadParagraph } from "@/lib/content";
+import { CONSTRAINT_CALL } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
 
-const rachelosProofAssets = [
+const rachelosScreens = [
   {
     title: "Prioritized work",
     description: "The queue makes active work, next actions, and operating lanes visible.",
@@ -24,18 +24,6 @@ const rachelosProofAssets = [
     image: "/proof/rachelos/human-approval.png",
     alt: "Redacted RachelOS review surface showing human approval controls.",
   },
-  {
-    title: "Durable context",
-    description: "Current context, recent activity, and the next recommended action share one working surface.",
-    image: "/proof/rachelos/relationship-memory.png",
-    alt: "Redacted RachelOS workspace showing relationship context and next action.",
-  },
-  {
-    title: "Operating health",
-    description: "System checks and execution status make failures visible instead of leaving them to operator intuition.",
-    image: "/proof/rachelos/system-health.png",
-    alt: "Redacted RachelOS system-health view showing operating checks.",
-  },
 ];
 
 export function generateStaticParams() {
@@ -46,18 +34,23 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
   if (!study) return {};
 
-  const lead = leadParagraph(study.situation);
+  const title = study.slug === "from-crm-to-operating-system"
+    ? "RachelOS: From Scattered Follow-Up to a Working System"
+    : study.title;
+  const lead = study.slug === "from-crm-to-operating-system"
+    ? "How person-held context became a practical operating system for relationship-driven work."
+    : leadParagraph(study.situation);
 
   return {
-    title: study.title,
+    title,
     description: lead,
     alternates: { canonical: `/selected-work/${study.slug}` },
     openGraph: {
       type: "article",
-      title: study.title,
+      title,
       description: lead,
       url: absoluteUrl(`/selected-work/${study.slug}`),
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions selected work and evidence." }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: `${title} | TKO Solutions` }],
     },
   };
 }
@@ -79,18 +72,19 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           headline: study.title,
           description: leadParagraph(study.situation),
           url: absoluteUrl(`/selected-work/${study.slug}`),
+          author: { "@type": "Person", name: "Todd Kovalsky", url: absoluteUrl("/founder") },
           publisher: { "@type": "Organization", name: site.name, url: site.url },
-          about: [study.industry, study.classification, "Healthcare transformation", "Operating model design"],
+          about: [study.industry, "Business operating systems", "Lead follow-up", "Human-in-the-loop AI"],
         }}
       />
       <PageHero
         eyebrow={study.industry}
         title={study.title}
         description={situationLead}
-        primaryHref={study.relatedOfferHref}
-        primaryLabel={`See the ${study.relatedOffer}`}
-        secondaryHref="/contact"
-        secondaryLabel="Discuss a Transformation"
+        primaryHref={CONSTRAINT_CALL.href}
+        primaryLabel={CONSTRAINT_CALL.label}
+        secondaryHref={study.relatedOfferHref}
+        secondaryLabel={`See the ${study.relatedOffer}`}
       />
 
       <Section>
@@ -98,12 +92,27 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
           {situationRest.length > 0 ? (
             <WorkSection title="Situation" body={situationRest.join("\n\n")} />
           ) : null}
-          <WorkSection title="Complexity" body={study.complexity} />
+          <WorkSection title="Why it was hard" body={study.complexity} />
           <WorkSection title="My role" body={study.role} />
-          <WorkSection title="What I changed" body={study.intervention} />
-          <WorkSection title="Result" body={study.result} />
+          <WorkSection title="How it was built" body={study.intervention} />
+        </div>
+        {study.stages ? (
+          <ol className="mt-10 max-w-[72ch] border-t border-border">
+            {study.stages.map((stage, index) => (
+              <li key={stage.name} className="grid gap-3 border-b border-border py-6 sm:grid-cols-[3rem_1fr]">
+                <span className="font-mono text-sm text-primary">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-xl font-semibold">{stage.name}</h3>
+                  <p className="mt-2 text-base leading-7 text-muted">{stage.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        ) : null}
+        <div className="mt-10 max-w-[72ch] space-y-10">
+          <WorkSection title="Where it stands" body={study.result} />
           <WorkSection
-            title="What this means for your transformation"
+            title="What this means for your business"
             body={`${study.lesson}\n\n${study.relevance}`}
           />
         </div>
@@ -112,14 +121,14 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       {study.slug === "from-crm-to-operating-system" ? (
         <Section className="bg-surface">
           <div className="max-w-[72ch]">
-            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Inspectable proof</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Inside the system</p>
             <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-              The operating mechanisms, in current screens.
+              Two views of the operating layer.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-muted">Redacted views of the system as it runs today.</p>
+            <p className="mt-5 text-lg leading-8 text-muted">The queue makes the work visible. The review surface keeps the person in the decision.</p>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {rachelosProofAssets.map((asset) => (
+            {rachelosScreens.map((asset) => (
               <article key={asset.title} className="overflow-hidden border border-border bg-white">
                 <div className="relative aspect-[16/10] border-b border-border bg-surface">
                   <Image src={asset.image} alt={asset.alt} fill className="object-cover object-top" sizes="(min-width: 1024px) 50vw, 100vw" />
@@ -134,21 +143,11 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         </Section>
       ) : null}
 
-      <Section className="!py-12 md:!py-14">
-        <div className="max-w-[72ch] border-l-2 border-border pl-6">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">About this work</h2>
-          <p className="mt-4 text-sm leading-6 text-muted">{study.evidenceLimit}</p>
-          <EvidenceNoteLink className="mt-3" />
-        </div>
-      </Section>
-
       <CtaBand
-        title="Bring one operating problem under pressure."
-        description="Experience shapes where I look first. A diagnostic establishes what is true in your environment and what leadership should do next."
-        primaryHref={study.relatedOfferHref}
-        primaryLabel={`See the ${study.relatedOffer}`}
-        secondaryHref="/contact"
-        secondaryLabel="Discuss a Transformation"
+        title="Does your business run on someone's memory?"
+        description="The mechanism is the same in most growing businesses. A diagnostic finds where it's costing you, in your own numbers."
+        secondaryHref={study.relatedOfferHref}
+        secondaryLabel={`See the ${study.relatedOffer}`}
       />
     </>
   );

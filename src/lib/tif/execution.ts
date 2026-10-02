@@ -15,7 +15,7 @@
 
 import { randomUUID } from "node:crypto";
 import { composeDraft, type ComposeDraftRequest } from "./draft-composer";
-import type { ComposeResponse } from "./contract";
+import type { ComposeResponse, TifExecutionIdentity } from "./contract";
 
 function generateId(prefix: string): string {
   return `${prefix}_${randomUUID().replace(/-/g, "").slice(0, 24)}`;
@@ -25,7 +25,10 @@ function generateId(prefix: string): string {
  * Validate a compose payload, create a run + draft, and return the response contract.
  * Throws (ZodError or Error) on invalid payloads — callers translate to HTTP 400.
  */
-export function runCompose(payload: ComposeDraftRequest): ComposeResponse {
+export function runCompose(
+  payload: ComposeDraftRequest,
+  executionIdentity: TifExecutionIdentity,
+): ComposeResponse {
   // Validation + composition (fail-fast: throws before any run/draft is created).
   const draft = composeDraft(payload);
 
@@ -37,6 +40,7 @@ export function runCompose(payload: ComposeDraftRequest): ComposeResponse {
     runId,
     draftId,
     status: "draft",
+    executionIdentity,
     ...draft,
   };
 }
