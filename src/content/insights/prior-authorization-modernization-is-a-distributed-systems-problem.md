@@ -5,7 +5,7 @@ description: >-
   workflow, and claims decisions—and where AI can and cannot help.
 business_unit: healthcare
 voice: tko-advisory
-cluster: prior-authorization-operations
+cluster: systems-that-dont-drive-action
 primary_buyer: >-
   Health-plan operations, utilization-management, provider-experience, transformation,
   and technology executives responsible for prior-authorization modernization.
