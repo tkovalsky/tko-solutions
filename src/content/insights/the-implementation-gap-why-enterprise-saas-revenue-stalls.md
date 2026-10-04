@@ -49,7 +49,7 @@ But the CFO knows the truth: you can't recognize that revenue until the client a
 
 We call this **The Implementation Gap**, and it is where momentum dies.
 
-## The Swivel Chair Tax and SaaS Onboarding Bottlenecks
+## The [Swivel Chair Tax](/insights/the-operational-swivel-chair) and SaaS Onboarding Bottlenecks
 
 The root cause of these severe SaaS onboarding bottlenecks is almost never the software itself. The root cause is the operational handoff. 
 
@@ -69,7 +69,7 @@ This just creates another silo. Now, instead of manually copying data between tw
 
 You cannot fix a handoff problem with a new database. You fix it with an orchestration layer.
 
-## The System of Action
+## The [System of Action](/insights/from-system-of-record-to-system-of-action)
 
 To close the Implementation Gap, you must move from passive Systems of Record to a governed **System of Action**. 
 

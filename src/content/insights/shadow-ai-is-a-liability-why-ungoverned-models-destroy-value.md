@@ -45,7 +45,7 @@ In boardrooms across the country, executives are handing down a mandate: *"We ne
 
 Usually, the IT department responds by purchasing 500 enterprise licenses for a generative AI chat tool. They run a one-hour training webinar, give the staff their logins, and declare the company "AI-enabled."
 
-This is not a strategy. Without a strict Shadow AI policy, this deployment is a massive operational liability.
+This is not a strategy. Without a strict [Shadow AI](/insights/shadow-ai-is-a-liability-why-ungoverned-models-destroy-value) policy, this deployment is a massive operational liability.
 
 When you give an employee a blank text box and say "use AI," you immediately lose control of your operating model. Your team begins pasting proprietary client data into external servers. They use the model to draft compliance responses, write code, and negotiate contracts. 
 

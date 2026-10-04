@@ -61,7 +61,7 @@ The foundational lie of the enterprise SaaS industry is that their software *is*
 
 It isn't. Platforms like Salesforce, HubSpot, NetSuite, and Jira are **Systems of Record**. 
 
-A System of Record is a highly structured digital filing cabinet. It is phenomenally good at holding state—recording that a customer exists, that an invoice was sent, or that a contract was signed. 
+A [System of Record](/insights/from-system-of-record-to-system-of-action) is a highly structured digital filing cabinet. It is phenomenally good at holding state—recording that a customer exists, that an invoice was sent, or that a contract was signed. 
 
 But a filing cabinet does not *do* work.
 
@@ -89,7 +89,7 @@ If you want to actually fix operational friction, you must stop treating workflo
 
 You have to decouple the *work* from the *record*.
 
-Leading organizations recognize that they don't need a single platform to rule them all. They need an **orchestration layer**—a System of Action that sits above their various databases and coordinates the flow of work.
+Leading organizations recognize that they don't need a single platform to rule them all. They need an **orchestration layer**—a [System of Action](/insights/from-system-of-record-to-system-of-action) that sits above their various databases and coordinates the flow of work.
 
 Here is how you reset the architecture:
 

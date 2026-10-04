@@ -85,7 +85,7 @@ This is a $5 million trap.
 
 You do not need to replace your legacy billing system or your CRM. They are doing their jobs perfectly well as digital filing cabinets. The friction isn't in the database; the friction is in the *handoff*.
 
-## Eliminating the Swivel Chair with a System of Action
+## Eliminating the Swivel Chair with a [System of Action](/insights/from-system-of-record-to-system-of-action)
 
 The modern playbook for reducing administrative cost does not involve firing people or replacing ERPs. It involves building a **System of Action** to automate the spaces between your tools.
 

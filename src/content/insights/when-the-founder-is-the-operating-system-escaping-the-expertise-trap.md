@@ -95,7 +95,7 @@ Once you document the rules for the routine 80% of your business, you give your 
 
 The only things that should escalate to your desk are the genuine exceptions—the 20% of cases where the rulebook breaks down. This is where your expertise is actually required. 
 
-### 3. Build a System of Action
+### 3. Build a [System of Action](/insights/from-system-of-record-to-system-of-action)
 Once the rules are documented, you can automate them. 
 
 You no longer need a human to check if a client's lifetime value is over $50,000. You can build an intelligent orchestration layer—a System of Action—that reads the incoming request, checks the CRM, verifies the boundary, and automatically approves it. 

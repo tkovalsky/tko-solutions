@@ -90,7 +90,7 @@ Once you define the boundaries, you will discover that 80% of what used to hit y
 
 The 20% that still escalates to you will actually be worth your time—the massive contract negotiations, the systemic operational failures, the strategic pivots. You stop playing defense and start playing offense.
 
-### 3. Automate the Boundary (The System of Action)
+### 3. Automate the Boundary (The [System of Action](/insights/from-system-of-record-to-system-of-action))
 Once the rules are explicit, you don't even need humans to enforce them. You can bake them into your software.
 
 This is where a **System of Action** becomes incredibly powerful. 

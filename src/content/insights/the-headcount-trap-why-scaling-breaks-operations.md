@@ -104,7 +104,7 @@ It didn't. Those platforms are **Systems of Record**. They are digital filing ca
 
 They rely on human operators to remember to update a dropdown, create a task, or send an alert. When your people get busy, the database goes stale, you lose visibility, and the company reverts to running on Slack pings and panic.
 
-## How to Break the Trap: Building a System of Action
+## How to Break the Trap: Building a [System of Action](/insights/from-system-of-record-to-system-of-action)
 
 Escaping the headcount trap does not require a $500,000 enterprise software overhaul. It requires shifting your operating model from **linear headcount expansion** to a **governed System of Action**.
 

@@ -43,7 +43,7 @@ featured: false
 
 You are the COO or VP of Operations. You know your company's delivery engine is held together by duct tape, spreadsheets, and the sheer willpower of your team. 
 
-You know that if you don't implement an intelligent orchestration layer—a System of Action—your margins will collapse under the weight of manual headcount as the business scales.
+You know that if you don't implement an intelligent orchestration layer—a [System of Action](/insights/from-system-of-record-to-system-of-action)—your margins will collapse under the weight of manual headcount as the business scales.
 
 So, you build a presentation. You go to the CFO or the Board. You ask for $500,000 to modernize the workflow. 
 

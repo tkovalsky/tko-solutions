@@ -81,7 +81,7 @@ We force the executive team to align on:
 
 **The Week 2 Deliverable:** The Decision Rights Matrix. This instantly resolves the political turf wars and gives your engineering team the exact business logic they need to build the automation.
 
-## Week 3: The Target Architecture (System of Action)
+## Week 3: The Target Architecture ([System of Action](/insights/from-system-of-record-to-system-of-action))
 With the decision rights locked, we design the future state. 
 
 Instead of planning a massive, risky rip-and-replace of your legacy ERP or CRM, we design a **System of Action**. We map out where your existing databases will remain as "headless" systems of record, and exactly where the intelligent orchestration layer will sit above them.

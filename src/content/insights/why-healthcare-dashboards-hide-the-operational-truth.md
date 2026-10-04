@@ -57,7 +57,7 @@ The organization had not fixed the workflow. They had just purchased a very expe
 
 In complex operational environments like healthcare, leaders consistently confuse **visibility** with **velocity**.
 
-A dashboard is a feature of a **System of Record**. It is designed to aggregate data and display state. It tells you that there are 450 prior-authorization requests in the queue, and 120 of them are at risk of missing their 72-hour regulatory SLA. 
+A dashboard is a feature of a **[System of Record](/insights/from-system-of-record-to-system-of-action)**. It is designed to aggregate data and display state. It tells you that there are 450 prior-authorization requests in the queue, and 120 of them are at risk of missing their 72-hour regulatory SLA. 
 
 This is useful for the Vice President of Operations. It is completely useless for the nurse reviewer who actually has to do the work. 
 
@@ -67,13 +67,13 @@ To the reviewer, the dashboard is just a list of chores. It does not pull the cl
 
 When a healthcare workflow breaks down, it rarely breaks inside the database. It breaks in the spaces *between* the databases. 
 
-We call this the **Swivel-Chair Tax**. 
+We call this the **[Swivel-Chair Tax](/insights/the-operational-swivel-chair)**. 
 
 If your clinical staff spends 40% of their day copying a member ID from Screen A, pasting it into Screen B to check eligibility, and then documenting the result in Screen C, you are bleeding administrative capital. You are paying registered nurses to behave like low-speed software routers. 
 
 If you want to solve the operational crisis, you must stop buying reporting tools and start building execution tools. 
 
-## The System of Action 
+## The [System of Action](/insights/from-system-of-record-to-system-of-action) 
 
 Fixing healthcare operations requires a fundamental architectural shift. You must move from a passive System of Record to an active **System of Action**.
 

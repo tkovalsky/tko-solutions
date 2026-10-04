@@ -88,8 +88,8 @@ Look for the steps in your process where a human is required to translate chaos 
 
 These are the perfect targets for agentic AI. 
 
-### 3. Build a Governed System of Action
-Do not just give your employees ChatGPT accounts and hope they figure it out. That creates "Shadow AI," where company data leaks and output quality varies wildly based on who wrote the prompt.
+### 3. Build a Governed [System of Action](/insights/from-system-of-record-to-system-of-action)
+Do not just give your employees ChatGPT accounts and hope they figure it out. That creates "[Shadow AI](/insights/shadow-ai-is-a-liability-why-ungoverned-models-destroy-value)," where company data leaks and output quality varies wildly based on who wrote the prompt.
 
 Instead, build an automated System of Action. 
 

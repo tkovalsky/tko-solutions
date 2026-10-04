@@ -77,7 +77,7 @@ Automation solves the follow-up problem, but it destroys the relationship.
 
 You cannot scale a high-ticket relationship business on human memory, and you cannot scale it on generic marketing spam. You must decouple the *intelligence* of the relationship from the *labor* of maintaining it.
 
-This requires a governed relationship engine—a System of Action.
+This requires a governed relationship engine—a [System of Action](/insights/from-system-of-record-to-system-of-action).
 
 Instead of asking the partner to remember to follow up, the system observes. It tracks when the prospect reads a private market dossier. It synthesizes the notes from the last three meetings. 
 

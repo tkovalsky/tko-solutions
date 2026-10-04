@@ -69,7 +69,7 @@ To scale Capital Formation and LP Relations, you must decouple the *intelligence
 
 You do this by deploying a **Governed Intelligence Layer**. 
 
-Instead of treating your CRM as a static rolodex, you use a System of Action (like RachelOS). The system observes the environment and prepares the work:
+Instead of treating your CRM as a static rolodex, you use a [System of Action](/insights/from-system-of-record-to-system-of-action) (like RachelOS). The system observes the environment and prepares the work:
 
 1. **The Trigger:** The firm publishes a new macro-thesis on interest rates.
 2. **The Synthesis:** The engine scans your CRM and identifies the 25 LPs who explicitly asked about interest rate exposure in their last three meetings.

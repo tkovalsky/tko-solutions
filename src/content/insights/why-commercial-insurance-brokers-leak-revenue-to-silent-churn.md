@@ -59,7 +59,7 @@ The brokers are not the problem. The inherent limitations of your agency managem
 
 Most commercial brokerages run on legacy Agency Management Systems (AMS) like Applied Epic or Vertafore. These systems are incredibly robust databases for storing policy numbers, carrier dec pages, and compliance documents. 
 
-But an AMS is a **System of Record**. It is passive. It waits to be queried. 
+But an AMS is a **[System of Record](/insights/from-system-of-record-to-system-of-action)**. It is passive. It waits to be queried. 
 
 It does not wake up in the morning and say, *"A major ransomware attack hit the logistics sector yesterday. Here are the 14 logistics clients in your book who only carry $1M in cyber liability, and here is a drafted email to each of them recommending a mid-term policy review."*
 
@@ -73,7 +73,7 @@ A CFO of a $50M manufacturing company does not read generic insurance newsletter
 
 If you want to maintain your status as a trusted advisor, the communication must be hyper-relevant to the client's specific operational risk. But manually typing highly specific risk advisories to 150 clients is impossible for a single broker. 
 
-## The Governed System of Action
+## The Governed [System of Action](/insights/from-system-of-record-to-system-of-action)
 
 To protect the book of business and drive organic cross-selling, progressive brokerages are abandoning the idea that the AMS will save them. They leave the policy data in the AMS, but they build a **System of Action** on top of it.
 

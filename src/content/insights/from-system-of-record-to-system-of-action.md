@@ -53,7 +53,7 @@ If you are a CTO or CIO staring at a deeply fragmented architecture, your defaul
 
 Stop. 
 
-Migrating your data to a newer database will not fix your operational velocity. The era of the monolithic System of Record is over. The future belongs to the **System of Action**.
+Migrating your data to a newer database will not fix your operational velocity. The era of the monolithic [System of Record](/insights/from-system-of-record-to-system-of-action) is over. The future belongs to the **[System of Action](/insights/from-system-of-record-to-system-of-action)**.
 
 ## The Limits of the System of Record
 
