@@ -3,12 +3,13 @@ import { Logo } from "@/components/site/logo";
 import { site } from "@/lib/site";
 
 const footerLinks = [
-  { href: "/services", label: "Services" },
-  { href: "/services/constraint-diagnostic", label: "Constraint Diagnostic" },
-  { href: "/selected-work", label: "RachelOS" },
-  { href: "/selected-work/from-crm-to-operating-system", label: "RachelOS Case Study" },
-  { href: "/insights", label: "Guides" },
-  { href: "/founder", label: "About Todd" },
+  { href: "/services", label: "Advisory" },
+  { href: "/products/ambient-crm", label: "Products" },
+  { href: "/healthcare", label: "Healthcare" },
+  { href: "/approach", label: "Approach" },
+  { href: "/selected-work", label: "Selected Work" },
+  { href: "/insights", label: "Insights" },
+  { href: "/founder", label: "About" },
   { href: "/contact", label: site.cta },
   { href: "/privacy", label: "Privacy" },
 ];
@@ -20,11 +21,11 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            Workflow systems, automation, and practical AI for growing businesses. Based in South Florida,
-            working in person locally and remotely everywhere else.
+            TKO builds operating systems for work that has outgrown the way it is currently run.
+            Governed decision systems, operational memory, and execution authority.
           </p>
           <p className="mt-4 max-w-sm text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
-            Find what is stuck · Build the fix · Make it usable
+            Signal → Fact → State → Decision → Action → Outcome
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
             <a href={`mailto:${site.email}`} data-conversion-event="email_link_click" data-cta-location="footer" data-cta-label="email" className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">

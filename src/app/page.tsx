@@ -1,230 +1,183 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight, Activity, Cpu, Users, Database } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { LinkButton } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { CONSTRAINT_CALL, offerHref, offers } from "@/lib/offers";
-import { absoluteUrl, site } from "@/lib/site";
+import { site, absoluteUrl } from "@/lib/site";
 
-const title = "Workflow Systems, Automation & Practical AI";
+const title = "Operating Systems for Complex Work";
 
 export const metadata: Metadata = {
   title: { absolute: `TKO Solutions | ${title}` },
-  description: site.description,
+  description: "TKO builds the operational intelligence layer that turns institutional knowledge and customer signals into reliable daily execution.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Less chasing. Better follow-through. A business that moves.",
-    description: site.description,
+    title: title,
+    description: "TKO builds the operational intelligence layer that turns institutional knowledge and customer signals into reliable daily execution.",
     url: absoluteUrl("/"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions: business operating systems for growing companies." }],
   },
 };
 
-const symptoms = [
-  ["Good opportunities go quiet", "The lead, request, or follow-up exists somewhere, but nobody owns what should happen next."],
-  ["The team waits for you", "People can do the work, but the context and judgment needed to move it forward still live with the owner or COO."],
-  ["The CRM records more than it runs", "It stores activity, but it does not give the team a reliable way to decide what matters today."],
-  ["People connect the tools by hand", "The real workflow lives between the inbox, spreadsheets, the CRM, and conversations nobody else can see."],
-  ["Automation added motion, not control", "More reminders and integrations made the stack busier without making ownership or decisions clearer."],
-  ["One absence changes everything", "When a key person is unavailable, the work slows because part of the operating system left with them."],
+const failureStates = [
+  {
+    title: "Leadership & Ownership Gaps",
+    description: "Programs stall where workstreams meet; nobody owns the whole.",
+    icon: Users,
+  },
+  {
+    title: "AI Stuck in Experimentation",
+    description: "Brilliant pilots in sandboxes that cannot safely take production actions.",
+    icon: Cpu,
+  },
+  {
+    title: "The Human API Bottleneck",
+    description: "Key operators spending half their time manually reconciling data and context.",
+    icon: Activity,
+  },
+  {
+    title: "Data Without Action",
+    description: "Systems of record that passively collect records without driving next-best actions.",
+    icon: Database,
+  }
 ] as const;
 
-const missingLayer = [
-  "One shared view of what is happening",
-  "Clear ownership for the next step",
-  "Rules for routine decisions",
-  "A short list of what needs attention",
-  "A simple way to see whether the fix worked",
+const actionLoop = [
+  "Signal", "Fact", "State", "Decision", "Action", "Outcome", "Feedback"
 ] as const;
 
-const method = [
-  ["See the work", "Follow one important flow end to end and find where it slows, disappears, or waits for one person."],
-  ["Choose the first fix", "Define the smallest useful change: a clearer state, a better handoff, a queue, a rule, or a missing connection."],
-  ["Build it into the work", "Use the tools you already have where they fit. Add only the layer the team actually needs."],
-  ["Measure and improve", "Compare the new way of working with the starting point, then decide what is worth fixing next."],
-] as const;
-
-const rachelosBuild = [
-  ["Make the work visible", "Bring lead activity, relationship context, and next steps into one working view."],
-  ["Keep the context", "Turn what one person remembers into information the system and the team can use."],
-  ["Support the next action", "Show what needs attention and give the operator a practical place to act."],
-  ["Keep judgment human", "Use automation to prepare the work without pretending every relationship decision should be automatic."],
-] as const;
-
-const builds = [
-  ["Follow-up your team can run", "A shared view of leads and customers, an owner for each next step, and a queue that makes overdue work visible."],
-  ["Tools that work together", "Connect the CRM, inbox, forms, and internal tools so people can spend less time copying information and rebuilding context."],
-  ["AI inside a useful workflow", "Draft replies, summarize history, or extract useful facts from documents—with a review step and a clear way to check the output."],
-  ["Internal tools built for the job", "A focused workspace for approvals, exceptions, intake, or handoffs that your current software does not handle well."],
-  ["Knowledge the team can use", "Capture customer context, operating rules, and repeat decisions where people do the work."],
-  ["A clear view of what needs attention", "Connect activity to ownership, next steps, and a few measures that help you decide what to change."],
-] as const;
-
-const differences = [
-  ["Start with the operating problem", "The first question is where work gets stuck, not which software to buy."],
-  ["Diagnosis and build stay together", "The person who learns how the business works is also responsible for turning that understanding into a working system."],
-  ["Use what already works", "A new platform is not the default. The goal is to make the current stack behave like one system."],
-  ["Leave the team with something usable", "The work includes the rules, ownership, documentation, and training needed to keep it useful."],
+const commercialPillars = [
+  {
+    title: "Advisory",
+    href: "/services",
+    description: "Transformation Diagnostics, Operating Model Design, Execution Authority.",
+  },
+  {
+    title: "Products",
+    href: "/products/ambient-crm",
+    description: "Ambient CRM & Lead Recovery Engine: Your CRM remembers who the leads are. We make sure somebody actually does something with them.",
+  },
+  {
+    title: "Sectors",
+    href: "/healthcare",
+    description: "Regulated, high-consequence environments (Healthcare, Financial Services, Real Estate).",
+  }
 ] as const;
 
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "WebPage", name: `TKO Solutions | ${title}`, url: absoluteUrl("/"), description: site.description }} />
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "WebPage", name: `TKO Solutions | ${title}`, url: absoluteUrl("/"), description: "TKO builds operating systems for work that has outgrown the way it is currently run." }} />
 
+      {/* Hero Section */}
       <section className="relative overflow-hidden bg-midnight text-white">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgb(var(--accent-rgb)/0.18),_transparent_58%)]" />
-        <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-24">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Workflow systems · Automation · Practical AI</p>
-            <h1 className="mt-6 max-w-4xl text-[1.875rem] font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem]">Less chasing.<br />Better follow-through.<br />A business that moves.</h1>
-            <p className="mt-7 max-w-[62ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">Missed follow-up. Manual handoffs. Decisions waiting on you. TKO turns the work scattered across your CRM, inbox, spreadsheets, and team into a system people can use. I find the bottleneck, design the workflow, and build the fix.</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <LinkButton href={CONSTRAINT_CALL.href} ctaLocation="homepage_hero">{CONSTRAINT_CALL.label}</LinkButton>
-              <LinkButton href={site.secondaryCtaHref} ctaLocation="homepage_hero" eventName="secondary_cta_click" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">{site.secondaryCta}</LinkButton>
-            </div>
-            <p className="mt-6 text-sm text-white/55">For owners, COOs, and team leaders ready to fix a workflow that is holding the business back.</p>
-          </div>
-          <div className="self-end border-l border-white/25 pl-6 lg:pl-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary-light">Work directly with the builder</p>
-            <p className="mt-5 text-2xl font-semibold leading-snug">Todd Kovalsky.<br />From the messy problem<br />to the working system.</p>
-            <p className="mt-5 text-sm leading-6 text-white/65">Start with one workflow. Agree on the scope, price, and what should change. Build around the tools you already use, with AI where it helps.</p>
+        <div className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Operating Systems for Complex Work</p>
+          <h1 className="mt-6 max-w-5xl text-[2rem] font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[4rem]">
+            Turn fragmented workflows, data, and AI into systems that actually take action.
+          </h1>
+          <p className="mt-8 max-w-[70ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">
+            Most organizations don&apos;t have an information problem; they have an execution problem. CRMs store contacts. Dashboards display status. AI models draft text. But work still stalls between systems and human handoffs. TKO builds the operational intelligence layer that turns institutional knowledge and customer signals into reliable daily execution.
+          </p>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <LinkButton href="/contact" ctaLocation="homepage_hero">Discuss an Operating Problem</LinkButton>
+            <LinkButton href="/services" ctaLocation="homepage_hero" eventName="secondary_cta_click" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">Explore Advisory Services</LinkButton>
           </div>
         </div>
       </section>
 
-      <Section className="!py-14 md:!py-18">
-        <SectionHeader eyebrow="Sound familiar?" title="The business grew. The way the work gets done did not." description="The gaps show up as missed follow-up, slow decisions, repeated questions, and too much work routing through a few people." />
-        <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-          {symptoms.map(([heading, body]) => (
-            <article key={heading} className="bg-white p-6">
-              <h3 className="text-lg font-semibold">{heading}</h3>
-              <p className="mt-3 text-base leading-7 text-muted">{body}</p>
+      {/* The Problem Section */}
+      <Section className="!py-14 md:!py-20">
+        <SectionHeader eyebrow="The Executive Problem" title="The 4 universal failure states" description="Systems of record without systems of action. Data is stored, but human handoffs stall decisions." />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2">
+          {failureStates.map((state) => (
+            <article key={state.title} className="flex gap-4 rounded-xl border border-border bg-white p-6 md:p-8">
+              <div className="flex-shrink-0">
+                <state.icon className="size-8 text-primary" aria-hidden="true" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold">{state.title}</h3>
+                <p className="mt-3 text-base leading-7 text-muted">{state.description}</p>
+              </div>
             </article>
           ))}
         </div>
       </Section>
 
-      <Section className="bg-surface !py-14 md:!py-20">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <SectionHeader eyebrow="What changes" title="Your business should not need you to remember everything." description="Give the team a shared view of the work, clear ownership, and a next step. Connect the tools, capture the context, and put routine decisions into the workflow." />
-          <div className="border border-border bg-white p-6 md:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Your systems</p>
-            <p className="mt-2 text-base font-semibold">CRM · inbox · spreadsheets · apps · AI tools</p>
-            <div className="my-5 border-l-2 border-primary pl-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">The missing operating layer</p>
-              <ul className="mt-3 space-y-2">
-                {missingLayer.map((item) => <li key={item} className="text-base leading-6">{item}</li>)}
-              </ul>
+      {/* The System of Action Loop */}
+      <Section className="bg-surface !py-14 md:!py-24 text-center">
+        <div className="mx-auto max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-primary">The Operating Model</p>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Signal to Outcome</h2>
+        </div>
+        <div className="mt-14 flex flex-col md:flex-row flex-wrap items-center justify-center gap-4">
+          {actionLoop.map((step, index) => (
+            <div key={step} className="flex flex-col md:flex-row items-center gap-4">
+              <div className="flex h-14 min-w-[120px] items-center justify-center rounded-lg border border-primary/20 bg-white px-6 text-base font-bold shadow-sm transition-all hover:border-primary">
+                {step}
+              </div>
+              {index < actionLoop.length - 1 && (
+                <ArrowRight className="text-primary size-6 rotate-90 md:rotate-0" aria-hidden="true" />
+              )}
             </div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Your team</p>
-            <p className="mt-2 text-base font-semibold">The right work, done on time, by the right person</p>
-          </div>
+          ))}
         </div>
       </Section>
 
-      <Section className="!py-14 md:!py-18">
-        <SectionHeader eyebrow="How TKO works" title="One workflow. A clear scope. A working fix." description="Start with the work that matters most. Agree on what a useful result looks like, build it with the team, and check it against the starting point." />
-        <ol className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {method.map(([heading, body], index) => (
-            <li key={heading} className="border-t-2 border-primary bg-surface p-6">
-              <p className="font-mono text-sm text-primary">{String(index + 1).padStart(2, "0")}</p>
-              <h3 className="mt-3 text-xl font-semibold">{heading}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      <Section className="bg-surface !py-14 md:!py-20">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
-          <div>
-            <SectionHeader eyebrow="Built, not just advised" title="RachelOS started with the same problem." description="The tools existed, but the operating logic lived in one person's head: which relationships mattered, what had happened, and what should happen next. I designed and built the layer that made that work visible and usable." />
-            <ol className="mt-8 border-t border-border">
-              {rachelosBuild.map(([stage, body], index) => (
-                <li key={stage} className="grid gap-2 border-b border-border py-4 sm:grid-cols-[2rem_9rem_1fr]">
-                  <span className="font-mono text-sm text-primary">{index + 1}</span>
-                  <p className="font-semibold">{stage}</p>
-                  <p className="text-sm leading-6 text-muted">{body}</p>
-                </li>
-              ))}
-            </ol>
-            <Link href={site.secondaryCtaHref} data-conversion-event="case_study_view" data-cta-location="homepage_proof" data-case-study="from-crm-to-operating-system" className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dark">
-              Read the full case <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+      {/* The Commercial Architecture */}
+      <Section className="!py-14 md:!py-24">
+        <SectionHeader eyebrow="The 3 Pillars" title="Commercial Architecture" description="Disciplined commercial drilldown: Advisory, Products, and Sectors." />
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {commercialPillars.map((pillar) => (
+            <Link key={pillar.title} href={pillar.href} className="group flex flex-col rounded-xl border border-border bg-white p-8 transition-colors hover:border-primary/50 hover:shadow-sm">
+              <h3 className="text-2xl font-bold">{pillar.title}</h3>
+              <p className="mt-4 flex-1 text-base leading-7 text-muted">{pillar.description}</p>
+              <div className="mt-8 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary">
+                Explore {pillar.title} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </div>
             </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* Inspectable Proof Strip */}
+      <Section className="bg-midnight text-white !py-14 md:!py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 md:text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-primary-light">Dual Proof Strip</p>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Evidence &amp; Working Systems</h2>
           </div>
-          <figure className="border border-border bg-white p-3">
-            <div className="relative aspect-[4/5] overflow-hidden bg-white">
-              <Image src="/proof/rachelos/today-work.png" alt="RachelOS Today screen: one ranked queue, a lead overdue by 12 days, missing facts flagged, and the next question to ask." fill priority={false} className="object-cover object-[62%_0%]" sizes="(min-width: 1024px) 60vw, 160vw" />
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="rounded-xl border border-white/20 bg-white/5 p-8 backdrop-blur-sm sm:p-10">
+              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white/50 mb-4">Enterprise Healthcare</p>
+              <h3 className="text-2xl font-bold text-white">Rural prior-authorization waiver &amp; multi-workstream governance</h3>
+              <Link href="/healthcare" className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary-light hover:text-white transition-colors">
+                View Healthcare Practice <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
             </div>
-            <figcaption className="px-2 pb-1 pt-3 text-sm leading-6 text-muted">The morning view: one queue, ranked by the system. Overdue follow-up, missing facts, and the next question to ask are all on one screen. Contact details are redacted.</figcaption>
-          </figure>
-        </div>
-      </Section>
-
-      <Section className="!py-14 md:!py-18">
-        <SectionHeader eyebrow="What I can build for you" title="Bring the follow-up gap, the manual process, or the AI idea." description="These are examples of work TKO can scope around your business. The first conversation identifies a useful starting point." />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {builds.map(([heading, body]) => (
-            <article key={heading} className="border-l-2 border-primary bg-surface p-6">
-              <h3 className="text-lg font-semibold">{heading}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="bg-surface !py-14 md:!py-20">
-        <SectionHeader eyebrow="How engagements work" title="Start where you are." description="An unclear problem starts with a diagnostic. A defined workflow or AI use case can go straight to build scoping. Ongoing support is available after launch." />
-        <ol className="mt-12 border-t border-border">
-          {offers.map((offer, index) => (
-            <li key={offer.slug} className="grid gap-4 border-b border-border py-7 md:grid-cols-[3rem_0.9fr_1.4fr_0.6fr_auto] md:items-center">
-              <span className="font-mono text-sm text-primary">{String(index + 1).padStart(2, "0")}</span>
-              <div><p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{offer.step}</p><h3 className="mt-1 text-xl font-semibold">{offer.name}</h3></div>
-              <p className="text-sm leading-6 text-muted">{offer.question}</p>
-              <p className="text-sm font-semibold">{offer.duration}<br /><span className="text-primary">{offer.commercial}</span></p>
-              <LinkButton href={offerHref(offer.slug)} variant="secondary" eventName="secondary_cta_click" ctaLocation="homepage_ladder">Details</LinkButton>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      <Section className="!py-14 md:!py-18">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Who you'll work with" title="Todd Kovalsky. One person from diagnosis through build." description="I have spent more than twenty years across operations, product, and systems delivery. TKO brings that experience into one focused engagement instead of splitting the problem across an advisor, a developer, and an automation vendor." />
-          <div>
-            <ul className="grid gap-3 sm:grid-cols-2">
-              {[
-                "20+ years across operations, product, and complex systems delivery",
-                "Designed and built RachelOS, a working operating system for relationship-driven work",
-                "Works across process, data, CRM, automation, and AI instead of one specialty",
-                "One principal on every engagement, and deliberately few clients at a time",
-              ].map((item) => <li key={item} className="border-l-2 border-primary bg-surface p-5 text-sm leading-6 text-muted">{item}</li>)}
-            </ul>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <LinkButton href="/founder" variant="secondary" eventName="secondary_cta_click" ctaLocation="homepage_founder">About Todd</LinkButton>
-              <a href={site.linkedin} target="_blank" rel="noreferrer" data-conversion-event="linkedin_click" data-cta-location="homepage_founder" data-cta-label="LinkedIn" className="inline-flex min-h-11 items-center justify-center gap-2 border border-foreground/20 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors hover:border-foreground/40 hover:bg-foreground/[0.03]">LinkedIn <ExternalLink className="size-4" aria-hidden /></a>
+            <div className="rounded-xl border border-white/20 bg-white/5 p-8 backdrop-blur-sm sm:p-10">
+              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white/50 mb-4">Software / Product</p>
+              <h3 className="text-2xl font-bold text-white">RachelOS live governed decision system</h3>
+              <Link href="/selected-work" className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary-light hover:text-white transition-colors">
+                View Selected Work <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </div>
       </Section>
 
-      <Section className="bg-surface !py-14 md:!py-18">
-        <SectionHeader eyebrow="Why TKO" title="The diagnosis and the build stay connected." description="The job is not to install more software. It is to understand how the work really moves and turn that into a system people can use." />
-        <div className="mt-10 border-t border-border">
-          {differences.map(([option, gap]) => (
-            <div key={option} className="grid gap-2 border-b border-border py-5 sm:grid-cols-[14rem_1fr] sm:gap-8">
-              <p className="text-base font-semibold">{option}</p>
-              <p className="text-base leading-7 text-muted">{gap}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <CtaBand title="Which workflow would you fix first?" description={CONSTRAINT_CALL.summary} secondaryHref="/services" secondaryLabel="See Scope and Pricing" />
+      {/* Executive Conversion Band */}
+      <CtaBand 
+        title="Bring the messy problem." 
+        description="What is changing? What is stuck? Where is the burden?" 
+        primaryHref="/contact" 
+        primaryLabel="Discuss an Operating Problem" 
+        secondaryHref="/services" 
+        secondaryLabel="Explore Advisory Engagements" 
+      />
     </>
   );
 }

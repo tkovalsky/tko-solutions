@@ -5,9 +5,12 @@ import { MobileNav } from "@/components/site/mobile-nav";
 import { site } from "@/lib/site";
 
 const navItems = [
-  { href: "/services", label: "Services" },
-  { href: "/selected-work", label: "RachelOS" },
-  { href: "/insights", label: "Guides" },
+  { href: "/services", label: "Advisory" },
+  { href: "/products/ambient-crm", label: "Products" },
+  { href: "/healthcare", label: "Healthcare" },
+  { href: "/approach", label: "Approach" },
+  { href: "/selected-work", label: "Selected Work" },
+  { href: "/insights", label: "Insights" },
   { href: "/founder", label: "About" },
 ];
 
