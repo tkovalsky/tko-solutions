@@ -4,17 +4,17 @@ export type DisclosureLevel = "generic" | "programs" | "full";
 export const DISCLOSURE_LEVEL: DisclosureLevel = "generic";
 
 export const disclosure = {
-  get level() {
+  get level(): DisclosureLevel {
     return DISCLOSURE_LEVEL;
   },
   get isGeneric() {
-    return DISCLOSURE_LEVEL === "generic";
+    return this.level === "generic";
   },
   get isPrograms() {
-    return DISCLOSURE_LEVEL === "programs" || DISCLOSURE_LEVEL === "full";
+    return this.level === "programs" || this.level === "full";
   },
   get isFull() {
-    return DISCLOSURE_LEVEL === "full";
+    return this.level === "full";
   },
 
   // Name resolvers

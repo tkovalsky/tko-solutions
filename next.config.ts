@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       "operational-intelligence-vs-reporting",
     ];
     return [
-      { source: "/healthcare/impact-assessment", destination: "/healthcare", permanent: true },
+      { source: "/healthcare", destination: "/healthcare/impact-assessment", permanent: true },
       { source: "/approach", destination: "/services", permanent: true },
       { source: "/program-recovery-readiness-check", destination: "/services/constraint-diagnostic", permanent: true },
       { source: "/about", destination: "/founder", permanent: true },

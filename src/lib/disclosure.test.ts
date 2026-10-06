@@ -1,8 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { DISCLOSURE_LEVEL } from "./disclosure";
+import { disclosure, DISCLOSURE_LEVEL } from "./disclosure";
 import { storyCopy } from "../content/healthcare/story";
 
 describe("Disclosure level guards", () => {
+  it("keeps organizational and program disclosure generic", () => {
+    expect(disclosure.level).toBe("generic");
+    expect(disclosure.isGeneric).toBe(true);
+    expect(disclosure.isPrograms).toBe(false);
+    expect(disclosure.isFull).toBe(false);
+    expect(disclosure.showPediatric).toBe(false);
+    expect(disclosure.employerName).toBe("a national payer");
+    expect(disclosure.agencyName).toBe("a global consultancy");
+  });
+
   it("never leaks restricted names in generic mode", () => {
     // We only enforce this if the current mode is generic
     if (DISCLOSURE_LEVEL === "generic") {
