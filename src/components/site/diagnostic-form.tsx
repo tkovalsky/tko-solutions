@@ -31,9 +31,11 @@ const defaultAttribution: Attribution = {
 export function DiagnosticForm({
   action,
   status,
+  managedFollowUp = false,
 }: {
   action: (formData: FormData) => void | Promise<void>;
   status?: string;
+  managedFollowUp?: boolean;
 }) {
   const [attribution, setAttribution] = useState(defaultAttribution);
   const started = useRef(false);
@@ -73,7 +75,7 @@ export function DiagnosticForm({
     const activeTiming = formData.get("timing") !== "exploring";
     const revenueFit = ["5-20m", "20-100m", "100m-plus"].includes(String(formData.get("revenueBand")));
     trackConversion("contact_form_submit_attempt", { ctaLocation: "contact_form" });
-    trackConversion("qualified_intake_indicator", { qualified: activeTiming && revenueFit });
+    trackConversion("qualified_intake_indicator", { qualified: activeTiming && (managedFollowUp || revenueFit) });
   }
 
   function handleInvalid() {
@@ -90,7 +92,8 @@ export function DiagnosticForm({
       onSubmit={handleSubmit}
       onInvalidCapture={handleInvalid}
     >
-      <input type="hidden" name="source" value="diagnostic_fit_call" />
+      <input type="hidden" name="source" value={managedFollowUp ? "managed_follow_up_pilot" : "diagnostic_fit_call"} />
+      {managedFollowUp ? <input type="hidden" name="offer" value="managed-follow-up" /> : null}
       {Object.entries(attribution).map(([name, value]) => (
         <input key={name} type="hidden" name={name} value={value} />
       ))}
@@ -103,7 +106,7 @@ export function DiagnosticForm({
       <div className="grid gap-6 md:grid-cols-2">
         <Field id="name" label="Name" autoComplete="name" />
         <Field id="email" label="Business email" type="email" autoComplete="email" />
-        <Field id="company" label="Company" autoComplete="organization" />
+        <Field id="company" label={managedFollowUp ? "Team / brokerage" : "Company"} autoComplete="organization" />
         <Field
           id="role"
           label="Title / role (optional)"
@@ -114,7 +117,7 @@ export function DiagnosticForm({
 
       <Field
         id="transformationContext"
-        label="What would you like to fix or build?"
+        label={managedFollowUp ? "Which follow-up keeps slipping?" : "What would you like to fix or build?"}
         placeholder="A workflow that keeps breaking, follow-up that depends on memory, or an AI idea you want connected to the way your team works. A few sentences are enough."
         textarea
       />
@@ -132,7 +135,7 @@ export function DiagnosticForm({
       </SelectField>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <SelectField id="revenueBand" label="Annual revenue">
+        <SelectField id="revenueBand" label={managedFollowUp ? "Annual commission revenue (not property sales volume)" : "Annual revenue"}>
           <option value="">Select one</option>
           <option value="under-2m">Under $2M</option>
           <option value="2-5m">$2M–$5M</option>
@@ -152,8 +155,8 @@ export function DiagnosticForm({
 
       <Field
         id="message"
-        label="Which tools do you run on? (optional)"
-        placeholder="For example: HubSpot, spreadsheets, QuickBooks, Gmail, an industry CRM, a few AI tools."
+        label={managedFollowUp ? "Team size, CRM, and approximate contact count (optional)" : "Which tools do you run on? (optional)"}
+        placeholder={managedFollowUp ? "For example: 3 agents, Follow Up Boss, about 1,200 contacts. Tell me which tools and people are involved." : "For example: HubSpot, spreadsheets, QuickBooks, Gmail, an industry CRM, a few AI tools."}
         textarea
         required={false}
       />
@@ -189,7 +192,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        Request a Conversation
+        {managedFollowUp ? "Discuss a Follow-Up Pilot" : "Request a Conversation"}
       </Button>
     </form>
   );

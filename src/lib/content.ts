@@ -40,8 +40,8 @@ export const caseStudies: CaseStudy[] = [
       "Most growing businesses do not need another place to store information. They need a clearer way to turn the information they already have into coordinated action.",
     relevance:
       "If leads, customers, jobs, or internal requests depend on one person remembering the context and routing the next step, the operating problem is the same even when the industry is different.",
-    relatedOffer: "Constraint Diagnostic",
-    relatedOfferHref: "/services/constraint-diagnostic",
+    relatedOffer: "Managed Follow-Up",
+    relatedOfferHref: "/products/ambient-crm",
     stages: [
       {
         name: "Make the work visible",

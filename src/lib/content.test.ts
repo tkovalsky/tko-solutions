@@ -11,7 +11,7 @@ describe("TKO case studies", () => {
       expect(study.role.length).toBeGreaterThan(40);
       expect(study.lesson.length).toBeGreaterThan(40);
       expect(study.relevance.length).toBeGreaterThan(40);
-      expect(study.relatedOfferHref).toMatch(/^\/services\//);
+      expect(study.relatedOfferHref).toMatch(/^\/(services|products)\//);
       expect(getCaseStudy(study.slug)).toBe(study);
     }
   });

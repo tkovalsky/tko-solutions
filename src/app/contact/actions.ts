@@ -35,8 +35,11 @@ const intakeSchema = z.object({
 });
 
 export async function submitDiagnosticIntake(formData: FormData) {
+  const offer = getFormString(formData, "offer") === "managed-follow-up"
+    ? "&offer=managed-follow-up" : "";
+  const contactResult = (status: string) => `/contact?status=${status}${offer}`;
   if (getFormString(formData, "website")) {
-    redirect("/contact?status=submitted");
+    redirect(contactResult("submitted"));
   }
 
   const parsed = intakeSchema.safeParse({
@@ -60,7 +63,7 @@ export async function submitDiagnosticIntake(formData: FormData) {
   });
 
   if (!parsed.success) {
-    redirect("/contact?status=invalid");
+    redirect(contactResult("invalid"));
   }
 
   const submittedAt = new Date();
@@ -89,14 +92,14 @@ export async function submitDiagnosticIntake(formData: FormData) {
     const notification = await notifyLead(lead);
     notificationSent = notification.status === "sent";
   } catch {
-    redirect("/contact?status=error");
+    redirect(contactResult("error"));
   }
 
   if (!notificationSent) {
-    redirect("/contact?status=notification-error");
+    redirect(contactResult("notification-error"));
   }
 
-  redirect("/contact?status=submitted");
+  redirect(contactResult("submitted"));
 }
 
 function getFormString(formData: FormData, key: string) {

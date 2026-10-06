@@ -29,6 +29,16 @@ afterEach(() => {
 });
 
 describe("submitDiagnosticIntake", () => {
+  it("preserves managed follow-up context on invalid intake", async () => {
+    const formData = validFormData();
+    formData.set("offer", "managed-follow-up");
+    formData.set("email", "not-an-email");
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow(
+      "REDIRECT:/contact?status=invalid&offer=managed-follow-up",
+    );
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+  });
+
   it("rejects invalid submissions without persisting", async () => {
     const formData = validFormData();
     formData.set("email", "not-an-email");

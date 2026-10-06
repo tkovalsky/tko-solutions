@@ -7,15 +7,15 @@ import { LinkButton } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { site, absoluteUrl } from "@/lib/site";
 
-const title = "Operating Systems for Complex Work";
+const title = "Managed Follow-Up & Workflow Systems";
 
 export const metadata: Metadata = {
   title: { absolute: `TKO Solutions | ${title}` },
-  description: "TKO builds the operational intelligence layer that turns institutional knowledge and customer signals into reliable daily execution.",
+  description: "Managed follow-up for real-estate agents and small teams. TKO sets up a practical daily workflow around your contacts and supported tools, then keeps it working.",
   alternates: { canonical: "/" },
   openGraph: {
     title: title,
-    description: "TKO builds the operational intelligence layer that turns institutional knowledge and customer signals into reliable daily execution.",
+    description: "Managed follow-up for real-estate agents and small teams. TKO sets up a practical daily workflow around your contacts and supported tools, then keeps it working.",
     url: absoluteUrl("/"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions: business operating systems for growing companies." }],
   },
@@ -55,9 +55,9 @@ const commercialPillars = [
     description: "Transformation Diagnostics, Operating Model Design, Execution Authority.",
   },
   {
-    title: "Products",
+    title: "Managed Follow-Up",
     href: "/products/ambient-crm",
-    description: "Ambient CRM & Lead Recovery Engine: Your CRM remembers who the leads are. We make sure somebody actually does something with them.",
+    description: "A 30-day pilot to establish a usable follow-up process around your existing contacts and supported tools. $5,000, with optional ongoing support.",
   },
   {
     title: "Sectors",
@@ -75,16 +75,16 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-midnight text-white">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgb(var(--accent-rgb)/0.18),_transparent_58%)]" />
         <div className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Operating Systems for Complex Work</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-light">Managed follow-up for real-estate agents &amp; small teams</p>
           <h1 className="mt-6 max-w-5xl text-[2rem] font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[4rem]">
-            Turn fragmented workflows, data, and AI into systems that actually take action.
+            Your next conversation shouldn’t depend on remembering every last detail.
           </h1>
           <p className="mt-8 max-w-[70ch] text-lg leading-8 text-white/75 sm:text-xl sm:leading-9">
-            Most organizations don&apos;t have an information problem; they have an execution problem. CRMs store contacts. Dashboards display status. AI models draft text. But work still stalls between systems and human handoffs. TKO builds the operational intelligence layer that turns institutional knowledge and customer signals into reliable daily execution.
+            You already have contacts, conversations, and tools. TKO helps turn them into a consistent daily follow-up process: who needs attention, what matters, and what to do next. Todd Kovalsky sets up the workflow and keeps it working, with important communications staying in your hands.
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <LinkButton href="/contact" ctaLocation="homepage_hero">Discuss an Operating Problem</LinkButton>
-            <LinkButton href="/services" ctaLocation="homepage_hero" eventName="secondary_cta_click" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">Explore Advisory Services</LinkButton>
+            <LinkButton href="/products/ambient-crm" ctaLocation="homepage_hero">Explore Managed Follow-Up</LinkButton>
+            <LinkButton href="/selected-work/from-crm-to-operating-system" ctaLocation="homepage_hero" eventName="secondary_cta_click" variant="secondary" className="border-white/35 text-white hover:border-white/60 hover:bg-white/10">See RachelOS</LinkButton>
           </div>
         </div>
       </section>
@@ -129,7 +129,7 @@ export default function HomePage() {
 
       {/* The Commercial Architecture */}
       <Section className="!py-14 md:!py-24">
-        <SectionHeader eyebrow="The 3 Pillars" title="Commercial Architecture" description="Disciplined commercial drilldown: Advisory, Products, and Sectors." />
+        <SectionHeader eyebrow="Ways to work together" title="Start with one useful change." description="Choose managed follow-up, a broader workflow project, or a specialist assessment." />
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {commercialPillars.map((pillar) => (
             <Link key={pillar.title} href={pillar.href} className="group flex flex-col rounded-xl border border-border bg-white p-8 transition-colors hover:border-primary/50 hover:shadow-sm">
@@ -160,9 +160,9 @@ export default function HomePage() {
             </div>
             <div className="rounded-xl border border-white/20 bg-white/5 p-8 backdrop-blur-sm sm:p-10">
               <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white/50 mb-4">Software / Product</p>
-              <h3 className="text-2xl font-bold text-white">RachelOS live governed decision system</h3>
-              <Link href="/selected-work" className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary-light hover:text-white transition-colors">
-                View Selected Work <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              <h3 className="text-2xl font-bold text-white">RachelOS: a working follow-up system</h3>
+              <Link href="/selected-work/from-crm-to-operating-system" className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary-light hover:text-white transition-colors">
+                See How RachelOS Works <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -170,13 +170,13 @@ export default function HomePage() {
       </Section>
 
       {/* Executive Conversion Band */}
-      <CtaBand 
-        title="Bring the messy problem." 
-        description="What is changing? What is stuck? Where is the burden?" 
-        primaryHref="/contact" 
-        primaryLabel="Discuss an Operating Problem" 
-        secondaryHref="/services" 
-        secondaryLabel="Explore Advisory Engagements" 
+      <CtaBand
+        title="Start with the follow-up that keeps slipping."
+        description="Bring your current CRM, one recurring problem, and the person who owns the process. We’ll check whether a bounded pilot is a fit."
+        primaryHref="/contact?offer=managed-follow-up"
+        primaryLabel="Discuss a Follow-Up Pilot"
+        secondaryHref="/services"
+        secondaryLabel="Explore Advisory Engagements"
       />
     </>
   );

@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "/",
     "/services",
+    "/products/ambient-crm",
     "/selected-work",
     "/insights",
     "/founder",
