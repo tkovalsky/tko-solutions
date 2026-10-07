@@ -14,7 +14,9 @@ export const site = {
   secondaryCta: "See How RachelOS Was Built",
   secondaryCtaHref: "/selected-work/from-crm-to-operating-system",
   socialImage: "/og-tko-3.png",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "t.e.kovalsky@gmail.com",
+  // Primary contact address for the “mailto:” link.
+  // Falls back to the corporate address if the env var is not set.
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "todd@tko.solutions",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "https://www.linkedin.com/in/toddkovalsky",
   scheduling: process.env.NEXT_PUBLIC_SCHEDULING_URL,
 };

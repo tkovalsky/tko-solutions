@@ -14,6 +14,7 @@ export function QueueWalkthroughModal({ children }: { children: React.ReactNode 
     const formData = new FormData(e.currentTarget);
     const data = {
       name: formData.get("name"),
+      email: formData.get("email"),
       firm: formData.get("firm"),
       market: formData.get("market"),
       transactionSize: formData.get("transactionSize"),
@@ -76,6 +77,18 @@ export function QueueWalkthroughModal({ children }: { children: React.ReactNode 
                       required 
                       className="flex h-10 w-full rounded-md border border-slate-300 bg-transparent px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent dark:border-slate-700 dark:focus:ring-slate-600" 
                       placeholder="Principal / Managing Partner"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium">Email</label>
+                    <input 
+                      id="email" 
+                      name="email" 
+                      type="email"
+                      required 
+                      className="flex h-10 w-full rounded-md border border-slate-300 bg-transparent px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent dark:border-slate-700 dark:focus:ring-slate-600" 
+                      placeholder="todd@firm.com"
                     />
                   </div>
                   

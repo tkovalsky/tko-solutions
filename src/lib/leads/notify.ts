@@ -11,7 +11,8 @@ type NotifyLeadResult =
 
 export async function notifyLead(lead: PersistedInboundLead): Promise<NotifyLeadResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.LEAD_NOTIFY_EMAIL;
+  // Destination for inbound-lead notifications. Falls back to corporate inbox.
+  const to = process.env.LEAD_NOTIFY_EMAIL ?? process.env.CONTACT_EMAIL ?? "todd@tko.solutions";
 
   if (!apiKey || !to) {
     console.warn("inbound_lead.notification_skipped", {
@@ -34,7 +35,7 @@ export async function notifyLead(lead: PersistedInboundLead): Promise<NotifyLead
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL,
+        from: process.env.RESEND_FROM_EMAIL || process.env.FROM_EMAIL || DEFAULT_FROM_EMAIL,
         to,
         subject: `New inbound lead: ${lead.email}`,
         text: buildLeadEmailText(lead, submittedAt),

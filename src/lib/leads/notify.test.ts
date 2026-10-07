@@ -43,6 +43,7 @@ describe("notifyLead", () => {
   it("skips email when notification env vars are missing", async () => {
     delete process.env.RESEND_API_KEY;
     delete process.env.LEAD_NOTIFY_EMAIL;
+    delete process.env.CONTACT_EMAIL;
     const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
@@ -99,6 +100,27 @@ describe("notifyLead", () => {
       source: "contact_form",
       timestamp: expect.any(String),
     });
+  });
+
+  it("falls back to todd@tko.solutions when LEAD_NOTIFY_EMAIL is omitted", async () => {
+    process.env.RESEND_API_KEY = "test-key";
+    delete process.env.LEAD_NOTIFY_EMAIL;
+    delete process.env.CONTACT_EMAIL;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+      }),
+    );
+
+    const result = await notifyLead(lead);
+    expect(result.status).toBe("sent");
+    expect(fetch).toHaveBeenCalledWith(
+      "https://api.resend.com/emails",
+      expect.objectContaining({
+        body: expect.stringContaining('"to":"todd@tko.solutions"'),
+      }),
+    );
   });
 
   it("does not throw when Resend rejects the notification", async () => {
