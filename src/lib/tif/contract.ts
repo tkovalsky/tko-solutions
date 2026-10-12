@@ -11,6 +11,7 @@ export type FrameworkKey =
   | "business_exit";
 
 export type ArtifactKey =
+  | "social_package"
   | "community_page"
   | "comparison_page"
   | "comparison_guide"
@@ -28,6 +29,7 @@ export type ArtifactKey =
 export type VoiceKey = "rachel" | "consumer" | "todd" | "commercial_operator";
 
 export const TIF_COMPOSE_CONTRACT_VERSION = "2026-07-22" as const;
+export const SOCIAL_PACKAGE_COMPOSITION_VERSION = "rachel-social-2026-10-11.v1" as const;
 export type ComposeContractVersion = typeof TIF_COMPOSE_CONTRACT_VERSION;
 
 // Execution identity is carried separately from the compose body so it cannot be
@@ -77,6 +79,7 @@ export interface ComposeContext {
 }
 
 export interface ComposeInputs extends Record<string, unknown> {
+  socialPackage?: SocialPackageInput;
   context?: ComposeContext;
   facts?: string;
   notes?: string;
@@ -121,6 +124,7 @@ export interface ComposeSourceUsage {
 }
 
 export interface ComposeResponse {
+  socialPackage?: SocialPackageLineage;
   ok: true;
   contractVersion: ComposeContractVersion;
   // Execution-layer identifiers (v0.1: generated per request; durable Run/Draft
@@ -147,4 +151,43 @@ export interface ComposeErrorResponse {
   ok: false;
   error: string;
   issues?: unknown;
+}
+
+/** Public canonical material only; operational evidence and CMS metadata stay with the publisher. */
+export type SocialChannel = "facebook_post" | "instagram_post" | "instagram_reel_script" | "linkedin_post";
+
+export interface SocialPackageInput {
+  channel: SocialChannel;
+  source: {
+    parentContentId: number;
+    contentId: string;
+    clusterId: string | null;
+    revision: string;
+    title: string;
+    canonicalUrl: string;
+    body: string;
+    sha256: string;
+  };
+  voice: {
+    path: "docs/content-system/RACHEL_VOICE.md";
+    content: string;
+    sha256: string;
+  };
+  destinationUrl: string;
+}
+
+/** A revision/hash receipt is provenance, never publication or factual/voice approval. */
+export interface SocialPackageLineage {
+  channel: SocialChannel;
+  parentContentId: number;
+  contentId: string;
+  clusterId: string | null;
+  sourceRevision: string;
+  sourceSha256: string;
+  canonicalUrl: string;
+  destinationUrl: string;
+  voicePath: "docs/content-system/RACHEL_VOICE.md";
+  voiceSha256: string;
+  compositionVersion: string;
+  compositionId: string;
 }

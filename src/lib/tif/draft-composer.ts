@@ -1,9 +1,11 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
-import { TIF_COMPOSE_CONTRACT_VERSION, type ComposeSourceUsage } from "./contract";
+import { TIF_COMPOSE_CONTRACT_VERSION, SOCIAL_PACKAGE_COMPOSITION_VERSION, type ComposeSourceUsage, type SocialPackageLineage } from "./contract";
+import { generateDerivativeCopy } from "./content-workflow";
 
 const FrameworkSchema = z.enum(["rachel_community", "rachel_relocation", "cre_tenant_rep", "business_exit"]);
 const ArtifactSchema = z.enum([
+  "social_package",
   "community_page",
   "comparison_page",
   "comparison_guide",
@@ -19,6 +21,40 @@ const ArtifactSchema = z.enum([
   "transferability_assessment_page",
 ]);
 const VoiceSchema = z.enum(["rachel", "consumer", "todd", "commercial_operator"]);
+const SocialIdentitySchema = z.string().regex(/^[a-zA-Z0-9:_-]{1,150}$/);
+const Sha256Schema = z.string().regex(/^[a-f0-9]{64}$/);
+const SocialPackageSchema = z.object({
+  channel: z.enum(["facebook_post", "instagram_post", "instagram_reel_script", "linkedin_post"]),
+  source: z.object({
+    parentContentId: z.number().int().positive(), contentId: SocialIdentitySchema,
+    clusterId: SocialIdentitySchema.nullable(), revision: SocialIdentitySchema,
+    title: z.string().min(3).max(250), canonicalUrl: z.string().url().max(500),
+    body: z.string().min(20).max(100_000), sha256: Sha256Schema,
+  }).strict(),
+  voice: z.object({ path: z.literal("docs/content-system/RACHEL_VOICE.md"),
+    content: z.string().min(40).max(20_000), sha256: Sha256Schema }).strict(),
+  destinationUrl: z.string().url().max(1500),
+}).strict().superRefine((value, ctx) => {
+  const hash = (text: string) => createHash("sha256").update(text).digest("hex");
+  if (hash(value.source.body) !== value.source.sha256 || hash(value.voice.content) !== value.voice.sha256) {
+    ctx.addIssue({ code: "custom", message: "Source or canonical voice integrity mismatch." });
+  }
+  let source: URL, destination: URL;
+  try { source = new URL(value.source.canonicalUrl); destination = new URL(value.destinationUrl); }
+  catch { ctx.addIssue({ code: "custom", message: "Valid canonical and destination URLs are required." }); return; }
+  const platform = value.channel.startsWith("instagram") ? "instagram" : value.channel.split("_")[0];
+  if (source.origin !== "https://racheldelray.com" || !/^\/guides\/[a-z0-9-]+$/.test(source.pathname)
+    || source.username || source.password || source.search || source.hash
+    || destination.origin !== source.origin || destination.pathname !== source.pathname
+    || destination.username || destination.password || destination.hash
+    || destination.searchParams.get("utm_source") !== platform || destination.searchParams.get("utm_medium") !== "social"
+    || !/^[a-zA-Z0-9_-]{1,100}$/.test(destination.searchParams.get("utm_campaign") ?? "")
+    || [...destination.searchParams.keys()].some(key => !["utm_source", "utm_medium", "utm_campaign", "utm_content"].includes(key))
+    || [...destination.searchParams.keys()].some(key => destination.searchParams.getAll(key).length !== 1)
+    || destination.searchParams.has("utm_content") && !/^[a-zA-Z0-9:_-]{1,150}$/.test(destination.searchParams.get("utm_content")!)) {
+    ctx.addIssue({ code: "custom", message: "A canonical guide and matching channel attribution are required." });
+  }
+});
 const RequirementRoleSchema = z.enum(["voice", "persona", "strategy", "page_contract", "validation", "baseline"]);
 const GenerationRequirementsSchema = z.object({
   version: z.string().min(1).max(50),
@@ -54,6 +90,7 @@ const ComposeDraftRequestSchema = z.object({
   voice: VoiceSchema.default("rachel"),
   inputs: z
     .object({
+      socialPackage: SocialPackageSchema.optional(),
       context: ComposeContextSchema.optional(),
       facts: z.string().max(100_000).optional(),
       notes: z.string().max(20_000).optional(),
@@ -103,6 +140,7 @@ const ComposeDraftRequestSchema = z.object({
 
 export type ComposeDraftRequest = z.input<typeof ComposeDraftRequestSchema>;
 export type ComposeDraftResult = {
+  socialPackage?: SocialPackageLineage;
   ok: true;
   contractVersion: typeof TIF_COMPOSE_CONTRACT_VERSION;
   framework: z.infer<typeof FrameworkSchema>;
@@ -824,6 +862,36 @@ ${isExit
 
 export function composeDraft(payload: ComposeDraftRequest): ComposeDraftResult {
   const request = normalizeRequest(payload);
+  if (request.artifact === "social_package") {
+    const input = request.inputs.socialPackage;
+    if (!input || request.framework !== "rachel_relocation" || request.voice !== "rachel"
+      || Object.keys(request.inputs).some(key => !["socialPackage", "context", "facts", "notes"].includes(key)
+        && request.inputs[key as keyof typeof request.inputs] !== undefined)
+      || request.inputs.facts || request.inputs.notes || Object.keys(request.inputs.context).length) {
+      throw new Error("Social packages require only the current public source and canonical Rachel voice.");
+    }
+    const compositionVersion = SOCIAL_PACKAGE_COMPOSITION_VERSION;
+    const socialPackage: SocialPackageLineage = {
+      channel: input.channel, parentContentId: input.source.parentContentId, contentId: input.source.contentId,
+      clusterId: input.source.clusterId, sourceRevision: input.source.revision, sourceSha256: input.source.sha256,
+      canonicalUrl: input.source.canonicalUrl, destinationUrl: input.destinationUrl,
+      voicePath: input.voice.path, voiceSha256: input.voice.sha256, compositionVersion,
+      compositionId: createHash("sha256").update(JSON.stringify({ compositionVersion, input })).digest("hex"),
+    };
+    return {
+      ok: true, contractVersion: TIF_COMPOSE_CONTRACT_VERSION, framework: request.framework,
+      artifact: request.artifact, voice: request.voice, slug: slugify(input.source.title), title: input.source.title,
+      markdown: generateDerivativeCopy({ type: input.channel, title: input.source.title, body: input.source.body,
+        context: { buyerDomain: "rachel_luxury", destinationUrl: input.destinationUrl,
+          rachelSource: { canonicalUrl: input.source.canonicalUrl, voice: input.voice } } }),
+      warnings: ["Source-grounded candidate only; current facts, permissions and voice still require their existing review.",
+        "Canonical voice instructions were loaded and retained; no independent voice approval or model refinement is claimed."],
+      suggestedPath: "", socialPackage,
+      sourceUsage: { factsIncluded: false, factReferences: [], notesIncluded: false, revisionFeedbackIncluded: false,
+        voiceApplied: false, requirementsAccepted: false, requirementsDigest: null },
+    };
+  }
+  if (request.inputs.socialPackage) throw new Error("Social input is valid only for social_package.");
   const generationRequirements = validateGenerationRequirements(request);
   const validationErrors = validateRequest(request);
   if (validationErrors.length > 0) {
