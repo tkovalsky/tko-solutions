@@ -1,15 +1,9 @@
 import Link from "next/link";
 import { Logo } from "@/components/site/logo";
-import { site } from "@/lib/site";
+import { publicNavigation, site } from "@/lib/site";
 
 const footerLinks = [
-  { href: "/services", label: "Advisory" },
-  { href: "/products/ambient-crm", label: "Products" },
-  { href: "/healthcare", label: "Healthcare" },
-  { href: "/approach", label: "Approach" },
-  { href: "/selected-work", label: "Selected Work" },
-  { href: "/insights", label: "Insights" },
-  { href: "/founder", label: "About" },
+  ...publicNavigation,
   { href: "/contact", label: site.cta },
   { href: "/privacy", label: "Privacy" },
 ];
@@ -37,7 +31,7 @@ export function Footer() {
             </a>
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 md:justify-self-end">
+        <div className="grid content-start gap-x-12 gap-y-1 sm:grid-cols-2 md:justify-self-end">
           {footerLinks.map((link) => (
             <Link
               key={link.href}
@@ -45,7 +39,7 @@ export function Footer() {
               data-conversion-event={link.href === "/contact" ? "primary_cta_click" : "secondary_cta_click"}
               data-cta-location="footer"
               data-cta-label={link.label}
-              className="text-sm font-medium text-white/75 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center text-sm font-medium text-white/75 transition-colors hover:text-white"
             >
               {link.label}
             </Link>

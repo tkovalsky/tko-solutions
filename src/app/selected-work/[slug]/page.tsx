@@ -4,27 +4,14 @@ import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
+import { VideoEmbed } from "@/components/media/video-embed";
+import { RachelOSUseCaseExplorer } from "@/components/site/rachelos-use-case-explorer";
 import { Section } from "@/components/ui/section";
 import { caseStudies, getCaseStudy, leadParagraph } from "@/lib/content";
 import { CONSTRAINT_CALL } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
-
-const rachelosScreens = [
-  {
-    title: "Prioritized work",
-    description: "The queue makes active work, next actions, and operating lanes visible.",
-    image: "/proof/rachelos/canonical-queue.png",
-    alt: "Redacted RachelOS queue showing active work and next actions.",
-  },
-  {
-    title: "Human approval",
-    description: "Recommended relationship actions remain under human review before execution.",
-    image: "/proof/rachelos/human-approval.png",
-    alt: "Redacted RachelOS review surface showing human approval controls.",
-  },
-];
 
 export function generateStaticParams() {
   return caseStudies.map((study) => ({ slug: study.slug }));
@@ -35,10 +22,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!study) return {};
 
   const title = study.slug === "from-crm-to-operating-system"
-    ? "RachelOS: From Scattered Follow-Up to a Working System"
+    ? "RachelOS: Explore Three Business Workflow Problems"
     : study.title;
   const lead = study.slug === "from-crm-to-operating-system"
-    ? "How person-held context became a practical operating system for relationship-driven work."
+    ? "Explore missed follow-up, key-person dependency, and human-controlled AI through RachelOS examples, redacted screenshots, and questions for your business."
     : leadParagraph(study.situation);
 
   return {
@@ -58,6 +45,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 export default async function SelectedWorkDetailPage({ params }: Params) {
   const study = getCaseStudy((await params).slug);
   if (!study) notFound();
+  const isRachelOS = study.slug === "from-crm-to-operating-system";
 
   // The hero carries the opening of the situation, so the body picks up from
   // whatever is left. Nothing in the case is rendered to the reader twice.
@@ -81,13 +69,26 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         eyebrow={study.industry}
         title={study.title}
         description={situationLead}
-        primaryHref={CONSTRAINT_CALL.href}
-        primaryLabel={CONSTRAINT_CALL.label}
-        secondaryHref={study.relatedOfferHref}
-        secondaryLabel={`See the ${study.relatedOffer}`}
+        primaryHref={isRachelOS ? "#use-cases" : CONSTRAINT_CALL.href}
+        primaryLabel={isRachelOS ? "Explore a Business Problem" : CONSTRAINT_CALL.label}
+        secondaryHref={isRachelOS ? "#build-story" : study.relatedOfferHref}
+        secondaryLabel={isRachelOS ? "Read the Build Story" : `See the ${study.relatedOffer}`}
       />
 
-      <Section>
+      {isRachelOS ? (
+        <Section className="!py-10 bg-midnight text-white">
+          <div className="mx-auto max-w-4xl">
+            <VideoEmbed
+              title="RachelOS Architecture: Why We Switched Off Autonomous AI"
+              caption="Todd Kovalsky demonstrates the exact-message human approval cockpit, fail-closed lead pipeline, and the computed relationship graph across 2,400 commits."
+            />
+          </div>
+        </Section>
+      ) : null}
+
+      {isRachelOS ? <RachelOSUseCaseExplorer /> : null}
+
+      <Section id="build-story">
         <div className="max-w-[72ch] space-y-10">
           {situationRest.length > 0 ? (
             <WorkSection title="Situation" body={situationRest.join("\n\n")} />
@@ -118,24 +119,60 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
         </div>
       </Section>
 
-      {study.slug === "from-crm-to-operating-system" ? (
-        <Section className="bg-surface">
+      {isRachelOS ? (
+        <Section className="bg-surface !py-16 md:!py-20">
           <div className="max-w-[72ch]">
-            <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Inside the system</p>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-              Two views of the operating layer.
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+              Living technical proof
+            </p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+              Inside the Production System
             </h2>
-            <p className="mt-5 text-lg leading-8 text-muted">The queue makes the work visible. The review surface keeps the person in the decision.</p>
+            <p className="mt-4 text-base leading-7 text-muted">
+              RachelOS is a single-operator production proof asset with zero autonomous outbound
+              sends. These redacted snapshots show the human approval cockpit, priority queue,
+              relationship memory, and system health. They are not live telemetry.
+            </p>
           </div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {rachelosScreens.map((asset) => (
-              <article key={asset.title} className="overflow-hidden border border-border bg-white">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            {[
+              {
+                title: "Exact-Message Human Approval",
+                desc: "Nothing sends without authenticated human signoff. Code prevents autonomous model sends.",
+                img: "/proof/rachelos/human-approval.png",
+              },
+              {
+                title: "Canonical Priority Queue",
+                desc: "One ranked list of who needs attention, recomputed deterministically on every inbound signal.",
+                img: "/proof/rachelos/canonical-queue.png",
+              },
+              {
+                title: "Relationship Memory Detail",
+                desc: "Persistent timeline, known facts, and open questions held in code, not in one person's head.",
+                img: "/proof/rachelos/relationship-memory.png",
+              },
+              {
+                title: "System Health & Daily Runs",
+                desc: "Observable cron-job runs, error classification, and provider rate-limit telemetry.",
+                img: "/proof/rachelos/system-health.png",
+              },
+            ].map((screen) => (
+              <article
+                key={screen.title}
+                className="overflow-hidden rounded-xl border border-border bg-white shadow-sm"
+              >
                 <div className="relative aspect-[16/10] border-b border-border bg-surface">
-                  <Image src={asset.image} alt={asset.alt} fill className="object-cover object-top" sizes="(min-width: 1024px) 50vw, 100vw" />
+                  <Image
+                    src={screen.img}
+                    alt={screen.title}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                  />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold">{asset.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted">{asset.description}</p>
+                  <h3 className="text-lg font-bold">{screen.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">{screen.desc}</p>
                 </div>
               </article>
             ))}
@@ -144,8 +181,8 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       ) : null}
 
       <CtaBand
-        title="Does your business run on someone's memory?"
-        description="The mechanism is the same in most growing businesses. A diagnostic finds where it's costing you, in your own numbers."
+        title={isRachelOS ? "Which part of this looks like your business?" : "Does your business run on someone's memory?"}
+        description={isRachelOS ? "Tell me where context, decisions, or follow-up get stuck. We can discuss what a useful version would look like for your team." : "The mechanism is the same in most growing businesses. A diagnostic finds where it's costing you, in your own numbers."}
         secondaryHref={study.relatedOfferHref}
         secondaryLabel={`See the ${study.relatedOffer}`}
       />

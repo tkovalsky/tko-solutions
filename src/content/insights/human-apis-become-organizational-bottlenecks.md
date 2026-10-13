@@ -50,8 +50,7 @@ recommended_action: >-
   any tool.
 offer: constraint-diagnostic
 cta: "Discuss a Transformation"
-# Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
-status: draft
+status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
 sources:
@@ -59,7 +58,7 @@ sources:
   - rachelos:ev-rachelos-relationship-memory
 date: "2026-08-05"
 slug: human-apis-become-organizational-bottlenecks
-published: false
+published: true
 featured: false
 # Internal evidence trail (not rendered):
 # - Critical operational knowledge and decision-making often live inside individuals instead of governed systems. Evidence: healthcare:ev-healthcare-human-api-dependency; content/proof/healthcare/evidence.yaml#human-api-root-pattern. Guard: advisory experience, pattern not metric, no organizations named.

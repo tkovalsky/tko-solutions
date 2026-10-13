@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { filterPipeline, isActivePipelineOpportunity, isAwaitingManualOutreach, isCurrentlySnoozed, isStaleNextAction, needsNextActionRepair } from "./page";
+import { filterPipeline, isActivePipelineOpportunity, isAwaitingManualOutreach, isCurrentlySnoozed, isStaleNextAction, needsNextActionRepair } from "./pipeline-filters";
 
 vi.mock("@/lib/tif/db", () => ({
   tifDb: {
@@ -12,6 +12,17 @@ vi.mock("@/lib/tif/db", () => ({
 const AS_OF = new Date("2026-08-01T12:00:00Z");
 
 describe("opportunity pipeline filters", () => {
+  it("preserves PE ordering for database decimal scores", () => {
+    const higher = opportunity("higher", "consulting", "researching", 0, "Example A");
+    const decimalScore = {
+      ...higher,
+      currentScore: { ...higher.currentScore, priorityEfficiency: { toNumber: () => 700 } },
+    };
+    const lower = opportunity("lower", "consulting", "researching", 310, "Example B");
+
+    expect(filterPipeline([lower, decimalScore], { path: "all", state: "active", sort: "pe" }, AS_OF).map((row) => row.id)).toEqual(["higher", "lower"]);
+  });
+
   it("composes path and state filters, then sorts by PE", () => {
     const rows = filterPipeline(
       [

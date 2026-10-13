@@ -1,4 +1,8 @@
-export type OfferSlug = "constraint-diagnostic" | "operating-system-build" | "operate-and-improve";
+export type OfferSlug =
+  | "constraint-diagnostic"
+  | "operating-system-build"
+  | "operate-and-improve"
+  | "regulatory-implementation-readiness-sprint";
 
 export type OfferTimelineStep = {
   period: string;
@@ -252,6 +256,88 @@ export const offers: Offer[] = [
       },
     ],
     ctaLabel: CONSTRAINT_CALL.label,
+  },
+  {
+    slug: "regulatory-implementation-readiness-sprint",
+    name: "Regulatory Implementation Readiness Sprint",
+    shortName: "Readiness Sprint",
+    level: "Diagnose",
+    step: "Establish Operational Truth",
+    duration: "3–4 weeks",
+    startingPrice: "$15,000",
+    commercial: "$15,000 fixed · 3–4 weeks",
+    question: "Turn healthcare mandates into executable, auditable operational change.",
+    audience:
+      "For health plan COOs, CIOs, VPs of Operations, VPs of Transformation, and regulatory-program sponsors facing CMS-0057-F, state prior-authorization mandates, or core platform migrations.",
+    summary:
+      "In 3 to 4 weeks, we connect policy requirements to workflows, systems, controls, owners, and evidence. You receive an obligation register, gap and ownership matrix, executable backlog, and executive readiness scorecard.",
+    metaDescription:
+      "A 3-4 week, fixed-price readiness sprint for health plans: translate healthcare mandates into executable workflows, controls, and backlogs. $15,000.",
+    triggers: [
+      "A regulatory deadline (such as CMS-0057-F or state PA rules) has created multiple projects but no single readiness view.",
+      "Compliance, operations, technology, product, and vendors have each interpreted the mandate differently.",
+      "A prior-authorization, interoperability, or policy change looks technically on track but operationally unclear.",
+      "Leadership needs an independent answer before declaring readiness, funding more work, or escalating a vendor.",
+      "Testing is planned at the application level, but no one has defined the end-to-end operational scenarios and evidence that matter.",
+    ],
+    deliverables: [
+      "Obligation Register & Impact Map: traceable from policy to capability, workflow, system, control, owner, evidence, and outcome",
+      "Gap, Dependency, and Accountable Ownership Assessment across operations, IT, and delegated vendors",
+      "Executable Implementation Backlog with explicit business rules, exceptions, and acceptance criteria",
+      "Executive Readiness Scorecard showing what is proven, what remains open, and what needs a leadership decision",
+      "Readout and alignment session with accountable workstream owners",
+    ],
+    boundaries: [
+      "Grounded in operational and technical architecture; not legal, clinical, actuarial, or regulatory advice.",
+      "Does not replace accountable client executives, compliance owners, architects, or delivery teams.",
+      "Not a generic PMO status report, software implementation, or formal compliance certification.",
+      "Bounded to one defined mandate, program surface, or regulatory package.",
+    ],
+    expansionPath:
+      "Client delivery teams execute the backlog. If independent execution authority or integration governance across vendors is required, follow-on advisory is separately scoped.",
+    capabilityTags: [
+      "Healthcare mandates",
+      "CMS-0057-F & PA",
+      "Payer operations",
+      "Cross-system controls",
+      "Delivery governance",
+      "Traceable readiness",
+    ],
+    faqs: [
+      {
+        q: "Does this replace our legal counsel or compliance team?",
+        a: "No. Your compliance and legal teams interpret the rule. The sprint takes their approved interpretation and translates it into operational behavior, system controls, and evidence.",
+      },
+      {
+        q: "What systems and workflows do you inspect?",
+        a: "Intake channels, UM platforms, clinical rules engines, claims adjudication, provider data, and partner APIs across the end-to-end operational path.",
+      },
+      {
+        q: "How does this differ from our internal PMO status reports?",
+        a: "A PMO collects reported status from workstreams. The readiness sprint tests whether the links between policy, workflow, and systems actually connect with demonstrable evidence.",
+      },
+    ],
+    ctaLabel: "Book a Readiness Assessment",
+    timeline: [
+      {
+        period: "Week 1",
+        title: "Map Obligations & Authorities",
+        description:
+          "Translate the approved mandate into concrete obligations across member eligibility, benefits, clinical policy, provider programs, UM orchestration, and claims controls.",
+      },
+      {
+        period: "Week 2",
+        title: "Inspect Systems & Handoffs",
+        description:
+          "Walk through the operational and technology handoffs with workstream leads and vendors. Find where unmodeled exceptions and hidden manual workarounds exist.",
+      },
+      {
+        period: "Week 3–4",
+        title: "Structure Backlog & Executive Scorecard",
+        description:
+          "Deliver the prioritized gap and ownership matrix, the executable backlog, and the executive readiness scorecard with a sponsor readout.",
+      },
+    ],
   },
 ];
 

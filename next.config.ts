@@ -1,8 +1,12 @@
 import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
   async redirects() {
     // v1 repositioning (2026-09-27): the site was not yet indexed, so the legacy
     // redirect map was replaced with this small set that catches old shared links.
@@ -16,10 +20,7 @@ const nextConfig: NextConfig = {
       "rachelos-delivery-model",
     ];
     const retiredGuides = [
-      "prior-authorization-is-a-decision-rights-problem",
       "prior-authorization-operational-quality-problem",
-      "why-healthcare-transformation-programs-stall",
-      "human-apis-become-organizational-bottlenecks",
       "operational-intelligence-vs-reporting",
     ];
     return [

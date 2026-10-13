@@ -3,7 +3,7 @@ title: "Prior Authorization Is a Decision-Rights Problem"
 description: "Prior authorization stalls because exception authority, escalation logic, and auditability live in individual heads. A guide to diagnosing and measuring it before funding automation."
 business_unit: tko
 voice: tko-advisory
-cluster: prior-authorization-operations
+cluster: systems-that-dont-drive-action
 primary_buyer: >-
   VP Utilization Management, VP Prior Authorization, VP Clinical Operations, COO, and
   Chief Transformation Officers at health plans, healthcare services organizations, and
@@ -50,8 +50,7 @@ recommended_action: >-
   before committing further platform, staffing, or automation spend.
 offer: constraint-diagnostic
 cta: "Discuss a Transformation"
-# Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
-status: draft
+status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
 sources:
@@ -62,7 +61,7 @@ sources:
   - https://www.ama-assn.org/practice-management/prior-authorization/ama-prior-authorization-physician-survey
 date: "2026-08-05"
 slug: prior-authorization-is-a-decision-rights-problem
-published: false
+published: true
 featured: true
 # Internal evidence trail (not rendered):
 # - Decision handling varies when authority lives in individual heads. Evidence: healthcare:prior-auth-decision-rights; content/proof/healthcare/evidence.yaml#prior-auth-decision-rights and HEALTHCARE_EXPERIENCE_LIBRARY.md section 1. Guard: advisory pattern, no organization or metric.

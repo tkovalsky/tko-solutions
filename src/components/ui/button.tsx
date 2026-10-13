@@ -19,7 +19,7 @@ export function Button({ className, variant = "primary", ...props }: ButtonProps
   return (
     <button
       className={cn(
-        "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors",
+        "inline-flex min-h-12 max-w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-center text-sm font-semibold leading-6 transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         variants[variant],
         className,
       )}
@@ -57,7 +57,7 @@ export function LinkButton({
       data-cta-label={label}
       data-referenced-service={referencedService}
       className={cn(
-        "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors",
+        "inline-flex min-h-12 max-w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-center text-sm font-semibold leading-6 transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         variants[variant],
         className,
       )}

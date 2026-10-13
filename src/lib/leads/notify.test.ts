@@ -93,6 +93,7 @@ describe("notifyLead", () => {
         body: expect.stringContaining("Submitted Payload"),
       }),
     );
+    expect(JSON.parse(vi.mocked(fetch).mock.calls[0][1]!.body as string).reply_to).toBe("todd@example.com");
     expect(mockedMarkInboundLeadNotified).toHaveBeenCalledWith("lead_123", expect.any(Date));
     expect(info).toHaveBeenCalledWith("inbound_lead.notification_sent", {
       leadId: "lead_123",
@@ -105,7 +106,7 @@ describe("notifyLead", () => {
   it("falls back to todd@tko.solutions when LEAD_NOTIFY_EMAIL is omitted", async () => {
     process.env.RESEND_API_KEY = "test-key";
     delete process.env.LEAD_NOTIFY_EMAIL;
-    delete process.env.CONTACT_EMAIL;
+    process.env.CONTACT_EMAIL = "hello@tko.solutions";
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue({

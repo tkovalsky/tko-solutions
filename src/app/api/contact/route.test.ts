@@ -48,6 +48,7 @@ describe("POST /api/contact", () => {
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.ok).toBe(true);
+    expect(body.notificationSent).toBe(true);
     expect(body.leadId).toBe("lead_abc");
 
     expect(persistInboundLead).toHaveBeenCalledWith(
@@ -61,4 +62,16 @@ describe("POST /api/contact", () => {
     );
     expect(notifyLead).toHaveBeenCalledWith({ id: "lead_abc" });
   });
+  it.each(["failed", "skipped"])("reports saved inquiry without claiming an email when notification is %s", async (status) => {
+    persistInboundLead.mockResolvedValue({ id: "lead_saved" });
+    notifyLead.mockResolvedValue({ status });
+    const response = await POST(new Request("http://localhost:3100/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "website-check@example.com" }),
+    }));
+    expect(response.status).toBe(202);
+    expect(await response.json()).toEqual({ ok: true, leadId: "lead_saved", notificationSent: false });
+  });
+
 });

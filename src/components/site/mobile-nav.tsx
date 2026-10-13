@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
-import { site } from "@/lib/site";
+import { isCurrentDestination, site } from "@/lib/site";
 
 type NavItem = { href: string; label: string };
 
@@ -71,7 +71,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex size-11 items-center justify-center text-foreground transition-colors hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="inline-flex size-11 items-center justify-center text-foreground transition-colors hover:bg-surface hover:text-primary aria-[current=page]:bg-surface aria-[current=page]:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         {open ? (
           <X className="size-6" aria-hidden="true" />
@@ -97,7 +97,8 @@ export function MobileNav({ items }: { items: NavItem[] }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex min-h-11 items-center text-base font-medium text-foreground transition-colors hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                aria-current={isCurrentDestination(pathname, item.href) ? "page" : undefined}
+                className="flex min-h-12 items-center rounded-lg px-3 text-base font-medium text-foreground transition-colors hover:bg-surface hover:text-primary aria-[current=page]:bg-surface aria-[current=page]:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 {item.label}
               </Link>

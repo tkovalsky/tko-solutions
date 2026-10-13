@@ -49,7 +49,7 @@ But the CFO knows the truth: you can't recognize that revenue until the client a
 
 We call this **The Implementation Gap**, and it is where momentum dies.
 
-## The [Swivel Chair Tax](/insights/the-operational-swivel-chair) and SaaS Onboarding Bottlenecks
+## The [Swivel Chair Tax](/insights/the-swivel-chair-cost-sizing-manual-handoffs) and SaaS Onboarding Bottlenecks
 
 The root cause of these severe SaaS onboarding bottlenecks is almost never the software itself. The root cause is the operational handoff. 
 

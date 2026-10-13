@@ -64,9 +64,9 @@ cta: "Book a 30-Minute Call"
 # - Add one first-person story from the founder interview: the moment you realized a lead had
 #   been lost because nobody owned it.
 # - Rachel's written permission is needed before naming her or the business.
-status: in_review
-reviewer: ""
-reviewed_date: ""
+status: published
+reviewer: "Todd Kovalsky"
+reviewed_date: "2026-10-13"
 sources:
   - rachelos-delivery-model:dm-honest-metrics
   - rachelos-delivery-model:dm-scale-snapshot
@@ -75,7 +75,7 @@ sources:
   - rachelos-delivery-model:dm-human-facts
 date: "2026-09-27"
 slug: why-leads-fall-through-the-cracks
-published: false
+published: true
 featured: true
 # Internal evidence trail (not rendered):
 # - 152 non-test leads, 117 touched, 9 responded; 35 never touched. Evidence: dm-scale-snapshot; 12_INDUSTRY_IMPLICATIONS.md (Revenue operations). Guard: one business, aggregates only.

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { trackConversion } from "@/lib/conversion-events";
+import { getRachelOSUseCase } from "@/lib/rachelos-use-cases";
 
 const controlClass =
   "mt-2 w-full rounded-md border border-[color:var(--input-border)] bg-white px-4 text-base text-foreground transition-colors placeholder:text-[color:var(--input-border-hover)] hover:border-[color:var(--input-border-hover)] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
@@ -32,11 +33,14 @@ export function DiagnosticForm({
   action,
   status,
   managedFollowUp = false,
+  useCaseId,
 }: {
   action: (formData: FormData) => void | Promise<void>;
   status?: string;
   managedFollowUp?: boolean;
+  useCaseId?: string;
 }) {
+  const workflowExample = managedFollowUp ? undefined : getRachelOSUseCase(useCaseId);
   const [attribution, setAttribution] = useState(defaultAttribution);
   const started = useRef(false);
   const validationErrorTracked = useRef(false);
@@ -92,7 +96,7 @@ export function DiagnosticForm({
       onSubmit={handleSubmit}
       onInvalidCapture={handleInvalid}
     >
-      <input type="hidden" name="source" value={managedFollowUp ? "managed_follow_up_pilot" : "diagnostic_fit_call"} />
+      <input type="hidden" name="source" value={managedFollowUp ? "managed_follow_up_pilot" : workflowExample ? `rachelos_use_case_${workflowExample.id}` : "diagnostic_fit_call"} />
       {managedFollowUp ? <input type="hidden" name="offer" value="managed-follow-up" /> : null}
       {Object.entries(attribution).map(([name, value]) => (
         <input key={name} type="hidden" name={name} value={value} />
@@ -120,9 +124,10 @@ export function DiagnosticForm({
         label={managedFollowUp ? "Which follow-up keeps slipping?" : "What would you like to fix or build?"}
         placeholder="A workflow that keeps breaking, follow-up that depends on memory, or an AI idea you want connected to the way your team works. A few sentences are enough."
         textarea
+        defaultValue={workflowExample?.intake}
       />
 
-      <SelectField id="currentPressure" label="Which sounds most like your business?">
+      <SelectField key={workflowExample?.id ?? "general"} id="currentPressure" label="Which sounds most like your business?" defaultValue={workflowExample?.pressure}>
         <option value="">Select one</option>
         <option value="leads-follow-up">Leads come in, but follow-up is inconsistent</option>
         <option value="owner-bottleneck">Everything routes through the owner or COO</option>
@@ -210,15 +215,17 @@ function SelectField({
   id,
   label,
   children,
+  defaultValue,
 }: {
   id: string;
   label: string;
   children: React.ReactNode;
+  defaultValue?: string;
 }) {
   return (
     <div>
       <Label htmlFor={id}>{label}</Label>
-      <select id={id} name={id} required className={`${controlClass} min-h-12`}>
+      <select id={id} name={id} required defaultValue={defaultValue} className={`${controlClass} min-h-12`}>
         {children}
       </select>
     </div>
@@ -233,6 +240,7 @@ function Field({
   placeholder,
   autoComplete,
   required = true,
+  defaultValue,
 }: {
   id: string;
   label: string;
@@ -241,6 +249,7 @@ function Field({
   placeholder?: string;
   autoComplete?: string;
   required?: boolean;
+  defaultValue?: string;
 }) {
   return (
     <div>
@@ -252,6 +261,7 @@ function Field({
           required={required}
           rows={4}
           placeholder={placeholder}
+          defaultValue={defaultValue}
           className={`${controlClass} resize-y py-3 leading-7`}
         />
       ) : (

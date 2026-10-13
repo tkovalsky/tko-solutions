@@ -24,21 +24,21 @@ export function PageHero({
   className,
 }: PageHeroProps) {
   return (
-    <section className={cn("py-20 md:py-28", className)}>
+    <section className={cn("py-16 md:py-24", className)}>
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-5xl">
           {eyebrow ? (
-            <p className="mb-6 text-sm font-semibold uppercase tracking-[0.1em] text-primary">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.1em] text-primary">
               {eyebrow}
             </p>
           ) : null}
-          <h1 className="max-w-4xl text-5xl font-bold leading-[1.03] tracking-tight text-foreground md:text-7xl">
+          <h1 className="max-w-4xl text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.08] tracking-tight text-foreground">
             {title}
           </h1>
-          <p className="mt-8 max-w-[65ch] text-xl leading-9 text-muted">
+          <p className="mt-6 max-w-[60ch] text-lg leading-8 text-muted md:text-xl md:leading-9">
             {description}
           </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <LinkButton href={primaryHref} ctaLocation="page_hero">{primaryLabel}</LinkButton>
             {secondaryHref && secondaryLabel ? (
               <LinkButton href={secondaryHref} variant="secondary" ctaLocation="page_hero">

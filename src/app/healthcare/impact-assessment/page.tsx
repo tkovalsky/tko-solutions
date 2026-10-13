@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AuthorizationDecisionLab } from "@/components/healthcare/authorization-decision-lab";
+import { VideoEmbed } from "@/components/media/video-embed";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
@@ -109,6 +110,12 @@ export default function HealthcareImpactAssessmentPage() {
       </Section>
 
       <Section id="decision-lab" className="bg-surface !py-14 md:!py-20">
+        <div className="mb-10">
+          <VideoEmbed
+            title="Live Policy Trace: CMS-0057-F Prior Auth Waiver Across 6 Authorities"
+            caption="Todd Kovalsky demonstrates how removing clinical review requires coordinating eligibility, benefits, procedure rules, provider qualification, and downstream claims controls without PHI."
+          />
+        </div>
         <AuthorizationDecisionLab />
         <p className="mt-5 max-w-[90ch] text-sm leading-6 text-muted">
           This is a synthetic, educational prototype. It does not use PHI, determine benefits,

@@ -14,13 +14,26 @@ export const site = {
   secondaryCta: "See How RachelOS Was Built",
   secondaryCtaHref: "/selected-work/from-crm-to-operating-system",
   socialImage: "/og-tko-3.png",
-  // Primary contact address for the “mailto:” link.
-  // Falls back to the corporate address if the env var is not set.
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "todd@tko.solutions",
+  // Explicit public address; legacy deployment settings must not override it.
+  email: "todd@tko.solutions",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "https://www.linkedin.com/in/toddkovalsky",
   scheduling: process.env.NEXT_PUBLIC_SCHEDULING_URL,
 };
 
 export function absoluteUrl(path = "/") {
   return new URL(path, site.url).toString();
+}
+
+// Canonical public destinations, shared by desktop, mobile, and footer navigation.
+export const publicNavigation = [
+  { href: "/services", label: "Advisory" },
+  { href: "/healthcare/impact-assessment", label: "Healthcare" },
+  { href: "/private-client-os", label: "Private Client OS" },
+  { href: "/selected-work", label: "Selected Work" },
+  { href: "/insights", label: "Guides" },
+  { href: "/founder", label: "About" },
+];
+
+export function isCurrentDestination(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
 }

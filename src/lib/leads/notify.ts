@@ -1,3 +1,4 @@
+import { site } from "@/lib/site";
 import { markInboundLeadNotified } from "@/lib/leads/persist";
 import type { PersistedInboundLead } from "@/lib/leads/types";
 
@@ -11,8 +12,8 @@ type NotifyLeadResult =
 
 export async function notifyLead(lead: PersistedInboundLead): Promise<NotifyLeadResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  // Destination for inbound-lead notifications. Falls back to corporate inbox.
-  const to = process.env.LEAD_NOTIFY_EMAIL ?? process.env.CONTACT_EMAIL ?? "todd@tko.solutions";
+  // An explicit notification override is supported; legacy CONTACT_EMAIL is not.
+  const to = process.env.LEAD_NOTIFY_EMAIL?.trim() || site.email;
 
   if (!apiKey || !to) {
     console.warn("inbound_lead.notification_skipped", {
@@ -30,6 +31,7 @@ export async function notifyLead(lead: PersistedInboundLead): Promise<NotifyLead
   try {
     const response = await fetch(RESEND_EMAIL_URL, {
       method: "POST",
+      signal: AbortSignal.timeout(10_000),
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
@@ -37,6 +39,7 @@ export async function notifyLead(lead: PersistedInboundLead): Promise<NotifyLead
       body: JSON.stringify({
         from: process.env.RESEND_FROM_EMAIL || process.env.FROM_EMAIL || DEFAULT_FROM_EMAIL,
         to,
+        reply_to: lead.email,
         subject: `New inbound lead: ${lead.email}`,
         text: buildLeadEmailText(lead, submittedAt),
       }),

@@ -30,9 +30,13 @@ export async function POST(request: Request) {
       submittedAt: new Date(),
     });
 
-    await notifyLead(lead);
+    const notification = await notifyLead(lead);
+    const notificationSent = notification.status === "sent";
 
-    return NextResponse.json({ ok: true, leadId: lead.id });
+    return NextResponse.json(
+      { ok: true, leadId: lead.id, notificationSent },
+      { status: notificationSent ? 200 : 202 },
+    );
   } catch (error) {
     console.error("api.contact.error", error);
     return NextResponse.json(

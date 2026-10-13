@@ -67,7 +67,7 @@ To the reviewer, the dashboard is just a list of chores. It does not pull the cl
 
 When a healthcare workflow breaks down, it rarely breaks inside the database. It breaks in the spaces *between* the databases. 
 
-We call this the **[Swivel-Chair Tax](/insights/the-operational-swivel-chair)**. 
+We call this the **[Swivel-Chair Tax](/insights/the-swivel-chair-cost-sizing-manual-handoffs)**.
 
 If your clinical staff spends 40% of their day copying a member ID from Screen A, pasting it into Screen B to check eligibility, and then documenting the result in Screen C, you are bleeding administrative capital. You are paying registered nurses to behave like low-speed software routers. 
 

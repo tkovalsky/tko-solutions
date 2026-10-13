@@ -3,7 +3,7 @@ title: "Why Healthcare Transformation Programs Stall"
 description: "Large healthcare programs rarely fail at the workstream level. They stall at the boundaries between workstreams, and status reporting is designed not to show it."
 business_unit: tko
 voice: tko-advisory
-cluster: stalled-healthcare-transformation
+cluster: what-to-fix-first
 primary_buyer: >-
   COO, Chief Transformation Officer, CIO, and SVP/VP Operations at health plans, healthcare
   services organizations, managed-care organizations, and PE-backed provider platforms, plus
@@ -51,8 +51,7 @@ recommended_action: >-
   approving additional funding, scope reduction, or a vendor change.
 offer: constraint-diagnostic
 cta: "Discuss a Transformation"
-# Unpublished 2026-09-27: healthcare-framed; retired from the public site in the SMB repositioning.
-status: draft
+status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
 sources:
@@ -60,7 +59,7 @@ sources:
   - healthcare:prior-auth-decision-rights
 date: "2026-08-04"
 slug: why-healthcare-transformation-programs-stall
-published: false
+published: true
 featured: true
 # Internal evidence trail (not rendered):
 # - Healthy workstream status can coexist with unresolved enterprise delivery risk. Evidence: healthcare:prior-auth-decision-rights and /selected-work/enterprise-care-management-modernization. Guard: qualitative employment-period mechanism; no client, program, cost, timing, or outcome metric.

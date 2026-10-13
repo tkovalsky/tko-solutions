@@ -44,3 +44,5 @@ next-env.d.ts
 
 # Non-public sales, positioning, and claims-review working materials
 /.private/
+/output/
+/tmp/

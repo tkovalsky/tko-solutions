@@ -6,9 +6,10 @@ type MermaidDiagramProps = {
   source: string;
   title: string;
   textAlternative: string;
+  compact?: boolean;
 };
 
-export function MermaidDiagram({ source, title, textAlternative }: MermaidDiagramProps) {
+export function MermaidDiagram({ source, title, textAlternative, compact = false }: MermaidDiagramProps) {
   const instanceId = useId().replace(/:/g, "");
   const [svg, setSvg] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -17,6 +18,9 @@ export function MermaidDiagram({ source, title, textAlternative }: MermaidDiagra
 
   useEffect(() => {
     let active = true;
+
+    setSvg("");
+    setError(null);
 
     async function render() {
       try {
@@ -47,6 +51,15 @@ export function MermaidDiagram({ source, title, textAlternative }: MermaidDiagra
       active = false;
     };
   }, [instanceId, source]);
+
+  if (compact) {
+    return (
+      <figure aria-label={`${title} diagram`} className="flex h-full min-h-72 items-center justify-center rounded-2xl bg-surface p-6">
+        <p className={svg && !error ? "sr-only" : "text-sm leading-7 text-muted"}>{textAlternative}</p>
+        {svg && !error && <div aria-hidden="true" className="w-full [&_svg]:mx-auto [&_svg]:max-h-80 [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: svg }} />}
+      </figure>
+    );
+  }
 
   const shellClassName = expanded
     ? "fixed inset-0 z-50 flex flex-col bg-white p-5 md:p-10"
