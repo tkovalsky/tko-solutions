@@ -32,9 +32,10 @@ async function main() {
       FROM "InboundLead"
       WHERE "lastSubmittedAt" >= ${since}
         AND COALESCE("source", '') NOT LIKE 'release_verification%'
+        AND COALESCE("payload"->>'utmSource', '') <> 'release_verification'
       GROUP BY 1 ORDER BY 1
     `;
-    console.log(JSON.stringify({ checkedAt: new Date().toISOString(), since: since.toISOString(), ...summarizeInquiries(rows), interpretation: "Unique contacts by latest submission, not all attempts or qualified opportunities. Notification acceptance is not confirmed mailbox receipt. Labeled release-verification sources are excluded." }, null, 2));
+    console.log(JSON.stringify({ checkedAt: new Date().toISOString(), since: since.toISOString(), ...summarizeInquiries(rows), interpretation: "Unique contacts by latest submission, not all attempts or qualified opportunities. Notification acceptance is not confirmed mailbox receipt. Release-verification source and UTM labels are excluded." }, null, 2));
   } finally { await prisma.$disconnect(); }
 }
 

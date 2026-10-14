@@ -166,3 +166,11 @@ The runtime release `0488edb388cc96a463a3153ca1a352870cabb7b5` deployed successf
 The project had a Web Analytics ID without `enabledAt`. Collection was explicitly activated through Vercel's official API on the existing Pro project. Vercel reports subsequently showed one `release_verification` event from the labeled post-activation official-SDK probe. This proves ingestion into reporting, not customer activity or mailbox delivery. The hosted analytics script excludes automated/headless sessions; normal browser event arrival has not been inferred from our automated interactions.
 
 The final configuration recheck still found no `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, or `NEXT_PUBLIC_SCHEDULING_URL`. The full goal remains incomplete: Todd's three actual recordings, a booking URL or explicit email-only choice, and an intentional production inquiry with observed storage, notification acceptance, and mailbox receipt are outstanding. No real production inquiry was submitted during this run and no buyer outreach was sent.
+
+## Prepared production inquiry and approval requirement
+
+A single synthetic production inquiry is prepared in the browser with a unique test address based on Todd's business email, no client or patient information, planning-only timing, and `release_verification` campaign attribution. Automatic approval review rejected the submit action because it creates persistent production data and runs notification handling. Explicit approval for that exact submission has been requested. The form remains unsubmitted; no workaround or alternate submission path was used. Storage, notification acceptance, and mailbox receipt are still unverified.
+
+The read-only inquiry report now excludes both explicit release-verification sources and the reserved `release_verification` UTM source used by the normal form. This prevents the prepared test from inflating commercial inquiry counts if it is approved later. SQL syntax was reviewed against the existing JSON payload field and PostgreSQL query; JavaScript syntax, focused lint, and whitespace checks passed. No database, schema, or public-page behavior was changed.
+
+A fresh production configuration check still found no Resend key, verified sender setting, or scheduling URL. No Todd-led recordings have been added to the available media. Existing user-input requests remain pending.
