@@ -60,7 +60,7 @@ export const offers: Offer[] = [
     step: "Where to start",
     duration: "2 weeks",
     startingPrice: "$7,500",
-    commercial: "$7,500 fixed · credited toward a build",
+    commercial: "$7,500 fixed · standalone diagnostic",
     question: "What is actually slowing the business down—and what is the smallest useful fix?",
     audience:
       "For an owner, COO, or department leader who can feel the drag—missed follow-up, slow handoffs, repeated decisions, too much work routing through one person—but cannot yet see the first fix clearly.",
@@ -90,7 +90,7 @@ export const offers: Offer[] = [
       "There is no obligation to build with TKO. The specification is yours to use with anyone.",
     ],
     expansionPath:
-      "If the first fix is worth building, the diagnostic ends with a fixed-price Operating System Build. The diagnostic fee is credited if that build starts within 30 days.",
+      "If the first fix is worth building, the diagnostic ends with a separately priced build proposal. The specification is yours. There is no automatic fee credit; any reuse of diagnostic work and its effect on the build price are stated in the proposal. Existing signed terms are honored.",
     capabilityTags: ["Process and handoffs", "CRM and data", "Lead and customer follow-up", "Automation readiness"],
     faqs: [
       {
@@ -132,7 +132,7 @@ export const offers: Offer[] = [
       },
     ],
     feeBoundary:
-      "Founding-client rate: the first three diagnostics are $5,000 in exchange for permission to describe the work publicly, anonymously if preferred. A reference call is requested only if the work earns your recommendation.",
+      "The diagnostic is $7,500 for the agreed scope. It does not commit you to a build. Case-study permission and references are optional and separate from the fee.",
   },
   {
     slug: "operating-system-build",
@@ -165,7 +165,7 @@ export const offers: Offer[] = [
       "A post-launch review against the starting baseline",
     ],
     boundaries: [
-      "Scope and price are fixed per phase and agreed in writing before work starts.",
+      "Scope and price are fixed per phase: one buyer journey or operating workflow, one accountable operator group, and the named sources and integrations agreed before work starts.",
       "I build on your existing CRM and tools unless there is a clear reason not to.",
       "Approval and change rules are agreed before customer-facing or record-changing automation is enabled.",
       "You own the agreed code, configuration, content, and documentation; existing third-party licenses retain their terms. No lead volume, conversion, revenue, or time advantage over aggregators is guaranteed.",
@@ -204,7 +204,7 @@ export const offers: Offer[] = [
     ],
     ctaLabel: CONSTRAINT_CALL.label,
     feeFraming:
-      "Builds are $7,500–$15,000 for the bounded scope agreed before work starts. Hosting, CRM subscriptions, messaging, and model usage are separate and approved before use. Larger integrations or additional workflows require a separate phase.",
+      "Builds are $7,500–$15,000 for a bounded first phase, not a full RachelOS replica. The proposal names the content inventory, capture path, supported CRM, connector count, acceptance scenarios, and handoff. Hosting, subscriptions, messaging, and model usage are separate. Larger integrations or additional workflows require a separate phase.",
     feeBoundary:
       "Every build states the objective, the metric it should move, what is in and out of scope, and what you own at the end.",
   },
@@ -294,7 +294,7 @@ export const offers: Offer[] = [
       "Bounded to one defined mandate, program surface, or platform transition. The sprint begins once approved interpretations, system walkthroughs, and accountable owners are available.",
     ],
     expansionPath:
-      "Client delivery teams execute the backlog. If independent execution authority or integration governance across vendors is required, follow-on advisory is separately scoped.",
+      "Client delivery teams execute the backlog. Optional Execution Assurance follows one named workstream through evidence reviews, dependency resolution, acceptance reviews, and sponsor decisions. Its cadence, capacity, term, and fee are agreed separately after the sprint.",
     capabilityTags: [
       "Healthcare mandates",
       "CMS-0057-F & PA",
@@ -317,6 +317,8 @@ export const offers: Offer[] = [
         a: "A PMO collects reported status from workstreams. The readiness sprint tests whether the links between policy, workflow, and systems actually connect with demonstrable evidence.",
       },
     ],
+    feeFraming: "$15,000 fixed for one agreed mandate, program surface, or platform transition over 3–4 weeks. The fee covers the assessment deliverables and sponsor readout; implementation and optional Execution Assurance are separately scoped.",
+    feeBoundary: "Scope, system boundaries, required interviews, source access, acceptance criteria, and sponsor availability are agreed before kickoff. A delayed prerequisite or additional workstream requires an agreed change to timing or scope.",
     ctaLabel: "Book a Readiness Assessment",
     timeline: [
       {
@@ -340,6 +342,22 @@ export const offers: Offer[] = [
     ],
   },
 ];
+
+// A continuation of the healthcare engagement, not an additional commercial engine.
+export const healthcareExecutionAssurance = {
+  name: "Execution Assurance",
+  summary: "Keep the readiness backlog connected to the evidence your sponsor needs to accept the change.",
+  cadence: "A proposed 90-day engagement, reviewed in three monthly cycles. Each cycle covers one named workstream, two evidence reviews, and one sponsor decision readout.",
+  deliverables: [
+    "An updated obligation-to-evidence register and acceptance status",
+    "A dependency and decision log with accountable owners and agreed review dates",
+    "Reviews of missing authority, failed handoffs, and exception evidence",
+    "A sponsor readout stating what can be accepted, what remains open, and who must act",
+    "An end-of-term handoff and recommendation to close, continue, or scope a separate delivery phase",
+  ],
+  boundaries: "Your teams deliver the backlog; your sponsor accepts the release. This scope does not supply a PMO, software implementation team, legal opinion, compliance certification, or continuous on-call coverage.",
+  commercial: "Fixed fee agreed after the sprint, before continuation. The proposal states monthly capacity, meeting cadence, review turnaround, and escalation rules. Additional workstreams or implementation receive a separate scope. No automatic renewal.",
+} as const;
 
 export function getOffer(slug: string): Offer | undefined {
   return offers.find((offer) => offer.slug === slug);

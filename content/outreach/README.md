@@ -23,7 +23,7 @@ No automated enrichment, scraping, sequencing, or CRM build is required or wante
 | `why_now` | Why this is urgent for them this quarter, not in principle. |
 | `path_in` | `warm_intro`, `shared_history`, `alumni`, `vendor_overlap`, `referral`, or `cold`. |
 | `relevant_credibility_asset` | The guide or proof asset to lead with. |
-| `relevant_offer` | Which of the three offers fits, from `src/lib/offers.ts`. |
+| `relevant_offer` | Use a current slug from `src/lib/offers.ts`: `regulatory-implementation-readiness-sprint` or `operating-system-build` for the two engines; `constraint-diagnostic` and `operate-and-improve` are supporting steps. |
 | `status` | Where it stands. |
 | `last_action` / `next_action` / `next_action_date` | The only workflow this needs. |
 
@@ -46,17 +46,40 @@ A row is qualified only when all four are true:
 Rows that fail any of the four should be marked `disqualified` rather than worked. An
 unqualified list produces activity, not conversations.
 
-## Primary audience
+## Healthcare audience
 
 Health plans and payers · healthcare services organizations · PE-backed provider platforms ·
 managed-care organizations · large provider organizations · healthcare consultancies and
 system integrators needing senior specialists.
 
-## Primary buyers
+## Healthcare buyers
 
 COO · Chief Transformation Officer · CIO/CTO · SVP/VP Operations · VP Clinical Operations ·
 VP Utilization Management · VP Prior Authorization · VP Care Management · enterprise
 transformation leaders · PE operating partners · consulting-firm practice and delivery leaders.
+
+## Owned demand audience and buyers
+
+Wealth-advisory firms, luxury services, and boutique practices with a specific buyer-inquiry or
+follow-up problem. Start with the managing partner, owner, practice lead, or operations lead
+who controls that workflow. A real inquiry handoff, CRM transition, or documented follow-up
+gap is stronger than assuming that every business needs AI.
+
+Lead with the [RachelOS case](https://tko.solutions/selected-work/from-crm-to-operating-system)
+and map the conversation to `operating-system-build`. For healthcare, lead with the
+[synthetic deliverables](https://tko.solutions/healthcare/readiness-preview) and map to
+`regulatory-implementation-readiness-sprint`. The optional healthcare Execution Assurance
+scope is a continuation discussed after the sprint, not another cold-outreach offer.
+
+## Recording actual conversations
+
+The CSV's example row is a field guide, not a researched account or real pursuit. Replace
+example values only with verified facts; never count a template as pipeline. The historical
+offer examples in that row must not be used as current commercial terms. Use the registry
+slugs above and the reviewed drafts in `docs/COMMERCIAL_OUTREACH_PLAYBOOK.md`.
+
+Keep outreach personal and approved. Record what was sent, the actual response, the next
+step, and the buyer's own question. Do not fabricate accounts, replies, results, or proof.
 
 ## Related
 

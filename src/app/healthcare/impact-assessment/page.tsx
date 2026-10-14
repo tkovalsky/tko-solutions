@@ -212,8 +212,8 @@ export default function HealthcareImpactAssessmentPage() {
         description="Bring one bounded change. TKO will map the authorities, decisions, systems, controls, failure paths, and evidence required to make it executable."
         primaryHref="/contact?offer=regulatory-implementation-readiness-sprint"
         primaryLabel="Discuss a Transformation"
-        secondaryHref="/services/regulatory-implementation-readiness-sprint"
-        secondaryLabel="See the $15,000 Readiness Sprint"
+        secondaryHref="/healthcare/readiness-preview"
+        secondaryLabel="Inspect the Sprint Deliverables"
       />
     </>
   );

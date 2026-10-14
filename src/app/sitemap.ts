@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/services",
     "/healthcare/impact-assessment",
+    "/healthcare/readiness-preview",
     "/private-client-os",
     "/products/ambient-crm",
     "/selected-work",
