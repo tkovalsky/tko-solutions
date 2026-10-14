@@ -1,10 +1,23 @@
 import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { DiagnosticForm } from "./diagnostic-form";
-import { trackConversion } from "@/lib/conversion-events";
-vi.mock("@/lib/conversion-events", () => ({ trackConversion: vi.fn(), getConversionAttribution: () => ({ landingPage: "/", referrer: "", utmSource: "", utmMedium: "", utmCampaign: "" }) }));
-afterEach(() => { cleanup(); vi.clearAllMocks(); });
+import { getConversionAttribution, trackConversion } from "@/lib/conversion-events";
+vi.mock("@/lib/conversion-events", async (importOriginal) => ({ ...await importOriginal<typeof import("@/lib/conversion-events")>(), trackConversion: vi.fn() }));
+afterEach(() => { cleanup(); vi.clearAllMocks(); window.sessionStorage.clear(); window.history.replaceState({}, "", "/"); });
 describe("follow-up pilot intake", () => {
+  it("submits the original campaign and landing path after navigating from proof into readiness intake", () => {
+    window.history.replaceState({}, "", "/healthcare/readiness-preview?utm_source=linkedin&utm_medium=personal&utm_campaign=readiness&email=private@example.com");
+    getConversionAttribution();
+    window.history.replaceState({}, "", "/contact?offer=regulatory-implementation-readiness-sprint");
+    const { container } = render(<DiagnosticForm action={vi.fn()} offerSlug="regulatory-implementation-readiness-sprint" />);
+    const data = new FormData(container.querySelector("form")!);
+    expect(data.get("landingPage")).toBe("/healthcare/readiness-preview");
+    expect(data.get("utmSource")).toBe("linkedin");
+    expect(data.get("utmMedium")).toBe("personal");
+    expect(data.get("utmCampaign")).toBe("readiness");
+    expect(data.get("offer")).toBe("regulatory-implementation-readiness-sprint");
+    expect(data.get("landingPage")).not.toContain("private@example.com");
+  });
   it("carries the readiness offer into an editable, accepted healthcare intake", () => {
     const { container } = render(<DiagnosticForm action={vi.fn()} offerSlug="regulatory-implementation-readiness-sprint" />);
     expect(screen.getByLabelText("Which sounds most like your business?")).toHaveValue("healthcare-readiness");
