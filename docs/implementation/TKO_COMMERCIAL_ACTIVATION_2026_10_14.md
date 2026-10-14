@@ -154,3 +154,7 @@ Select the intended database environment explicitly; do not assume a local envir
 Official integration references: [custom events](https://vercel.com/docs/analytics/custom-events), [reporting configuration](https://vercel.com/docs/analytics/package), and [metrics CLI](https://vercel.com/docs/analytics/accessing-metrics-with-vercel-cli). The exact staged release passed a fresh dependency install, 449 tests across 79 files, lint, and the production build. Reporting-window and aggregate fixtures also passed. Observed production event arrival remains pending.
 
 The read-only local production inquiry report could not run because Vercel intentionally replaces protected secrets with `[SENSITIVE]` during environment download. The resulting local connection failure does not prove a production database failure. Do not use that download as a working database credential. Production persistence must be observed through the intentional form verification and runtime evidence, or a separately available authorized production database connection.
+
+## Outreach tracking cleanup
+
+Removed the example data rows from the target-account and guide-feedback CSVs; the headers remain unchanged. No real account or interaction was removed. The account guidance names both audiences and current offer slugs. The playbook uses the two current engine names and terms, the deliverables preview and cleared case study, and no retired media link. Neither a template row nor a prepared draft counts as pipeline, and no outreach was sent.

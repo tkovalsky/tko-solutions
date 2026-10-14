@@ -73,9 +73,8 @@ scope is a continuation discussed after the sprint, not another cold-outreach of
 
 ## Recording actual conversations
 
-The CSV's example row is a field guide, not a researched account or real pursuit. Replace
-example values only with verified facts; never count a template as pipeline. The historical
-offer examples in that row must not be used as current commercial terms. Use the registry
+The CSV contains its header until a real account is researched. Examples live in this
+guidance, not as fake pipeline rows. Add only verified facts and use the current registry
 slugs above and the reviewed drafts in `docs/COMMERCIAL_OUTREACH_PLAYBOOK.md`.
 
 Keep outreach personal and approved. Record what was sent, the actual response, the next
