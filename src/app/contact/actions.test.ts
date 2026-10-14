@@ -33,10 +33,38 @@ describe("submitDiagnosticIntake", () => {
     const formData = validFormData();
     formData.set("offer", "regulatory-implementation-readiness-sprint");
     formData.set("currentPressure", "healthcare-readiness");
+    formData.delete("revenueBand");
+    formData.set("targetDeadline", "Before the March release decision");
+    formData.set("affectedSystems", "UM, claims, and delegated vendor");
+    formData.set("sponsor", "VP Operations");
+    formData.set("healthcareScope", "One approved transition and its claims handoff");
     mockedPersistInboundLead.mockRejectedValue(new Error("database unavailable"));
     await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=error&offer=regulatory-implementation-readiness-sprint");
-    expect(mockedPersistInboundLead).toHaveBeenCalledWith(expect.objectContaining({ payload: expect.objectContaining({ offer: "regulatory-implementation-readiness-sprint", currentPressure: "healthcare-readiness" }) }));
+    expect(mockedPersistInboundLead).toHaveBeenCalledWith(expect.objectContaining({ payload: expect.objectContaining({ offer: "regulatory-implementation-readiness-sprint", currentPressure: "healthcare-readiness", targetDeadline: "Before the March release decision", affectedSystems: "UM, claims, and delegated vendor", sponsor: "VP Operations", healthcareScope: "One approved transition and its claims handoff" }) }));
+    expect(mockedPersistInboundLead.mock.calls[0][0].payload).not.toHaveProperty("revenueBand");
     expect(mockedNotifyLead).not.toHaveBeenCalled();
+  });
+
+  it("requires readiness scope without letting an unrecognized offer bypass general qualification", async () => {
+    const formData = validFormData();
+    formData.set("offer", "regulatory-implementation-readiness-sprint");
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=invalid&offer=regulatory-implementation-readiness-sprint");
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+    formData.set("offer", "unknown-healthcare-offer");
+    formData.delete("revenueBand");
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=invalid");
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+  });
+
+  it("rejects oversized readiness context before persistence", async () => {
+    const formData = validFormData();
+    formData.set("offer", "regulatory-implementation-readiness-sprint");
+    formData.set("targetDeadline", "To be agreed");
+    formData.set("affectedSystems", "x".repeat(1001));
+    formData.set("sponsor", "VP Operations");
+    formData.set("healthcareScope", "One approved transition and its claims handoff");
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=invalid&offer=regulatory-implementation-readiness-sprint");
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
   });
 
   it("does not echo an unknown offer in the redirect or persisted payload", async () => {

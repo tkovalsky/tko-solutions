@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { trackConversion } from "@/lib/conversion-events";
+import { getConversionAttribution, trackConversion } from "@/lib/conversion-events";
 import { getRachelOSUseCase } from "@/lib/rachelos-use-cases";
 import { getOffer, type OfferSlug } from "@/lib/offers";
 
@@ -52,12 +52,13 @@ export function DiagnosticForm({
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const campaign = getConversionAttribution();
     setAttribution({
-      landingPage: `${window.location.pathname}${window.location.search}`,
-      referrer: document.referrer,
-      utmSource: params.get("utm_source") || "",
-      utmMedium: params.get("utm_medium") || "",
-      utmCampaign: params.get("utm_campaign") || "",
+      landingPage: campaign.landingPage,
+      referrer: campaign.referrer,
+      utmSource: campaign.utmSource,
+      utmMedium: campaign.utmMedium,
+      utmCampaign: campaign.utmCampaign,
       device: window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop",
       ctaLocation: params.get("cta") || "contact_page",
     });
@@ -84,7 +85,7 @@ export function DiagnosticForm({
     const activeTiming = formData.get("timing") !== "exploring";
     const revenueFit = ["5-20m", "20-100m", "100m-plus"].includes(String(formData.get("revenueBand")));
     trackConversion("contact_form_submit_attempt", { ctaLocation: "contact_form" });
-    trackConversion("qualified_intake_indicator", { qualified: activeTiming && (managedFollowUp || revenueFit) });
+    trackConversion("qualified_intake_indicator", { qualified: activeTiming && (healthcare || managedFollowUp || revenueFit) });
   }
 
   function handleInvalid() {
@@ -127,7 +128,7 @@ export function DiagnosticForm({
 
       <Field
         id="transformationContext"
-        label={managedFollowUp ? "Which follow-up keeps slipping?" : "What would you like to fix or build?"}
+        label={managedFollowUp ? "Which follow-up keeps slipping?" : healthcare ? "Which mandate or platform transition needs readiness evidence?" : "What would you like to fix or build?"}
         placeholder={healthcare ? "The approved mandate or platform transition, affected teams and systems, and the readiness question you need answered. Do not include patient or confidential client data." : "The buyer inquiry, follow-up gap, or workflow you want to improve. Include the tools, decision owner, and what should happen next."}
         textarea
         defaultValue={workflowExample?.intake}
@@ -146,15 +147,21 @@ export function DiagnosticForm({
         <option value="other">Something else</option>
       </SelectField>
 
+      {healthcare ? <fieldset className="space-y-6 rounded-lg border border-border bg-surface p-5"><legend className="px-2 font-semibold">Readiness scope</legend>
+        <div className="grid gap-6 md:grid-cols-2"><Field id="targetDeadline" label="Target deadline or decision date" placeholder="For example: release decision in March, or date to be agreed" /><Field id="sponsor" label="Sponsor or accountable role" placeholder="For example: VP Operations; name optional" /></div>
+        <Field id="affectedSystems" label="Affected systems and teams" placeholder="For example: intake, UM platform, claims adapter, and delegated vendor" textarea />
+        <Field id="healthcareScope" label="Scope and the decision you need" placeholder="One approved change, the population or workflow in scope, and the decision your sponsor needs. Unknown boundaries can be stated explicitly." textarea />
+      </fieldset> : null}
+
       <div className="grid gap-6 md:grid-cols-2">
-        <SelectField id="revenueBand" label={managedFollowUp ? "Annual commission revenue (not property sales volume)" : "Annual revenue"}>
+        {!healthcare ? <SelectField id="revenueBand" label={managedFollowUp ? "Annual commission revenue (not property sales volume)" : "Annual revenue"}>
           <option value="">Select one</option>
           <option value="under-2m">Under $2M</option>
           <option value="2-5m">$2M–$5M</option>
           <option value="5-20m">$5M–$20M</option>
           <option value="20-100m">$20M–$100M</option>
           <option value="100m-plus">Over $100M</option>
-        </SelectField>
+        </SelectField> : null}
 
         <SelectField id="timing" label="When do you want this fixed?">
           <option value="">Select one</option>

@@ -2,7 +2,7 @@ import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { DiagnosticForm } from "./diagnostic-form";
 import { trackConversion } from "@/lib/conversion-events";
-vi.mock("@/lib/conversion-events", () => ({ trackConversion: vi.fn() }));
+vi.mock("@/lib/conversion-events", () => ({ trackConversion: vi.fn(), getConversionAttribution: () => ({ landingPage: "/", referrer: "", utmSource: "", utmMedium: "", utmCampaign: "" }) }));
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 describe("follow-up pilot intake", () => {
   it("carries the readiness offer into an editable, accepted healthcare intake", () => {
@@ -11,7 +11,12 @@ describe("follow-up pilot intake", () => {
     const data = new FormData(container.querySelector("form")!);
     expect(data.get("offer")).toBe("regulatory-implementation-readiness-sprint");
     expect(data.get("source")).toBe("commercial_offer_regulatory-implementation-readiness-sprint");
-    expect(screen.getByLabelText("What would you like to fix or build?")).toHaveValue("");
+    expect(screen.getByLabelText("Which mandate or platform transition needs readiness evidence?")).toHaveValue("");
+    expect(screen.queryByLabelText("Annual revenue")).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Target deadline or decision date")).toBeRequired();
+    expect(screen.getByLabelText("Sponsor or accountable role")).toBeRequired();
+    expect(screen.getByLabelText("Affected systems and teams")).toBeRequired();
+    expect(screen.getByLabelText("Scope and the decision you need")).toBeRequired();
   });
   it("keeps the selected example in submitted context while allowing the visitor to edit it", () => {
     const { container } = render(<DiagnosticForm action={vi.fn()} useCaseId="human-controlled-ai" />);

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   conversionEventNames,
   trackConversion,
+  getConversionAttribution,
   type ConversionEventName,
 } from "@/lib/conversion-events";
 
@@ -12,6 +13,8 @@ export function ConversionTracker() {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (pathname.startsWith("/tif")) return;
+    getConversionAttribution();
     if (pathname.startsWith("/services/") && pathname.split("/").filter(Boolean).length === 2) {
       trackConversion("service_view", { referencedService: pathname.split("/").pop() });
     }
@@ -21,6 +24,7 @@ export function ConversionTracker() {
   }, [pathname]);
 
   useEffect(() => {
+    if (pathname.startsWith("/tif")) return;
     const handleClick = (event: MouseEvent) => {
       const target = event.target instanceof Element
         ? event.target.closest<HTMLElement>("[data-conversion-event]")
@@ -40,7 +44,7 @@ export function ConversionTracker() {
 
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
-  }, []);
+  }, [pathname]);
 
   return null;
 }

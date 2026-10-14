@@ -44,7 +44,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             <a href={site.scheduling} target="_blank" rel="noreferrer" data-conversion-event="primary_cta_click" data-cta-location="contact_scheduling" data-cta-label="Pick a time" className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 border border-primary bg-primary px-5 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:border-primary-dark hover:bg-primary-dark">
               <CalendarDays className="size-4" aria-hidden /> Pick a time
             </a>
-          ) : null}
+          ) : <a href={`mailto:${site.email}?subject=${encodeURIComponent(selectedOffer ? `Schedule a conversation: ${selectedOffer.name}` : "Schedule a TKO project conversation")}`} data-conversion-event="email_link_click" data-cta-location="contact_email_scheduling" data-cta-label="Arrange a time by email" className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 border border-primary bg-primary px-5 text-sm font-semibold text-white hover:bg-primary-dark"><CalendarDays className="size-4" aria-hidden />Arrange a time by email</a>}
         </div>
         <div className="mt-10 grid gap-x-12 gap-y-8 lg:grid-cols-[0.7fr_1.3fr]">
           <aside>

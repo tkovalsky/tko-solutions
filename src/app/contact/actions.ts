@@ -23,7 +23,11 @@ const intakeSchema = z.object({
     "knowledge-risk",
     "other",
   ]),
-  revenueBand: z.enum(["under-2m", "2-5m", "5-20m", "20-100m", "100m-plus"]),
+  revenueBand: z.enum(["under-2m", "2-5m", "5-20m", "20-100m", "100m-plus"]).optional(),
+  targetDeadline: z.string().min(2).max(200).optional(),
+  affectedSystems: z.string().min(2).max(1000).optional(),
+  sponsor: z.string().min(2).max(200).optional(),
+  healthcareScope: z.string().min(10).max(1000).optional(),
   timing: z.enum(["now", "30", "31-90", "exploring"]),
   privacyConsent: z.literal(true),
   message: z.string().max(2000).optional(),
@@ -39,6 +43,7 @@ const intakeSchema = z.object({
 export async function submitDiagnosticIntake(formData: FormData) {
   const requestedOffer = getFormString(formData, "offer") ?? "";
   const selectedOffer = requestedOffer === "managed-follow-up" || isOfferSlug(requestedOffer) ? requestedOffer : undefined;
+  const healthcare = selectedOffer === "regulatory-implementation-readiness-sprint";
   const offer = selectedOffer ? `&offer=${selectedOffer}` : "";
   const contactResult = (status: string) => `/contact?status=${status}${offer}`;
   if (getFormString(formData, "website")) {
@@ -52,7 +57,11 @@ export async function submitDiagnosticIntake(formData: FormData) {
     role: getFormString(formData, "role"),
     transformationContext: formData.get("transformationContext"),
     currentPressure: formData.get("currentPressure"),
-    revenueBand: formData.get("revenueBand"),
+    revenueBand: healthcare ? undefined : getFormString(formData, "revenueBand"),
+    targetDeadline: healthcare ? getFormString(formData, "targetDeadline") : undefined,
+    affectedSystems: healthcare ? getFormString(formData, "affectedSystems") : undefined,
+    sponsor: healthcare ? getFormString(formData, "sponsor") : undefined,
+    healthcareScope: healthcare ? getFormString(formData, "healthcareScope") : undefined,
     timing: formData.get("timing"),
     privacyConsent: formData.get("privacyConsent") === "on",
     message: getFormString(formData, "message"),
@@ -65,7 +74,9 @@ export async function submitDiagnosticIntake(formData: FormData) {
     ctaLocation: getFormString(formData, "ctaLocation"),
   });
 
-  if (!parsed.success) {
+  if (!parsed.success || (healthcare
+    ? !parsed.data.targetDeadline || !parsed.data.affectedSystems || !parsed.data.sponsor || !parsed.data.healthcareScope
+    : !parsed.data.revenueBand)) {
     redirect(contactResult("invalid"));
   }
 

@@ -29,6 +29,8 @@ export type ConversionEvent = ConversionProperties & {
   timestamp: string;
   referralSource?: string;
   utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
   deviceCategory: "mobile" | "tablet" | "desktop";
 };
 
@@ -43,14 +45,17 @@ export function trackConversion(
   event: ConversionEventName,
   properties: ConversionProperties = {},
 ) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || window.location.pathname.startsWith("/tif")) return;
+  const attribution = getConversionAttribution();
 
   const detail: ConversionEvent = {
     event,
     pagePath: window.location.pathname,
     timestamp: new Date().toISOString(),
-    referralSource: safeReferrerHost(document.referrer),
-    utmSource: safeUtmSource(window.location.search),
+    referralSource: attribution.referrer || undefined,
+    utmSource: attribution.utmSource || undefined,
+    utmMedium: attribution.utmMedium || undefined,
+    utmCampaign: attribution.utmCampaign || undefined,
     deviceCategory:
       window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop",
     ...sanitizeEventProperties(properties),
@@ -85,7 +90,44 @@ function safeReferrerHost(referrer: string) {
   }
 }
 
-function safeUtmSource(search: string) {
-  const value = new URLSearchParams(search).get("utm_source");
-  return value ? safeToken(value) : undefined;
+const attributionKey = "tko:attribution:v1";
+const attributionLifetime = 30 * 60 * 1000;
+
+export type ConversionAttribution = {
+  landingPage: string;
+  referrer: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+};
+
+function campaignToken(value: unknown): string {
+  return typeof value === "string" && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(value) ? value : "";
+}
+
+function landingPath(value: unknown): string {
+  return typeof value === "string" && /^\/[a-zA-Z0-9/_-]{0,199}$/.test(value) && !value.startsWith("/tif") ? value : "/";
+}
+
+// First public landing context survives navigation in this tab for 30 minutes.
+// Store only the path, referrer host, and constrained campaign labels, never raw URLs.
+export function getConversionAttribution(): ConversionAttribution {
+  if (typeof window === "undefined") return { landingPage: "/", referrer: "", utmSource: "", utmMedium: "", utmCampaign: "" };
+  try {
+    const stored = JSON.parse(window.sessionStorage.getItem(attributionKey) ?? "null");
+    if (stored && typeof stored.expiresAt === "number" && stored.expiresAt > Date.now() && stored.expiresAt <= Date.now() + attributionLifetime) {
+      return { landingPage: landingPath(stored.landingPage), referrer: safeReferrerHost(`https://${stored.referrer ?? ""}`) ?? "", utmSource: campaignToken(stored.utmSource), utmMedium: campaignToken(stored.utmMedium), utmCampaign: campaignToken(stored.utmCampaign) };
+    }
+  } catch { /* Storage may be disabled. The inquiry must still work. */ }
+  const params = new URLSearchParams(window.location.search);
+  const context = {
+    landingPage: landingPath(window.location.pathname),
+    referrer: safeReferrerHost(document.referrer) ?? "",
+    utmSource: campaignToken(params.get("utm_source")),
+    utmMedium: campaignToken(params.get("utm_medium")),
+    utmCampaign: campaignToken(params.get("utm_campaign")),
+  };
+  try { window.sessionStorage.setItem(attributionKey, JSON.stringify({ ...context, expiresAt: Date.now() + attributionLifetime })); }
+  catch { /* No persistent storage is required for submitting an inquiry. */ }
+  return context;
 }
