@@ -2,10 +2,12 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 import {
   conversionEventNames,
   trackConversion,
   getConversionAttribution,
+  sanitizeAnalyticsEvent,
   type ConversionEventName,
 } from "@/lib/conversion-events";
 
@@ -46,5 +48,5 @@ export function ConversionTracker() {
     return () => document.removeEventListener("click", handleClick);
   }, [pathname]);
 
-  return null;
+  return pathname.startsWith("/tif") ? null : <Analytics beforeSend={sanitizeAnalyticsEvent} />;
 }

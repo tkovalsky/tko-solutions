@@ -1,5 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getConversionAttribution, sanitizeEventProperties, trackConversion } from "@/lib/conversion-events";
+import { track } from "@vercel/analytics";
+import { getConversionAttribution, sanitizeAnalyticsEvent, sanitizeEventProperties, trackConversion } from "@/lib/conversion-events";
+
+vi.mock("@vercel/analytics", () => ({ track: vi.fn() }));
 
 describe("conversion events", () => {
   beforeEach(() => {
@@ -7,6 +10,7 @@ describe("conversion events", () => {
     window.__tkoConversionEvents = [];
     window.dataLayer = [];
     window.sessionStorage.clear();
+    vi.mocked(track).mockReset();
   });
 
   it("records only the path and allow-listed context", () => {
@@ -24,6 +28,8 @@ describe("conversion events", () => {
       referencedService: "diagnostic",
     });
     expect(JSON.stringify(window.__tkoConversionEvents)).not.toContain("private@example.com");
+    expect(track).toHaveBeenCalledWith("primary_cta_click", expect.objectContaining({ pagePath: "/contact", utmSource: "referral" }));
+    expect(JSON.stringify(vi.mocked(track).mock.calls)).not.toContain("private@example.com");
   });
 
   it("keeps qualified intake as a boolean without form values", () => {
@@ -58,5 +64,18 @@ describe("conversion events", () => {
     trackConversion("primary_cta_click");
     expect(window.__tkoConversionEvents).toEqual([]);
     expect(window.dataLayer).toEqual([]);
+    expect(track).not.toHaveBeenCalled();
+  });
+
+  it("redacts query strings and fragments and excludes private workspace URLs at the reporting boundary", () => {
+    expect(sanitizeAnalyticsEvent({ type: "pageview", url: "https://tko.solutions/contact?email=private@example.com#private" })).toEqual({ type: "pageview", url: "https://tko.solutions/contact" });
+    expect(sanitizeAnalyticsEvent({ type: "event", url: "https://tko.solutions/tif/opportunities/private-id" })).toBeNull();
+    expect(sanitizeAnalyticsEvent({ type: "event", url: "not a URL" })).toBeNull();
+  });
+
+  it("keeps inquiry interactions working if reporting fails", () => {
+    vi.mocked(track).mockImplementation(() => { throw new Error("analytics blocked"); });
+    expect(() => trackConversion("contact_form_start")).not.toThrow();
+    expect(window.__tkoConversionEvents).toHaveLength(1);
   });
 });

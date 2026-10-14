@@ -65,7 +65,8 @@ export function DiagnosticForm({
   }, []);
 
   useEffect(() => {
-    if (status === "submitted") trackConversion("contact_form_submit_success");
+    // A URL status is a viewed result, not independent proof of a stored lead.
+    if (status === "submitted" || status === "notification-error") trackConversion("contact_form_result_view");
     if (status === "invalid") {
       trackConversion("contact_form_submit_error", { errorType: "server_validation" });
     }

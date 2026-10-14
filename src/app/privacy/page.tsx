@@ -35,7 +35,7 @@ export default function PrivacyPage() {
       />
       <Section>
         <div className="prose-tko">
-          <p><strong>Last updated:</strong> July 23, 2026</p>
+          <p><strong>Last updated:</strong> October 14, 2026</p>
 
           <h2>Information TKO collects</h2>
           <p>
@@ -68,6 +68,25 @@ export default function PrivacyPage() {
             TKO uses service providers for website hosting, database storage, and
             delivery of inquiry notifications. They process information only to
             provide those services. TKO does not sell submitted personal information.
+          </p>
+
+          <h2>Website measurement</h2>
+          <p>
+            TKO uses Vercel Web Analytics to understand visits to public pages and
+            actions such as viewing an offer, opening email scheduling, and starting
+            an inquiry. Event properties contain page paths, constrained campaign
+            labels, device category, and the action taken. TKO does not include form
+            answers, names, email addresses, or private workspace paths in those
+            event properties. Page URLs sent through this integration exclude query
+            strings and fragments.
+          </p>
+          <p>
+            Within a browser tab, the site retains the initial public landing path,
+            referring hostname, and constrained campaign labels for up to 30 minutes
+            in session storage so an inquiry can retain its source as you navigate.
+            Inquiry information submitted through the form is stored separately from
+            website analytics. A viewed confirmation page is measured as a page result,
+            not treated as independent proof of a qualified sales opportunity.
           </p>
 
           <h2>Retention and security</h2>

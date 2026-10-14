@@ -1,3 +1,5 @@
+import { track, type BeforeSendEvent } from "@vercel/analytics";
+
 export const conversionEventNames = [
   "service_view",
   "case_study_view",
@@ -5,7 +7,7 @@ export const conversionEventNames = [
   "secondary_cta_click",
   "contact_form_start",
   "contact_form_submit_attempt",
-  "contact_form_submit_success",
+  "contact_form_result_view",
   "contact_form_submit_error",
   "email_link_click",
   "linkedin_click",
@@ -64,6 +66,19 @@ export function trackConversion(
   window.__tkoConversionEvents = [...(window.__tkoConversionEvents ?? []).slice(-49), detail];
   window.dispatchEvent(new CustomEvent("tko:conversion", { detail }));
   window.dataLayer?.push({ ...detail });
+  // Analytics must never interrupt navigation or inquiry submission.
+  try { track(event, { ...detail }); } catch { /* The local event remains inspectable. */ }
+}
+
+export function sanitizeAnalyticsEvent(event: BeforeSendEvent): BeforeSendEvent | null {
+  try {
+    const url = new URL(event.url);
+    if (url.pathname.startsWith("/tif")) return null;
+    url.pathname = landingPath(url.pathname);
+    url.search = "";
+    url.hash = "";
+    return { ...event, url: url.toString() };
+  } catch { return null; }
 }
 
 export function sanitizeEventProperties(properties: ConversionProperties) {

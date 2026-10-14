@@ -130,6 +130,27 @@ Rollback only the relevant phase's source and configuration. Preserve other work
 
 ## Completion evidence
 
-Phase A passed all 442 tests across 79 files, lint, and the production build. The local verifier checked 54 public targets including the new route, internal links, media, fragments, and expected missing captures with zero failures. Desktop and 390-pixel browser checks confirmed the preview, five deliverables, sponsor-readout anchor, scrollable tables without page overflow, and the Execution Assurance section. Screenshots are held privately. The final pricing presentation also passed the incremental production build. Phase B and actual Todd-led recordings remain open.
+Phase A passed all 442 tests across 79 files, lint, and the production build. The local verifier checked 54 public targets including the new route, internal links, media, fragments, and expected missing captures with zero failures. Desktop and 390-pixel browser checks confirmed the preview, five deliverables, sponsor-readout anchor, scrollable tables without page overflow, and the Execution Assurance section. Screenshots are held privately. The final pricing presentation also passed the incremental production build. Healthcare intake and first-landing attribution passed 447 tests across 79 files, lint, and build. The healthcare path requires the mandate/transition, deadline, systems, sponsor role, and scope; company revenue remains required only on the other intake paths. Reporting and actual Todd-led recordings remain open.
 
 Production environment inventory confirmed no Resend API key, verified sender setting, scheduling URL, or Google verification setting. Local configuration also lacks a Resend key. Notification delivery cannot be established until the sender credentials are configured. Todd has been asked to supply a booking URL or choose email scheduling, provide recordings or record from these scripts, and configure the notification credentials without sharing secrets in chat.
+
+## Vercel reporting integration
+
+The existing Vercel team is Pro and the project already has a Web Analytics ID. The pre-release custom-event query returned no events. The integration uses the official `@vercel/analytics` 2.0.1 package and the existing project, with no new account or plan change. The release dependency patch is generated from the committed manifest and lockfile so unrelated local development dependencies remain excluded.
+
+The shared conversion emitter forwards the existing allowlisted events to Vercel. A reporting-boundary filter strips URL queries/fragments and drops private workspace URLs. Public-page context and campaign labels contain no form answers. A viewed submission result is now `contact_form_result_view`; it is not a verified stored submission and cannot be used as a sales conversion count. The client qualification event is a heuristic, not a qualified opportunity. Privacy wording describes the integration and 30-minute tab attribution.
+
+Validated inquiry totals are available separately through the read-only `scripts/report-commercial-inquiries.mjs`, using the existing database and a selected 1–365 day window. It returns aggregate counts only, grouped by an allowlisted offer. It counts unique contacts by their latest submission, excludes labeled release verification, and treats a notification as current only when its accepted timestamp is at least the latest submitted timestamp. Provider acceptance remains distinct from mailbox receipt. It never prints names, email addresses, submitted context, database URLs, or credentials.
+
+Reporting commands, from the project checkout:
+
+```sh
+vercel metrics vercel.analytics.event.count --group-by eventName --since 7d --project tko-solutions --prod --json
+node --env-file=.env.local scripts/report-commercial-inquiries.mjs 30
+```
+
+Select the intended database environment explicitly; do not assume a local environment points to production. Use analytics for offer views, CTA actions, form starts, and attempts. Use stored-inquiry counts, actual conversations, proposals, and wins for the commercial funnel.
+
+Official integration references: [custom events](https://vercel.com/docs/analytics/custom-events), [reporting configuration](https://vercel.com/docs/analytics/package), and [metrics CLI](https://vercel.com/docs/analytics/accessing-metrics-with-vercel-cli). The exact staged release passed a fresh dependency install, 449 tests across 79 files, lint, and the production build. Reporting-window and aggregate fixtures also passed. Observed production event arrival remains pending.
+
+The read-only local production inquiry report could not run because Vercel intentionally replaces protected secrets with `[SENSITIVE]` during environment download. The resulting local connection failure does not prove a production database failure. Do not use that download as a working database credential. Production persistence must be observed through the intentional form verification and runtime evidence, or a separately available authorized production database connection.
