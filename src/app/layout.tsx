@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "TKO Solutions | Workflow Systems, Automation & Practical AI",
+    default: "TKO Solutions | Healthcare Readiness & Owned Demand",
     template: "%s | TKO Solutions",
   },
   description: site.description,
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     type: "website",
     url: absoluteUrl("/"),
     siteName: site.name,
-    title: "TKO Solutions | Workflow Systems, Automation & Practical AI",
+    title: "TKO Solutions | Healthcare Readiness & Owned Demand",
     description: site.description,
-    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions: business operating systems for growing companies." }],
+    images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions: healthcare readiness, owned demand, and accountable delivery with Todd Kovalsky." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TKO Solutions | Workflow Systems, Automation & Practical AI",
+    title: "TKO Solutions | Healthcare Readiness & Owned Demand",
     description: site.description,
     images: [site.socialImage],
   },

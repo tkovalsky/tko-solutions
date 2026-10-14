@@ -5,7 +5,7 @@ description: >-
   workflow, and claims decisions—and where AI can and cannot help.
 business_unit: healthcare
 voice: tko-advisory
-cluster: systems-that-dont-drive-action
+cluster: healthcare-readiness
 primary_buyer: >-
   Health-plan operations, utilization-management, provider-experience, transformation,
   and technology executives responsible for prior-authorization modernization.
@@ -49,8 +49,8 @@ diagnostic_questions:
 recommended_action: >-
   Reconstruct one bounded change as an effective-dated decision context, trace it through every
   authority and downstream consumer, and define activation and burden measures before expanding.
-offer: constraint-diagnostic
-cta: "Discuss a Transformation"
+offer: regulatory-implementation-readiness-sprint
+cta: "Discuss the Readiness Sprint"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-09-03"
@@ -177,7 +177,7 @@ That slice is small enough to build and rich enough to expose the real transform
 
 You can [run the synthetic Healthcare Change Execution Assessment](/healthcare/impact-assessment) and inspect the current decision path. The rules are illustrative and process no patient data. The point is not the sample answer; it is whether your real organization can identify the authoritative source, effective rule, accountable owner, failure path, and downstream evidence for each step.
 
-For the broader operating pattern, see [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem), the [Healthcare Transformation Practice](/healthcare), and [selected healthcare experience](/selected-work/prior-authorization-modernization).
+For the broader operating pattern, see [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem), the [synthetic healthcare decision lab](/healthcare/impact-assessment), and [Todd’s verified operating background](/founder).
 
 ## Public Sources and Claim Boundaries
 

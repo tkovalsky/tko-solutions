@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AuthorizationDecisionLab } from "@/components/healthcare/authorization-decision-lab";
-import { VideoEmbed } from "@/components/media/video-embed";
+import { ProofMediaSlots } from "@/components/site/proof-media-slots";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
@@ -79,8 +79,8 @@ export default function HealthcareImpactAssessmentPage() {
         description="This assessment makes one prior-authorization modernization scenario inspectable across member eligibility, benefit coverage, procedure policy, provider qualification, UM routing, and the claims control that survives after clinical review is removed."
         primaryHref="#decision-lab"
         primaryLabel="Run the Scenario"
-        secondaryHref="/services"
-        secondaryLabel="Explore Services"
+        secondaryHref="/services/regulatory-implementation-readiness-sprint"
+        secondaryLabel="See the $15,000 Readiness Sprint"
       />
 
       <Section className="!py-12 md:!py-16">
@@ -111,10 +111,7 @@ export default function HealthcareImpactAssessmentPage() {
 
       <Section id="decision-lab" className="bg-surface !py-14 md:!py-20">
         <div className="mb-10">
-          <VideoEmbed
-            title="Live Policy Trace: CMS-0057-F Prior Auth Waiver Across 6 Authorities"
-            caption="Todd Kovalsky demonstrates how removing clinical review requires coordinating eligibility, benefits, procedure rules, provider qualification, and downstream claims controls without PHI."
-          />
+          <ProofMediaSlots kind="healthcare" />
         </div>
         <AuthorizationDecisionLab />
         <p className="mt-5 max-w-[90ch] text-sm leading-6 text-muted">
@@ -164,7 +161,7 @@ export default function HealthcareImpactAssessmentPage() {
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
           <SectionHeader
             eyebrow="Impact, not activity"
-            title="The prototype makes a decision. The engagement proves whether it changed the system."
+            title="The prototype exposes a decision. The sprint defines the evidence a release needs."
             description="No administrative-burden or outcome claim is implied by the lab. Those claims require a baseline, activation evidence, and observed post-change behavior."
           />
           <div className="overflow-x-auto">
@@ -213,10 +210,10 @@ export default function HealthcareImpactAssessmentPage() {
       <CtaBand
         title="Which healthcare commitment is getting lost between policy and production?"
         description="Bring one bounded change. TKO will map the authorities, decisions, systems, controls, failure paths, and evidence required to make it executable."
-        primaryHref="/contact"
+        primaryHref="/contact?offer=regulatory-implementation-readiness-sprint"
         primaryLabel="Discuss a Transformation"
-        secondaryHref="/services/transformation-diagnostic"
-        secondaryLabel="See the Diagnostic"
+        secondaryHref="/services/regulatory-implementation-readiness-sprint"
+        secondaryLabel="See the $15,000 Readiness Sprint"
       />
     </>
   );

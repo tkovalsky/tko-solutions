@@ -134,12 +134,12 @@ An organization that has resolved a human API dependency can do four things it c
 - State who decides what, at which tier, and on what evidence, in writing.
 - Route an exception to a role rather than to a name.
 - Reconstruct a significant past decision without asking the person who made it.
-- Absorb the loss of any single operator without a step change in throughput or quality.
+- Give an authorized colleague enough current context to take the next step and identify what still needs expert judgment.
 
 None of that requires removing human judgment. It requires making the model around the judgment explicit enough to be governed, delegated, and audited.
 
 ---
 
-**Where this pattern is driving cost in a healthcare workflow**, the [Executive Diagnostic](/services/executive-diagnostic) establishes where the dependency sits, what it affects, and what should change first.
+**Where this pattern is driving cost in a healthcare workflow**, the [Enterprise Transformation & Readiness Sprint](/services/regulatory-implementation-readiness-sprint) establishes where the dependency sits, what it affects, and what should change first.
 
 For the healthcare-specific version of this problem, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem).

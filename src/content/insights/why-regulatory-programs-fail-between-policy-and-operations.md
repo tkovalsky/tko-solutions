@@ -5,7 +5,7 @@ description: >-
   unowned translation from policy to workflow, systems, controls, and evidence.
 business_unit: healthcare
 voice: tko-advisory
-cluster: systems-that-dont-drive-action
+cluster: healthcare-readiness
 primary_buyer: >-
   COO, CIO, Chief Transformation Officer, compliance executive, and regulatory-program sponsor
   at a health plan responsible for a cross-functional implementation.
@@ -45,8 +45,8 @@ diagnostic_questions:
 recommended_action: >-
   Establish a bounded obligation-to-evidence map for one high-consequence regulatory change,
   convert the gaps into owned backlog items, and test complete scenarios before expanding scope.
-offer: constraint-diagnostic
-cta: "Discuss implementation readiness"
+offer: regulatory-implementation-readiness-sprint
+cta: "Discuss the Readiness Sprint"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-09-03"
@@ -128,3 +128,6 @@ If the answer to any question is “we have a project plan,” the program has d
 Start with one bounded, high-consequence obligation. Build the obligation register. Map the capability, workflow, systems, controls, owners, and evidence. Expose gaps. Convert them into an executable backlog. Test the scenarios people already know will occur.
 
 The framework above is implementation-readiness guidance, not legal or regulatory advice. Regulatory interpretation, compliance determinations, clinical policy, and accountable delivery decisions remain with the organization’s authorized owners.
+
+
+For one approved healthcare obligation or platform transition, the [Enterprise Transformation & Readiness Sprint](/services/regulatory-implementation-readiness-sprint) produces the obligation register, impact map, owners, implementation backlog, and readiness readout. It is $15,000 fixed over 3–4 weeks. Inspect the [synthetic decision lab](/healthcare/impact-assessment) to see the decision decomposition before discussing your program.

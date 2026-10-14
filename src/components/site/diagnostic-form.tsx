@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { trackConversion } from "@/lib/conversion-events";
 import { getRachelOSUseCase } from "@/lib/rachelos-use-cases";
+import { getOffer, type OfferSlug } from "@/lib/offers";
 
 const controlClass =
   "mt-2 w-full rounded-md border border-[color:var(--input-border)] bg-white px-4 text-base text-foreground transition-colors placeholder:text-[color:var(--input-border-hover)] hover:border-[color:var(--input-border-hover)] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
@@ -34,13 +35,17 @@ export function DiagnosticForm({
   status,
   managedFollowUp = false,
   useCaseId,
+  offerSlug,
 }: {
   action: (formData: FormData) => void | Promise<void>;
   status?: string;
   managedFollowUp?: boolean;
   useCaseId?: string;
+  offerSlug?: OfferSlug;
 }) {
   const workflowExample = managedFollowUp ? undefined : getRachelOSUseCase(useCaseId);
+  const selectedOffer = managedFollowUp || workflowExample ? undefined : getOffer(offerSlug ?? "");
+  const healthcare = selectedOffer?.slug === "regulatory-implementation-readiness-sprint";
   const [attribution, setAttribution] = useState(defaultAttribution);
   const started = useRef(false);
   const validationErrorTracked = useRef(false);
@@ -96,8 +101,9 @@ export function DiagnosticForm({
       onSubmit={handleSubmit}
       onInvalidCapture={handleInvalid}
     >
-      <input type="hidden" name="source" value={managedFollowUp ? "managed_follow_up_pilot" : workflowExample ? `rachelos_use_case_${workflowExample.id}` : "diagnostic_fit_call"} />
+      <input type="hidden" name="source" value={managedFollowUp ? "managed_follow_up_pilot" : workflowExample ? `rachelos_use_case_${workflowExample.id}` : selectedOffer ? `commercial_offer_${selectedOffer.slug}` : "diagnostic_fit_call"} />
       {managedFollowUp ? <input type="hidden" name="offer" value="managed-follow-up" /> : null}
+      {selectedOffer ? <input type="hidden" name="offer" value={selectedOffer.slug} /> : null}
       {Object.entries(attribution).map(([name, value]) => (
         <input key={name} type="hidden" name={name} value={value} />
       ))}
@@ -122,13 +128,14 @@ export function DiagnosticForm({
       <Field
         id="transformationContext"
         label={managedFollowUp ? "Which follow-up keeps slipping?" : "What would you like to fix or build?"}
-        placeholder="A workflow that keeps breaking, follow-up that depends on memory, or an AI idea you want connected to the way your team works. A few sentences are enough."
+        placeholder={healthcare ? "The approved mandate or platform transition, affected teams and systems, and the readiness question you need answered. Do not include patient or confidential client data." : "The buyer inquiry, follow-up gap, or workflow you want to improve. Include the tools, decision owner, and what should happen next."}
         textarea
         defaultValue={workflowExample?.intake}
       />
 
-      <SelectField key={workflowExample?.id ?? "general"} id="currentPressure" label="Which sounds most like your business?" defaultValue={workflowExample?.pressure}>
+      <SelectField key={workflowExample?.id ?? selectedOffer?.slug ?? "general"} id="currentPressure" label="Which sounds most like your business?" defaultValue={workflowExample?.pressure ?? (healthcare ? "healthcare-readiness" : undefined)}>
         <option value="">Select one</option>
+        <option value="healthcare-readiness">A healthcare mandate or platform transition needs readiness evidence</option>
         <option value="leads-follow-up">Leads come in, but follow-up is inconsistent</option>
         <option value="owner-bottleneck">Everything routes through the owner or COO</option>
         <option value="crm-trust">We have a CRM, but nobody trusts it or uses it well</option>
@@ -175,7 +182,7 @@ export function DiagnosticForm({
       />
 
       <div className="rounded-md border border-border bg-surface p-4 text-sm leading-6 text-muted">
-        Please don&apos;t include passwords, customer personal data, or other sensitive
+        Please don&apos;t include passwords, patient information, customer personal data, or other sensitive
         information. Details can be shared safely once we agree to work together.
       </div>
 

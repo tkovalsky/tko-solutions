@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
-import { VideoEmbed } from "@/components/media/video-embed";
+import { ProofMediaSlots } from "@/components/site/proof-media-slots";
 import { RachelOSUseCaseExplorer } from "@/components/site/rachelos-use-case-explorer";
 import { Section } from "@/components/ui/section";
 import { caseStudies, getCaseStudy, leadParagraph } from "@/lib/content";
@@ -78,10 +78,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
       {isRachelOS ? (
         <Section className="!py-10 bg-midnight text-white">
           <div className="mx-auto max-w-4xl">
-            <VideoEmbed
-              title="RachelOS Architecture: Why We Switched Off Autonomous AI"
-              caption="Todd Kovalsky demonstrates the exact-message human approval cockpit, fail-closed lead pipeline, and the computed relationship graph across 2,400 commits."
-            />
+            <ProofMediaSlots kind="all" />
           </div>
         </Section>
       ) : null}
@@ -129,16 +126,16 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
               Inside the Production System
             </h2>
             <p className="mt-4 text-base leading-7 text-muted">
-              RachelOS is a single-operator production proof asset with zero autonomous outbound
-              sends. These redacted snapshots show the human approval cockpit, priority queue,
-              relationship memory, and system health. They are not live telemetry.
+              RachelOS is an independent, single-operator system. These snapshots show its
+              operator review and action queue. They do not display an exact-message approval
+              or a live model failure; those mechanisms require separate demonstrations.
             </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {[
               {
-                title: "Exact-Message Human Approval",
-                desc: "Nothing sends without authenticated human signoff. Code prevents autonomous model sends.",
+                title: "Operator Review",
+                desc: "Recorded context, open questions, and operator controls. The image does not display a message approval.",
                 img: "/proof/rachelos/human-approval.png",
               },
               {
@@ -146,16 +143,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
                 desc: "One ranked list of who needs attention, recomputed deterministically on every inbound signal.",
                 img: "/proof/rachelos/canonical-queue.png",
               },
-              {
-                title: "Relationship Memory Detail",
-                desc: "Persistent timeline, known facts, and open questions held in code, not in one person's head.",
-                img: "/proof/rachelos/relationship-memory.png",
-              },
-              {
-                title: "System Health & Daily Runs",
-                desc: "Observable cron-job runs, error classification, and provider rate-limit telemetry.",
-                img: "/proof/rachelos/system-health.png",
-              },
+
             ].map((screen) => (
               <article
                 key={screen.title}
@@ -166,7 +154,7 @@ export default async function SelectedWorkDetailPage({ params }: Params) {
                     src={screen.img}
                     alt={screen.title}
                     fill
-                    className="object-cover object-top"
+                    className="object-contain object-top"
                     sizes="(min-width: 1024px) 50vw, 100vw"
                   />
                 </div>

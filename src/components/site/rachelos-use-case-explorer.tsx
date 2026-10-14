@@ -8,7 +8,16 @@ import { LinkButton } from "@/components/ui/button";
 import { getRachelOSUseCase, rachelosUseCases, rachelosUseCaseContactHref } from "@/lib/rachelos-use-cases";
 import { cn } from "@/lib/utils";
 
+const architectureProof = [
+  { id: "relationship", title: "Computed Relationship Context", summary: "Recorded facts and activity support a current per-relationship view. A current relationship view connects recorded facts, activity, and unresolved questions.", flow: "Recorded facts → relationship context → visible gap → operator action", image: null, alt: "", boundary: "Architecture explanation backed by RachelOS relationship-memory code; this is not a live graph query." },
+  { id: "pipeline", title: "Lead Pipeline Controls", summary: "Validate inputs, surface missing information, and keep exceptions visible before assisted work proceeds.", flow: "Input → validation → visible exception → accountable review", image: null, alt: "", boundary: "Input validation and visible exception handling are distinct from provider telemetry. This diagram explains the control path." },
+  { id: "approval", title: "Exact-Message Human Approval Gate", summary: "AI-assisted outreach requires review of the exact message before sending. The image below shows a separate operator context-review surface.", flow: "Recorded context → proposed draft → exact-message review → authorized send", image: "/proof/rachelos/human-approval.png", alt: "RachelOS operator context review with fictional contact labels; no message approval is shown", boundary: "Approval mechanism is backed by RachelOS code. This image does not demonstrate approval, and this public walkthrough sends no messages." },
+  { id: "knowledge", title: "Structured Knowledge Capture", summary: "Domain guides provide reusable buyer context. Record their sources and connect relevant material to a human-reviewed recommendation.", flow: "Domain guides → structured context → relevant recommendation → human review", image: null, alt: "", boundary: "Documentation and guides support the workflow. This is not live retrieval, an independently verified publication count, or a measured business result." },
+] as const;
+
 export function RachelOSUseCaseExplorer() {
+  const [proofIndex, setProofIndex] = useState(0);
+  const proof = architectureProof[proofIndex];
   const [selectedId, setSelectedId] = useState(rachelosUseCases[0].id);
   const [stepIndex, setStepIndex] = useState(0);
   const [campaignSearch, setCampaignSearch] = useState("");
@@ -48,6 +57,41 @@ export function RachelOSUseCaseExplorer() {
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-primary">Explore the problem</p>
           <h2 id="use-case-heading" className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">Where does work break down?</h2>
           <p className="mt-5 text-lg leading-8 text-muted">Pick a familiar problem. See the workflow. Imagine your version.</p>
+        </div>
+
+        <div id="architecture-explorer" className="mt-10 scroll-mt-24 overflow-hidden rounded-2xl border border-border bg-white">
+          <div className="p-6 md:p-8">
+            <h3 className="text-2xl font-semibold">Inspect the governed architecture</h3>
+            <p className="mt-3 text-sm leading-6 text-muted">Inspect the operating rules behind relationship context, input validation, message review, and reusable knowledge. The diagrams explain mechanisms; the screenshot shows the operator interface.</p>
+            <div className="mt-6 grid gap-2 md:grid-cols-4" role="tablist" aria-label="RachelOS architecture">
+              {architectureProof.map((item, index) => (
+                <button key={item.id} id={`architecture-tab-${item.id}`} type="button" role="tab" aria-selected={proofIndex === index} aria-controls="architecture-panel" tabIndex={proofIndex === index ? 0 : -1} onClick={() => setProofIndex(index)} onKeyDown={(event) => {
+                  const next = event.key === "ArrowRight" ? (index + 1) % architectureProof.length : event.key === "ArrowLeft" ? (index + architectureProof.length - 1) % architectureProof.length : event.key === "Home" ? 0 : event.key === "End" ? architectureProof.length - 1 : null;
+                  if (next !== null) { event.preventDefault(); setProofIndex(next); document.getElementById(`architecture-tab-${architectureProof[next].id}`)?.focus(); }
+                }} className={cn("min-h-16 rounded-lg border px-4 py-3 text-left text-sm font-semibold focus-visible:outline-2 focus-visible:outline-primary", proofIndex === index ? "border-primary bg-primary text-white" : "border-border bg-surface")}>
+                  <span className="block text-xs opacity-70">0{index + 1}</span>{item.title}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div id="architecture-panel" role="tabpanel" aria-labelledby={`architecture-tab-${proof.id}`} tabIndex={0} className="grid gap-8 border-t border-border p-6 md:p-8 lg:grid-cols-2">
+            <div>
+              <h4 className="text-xl font-semibold">{proof.title}</h4>
+              <p className="mt-4 text-base leading-7 text-muted">{proof.summary}</p>
+              <p className="mt-6 rounded-lg bg-midnight p-5 font-mono text-sm leading-7 text-white">{proof.flow}</p>
+              <p className="mt-5 text-xs leading-6 text-muted">{proof.boundary}</p>
+            </div>
+            {proof.image ? (
+              <Image src={proof.image} alt={proof.alt} width={1440} height={1100} className="h-80 w-full rounded-lg border border-border object-contain object-top" sizes="(min-width: 1024px) 600px, 90vw" />
+            ) : (
+              <div className="flex min-h-80 flex-col justify-center rounded-lg border border-border bg-surface p-8">
+                <p className="text-sm font-semibold uppercase tracking-wider text-primary">Architecture explanation</p>
+                <ol className="mt-5 space-y-3" aria-label={`${proof.title} control sequence`}>
+                  {proof.flow.split(" → ").map((item, index) => <li key={item} className="flex items-center gap-4 rounded-lg border border-border bg-white p-4"><span className="font-mono text-sm text-primary">0{index + 1}</span><span className="text-sm font-semibold">{item}</span></li>)}
+                </ol>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-12 grid gap-4 md:grid-cols-3" role="group" aria-label="Choose a business problem">
@@ -98,9 +142,11 @@ export function RachelOSUseCaseExplorer() {
             <details key={`proof-${selected.id}`} className="py-6">
               <summary className="cursor-pointer text-base font-semibold text-primary">See it inside RachelOS</summary>
               <figure className="mt-6 max-w-3xl">
-                <a href={selected.proof.image} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-xl border border-border focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" aria-label="Open the redacted RachelOS screenshot at full size (new tab)">
+                {selected.proof.image ? <a href={selected.proof.image} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-xl border border-border focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" aria-label="Open the redacted RachelOS screenshot at full size (new tab)">
                   <Image src={selected.proof.image} alt={selected.proof.alt} width={1440} height={1100} className="h-auto w-full" sizes="(min-width: 1024px) 60vw, 90vw" />
-                </a>
+                </a> : <div className="grid gap-3 rounded-xl border border-border bg-surface p-6 sm:grid-cols-3" aria-label="Illustrative relationship handoff">
+                  {selected.flow.map((item, index) => <div key={item} className="rounded-lg border border-border bg-white p-5"><p className="font-mono text-xs text-primary">0{index + 1}</p><p className="mt-3 font-semibold">{item}</p></div>)}
+                </div>}
                 <figcaption className="mt-4 text-sm leading-6 text-muted">{selected.proof.caption}</figcaption>
               </figure>
             </details>

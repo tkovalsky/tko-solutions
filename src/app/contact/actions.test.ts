@@ -29,6 +29,23 @@ afterEach(() => {
 });
 
 describe("submitDiagnosticIntake", () => {
+  it("accepts a healthcare readiness inquiry and preserves its offer through recovery", async () => {
+    const formData = validFormData();
+    formData.set("offer", "regulatory-implementation-readiness-sprint");
+    formData.set("currentPressure", "healthcare-readiness");
+    mockedPersistInboundLead.mockRejectedValue(new Error("database unavailable"));
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=error&offer=regulatory-implementation-readiness-sprint");
+    expect(mockedPersistInboundLead).toHaveBeenCalledWith(expect.objectContaining({ payload: expect.objectContaining({ offer: "regulatory-implementation-readiness-sprint", currentPressure: "healthcare-readiness" }) }));
+    expect(mockedNotifyLead).not.toHaveBeenCalled();
+  });
+
+  it("does not echo an unknown offer in the redirect or persisted payload", async () => {
+    const formData = validFormData();
+    formData.set("offer", "https://untrusted.example");
+    formData.set("email", "not-an-email");
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=invalid");
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+  });
   it("preserves managed follow-up context on invalid intake", async () => {
     const formData = validFormData();
     formData.set("offer", "managed-follow-up");

@@ -4,7 +4,7 @@ export const site = {
   name: "TKO Solutions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tko.solutions",
   description:
-    "TKO Solutions designs and builds workflow systems, CRM integrations, and practical AI applications for growing businesses. Work directly with Todd Kovalsky.",
+    "TKO maps healthcare obligations to workflows, owners, controls, and evidence, and builds owned demand and follow-up systems with human-reviewed AI drafting.",
   positioning: "TKO builds the systems that turn scattered information into follow-up, decisions, and work that moves.",
   differentiation:
     "Todd Kovalsky connects business operations, product design, and hands-on development in one focused engagement, from the first workflow conversation through launch.",
@@ -13,7 +13,7 @@ export const site = {
   ctaHref: CONSTRAINT_CALL.href,
   secondaryCta: "See How RachelOS Was Built",
   secondaryCtaHref: "/selected-work/from-crm-to-operating-system",
-  socialImage: "/og-tko-3.png",
+  socialImage: "/og-tko-4.png",
   // Explicit public address; legacy deployment settings must not override it.
   email: "todd@tko.solutions",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "https://www.linkedin.com/in/toddkovalsky",
@@ -26,10 +26,10 @@ export function absoluteUrl(path = "/") {
 
 // Canonical public destinations, shared by desktop, mobile, and footer navigation.
 export const publicNavigation = [
-  { href: "/services", label: "Advisory" },
+  { href: "/services", label: "Services & Pricing" },
   { href: "/healthcare/impact-assessment", label: "Healthcare" },
   { href: "/private-client-os", label: "Private Client OS" },
-  { href: "/selected-work", label: "Selected Work" },
+  { href: "/selected-work", label: "RachelOS Proof" },
   { href: "/insights", label: "Guides" },
   { href: "/founder", label: "About" },
 ];

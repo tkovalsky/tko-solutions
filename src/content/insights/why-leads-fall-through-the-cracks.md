@@ -22,15 +22,13 @@ problem_hypothesis: >-
   system of record for leads but no system of action: nothing decides each lead's status,
   owner, and next step, so follow-up depends on memory.
 point_of_view: >-
-  Don't buy more automation until you've counted. Most businesses respond to weak follow-up by
-  sending more email. In the one system I measured end to end, email was the weakest channel
-  by a wide margin, and a fifth of the leads had never been touched at all. Fix state,
-  ownership, and the daily queue first; automate second.
+  Count the work before adding automation. Make each active relationship’s state, owner,
+  context, and next action visible, then measure the change rather than promising a channel
+  or revenue outcome.
 relevant_proof: >-
-  RachelOS, a production lead and relationship system I built and run for a South Florida
-  real-estate business. Its own funnel audit counted untouched leads, reply rates by first-touch
-  channel, and the effect of an email-first default, and those numbers changed what was built
-  next.
+  RachelOS, an independent single-operator system Todd designed, built, and runs. Its queue
+  makes missing qualification and next-action needs visible; its approval path governs
+  model-assisted outreach. Screens demonstrate capability, not conversion results.
 ai_useful: >-
   Drafting a first response or follow-up for a person to approve, summarizing a lead's history
   before a call, spotting the missing fact worth asking for, and flagging leads that have gone
@@ -51,41 +49,17 @@ recommended_action: >-
   status, one owner, and one next action before adding any new tool.
 offer: constraint-diagnostic
 cta: "Book a 30-Minute Call"
-# In review: not rendered publicly until Todd reviews it, fills `reviewer` and
-# `reviewed_date`, and sets `status: published`.
-# BLOCKED (2026-09-28): do not publish until every figure is re-verified by the full RachelOS
-# re-audit (docs/strategy/CODEX_PROMPT_REVIEW_AND_REAUDIT.md). The July 2026 numbers below are
-# placeholders from the last audit, not current facts.
-# REVIEW NOTES FOR TODD
-# - Numbers are from the RachelOS snapshot of 2026-07-11 (claim audit 07_CLAIM_AUDIT.md). Replace
-#   with the Codex evidence refresh when it lands, and update the "as of" date in the text.
-# - Confirm the AI follow-up incident wording ("stated things that weren't true") and add one
-#   concrete, anonymized example if you can.
-# - Add one first-person story from the founder interview: the moment you realized a lead had
-#   been lost because nobody owned it.
-# - Rachel's written permission is needed before naming her or the business.
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-10-13"
 sources:
-  - rachelos-delivery-model:dm-honest-metrics
-  - rachelos-delivery-model:dm-scale-snapshot
-  - rachelos-delivery-model:dm-queue
-  - rachelos-delivery-model:dm-approval-loop
-  - rachelos-delivery-model:dm-human-facts
+  - rachelos:canonical-queue
+  - rachelos:relationship-memory
+  - rachelos:human-approved-ai
 date: "2026-09-27"
 slug: why-leads-fall-through-the-cracks
 published: true
 featured: true
-# Internal evidence trail (not rendered):
-# - 152 non-test leads, 117 touched, 9 responded; 35 never touched. Evidence: dm-scale-snapshot; 12_INDUSTRY_IMPLICATIONS.md (Revenue operations). Guard: one business, aggregates only.
-# - Email-first reply rate 2.2%; observed ordering call (25%) > text (8.3%) > email. Evidence: dm-honest-metrics; 10_FAILED_BETS_AND_LESSONS.md §6. Guard: small observational samples; never a benchmark or success metric.
-# - Five competing lifecycle fields consolidated to one. Evidence: 10_FAILED_BETS_AND_LESSONS.md §2 (DEC-1, DEC-51, DEC-75).
-# - 145 open / 97 completed canonical actions, each with a persisted explanation. Evidence: dm-queue.
-# - 77 messages accepted through human draft review; AI cannot override human-entered facts. Evidence: dm-approval-loop; dm-human-facts.
-# - Autonomous AI nurture deactivated after factual errors. Evidence: 09_TODD_OPERATING_PATTERN_ANALYSIS.md §5.
-# - Zero-lead alert added after two zero-lead windows. Evidence: 10_FAILED_BETS_AND_LESSONS.md §10.
-# - No revenue, conversion lift, or ROI is claimed: no attribution chain exists (claim audit).
 ---
 
 Every owner I talk to has a version of the same story. A lead came in, someone meant to call, and three weeks later it turned up in the CRM with no activity, or worse, as a customer of a competitor.
@@ -94,17 +68,13 @@ The usual diagnosis is people: the sales team isn't disciplined, the new hire do
 
 In my experience that diagnosis is usually wrong, and the fixes make it worse. Leads don't fall through the cracks because people don't care. They fall through because **nothing in the business decides what state each lead is in and what should happen next.** That job is left to whoever happens to remember.
 
-## What I found when I actually counted
+## What the operator queue makes visible
 
-I built and run a lead and relationship system, RachelOS, for a South Florida real-estate business. The business had everything it was told to buy: a CRM, a website with lead capture, email, texting, and a steady flow of inquiries. The owner was capable and busy. She was also, in practice, the only place where it was known who needed what.
+I designed and built RachelOS for an independent South Florida real-estate operation. The useful proof is the operating detail: a queue that makes the next action and missing qualification visible, persistent relationship context, and a review boundary around model-assisted outreach.
 
-When the system's own audit counted everything (as of July 2026), three findings changed what I built next:
+A saved lead and a completed follow-up are different things. The workflow needs to distinguish them. It also needs to make an unanswered question, an unowned commitment, or a contact preference visible before preparing the next message.
 
-- **Of 152 leads, 35 had never been contacted at all.** Not ignored on purpose. They simply had no owner, no status, and no next step, so nothing ever surfaced them.
-- **Of the 117 that were contacted, 9 replied.** The business had been treating "we reached out" as the same thing as "we're in a conversation." It isn't.
-- **Email-first outreach had a 2.2% reply rate.** Calls and texts did noticeably better on small samples. Email had become the default first touch because it was the easiest thing to automate, not because it worked.
-
-Those numbers come from one business, and the samples are small. They are not a benchmark for yours. What should transfer is the order of operations: **count before you automate.** The obvious response to weak follow-up would have been to build more email automation. The evidence said the opposite, so the next build made calling and texting easier instead.
+That gives you a concrete place to begin in your own business: **count the actual work before adding automation.** Measure untouched inquiries, missing owners, open commitments, and outcomes by source and channel. Do not infer your expected conversion from another operator's queue.
 
 ## The real reason: a system of record, not a system of action
 
@@ -194,6 +164,6 @@ Most businesses start at step five. That is why the leaks survive the new softwa
 
 ---
 
-If you'd rather have someone do the counting and build the fix, that is what the [Constraint Diagnostic](/services/constraint-diagnostic) is for: two weeks to find where leads, work, and decisions stall in your business, what it's costing, and a fixed-price plan for the first fix. You can see how the system described here was built in the [RachelOS case study](/selected-work/from-crm-to-operating-system).
+If you'd rather have someone do the counting and build the fix, that is what the [Constraint Diagnostic](/services/constraint-diagnostic) is for: two weeks to find where leads, work, and decisions stall in your business, what it's costing, and a fixed-price plan for the first fix. You can see how the system described here was built in the [RachelOS case study](/selected-work/from-crm-to-operating-system). For a defined inquiry and follow-up workflow, explore the [Owned Demand & Governed AI Engine](/private-client-os).
 
-*The RachelOS figures come from one business, as of July 2026, with small samples where noted. They describe what was measured there, not what you should expect. No revenue or conversion improvement is claimed.*
+*RachelOS is an independent, single-operator proof asset. The transferable evidence is its workflow and controls; no revenue or conversion improvement is claimed.*

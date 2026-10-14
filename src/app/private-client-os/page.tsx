@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { QueueWalkthroughModal } from "@/components/marketing/QueueWalkthroughModal";
-import { CheckCircle2, ShieldCheck, Zap, Globe, Smartphone, Network } from "lucide-react";
+import { ShieldCheck, Zap, Globe, Smartphone, Network } from "lucide-react";
+
+import { getOffer } from "@/lib/offers";
+
+const build = getOffer("operating-system-build")!;
+const support = getOffer("operate-and-improve")!;
 
 export const metadata: Metadata = {
   title: "The Private Client Operating System",
-  description: "Governed AI relationship intelligence for boutique brokerages, M&A advisors, and private client firms closing high-consideration deals.",
+  description: "Owned buyer education, inquiry capture, and follow-up with human-reviewed AI drafting for wealth advisory, luxury services, and boutique practices.",
+  alternates: { canonical: "/private-client-os" },
 };
 
 export default function PrivateClientOSPage() {
@@ -20,10 +26,10 @@ export default function PrivateClientOSPage() {
           </p>
           <h1 className="max-w-4xl text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.08] tracking-tight text-foreground">
             The Model Drafts. You Approve. <br className="hidden md:inline" />
-            <span className="text-primary">Your Firm Never Loses a High-Value Client.</span>
+            <span className="text-primary">Keep the next client action visible.</span>
           </h1>
           <p className="mt-6 max-w-[60ch] text-lg leading-8 text-muted md:text-xl md:leading-9">
-            Governed AI relationship intelligence for boutique brokerages, M&A advisors, and private client firms closing $50,000 to $500,000+ fee transactions.
+            Own the path from buyer research to inquiry and follow-up. TKO connects useful content, recorded relationship context, and human-reviewed AI drafting around the tools your firm already uses.
           </p>
           
           <div className="mt-8 flex flex-col items-start gap-4">
@@ -39,7 +45,7 @@ export default function PrivateClientOSPage() {
           
           <div className="mt-8 inline-flex max-w-3xl items-start gap-3 rounded-xl border border-border bg-white p-4 text-sm leading-6 text-muted">
             <ShieldCheck className="mt-1 size-4 shrink-0 text-primary" />
-            Proof in Production: Operating on live luxury client portfolios in South Florida. Zero autonomous sends.
+            RachelOS is the independent, single-operator proof. It demonstrates workflow and approval mechanisms, not client retention or revenue results.
           </div>
         </div>
       </section>
@@ -49,12 +55,12 @@ export default function PrivateClientOSPage() {
         {/* THE PROBLEM */}
         <Section>
           <SectionHeader
-            title="The High-Ticket Paradox"
-            description="Generic CRM Automation Destroys High-Net-Worth Relationships."
+            title="When the record exists but the next step is missing"
+            description="Give an operator the context, open questions, and next action before preparing outreach."
           />
           <div className="mt-8 max-w-none space-y-6 text-lg leading-8 text-muted">
             <p>
-              If you sell $200 SaaS subscriptions, automated marketing sequences work fine. If you broker $5M to $25M transactions, standard automation actively harms your reputation.
+              A prospect can read your content, ask a question, and return weeks later. The workflow needs to preserve that context and make the next commitment visible to the person responsible.
             </p>
             
             <div className="grid gap-8 pt-6 md:grid-cols-3">
@@ -63,7 +69,7 @@ export default function PrivateClientOSPage() {
                   <span className="text-primary">01.</span> Spam Rejection
                 </h3>
                 <p className="text-base">
-                  Sophisticated buyers research quietly for 6 to 12 months. When dumped into a HubSpot sequence or an Apollo cold drip, they disengage permanently. High-value clients demand peer-level discretion.
+                  Useful buyer content gives prospects a reason to visit a channel you own. Capture an inquiry with permission and carry the question into follow-up instead of starting from a generic sequence.
                 </p>
               </div>
               <div className="space-y-3">
@@ -71,7 +77,7 @@ export default function PrivateClientOSPage() {
                   <span className="text-primary">02.</span> AI Liability
                 </h3>
                 <p className="text-base">
-                  Generic AI wrappers run loose. In a seven-figure deal, an AI hallucination regarding property zoning or deal EBITDA can kill a transaction. Unchecked models cannot be trusted with client communications.
+                  A draft can sound convincing and still misstate a client preference or agreed term. Keep the source facts visible and give a named person the final review before client-facing outreach.
                 </p>
               </div>
               <div className="space-y-3">
@@ -89,33 +95,33 @@ export default function PrivateClientOSPage() {
         {/* THE ARCHITECTURAL MOAT */}
         <Section>
           <SectionHeader
-            title="The Architectural Moat"
-            description="Engineered for High Stakes: The Governed Relationship Engine."
+            title="The controls around the model"
+            description="Recorded facts, visible failures, and a named reviewer."
           />
           <div className="mt-8 max-w-none space-y-6 text-lg leading-8 text-muted">
             <p>
-              We built The Private Client Operating System around an uncompromising architectural boundary: <strong>AI may synthesize context, but only licensed human principals speak to clients.</strong>
+              The RachelOS pattern separates proposed prose from recorded facts: <strong>a model can prepare a draft; a person reviews the exact message before AI-assisted outreach is sent.</strong> Your implementation is scoped against your permissions, sources, and review requirements.
             </p>
 
             <div className="space-y-8 pt-4">
               <div className="border-l-4 border-primary pl-6 space-y-2">
                 <h3 className="text-xl font-semibold text-foreground">The Governed Fact Layer</h3>
                 <p>
-                  Human-entered records always supersede AI inferences. If your broker notes that a client prefers deep-water dockage in Delray Beach, the model cannot suggest a country club property in Boca Raton. Facts are immutable; model suggestions are strictly constrained.
+                  Keep recorded facts, their sources, and unresolved questions visible. Human updates take precedence over model suggestions. A reviewer still checks the draft against the record; a prompt is not a factual guarantee.
                 </p>
               </div>
 
               <div className="border-l-4 border-primary pl-6 space-y-2">
                 <h3 className="text-xl font-semibold text-foreground">The Audited Model Wrapper</h3>
                 <p>
-                  Deterministic lifecycle state machines govern every prompt. Built-in schema enforcement, strict timeouts, and fallback states prevent runaway behavior. The engine generates peer-level correspondence grounded exclusively in observed data.
+                  RachelOS routes model attempts through an audited wrapper with timeouts and failure classification. The surrounding workflow determines what assistance is permitted and what happens when the provider is unavailable.
                 </p>
               </div>
 
               <div className="border-l-4 border-primary pl-6 space-y-2">
-                <h3 className="text-xl font-semibold text-foreground">The 5-Second Mobile Approval Queue</h3>
+                <h3 className="text-xl font-semibold text-foreground">Exact-message review</h3>
                 <p>
-                  Nothing ever sends autonomously. Outreach drafts land in a centralized operator queue on your phone or laptop. You review the context, make any necessary adjustments, and tap Approve. Five seconds of review gives you 10x relationship coverage without a fraction of the reputational risk.
+                  An operator checks the exact message, edits or rejects it, and explicitly authorizes AI-assisted outreach. Deterministic transactional or approved fixed-copy paths are separate. Review time and business results must be measured, not promised.
                 </p>
               </div>
             </div>
@@ -133,7 +139,7 @@ export default function PrivateClientOSPage() {
               <Globe className="w-8 h-8 text-primary" />
               <h3 className="font-semibold text-lg text-foreground">1. Authority Content Engine</h3>
               <p className="text-muted text-sm leading-relaxed">
-                Comprehensive market dossiers, property briefs, and deal analysis assets built specifically for high-consideration buyers. Prospects consume institutional-grade analysis on your private domain rather than searching elsewhere.
+                  Useful guides and decision material on your own site. Answer the questions a buyer asks while researching, then connect an inquiry to the question that brought them to you.
               </p>
             </div>
             
@@ -141,7 +147,7 @@ export default function PrivateClientOSPage() {
               <Zap className="w-8 h-8 text-primary" />
               <h3 className="font-semibold text-lg text-foreground">2. Buyer-Journey Telemetry</h3>
               <p className="text-muted text-sm leading-relaxed">
-                Passive, privacy-conscious tracking that monitors high-net-worth research patterns over weeks and months. The system detects return visits, dossier velocity, and specific asset concentration without interrupting the prospect.
+                The scope identifies which consented inquiries and permitted activity signals can be recorded, how they are linked to a relationship, and what remains unknown. Anonymous visits do not establish a person’s identity or buying intent.
               </p>
             </div>
 
@@ -149,7 +155,7 @@ export default function PrivateClientOSPage() {
               <ShieldCheck className="w-8 h-8 text-primary" />
               <h3 className="font-semibold text-lg text-foreground">3. Governed AI Drafter & Memory</h3>
               <p className="text-muted text-sm leading-relaxed">
-                When telemetry indicates rising intent, the engine synthesizes the client&apos;s past notes and viewing history to draft a bespoke, highly personal touchpoint. The note sounds like an experienced partner writing from their desk.
+                Use recorded relationship context to prepare a draft when the agreed workflow calls for it. The operator verifies the facts, tone, permissions, and proposed next step before use.
               </p>
             </div>
 
@@ -157,7 +163,7 @@ export default function PrivateClientOSPage() {
               <Smartphone className="w-8 h-8 text-primary" />
               <h3 className="font-semibold text-lg text-foreground">4. Human-in-the-Loop &quot;One-Tap&quot; Queue</h3>
               <p className="text-muted text-sm leading-relaxed">
-                The draft arrives in your morning action queue with full context. Tap once to send, swipe to edit, or dismiss with a single keystroke.
+                The draft arrives in your morning action queue with full context. Review the exact message, edit or reject it, and authorize sending through the configured workflow.
               </p>
             </div>
           </div>
@@ -166,16 +172,16 @@ export default function PrivateClientOSPage() {
         {/* THE FEEDER CORRIDOR MULTIPLIER */}
         <Section>
           <SectionHeader
-            title="The Feeder Corridor Multiplier"
-            description="Not Just Software. An Exclusive Two-Way Wealth Network."
+            title="Referrals with an accountable handoff"
+            description="Use relationships your firm already has permission to involve."
           />
           <div className="mt-10 rounded-2xl bg-midnight p-6 text-white md:p-10 space-y-6">
             <Network className="w-10 h-10 text-primary-light" />
             <p className="text-lg leading-relaxed text-slate-300">
-              High-net-worth capital moves along established geographic corridors: Greenwich to Palm Beach, Manhattan to the Hamptons, Aspen to South Florida winter estates.
+              A referral needs the same operating detail as a direct inquiry: consent, context, a named recipient, and a next step.
             </p>
             <p className="text-lg leading-relaxed text-slate-300">
-              When you install The Private Client Operating System, you join a closed network of non-competing luxury operators. A boutique brokerage in Greenwich does not compete with RachelDelray in Florida; they complement each other. Our system allows participating firms to share qualified high-net-worth referrals along the corridor, turning a technology investment into immediate transaction flow.
+              Where referrals are in scope, TKO maps the handoff to your existing approved partners. The engagement does not include access to an exclusive network or a promise of transaction flow.
             </p>
           </div>
         </Section>
@@ -183,104 +189,32 @@ export default function PrivateClientOSPage() {
         {/* COMMERCIAL TIERS */}
         <Section>
           <SectionHeader
-            title="Production Deployments"
-            description="Commercial Tiers & Platform Access."
+            title="A defined build. Optional ongoing care."
+            description="Work directly with Todd. Agree the workflow, deliverables, and commercial terms before implementation."
           />
           
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {/* Founding Partner */}
-            <div className="bg-white border-2 border-primary rounded-2xl p-6 relative flex flex-col h-full">
-              <div className="absolute top-0 right-0 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-bl-lg rounded-tr-xl uppercase tracking-wider">
-                First 2 Deployments Only
-              </div>
-              <div className="space-y-4 flex-grow">
-                <h3 className="text-2xl font-semibold text-foreground">Founding Partner</h3>
-                <p className="text-sm text-muted">
-                  Designed for premier boutique operators willing to serve as flagship corridor case studies.
-                </p>
-                <div className="pt-4 pb-6 space-y-1 border-b border-border">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-semibold text-foreground">$7,500</span>
-                    <span className="text-sm text-muted font-medium">Setup</span>
-                  </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-xl font-semibold text-muted">+$2,000</span>
-                    <span className="text-sm text-muted font-medium">/ month</span>
-                  </div>
-                  <p className="text-xs text-muted font-medium pt-1">6-month commitment</p>
-                </div>
-                <ul className="space-y-3 pt-4 text-sm text-muted">
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 1 Dedicated Operator Seat</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Custom domain config and brand voice</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Initial database hygiene import</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> Direct access to South Florida network</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Standard */}
-            <div className="bg-surface border border-border rounded-2xl p-6 flex flex-col h-full">
-              <div className="space-y-4 flex-grow">
-                <h3 className="text-xl font-semibold text-foreground">Standard Production</h3>
-                <p className="text-sm text-muted">
-                  For established boutique firms seeking disciplined relationship intelligence.
-                </p>
-                <div className="pt-4 pb-6 space-y-1 border-b border-border">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-semibold text-foreground">$12,500</span>
-                    <span className="text-sm text-muted font-medium">Setup</span>
-                  </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-lg font-semibold text-muted">+$2,500</span>
-                    <span className="text-sm text-muted font-medium">/ month</span>
-                  </div>
-                  <p className="text-xs text-muted font-medium pt-1">6-month commitment</p>
-                </div>
-                <ul className="space-y-3 pt-4 text-sm text-muted">
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> Up to 2 Operator Seats</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> Full telemetry tracking</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> Weekly prompt tuning</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> 48-hour engineering SLA</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Enterprise */}
-            <div className="bg-surface border border-border rounded-2xl p-6 flex flex-col h-full">
-              <div className="space-y-4 flex-grow">
-                <h3 className="text-xl font-semibold text-foreground">Enterprise</h3>
-                <p className="text-sm text-muted">
-                  For multi-partner advisory firms, RIAs, and commercial brokerages.
-                </p>
-                <div className="pt-4 pb-6 space-y-1 border-b border-border">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-semibold text-foreground">$20,000</span>
-                    <span className="text-sm text-muted font-medium">Setup</span>
-                  </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-lg font-semibold text-muted">+$3,500</span>
-                    <span className="text-sm text-muted font-medium">/ month</span>
-                  </div>
-                  <p className="text-xs text-muted font-medium pt-1">12-month commitment</p>
-                </div>
-                <ul className="space-y-3 pt-4 text-sm text-muted">
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> Up to 5 Operator Seats</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> Custom CRM bi-directional sync</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> Private database instance</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-muted shrink-0" /> Priority SLA with bespoke reviews</li>
-                </ul>
-              </div>
-            </div>
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+            <article className="rounded-2xl border border-primary/30 bg-white p-7">
+              <h3 className="text-xl font-semibold">Owned Demand &amp; Governed AI Engine</h3>
+              <p className="mt-4 text-2xl font-semibold">{build.commercial}</p>
+              <p className="mt-4 leading-7 text-muted">One bounded content, inquiry, and follow-up workflow. Scope states the supported integrations, review controls, owner, handoff, and starting measures.</p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-7">
+              <h3 className="text-xl font-semibold">Optional monitoring and improvement</h3>
+              <p className="mt-4 text-2xl font-semibold">{support.commercial}</p>
+              <p className="mt-4 leading-7 text-muted">{support.duration}. Supported systems, hours, monitoring cadence, and response expectations are agreed in writing. Larger changes receive a separate scope.</p>
+            </article>
           </div>
+          <p className="mt-6 text-sm leading-7 text-muted">Hosting, CRM subscriptions, messaging, and model usage are separate. No lead volume, retention, revenue, or time advantage over aggregators is guaranteed.</p>
         </Section>
 
         {/* PRIMARY CTA */}
         <div className="mx-auto flex w-full max-w-7xl flex-col items-start gap-6 px-6 py-16 md:py-24 lg:px-8">
           <h2 className="text-3xl font-semibold text-foreground">
-            See the Live South Florida Queue in Action
+            Inspect the RachelOS pattern
           </h2>
           <p className="text-lg text-muted max-w-2xl">
-            We do not run canned slide decks. In a 15-minute briefing, we open the live RachelDelray production queue, walk through real high-net-worth buyer telemetry, and show you how a single operator handles 50 high-consideration relationships in 10 minutes a day.
+            In a 15-minute briefing, Todd walks through approved demonstration material: relationship context, a visible next action, and the controls around model drafting. We then identify the sources, permissions, and workflow your version would need.
           </p>
           <div className="mt-8 flex flex-col items-start gap-4 w-full">
             <QueueWalkthroughModal>

@@ -41,7 +41,7 @@ export const CONSTRAINT_CALL = {
   href: "/contact",
   duration: "30 minutes",
   summary:
-    "Bring one workflow that keeps slowing you down, or an AI idea you want to put to work. In 30 minutes, we will talk through the problem, the tools involved, and whether a diagnostic or a scoped build is the right next step.",
+    "Bring one healthcare mandate, platform transition, or client workflow that needs a clear path to delivery. In 30 minutes, I will talk through the decisions, systems, and dependencies with you, then identify the right scope and next step.",
   boundary:
     "The first call is free. You do not need a finished brief or a technical specification. We will decide whether there is a useful project to scope.",
   outputs: [
@@ -136,20 +136,20 @@ export const offers: Offer[] = [
   },
   {
     slug: "operating-system-build",
-    name: "Operating System Build",
+    name: "Owned Demand & Governed AI Engine",
     shortName: "Build",
     level: "Build",
     step: "Fix the constraint",
     duration: "4–8 weeks",
-    startingPrice: "$15,000",
-    commercial: "From $15,000 · fixed price per phase",
-    question: "Turn a workflow problem or an AI use case into a working system.",
+    startingPrice: "$7,500",
+    commercial: "$7,500–$15,000 build · fixed scope",
+    question: "Own the path from buyer research to a human-approved next step.",
     audience:
-      "For an owner or team leader with a defined workflow problem, automation need, or AI use case and the authority to put the solution into use.",
+      "For wealth advisory firms, luxury services, and boutique practices that need their own buyer education, inquiry capture, and accountable follow-up workflow.",
     summary:
-      "I design, build, and launch a focused system around your existing tools. That might be a follow-up workflow, a CRM integration, an internal workspace, or AI that drafts, summarizes, or extracts information inside a real process. We agree on the scope and how to judge the result before building.",
+      "I connect useful buyer content, permission-based inquiry capture, relationship context, and a daily action view around your existing tools. Where model drafting is useful, an operator reviews the exact message before sending. The fixed scope names the sources, integrations, controls, owner, and starting measures.",
     metaDescription:
-      "Workflow systems, CRM integrations, internal tools, and practical AI applications. Design through launch with Todd Kovalsky. Builds from $15,000.",
+      "Owned buyer content, inquiry capture, and follow-up with human-reviewed AI drafting. Builds $7,500–$15,000; optional support $1,500–$3,000/month.",
     triggers: [
       "A diagnostic or your own analysis has identified a specific workflow to improve.",
       "You know the problem, but earlier tools, agencies, or hires didn't fix it.",
@@ -157,10 +157,10 @@ export const offers: Offer[] = [
       "You have an AI use case and need it connected to the tools and process your team actually uses.",
     ],
     deliverables: [
-      "A working system in production, built around your existing tools wherever possible",
+      "A bounded buyer-content and inquiry-capture path on channels you control",
       "A clear state, owner, and next step for the work in scope",
       "An interface or action view matched to the workflow",
-      "Integrations, automation, and AI assistance where the agreed use case calls for them",
+      "Supported integrations and model drafting with exact-message review, visible failures, and an audit trail when included in scope",
       "Documentation and hands-on training for the people who use it",
       "A post-launch review against the starting baseline",
     ],
@@ -168,7 +168,7 @@ export const offers: Offer[] = [
       "Scope and price are fixed per phase and agreed in writing before work starts.",
       "I build on your existing CRM and tools unless there is a clear reason not to.",
       "Approval and change rules are agreed before customer-facing or record-changing automation is enabled.",
-      "You own what is built: code, configuration, and documentation.",
+      "You own the agreed code, configuration, content, and documentation; existing third-party licenses retain their terms. No lead volume, conversion, revenue, or time advantage over aggregators is guaranteed.",
     ],
     expansionPath:
       "After launch, your team can own the system or TKO can continue with Operate & Improve. The next step is optional and separately scoped.",
@@ -204,7 +204,7 @@ export const offers: Offer[] = [
     ],
     ctaLabel: CONSTRAINT_CALL.label,
     feeFraming:
-      "Builds start at $15,000. Price depends on the workflow, integrations, data, and review requirements. You receive a fixed-price proposal before implementation starts.",
+      "Builds are $7,500–$15,000 for the bounded scope agreed before work starts. Hosting, CRM subscriptions, messaging, and model usage are separate and approved before use. Larger integrations or additional workflows require a separate phase.",
     feeBoundary:
       "Every build states the objective, the metric it should move, what is in and out of scope, and what you own at the end.",
   },
@@ -215,15 +215,15 @@ export const offers: Offer[] = [
     level: "Operate",
     step: "Keep it working",
     duration: "Monthly · 3-month minimum",
-    startingPrice: "$3,000/mo",
-    commercial: "$3,000–$6,000 per month",
+    startingPrice: "$1,500/mo",
+    commercial: "$1,500–$3,000 per month",
     question: "Keep the system useful after launch.",
     audience:
       "For a business running a system TKO built, or one TKO has taken over, that wants it maintained, measured, and improved rather than left to drift.",
     summary:
       "I keep the operating loop healthy, fix what drifts, review what the team is seeing, and make one focused improvement at a time as the business changes.",
     metaDescription:
-      "Ongoing care and improvement for a business operating system: monitoring, fixes, a monthly review, and focused improvements. $3,000–$6,000/month.",
+      "Ongoing care and improvement for a business operating system: monitoring, fixes, a monthly review, and focused improvements. $1,500–$3,000/month.",
     triggers: [
       "A build is live and you want it to keep working.",
       "The business changes faster than anyone updates the system.",
@@ -232,9 +232,9 @@ export const offers: Offer[] = [
     deliverables: [
       "Monitoring and fixes",
       "A monthly metric review against the baseline",
-      "One improvement shipped each month",
+      "A monthly improvement allowance agreed in writing; larger changes receive a separate scope",
       "A quarterly review of what is limiting the business now",
-      "Priority changes when the business changes",
+      "A documented review of failures, approval controls, and inquiry handoffs",
     ],
     boundaries: [
       "Covers systems TKO built or has formally taken over.",
@@ -252,17 +252,17 @@ export const offers: Offer[] = [
       },
       {
         q: "What determines the monthly price?",
-        a: "The number of systems and integrations involved, and how often the business changes the workflow.",
+        a: "The supported systems, monitoring cadence, monthly hours, and response expectations agreed in writing. This is not continuous on-call coverage.",
       },
     ],
     ctaLabel: CONSTRAINT_CALL.label,
   },
   {
     slug: "regulatory-implementation-readiness-sprint",
-    name: "Regulatory Implementation Readiness Sprint",
+    name: "Enterprise Transformation & Readiness Sprint",
     shortName: "Readiness Sprint",
     level: "Diagnose",
-    step: "Establish Operational Truth",
+    step: "Trace the mandate to the work",
     duration: "3–4 weeks",
     startingPrice: "$15,000",
     commercial: "$15,000 fixed · 3–4 weeks",
@@ -270,7 +270,7 @@ export const offers: Offer[] = [
     audience:
       "For health plan COOs, CIOs, VPs of Operations, VPs of Transformation, and regulatory-program sponsors facing CMS-0057-F, state prior-authorization mandates, or core platform migrations.",
     summary:
-      "In 3 to 4 weeks, we connect policy requirements to workflows, systems, controls, owners, and evidence. You receive an obligation register, gap and ownership matrix, executable backlog, and executive readiness scorecard.",
+      "In 3–4 weeks, I follow one approved mandate or platform transition through Policy → Obligation → Capability → Workflow → System → Control → Owner → Evidence → Outcome. You receive the obligation register, cross-system impact map, gap and ownership matrix, implementation backlog, and a readiness readout showing what is proven and what still needs a decision.",
     metaDescription:
       "A 3-4 week, fixed-price readiness sprint for health plans: translate healthcare mandates into executable workflows, controls, and backlogs. $15,000.",
     triggers: [
@@ -285,13 +285,13 @@ export const offers: Offer[] = [
       "Gap, Dependency, and Accountable Ownership Assessment across operations, IT, and delegated vendors",
       "Executable Implementation Backlog with explicit business rules, exceptions, and acceptance criteria",
       "Executive Readiness Scorecard showing what is proven, what remains open, and what needs a leadership decision",
-      "Readout and alignment session with accountable workstream owners",
+      "Sponsor readout with accountable workstream owners and a baseline plan for activation, rework, exceptions, and downstream fallout",
     ],
     boundaries: [
       "Grounded in operational and technical architecture; not legal, clinical, actuarial, or regulatory advice.",
       "Does not replace accountable client executives, compliance owners, architects, or delivery teams.",
       "Not a generic PMO status report, software implementation, or formal compliance certification.",
-      "Bounded to one defined mandate, program surface, or regulatory package.",
+      "Bounded to one defined mandate, program surface, or platform transition. The sprint begins once approved interpretations, system walkthroughs, and accountable owners are available.",
     ],
     expansionPath:
       "Client delivery teams execute the backlog. If independent execution authority or integration governance across vendors is required, follow-on advisory is separately scoped.",
@@ -352,3 +352,21 @@ export function isOfferSlug(value: string): value is OfferSlug {
 export function offerHref(slug: OfferSlug) {
   return `/services/${slug}`;
 }
+
+export function offerContactHref(slug: OfferSlug) {
+  return `/contact?offer=${slug}`;
+}
+
+export function offerProof(slug: OfferSlug) {
+  return slug === "regulatory-implementation-readiness-sprint"
+    ? { href: "/healthcare/impact-assessment", label: "Run the Synthetic Decision Lab" }
+    : slug === "constraint-diagnostic"
+      ? { href: "/selected-work", label: "Inspect the Work" }
+      : { href: "/selected-work/from-crm-to-operating-system", label: "Inspect RachelOS" };
+}
+
+// Two entry points; diagnostic and support remain supporting steps.
+export const commercialEngines = [
+  { id: "enterprise", slug: "regulatory-implementation-readiness-sprint", href: "/services/regulatory-implementation-readiness-sprint", proofHref: "/healthcare/impact-assessment", proofLabel: "Run the synthetic decision lab" },
+  { id: "owned-demand", slug: "operating-system-build", href: "/private-client-os", proofHref: "/selected-work/from-crm-to-operating-system", proofLabel: "Inspect RachelOS" },
+] as const satisfies readonly { id: string; slug: OfferSlug; href: string; proofHref: string; proofLabel: string }[];

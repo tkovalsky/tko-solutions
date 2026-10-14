@@ -1,9 +1,11 @@
 # Offer Architecture: Human API Risk Assessment
 
-> **Status — SUPERSEDED for offers; reframed 2026-06-25.** The authoritative offer ladder is in
-> [`CURRENT_REALITY.md`](../archive/CURRENT_REALITY.md): Operational Recovery Assessment ($5–8K) ·
-> Prior Authorization Operational Assessment · Operational Truth Diagnostic · Decision Layer Build
-> Sprint · Fractional Advisor. **"Human API" is a finding type and diagnostic lens — not a
+> **Status — historical assessment reference; commercial authority updated 2026-10-14.**
+> Current offer names, prices, scopes, and routes are defined by
+> [`src/lib/offers.ts`](../../src/lib/offers.ts) and
+> [`OPERATING-BOUNDARIES.md`](../OPERATING-BOUNDARIES.md). The historical descriptions and
+> pricing below do not define today's commercial offer ladder.
+> **"Human API" is a finding type and diagnostic lens — not a
 > standalone offer, separate assessment, or pricing tier.** The "Human API Recovery Assessment
 > ($25–45K)" named below is **not** an offer TKO sells; do not quote it. This document is retained
 > only for its assessment *scope/deliverable* detail, which feeds the Operational Recovery

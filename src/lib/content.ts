@@ -33,15 +33,15 @@ export const caseStudies: CaseStudy[] = [
     role:
       "I designed and built RachelOS end to end: the data model, operating rules, queues, relationship memory, communication workflows, and operator screens.",
     intervention:
-      "I built it in small operating loops. First make the work visible. Then preserve the context. Then support the next action. Add automation only where it makes the operator's job easier and keeps important judgment in human hands.",
+      "I built it in small operating loops: make work visible, preserve relationship context, and support the next action. Recorded facts and open questions remain separate from model-written prose. Model attempts pass through an audited wrapper with timeouts and failure classification. AI-assisted outreach requires human review of the exact message before sending.",
     result:
-      "RachelOS turned a scattered set of records and signals into a coherent way to work: shared context, visible next actions, clearer handoffs, and support for communication without pretending the relationship can be fully automated.\n\nThe important proof is not a feature count. It is that the operating problem could be understood, translated into rules and interfaces, and built into a working system.",
+      "RachelOS turned a scattered set of records and signals into a coherent way to work: shared context, visible next actions, clearer handoffs, and support for communication without pretending the relationship can be fully automated.\n\nThis is an independent, single-operator system. Its code and interface demonstrate mechanisms; they do not establish healthcare deployment, enterprise scale, or measured conversion and revenue results.",
     lesson:
       "Most growing businesses do not need another place to store information. They need a clearer way to turn the information they already have into coordinated action.",
     relevance:
       "If leads, customers, jobs, or internal requests depend on one person remembering the context and routing the next step, the operating problem is the same even when the industry is different.",
-    relatedOffer: "Managed Follow-Up",
-    relatedOfferHref: "/products/ambient-crm",
+    relatedOffer: "Owned Demand & Governed AI Engine",
+    relatedOfferHref: "/services/operating-system-build",
     stages: [
       {
         name: "Make the work visible",

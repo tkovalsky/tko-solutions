@@ -11,6 +11,7 @@
 import type { OfferSlug } from "@/lib/offers";
 
 export type GuideClusterSlug =
+  | "healthcare-readiness"
   | "lead-follow-up-and-revenue-leakage"
   | "owner-as-operating-system"
   | "systems-that-dont-drive-action"
@@ -27,6 +28,14 @@ export type GuideCluster = {
 };
 
 export const guideClusters: GuideCluster[] = [
+  {
+    slug: "healthcare-readiness",
+    name: "Healthcare readiness and cross-system delivery",
+    executiveProblem: "An approved mandate or platform change spans teams and vendors. Leadership needs to see the obligations, handoffs, accountable owners, and evidence a release requires.",
+    searchIntent: "How to turn a payer mandate or core platform transition into operational readiness and an executable backlog.",
+    boundary: "Payer obligations, prior authorization, delegated operations, and cross-system controls. General client follow-up belongs to the owned-demand and relationship clusters.",
+    primaryOffer: "regulatory-implementation-readiness-sprint",
+  },
   {
     slug: "lead-follow-up-and-revenue-leakage",
     name: "Lead follow-up and revenue leakage",

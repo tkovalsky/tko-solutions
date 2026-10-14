@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
@@ -25,9 +26,17 @@ export default function FounderPage() {
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "ProfilePage", name: "Todd Kovalsky", url: absoluteUrl("/founder"), mainEntity: { "@type": "Person", name: "Todd Kovalsky", jobTitle: "Founder & Principal", worksFor: { "@type": "Organization", name: site.name, url: site.url }, sameAs: [site.linkedin], knowsAbout: ["Business Operations", "Operating Model Design", "CRM and Lifecycle Systems", "Workflow Automation", "Human-in-the-Loop AI Systems", "Program and Product Leadership"] } }} />
-      <PageHero eyebrow="About Todd" title={executiveSummary.headline} description="I have spent my career where operations, product, and technology meet. TKO brings those disciplines together for growing businesses that need more than advice and less than a giant transformation program." primaryHref={CONSTRAINT_CALL.href} primaryLabel={CONSTRAINT_CALL.label} secondaryHref="/selected-work/from-crm-to-operating-system" secondaryLabel="See RachelOS" />
+      <PageHero eyebrow="Todd Kovalsky · Founder & Principal" title={executiveSummary.headline} description="I bring 20+ years across regulated operations, product ownership, and healthcare transformation to the work I lead personally. I translate the operating problem into decisions, controls, and a delivery scope—and stay responsible for the result I have agreed to deliver." primaryHref={CONSTRAINT_CALL.href} primaryLabel="Discuss Your Project" secondaryHref="/selected-work" secondaryLabel="Inspect My Work" />
 
       <Section className="bg-surface !py-12 md:!py-16"><div className="grid gap-3 md:grid-cols-2">{executiveSummary.facts.map((fact) => <p key={fact} className="border-l-2 border-primary bg-white p-5 text-sm leading-6 text-muted">{fact}</p>)}</div></Section>
+
+      <Section>
+        <SectionHeader eyebrow="Where I put that experience to work" title="Two engagements. The same accountable principal." />
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <article className="border border-border p-6"><h2 className="text-xl font-semibold">Healthcare transformation and readiness</h2><p className="mt-4 leading-7 text-muted">Trace an approved mandate or platform change through capabilities, workflows, systems, controls, and owners. Give delivery teams a backlog and the evidence required to accept the work.</p><Link href="/services/regulatory-implementation-readiness-sprint" className="mt-5 inline-flex min-h-11 items-center font-semibold text-primary hover:underline">Explore the Readiness Sprint →</Link></article>
+          <article className="border border-border p-6"><h2 className="text-xl font-semibold">Owned demand and governed AI</h2><p className="mt-4 leading-7 text-muted">Connect buyer education, inquiry capture, relationship context, and an accountable next action. RachelOS demonstrates how I build the operating layer and controls around model assistance.</p><Link href="/private-client-os" className="mt-5 inline-flex min-h-11 items-center font-semibold text-primary hover:underline">Explore the Owned-Demand Build →</Link></article>
+        </div>
+      </Section>
 
       <Section>
         <SectionHeader eyebrow="What I notice" title="Different businesses get stuck in familiar ways." description="The vocabulary changes. The operating problem usually comes back to ownership, context, handoffs, and decisions that never made it into the system." />

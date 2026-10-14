@@ -8,7 +8,21 @@ import {
 } from "@/lib/healthcare-policy-execution";
 import { cn } from "@/lib/utils";
 
+const implementationChain = [
+  ["Policy", "Start with the approved interpretation of CMS-0057-F. This synthetic example is not a rule interpretation or conformance test."],
+  ["Obligation", "Define the bounded operational obligation and affected population before assigning delivery work."],
+  ["Capability", "Keep eligibility, coverage, authorization policy, provider qualification, and claims evidence as distinct capabilities."],
+  ["Workflow", "Trace the request from intake through UM routing to the durable record consumed by claims."],
+  ["System", "Core platform decoupling: a policy-layer waiver alone does not prove the claims adapter receives a usable record."],
+  ["Control", "Preserve the advance-notification record when review is waived; require integration acceptance evidence before release."],
+  ["Owner", "Name accountable policy, UM, integration, and claims owners for the handoff and exception route."],
+  ["Evidence", "Match the decision trace, emitted artifact, adapter acknowledgement, and downstream claims test."],
+  ["Outcome", "Observe activation, manual rework, and claims fallout against a baseline. This lab does not claim measured results."],
+] as const;
+
 export function AuthorizationDecisionLab() {
+  const [failureMode, setFailureMode] = useState("none");
+  const [chainIndex, setChainIndex] = useState(0);
   const [input, setInput] = useState<AuthorizationAssessmentInput>(
     syntheticAuthorizationScenarios[0],
   );
@@ -38,7 +52,7 @@ export function AuthorizationDecisionLab() {
   ) => setInput((current) => ({ ...current, [key]: value, scenarioName: "Custom variation" }));
 
   return (
-    <div className="border border-border bg-white">
+    <div id="authorization-decision-lab" className="scroll-mt-24 border border-border bg-white">
       <div className="border-b border-border bg-midnight p-6 text-white md:p-8">
         <p className="text-sm font-semibold uppercase tracking-[0.12em] text-primary-light">
           Synthetic decision lab
@@ -51,6 +65,41 @@ export function AuthorizationDecisionLab() {
           source authorities. All identifiers and rules are illustrative. No patient data is
           collected or processed.
         </p>
+      </div>
+
+      <div className="border-b border-border bg-surface p-6 md:p-8">
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <label htmlFor="mandate" className="text-sm font-semibold">Mandate context</label>
+            <select id="mandate" className="mt-2 min-h-12 w-full border border-border bg-white px-3 text-sm" defaultValue="CMS-0057-F">
+              <option value="CMS-0057-F">CMS-0057-F</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="failure-mode" className="text-sm font-semibold">Failure mode</label>
+            <select id="failure-mode" value={failureMode} onChange={(event) => { setFailureMode(event.target.value); setChainIndex(4); }} className="mt-2 min-h-12 w-full border border-border bg-white px-3 text-sm">
+              <option value="none">Inspect the implementation chain</option>
+              <option value="core-platform-decoupling">Core Platform Decoupling</option>
+            </select>
+          </div>
+        </div>
+        {failureMode === "core-platform-decoupling" ? (
+          <p className="mt-5 border-l-4 border-warning bg-white p-4 text-sm leading-6" role="status">
+            Simulated integration gap: the policy layer waives review, but delivery teams have not proven the claims handoff. The policy determination below remains separate from integration readiness.
+          </p>
+        ) : null}
+        <h3 className="mt-6 text-lg font-semibold">9-Part Implementation Chain</h3>
+        <div className="mt-4 grid grid-cols-3 gap-2 lg:grid-cols-9" role="group" aria-label="Implementation chain">
+          {implementationChain.map(([label], index) => (
+            <button key={label} type="button" aria-pressed={chainIndex === index} aria-controls="implementation-chain-detail" onClick={() => setChainIndex(index)} className={cn("min-h-14 rounded border px-2 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-primary", chainIndex === index ? "border-primary bg-primary text-white" : "border-border bg-white")}>
+              <span className="block text-xs opacity-70">{String(index + 1).padStart(2, "0")}</span>{label}
+            </button>
+          ))}
+        </div>
+        <div id="implementation-chain-detail" className="mt-4 min-h-28 rounded border border-border bg-white p-5" aria-live="polite">
+          <h4 className="font-semibold">{implementationChain[chainIndex][0]}</h4>
+          <p className="mt-2 text-sm leading-6 text-muted">{implementationChain[chainIndex][1]}</p>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-[0.88fr_1.12fr]">

@@ -5,7 +5,7 @@ description: >-
   controls, owners, evidence, and outcomes that make implementation real.
 business_unit: healthcare
 voice: tko-advisory
-cluster: systems-that-dont-drive-action
+cluster: healthcare-readiness
 primary_buyer: >-
   CIO, CTO, COO, VP Transformation, enterprise architect, and payer program leader responsible
   for translating a healthcare requirement into coordinated delivery.
@@ -45,8 +45,8 @@ diagnostic_questions:
 recommended_action: >-
   Apply the chain to one representative, high-consequence scenario; use the resulting gaps and
   acceptance criteria to build an owned implementation backlog before broadening the program.
-offer: operating-system-build
-cta: "See how to make the work executable"
+offer: regulatory-implementation-readiness-sprint
+cta: "Discuss the Readiness Sprint"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-09-03"
@@ -129,3 +129,6 @@ CMS-0057-F creates public requirements and timelines for impacted payers, includ
 Once the first scenario is traceable, testable, and owned, reuse the chain across other obligations. The value is not the diagram. It is a program that can show how a mandate becomes a real, governed operating result.
 
 This framework is implementation-readiness guidance. It does not provide legal, regulatory, clinical, or actuarial advice, and it does not certify compliance. Those judgments remain with the organization’s authorized owners.
+
+
+For one approved healthcare obligation or platform transition, the [Enterprise Transformation & Readiness Sprint](/services/regulatory-implementation-readiness-sprint) produces the obligation register, impact map, owners, implementation backlog, and readiness readout. It is $15,000 fixed over 3–4 weeks. Inspect the [synthetic decision lab](/healthcare/impact-assessment) to see the decision decomposition before discussing your program.

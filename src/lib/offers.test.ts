@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getOffer, isOfferSlug, offerHref, offers } from "@/lib/offers";
+import { commercialEngines, getOffer, isOfferSlug, offerHref, offers } from "@/lib/offers";
 
 describe("TKO offer ladder", () => {
   it("contains three unique, priced steps in diagnose → build → operate order", () => {
@@ -21,5 +21,16 @@ describe("TKO offer ladder", () => {
   it("does not expose hourly staff augmentation", () => {
     expect(JSON.stringify(offers).toLowerCase()).not.toContain("per hour");
     expect(offers.some((offer) => offer.slug.includes("subcontract"))).toBe(false);
+  });
+});
+
+
+describe("Commercial engine consistency", () => {
+  it("keeps existing route identities while sharing the approved commercial terms", () => {
+    expect(commercialEngines.map((engine) => engine.slug)).toEqual(["regulatory-implementation-readiness-sprint", "operating-system-build"]);
+    expect(getOffer("regulatory-implementation-readiness-sprint")).toMatchObject({ startingPrice: "$15,000", duration: "3–4 weeks" });
+    expect(getOffer("operating-system-build")).toMatchObject({ startingPrice: "$7,500", commercial: "$7,500–$15,000 build · fixed scope" });
+    expect(getOffer("operate-and-improve")).toMatchObject({ startingPrice: "$1,500/mo", commercial: "$1,500–$3,000 per month" });
+    for (const engine of commercialEngines) expect(getOffer(engine.slug)).toBeDefined();
   });
 });

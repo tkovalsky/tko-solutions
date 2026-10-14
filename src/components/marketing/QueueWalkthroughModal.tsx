@@ -88,7 +88,7 @@ export function QueueWalkthroughModal({ children }: { children: React.ReactNode 
               <div className="space-y-2 mb-6">
                 <h2 className="text-xl font-bold text-foreground">Schedule a Queue Walk-Through</h2>
                 <p className="text-sm text-slate-600">
-                  See the live production queue in Delray Beach. No sales pitch, just a 15-minute architectural review of the governed AI engine.
+                  Inspect approved RachelOS demonstration material with Todd. In 15 minutes, discuss the workflow, controls, and what your version would need.
                 </p>
               </div>
 
@@ -96,7 +96,7 @@ export function QueueWalkthroughModal({ children }: { children: React.ReactNode 
                 <div className="py-6 text-center space-y-4">
                   <h3 className="text-lg font-medium text-green-600">Request Received</h3>
                   <p className="text-sm text-slate-600">
-                    Todd will reach out shortly to coordinate a 15-minute window to show you the live queue.
+                    Todd will reach out to coordinate a 15-minute walkthrough of the approved demonstration material and discuss your workflow.
                   </p>
                   <Button onClick={() => setOpen(false)} className="mt-4 w-full">Close</Button>
                 </div>

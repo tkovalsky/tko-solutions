@@ -7,13 +7,13 @@ import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsightsByCluster, type Insight } from "@/lib/insights";
 import { guideClusters } from "@/lib/guide-clusters";
-import { CONSTRAINT_CALL } from "@/lib/offers";
+import { CONSTRAINT_CALL, getOffer, offerHref } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Guides",
   description:
-    "Practical notes for owners and operators on follow-up, handoffs, owner bottlenecks, useful systems, and where automation helps or gets in the way.",
+    "Practical guides to healthcare readiness, owned demand, accountable follow-up, and the controls around AI-assisted work. Written from Todd Kovalsky's operating perspective.",
   alternates: { canonical: "/insights" },
   openGraph: {
     title: "Guides",
@@ -36,8 +36,8 @@ export default function InsightsPage() {
     <>
       <PageHero
         eyebrow="Guides"
-        title="Notes on making the business easier to run."
-        description="Practical thinking on owner bottlenecks, follow-up, handoffs, operating systems, and using automation without losing judgment."
+        title="How to turn a business problem into executable work."
+        description="Healthcare obligations, client follow-up, decision ownership, and governed AI. Each guide gives you a specific workflow to inspect and a practical next step."
         primaryHref={CONSTRAINT_CALL.href}
         primaryLabel={site.cta}
         secondaryHref="/selected-work"
@@ -54,6 +54,7 @@ export default function InsightsPage() {
                   title={cluster.name}
                   description={cluster.executiveProblem}
                 />
+                <Link href={offerHref(cluster.primaryOffer)} className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-primary hover:underline">Explore the {getOffer(cluster.primaryOffer)!.name} →</Link>
                 <div className="mt-8 grid gap-4 lg:grid-cols-2">
                   {(byCluster.get(cluster.slug) ?? []).map((insight) => (
                     <InsightCard key={insight.slug} insight={insight} />

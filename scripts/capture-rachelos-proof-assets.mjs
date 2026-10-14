@@ -4,7 +4,9 @@ import { chromium } from "playwright";
 
 const sourceRoot = "/Users/todd/dev/rachel-realestate";
 const envPath = path.join(sourceRoot, ".env.local");
-const outputRoot = path.resolve("public/proof/rachelos");
+// Captures contain real operational context even after automated substitutions.
+// Keep them private until a human has checked every field and cleared publication.
+const outputRoot = path.resolve(".private/proof-quarantine");
 const baseUrl = process.env.RACHELOS_BASE_URL ?? "http://localhost:3001";
 
 function readEnvValue(file, keys) {
@@ -166,10 +168,10 @@ async function capture(name, route) {
   await page.waitForTimeout(600);
   await stabilizeAndRedact();
   await page.screenshot({
-    path: path.join(outputRoot, `${name}.png`),
+    path: path.join(outputRoot, `pending-${name}.png`),
     fullPage: false,
   });
-  console.log(`${name}.png`);
+  console.log(`Private capture: pending-${name}.png. Review before copying to public/proof/rachelos.`);
 }
 
 for (const [name, route] of routes) {
@@ -203,7 +205,7 @@ if (leadHref) {
       ],
     });
     await page.screenshot({
-      path: path.join(outputRoot, "relationship-memory.png"),
+      path: path.join(outputRoot, "pending-relationship-memory.png"),
       fullPage: false,
     });
     console.log("relationship-memory.png");

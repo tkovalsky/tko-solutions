@@ -12,12 +12,17 @@ import { CtaBand } from "@/components/site/cta-band";
 import { JsonLd } from "@/components/site/json-ld";
 import { LinkButton } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { VideoEmbed } from "@/components/media/video-embed";
+import { ProofMediaSlots } from "@/components/site/proof-media-slots";
 import { site, absoluteUrl } from "@/lib/site";
+import { getOffer } from "@/lib/offers";
 
-const title = "Enterprise Transformation & Governed AI Operating Systems";
+const readiness = getOffer("regulatory-implementation-readiness-sprint")!;
+const ownedDemand = getOffer("operating-system-build")!;
+const support = getOffer("operate-and-improve")!;
+
+const title = "Healthcare Readiness & Owned Demand";
 const description =
-  "Todd Kovalsky translates healthcare mandates into executable payer workflows, and replaces commoditized lead aggregators with governed, high-consideration AI operating systems.";
+  "Trace healthcare obligations to workflows, controls, owners, and evidence. Build owned buyer education and follow-up with human-reviewed AI drafting.";
 
 export const metadata: Metadata = {
   title: { absolute: `TKO Solutions | ${title}` },
@@ -32,7 +37,7 @@ export const metadata: Metadata = {
         url: site.socialImage,
         width: 1200,
         height: 630,
-        alt: "TKO Solutions: Enterprise Transformation & Governed AI Operating Systems.",
+        alt: "TKO Solutions: Healthcare Readiness & Owned Demand.",
       },
     ],
   },
@@ -52,33 +57,20 @@ const implementationChain = [
 
 const rachelosProofScreens = [
   {
-    title: "Exact-Message Human Approval",
-    subtitle: "Zero autonomous sends",
+    title: "Operator Review",
+    subtitle: "Known context and open questions",
     description:
-      "Model outputs draft outreach with cited facts, but an authenticated human operator approves the exact message before a single byte leaves the server.",
+      "This snapshot shows the operator reviewing relationship context and missing information. Exact-message approval is a separate, code-backed control.",
     image: "/proof/rachelos/human-approval.png",
   },
   {
     title: "The Canonical Priority Queue",
     subtitle: "Computed next-best action",
     description:
-      "A deterministic queue recomputing active work and relationship state across 114 database migrations. No unowned leads or buried follow-up.",
+      "A daily action view groups work by the next step and makes missing qualification information visible. This screenshot does not prove a measured outcome.",
     image: "/proof/rachelos/canonical-queue.png",
   },
-  {
-    title: "Computed Relationship Memory",
-    subtitle: "Institutional continuity",
-    description:
-      "Persistent timeline, source quote provenance, and open intelligence gaps held inside the operating system, rather than trapped in an employee's head.",
-    image: "/proof/rachelos/relationship-memory.png",
-  },
-  {
-    title: "System Health & Orchestration",
-    subtitle: "Observable daily runs",
-    description:
-      "Scheduled jobs, failure classification, audit spans with correlation IDs, and rate-limit alarms. Running software with inspectable telemetry.",
-    image: "/proof/rachelos/system-health.png",
-  },
+
 ];
 
 export default function HomePage() {
@@ -109,39 +101,40 @@ export default function HomePage() {
         <div className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary-light/30 bg-primary/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-primary-light">
             <ShieldCheck className="size-3.5" />
-            20 Years of Regulated Operations · Human Approval Before AI Outreach
+            Todd Kovalsky · Founder &amp; Principal
           </div>
 
           <h1 className="mt-6 max-w-5xl text-[2.25rem] font-bold leading-[1.06] tracking-tight sm:text-5xl lg:text-[4.25rem]">
-            When work gets complex, model calls are cheap.{" "}
+            I turn complex operations into{" "}
             <span className="text-primary-light">
-              Decision governance is what prevents disaster.
+              work that gets done.
             </span>
           </h1>
 
+          <p className="mt-6 text-xl font-semibold leading-8 text-white/90 sm:text-2xl">Clear decisions. Working systems. One accountable principal.</p>
+
           <p className="mt-8 max-w-[72ch] text-lg leading-8 text-white/80 sm:text-xl sm:leading-9">
-            Todd Kovalsky spent 20 years in high-consequence enterprise operations: Apollo Global
-            Management after the 2008 restructuring cycle, Goldman Sachs Asset Management at
-            Sapient, JPMorgan, and national health plan transformations. TKO constructs the
-            deterministic fact layers, exception workflows, and human approval gates required to
-            run mission-critical operations safely.
+            I bring 20+ years across operations, product, and healthcare transformation to two
+            kinds of work: making a healthcare mandate executable, and building an owned client
+            pipeline with governed AI. I map the decisions, design the controls, and deliver the
+            agreed scope. You work with me from the first conversation through handoff.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
             <LinkButton
-              href="/healthcare/impact-assessment"
+              href="/contact"
               ctaLocation="homepage_hero"
               className="bg-primary hover:bg-primary-dark"
             >
-              Inspect the Healthcare Decision Lab
+              Discuss Your Project
             </LinkButton>
             <LinkButton
-              href="/selected-work/from-crm-to-operating-system"
+              href="/selected-work"
               ctaLocation="homepage_hero"
               variant="secondary"
               className="border-white/35 text-white hover:border-white/60 hover:bg-white/10"
             >
-              See RachelOS Architecture (~2,400 Commits)
+              Inspect My Work
             </LinkButton>
           </div>
 
@@ -150,19 +143,19 @@ export default function HomePage() {
             <div>
               <p className="text-2xl font-bold tracking-tight text-white">20+ Years</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-white/60">
-                Regulated Operations
+                Operations &amp; Product Experience
               </p>
             </div>
             <div>
-              <p className="text-2xl font-bold tracking-tight text-white">~2,400</p>
+              <p className="text-2xl font-bold tracking-tight text-white">RachelOS</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-white/60">
-                RachelOS Commits
+                Single-Operator Proof
               </p>
             </div>
             <div>
-              <p className="text-2xl font-bold tracking-tight text-white">0 Sends</p>
+              <p className="text-2xl font-bold tracking-tight text-white">Human Review</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-white/60">
-                Autonomous AI Outreach
+                Before AI Outreach
               </p>
             </div>
             <div>
@@ -180,38 +173,22 @@ export default function HomePage() {
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-              The Industry Contrast
+              Work you can inspect
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              Between Big SI Slide Decks and Fragile AI Wrappers.
+              Name the owner. Show the handoff. Record the evidence.
             </h2>
             <div className="mt-6 space-y-4 text-base leading-7 text-muted">
-              <p>
-                The market is drowning in two extremes:
-              </p>
-              <ul className="space-y-3">
-                <li className="flex gap-3">
-                  <span className="font-semibold text-foreground">1. Corporate Advisory Fluff:</span>
-                  Multi-million dollar roadmaps from legacy consultancies that produce 80-slide decks
-                  while delivery teams remain paralyzed by unmodeled exception paths.
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-semibold text-foreground">2. Twitter AI Agency Slop:</span>
-                  Fragile Zapier webhooks and unmonitored ChatGPT API wrappers sold with zero
-                  governance, zero audit logging, and zero understanding of regulatory liability.
-                </li>
-              </ul>
-              <p className="border-l-2 border-primary pl-4 font-medium text-foreground">
-                TKO represents the third way: an enterprise operator who writes code, understands
-                reconciliation under pressure, and bounds automation with deterministic controls.
-              </p>
+              <p>A green status report does not show what happens when a rule is missing, a vendor handoff fails, or a client asks something the record cannot answer.</p>
+              <p>I follow the work across team and system boundaries. I identify the missing rule, handoff, or owner, then turn the finding into a specific delivery plan. Every proposed change has an acceptance test and a way to check whether it helped.</p>
+              <p>My background spans regulated operations, product ownership, and healthcare transformation. RachelOS shows how I turn that operating detail into working rules and screens.</p>
             </div>
           </div>
 
           <div className="rounded-2xl border border-border bg-surface p-8 md:p-10">
             <h3 className="text-xl font-semibold">The Core Thesis</h3>
             <p className="mt-3 text-sm leading-6 text-muted">
-              Why autonomous AI fails in high-stakes businesses—and what actually works:
+              Model calls are cheap. The surrounding decision system is the work:
             </p>
             <div className="mt-6 space-y-4">
               <div className="rounded-xl border border-border bg-white p-5">
@@ -220,9 +197,9 @@ export default function HomePage() {
                   <span>Model Calls Are Commodities</span>
                 </div>
                 <p className="mt-2 text-sm leading-6 text-muted">
-                  Calling Claude or GPT is a commodity utility. The value sits in what precedes and
-                  succeeds the call: the deterministic fact extractors, entity reconciliation,
-                  provenance tracking, and failure classification.
+                  A useful model draft needs recorded facts, visible gaps, a permitted action, and an
+                  accountable reviewer. Deterministic rules control workflow state; model output
+                  remains proposed prose.
                 </p>
               </div>
 
@@ -232,10 +209,9 @@ export default function HomePage() {
                   <span>Fail-Closed Human Approval Gate</span>
                 </div>
                 <p className="mt-2 text-sm leading-6 text-muted">
-                  When a model hallucinates in a demo, people laugh. When it hallucinates in a $20M
-                  transaction or a clinical determination, you face regulatory investigation. In our
-                  systems, model-drafted messages require authenticated human approval. Zero
-                  autonomous sends.
+                  RachelOS routes AI-assisted outreach through review of the exact message. Its
+                  model wrapper records attempts and classifies failures. These controls make
+                  review and failure handling explicit; they do not guarantee factual accuracy.
                 </p>
               </div>
             </div>
@@ -246,9 +222,9 @@ export default function HomePage() {
       {/* THE TWO COMMERCIAL ENGINES */}
       <Section className="bg-surface !py-16 md:!py-24">
         <SectionHeader
-          eyebrow="Commercial Architecture"
-          title="The Two Operating Engines"
-          description="Fixed-price, principal-led engagements built around undeniable operational proof."
+          eyebrow="Choose the work you need"
+          title="Healthcare readiness and owned demand"
+          description="Two bounded engagements. Clear outputs, pricing, and ownership before work starts."
         />
 
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
@@ -258,11 +234,11 @@ export default function HomePage() {
               <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
                 Commercial Engine A
               </span>
-              <span className="text-sm font-bold text-foreground">$15,000 Fixed · 3–4 Weeks</span>
+              <span className="text-sm font-bold text-foreground">{readiness.commercial}</span>
             </div>
 
             <h3 className="mt-6 text-2xl font-bold">
-              Enterprise Transformation &amp; Readiness Sprint
+              {readiness.name}
             </h3>
             <p className="mt-3 text-sm font-medium text-primary">
               For Health Plans, Payers &amp; Regulated Healthcare Organizations
@@ -270,8 +246,8 @@ export default function HomePage() {
 
             <p className="mt-4 text-base leading-7 text-muted">
               For leaders facing CMS-0057-F, state prior-authorization mandates, or core platform
-              migrations. When the executive dashboard is reported green, but nobody can produce the
-              traceable claims artifacts that prove clinical review was safely waived.
+              transitions. Trace one approved obligation through the affected teams and systems,
+              then identify the missing controls, owners, dependencies, and release evidence.
             </p>
 
             <div className="mt-6 border-y border-border py-5">
@@ -299,7 +275,7 @@ export default function HomePage() {
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                <span>Synthetic Decision Lab trace without PHI</span>
+                <span>A sponsor readout and baseline plan; inspect the synthetic lab before engaging</span>
               </li>
             </ul>
 
@@ -326,21 +302,21 @@ export default function HomePage() {
                 Commercial Engine B
               </span>
               <span className="text-sm font-bold text-foreground">
-                $7.5K–$15K Build + $1.5K–$3K/mo
+                {ownedDemand.commercial}<br />{support.commercial} optional
               </span>
             </div>
 
             <h3 className="mt-6 text-2xl font-bold">
-              Owned Demand &amp; Governed AI Engine (RachelOS)
+              {ownedDemand.name}
             </h3>
             <p className="mt-3 text-sm font-medium text-primary">
               For Wealth Advisory (RIAs), Boutique Practices &amp; High-Consideration Firms
             </p>
 
             <p className="mt-4 text-base leading-7 text-muted">
-              For firms closing $50,000 to $500,000+ fee transactions tired of the aggregator trap:
-              paying Zillow, SmartAsset, or Angi $40,000+/year for commoditized leads auctioned to
-              four competitors simultaneously.
+              For wealth advisory firms, luxury services, and boutique practices that rely on
+              third-party leads and scattered follow-up. Build useful buyer content, inquiry capture,
+              and an accountable next step on channels you control.
             </p>
 
             <div className="mt-6 border-y border-border py-5">
@@ -348,26 +324,26 @@ export default function HomePage() {
                 The Governed Operating Model
               </p>
               <p className="mt-2 text-xs font-mono font-medium text-foreground">
-                Research-Phase Capture → Computed Relationship Graph → Fail-Closed Human Approval Cockpit
+                Buyer Education → Permission-Based Inquiry → Relationship Context → Human-Reviewed Action
               </p>
             </div>
 
             <ul className="mt-6 space-y-2.5 text-sm text-muted">
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                <span>Captures buyers 60 days before form-fills via long-form domain authority</span>
+                <span>Buyer education that answers research questions before an inquiry</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                <span>Computed relationship graph with source quote provenance</span>
+                <span>Recorded relationship context with known facts and open questions</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                <span>Deterministic Canonical Queue replacing human memory</span>
+                <span>A daily action view with accountable next steps</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                <span>Exact-message human approval cockpit · Zero autonomous sends</span>
+                <span>Exact-message human review for AI-assisted outreach</span>
               </li>
             </ul>
 
@@ -382,7 +358,7 @@ export default function HomePage() {
                 href="/selected-work/from-crm-to-operating-system"
                 className="text-center text-sm font-semibold text-primary hover:underline sm:text-left"
               >
-                Inspect RachelOS Codebase →
+                Inspect RachelOS Proof →
               </Link>
             </div>
           </article>
@@ -393,16 +369,13 @@ export default function HomePage() {
       <Section className="!py-16 md:!py-24">
         <SectionHeader
           eyebrow="Living Technical Proof"
-          title="Inside RachelOS: ~2,400 Commits in Production"
-          description="RachelOS is a single-operator production proof asset. These redacted screenshots show its workflows and system health; they are snapshots, not live telemetry. AI outreach requires human approval, with zero autonomous outbound sends."
+          title="Inspect the RachelOS workflow"
+          description="RachelOS is an independent, single-operator system. These snapshots show interface behavior. Its code backs separate controls for human review and recorded model attempts; neither establishes healthcare deployment or client results."
         />
 
         {/* Video Embed Slot */}
         <div className="mt-10">
-          <VideoEmbed
-            title="Why I Turned Off Autonomous AI: Inside the Governed Approval Cockpit"
-            caption="Todd Kovalsky demonstrates the RachelOS approval state machine, 3-second Anthropic timeouts, and why client-facing sends require an authenticated human signature."
-          />
+          <ProofMediaSlots kind="all" />
         </div>
 
         {/* 4 Core Screenshot Walkthroughs */}
@@ -417,7 +390,7 @@ export default function HomePage() {
                   src={screen.image}
                   alt={screen.title}
                   fill
-                  className="object-cover object-top"
+                  className="object-contain object-top"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                 />
               </div>
@@ -473,12 +446,12 @@ export default function HomePage() {
 
       {/* FINAL EXECUTIVE CTA BAND */}
       <CtaBand
-        title="Ready to turn complex obligations into executable systems?"
+        title="Bring the work that needs an accountable owner."
         description="Bring one regulatory deadline under pressure or one high-consideration pipeline losing momentum. Work directly with Todd Kovalsky."
         primaryHref="/contact"
-        primaryLabel="Book an Executive Discussion"
+        primaryLabel="Discuss Your Project"
         secondaryHref="/services"
-        secondaryLabel="Compare Service Ladders"
+        secondaryLabel="Scope and Pricing"
       />
     </>
   );

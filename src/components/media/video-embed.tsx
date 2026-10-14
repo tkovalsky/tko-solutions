@@ -1,8 +1,17 @@
+"use client";
+
+import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 
 type VideoEmbedProps = {
   title: string;
-  src?: string; // e.g. Loom, YouTube, Vimeo, Mux embed URL
+  src?: string;
+  poster?: string;
+  autoPlay?: boolean;
+  muted?: boolean;
+  loop?: boolean;
+  controls?: boolean;
+  playsInline?: boolean;
   caption?: string;
   className?: string;
   aspectRatio?: "16/9" | "4/3" | "1/1";
@@ -11,10 +20,24 @@ type VideoEmbedProps = {
 export function VideoEmbed({
   title,
   src,
+  poster,
+  autoPlay = false,
+  muted = false,
+  loop = false,
+  controls = true,
+  playsInline = true,
   caption,
   className,
   aspectRatio = "16/9",
 }: VideoEmbedProps) {
+  const [mediaState, setMediaState] = useState<{ src?: string; status: "ready" | "error" }>({ status: "ready" });
+  const status = mediaState.src === src ? mediaState.status : "loading";
+  // The browser may finish loading server-rendered media before hydration attaches events.
+  const attachVideo = useCallback((video: HTMLVideoElement | null) => {
+    if (video?.error) setMediaState({ src, status: "error" });
+    else if (video && video.readyState >= 2) setMediaState({ src, status: "ready" });
+  }, [src]);
+  const localVideo = Boolean(src && (/^\/(?!\/)/.test(src) || /\.(webm|mp4|ogg)(?:[?#]|$)/i.test(src)));
   const aspectClass =
     aspectRatio === "4/3"
       ? "aspect-[4/3]"
@@ -30,7 +53,35 @@ export function VideoEmbed({
       )}
     >
       <div className={cn("relative w-full bg-black/70", aspectClass)}>
-        {src ? (
+        {src && localVideo ? (
+          <>
+            <video
+              key={src}
+              ref={attachVideo}
+              src={src}
+              poster={poster}
+              title={title}
+              aria-label={title}
+              autoPlay={autoPlay}
+              muted={muted}
+              loop={loop}
+              controls={controls}
+              playsInline={playsInline}
+              preload={autoPlay ? "auto" : "metadata"}
+              onLoadedData={() => setMediaState({ src, status: "ready" })}
+              onPlaying={() => setMediaState({ src, status: "ready" })}
+              onError={() => setMediaState({ src, status: "error" })}
+              className="size-full object-contain"
+            >
+              Your browser does not support this video. <a href={src}>Open the walkthrough</a>.
+            </video>
+            {status !== "ready" ? (
+              <div role="status" className="pointer-events-none absolute inset-x-4 top-4 mx-auto w-fit rounded-lg bg-zinc-900/90 px-4 py-2 text-sm text-white">
+                {status === "error" ? "Walkthrough unavailable. Explore the interactive demo below." : "Loading walkthrough…"}
+              </div>
+            ) : null}
+          </>
+        ) : src ? (
           <iframe
             src={src}
             title={title}

@@ -15,11 +15,11 @@ export function Footer() {
         <div>
           <Logo inverted />
           <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            TKO builds operating systems for work that has outgrown the way it is currently run.
-            Governed decision systems, operational memory, and execution authority.
+            TKO connects healthcare obligations to workflows, controls, owners, and evidence,
+            and builds owned demand and follow-up systems with human-reviewed AI drafting.
           </p>
           <p className="mt-4 max-w-sm text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
-            Signal → Fact → State → Decision → Action → Outcome
+            Policy → Obligation → Capability → Workflow → System → Control → Owner → Evidence → Outcome
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
             <a href={`mailto:${site.email}`} data-conversion-event="email_link_click" data-cta-location="footer" data-cta-label="email" className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">

@@ -5,6 +5,14 @@ import { trackConversion } from "@/lib/conversion-events";
 vi.mock("@/lib/conversion-events", () => ({ trackConversion: vi.fn() }));
 afterEach(() => { cleanup(); vi.clearAllMocks(); });
 describe("follow-up pilot intake", () => {
+  it("carries the readiness offer into an editable, accepted healthcare intake", () => {
+    const { container } = render(<DiagnosticForm action={vi.fn()} offerSlug="regulatory-implementation-readiness-sprint" />);
+    expect(screen.getByLabelText("Which sounds most like your business?")).toHaveValue("healthcare-readiness");
+    const data = new FormData(container.querySelector("form")!);
+    expect(data.get("offer")).toBe("regulatory-implementation-readiness-sprint");
+    expect(data.get("source")).toBe("commercial_offer_regulatory-implementation-readiness-sprint");
+    expect(screen.getByLabelText("What would you like to fix or build?")).toHaveValue("");
+  });
   it("keeps the selected example in submitted context while allowing the visitor to edit it", () => {
     const { container } = render(<DiagnosticForm action={vi.fn()} useCaseId="human-controlled-ai" />);
     const context = screen.getByLabelText("What would you like to fix or build?");

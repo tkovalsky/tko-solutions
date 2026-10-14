@@ -2,22 +2,24 @@
 
 **Effective 2026-08-05.**
 
-The commercial objective for the next ninety days is qualified executive conversations, through
-three parallel paths:
+**Commercial scope updated 2026-10-14 under Todd's explicit implementation request.**
 
-1. Executive or senior leadership roles
-2. Specialist subcontracting through healthcare consultancies and integrators
-3. Transformation Diagnostic, Operating Model & Transformation Design Sprint, and Transformation Execution Authority engagements
+The public commercial objective is qualified conversations for two principal-led engagements:
 
-The website and TIF exist to serve those paths. They are not independent products and do not
-get their own growth strategies. Every boundary below follows from that.
+1. Enterprise Transformation & Readiness Sprint: $15,000 fixed over 3–4 weeks for one approved healthcare mandate or platform transition.
+2. Owned Demand & Governed AI Engine: $7,500–$15,000 for a bounded build, with optional $1,500–$3,000/month support.
+
+The diagnostic and Managed Follow-Up pilot remain supporting entry points, with their own
+written scope. Executive roles and specialist subcontracting remain adjacent opportunities,
+not additional public product ladders. The website and TIF serve these engagements; they are
+not independent software products and do not get their own growth strategies.
 
 ---
 
 ## What TIF is
 
 TIF is an **internal enabler for TKO**. Its job is to help produce evidence-backed guides and
-proof assets that answer problems healthcare executives are actively researching, make TKO
+proof assets that answer problems healthcare leaders and high-consideration business owners are actively researching, make TKO
 discoverable for those problems, demonstrate judgment, connect to a relevant offer, and learn
 from real buyer conversations.
 
@@ -55,8 +57,9 @@ because that was already sufficient.
 ### RachelOS (`/Users/todd/dev/rachel-realestate`)
 
 **No new feature development.** RachelOS is preserved as existing implementation proof — it
-demonstrates that Todd builds and implements, not only advises. It is secondary proof behind
-healthcare experience, and it is already sufficient for that purpose.
+demonstrates that Todd builds and implements, not only advises. It supports the owned-demand
+and governed-drafting pattern alongside verified healthcare experience. It is an independent,
+single-operator system; it does not establish healthcare AI deployment or client outcomes.
 
 Permitted: security patches, dependency updates required for it to keep running, and factual
 corrections to claims made about it on the TKO site.

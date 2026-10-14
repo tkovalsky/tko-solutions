@@ -3,7 +3,7 @@ title: "Prior Authorization Is a Decision-Rights Problem"
 description: "Prior authorization stalls because exception authority, escalation logic, and auditability live in individual heads. A guide to diagnosing and measuring it before funding automation."
 business_unit: tko
 voice: tko-advisory
-cluster: systems-that-dont-drive-action
+cluster: healthcare-readiness
 primary_buyer: >-
   VP Utilization Management, VP Prior Authorization, VP Clinical Operations, COO, and
   Chief Transformation Officers at health plans, healthcare services organizations, and
@@ -48,8 +48,8 @@ diagnostic_questions:
 recommended_action: >-
   Establish an operational baseline and an explicit authority map for one bounded workflow
   before committing further platform, staffing, or automation spend.
-offer: constraint-diagnostic
-cta: "Discuss a Transformation"
+offer: regulatory-implementation-readiness-sprint
+cta: "Discuss the Readiness Sprint"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
@@ -219,7 +219,7 @@ Most organizations discover in step three that a meaningful share of the delay t
 
 ---
 
-**If a program is already underway and not producing the expected result**, the [Transformation Diagnostic](/services/transformation-diagnostic) is a bounded engagement that establishes what is actually wrong, which controls and dependencies matter, and what should happen next.
+**If a program is already underway and not producing the expected result**, the [Enterprise Transformation & Readiness Sprint](/services/regulatory-implementation-readiness-sprint) is a bounded engagement that establishes what is actually wrong, which controls and dependencies matter, and what should happen next.
 
 For the portable version of the underlying pattern, read [Human APIs Become Organizational Bottlenecks](/insights/human-apis-become-organizational-bottlenecks).
 

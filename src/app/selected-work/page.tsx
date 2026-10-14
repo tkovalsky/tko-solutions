@@ -9,12 +9,12 @@ import { CONSTRAINT_CALL, offerHref } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "RachelOS",
+  title: "Work You Can Inspect",
   description:
-    "RachelOS is the clearest example of how TKO turns scattered information and person-held judgment into a practical operating system.",
+    "Inspect RachelOS workflow controls and TKO's synthetic healthcare decision lab. Working mechanisms, clear boundaries, and a direct path to the relevant engagement.",
   alternates: { canonical: "/selected-work" },
   openGraph: {
-    title: "RachelOS | TKO Solutions",
+    title: "Work You Can Inspect | TKO Solutions",
     description: "A real operating problem, turned into a working system.",
     url: absoluteUrl("/selected-work"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "RachelOS by TKO Solutions." }],
@@ -33,12 +33,12 @@ export default function SelectedWorkPage() {
     <>
       <PageHero
         eyebrow="Selected work"
-        title="A real operating problem, turned into a working system."
-        description="RachelOS is the clearest example of how I work: understand the decisions people are carrying, make the work visible, and build the missing layer around the tools already in place."
+        title="Inspect the work. Then discuss yours."
+        description="RachelOS shows a relationship workflow I designed, built, and operate. The synthetic healthcare lab makes cross-system decisions inspectable. Together they show how I move from an operating problem to explicit rules, controls, and usable interfaces."
         primaryHref={CONSTRAINT_CALL.href}
         primaryLabel={CONSTRAINT_CALL.label}
-        secondaryHref={offerHref("constraint-diagnostic")}
-        secondaryLabel="See the Diagnostic"
+        secondaryHref="/services"
+        secondaryLabel="Scope and Pricing"
       />
 
       {flagship ? (
@@ -67,6 +67,13 @@ export default function SelectedWorkPage() {
         </Section>
       ) : null}
 
+      <Section>
+        <div className="grid gap-8 rounded-xl border border-border bg-surface p-6 md:p-10 lg:grid-cols-2">
+          <div><p className="text-xs font-semibold uppercase tracking-wider text-primary">Healthcare proof · synthetic</p><h2 className="mt-4 text-3xl font-semibold">Change one fact. Inspect the downstream decision.</h2><p className="mt-5 leading-7 text-muted">Eligibility, benefit coverage, procedure policy, provider qualification, UM routing, and the claims-control artifact remain separate decisions. The lab shows the questions a real release must answer.</p><ArrowLink href="/healthcare/impact-assessment" className="mt-6">Run the decision lab</ArrowLink></div>
+          <div className="flex flex-col justify-center"><p className="font-mono text-sm leading-8 text-foreground">Policy → Obligation → Capability → Workflow → System → Control → Owner → Evidence → Outcome</p><p className="mt-5 text-sm leading-7 text-muted">The prototype uses synthetic rules and identifiers. It demonstrates decision decomposition; it is not a deployed payer system or a compliance certification.</p><ArrowLink href={offerHref("regulatory-implementation-readiness-sprint")} className="mt-6">See the $15,000 Readiness Sprint</ArrowLink></div>
+        </div>
+      </Section>
+
       {others.length > 0 ? (
         <Section className="!py-14">
           <SectionHeader title="More work" />
@@ -94,11 +101,11 @@ export default function SelectedWorkPage() {
 
       <Section className="bg-surface !py-14 md:!py-18">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeader eyebrow="Founding clients" title="Bring me the workflow everyone complains about." />
+          <SectionHeader eyebrow="From proof to your project" title="Leave with a scope somebody can execute." />
           <div className="space-y-5 text-base leading-7 text-muted">
-            <p>I am opening a small number of founding-client engagements. The first three diagnostics are $5,000 instead of $7,500 in exchange for permission to describe the work publicly, anonymously if needed, and a short reference call if the engagement earns it.</p>
-            <p>The goal is simple: identify one meaningful bottleneck and leave you with a practical decision about what to fix.</p>
-            <ArrowLink href={offerHref("constraint-diagnostic")}>See the Diagnostic</ArrowLink>
+            <p>For healthcare readiness, I trace one approved obligation through the teams and systems that must deliver it. For owned demand, I connect buyer content, inquiry capture, context, and an accountable next action.</p>
+            <p>Each engagement names the deliverables, owners, acceptance criteria, dependencies, and commercial terms before the work starts. You work with me through the agreed handoff.</p>
+            <ArrowLink href="/services">Compare the engagements</ArrowLink>
           </div>
         </div>
       </Section>

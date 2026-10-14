@@ -64,17 +64,17 @@ AI is useful when the task is bounded and the output can be checked:
 
 - turning a long history into a short summary;
 - preparing a draft for review;
-- sorting a set of records into a useful starting order;
+- summarizing records already organized by explicit operating rules;
 - noticing that an important piece of information is missing;
 - converting an existing rule or template into a first pass.
 
-These are preparation tasks. They save time without pretending the system owns the decision.
+These are preparation tasks. Measure preparation, review, and corrections together to determine whether they help.
 
 ## What still belongs to a person
 
 The harder work does not disappear:
 
-**Choosing the priority.** A model can rank what it is given. It cannot decide which business problem is worth solving first without context and accountability.
+**Choosing the priority.** Keep operational scores and rankings reproducible through explicit rules. A model can propose an explanation; the accountable owner decides which business problem deserves investment.
 
 **Handling the exception.** The ordinary case is easy to automate. The customer who changed their mind, the incomplete record, and the unusual handoff are where the operating design is tested.
 
@@ -96,4 +96,4 @@ That is the useful pattern for most growing businesses:
 
 If the operating loop is unclear, another AI tool will not fix it. It will simply produce more output for someone to interpret.
 
-See how that approach shaped [RachelOS](/selected-work/from-crm-to-operating-system), or start with the [Operating System Build](/services/operating-system-build).
+See how that approach shaped [RachelOS](/selected-work/from-crm-to-operating-system), or start with the [Owned Demand & Governed AI Engine](/private-client-os).

@@ -48,14 +48,31 @@ describe("RachelOS problem walkthroughs", () => {
     expect(screen.queryByRole("button", { name: /^Send|^Approve/ })).not.toBeInTheDocument();
   });
 
-  it("uses existing proof images for all three problems", () => {
+  it("uses cleared images or a labeled diagram without requesting quarantined captures", () => {
     render(<RachelOSUseCaseExplorer />);
     for (const useCase of rachelosUseCases) {
-      expect(existsSync(join(process.cwd(), "public", useCase.proof.image))).toBe(true);
       fireEvent.click(screen.getByRole("button", { name: new RegExp(useCase.title) }));
       fireEvent.click(screen.getByText("See it inside RachelOS"));
-      expect(screen.getByRole("img", { name: useCase.proof.alt })).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: /Open the redacted/ })).toHaveAttribute("href", useCase.proof.image);
+      if (useCase.proof.image) {
+        expect(existsSync(join(process.cwd(), "public", useCase.proof.image))).toBe(true);
+        expect(screen.getByRole("img", { name: useCase.proof.alt })).toBeInTheDocument();
+        expect(screen.getByRole("link", { name: /Open the redacted/ })).toHaveAttribute("href", useCase.proof.image);
+      } else {
+        expect(screen.getByLabelText("Illustrative relationship handoff")).toBeInTheDocument();
+        expect(screen.queryByRole("link", { name: /Open the redacted/ })).not.toBeInTheDocument();
+      }
     }
   });
+});
+
+it("supports keyboard inspection of four architecture panels without replacing the business walkthrough", () => {
+  render(<RachelOSUseCaseExplorer />);
+  expect(screen.getAllByRole("tab")).toHaveLength(4);
+  const first = screen.getByRole("tab", { name: /Computed Relationship Context/ });
+  fireEvent.keyDown(first, { key: "End" });
+  expect(screen.getByRole("tab", { name: /Structured Knowledge Capture/ })).toHaveFocus();
+  expect(screen.getByRole("tabpanel")).toHaveTextContent("Documentation and guides");
+  fireEvent.click(screen.getByRole("tab", { name: /Exact-Message Human Approval Gate/ }));
+  expect(screen.getByRole("tabpanel")).toHaveTextContent("sends no messages");
+  expect(screen.getByRole("button", { name: /Follow-up keeps slipping/ })).toBeInTheDocument();
 });

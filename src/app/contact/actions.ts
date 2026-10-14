@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { notifyLead } from "@/lib/leads/notify";
 import { persistInboundLead } from "@/lib/leads/persist";
+import { isOfferSlug } from "@/lib/offers";
 
 const intakeSchema = z.object({
   name: z.string().min(2),
@@ -12,6 +13,7 @@ const intakeSchema = z.object({
   role: z.string().min(2).max(200).optional(),
   transformationContext: z.string().min(10).max(2000),
   currentPressure: z.enum([
+    "healthcare-readiness",
     "leads-follow-up",
     "owner-bottleneck",
     "crm-trust",
@@ -35,8 +37,9 @@ const intakeSchema = z.object({
 });
 
 export async function submitDiagnosticIntake(formData: FormData) {
-  const offer = getFormString(formData, "offer") === "managed-follow-up"
-    ? "&offer=managed-follow-up" : "";
+  const requestedOffer = getFormString(formData, "offer") ?? "";
+  const selectedOffer = requestedOffer === "managed-follow-up" || isOfferSlug(requestedOffer) ? requestedOffer : undefined;
+  const offer = selectedOffer ? `&offer=${selectedOffer}` : "";
   const contactResult = (status: string) => `/contact?status=${status}${offer}`;
   if (getFormString(formData, "website")) {
     redirect(contactResult("submitted"));
@@ -70,6 +73,7 @@ export async function submitDiagnosticIntake(formData: FormData) {
   const source = getFormString(formData, "source") || "contact_form";
   const landingPage = getFormString(formData, "landingPage") || "/contact";
   const payload: Record<string, string | boolean> = {};
+  if (selectedOffer) payload.offer = selectedOffer;
   for (const [key, value] of Object.entries(parsed.data)) {
     if (value !== undefined) {
       payload[key] = value;

@@ -3,7 +3,7 @@ title: "Why Healthcare Transformation Programs Stall"
 description: "Large healthcare programs rarely fail at the workstream level. They stall at the boundaries between workstreams, and status reporting is designed not to show it."
 business_unit: tko
 voice: tko-advisory
-cluster: what-to-fix-first
+cluster: healthcare-readiness
 primary_buyer: >-
   COO, Chief Transformation Officer, CIO, and SVP/VP Operations at health plans, healthcare
   services organizations, managed-care organizations, and PE-backed provider platforms, plus
@@ -49,8 +49,8 @@ diagnostic_questions:
 recommended_action: >-
   Establish an independent, time-boxed read on what is actually blocking the program before
   approving additional funding, scope reduction, or a vendor change.
-offer: constraint-diagnostic
-cta: "Discuss a Transformation"
+offer: regulatory-implementation-readiness-sprint
+cta: "Discuss the Readiness Sprint"
 status: published
 reviewer: "Todd Kovalsky"
 reviewed_date: "2026-08-05"
@@ -164,7 +164,7 @@ The single most valuable property of a recovery is speed. A diagnosis that takes
 
 ---
 
-**If a program is behind, over budget, or about to fund automation on top of an unstable workflow**, the [Transformation Diagnostic](/services/transformation-diagnostic) establishes what is actually wrong, which dependencies and decisions are blocking progress, and what should happen next.
+**If a program is behind, over budget, or about to fund automation on top of an unstable workflow**, the [Enterprise Transformation & Readiness Sprint](/services/regulatory-implementation-readiness-sprint) establishes what is actually wrong, which dependencies and decisions are blocking progress, and what should happen next.
 
 Where the stall traces to key-person dependency, read [Human APIs Become Organizational Bottlenecks](/insights/human-apis-become-organizational-bottlenecks). Where it traces to an authorization or utilization workflow, read [Prior Authorization Is a Decision-Rights Problem](/insights/prior-authorization-is-a-decision-rights-problem).
 

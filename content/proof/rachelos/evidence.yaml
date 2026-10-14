@@ -46,7 +46,6 @@ records:
       per-relationship snapshot — situation, known facts, open questions — that survives
       outside any individual.
     proof_ref: "rachel-realestate: src/lib/leads/relationshipMemory.ts (+.test), migrations/055_relationship_memory.sql, migrations/042_relationship_updates.sql"
-    visual: public/proof/rachelos/relationship-memory.png
     framework_stage: Memory
     allowed_use: [homepage, case-study, assessment, service-pages, deck]
     claim_guard: "Proves memory can live in the system, not in a person. No outcome metric."
@@ -168,7 +167,6 @@ records:
       The operating system is self-monitoring — a system-health dashboard, smoke tests,
       cron-run tracking, ops alerts, and failure logging show the system itself is running.
     proof_ref: "rachel-realestate: src/app/ops/system-health, src/lib/ops/runSmokeTest.ts, migrations/015_cron_runs.sql, 030_smoke_test_runs.sql, 024_system_failures.sql, src/lib/leads/leadOpsAlerts.ts"
-    visual: public/proof/rachelos/system-health.png
     framework_stage: Outcome
     allowed_use: [case-study, assessment, service-pages, deck]
     claim_guard: "Proves 'trusted execution' via observability. Not a separate product/SKU."

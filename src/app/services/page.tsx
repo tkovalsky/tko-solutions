@@ -4,17 +4,17 @@ import { JsonLd } from "@/components/site/json-ld";
 import { PageHero } from "@/components/site/page-hero";
 import { LinkButton } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { CONSTRAINT_CALL, offerHref, offers } from "@/lib/offers";
+import { CONSTRAINT_CALL, commercialEngines, getOffer, offerHref, offers } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Services and Pricing",
   description:
-    "Workflow systems, CRM integrations, automation, and practical AI applications. Explore diagnostic, build, and ongoing support options with clear pricing.",
+    "Principal-led healthcare readiness and owned-demand builds. Clear scopes, working proof, $15,000 readiness sprints, and $7,500–$15,000 governed workflow builds.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "Services and Pricing | TKO Solutions",
-    description: "Start with what is stuck. Build the first useful fix. Keep it working as the business changes.",
+    description: "Healthcare readiness and owned demand. Work directly with Todd Kovalsky on a defined scope, with proof and pricing you can inspect.",
     url: absoluteUrl("/services"),
     images: [{ url: site.socialImage, width: 1200, height: 630, alt: "TKO Solutions services and pricing." }],
   },
@@ -24,9 +24,21 @@ export default function ServicesPage() {
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: "TKO Solutions services", url: absoluteUrl("/services"), itemListElement: offers.map((offer, index) => ({ "@type": "ListItem", position: index + 1, item: { "@type": "Service", name: offer.name, description: offer.metaDescription, url: absoluteUrl(offerHref(offer.slug)), provider: { "@type": "ProfessionalService", name: site.name, url: site.url } } })) }} />
-      <PageHero eyebrow="Services and pricing" title="From a recurring problem to a working system." description="Bring a follow-up gap, a manual process, or an AI use case. If the problem needs investigation, start with a diagnostic. If the workflow and goal are clear, we can scope a build directly." primaryHref={CONSTRAINT_CALL.href} primaryLabel={CONSTRAINT_CALL.label} secondaryHref="/services/operating-system-build" secondaryLabel="Explore a Build" />
+      <PageHero eyebrow="Services and pricing" title="Two starting points. A defined scope for each." description="For healthcare leaders: trace an approved obligation through the systems and teams that must deliver it. For high-consideration firms: own buyer education, inquiry capture, and follow-up with human-reviewed AI drafting." primaryHref={CONSTRAINT_CALL.href} primaryLabel={CONSTRAINT_CALL.label} secondaryHref="/services/operating-system-build" secondaryLabel="Explore a Build" />
 
       <Section className="bg-surface !py-14 md:!py-20">
+        <div className="mb-10 grid gap-6 lg:grid-cols-2">
+          {commercialEngines.map((engine) => {
+            const offer = getOffer(engine.slug)!;
+            return <article key={engine.id} className="rounded-xl border border-primary/30 bg-white p-7">
+              <h2 className="text-2xl font-semibold">{offer.name}</h2>
+              <p className="mt-3 font-semibold text-primary">{offer.commercial}</p>
+              {engine.id === "owned-demand" ? <p className="mt-2 text-sm text-muted">Optional support: {getOffer("operate-and-improve")!.commercial}</p> : null}
+              <p className="mt-4 leading-7 text-muted">{offer.audience}</p>
+              <LinkButton href={engine.href} className="mt-6">See the scope</LinkButton>
+            </article>;
+          })}
+        </div>
         <ol className="space-y-5">
           {offers.map((offer, index) => (
             <li key={offer.slug} className="grid gap-6 border border-border bg-white p-6 md:grid-cols-[4rem_1fr_1.4fr_0.65fr] md:p-8">

@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { getInsight, getInsights, getRelatedInsights, type Insight } from "@/lib/insights";
 import { getGuideCluster } from "@/lib/guide-clusters";
-import { getOffer, offerHref, offers, CONSTRAINT_CALL } from "@/lib/offers";
+import { getOffer, offerHref, offerProof, offerContactHref, offers } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Params = {
@@ -55,6 +55,7 @@ export default async function InsightPage({ params }: Params) {
   const offer = getOffer(insight.brief?.offer ?? "") ?? offers[0];
   const cluster = getGuideCluster(insight.brief?.cluster ?? "");
   const ctaLabel = insight.brief?.cta ?? site.cta;
+  const proof = offerProof(offer.slug);
 
   return (
     <>
@@ -65,6 +66,7 @@ export default async function InsightPage({ params }: Params) {
           headline: insight.title,
           description: insight.description,
           datePublished: insight.date,
+          author: { "@type": "Person", name: "Todd Kovalsky", url: absoluteUrl("/founder") },
           url: absoluteUrl(`/insights/${insight.slug}`),
           publisher: { "@type": "Organization", name: "TKO Solutions" },
         }}
@@ -75,7 +77,7 @@ export default async function InsightPage({ params }: Params) {
         description={insight.description}
         primaryHref={offerHref(offer.slug)}
         primaryLabel={`See the ${offer.name}`}
-        secondaryHref={CONSTRAINT_CALL.href}
+        secondaryHref={offerContactHref(offer.slug)}
         secondaryLabel={ctaLabel}
       />
       <Section>
@@ -90,6 +92,9 @@ export default async function InsightPage({ params }: Params) {
             dangerouslySetInnerHTML={{ __html: insight.html }}
           />
         </div>
+      </Section>
+      <Section className="!py-8">
+        <Link href={proof.href} className="inline-flex min-h-11 items-center gap-2 font-semibold text-primary hover:underline">{proof.label}<ArrowRight className="size-4" aria-hidden /></Link>
       </Section>
       {related.length > 0 ? (
         <Section className="bg-surface">
@@ -106,7 +111,7 @@ export default async function InsightPage({ params }: Params) {
         description={offer.summary}
         primaryHref={offerHref(offer.slug)}
         primaryLabel={`See the ${offer.name}`}
-        secondaryHref={CONSTRAINT_CALL.href}
+        secondaryHref={offerContactHref(offer.slug)}
         secondaryLabel={ctaLabel}
       />
     </>

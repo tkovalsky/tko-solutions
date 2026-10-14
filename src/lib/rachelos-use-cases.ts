@@ -11,7 +11,7 @@ export type RachelOSUseCase = {
   discussion: string;
   pressure: string;
   intake: string;
-  proof: { image: string; alt: string; caption: string; evidence: string };
+  proof: { image?: string; alt: string; caption: string; evidence: string };
 };
 
 export const RACHELOS_CASE_PATH = "/selected-work/from-crm-to-operating-system";
@@ -85,9 +85,8 @@ export const rachelosUseCases: RachelOSUseCase[] = [
     pressure: "knowledge-risk",
     intake: "I explored the RachelOS key-person dependency example. The decisions that still depend on one person in our business are…",
     proof: {
-      image: "/proof/rachelos/relationship-memory.png",
-      alt: "Redacted RachelOS relationship record with a current snapshot, recent activity, known facts, and a recommended next action.",
-      caption: "The relationship record preserves a current picture and its activity history. The capture shows system-held context, not a measured reduction in staffing dependency.",
+      alt: "",
+      caption: "RachelOS stores a current relationship picture and activity history. The architecture below explains the handoff; it is an illustrative model, not a client record.",
       evidence: "relationship-memory",
     },
   },
