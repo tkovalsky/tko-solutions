@@ -183,7 +183,7 @@ export const offers: Offer[] = [
     faqs: [
       {
         q: "Will you replace our CRM?",
-        a: "Rarely. The CRM is usually fine as a record. What's missing is the layer that turns records into the next action.",
+        a: "Rarely. Your CRM is usually fine as a system of record. What is missing is the sidecar operating layer beside it that turns stored records into a daily action queue, missing-fact prompts, and human-reviewed follow-up.",
       },
       {
         q: "Is this an AI project?",

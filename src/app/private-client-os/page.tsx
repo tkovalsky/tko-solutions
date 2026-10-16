@@ -55,37 +55,38 @@ export default function PrivateClientOSPage() {
         {/* THE PROBLEM */}
         <Section>
           <SectionHeader
-            title="When the record exists but the next step is missing"
-            description="Give an operator the context, open questions, and next action before preparing outreach."
+            eyebrow="System of Record vs. System of Action"
+            title="Keep your CRM as the filing cabinet. Add the operating layer that drives the next conversation."
+            description="High-consideration clients research in private before they ever inquire. Once they reach out, your workflow must preserve their context and make the next commitment visible—without a disruptive CRM migration."
           />
           <div className="mt-8 max-w-none space-y-6 text-lg leading-8 text-muted">
             <p>
-              A prospect can read your content, ask a question, and return weeks later. The workflow needs to preserve that context and make the next commitment visible to the person responsible.
+              Whether your firm runs on HubSpot, Wealthbox, Follow Up Boss, Clio, or Salesforce, a traditional CRM stores what already happened. TKO builds the <strong>Sidecar Operating Layer</strong> around your existing stack so buyer education, inquiry capture, relationship memory, and daily follow-up stay connected.
             </p>
             
             <div className="grid gap-8 pt-6 md:grid-cols-3">
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                  <span className="text-primary">01.</span> Spam Rejection
+                  <span className="text-primary">01.</span> Pre-Intent Authority
                 </h3>
                 <p className="text-base">
-                  Useful buyer content gives prospects a reason to visit a channel you own. Capture an inquiry with permission and carry the question into follow-up instead of starting from a generic sequence.
+                  Useful buyer guides and diagnostic tools give affluent prospects a reason to visit a channel you own during their research window—capturing inquiries with permission and carrying their exact question into follow-up.
                 </p>
               </div>
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                  <span className="text-primary">02.</span> AI Liability
+                  <span className="text-primary">02.</span> Fail-Closed AI Governance
                 </h3>
                 <p className="text-base">
-                  A draft can sound convincing and still misstate a client preference or agreed term. Keep the source facts visible and give a named person the final review before client-facing outreach.
+                  In regulated and reputation-driven advisory (Wealth, Legal, Luxury Real Estate, B2B), one hallucinated email destroys trust. Keep source facts visible, lock approved templates, and require a named person&apos;s final review before AI-assisted outreach.
                 </p>
               </div>
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                  <span className="text-primary">03.</span> Fragmented Memory
+                  <span className="text-primary">03.</span> Ambient Relationship Memory
                 </h3>
                 <p className="text-base">
-                  Notes remain trapped in iMessage, call logs, and fragmented memory. When transaction flow peaks, high-probability buyers drop off the radar because your team lacks the bandwidth for disciplined follow-up.
+                  Instead of trapping context inside iMessage threads, call logs, and one rainmaker&apos;s head, the operating layer separates recorded facts from open questions and surfaces a focused daily action lineup when deal flow peaks.
                 </p>
               </div>
             </div>
@@ -93,35 +94,36 @@ export default function PrivateClientOSPage() {
         </Section>
 
         {/* THE ARCHITECTURAL MOAT */}
-        <Section>
+        <Section className="bg-surface">
           <SectionHeader
+            eyebrow="Bounded Autonomy Architecture"
             title="The controls around the model"
-            description="Recorded facts, visible failures, and a named reviewer."
+            description="Recorded facts, human source precedence, visible failures, and a named reviewer."
           />
           <div className="mt-8 max-w-none space-y-6 text-lg leading-8 text-muted">
             <p>
-              The RachelOS pattern separates proposed prose from recorded facts: <strong>a model can prepare a draft; a person reviews the exact message before AI-assisted outreach is sent.</strong> Your implementation is scoped against your permissions, sources, and review requirements.
+              The RachelOS pattern separates proposed prose from recorded facts: <strong>a model can prepare a draft; a person reviews the exact message before AI-assisted outreach is sent.</strong> Your implementation is scoped against your permissions, sources, and regulatory review requirements.
             </p>
 
             <div className="space-y-8 pt-4">
               <div className="border-l-4 border-primary pl-6 space-y-2">
-                <h3 className="text-xl font-semibold text-foreground">The Governed Fact Layer</h3>
+                <h3 className="text-xl font-semibold text-foreground">The Governed Fact Layer (Human &gt; AI Precedence)</h3>
                 <p>
-                  Keep recorded facts, their sources, and unresolved questions visible. Human updates take precedence over model suggestions. A reviewer still checks the draft against the record; a prompt is not a factual guarantee.
+                  Keep recorded facts, their sources, and unresolved questions visible. Human operator updates strictly supersede model suggestions so AI summaries never overwrite practitioner truth. A reviewer still checks the draft against the record; a prompt is not a factual guarantee.
                 </p>
               </div>
 
               <div className="border-l-4 border-primary pl-6 space-y-2">
                 <h3 className="text-xl font-semibold text-foreground">The Audited Model Wrapper</h3>
                 <p>
-                  RachelOS routes model attempts through an audited wrapper with timeouts and failure classification. The surrounding workflow determines what assistance is permitted and what happens when the provider is unavailable.
+                  RachelOS routes model attempts through an audited wrapper with timeouts, budget ceilings, and failure classification. The surrounding deterministic workflow decides what assistance is permitted and fails closed when a provider is unavailable.
                 </p>
               </div>
 
               <div className="border-l-4 border-primary pl-6 space-y-2">
-                <h3 className="text-xl font-semibold text-foreground">Exact-message review</h3>
+                <h3 className="text-xl font-semibold text-foreground">Exact-Message Review &amp; Locked Templates</h3>
                 <p>
-                  An operator checks the exact message, edits or rejects it, and explicitly authorizes AI-assisted outreach. Deterministic transactional or approved fixed-copy paths are separate. Review time and business results must be measured, not promised.
+                  An operator checks the exact message, edits or rejects it, and explicitly authorizes AI-assisted outreach. Deterministic transactional or approved fixed-copy paths remain separate. Review time and business results must be measured, not promised.
                 </p>
               </div>
             </div>
@@ -131,39 +133,40 @@ export default function PrivateClientOSPage() {
         {/* THE 4 PILLARS */}
         <Section>
           <SectionHeader
+            eyebrow="Inside the Operating Layer"
             title="System Operation"
-            description="The Four Core Pillars of the Operating System."
+            description="The Four Core Pillars connecting buyer research to daily rainmaker execution."
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <div className="bg-white p-6 rounded-xl border border-border space-y-3">
               <Globe className="w-8 h-8 text-primary" />
-              <h3 className="font-semibold text-lg text-foreground">1. Authority Content Engine</h3>
+              <h3 className="font-semibold text-lg text-foreground">1. Pre-Intent Authority Content Engine</h3>
               <p className="text-muted text-sm leading-relaxed">
-                  Useful guides and decision material on your own site. Answer the questions a buyer asks while researching, then connect an inquiry to the question that brought them to you.
+                Structured guides, comparisons, and decision material on your own domain. Answer the complex questions a client asks while researching, then connect their permissioned inquiry directly to the question that brought them to you.
               </p>
             </div>
             
             <div className="bg-white p-6 rounded-xl border border-border space-y-3">
               <Zap className="w-8 h-8 text-primary" />
-              <h3 className="font-semibold text-lg text-foreground">2. Buyer-Journey Telemetry</h3>
+              <h3 className="font-semibold text-lg text-foreground">2. Buyer-Journey &amp; Sidecar Telemetry</h3>
               <p className="text-muted text-sm leading-relaxed">
-                The scope identifies which consented inquiries and permitted activity signals can be recorded, how they are linked to a relationship, and what remains unknown. Anonymous visits do not establish a person’s identity or buying intent.
+                The scope identifies which consented inquiries and permitted activity signals can be recorded across your site and existing CRM, how they link to a relationship record, and what remains unknown. Anonymous visits do not establish identity or buying intent.
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-xl border border-border space-y-3">
               <ShieldCheck className="w-8 h-8 text-primary" />
-              <h3 className="font-semibold text-lg text-foreground">3. Governed AI Drafter & Memory</h3>
+              <h3 className="font-semibold text-lg text-foreground">3. Governed AI Drafter &amp; Relationship Memory</h3>
               <p className="text-muted text-sm leading-relaxed">
-                Use recorded relationship context to prepare a draft when the agreed workflow calls for it. The operator verifies the facts, tone, permissions, and proposed next step before use.
+                Use recorded relationship context and open intelligence gaps to prepare a draft when the agreed workflow calls for it. The operator verifies the facts, tone, permissions, and proposed next step before use.
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-xl border border-border space-y-3">
               <Smartphone className="w-8 h-8 text-primary" />
-              <h3 className="font-semibold text-lg text-foreground">4. Human-in-the-Loop &quot;One-Tap&quot; Queue</h3>
+              <h3 className="font-semibold text-lg text-foreground">4. The Morning Cockpit &amp; Action Queue</h3>
               <p className="text-muted text-sm leading-relaxed">
-                The draft arrives in your morning action queue with full context. Review the exact message, edit or reject it, and authorize sending through the configured workflow.
+                Instead of a bloated task list, the prioritized action queue surfaces who needs attention today and why. Review the exact message, edit or reject it, and authorize sending through your configured workflow.
               </p>
             </div>
           </div>

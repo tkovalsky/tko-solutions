@@ -1,6 +1,6 @@
 # Commercial outreach playbook
 
-Use these drafts for individual conversations about the two TKO engagements. Match the buyer's actual situation, review the final message, and send it personally. No messages have been sent by this implementation.
+Use these drafts and founder playbooks for individual conversations and authority content about the two TKO engagements. Match the buyer's actual situation, review the final message, and send it personally. No messages have been sent by this implementation.
 
 ## Healthcare sponsor draft
 
@@ -30,7 +30,7 @@ Hi [First name],
 
 [One verified sentence about their inquiry path or follow-up problem.]
 
-When a buyer moves from researching to asking a question, the context often gets lost between the website, inbox, and CRM. I build the path that keeps the inquiry, known facts, open questions, owner, and next step together.
+When a buyer moves from researching to asking a question, the context often gets lost between the website, inbox, and CRM. I build the Sidecar operating path that keeps the inquiry, known facts, open questions, owner, and next step together—without replacing your existing CRM.
 
 [Inspect the RachelOS workflow and controls](https://tko.solutions/selected-work/from-crm-to-operating-system#architecture-explorer). RachelOS is a single-operator real-estate system I designed and built. It shows the pattern: recorded relationship context, visible missing information, and human review of the exact AI-assisted message. It does not establish results in your industry.
 
@@ -53,6 +53,36 @@ I suggest [one bounded engagement or next scoping step], with [the specific deli
 Would [the named sponsor or operator] be the right person to include in that discussion?
 
 Todd
+
+---
+
+## Founder Verbal Pitch Track ("Who Is Todd & Why TKO?")
+
+Use this 45-second framing at the start of discovery calls with CEOs, CFOs, COOs, and CTOs:
+
+1. **Institutional Pedigree:** "I spent 20+ years across regulated operations, product ownership, and healthcare transformation—at Apollo Global Management, Goldman Sachs AM and JPMorgan AM (via Sapient), FolioDynamix through its Envestnet exit, ELLKAY on CMS Cures Act FHIR interoperability, and Cognizant in Healthcare Transformation & AI."
+2. **The Problem with Goliath:** "Large consultancies charge six figures for slide decks that leave the handoffs broken. CRM vendors give you a passive system of record that operators hate updating. And generic AI agencies wire unguarded prompts to your database with no source authority or approval gate."
+3. **Inspectable Proof & Single-Principal Accountability:** "I built RachelOS end to end in production—separating recorded facts from model prose, enforcing human-over-AI fact precedence, and requiring exact-message human review after we saw autonomous AI nurture fail in production. At TKO, there is no handoff to junior associates. The person who diagnoses your constraint designs the controls and delivers the agreed scope."
+
+---
+
+## LinkedIn & Reddit Builder-in-Public Playbook (Mechanism-First Authority)
+
+When posting on LinkedIn or Reddit (`r/realtors`, `r/CFP`, `r/LawFirm`, `r/consulting`, `r/SaaS`), lead with architectural teardowns and honest engineering reversals rather than marketing claims:
+
+### Archetype 1: System of Record vs. System of Action (The Sidecar Pattern)
+* **Hook:** "Most businesses don't have a CRM problem. Their CRM is fine at storing what happened last month. They have a System of Action problem: nothing looks across their inbox, texts, and notes to tell the operator which 5 relationships need human judgment at 8:30 AM."
+* **Mechanism to Show:** Explain why ripping out HubSpot, Follow Up Boss, Wealthbox, or Clio fails, and how a Sidecar operating layer connects permissioned inquiry capture, relationship memory, missing-fact detection, and a daily action queue beside the existing CRM.
+
+### Archetype 2: Why We Turned Off Autonomous AI Nurture in Production
+* **Hook:** "Everyone is pitching 'autonomous AI SDRs.' In high-trust businesses (wealth advisory, law, healthcare, luxury real estate), one fabricated detail in an automated email ruins a relationship. Here is why we shut down autonomous AI nurture in RachelOS and replaced it with fail-closed human review."
+* **Mechanism to Show:** Walk through the four controls: (1) recorded facts vs. derived journey state, (2) human updates superseding AI extraction, (3) deterministic queue ranking, and (4) exact-message human approval before AI-assisted outreach is sent.
+
+### Archetype 3: Why Green Status Reports Hide Broken Healthcare Handoffs
+* **Hook:** "In healthcare transformation (CMS-0057-F, prior authorization, platform migrations), every workstream can report green while the handoff between clinical review and claims adjudication is completely unverified."
+* **Mechanism to Show:** Walk through the 9-Link Implementation Chain (`Policy → Obligation → Capability → Workflow → System → Control → Owner → Evidence → Outcome`) and link to the synthetic readiness preview (`/healthcare/readiness-preview`).
+
+---
 
 ## Scope and evidence rules
 
