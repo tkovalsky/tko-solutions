@@ -6,6 +6,7 @@ import { buildRecentChanges } from "@/lib/opportunity-intelligence/queue/changes
 import { buildTodayQueue } from "@/lib/opportunity-intelligence/queue/today";
 import { daysUntilOct1 } from "@/lib/opportunity-intelligence/date/oct1";
 import { tifDb } from "@/lib/tif/db";
+import type { PersistedInboundLead } from "@/lib/leads/types";
 
 export const metadata: Metadata = {
   title: "POIS Today",
@@ -19,7 +20,7 @@ type WatchedAccount = Awaited<ReturnType<typeof getWatchedAccounts>>[number];
 
 export default async function OiTodayPage() {
   const asOf = new Date();
-  const [opportunities, recentActivities, untriagedSignalCount, topUntriagedSignals, watchedAccounts] = await Promise.all([
+  const [opportunities, recentActivities, untriagedSignalCount, topUntriagedSignals, watchedAccounts, inboundLeads] = await Promise.all([
     tifDb.oiOpportunity.findMany({
       include: {
         organization: { select: { name: true } },
@@ -46,6 +47,9 @@ export default async function OiTodayPage() {
     }),
     getTopUntriagedSignals(),
     getWatchedAccounts(),
+    tifDb.inboundLead?.findMany
+      ? tifDb.inboundLead.findMany({ orderBy: [{ lastSubmittedAt: "desc" }], take: 5 })
+      : Promise.resolve([]),
   ]);
   const restoredActionIds = opportunities.flatMap((opportunity) =>
     opportunity.nextActions
@@ -103,6 +107,8 @@ export default async function OiTodayPage() {
         <NewSignalsBlock count={untriagedSignalCount} signals={topUntriagedSignals} asOf={asOf} />
         <WatchBlock accounts={watchedAccounts} asOf={asOf} />
       </div>
+
+      {inboundLeads.length > 0 ? <InboundLeadsBlock leads={inboundLeads} asOf={asOf} /> : null}
 
       {queue.length === 0 ? (
         <EmptyState activeCount={opportunities.length} summary={summary} />
@@ -163,6 +169,53 @@ async function getWatchedAccounts() {
     },
     orderBy: [{ updatedAt: "desc" }],
   });
+}
+
+function InboundLeadsBlock({ leads, asOf }: { leads: PersistedInboundLead[]; asOf: Date }) {
+  return (
+    <section className="mt-6 rounded-md border border-border bg-white p-5" aria-labelledby="inbound-leads-heading">
+      <h3 id="inbound-leads-heading" className="text-lg font-semibold">Website inbound leads</h3>
+      <p className="mt-1 text-sm text-muted">Latest five submissions</p>
+      <ul className="mt-4 grid gap-4 text-sm">
+        {leads.map((lead) => {
+          const payload = lead.payload && typeof lead.payload === "object" && !Array.isArray(lead.payload) ? lead.payload : {};
+          const contextFields = [
+            ["transformationContext", "Context"],
+            ["currentPressure", "Current pressure"],
+            ["revenueBand", "Revenue band"],
+            ["timing", "Timing"],
+          ] as const;
+          return (
+            <li key={lead.id} className="border-t border-border pt-4 first:border-t-0 first:pt-0">
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div>
+                  <p className="font-semibold">{lead.name || "Name not provided"}</p>
+                  {lead.company ? <p>{lead.company}</p> : null}
+                  {lead.role ? <p className="text-muted">{lead.role}</p> : null}
+                </div>
+                <span className={`rounded px-2 py-1 text-xs font-semibold ${lead.notifiedAt ? "bg-green-50 text-green-900" : "bg-amber-50 text-amber-950"}`}>
+                  {lead.notifiedAt ? "Email notified" : "Saved in DB · Email pending"}
+                </span>
+              </div>
+              <a href={`mailto:${lead.email}`} className="mt-1 inline-block break-all font-medium text-[#17375e] underline">{lead.email}</a>
+              <p className="mt-1 text-xs text-muted">{lead.source || "Source unknown"} · {formatAge(lead.lastSubmittedAt, asOf)}</p>
+              <dl className="mt-2 space-y-1">
+                {contextFields.map(([key, label]) => {
+                  const value = payload[key];
+                  return typeof value === "string" && value.trim() ? (
+                    <div key={key} className="break-words">
+                      <dt className="inline font-semibold">{label}: </dt>
+                      <dd className="inline whitespace-pre-wrap">{value}</dd>
+                    </div>
+                  ) : null;
+                })}
+              </dl>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
 }
 
 function NewSignalsBlock({ count, signals, asOf }: { count: number; signals: NewSignal[]; asOf: Date }) {

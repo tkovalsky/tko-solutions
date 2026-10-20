@@ -4,6 +4,29 @@ import { DiagnosticForm } from "./diagnostic-form";
 import { getConversionAttribution, trackConversion } from "@/lib/conversion-events";
 vi.mock("@/lib/conversion-events", async (importOriginal) => ({ ...await importOriginal<typeof import("@/lib/conversion-events")>(), trackConversion: vi.fn() }));
 afterEach(() => { cleanup(); vi.clearAllMocks(); window.sessionStorage.clear(); window.history.replaceState({}, "", "/"); });
+describe("intake result states", () => {
+  it.each(["submitted", "notification-error"])("treats %s as a saved result and offers a fresh request", (status) => {
+    const { container } = render(<DiagnosticForm action={vi.fn()} status={status} />);
+
+    expect(trackConversion).toHaveBeenCalledWith("contact_form_result_view");
+    expect(vi.mocked(trackConversion).mock.calls.some(([event]) => event === "contact_form_submit_error")).toBe(false);
+    expect(container.querySelector("form")).toBeNull();
+    expect(screen.getByRole("link", { name: "Submit another request" })).toHaveAttribute("href", "/contact");
+  });
+
+  it.each([
+    ["invalid", "server_validation"],
+    ["error", "submission_failure"],
+  ])("keeps %s recoverable with the form and the correct error event", (status, errorType) => {
+    const { container } = render(<DiagnosticForm action={vi.fn()} status={status} />);
+
+    expect(trackConversion).toHaveBeenCalledWith("contact_form_submit_error", { errorType });
+    expect(trackConversion).not.toHaveBeenCalledWith("contact_form_result_view");
+    expect(container.querySelector("form")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Submit another request" })).not.toBeInTheDocument();
+  });
+});
+
 describe("follow-up pilot intake", () => {
   it("submits the original campaign and landing path after navigating from proof into readiness intake", () => {
     window.history.replaceState({}, "", "/healthcare/readiness-preview?utm_source=linkedin&utm_medium=personal&utm_campaign=readiness&email=private@example.com");

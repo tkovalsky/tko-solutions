@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { persistInboundLead } from "@/lib/leads/persist";
+import { markInboundLeadNotified, persistInboundLead } from "@/lib/leads/persist";
 import { prisma } from "@/lib/db/prisma";
 
 vi.mock("@/lib/db/prisma", () => ({
   prisma: {
     inboundLead: {
       upsert: vi.fn(),
-      update: vi.fn(),
+      updateMany: vi.fn(),
     },
   },
 }));
@@ -56,6 +56,7 @@ describe("persistInboundLead", () => {
       }),
       update: expect.objectContaining({
         lastSubmittedAt: submittedAt,
+        notifiedAt: null,
       }),
     });
     expect(info).toHaveBeenCalledWith("inbound_lead.persisted", {
@@ -63,6 +64,18 @@ describe("persistInboundLead", () => {
       email: "todd@example.com",
       source: "contact_form",
       timestamp: "2026-07-02T12:00:00.000Z",
+    });
+  });
+
+  it("only marks the saved submission notified, leaving a newer submission pending", async () => {
+    const submittedAt = new Date("2026-10-16T12:00:00Z");
+    const notifiedAt = new Date("2026-10-16T12:01:00Z");
+    mockedPrisma.inboundLead.updateMany.mockResolvedValue({ count: 0 });
+
+    await expect(markInboundLeadNotified("lead_123", notifiedAt, submittedAt)).resolves.toEqual({ count: 0 });
+    expect(mockedPrisma.inboundLead.updateMany).toHaveBeenCalledWith({
+      where: { id: "lead_123", lastSubmittedAt: submittedAt },
+      data: { notifiedAt },
     });
   });
 });

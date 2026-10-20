@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import OiTodayPage from "./page";
 import { ANCHORS } from "./opportunity-card";
 import { tifDb } from "@/lib/tif/db";
+import type { PersistedInboundLead } from "@/lib/leads/types";
 
 vi.mock("@/lib/tif/db", () => ({
   tifDb: {
@@ -11,6 +12,7 @@ vi.mock("@/lib/tif/db", () => ({
     oiNextAction: { updateMany: vi.fn() },
     oiSignal: { count: vi.fn(), findMany: vi.fn() },
     oiOrganization: { findMany: vi.fn() },
+    inboundLead: { findMany: vi.fn() },
   },
 }));
 
@@ -30,6 +32,7 @@ beforeEach(() => {
   mockedDb.oiSignal.count.mockResolvedValue(0);
   mockedDb.oiSignal.findMany.mockResolvedValue([]);
   mockedDb.oiOrganization.findMany.mockResolvedValue([]);
+  mockedDb.inboundLead.findMany.mockResolvedValue([]);
 });
 
 afterEach(() => {
@@ -37,6 +40,42 @@ afterEach(() => {
 });
 
 describe("OiTodayPage", () => {
+  it("renders a saved website lead with intake context and pending email status", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([]);
+    mockedDb.inboundLead.findMany.mockResolvedValue([inboundLead()]);
+
+    render(await OiTodayPage());
+
+    expect(screen.getByRole("heading", { name: "Website inbound leads" })).toBeInTheDocument();
+    expect(screen.getByText("Alex Morgan")).toBeInTheDocument();
+    expect(screen.getByText("Example Health")).toBeInTheDocument();
+    expect(screen.getByText("Operations director")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "alex@example.com" })).toHaveAttribute("href", "mailto:alex@example.com");
+    expect(screen.getByText("Saved in DB · Email pending")).toBeInTheDocument();
+    expect(screen.getByText(/diagnostic_fit_call · 2h old/)).toBeInTheDocument();
+    expect(screen.getByText("Our manual handoffs need improvement.")).toBeInTheDocument();
+    expect(screen.getByText("manual-work")).toBeInTheDocument();
+    expect(screen.getByText("5-20m")).toBeInTheDocument();
+    expect(screen.getByText("now")).toBeInTheDocument();
+    expect(mockedDb.inboundLead.findMany).toHaveBeenCalledWith({
+      orderBy: [{ lastSubmittedAt: "desc" }], take: 5,
+    });
+  });
+
+  it("renders notified leads with optional fields and non-object payloads missing", async () => {
+    mockedDb.oiOpportunity.findMany.mockResolvedValue([]);
+    mockedDb.inboundLead.findMany.mockResolvedValue([
+      { ...inboundLead(), name: null, company: null, role: null, source: null, payload: null, notifiedAt: new Date("2026-08-01T10:01:00Z") },
+    ]);
+
+    render(await OiTodayPage());
+
+    expect(screen.getByText("Email notified")).toBeInTheDocument();
+    expect(screen.getByText("Name not provided")).toBeInTheDocument();
+    expect(screen.getByText(/Source unknown/)).toBeInTheDocument();
+    expect(screen.queryByText("Context:")).not.toBeInTheDocument();
+  });
+
   it("renders the header before capped opportunity cards and removes the placeholder", async () => {
     mockedDb.oiOpportunity.findMany.mockResolvedValue(
       Array.from({ length: 6 }, (_, index) => opportunity(`opp-${index}`, { pe: 1000 - index })),
@@ -213,8 +252,31 @@ describe("OiTodayPage", () => {
 
     expect(screen.getByText("No Tier 1 or Tier 2 signals are waiting for triage.")).toBeInTheDocument();
     expect(screen.getByText("No accounts are being watched.")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Website inbound leads" })).not.toBeInTheDocument();
   });
 });
+
+function inboundLead(): PersistedInboundLead {
+  return {
+    id: "lead-1",
+    name: "Alex Morgan",
+    company: "Example Health",
+    role: "Operations director",
+    email: "alex@example.com",
+    source: "diagnostic_fit_call",
+    landingPage: "/contact",
+    payload: {
+      transformationContext: "Our manual handoffs need improvement.",
+      currentPressure: "manual-work",
+      revenueBand: "5-20m",
+      timing: "now",
+    },
+    notifiedAt: null,
+    lastSubmittedAt: new Date("2026-08-01T10:00:00Z"),
+    createdAt: new Date("2026-08-01T10:00:00Z"),
+    updatedAt: new Date("2026-08-01T10:00:00Z"),
+  };
+}
 
 function opportunity(
   id: string,
