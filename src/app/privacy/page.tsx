@@ -35,7 +35,7 @@ export default function PrivacyPage() {
       />
       <Section>
         <div className="prose-tko">
-          <p><strong>Last updated:</strong> October 14, 2026</p>
+          <p><strong>Last updated:</strong> October 18, 2026</p>
 
           <h2>Information TKO collects</h2>
           <p>
@@ -51,7 +51,9 @@ export default function PrivacyPage() {
             TKO uses submitted information to review your request, determine whether
             a conversation may be appropriate, respond to you, protect the form from
             abuse, maintain a record of business inquiries, and understand which
-            public content helps prospective buyers.
+            public content helps prospective buyers. When you submit a valid inquiry,
+            TKO may send you one email acknowledging receipt. TKO does not add you to
+            a marketing list or send recurring email without your separate agreement.
           </p>
 
           <h2>Do not submit sensitive information</h2>
@@ -65,9 +67,20 @@ export default function PrivacyPage() {
 
           <h2>Service providers</h2>
           <p>
-            TKO uses service providers for website hosting, database storage, and
-            delivery of inquiry notifications. They process information only to
-            provide those services. TKO does not sell submitted personal information.
+            TKO uses service providers for website hosting and analytics (Vercel),
+            database storage (Neon), and delivery of inquiry notifications and
+            acknowledgments (Resend), with business email handled through Zoho Mail.
+            They process information only to provide those services and are located in
+            the United States. TKO does not sell submitted personal information.
+          </p>
+
+          <h2>Client engagements</h2>
+          <p>
+            This notice covers the website. When TKO processes contact or business data
+            on a client&rsquo;s behalf during an engagement, that processing is governed by
+            the client&rsquo;s written agreement and separate data-processing terms, which
+            name the providers involved, the security measures, and the notification and
+            deletion commitments. Client data is never combined with website inquiry data.
           </p>
 
           <h2>Website measurement</h2>
@@ -109,7 +122,8 @@ export default function PrivacyPage() {
           <p>
             Questions or requests about this notice can be sent to{" "}
             <a href={`mailto:${site.email}`}>{site.email}</a>. For a business inquiry,
-            use the <Link href="/contact">contact page</Link>.
+            use the <Link href="/contact">contact page</Link>. Use of the site is also
+            subject to the <Link href="/terms">website terms</Link>.
           </p>
         </div>
       </Section>

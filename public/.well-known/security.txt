@@ -1,0 +1,5 @@
+Contact: mailto:todd@tko.solutions
+Expires: 2027-10-18T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://tko.solutions/.well-known/security.txt
+Policy: https://tko.solutions/terms
