@@ -128,7 +128,7 @@ The fix is not a new CRM, and it is not more automated email. It is a small oper
 1. **One record per lead.** Every call, text, email, form, and site visit lands in one place, with facts kept separate from guesses.
 2. **One status, one owner, one next action.** Every open lead has exactly one of each. If it doesn't, that is itself a flag.
 3. **One ranked queue.** Each morning the question "who needs attention today, and why?" is answered by the system instead of being rebuilt from four tools. In RachelOS, every item in the queue carries its reason: what triggered it, how long it has waited, and what is missing.
-4. **Drafts, with a person deciding.** The system drafts the next message and suggests what to send. A person approves anything that goes to a customer. Seventy-seven messages went out that way by July.
+4. **Drafts, with a person deciding.** The system drafts the next message and suggests what to send. A person approves anything that goes to a customer.
 5. **Alerts for silence.** Twice, leads stopped arriving for several days and nobody noticed. The system now raises an alert when nothing comes in, because the most expensive leak is the one you can't see.
 
 ![The RachelOS morning view: one ranked queue, a lead overdue by 12 days, missing facts flagged, and the next question to ask. Contact details are redacted.](/proof/rachelos/today-work.png)
