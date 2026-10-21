@@ -27,6 +27,14 @@ unless explicitly instructed.
 
 ⸻
 
+Positioning Lock
+
+Before changing any public copy, offer, price, product name, or RachelOS claim, read docs/POSITIONING_LOCK.md.
+
+Do not change lanes, offer names, prices, product names, the homepage headline, or RachelOS proof claims without Todd's explicit approval in the request. An approved change updates docs/POSITIONING_LOCK.md in the same commit. src/lib/positioning-lock.test.ts enforces this; never edit the test to make it pass.
+
+⸻
+
 Default Workflow
 
 Every request follows:
