@@ -65,7 +65,7 @@ Review every public page as it exists now:
    npm run lint
    npm test
    DATABASE_URL=postgresql://u:p@localhost:5432/db npm run build
-   The current baseline is 450 tests passing.
+   The current baseline is 498 tests passing.
 7. Risks: any personal data in screenshots or text; anything implying an employer or client endorses TKO; any mention of Rachel or her business beyond the name "RachelOS" without her written permission; anything implying unlimited availability (Todd has a full-time job).
 
 PART 3: DELIVERABLES
