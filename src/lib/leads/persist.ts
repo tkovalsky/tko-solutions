@@ -24,6 +24,7 @@ export async function persistInboundLead(
       landingPage: submission.landingPage,
       payload: submission.payload,
       lastSubmittedAt: submission.submittedAt,
+      notifiedAt: null,
     },
   });
 
@@ -37,9 +38,9 @@ export async function persistInboundLead(
   return lead;
 }
 
-export async function markInboundLeadNotified(leadId: string, notifiedAt = new Date()) {
-  return prisma.inboundLead.update({
-    where: { id: leadId },
+export async function markInboundLeadNotified(leadId: string, notifiedAt = new Date(), lastSubmittedAt?: Date) {
+  return prisma.inboundLead.updateMany({
+    where: { id: leadId, ...(lastSubmittedAt ? { lastSubmittedAt } : {}) },
     data: { notifiedAt },
   });
 }

@@ -70,7 +70,7 @@ export function DiagnosticForm({
     if (status === "invalid") {
       trackConversion("contact_form_submit_error", { errorType: "server_validation" });
     }
-    if (status === "error" || status === "notification-error") {
+    if (status === "error") {
       trackConversion("contact_form_submit_error", { errorType: "submission_failure" });
     }
   }, [status]);
@@ -93,6 +93,16 @@ export function DiagnosticForm({
     if (validationErrorTracked.current) return;
     validationErrorTracked.current = true;
     trackConversion("contact_form_submit_error", { errorType: "client_validation" });
+  }
+
+  if (status === "submitted" || status === "notification-error") {
+    return (
+      <div className="py-2">
+        <Link href="/contact" className="inline-flex min-h-11 items-center font-semibold text-primary underline">
+          Submit another request
+        </Link>
+      </div>
+    );
   }
 
   return (

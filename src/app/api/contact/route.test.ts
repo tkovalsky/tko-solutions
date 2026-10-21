@@ -62,6 +62,25 @@ describe("POST /api/contact", () => {
     );
     expect(notifyLead).toHaveBeenCalledWith({ id: "lead_abc" });
   });
+  it.each(["a@", "@example.com", "a@@example.com", "a@example", "a@example.com\r\nBcc:other@example.com", null, 123])("rejects malformed addresses before storage or email: %s", async (email) => {
+    const response = await POST(new Request("http://localhost:3000/api/contact", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }),
+    }));
+    expect(response.status).toBe(400);
+    expect(persistInboundLead).not.toHaveBeenCalled();
+    expect(notifyLead).not.toHaveBeenCalled();
+  });
+
+  it("normalizes a valid email before saving and sending", async () => {
+    persistInboundLead.mockResolvedValue({ id: "normalized" });
+    notifyLead.mockResolvedValue({ status: "sent", notifiedAt: new Date() });
+    const response = await POST(new Request("http://localhost:3000/api/contact", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: "  Alex@Example.COM  " }),
+    }));
+    expect(response.status).toBe(200);
+    expect(persistInboundLead).toHaveBeenCalledWith(expect.objectContaining({ email: "alex@example.com" }));
+    expect(notifyLead).toHaveBeenCalledWith({ id: "normalized" });
+  });
   it.each(["failed", "skipped"])("reports saved inquiry without claiming an email when notification is %s", async (status) => {
     persistInboundLead.mockResolvedValue({ id: "lead_saved" });
     notifyLead.mockResolvedValue({ status });

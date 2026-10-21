@@ -4,7 +4,9 @@ import path from "node:path";
 // Run from the site checkout after npm run build. Read-only: no form submissions.
 const base = new URL(process.argv[2] ?? "http://localhost:3000");
 const manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), ".next/prerender-manifest.json"), "utf8"));
-const seeds = [...new Set([...Object.keys(manifest.routes).filter(p => !p.startsWith("/_")), "/contact", "/contact?offer=regulatory-implementation-readiness-sprint", "/contact?offer=operating-system-build", "/contact?offer=managed-follow-up"])];
+// Discovery files are seeded explicitly: they are not HTML, so nothing links to them.
+const discovery = ["/robots.txt", "/sitemap.xml", "/llms.txt", "/.well-known/security.txt"];
+const seeds = [...new Set([...Object.keys(manifest.routes).filter(p => !p.startsWith("/_")), "/contact", "/contact?offer=regulatory-implementation-readiness-sprint", "/contact?offer=operating-system-build", "/contact?offer=managed-follow-up", "/terms", ...discovery])];
 const queue = [...seeds];
 const pages = new Map();
 const fragments = [];

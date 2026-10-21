@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/founder",
     "/contact",
     "/privacy",
+    "/terms",
   ];
 
   const serviceRoutes = offers.map((offer) => offerHref(offer.slug));

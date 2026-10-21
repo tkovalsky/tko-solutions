@@ -6,6 +6,7 @@ const footerLinks = [
   ...publicNavigation,
   { href: "/contact", label: site.cta },
   { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
 ];
 
 export function Footer() {

@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { notifyLead } from "@/lib/leads/notify";
 import { persistInboundLead } from "@/lib/leads/persist";
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const { name, email, firm, market, transactionSize, inquiryType } = data;
+    const { name, email, firm, market, transactionSize, inquiryType } = data ?? {};
+    const parsedEmail = z.string().trim().toLowerCase().pipe(z.email()).safeParse(email);
 
-    if (!email || typeof email !== "string" || !email.includes("@")) {
+    if (!parsedEmail.success) {
       return NextResponse.json(
         { error: "A valid email address is required." },
         { status: 400 },
@@ -16,7 +18,7 @@ export async function POST(request: Request) {
 
     const lead = await persistInboundLead({
       name: typeof name === "string" ? name : undefined,
-      email: email.trim().toLowerCase(),
+      email: parsedEmail.data,
       company: typeof firm === "string" ? firm : undefined,
       role: "Principal / Managing Partner",
       source: typeof inquiryType === "string" ? inquiryType : "PCOS_QUEUE_WALKTHROUGH",

@@ -61,10 +61,10 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             </div>
           </aside>
           <div>
-            {status === "submitted" ? <Notice title="Got it." body="I'll reply within two business days to set up the call." /> : null}
+            {status === "submitted" ? <Notice title="Got it — your request is logged." body="I review every submission myself and will reply within two business days to set up our 30-minute call." /> : null}
             {status === "invalid" ? <Notice title="A little more detail, please." body="Complete the required fields and describe what's stuck in a sentence or two." /> : null}
             {status === "error" ? <Notice title="That didn't go through." body="Please try again, or email me directly." /> : null}
-            {status === "notification-error" ? <Notice title="Your message was saved, but I couldn't confirm the notification." body="Please email me directly as well so it isn't missed." /> : null}
+            {status === "notification-error" ? <Notice title="Got it — your request is saved." body="Your details are logged in our system and I will reply within two business days. If your timeline is urgent, feel free to also email me directly at todd@tko.solutions." /> : null}
             <DiagnosticForm key={workflowExample?.id ?? (managedFollowUp ? "managed-follow-up" : selectedOffer?.slug ?? "general")} action={submitDiagnosticIntake} status={status} managedFollowUp={managedFollowUp} useCaseId={workflowExample?.id} offerSlug={selectedOffer?.slug} />
             <p className="mt-8 border-t border-border pt-6 text-sm leading-6 text-muted">
               Prefer email? Write to me at{" "}
