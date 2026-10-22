@@ -58,6 +58,12 @@ describe("operator brief", () => {
     }
   });
 
+  it("includes managed follow-up qualification answers with labels", () => {
+    const content = buildLeadNotificationEmail({ ...lead, payload: { offer: "managed-follow-up", crm: "Follow Up Boss", contactCount: "500-3000", consentEvidence: "Past clients; opt-outs in FUB", caller: "Agent and assistant" } });
+    for (const line of ["CRM: Follow Up Boss", "Approximate contacts: 500-3000", "Consent evidence and opt-outs: Past clients; opt-outs in FUB", "Who makes the calls and logs dispositions: Agent and assistant", "Requested offer: managed-follow-up"]) expect(content.text).toContain(line);
+    expect(content.html).toContain("Who makes the calls and logs dispositions");
+  });
+
   it("escapes every user-controlled HTML field and removes subject line breaks", () => {
     const malicious = '<img src=x onerror="alert(1)">';
     const content = buildLeadNotificationEmail({ ...lead, name: "Alex\r\nBcc:other@example.com", company: malicious, role: malicious, email: malicious, source: malicious, landingPage: malicious, payload: { transformationContext: malicious } });

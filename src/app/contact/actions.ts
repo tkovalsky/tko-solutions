@@ -28,6 +28,10 @@ const intakeSchema = z.object({
   affectedSystems: z.string().min(2).max(1000).optional(),
   sponsor: z.string().min(2).max(200).optional(),
   healthcareScope: z.string().min(10).max(1000).optional(),
+  crm: z.string().min(2).max(200).optional(),
+  contactCount: z.enum(["under-500", "500-3000", "3000-8000", "over-8000", "unsure"]).optional(),
+  consentEvidence: z.string().max(1000).optional(),
+  caller: z.string().min(2).max(200).optional(),
   timing: z.enum(["now", "30", "31-90", "exploring"]),
   privacyConsent: z.literal(true),
   message: z.string().max(2000).optional(),
@@ -44,6 +48,7 @@ export async function submitDiagnosticIntake(formData: FormData) {
   const requestedOffer = getFormString(formData, "offer") ?? "";
   const selectedOffer = requestedOffer === "managed-follow-up" || isOfferSlug(requestedOffer) ? requestedOffer : undefined;
   const healthcare = selectedOffer === "regulatory-implementation-readiness-sprint";
+  const managedFollowUp = selectedOffer === "managed-follow-up";
   const offer = selectedOffer ? `&offer=${selectedOffer}` : "";
   const contactResult = (status: string) => `/contact?status=${status}${offer}`;
   if (getFormString(formData, "website")) {
@@ -62,6 +67,10 @@ export async function submitDiagnosticIntake(formData: FormData) {
     affectedSystems: healthcare ? getFormString(formData, "affectedSystems") : undefined,
     sponsor: healthcare ? getFormString(formData, "sponsor") : undefined,
     healthcareScope: healthcare ? getFormString(formData, "healthcareScope") : undefined,
+    crm: managedFollowUp ? getFormString(formData, "crm") : undefined,
+    contactCount: managedFollowUp ? getFormString(formData, "contactCount") : undefined,
+    consentEvidence: managedFollowUp ? getFormString(formData, "consentEvidence") : undefined,
+    caller: managedFollowUp ? getFormString(formData, "caller") : undefined,
     timing: formData.get("timing"),
     privacyConsent: formData.get("privacyConsent") === "on",
     message: getFormString(formData, "message"),
@@ -76,7 +85,7 @@ export async function submitDiagnosticIntake(formData: FormData) {
 
   if (!parsed.success || (healthcare
     ? !parsed.data.targetDeadline || !parsed.data.affectedSystems || !parsed.data.sponsor || !parsed.data.healthcareScope
-    : !parsed.data.revenueBand)) {
+    : !parsed.data.revenueBand || (managedFollowUp && (!parsed.data.crm || !parsed.data.contactCount || !parsed.data.caller)))) {
     redirect(contactResult("invalid"));
   }
 

@@ -84,6 +84,17 @@ describe("follow-up pilot intake", () => {
     expect(container.querySelector('input[name="source"]')).toHaveProperty("value", "managed_follow_up_pilot");
     expect(screen.getByLabelText("Team / brokerage")).toBeTruthy();
   });
+  it("asks the managed follow-up qualification questions only on that variant", () => {
+    const managed = render(<DiagnosticForm action={vi.fn()} managedFollowUp />);
+    expect(screen.getByLabelText("Which CRM do you use?")).toBeRequired();
+    expect(screen.getByLabelText("Approximate number of contacts")).toBeRequired();
+    expect(screen.getByLabelText("Who will make the calls and log the outcome?")).toBeRequired();
+    expect(screen.getByLabelText(/where do opt-outs live\? \(optional\)/)).not.toBeRequired();
+    expect(screen.getByRole("button", { name: "Discuss Managed Follow-Up" })).toBeInTheDocument();
+    managed.unmount();
+    const general = render(<DiagnosticForm action={vi.fn()} />);
+    for (const name of ["crm", "contactCount", "caller", "consentEvidence"]) expect(general.container.querySelector(`[name="${name}"]`)).toBeNull();
+  });
   it("preserves the general intake qualification rule", () => {
     const { container } = render(<DiagnosticForm action={vi.fn()} />);
     fireEvent.change(screen.getByLabelText("Annual revenue"), { target: { value: "under-2m" } });

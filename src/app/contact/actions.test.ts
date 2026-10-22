@@ -84,6 +84,29 @@ describe("submitDiagnosticIntake", () => {
     expect(mockedPersistInboundLead).not.toHaveBeenCalled();
   });
 
+  it("carries managed follow-up qualification fields into the saved payload", async () => {
+    const formData = managedFormData();
+    mockedPersistInboundLead.mockRejectedValue(new Error("database unavailable"));
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=error&offer=managed-follow-up");
+    expect(mockedPersistInboundLead).toHaveBeenCalledWith(expect.objectContaining({ payload: expect.objectContaining({ offer: "managed-follow-up", crm: "Follow Up Boss", contactCount: "500-3000", caller: "Me, with my assistant", consentEvidence: "Past clients; unsubscribes tracked in FUB" }) }));
+  });
+
+  it.each(["crm", "contactCount", "caller"])("requires %s for managed follow-up before persistence", async (field) => {
+    const formData = managedFormData();
+    formData.delete(field);
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=invalid&offer=managed-follow-up");
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+  });
+
+  it("does not store managed follow-up fields from other intake variants", async () => {
+    const formData = managedFormData();
+    formData.delete("offer");
+    mockedPersistInboundLead.mockRejectedValue(new Error("database unavailable"));
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=error");
+    const payload = mockedPersistInboundLead.mock.calls[0][0].payload;
+    for (const field of ["crm", "contactCount", "caller", "consentEvidence"]) expect(payload).not.toHaveProperty(field);
+  });
+
   it("rejects invalid submissions without persisting", async () => {
     const formData = validFormData();
     formData.set("email", "not-an-email");
@@ -219,5 +242,16 @@ function validFormData() {
   formData.set("privacyConsent", "on");
   formData.set("message", "We need a defensible next move.");
   formData.set("consequence", "We keep losing deals we already paid to generate.");
+  return formData;
+}
+
+function managedFormData() {
+  const formData = validFormData();
+  formData.set("offer", "managed-follow-up");
+  formData.set("revenueBand", "under-2m");
+  formData.set("crm", "Follow Up Boss");
+  formData.set("contactCount", "500-3000");
+  formData.set("caller", "Me, with my assistant");
+  formData.set("consentEvidence", "Past clients; unsubscribes tracked in FUB");
   return formData;
 }

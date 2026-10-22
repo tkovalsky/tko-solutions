@@ -29,6 +29,8 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
     ["revenueBand", "Revenue band"], ["timing", "Timing"], ["offer", "Requested offer"],
     ["targetDeadline", "Target deadline"], ["affectedSystems", "Affected systems"],
     ["sponsor", "Sponsor"], ["healthcareScope", "Readiness scope"],
+    ["crm", "CRM"], ["contactCount", "Approximate contacts"],
+    ["consentEvidence", "Consent evidence and opt-outs"], ["caller", "Who makes the calls and logs dispositions"],
     ["message", "Message"], ["consequence", "Consequence"],
     ["firm", "Firm"], ["market", "Market"], ["transactionSize", "Transaction size"],
     ["inquiryType", "Inquiry type"], ["problem", "Problem"], ["systems", "Systems"],

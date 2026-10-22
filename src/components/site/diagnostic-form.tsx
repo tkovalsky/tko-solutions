@@ -164,6 +164,20 @@ export function DiagnosticForm({
         <Field id="healthcareScope" label="Scope and the decision you need" placeholder="One approved change, the population or workflow in scope, and the decision your sponsor needs. Unknown boundaries can be stated explicitly." textarea />
       </fieldset> : null}
 
+      {managedFollowUp ? <fieldset className="space-y-6 rounded-lg border border-border bg-surface p-5"><legend className="px-2 font-semibold">Your contact base</legend>
+        <div className="grid gap-6 md:grid-cols-2"><Field id="crm" label="Which CRM do you use?" placeholder="For example: Follow Up Boss, Wealthbox, Redtail, or a spreadsheet" />
+          <SelectField id="contactCount" label="Approximate number of contacts">
+            <option value="">Select one</option>
+            <option value="under-500">Under 500</option>
+            <option value="500-3000">500–3,000</option>
+            <option value="3000-8000">3,000–8,000</option>
+            <option value="over-8000">Over 8,000</option>
+            <option value="unsure">Not sure</option>
+          </SelectField></div>
+        <Field id="caller" label="Who will make the calls and log the outcome?" placeholder="For example: me, or our inside sales agent. A name is optional." />
+        <Field id="consentEvidence" label="How did these contacts come to you, and where do opt-outs live? (optional)" placeholder="For example: past clients and open-house sign-ins; unsubscribes are tracked in Follow Up Boss. Do not paste contact data." textarea required={false} />
+      </fieldset> : null}
+
       <div className="grid gap-6 md:grid-cols-2">
         {!healthcare ? <SelectField id="revenueBand" label={managedFollowUp ? "Annual commission revenue (not property sales volume)" : "Annual revenue"}>
           <option value="">Select one</option>
@@ -185,8 +199,8 @@ export function DiagnosticForm({
 
       <Field
         id="message"
-        label={managedFollowUp ? "Team size, CRM, and approximate contact count (optional)" : "Which tools do you run on? (optional)"}
-        placeholder={managedFollowUp ? "For example: 3 agents, Follow Up Boss, about 1,200 contacts. Tell me which tools and people are involved." : "For example: HubSpot, spreadsheets, QuickBooks, Gmail, an industry CRM, a few AI tools."}
+        label={managedFollowUp ? "Team size and anything else I should know (optional)" : "Which tools do you run on? (optional)"}
+        placeholder={managedFollowUp ? "For example: 3 agents and one assistant; we tried a drip campaign last year." : "For example: HubSpot, spreadsheets, QuickBooks, Gmail, an industry CRM, a few AI tools."}
         textarea
         required={false}
       />
@@ -222,7 +236,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        {managedFollowUp ? "Discuss a Follow-Up Pilot" : "Request a Conversation"}
+        {managedFollowUp ? "Discuss Managed Follow-Up" : "Request a Conversation"}
       </Button>
     </form>
   );
