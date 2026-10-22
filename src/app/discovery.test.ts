@@ -6,7 +6,7 @@ import sitemap from "./sitemap";
 import { GET as getLlmsText } from "./llms.txt/route";
 import { getInsights } from "@/lib/insights";
 import { buildLlmsText } from "@/lib/llms";
-import { offers } from "@/lib/offers";
+import { offers, sidecar } from "@/lib/offers";
 
 // Discovery surface: robots, sitemap, llms.txt, security.txt. These are generated from the
 // offer registry and published guides, so the checks assert they cannot drift from the pages.
@@ -76,7 +76,8 @@ describe("llms.txt", () => {
       expect(text).toContain(`[${offer.name}](https://tko.solutions/services/${offer.slug})`);
       expect(text).toContain(offer.commercial);
     }
-    expect(text).toContain("$5,000 30-day pilot");
+    for (const step of sidecar.steps) expect(text).toContain(`${step.name}: ${step.commercial}`);
+    expect(text).not.toContain("$5,000");
   });
 
   it("links every published guide and the policy pages, and nothing private", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { commercialEngines, getOffer, isOfferSlug, offerHref, offers } from "@/lib/offers";
+import { commercialEngines, getOffer, isOfferSlug, offerHref, offers, sidecar } from "@/lib/offers";
 
 describe("TKO offer ladder", () => {
   it("contains three unique, priced steps in diagnose → build → operate order", () => {
@@ -32,5 +32,25 @@ describe("Commercial engine consistency", () => {
     expect(getOffer("operating-system-build")).toMatchObject({ startingPrice: "$7,500", commercial: "$7,500–$15,000 build · fixed scope" });
     expect(getOffer("operate-and-improve")).toMatchObject({ startingPrice: "$1,500/mo", commercial: "$1,500–$3,000 per month" });
     for (const engine of commercialEngines) expect(getOffer(engine.slug)).toBeDefined();
+  });
+});
+
+describe("SidecarOS ladder", () => {
+  it("states assessment, Core, and Managed in order with Schedule A contact limits", () => {
+    expect(sidecar.steps.map((step) => step.id)).toEqual(["assessment", "core", "managed"]);
+    expect(sidecar.steps.map((step) => step.price)).toEqual(["$500", "$1,500 setup", "$2,500 setup"]);
+    expect(sidecar.steps.map((step) => ("monthly" in step ? step.monthly : undefined))).toEqual([undefined, "$500/month", "$1,200/month"]);
+    expect(sidecar.steps.map((step) => step.includes.find((item) => /contacts/.test(item)))).toEqual([
+      "Up to 8,000 contacts",
+      "Up to 3,000 contacts; email support within two business days",
+      "Up to 8,000 contacts; email support within one business day",
+    ]);
+  });
+
+  it("does not publish Rachel Desk or guarantee outcomes", () => {
+    const text = JSON.stringify(sidecar).toLowerCase();
+    expect(text).not.toContain("rachel desk");
+    expect(text).not.toMatch(/guarantee/);
+    expect(sidecar.contactHref).toBe("/contact?offer=managed-follow-up");
   });
 });

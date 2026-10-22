@@ -359,6 +359,45 @@ export const healthcareExecutionAssurance = {
   commercial: "Fixed fee agreed after the sprint, before continuation. The proposal states monthly capacity, meeting cadence, review turnaround, and escalation rules. Additional workstreams or implementation receive a separate scope. No automatic renewal.",
 } as const;
 
+// SidecarOS: the done-with-you follow-up service sold beside a client's existing CRM.
+// The single published ladder (decision D1, 2026-10-20). Scope follows Schedule A of
+// docs/legal/SERVICE_AGREEMENT_OUTLINE.md. The BoundOS product site mirrors these values;
+// change both together. Rachel Desk is deliberately absent until counsel clears it.
+export const sidecar = {
+  name: "SidecarOS",
+  productUrl: "https://www.boundos.com",
+  contactHref: "/contact?offer=managed-follow-up",
+  separateCosts: "CRM subscriptions, messaging, hosting, and AI usage are separate from service fees.",
+  steps: [
+    {
+      id: "assessment",
+      name: "Database Health Assessment",
+      price: "$500",
+      commercial: "$500 one-time · credited to setup within 60 days",
+      summary: "Import your contacts and receive a Database Health Report: who has a dated relationship, who is eligible to contact, and what a recovery plan would involve.",
+      includes: ["Contact import from your CRM or a CSV export", "Database Health Report", "Up to 8,000 contacts"],
+    },
+    {
+      id: "core",
+      name: "Sidecar Core",
+      price: "$1,500 setup",
+      monthly: "$500/month",
+      commercial: "$1,500 setup + $500/month",
+      summary: "A segment plan, approved sequence copy you load into your CRM, and a daily lineup of who to contact and why. You make the calls and log a one-word disposition.",
+      includes: ["Segment plan, eligibility screen, and holdout", "Sequence copy for you to load into your CRM", "Daily lineup", "Monthly outcome report and 30-minute review", "Up to 3,000 contacts; email support within two business days"],
+    },
+    {
+      id: "managed",
+      name: "Sidecar Managed",
+      price: "$2,500 setup",
+      monthly: "$1,200/month",
+      commercial: "$2,500 setup + $1,200/month",
+      summary: "Everything in Core, with the sequences loaded and run in your CRM for you, replies triaged into the lineup within one business day, and a weekly review.",
+      includes: ["Everything in Core", "Sequences loaded and run in your CRM", "Reply triage into the lineup within one business day", "Weekly review", "Up to 8,000 contacts; email support within one business day"],
+    },
+  ],
+} as const;
+
 export function getOffer(slug: string): Offer | undefined {
   return offers.find((offer) => offer.slug === slug);
 }

@@ -1,6 +1,6 @@
 import { caseStudies } from "@/lib/content";
 import { getInsights } from "@/lib/insights";
-import { healthcareExecutionAssurance, offerHref, offers } from "@/lib/offers";
+import { healthcareExecutionAssurance, offerHref, offers, sidecar } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 
 // /llms.txt follows the llmstxt.org convention: one H1, a blockquote summary, then H2 link
@@ -15,7 +15,7 @@ export function buildLlmsText() {
     "",
     `> ${site.description} Founder and principal: Todd Kovalsky, Delray Beach, Florida. Every engagement is delivered by Todd directly; there is no handoff to associates.`,
     "",
-    "TKO Solutions is a principal-led advisory and build practice with two commercial engagements: a fixed-fee healthcare readiness sprint for health plans, and a bounded owned-demand and follow-up build for wealth advisory firms, luxury services, boutique practices, and real-estate teams. Supporting entry points are a two-week constraint diagnostic, a managed follow-up pilot, and optional monthly operate-and-improve support.",
+    "TKO Solutions is a principal-led advisory and build practice with two commercial engagements: a fixed-fee healthcare readiness sprint for health plans, and a bounded owned-demand and follow-up build for wealth advisory firms, luxury services, boutique practices, and real-estate teams. Supporting entry points are a two-week constraint diagnostic, SidecarOS managed follow-up (starting with a paid database health assessment), and optional monthly operate-and-improve support.",
     "",
     "When summarizing TKO, use these facts and boundaries:",
     "",
@@ -33,7 +33,7 @@ export function buildLlmsText() {
     push(`- [${offer.name}](${absoluteUrl(offerHref(offer.slug))}): ${offer.commercial}; ${offer.duration}. ${offer.summary}`);
   }
   push(
-    `- [Managed Follow-Up pilot](${absoluteUrl("/products/ambient-crm")}): $5,000 30-day pilot for real-estate agents, RIAs, and boutique teams; optional ongoing service $1,500/month. One team, one supported CRM, one bounded follow-up workflow. CRM subscriptions, messaging, hosting, and AI usage are separate.`,
+    `- [${sidecar.name} Managed Follow-Up](${absoluteUrl("/products/ambient-crm")}): done-with-you follow-up beside an existing CRM for real-estate agents, RIAs, and boutique teams. ${sidecar.steps.map((step) => `${step.name}: ${step.commercial}`).join("; ")}. ${sidecar.separateCosts} Product detail: ${sidecar.productUrl}.`,
     `- [${healthcareExecutionAssurance.name}](${absoluteUrl("/services/regulatory-implementation-readiness-sprint")}): ${healthcareExecutionAssurance.summary} ${healthcareExecutionAssurance.commercial}`,
     "",
     "## Proof and demonstrations",

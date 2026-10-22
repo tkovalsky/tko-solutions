@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { QueueWalkthroughModal } from "@/components/marketing/QueueWalkthroughModal";
 import { ShieldCheck, Zap, Globe, Smartphone, Network } from "lucide-react";
 
-import { getOffer } from "@/lib/offers";
+import { getOffer, sidecar } from "@/lib/offers";
 
 const build = getOffer("operating-system-build")!;
 const support = getOffer("operate-and-improve")!;
@@ -209,6 +209,7 @@ export default function PrivateClientOSPage() {
             </article>
           </div>
           <p className="mt-6 text-sm leading-7 text-muted">Hosting, CRM subscriptions, messaging, and model usage are separate. No lead volume, retention, revenue, or time advantage over aggregators is guaranteed.</p>
+          <p className="mt-4 text-sm leading-7 text-muted">Only need follow-up on an existing contact base? {sidecar.name}, by TKO Solutions, starts with a {sidecar.steps[0].price} {sidecar.steps[0].name}; see <a href={sidecar.productUrl} className="font-semibold text-primary underline underline-offset-4">boundos.com</a> or <a href="/products/ambient-crm" className="font-semibold text-primary underline underline-offset-4">Managed Follow-Up</a>.</p>
         </Section>
 
         {/* PRIMARY CTA */}

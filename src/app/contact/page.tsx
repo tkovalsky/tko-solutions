@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { CalendarDays, Mail } from "lucide-react";
 import { submitDiagnosticIntake } from "@/app/contact/actions";
 import { DiagnosticForm } from "@/components/site/diagnostic-form";
-import { CONSTRAINT_CALL, getOffer } from "@/lib/offers";
+import { CONSTRAINT_CALL, getOffer, sidecar } from "@/lib/offers";
 import { absoluteUrl, site } from "@/lib/site";
 import { getRachelOSUseCase } from "@/lib/rachelos-use-cases";
 
@@ -29,8 +29,8 @@ export default async function ContactPage({ searchParams }: SearchParams) {
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-[64ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.1em] text-primary">Book a call</p>
-          <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">{managedFollowUp ? "Let’s check whether a follow-up pilot fits." : "Talk to the person who will do the work."}</h1>
-          <p className="mt-5 text-lg leading-8 text-muted">{managedFollowUp ? "A free introductory conversation about your team, current CRM, and the follow-up that keeps slipping. We confirm access, compatibility, and scope before proposing the $5,000 pilot." : CONSTRAINT_CALL.summary}</p>
+          <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">{managedFollowUp ? "Let’s check whether managed follow-up fits." : "Talk to the person who will do the work."}</h1>
+          <p className="mt-5 text-lg leading-8 text-muted">{managedFollowUp ? `A free introductory conversation about your team, current CRM, and the follow-up that keeps slipping. We confirm access, compatibility, and scope before proposing the ${sidecar.steps[0].price} ${sidecar.steps[0].name}.` : CONSTRAINT_CALL.summary}</p>
           <p className="mt-4 text-base leading-7 text-muted">A few sentences are enough. Projects for this year or next are welcome; scope and start dates are agreed around your priorities and available capacity.</p>
           {workflowExample ? (
             <div className="mt-6 border-l-2 border-primary bg-surface p-5">
@@ -52,7 +52,7 @@ export default async function ContactPage({ searchParams }: SearchParams) {
             <ol className="mt-5 space-y-4 text-base leading-7 text-muted">
               <li><span className="font-semibold text-foreground">1.</span> I read the message myself and reply within two business days.</li>
               <li><span className="font-semibold text-foreground">2.</span> {managedFollowUp ? "We discuss your follow-up process, supported tools, and who will use the workflow." : selectedOffer?.slug === "regulatory-implementation-readiness-sprint" ? "We discuss the approved obligation, affected teams and systems, and the readiness decision your sponsor needs." : "We spend 30 minutes on the workflow, what should change, and your timeline."}</li>
-              <li><span className="font-semibold text-foreground">3.</span> {managedFollowUp ? "If there is a fit, you receive a written pilot scope. Ongoing service is optional." : selectedOffer ? "If the work fits, I propose a written scope with deliverables, dependencies, acceptance criteria, and commercial terms." : "I tell you where I would look first and whether a readiness sprint, diagnostic, or scoped build makes sense."}</li>
+              <li><span className="font-semibold text-foreground">3.</span> {managedFollowUp ? "If there is a fit, you receive a written assessment scope. Monthly service is a separate decision after the report." : selectedOffer ? "If the work fits, I propose a written scope with deliverables, dependencies, acceptance criteria, and commercial terms." : "I tell you where I would look first and whether a readiness sprint, diagnostic, or scoped build makes sense."}</li>
               <li><span className="font-semibold text-foreground">4.</span> If TKO is not the right fit, I will say so plainly.</li>
             </ol>
             <div className="mt-8 border-l-2 border-primary bg-surface p-5">
