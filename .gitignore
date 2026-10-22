@@ -46,3 +46,6 @@ next-env.d.ts
 /.private/
 /output/
 /tmp/
+
+# Temporary browser recording staging
+/public/videos/raw/
