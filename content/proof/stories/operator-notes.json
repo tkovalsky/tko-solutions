@@ -607,12 +607,12 @@
     "insight": "Group the questions by where people are moving from, and the worries become specific",
     "mechanics": [
       "An aggregate, de-identified count of questionnaire questions by origin market, with no lead-level data.",
-      "Rachel's answer to the top three, in her own words."
+      "My answer to the top three, in my own words."
     ],
     "outcome": {
       "status": "unknown",
       "claims": [],
-      "gap": "The de-identified aggregate hasn't been pulled yet, and Rachel hasn't chosen the three questions."
+      "gap": "The de-identified aggregate hasn't been pulled yet, and I haven't chosen the three questions yet."
     },
     "takeaway": "The question someone asks last is often the one they should have asked first.",
     "cta": { "text": "Moving to South Florida? Start with the home-match questionnaire.", "href": "https://racheldelray.com/recommendations" },
