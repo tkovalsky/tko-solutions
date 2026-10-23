@@ -47,10 +47,18 @@ outreach, or a large software-development roadmap.
 | SEO and structured metadata | `src/app/insights/[slug]/page.tsx` (canonical, OpenGraph, JSON-LD) |
 | Offer and CTA mapping | `offer` + `cta` frontmatter → `src/lib/offers.ts` |
 | Repurposing | `src/lib/tif/repurposing.ts`, surfaced at `/tif/guides` |
-| Performance feedback | `content/feedback/guide-usage.csv` |
+| Operator notes (build in public) | `content/proof/stories/operator-notes.json` → `src/lib/tif/operator-notes.ts`, surfaced at `/tif/operator-notes` |
+| Performance feedback | `content/feedback/guide-usage.csv` · `content/feedback/post-performance.csv` |
 
 No database was introduced for the guide pipeline. Guides are repository-native markdown
 because that was already sufficient.
+
+Operator notes turn RachelOS engineering and operating evidence into LinkedIn drafts for
+Todd's professional audience. They read RachelOS only through cited, already-committed
+artifacts (PRs, issues, decisions, audits); they never read RachelOS production data, lead
+records, or employer or client material. Rachel's voice, the joint founder voice, and any note
+about her contacts or business stay unpublishable until she records consent in the note. A
+person publishes each post by hand; nothing in TIF posts to LinkedIn.
 
 ---
 
