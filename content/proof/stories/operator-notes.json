@@ -1,0 +1,642 @@
+[
+  {
+    "id": "ON-001",
+    "rank": 1,
+    "title": "Our production AI cost $3.42. Our CI cost $224.77 in 17 days.",
+    "identity": "todd",
+    "audience": "Founders, CTOs and operators budgeting for AI automation in a small business",
+    "storyType": "cost_to_build",
+    "hook": "By mid-October, our production AI ledger showed $3.42 in total model spend. CI cost $224.77 in the first 17 days of the month.",
+    "problem": "We suspected our AI features were leaking money. A small business can't carry a mystery bill, and guessing leads to cutting the wrong thing.",
+    "context": "RachelOS runs lead capture and follow-up for a working South Florida real estate business. AI coding agents help build it, so it merges a lot of small pull requests (439 in one two-week stretch this fall), and every one runs the full test suite.",
+    "failedApproach": "The obvious move was to cut model usage: cheaper models, fewer AI features. It would have saved almost nothing.",
+    "insight": "So we stopped guessing and put two ledgers side by side",
+    "mechanics": [
+      "Every production model call writes a ledger row (workload, model, tokens, cost) before the API key is even read, so total AI spend is one query.",
+      "GitHub's org billing report showed where the money actually went: 40,823 Linux minutes from October 1 to 17, nearly all of it CI.",
+      "We moved CI's test jobs to self-hosted runners in a Linux VM on a Mac we already own. Releases, migrations and anything else that touches production stay on GitHub's hosted runners.",
+      "We stopped the CMS project from rebuilding on commits that never touched it."
+    ],
+    "outcome": {
+      "status": "partial",
+      "claims": [
+        { "text": "GitHub Actions: $17.27/day (Oct 6–16) down to $2.33/day (Oct 18–21).", "evidenceIds": ["EVD-ON001-COST"] },
+        { "text": "Vercel: $6.49/day down to $2.47/day over the same windows, almost all of it build minutes.", "evidenceIds": ["EVD-ON001-COST"] },
+        { "text": "Model spend recorded in the production ledger as of Oct 17: $3.42 in total ($3.35 Sonnet, $0.07 Haiku).", "evidenceIds": ["EVD-ON001-AUDIT"] }
+      ],
+      "gap": "The after window is only four days, and the Mac's electricity and wear aren't in the comparison. Database cost still needs a reading from the Neon console."
+    },
+    "takeaway": "Before you cut an AI feature to save money, put its ledger next to your CI bill. For us, the model was the cheapest part of the system.",
+    "cta": { "text": "How RachelOS is built, in more detail: first comment.", "href": "/selected-work/from-crm-to-operating-system" },
+    "evidence": [
+      {
+        "id": "EVD-ON001-COST",
+        "kind": "billing_report",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/issues/1020",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "Cost before/after comment from Vercel /v1/billing/charges and the GitHub org billing usage API: Vercel $6.49 to $2.47/day (build CPU minutes), Actions $17.27 to $2.33/day (self-hosted runners)."
+      },
+      {
+        "id": "EVD-ON001-AUDIT",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/docs/audits/SECOND_OPINION_AUDIT_2026-10-17.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-17",
+        "summary": "Second-opinion audit: Actions $224.77 net for Oct 1–17 (40,823 Linux minutes); production AI ledger lifetime cost $3.35 Sonnet and $0.07 Haiku."
+      },
+      {
+        "id": "EVD-ON001-RUNNERS",
+        "kind": "pull_request",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/pull/1869",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-17",
+        "summary": "CI static, tests, app and build jobs moved to self-hosted runners in a Colima Ubuntu VM; release, Preview and migration workflows that hold production secrets stay GitHub-hosted."
+      },
+      {
+        "id": "EVD-ON001-PRS",
+        "kind": "pull_request",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-09-28..2026-10-12",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "439 pull requests merged between 2026-09-28 and 2026-10-12, counted with gh pr list."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "public",
+      "consentRequiredFrom": [],
+      "consentRecorded": [],
+      "notes": "Infrastructure cost is Todd's to disclose. No lead, customer or revenue data."
+    },
+    "commercial": {
+      "relevance": "high",
+      "offer": "operating-system-build",
+      "rationale": "Buyers of a governed AI build worry about runaway AI cost; this shows measured cost discipline on a live system."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-002",
+    "rank": 2,
+    "title": "We deleted 6,654 lines of release process and shipped faster",
+    "identity": "todd",
+    "audience": "Engineering leaders, delivery and transformation leads, CTOs of small teams",
+    "storyType": "tried_failed_why",
+    "hook": "We deleted 6,654 lines of release process. Time from pull request to production fell from 34 minutes to 22.",
+    "problem": "Every safety step we'd added to the release path made sense on its own. Together they made me the operator: approval PRs, a separate migration lane, evidence refreshes, and labels that had quietly become shipping dependencies.",
+    "context": "The system runs a live business, so release safety isn't optional. But a process that only works when its owner babysits it isn't safe. It just moves the risk to whoever is tired.",
+    "failedApproach": "Each incident got a new gate. By October, 100 of 172 open issues were routed as high risk even though they all shipped through the same lane, and serial CI took a median 11.95 minutes before anything else could run.",
+    "insight": "We kept exactly one human decision and automated everything around it",
+    "mechanics": [
+      "When Preview checks pass, I get a 'Release ready' email linking to a page that lists the changes and any database migration in plain English.",
+      "One tap proves a database restore point exists, applies migrations, fast-forwards main, and runs production smoke tests and canaries.",
+      "We retired the approval PR and the separate migration lane, dropped main's duplicate CI run, and deleted tests that only checked file contents.",
+      "We gave the AI coding agents a written rule: no new gates unless the owner asks for one."
+    ],
+    "outcome": {
+      "status": "verified",
+      "claims": [
+        { "text": "PR opened to released: 34.07 minutes before, 22.15 after, owner wait included.", "evidenceIds": ["EVD-ON002-CLOSEOUT"] },
+        { "text": "CI runner minutes per release: 42.62 before, 34.25 after.", "evidenceIds": ["EVD-ON002-CLOSEOUT"] },
+        { "text": "Ten PRs removed 34 files and 6,654 lines, and closed 26 issues.", "evidenceIds": ["EVD-ON002-FINAL"] },
+        { "text": "The next ordinary product PR merged itself 7.03 minutes after it opened, with zero commands from me.", "evidenceIds": ["EVD-ON002-FINAL"] }
+      ],
+      "gap": "That's one before/after pair, not a trend, and we didn't claim dollar savings from it."
+    },
+    "takeaway": "If every incident adds a gate, the process eventually needs a full-time operator. Keep the one decision a human should make, and automate the rest.",
+    "cta": { "text": "The full RachelOS write-up, release lane included, is in the first comment.", "href": "/selected-work/from-crm-to-operating-system" },
+    "evidence": [
+      {
+        "id": "EVD-ON002-CLOSEOUT",
+        "kind": "issue",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/issues/1019#issuecomment-5974614589",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-03",
+        "summary": "Measured implementation proof for the development-system simplification: PR opened to RELEASED 34.07 vs 22.15 minutes; core runner job-minutes 42.62 vs 34.25; main's duplicate CI removed."
+      },
+      {
+        "id": "EVD-ON002-FINAL",
+        "kind": "issue",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/issues/1019",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-04",
+        "summary": "Final normal-product proof: PR #1045 merged automatically 7.03 minutes after opening with zero owner commands; remediation was ten PRs, 34 deleted files, 6,654 removed lines, 26 issues closed."
+      },
+      {
+        "id": "EVD-ON002-DIAG",
+        "kind": "issue",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/issues/1019",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-03",
+        "summary": "Diagnosis: 100 of 172 open issues routed HIGH on the same delivery lane; serial CI median 11.95 minutes; five structural causes including retired approval machinery and labels acting as shipping dependencies."
+      },
+      {
+        "id": "EVD-ON002-LANE",
+        "kind": "pull_request",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/pull/1015",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-03",
+        "summary": "One release lane: the approval PR and the separate migration lane retired (+495/-2,882)."
+      },
+      {
+        "id": "EVD-ON002-RULE",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/AGENTS.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "Agent contract: 'No new gates' rule and the one-tap release steps (CI check, restore point, migrations, fast-forward main, production smoke and canaries)."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "public",
+      "consentRequiredFrom": [],
+      "consentRecorded": [],
+      "notes": "Process and timing data only."
+    },
+    "commercial": {
+      "relevance": "high",
+      "offer": "constraint-diagnostic",
+      "rationale": "Delivery and transformation leaders live with governance that has outgrown its purpose; this is a measured example of finding and removing the constraint."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-003",
+    "rank": 3,
+    "title": "966 merged pull requests and the conveyor that checks them",
+    "identity": "todd",
+    "audience": "CTOs, engineering managers and founders adopting AI coding agents",
+    "storyType": "how_the_automation_works",
+    "hook": "The software behind our two-person real estate business has merged 966 pull requests since September 2025. This is the system that checks them before they reach production.",
+    "problem": "AI coding agents can open pull requests faster than one person can review them. Either the human becomes the bottleneck, or review quietly stops happening.",
+    "context": "This system handles real leads and real customer email, so moving fast can't mean merging anything.",
+    "insight": "We treat agents as roles, not vendors, and every change rides the same conveyor",
+    "mechanics": [
+      "Work starts from a GitHub issue with acceptance criteria. A deterministic script, not a model, routes it by risk.",
+      "One agent implements on its own branch and runs the same verification CI runs before opening the PR.",
+      "An independent reviewer checks the exact commit against the issue. Green CI plus a passing review merges automatically; a Draft PR is a hold.",
+      "Merging isn't releasing. Production only moves when I tap Release.",
+      "The review job and the model worker both run on hardware we own, so review doesn't consume hosted CI minutes."
+    ],
+    "outcome": {
+      "status": "partial",
+      "claims": [
+        { "text": "966 merged PRs, 1,257 test files and 152 database migrations since the first commit on September 30, 2025.", "evidenceIds": ["EVD-ON003-REPO"] },
+        { "text": "Full local verification before a recent PR: 917 Jest suites, 14,260 tests and 278 browser tests passed.", "evidenceIds": ["EVD-ON003-VERIFY"] }
+      ],
+      "gap": "Volume isn't quality. An October audit found four production regressions that landed during a nine-day window of 300+ merges and were caught by production errors, not CI. That's the next thing to fix."
+    },
+    "takeaway": "With AI agents, code stops being the scarce resource. Verification you trust and a human decision you actually make are what's scarce now.",
+    "cta": { "text": "If you're running coding agents in production, I'd like to hear how you handle review. What's working?" },
+    "evidence": [
+      {
+        "id": "EVD-ON003-CONTRACT",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/AGENTS.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "Agent contract: issue-first work, deterministic routing (npm run route:issue), PR to CI to independent review to automatic merge, Draft means hold, merging is not a release, local launchd-supervised review worker."
+      },
+      {
+        "id": "EVD-ON003-REPO",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "GitHub GraphQL merged PR totalCount 966; first commit 2025-09-30; origin/dev ab1ea0a28 holds 1,257 test files and 152 migrations."
+      },
+      {
+        "id": "EVD-ON003-VERIFY",
+        "kind": "pull_request",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/pull/1869",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-17",
+        "summary": "PR verification block: npm run verify:agent exited 0 with 917 Jest suites, 14,260 tests and 278 Playwright tests passing."
+      },
+      {
+        "id": "EVD-ON003-AUDIT",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/docs/audits/SECOND_OPINION_AUDIT_2026-10-17.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-17",
+        "summary": "Audit risk 3: regressions #1813, #1814, #1837 and #1840 landed in a nine-day window of 300+ merges and were found by production errors, not CI."
+      },
+      {
+        "id": "EVD-ON003-ROLES",
+        "kind": "decision",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/docs/DECISIONS.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "DEC-189: agents are roles (primary, second opinion), not vendors; one agent per issue."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "public",
+      "consentRequiredFrom": [],
+      "consentRecorded": [],
+      "notes": "Process description only; do not name the review model or provider accounts."
+    },
+    "commercial": {
+      "relevance": "high",
+      "offer": "operating-system-build",
+      "rationale": "Shows a governed, human-decided AI delivery system working at volume, which is what the governed AI build sells."
+    },
+    "format": "carousel",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-004",
+    "rank": 4,
+    "title": "The AI safety switch that silently turned off lead enrichment for three weeks",
+    "identity": "todd",
+    "audience": "Engineers and operators running AI in production",
+    "storyType": "production_failure_lessons",
+    "hook": "For three weeks our lead-enrichment AI didn't run. Nothing crashed. The budget guard was doing exactly what we told it to.",
+    "problem": "Every production AI call must carry a budget policy, and a call without one is refused before it reaches the provider. That's fail-closed, which is what you want for spend.",
+    "context": "From September 18 our enrichment calls had no policy. They were refused, cost nothing and were logged, which is exactly why nobody noticed.",
+    "failedApproach": "We treated no spend as no problem. The refusals sat in a ledger that no person was looking at.",
+    "insight": "A fail-closed control needs an alarm as loud as the failure it prevents",
+    "mechanics": [
+      "Every attempt is written to a ledger before the API key is read, so refusals can be counted after the fact.",
+      "Reading that ledger during a cost audit is how the refusals surfaced: every one rejected with AI_BUDGET_POLICY_MISSING, none reaching the provider.",
+      "From October 9 the calls ran again under a configured policy."
+    ],
+    "outcome": {
+      "status": "partial",
+      "claims": [
+        { "text": "1,263 refused calls between September 18 and October 9, at a cost of $0.", "evidenceIds": ["EVD-ON004-LEDGER"] },
+        { "text": "From October 9 to the audit on October 17: 222 successful calls, $0.07 in total.", "evidenceIds": ["EVD-ON004-LEDGER"] }
+      ],
+      "gap": "We haven't measured what three weeks without enrichment cost in follow-up quality."
+    },
+    "takeaway": "Fail-closed is the right default for spend and for sending. But a refusal nobody sees is an outage that never pages anyone.",
+    "cta": { "text": "Worth checking this week: how many calls did your AI guardrails refuse last month, and who would have found out?" },
+    "evidence": [
+      {
+        "id": "EVD-ON004-LEDGER",
+        "kind": "production_ledger",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/docs/audits/SECOND_OPINION_AUDIT_2026-10-17.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-17",
+        "summary": "Production ai_execution_attempts read with the read-only role: claude-haiku-4-5 1,263 attempts 09-18 to 10-09, all rejected AI_BUDGET_POLICY_MISSING, never contacted; claude-haiku-5-5 222 attempts from 10-09, $0.07."
+      },
+      {
+        "id": "EVD-ON004-LEDGER-DESIGN",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/migrations/121_ai_execution_attempt_ledger.sql",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "Attempt ledger migration; the audit notes the row is written before the credential is read, so the ledger is complete for the app."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "public",
+      "consentRequiredFrom": [],
+      "consentRecorded": [],
+      "notes": "Aggregate call counts only. Confirm with Todd that the October 9 change was the policy before publishing."
+    },
+    "commercial": {
+      "relevance": "high",
+      "offer": "operate-and-improve",
+      "rationale": "Keeping a governed AI system observable after launch is the Operate & Improve retainer's job; this is the failure it prevents."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-005",
+    "rank": 5,
+    "title": "Our pre-send check unsubscribed the people it was checking",
+    "identity": "todd",
+    "audience": "Engineers and technical founders who send email from their own systems",
+    "storyType": "production_failure_lessons",
+    "hook": "Our pre-send safety check unsubscribed 57 people. It was checking that their unsubscribe links worked.",
+    "problem": "A campaign preflight visited every link in each rendered email to catch broken URLs, including each recipient's own unsubscribe link.",
+    "context": "Unsubscribe is the one action you can't get wrong in either direction: wrongly suppressing someone silently stops their mail, and wrongly re-adding someone breaks a promise.",
+    "failedApproach": "The unsubscribe route changed state on GET. Next.js answers a HEAD request by running GET, so even a 'harmless' HEAD check unsubscribed the recipient, and the send then failed on the suppression the check had just created.",
+    "insight": "The code fix was small. Proving exactly who was affected was the real work",
+    "mechanics": [
+      "Unsubscribing now changes state only on POST.",
+      "We identified the affected contacts by causal pairing, not a time window: an unsubscribe event followed within 0.13–0.67 seconds by that same contact's send failing on suppression.",
+      "The repair ran from a frozen list, never a fresh query, and wrote a recovery marker on every restored record.",
+      "A hard cutoff at the fix time means any later unsubscribe is treated as genuine and never auto-restored."
+    ],
+    "outcome": {
+      "status": "verified",
+      "claims": [
+        { "text": "57 false unsubscribes confirmed across three campaigns, August 12–19.", "evidenceIds": ["EVD-ON005-DEC", "EVD-ON005-MECHANISM"] },
+        { "text": "A later read-only review of every suppressed contact found 0 remaining high- or medium-confidence false suppressions.", "evidenceIds": ["EVD-ON005-STATE"] }
+      ],
+      "gap": "Four suppressed contacts have no unsubscribe event at all. How they were suppressed is still unknown, so they were deliberately left alone."
+    },
+    "takeaway": "Anything that follows links will eventually follow yours: link checkers, email security scanners, prefetchers. Never change state on GET, and repair data from a frozen list with a marker on every row.",
+    "cta": { "text": "If you send email from your own app, it's worth five minutes to check whether your unsubscribe route changes anything on GET." },
+    "evidence": [
+      {
+        "id": "EVD-ON005-DEC",
+        "kind": "decision",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/docs/DECISIONS.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-08-28",
+        "summary": "DEC-113 context: INC-2026-08-PREFLIGHT falsely unsubscribed 57 contacts through a bare UPDATE; the repair had to reconstruct intent from lead_events."
+      },
+      {
+        "id": "EVD-ON005-STATE",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/docs/CURRENT_STATE.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-08-23",
+        "summary": "Contactability after the incident: repair rows carry a preflight_false_unsubscribe_repair marker; read-only classification found 0 high and 0 medium confidence cases, 15 true opt-outs, 4 with insufficient evidence left alone; INCIDENT_FIX_AT is a hard cutoff."
+      },
+      {
+        "id": "EVD-ON005-MECHANISM",
+        "kind": "owner_statement",
+        "ref": "Incident record INC-2026-08-PREFLIGHT (session notes, 2026-08-21)",
+        "claimStatus": "owner_confirmed",
+        "observedAt": "2026-08-21",
+        "summary": "Mechanism: preflight probed every href including the unsubscribe link; the route mutated on GET and Next.js serves HEAD via GET; forensic signature was unsubscribe followed by EMAIL_SUPPRESSED within 0.13–0.67 seconds."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "anonymized",
+      "consentRequiredFrom": ["rachel"],
+      "consentRecorded": [],
+      "notes": "These were Rachel's contacts and campaigns. Aggregate counts only; no contact, campaign or property names."
+    },
+    "commercial": {
+      "relevance": "medium",
+      "offer": "operating-system-build",
+      "rationale": "Shows production discipline around permission and data repair, which technical buyers check before trusting a build."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-006",
+    "rank": 6,
+    "title": "One shortlist, three emails: keys that described the visit, not the message",
+    "identity": "todd",
+    "audience": "Backend engineers and technical founders",
+    "storyType": "unexpected_engineering_decision",
+    "hook": "A prospect got the same email three times in 12 minutes. Every system involved did exactly what it was told.",
+    "problem": "A 'your community matches' email went out three times to one person, all three listing the same communities.",
+    "context": "Duplicate email erodes trust fast, and we had duplicate protection.",
+    "failedApproach": "It never fired. The protection was keyed on things that changed every time, and this email's code path skipped it entirely.",
+    "insight": "Three independent failures had to line up",
+    "mechanics": [
+      "The email provider's idempotency key included a submission counter, so each attempt minted a new key and the provider correctly sent each one. The key described the visit, not the message.",
+      "Our signed links embed an expiry timestamp, so every render produced a unique body and the content-hash dedupe could never match.",
+      "This receipt's code path had never been wired into the send ledger at all.",
+      "The fix allows one customer send per logical communication, keyed on business meaning, with volatile signed tokens normalized out before hashing. An invariant test suite pins it."
+    ],
+    "outcome": {
+      "status": "verified",
+      "claims": [
+        { "text": "Before the fix, nine recipients received 14 excess emails; 12 were this receipt, 18% of its 66 sends.", "evidenceIds": ["EVD-ON006-INC"] },
+        { "text": "Found, fixed and documented within a day, September 8–9.", "evidenceIds": ["EVD-ON006-INC", "EVD-ON006-FIX"] }
+      ]
+    },
+    "takeaway": "Before you trust a hash or an idempotency key, ask what changes on every render. Key on intent, not on the event.",
+    "cta": { "text": "A five-minute check for anyone sending email from their own code: what goes into your idempotency key?" },
+    "evidence": [
+      {
+        "id": "EVD-ON006-INC",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/docs/CURRENT_STATE.md",
+        "claimStatus": "verified",
+        "observedAt": "2026-09-09",
+        "summary": "INC-2026-09-DUPLICATE-RECEIPT: one logical communication sent three times; nine recipients, 14 excess emails, 12 on the recommendation receipt (18% of 66); three independent failures required."
+      },
+      {
+        "id": "EVD-ON006-FIX",
+        "kind": "commit",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/commit/d6e465b57",
+        "claimStatus": "verified",
+        "observedAt": "2026-09-08",
+        "summary": "fix(email): enforce one customer send per logical communication intent; adds duplicateSendInvariant.test.ts and volatile-token normalization in contentDeliveryLedger.ts."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "anonymized",
+      "consentRequiredFrom": ["rachel"],
+      "consentRecorded": [],
+      "notes": "Rachel's prospects. Never quote names, addresses or community lists from the incident record, which contains identifiers."
+    },
+    "commercial": {
+      "relevance": "medium",
+      "offer": "operating-system-build",
+      "rationale": "Accountable follow-up is half the build offer; a concrete duplicate-send fix is credible proof for technical evaluators."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-007",
+    "rank": 7,
+    "title": "We built the content machine before we knew content worked",
+    "identity": "todd",
+    "audience": "Founders and operators deciding what to build next",
+    "storyType": "tried_failed_why",
+    "hook": "In two weeks we merged 439 pull requests. 40% went to content tooling. 6% went to conversion, analytics and follow-up.",
+    "problem": "The constraint in the business was turning inquiries into conversations, not producing more content.",
+    "context": "Content tooling is satisfying to build and easy to demo. Connecting search analytics and tightening follow-up is less fun, and it's closer to revenue.",
+    "failedApproach": "We kept extending the newsroom (briefs, evidence checks, CMS publishing, photo pipelines) before search analytics could tell us whether organic search was worth it.",
+    "insight": "Count what you actually built, by category, before planning the next sprint",
+    "mechanics": [
+      "We bucketed every PR merged from September 28 to October 12 by title: 176 content and media, 97 release and CI, 57 operator screens, 26 conversion, analytics and nurture.",
+      "We set that against where inquiries actually stall, which is before a real conversation happens.",
+      "The review recommended pausing content-machine expansion until analytics shows organic search pays."
+    ],
+    "outcome": {
+      "status": "partial",
+      "claims": [
+        { "text": "439 merged PRs: 40% content tooling, 22% release and CI, 13% operator screens, 6% conversion and follow-up.", "evidenceIds": ["EVD-ON007-PRS"] }
+      ],
+      "gap": "Keyword buckets are approximate, and we haven't fully followed our own advice yet. Whether shifting effort moves conversion is still unmeasured."
+    },
+    "takeaway": "Your merge history is a budget. Read it like one before you plan the next sprint.",
+    "cta": { "text": "Try it on your own repo: bucket the last two weeks of merged work and compare it with where customers actually drop off." },
+    "evidence": [
+      {
+        "id": "EVD-ON007-PRS",
+        "kind": "pull_request",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-09-28..2026-10-12",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-22",
+        "summary": "Title-keyword classification of 439 PRs merged 2026-09-28 to 10-12: content/CMS/media 176, release/CI/review 97, operator 57, conversion/analytics/nurture 26, other 83."
+      },
+      {
+        "id": "EVD-ON007-REVIEW",
+        "kind": "owner_statement",
+        "ref": "Revenue prioritization review, 2026-10-12 (session notes)",
+        "claimStatus": "owner_confirmed",
+        "observedAt": "2026-10-12",
+        "summary": "Read-only strategy review of open issues recommended pausing content-machine expansion until Search Console and GA4 are connected and channel diagnosis shows organic is worth it."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "public",
+      "consentRequiredFrom": [],
+      "consentRecorded": [],
+      "notes": "Engineering allocation only. Do not add lead counts, reply rates or conversion figures without Rachel's consent."
+    },
+    "commercial": {
+      "relevance": "medium",
+      "offer": "constraint-diagnostic",
+      "rationale": "The diagnostic sells exactly this discipline: find the real constraint before building more."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-008",
+    "rank": 8,
+    "title": "The software worked. The workflow didn't.",
+    "identity": "joint",
+    "audience": "Small-business owners, real estate professionals and anyone building tools for a partner",
+    "storyType": "human_judgment_vs_ai",
+    "hook": "I built a lead system for my wife's real estate business: a ranked daily queue, drafted follow-ups, a morning briefing. She works from a printed call sheet and her own phone. She isn't wrong.",
+    "problem": "The conversations were happening, but the system never heard about them, so it couldn't learn who was ready or what worked.",
+    "context": "Rachel is the licensed agent. The calls, tours and judgment are hers. My job is making follow-up hard to drop.",
+    "failedApproach": "My instinct was to build more screens. Every new operator feature assumed she would open the app, and she doesn't need to.",
+    "insight": "Recording, not features, is the bottleneck, so the system has to meet her where she already works",
+    "mechanics": [
+      "Print-friendly call sheets and text-message prompts instead of another dashboard.",
+      "One-word replies by text to record what happened, instead of a form."
+    ],
+    "outcome": {
+      "status": "unknown",
+      "claims": [],
+      "gap": "We don't know yet whether meeting her in print and text raises recorded conversations. That's the measurement we're setting up now."
+    },
+    "takeaway": "If the person you're building for works around your software, the software has the problem.",
+    "cta": { "text": "Anyone else building tools for a spouse, partner or co-founder? What did you learn?" },
+    "evidence": [
+      {
+        "id": "EVD-ON008-OWNER",
+        "kind": "owner_statement",
+        "ref": "Todd, operator adoption note, 2026-07-27 (session notes)",
+        "claimStatus": "owner_confirmed",
+        "observedAt": "2026-07-27",
+        "summary": "Rachel works from a printed call sheet and texts leads from her personal phone, outside the system; outcomes go unrecorded as a result."
+      },
+      {
+        "id": "EVD-ON008-AUDIT",
+        "kind": "production_ledger",
+        "ref": "docs/audits/RACHELOS_ACTION_LOOP_AUDIT_2026-10-17.md (untracked, rachel-realestate)",
+        "claimStatus": "verified",
+        "observedAt": "2026-10-17",
+        "summary": "Read-only production audit of the action loop. Internal only: its counts describe Rachel's lead handling and are not for publication."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "consent_backed",
+      "consentRequiredFrom": ["rachel"],
+      "consentRecorded": [],
+      "notes": "Rachel approves the wording about her workflow. Confirm both mechanics are live before publishing. Never publish lead counts, response times or conversion figures in this note."
+    },
+    "commercial": {
+      "relevance": "medium",
+      "rationale": "Brand differentiation for the founder story; the strongest human-versus-automation material we have."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-009",
+    "rank": 9,
+    "title": "My AI agent spent $237 watching CI",
+    "identity": "todd",
+    "audience": "Founders and engineers using cloud AI agents",
+    "storyType": "cost_to_build",
+    "hook": "A cloud AI agent spent $237 of credit in about two days. Most of it went to watching CI and doing nothing.",
+    "problem": "I set a cloud agent session to watch pull requests and re-check them on a schedule.",
+    "context": "The pipeline already merged green PRs on its own. The watcher added nothing but wake-ups.",
+    "failedApproach": "Reminder routines, a daily routine and every GitHub event on watched PRs each woke the session: about 27 wake-ups in 40 minutes, nearly all no-ops.",
+    "insight": "Agents bill for attention, so don't give them attention they don't need",
+    "mechanics": [
+      "Open the PR, hand off, and stop. Act only if it goes red.",
+      "Implementation runs in local sessions, not in a cloud sandbox.",
+      "If a follow-up check is truly needed, one scheduled task, not a chain of routines."
+    ],
+    "outcome": {
+      "status": "partial",
+      "claims": [
+        { "text": "$237 of a $250 cloud credit used in about two days.", "evidenceIds": ["EVD-ON009-OWNER"] }
+      ],
+      "gap": "We haven't measured the month after the change yet."
+    },
+    "takeaway": "With agentic tools, idle attention is often the expensive part, not model quality. Budget wake-ups the way you'd budget API calls.",
+    "cta": { "text": "Curious what others have found: where did your agent spend actually go?" },
+    "evidence": [
+      {
+        "id": "EVD-ON009-OWNER",
+        "kind": "owner_statement",
+        "ref": "Todd, cloud credit observation, 2026-10-17 (session notes)",
+        "claimStatus": "owner_confirmed",
+        "observedAt": "2026-10-17",
+        "summary": "One cloud session woken by about six reminder routines, a daily routine and every event on watched PRs (around 27 wakes in 40 minutes); $237 of $250 credit gone in about two days. Needs a billing export before the number is published."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "public",
+      "consentRequiredFrom": [],
+      "consentRecorded": [],
+      "notes": "Todd's own tooling spend."
+    },
+    "commercial": {
+      "relevance": "medium",
+      "offer": "operate-and-improve",
+      "rationale": "Operators adopting agents need cost hygiene; this is a relatable, specific example."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  },
+  {
+    "id": "ON-010",
+    "rank": 10,
+    "title": "What relocating buyers ask before they ever call an agent",
+    "identity": "rachel",
+    "audience": "Buyers and sellers relocating to South Florida, and referral partners in feeder markets",
+    "storyType": "running_a_real_business",
+    "hook": "Before buyers moving to South Florida ever talk to me, they've already told us their budget and timeline. What they ask next tells you what actually worries them.",
+    "problem": "Relocating buyers carry questions they don't ask out loud until late, and late answers cost them options.",
+    "context": "Our home-match questionnaire asks for budget and timeline up front, so the free-text questions people add afterwards are a rare, honest signal.",
+    "insight": "Group the questions by where people are moving from, and the worries become specific",
+    "mechanics": [
+      "An aggregate, de-identified count of questionnaire questions by origin market, with no lead-level data.",
+      "My answer to the top three, in my own words."
+    ],
+    "outcome": {
+      "status": "unknown",
+      "claims": [],
+      "gap": "The de-identified aggregate hasn't been pulled yet, and I haven't chosen the three questions yet."
+    },
+    "takeaway": "The question someone asks last is often the one they should have asked first.",
+    "cta": { "text": "Moving to South Florida? Start with the home-match questionnaire.", "href": "https://racheldelray.com/recommendations" },
+    "evidence": [
+      {
+        "id": "EVD-ON010-FORM",
+        "kind": "repository_doc",
+        "ref": "https://github.com/racheldelray-team/rachel-realestate/blob/dev/src/app/components/forms/UnifiedContactForm.tsx",
+        "claimStatus": "experience_based",
+        "observedAt": "2026-10-22",
+        "summary": "The Fit Finder flow collects budget and timeline before submission; the question aggregate itself does not exist yet."
+      }
+    ],
+    "sensitivity": {
+      "confidentiality": "anonymized",
+      "consentRequiredFrom": ["rachel"],
+      "consentRecorded": [],
+      "notes": "Rachel's voice. Distribution of Rachel-identity posts belongs to RachelOS #1036/#333; this entry only tracks the candidate."
+    },
+    "commercial": {
+      "relevance": "high",
+      "rationale": "Real estate inquiries for Rachel; no TKO offer applies."
+    },
+    "format": "text",
+    "editorial": { "status": "candidate" }
+  }
+]

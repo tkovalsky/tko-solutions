@@ -5,7 +5,7 @@ The last step of the TIF loop:
 > Buyer problem → research and evidence → useful guide → organic discovery → credibility →
 > relevant offer → executive conversation → **captured market feedback** → improved guide
 
-This directory is that capture step. It is deliberately two CSV files and no software. A CRM
+This directory is that capture step. It is deliberately a few CSV files and no software. A CRM
 is not required to learn from twenty conversations, and building one would delay the
 conversations that produce the learning.
 
@@ -14,6 +14,7 @@ conversations that produce the learning.
 | File | Purpose |
 |---|---|
 | `guide-usage.csv` | One row per use of a guide in a real conversation. |
+| `post-performance.csv` | One row per published operator note (`content/proof/stories/operator-notes.json`) per measurement. |
 | `../outreach/target-accounts.csv` | The target account list. See `../outreach/README.md`. |
 
 Both open directly in Excel, Numbers, or Google Sheets. Edit them there and commit the result,
@@ -41,6 +42,21 @@ guide more specific than the last.
 | `influenced_proposal` | Did this contribute to a proposal? |
 | `opportunity_value` | Indicative value if it became a real opportunity. |
 | `notes` | Anything else worth remembering. |
+
+## What to record in `post-performance.csv`
+
+Two rows per published operator note: one at 7 days and one at 30 days (`measured_at`). Copy
+the platform numbers from the post's analytics; count conversations yourself.
+
+| Column group | Columns | What it tells you |
+|---|---|---|
+| Distribution (leading) | `impressions`, `reactions`, `comments`, `reposts`, `saves` | Whether the post reached anyone. Never a goal by itself. |
+| Authority (leading) | `profile_views`, `relevant_followers`, `site_visits` | Whether the right people looked further. `site_visits` comes from the note's `utm_campaign=operator-notes-<id>`. |
+| Revenue (lagging) | `inbound_conversations`, `qualified_opportunities`, `opportunity_value` | Whether it produced a real conversation. Count only a conversation the post demonstrably started or materially advanced. |
+| Efficiency | `review_minutes` | Human time spent editing and approving. If this exceeds the value of the conversations, write fewer, better notes. |
+
+A note with impressions and no conversations after 30 days taught you about the hook, not the
+business. A note that starts one qualified conversation is worth more than a hundred reposts.
 
 ## What to do with it
 
