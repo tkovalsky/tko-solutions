@@ -31,6 +31,8 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
     ["sponsor", "Sponsor"], ["healthcareScope", "Readiness scope"],
     ["crm", "CRM"], ["contactCount", "Approximate contacts"],
     ["consentEvidence", "Consent evidence and opt-outs"], ["caller", "Who makes the calls and logs dispositions"],
+    ["vertical", "Vertical"], ["crmApiKey", "Can create a CRM API key"], ["datedRelationships", "Dated relationships"],
+    ["optOuts", "Where opt-outs live"], ["holdout", "Accepts a 10–20% holdout"], ["riaCompliance", "RIA: CCO, archiving, Reg S-P"],
     ["message", "Message"], ["consequence", "Consequence"],
     ["firm", "Firm"], ["market", "Market"], ["transactionSize", "Transaction size"],
     ["inquiryType", "Inquiry type"], ["problem", "Problem"], ["systems", "Systems"],
