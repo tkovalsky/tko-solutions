@@ -4,7 +4,7 @@ Draft October 18, 2026. Written for RIA service-provider oversight (Regulation S
 
 | Question | Pilot 1 (offline CLI) | Sidecar application (planned) |
 |---|---|---|
-| Company and contact | TKO Solutions LLC [confirm registered name]; Todd Kovalsky, todd@tko.solutions; Delray Beach, FL | Same |
+| Company and contact | TKO Solutions LLC; Todd Kovalsky, todd@tko.solutions; Delray Beach, FL | Same |
 | What data do you hold? | Client contact export (identifiers, relationship facts, notes), suppression, dispositions, outcomes | Same, per client, in an isolated database |
 | Where is it stored? | Provider device with full-disk encryption; encrypted lineup email via Resend | Neon PostgreSQL, one project per client, encrypted at rest; object storage for encrypted raw imports (30 days) and exports |
 | Multi-tenancy | Not applicable (one client's data at a time, separate encrypted folders) | One database per client; no cross-client query path; control database holds only client metadata and encrypted credentials |

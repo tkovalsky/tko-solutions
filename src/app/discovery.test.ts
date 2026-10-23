@@ -1,9 +1,11 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { renderToStaticMarkup } from "react-dom/server";
 import robots from "./robots";
 import sitemap from "./sitemap";
 import { GET as getLlmsText } from "./llms.txt/route";
+import TermsPage from "./terms/page";
 import { getInsights } from "@/lib/insights";
 import { buildLlmsText } from "@/lib/llms";
 import { offers, sidecar } from "@/lib/offers";
@@ -110,5 +112,11 @@ describe("security.txt", () => {
     expect(expires).toBeDefined();
     expect(new Date(expires!).getTime()).toBeGreaterThan(Date.now());
     expect(file).toContain("Canonical: https://tko.solutions/.well-known/security.txt");
+  });
+});
+
+describe("website terms", () => {
+  it("names the contracting entity that operates the site", () => {
+    expect(renderToStaticMarkup(TermsPage())).toContain("operated by TKO Solutions LLC");
   });
 });

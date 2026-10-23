@@ -38,7 +38,7 @@ export default function TermsPage() {
 
           <h2>Who we are</h2>
           <p>
-            This website is operated by TKO Solutions (&ldquo;TKO&rdquo;), the advisory and
+            This website is operated by TKO Solutions LLC (&ldquo;TKO&rdquo;), the advisory and
             build practice of Todd Kovalsky, based in Delray Beach, Florida. By using the site
             you agree to these terms. If you do not agree, do not use the site.
           </p>

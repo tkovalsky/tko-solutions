@@ -4,7 +4,7 @@ Draft October 18, 2026. Not legal advice. Bracketed items are decisions or couns
 
 ## 1. Parties and definitions
 
-- **Provider:** TKO Solutions LLC (decision D2, 2026-10-20) [counsel: confirm exact registered name and Florida principal address against Sunbiz]. Trading as TKO Solutions / SidecarOS.
+- **Provider:** TKO Solutions LLC (registered name confirmed by Todd, 2026-10-22) [counsel: confirm Florida principal address]. Trading as TKO Solutions / SidecarOS.
 - **Client:** the licensed real-estate agent or team, or the registered investment adviser, that signs. If the Client is an individual agent, [counsel: whether the brokerage must consent or co-sign for data export].
 - **Services:** the plan selected in the Order Form (Assessment, Core, Managed) as described in Schedule A.
 - **Client Data:** contacts, notes, activity, and outcomes the Client supplies or authorizes Provider to read from the Client's CRM.
