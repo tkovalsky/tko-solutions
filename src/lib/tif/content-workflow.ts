@@ -54,6 +54,7 @@ export const DERIVATIVE_ASSET_LABELS = {
 export type DerivativeAssetKind = keyof typeof DERIVATIVE_ASSET_LABELS;
 
 export type ChannelPackageContext = {
+  rachelSource?: { canonicalUrl: string; voice: { path: string; content: string; sha256: string } };
   voice?: string;
   audience?: string;
   objective?: string;
@@ -300,6 +301,25 @@ export function generateDerivativeCopy({
   const voice = context.voice || "operator";
   const strategy = deriveBehavioralContentStrategy(context, `${title} ${body}`);
   const governance = governanceBlock(context, strategy);
+
+  if (context.rachelSource) {
+    if (context.buyerDomain !== "rachel_luxury" || !["facebook_post", "instagram_post", "instagram_reel_script", "linkedin_post"].includes(type)) {
+      throw new Error("Unsupported Rachel source/channel context.");
+    }
+    const reference = context.rachelSource;
+    // The exact contract is part of the editable production package. Keeping it
+    // outside public copy prevents a provenance receipt becoming voice approval.
+    const editorial = `\n\n---\nProduction notes — omit from public copy\nCanonical source: ${reference.canonicalUrl}\nVoice: ${reference.voice.path} (${reference.voice.sha256})\n${reference.voice.content}`;
+    const next = `Read the guide: ${destination}`;
+    if (type === "facebook_post") return [title, "", excerpt, "", "What are you comparing before deciding where to live?", next, editorial].join("\n");
+    if (type === "linkedin_post") return [title, "", "Planning a move to South Florida? Start with the decision you need to make.", "", excerpt,
+      "", "Which tradeoff would change your shortlist? Use the guide to prepare your next question.", next, editorial].join("\n");
+    if (type === "instagram_post") return [`Carousel proposal: ${title}`, `Slide 1 — ${title}`, `Slide 2 — From the guide: ${excerpt}`,
+      "Slide 3 — Which part matters for your move?", "Slide 4 — What still needs current verification?", "Slide 5 — Read the full guide through the approved profile link.",
+      next, "Use original or explicitly permitted images; this proposal supplies no media rights.", editorial].join("\n");
+    return [`Reel proposal: ${title}`, `Opening passage from the guide: ${excerpt}`, "Explain the supported decision and what remains to verify.",
+      "Plan original or explicitly permitted footage; do not present a visit or client story that did not happen.", "Close with the full guide through the approved profile link.", next, editorial].join("\n");
+  }
 
   switch (type) {
     case "behavioral_content_brief":
