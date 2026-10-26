@@ -109,6 +109,30 @@ describe("POST /api/contact", () => {
     expect(notifyLead).not.toHaveBeenCalled();
   });
 
+  it("stores a Ghost Test result with answers only and a fixed source", async () => {
+    persistInboundLead.mockResolvedValue({ id: "lead_ghost" });
+    notifyLead.mockResolvedValue({ status: "sent", notifiedAt: new Date() });
+    const response = await POST(ghostRequest());
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Access-Control-Allow-Origin")).toBe("https://www.boundos.com");
+    expect(persistInboundLead).toHaveBeenCalledWith(expect.objectContaining({
+      name: "Jordan", email: "jordan@team.com", source: "BOUNDOS_GHOST_TEST", landingPage: "https://www.boundos.com/ghost-test",
+      payload: { inquiryType: "BOUNDOS_GHOST_TEST", offer: "sidecar", persona: "team-lead", pastClients: "100-300", lastTouch: "3-12-months", dailyPick: "memory", quietLead: "few-tries", topTen: "roughly", busyWeek: "1-4", ghostNumber: "61", estimatedGhosted: "122" },
+    }));
+  });
+
+  it.each([
+    ["an unknown answer", { lastTouch: "yesterday" }],
+    ["an out-of-range number", { ghostNumber: 150 }],
+    ["a number sent as text", { ghostNumber: "61" }],
+    ["a missing name", { name: undefined }],
+  ])("rejects a Ghost Test result with %s before storage or email", async (_label, overrides) => {
+    const response = await POST(ghostRequest(overrides));
+    expect(response.status).toBe(400);
+    expect(persistInboundLead).not.toHaveBeenCalled();
+    expect(notifyLead).not.toHaveBeenCalled();
+  });
+
   it("accepts a filled honeypot silently without storage or email", async () => {
     const response = await POST(boundosRequest({ website: "https://spam.example" }));
     expect(response.status).toBe(200);
@@ -148,6 +172,20 @@ describe("POST /api/contact", () => {
   });
 
 });
+
+// Answer values mirror rachel-realestate-marketing tests/ghost.test.ts (`typical`).
+function ghostRequest(overrides: Record<string, unknown> = {}) {
+  return new Request("https://tko.solutions/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Origin: "https://www.boundos.com" },
+    body: JSON.stringify({
+      inquiryType: "BOUNDOS_GHOST_TEST", name: "Jordan", email: "jordan@team.com",
+      persona: "team-lead", pastClients: "100-300", lastTouch: "3-12-months", dailyPick: "memory", quietLead: "few-tries", topTen: "roughly", busyWeek: "1-4",
+      ghostNumber: 61, estimatedGhosted: 122,
+      ...overrides,
+    }),
+  });
+}
 
 function boundosRequest(overrides: Record<string, unknown> = {}) {
   return new Request("https://tko.solutions/api/contact", {

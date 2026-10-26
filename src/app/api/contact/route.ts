@@ -25,6 +25,23 @@ const boundosApplySchema = z.object({
   message: z.string().trim().max(2000).optional(),
 }).refine((data) => data.vertical !== "ria" || (data.riaCompliance?.length ?? 0) >= 2, { path: ["riaCompliance"] });
 
+// The BoundOS Ghost Test (a free self-assessment) posts answers and its computed result only;
+// never contact lists. Values mirror rachel-realestate-marketing src/lib/ghost/test.ts.
+const BOUNDOS_GHOST_TEST = "BOUNDOS_GHOST_TEST";
+const ghostTestSchema = z.object({
+  name: z.string().trim().min(2).max(200),
+  firm: z.string().trim().max(200).optional(),
+  persona: z.enum(["solo-agent", "team-lead", "broker-owner", "advisor", "other"]),
+  pastClients: z.enum(["under-25", "25-100", "100-300", "300-1000", "over-1000"]),
+  lastTouch: z.enum(["this-month", "3-months", "3-12-months", "over-a-year", "not-sure"]),
+  dailyPick: z.enum(["system", "own-list", "memory", "react"]),
+  quietLead: z.enum(["persist", "drip", "few-tries", "slips"]),
+  topTen: z.enum(["yes", "roughly", "no"]),
+  busyWeek: z.enum(["10-plus", "5-10", "1-4", "zero"]),
+  ghostNumber: z.number().int().min(1).max(99),
+  estimatedGhosted: z.number().int().min(0).max(100000),
+});
+
 function corsHeaders(request: Request): Record<string, string> {
   const origin = request.headers.get("origin");
   if (!origin || !BOUNDOS_ORIGINS.has(origin)) return {};
@@ -71,6 +88,22 @@ export async function POST(request: Request) {
         source: BOUNDOS_APPLY,
         landingPage: "https://www.boundos.com/apply",
         payload: { inquiryType: BOUNDOS_APPLY, offer: "sidecar", firm: company, ...answers },
+        submittedAt: new Date(),
+      });
+    } else if (inquiryType === BOUNDOS_GHOST_TEST) {
+      const test = ghostTestSchema.safeParse(data);
+      if (!test.success) {
+        return json({ error: "Please retake the Ghost Test and try again." }, 400);
+      }
+      const { name: taker, firm: company, ghostNumber, estimatedGhosted, ...answers } = test.data;
+      lead = await persistInboundLead({
+        name: taker,
+        email: parsedEmail.data,
+        company,
+        source: BOUNDOS_GHOST_TEST,
+        landingPage: "https://www.boundos.com/ghost-test",
+        // Stored as strings so the operator brief renders them; the number is self-reported.
+        payload: { inquiryType: BOUNDOS_GHOST_TEST, offer: "sidecar", ...answers, ghostNumber: String(ghostNumber), estimatedGhosted: String(estimatedGhosted) },
         submittedAt: new Date(),
       });
     } else {

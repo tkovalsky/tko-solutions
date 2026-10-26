@@ -69,6 +69,11 @@ describe("operator brief", () => {
     for (const line of ["Vertical: ria", "Can create a CRM API key: no", "Dated relationships: About 300 clients", "Where opt-outs live: Redtail flag", "Accepts a 10–20% holdout: unsure", "RIA: CCO, archiving, Reg S-P: CCO: Pat; Smarsh; procedure drafted", "Inquiry type: BOUNDOS_APPLY"]) expect(content.text).toContain(line);
   });
 
+  it("labels a Ghost Test result as self-reported", () => {
+    const content = buildLeadNotificationEmail({ ...lead, source: "BOUNDOS_GHOST_TEST", payload: { inquiryType: "BOUNDOS_GHOST_TEST", ghostNumber: "61", estimatedGhosted: "122", lastTouch: "3-12-months", dailyPick: "memory" } });
+    for (const line of ["Ghost Number (self-reported test): 61", "Estimated people to call back: 122", "Last personal touch: 3-12-months", "How they pick daily calls: memory"]) expect(content.text).toContain(line);
+  });
+
   it("escapes every user-controlled HTML field and removes subject line breaks", () => {
     const malicious = '<img src=x onerror="alert(1)">';
     const content = buildLeadNotificationEmail({ ...lead, name: "Alex\r\nBcc:other@example.com", company: malicious, role: malicious, email: malicious, source: malicious, landingPage: malicious, payload: { transformationContext: malicious } });
