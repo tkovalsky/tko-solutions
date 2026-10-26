@@ -117,20 +117,28 @@ describe("POST /api/contact", () => {
     expect(response.headers.get("Access-Control-Allow-Origin")).toBe("https://www.boundos.com");
     expect(persistInboundLead).toHaveBeenCalledWith(expect.objectContaining({
       name: "Jordan", email: "jordan@team.com", source: "BOUNDOS_GHOST_TEST", landingPage: "https://www.boundos.com/ghost-test",
-      payload: { inquiryType: "BOUNDOS_GHOST_TEST", offer: "sidecar", persona: "team-lead", pastClients: "100-300", lastTouch: "3-12-months", dailyPick: "memory", quietLead: "few-tries", topTen: "roughly", busyWeek: "1-4", ghostNumber: "61", estimatedGhosted: "122" },
+      payload: { inquiryType: "BOUNDOS_GHOST_TEST", offer: "sidecar", persona: "team-lead", pastClients: "100-300", lastTouch: "3-12-months", dailyPick: "memory", quietLead: "few-tries", topTen: "roughly", busyWeek: "1-4", ghostScore: "63", estimatedGhosted: "126" },
     }));
   });
 
   it.each([
     ["an unknown answer", { lastTouch: "yesterday" }],
-    ["an out-of-range number", { ghostNumber: 150 }],
-    ["a number sent as text", { ghostNumber: "61" }],
+    ["an out-of-range score", { ghostScore: 101 }],
+    ["a negative score", { ghostScore: -1 }],
+    ["a score sent as text", { ghostScore: "61" }],
     ["a missing name", { name: undefined }],
   ])("rejects a Ghost Test result with %s before storage or email", async (_label, overrides) => {
     const response = await POST(ghostRequest(overrides));
     expect(response.status).toBe(400);
     expect(persistInboundLead).not.toHaveBeenCalled();
     expect(notifyLead).not.toHaveBeenCalled();
+  });
+
+  it.each([0, 100])("accepts the Ghost Score endpoint %i", async (ghostScore) => {
+    persistInboundLead.mockResolvedValue({ id: "lead_edge" });
+    notifyLead.mockResolvedValue({ status: "sent", notifiedAt: new Date() });
+    expect((await POST(ghostRequest({ ghostScore, estimatedGhosted: 0 }))).status).toBe(200);
+    expect(persistInboundLead.mock.calls[0][0].payload).toMatchObject({ ghostScore: String(ghostScore) });
   });
 
   it("accepts a filled honeypot silently without storage or email", async () => {
@@ -181,7 +189,7 @@ function ghostRequest(overrides: Record<string, unknown> = {}) {
     body: JSON.stringify({
       inquiryType: "BOUNDOS_GHOST_TEST", name: "Jordan", email: "jordan@team.com",
       persona: "team-lead", pastClients: "100-300", lastTouch: "3-12-months", dailyPick: "memory", quietLead: "few-tries", topTen: "roughly", busyWeek: "1-4",
-      ghostNumber: 61, estimatedGhosted: 122,
+      ghostScore: 63, estimatedGhosted: 126,
       ...overrides,
     }),
   });

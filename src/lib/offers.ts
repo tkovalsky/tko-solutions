@@ -359,12 +359,13 @@ export const healthcareExecutionAssurance = {
   commercial: "Fixed fee agreed after the sprint, before continuation. The proposal states monthly capacity, meeting cadence, review turnaround, and escalation rules. Additional workstreams or implementation receive a separate scope. No automatic renewal.",
 } as const;
 
-// SidecarOS: the done-with-you follow-up service sold beside a client's existing CRM.
+// BoundOS: the done-with-you follow-up service sold beside a client's existing CRM (formerly
+// "SidecarOS"; one product brand since 2026-10-26).
 // The single published ladder (decision D1, 2026-10-20). Scope follows Schedule A of
 // docs/legal/SERVICE_AGREEMENT_OUTLINE.md. The BoundOS product site mirrors these values;
 // change both together. Rachel Desk is deliberately absent until counsel clears it.
 export const sidecar = {
-  name: "SidecarOS",
+  name: "BoundOS",
   productUrl: "https://www.boundos.com",
   contactHref: "/contact?offer=managed-follow-up",
   separateCosts: "CRM subscriptions, messaging, hosting, and AI usage are separate from service fees.",
@@ -379,7 +380,7 @@ export const sidecar = {
     },
     {
       id: "core",
-      name: "Sidecar Core",
+      name: "BoundOS Core",
       price: "$1,500 setup",
       monthly: "$500/month",
       commercial: "$1,500 setup + $500/month",
@@ -388,7 +389,7 @@ export const sidecar = {
     },
     {
       id: "managed",
-      name: "Sidecar Managed",
+      name: "BoundOS Managed",
       price: "$2,500 setup",
       monthly: "$1,200/month",
       commercial: "$2,500 setup + $1,200/month",

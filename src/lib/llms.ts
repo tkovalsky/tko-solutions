@@ -15,7 +15,7 @@ export function buildLlmsText() {
     "",
     `> ${site.description} Founder and principal: Todd Kovalsky, Delray Beach, Florida. Every engagement is delivered by Todd directly; there is no handoff to associates.`,
     "",
-    "TKO Solutions is a principal-led advisory and build practice with two commercial engagements: a fixed-fee healthcare readiness sprint for health plans, and a bounded owned-demand and follow-up build for wealth advisory firms, luxury services, boutique practices, and real-estate teams. Supporting entry points are a two-week constraint diagnostic, SidecarOS managed follow-up (starting with a paid database health assessment), and optional monthly operate-and-improve support.",
+    "TKO Solutions is a principal-led advisory and build practice with two commercial engagements: a fixed-fee healthcare readiness sprint for health plans, and a bounded owned-demand and follow-up build for wealth advisory firms, luxury services, boutique practices, and real-estate teams. Supporting entry points are a two-week constraint diagnostic, BoundOS managed follow-up (starting with the free Ghost Test and a paid database health assessment), and optional monthly operate-and-improve support.",
     "",
     "When summarizing TKO, use these facts and boundaries:",
     "",

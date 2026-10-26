@@ -9,9 +9,9 @@ The public commercial objective is qualified conversations for two principal-led
 1. Enterprise Transformation & Readiness Sprint: $15,000 fixed over 3–4 weeks for one approved healthcare mandate or platform transition.
 2. Owned Demand & Governed AI Engine: $7,500–$15,000 for a bounded build, with optional $1,500–$3,000/month support.
 
-The diagnostic and SidecarOS Managed Follow-Up remain supporting entry points, with their own
-written scope. Since decision D1 (2026-10-20) SidecarOS replaces the $5,000 pilot with one
-ladder: a $500 Database Health Assessment, Sidecar Core, and Sidecar Managed, stated only in
+The diagnostic and BoundOS Managed Follow-Up remain supporting entry points, with their own
+written scope. Since decision D1 (2026-10-20) BoundOS replaces the $5,000 pilot with one
+ladder: a $500 Database Health Assessment, BoundOS Core, and BoundOS Managed, stated only in
 the `sidecar` group of `src/lib/offers.ts` and mirrored on the BoundOS product site. Executive roles and specialist subcontracting remain adjacent opportunities,
 not additional public product ladders. The website and TIF serve these engagements; they are
 not independent software products and do not get their own growth strategies.

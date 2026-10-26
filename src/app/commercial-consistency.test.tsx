@@ -53,7 +53,7 @@ describe("commercial consistency", () => {
     }
   });
 
-  it("renders the SidecarOS ladder from the registry on the managed follow-up and PCOS pages", () => {
+  it("renders the BoundOS ladder from the registry on the managed follow-up and PCOS pages", () => {
     const text = render(<ManagedFollowUpPage />).container.textContent ?? "";
     for (const step of sidecar.steps) {
       expect(text).toContain(step.name);

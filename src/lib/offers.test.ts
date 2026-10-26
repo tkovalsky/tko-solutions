@@ -35,7 +35,7 @@ describe("Commercial engine consistency", () => {
   });
 });
 
-describe("SidecarOS ladder", () => {
+describe("BoundOS ladder", () => {
   it("states assessment, Core, and Managed in order with Schedule A contact limits", () => {
     expect(sidecar.steps.map((step) => step.id)).toEqual(["assessment", "core", "managed"]);
     expect(sidecar.steps.map((step) => step.price)).toEqual(["$500", "$1,500 setup", "$2,500 setup"]);

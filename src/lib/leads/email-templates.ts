@@ -32,7 +32,7 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
     ["crm", "CRM"], ["contactCount", "Approximate contacts"],
     ["consentEvidence", "Consent evidence and opt-outs"], ["caller", "Who makes the calls and logs dispositions"],
     ["vertical", "Vertical"], ["crmApiKey", "Can create a CRM API key"], ["datedRelationships", "Dated relationships"],
-    ["ghostNumber", "Ghost Number (self-reported test)"], ["estimatedGhosted", "Estimated people to call back"],
+    ["ghostScore", "Ghost Score (self-reported test, 0 best, 100 worst)"], ["estimatedGhosted", "Estimated people to call back"],
     ["persona", "Describes themselves as"], ["pastClients", "Past clients"], ["lastTouch", "Last personal touch"],
     ["dailyPick", "How they pick daily calls"], ["quietLead", "When a lead goes quiet"], ["topTen", "Knows top 10 clients"],
     ["busyWeek", "Check-ins in a busy week"],

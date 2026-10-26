@@ -76,7 +76,7 @@ Six qualification questions (from `docs/strategy/SIDECAR_GTM_PLAYBOOK_2026_10_18
 2. How many contacts, and how many have a dated relationship you can point to (closing date, inquiry date, meeting)?
 3. Where do opt-outs live today, and who maintains them?
 4. Who will make the calls and log a one-word disposition?
-5. Will you accept a 10–20 percent holdout you do not contact through SidecarOS for 90 days?
+5. Will you accept a 10–20 percent holdout you do not contact through BoundOS for 90 days?
 6. (RIA only) Who is your CCO, which archiving vendor captures your email, and has your Reg S-P vendor-oversight procedure been written?
 
 Reading the answers:
@@ -84,7 +84,7 @@ Reading the answers:
 - A "no" on 1 is a CSV client, not a disqualification.
 - A "no" on 4 or 5 disqualifies Core and Managed. If nobody will make the calls, the deliverable is the assessment report alone; say so.
 - A missing answer on 3 must be resolved before any copy is approved or loaded.
-- For an RIA, stop at question 6 if the CCO is not involved; the template-approval and archiving requirements are the client's to meet, and SidecarOS sends nothing to end clients.
+- For an RIA, stop at question 6 if the CCO is not involved; the template-approval and archiving requirements are the client's to meet, and BoundOS sends nothing to end clients.
 - The next step is the $500 Database Health Assessment under a signed data authorization letter (`docs/legal/DATA_AUTHORIZATION_LETTER.md`). Credentials or exports arrive through a form, never by email.
 
 Do not promise reply rates, conversations, appointments, or closings. Rachel's nurture results are a single-operator baseline, not a forecast.
@@ -112,7 +112,7 @@ When posting on LinkedIn or Reddit (`r/realtors`, `r/CFP`, `r/LawFirm`, `r/consu
 ## Scope and evidence rules
 
 - Use the commercial names and terms in `src/lib/offers.ts`. The diagnostic is $7,500 as a standalone engagement, without an automatic build credit. Existing signed terms are honored. Do not introduce a discount or a different retainer in a message.
-- SidecarOS Managed Follow-Up is a separate supporting entry point for an existing contact base and supported tools: a $500 Database Health Assessment (credited to setup within 60 days), then Sidecar Core ($1,500 setup + $500/month) or Sidecar Managed ($2,500 setup + $1,200/month), per the `sidecar` ladder in `src/lib/offers.ts`. It is not a price for the complete owned-demand build. Use `/products/ambient-crm` only when that narrower scope fits. Do not mention Rachel Desk.
+- BoundOS Managed Follow-Up is a separate supporting entry point for an existing contact base and supported tools: a $500 Database Health Assessment (credited to setup within 60 days), then BoundOS Core ($1,500 setup + $500/month) or BoundOS Managed ($2,500 setup + $1,200/month), per the `sidecar` ladder in `src/lib/offers.ts`. It is not a price for the complete owned-demand build. Use `/products/ambient-crm` only when that narrower scope fits. Do not mention Rachel Desk.
 - The current healthcare recording is automated. Do not describe it as Todd speaking. Link to the lab or deliverables page rather than promising an unrecorded founder video.
 - The retired RachelOS video and rejected captures must not be linked or restored. Use the cleared case study and architecture explorer until reviewed recordings are published.
 - Do not quote assumed acquisition costs, competitor pricing, a time advantage over aggregators, or guaranteed lead volume, conversion, revenue, savings, compliance, or capacity.

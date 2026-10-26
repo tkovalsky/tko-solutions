@@ -25,7 +25,8 @@ const boundosApplySchema = z.object({
   message: z.string().trim().max(2000).optional(),
 }).refine((data) => data.vertical !== "ria" || (data.riaCompliance?.length ?? 0) >= 2, { path: ["riaCompliance"] });
 
-// The BoundOS Ghost Test (a free self-assessment) posts answers and its computed result only;
+// The BoundOS Ghost Test (a free self-assessment; Ghost Score 0 = not a ghost, 100 = full ghost)
+// posts answers and its computed result only;
 // never contact lists. Values mirror rachel-realestate-marketing src/lib/ghost/test.ts.
 const BOUNDOS_GHOST_TEST = "BOUNDOS_GHOST_TEST";
 const ghostTestSchema = z.object({
@@ -38,7 +39,7 @@ const ghostTestSchema = z.object({
   quietLead: z.enum(["persist", "drip", "few-tries", "slips"]),
   topTen: z.enum(["yes", "roughly", "no"]),
   busyWeek: z.enum(["10-plus", "5-10", "1-4", "zero"]),
-  ghostNumber: z.number().int().min(1).max(99),
+  ghostScore: z.number().int().min(0).max(100),
   estimatedGhosted: z.number().int().min(0).max(100000),
 });
 
@@ -95,7 +96,7 @@ export async function POST(request: Request) {
       if (!test.success) {
         return json({ error: "Please retake the Ghost Test and try again." }, 400);
       }
-      const { name: taker, firm: company, ghostNumber, estimatedGhosted, ...answers } = test.data;
+      const { name: taker, firm: company, ghostScore, estimatedGhosted, ...answers } = test.data;
       lead = await persistInboundLead({
         name: taker,
         email: parsedEmail.data,
@@ -103,7 +104,7 @@ export async function POST(request: Request) {
         source: BOUNDOS_GHOST_TEST,
         landingPage: "https://www.boundos.com/ghost-test",
         // Stored as strings so the operator brief renders them; the number is self-reported.
-        payload: { inquiryType: BOUNDOS_GHOST_TEST, offer: "sidecar", ...answers, ghostNumber: String(ghostNumber), estimatedGhosted: String(estimatedGhosted) },
+        payload: { inquiryType: BOUNDOS_GHOST_TEST, offer: "sidecar", ...answers, ghostScore: String(ghostScore), estimatedGhosted: String(estimatedGhosted) },
         submittedAt: new Date(),
       });
     } else {
