@@ -9,6 +9,20 @@ import {
 } from "./content-workflow";
 
 describe("content workflow helpers", () => {
+  it("uses the explicit Rachel source context while leaving ordinary TKO framing separate", () => {
+    const body = "Compare daily travel and home types before you choose where to live; current home-specific details still need verification.";
+    const voice = { path: "docs/content-system/RACHEL_VOICE.md", content: "Synthetic voice instructions: use calm practical questions and preserve uncertainty.", sha256: "a".repeat(64) };
+    const context = { buyerDomain: "rachel_luxury" as const, destinationUrl: "https://racheldelray.com/guides/boca-vs-delray?utm_source=facebook",
+      rachelSource: { canonicalUrl: "https://racheldelray.com/guides/boca-vs-delray", voice } };
+    const copy = generateDerivativeCopy({ type: "facebook_post", title: "Compare Boca and Delray", body, context });
+    expect(copy).toContain(body);
+    expect(copy).toContain("What are you comparing before deciding where to live?");
+    expect(copy).toContain(voice.content);
+    expect(copy).toContain("Production notes — omit from public copy");
+    expect(copy).not.toContain("preventable work");
+    expect(generateDerivativeCopy({ type: "facebook_post", title: "Workflows", body })).toContain("preventable work");
+    expect(() => generateDerivativeCopy({ type: "email_draft", title: "Unsupported", body, context })).toThrow("Unsupported Rachel");
+  });
   it("creates stable content slugs from operator titles", () => {
     expect(makeContentSlug("  Why Buyers Choose Rachel Delray!  ")).toBe("why-buyers-choose-rachel-delray");
   });

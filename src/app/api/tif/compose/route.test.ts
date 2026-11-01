@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { createHash } from "node:crypto";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { runCompose } = vi.hoisted(() => ({ runCompose: vi.fn() }));
@@ -13,7 +14,7 @@ const payload = {
   inputs: { title: "Synthetic attribution check" },
 };
 
-function request(headers: Record<string, string> = {}) {
+function request(headers: Record<string, string> = {}, body: unknown = payload) {
   return new NextRequest("https://tif.example.test/api/tif/compose", {
     method: "POST",
     headers: {
@@ -21,11 +22,35 @@ function request(headers: Record<string, string> = {}) {
       "x-tif-access-key": "test-tif-key",
       ...headers,
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(body),
   });
 }
 
 describe("POST /api/tif/compose identity boundary", () => {
+  it("runs a real social package through the authenticated composer without any external request", async () => {
+    const actual = await vi.importActual<typeof import("@/lib/tif/execution")>("@/lib/tif/execution");
+    runCompose.mockImplementation(actual.runCompose);
+    const hash = (value: string) => createHash("sha256").update(value).digest("hex");
+    const body = "Compare daily travel and home types before deciding which South Florida options you want to research further.";
+    const voice = "Synthetic canonical voice: calm practical questions, no invented anecdotes or unsupported promises.";
+    const input = { framework: "rachel_relocation", artifact: "social_package", voice: "rachel", inputs: { socialPackage: {
+      channel: "linkedin_post", source: { parentContentId: 42, contentId: "newsroom:42", clusterId: "relocation", revision: "v1",
+        title: "Compare Boca and Delray", canonicalUrl: "https://racheldelray.com/guides/boca-vs-delray", body, sha256: hash(body) },
+      voice: { path: "docs/content-system/RACHEL_VOICE.md", content: voice, sha256: hash(voice) },
+      destinationUrl: "https://racheldelray.com/guides/boca-vs-delray?utm_source=linkedin&utm_medium=social&utm_campaign=relocation" } } };
+    const headers = { "x-ai-workload": "product.content_generation", "x-ai-environment": "test", "x-ai-execution-source": "http_request" };
+    const external = vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("External requests forbidden"));
+    try {
+      const response = await POST(request(headers, input));
+      expect(response.status).toBe(200);
+      await expect(response.json()).resolves.toMatchObject({ ok: true, artifact: "social_package",
+        socialPackage: { channel: "linkedin_post", sourceRevision: "v1", voiceSha256: hash(voice) } });
+      const invalid = structuredClone(input); invalid.inputs.socialPackage.source.body += " Changed.";
+      expect((await POST(request(headers, invalid))).status).toBe(400);
+      expect((await POST(request({ ...headers, "x-tif-access-key": "wrong" }, input))).status).toBe(401);
+      expect(external).not.toHaveBeenCalled();
+    } finally { external.mockRestore(); }
+  });
   beforeEach(() => {
     process.env.TIF_ACCESS_KEY = "test-tif-key";
     runCompose.mockReset();

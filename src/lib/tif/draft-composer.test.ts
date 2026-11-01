@@ -5,6 +5,53 @@ import { composeDraft } from "./draft-composer";
 import type { GenerationRequirementSource } from "./contract";
 
 describe("TIF core draft composer", () => {
+  function social(channel: "facebook_post" | "instagram_post" | "instagram_reel_script" | "linkedin_post" = "facebook_post") {
+    const body = "Compare daily travel, home types and the questions you still need to verify before deciding where to live.";
+    const voice = "Synthetic canonical voice fixture: calm, practical, mostly second person; never invent a visit, client story or outcome.";
+    const hash = (value: string) => createHash("sha256").update(value).digest("hex");
+    return { framework: "rachel_relocation" as const, artifact: "social_package" as const, voice: "rachel" as const,
+      inputs: { socialPackage: { channel, source: { parentContentId: 42, contentId: "newsroom:42", clusterId: null,
+        revision: "revision-1", title: "Compare Boca and Delray", canonicalUrl: "https://racheldelray.com/guides/boca-vs-delray", body, sha256: hash(body) },
+        voice: { path: "docs/content-system/RACHEL_VOICE.md" as const, content: voice, sha256: hash(voice) },
+        destinationUrl: `https://racheldelray.com/guides/boca-vs-delray?utm_source=${channel.startsWith("instagram") ? "instagram" : channel.split("_")[0]}&utm_medium=social&utm_campaign=relocation` } } };
+  }
+
+  it("composes distinct source-grounded channels with stable revision/voice lineage and no approval claim", () => {
+    const channels = ["facebook_post", "instagram_post", "instagram_reel_script", "linkedin_post"] as const;
+    const results = channels.map(channel => composeDraft(social(channel)));
+    expect(new Set(results.map(result => result.markdown)).size).toBe(4);
+    for (const [index, result] of results.entries()) {
+      const input = social(channels[index]).inputs.socialPackage;
+      expect(result.markdown).toContain(input.source.body);
+      expect(result.markdown).toContain(input.voice.content);
+      expect(result.markdown).toContain(input.destinationUrl);
+      expect(result.markdown).not.toMatch(/A buyer asked|staff touches|preventable rework|Todd review/);
+      expect(result.sourceUsage.voiceApplied).toBe(false);
+      expect(result.socialPackage).toMatchObject({ channel: input.channel, contentId: "newsroom:42", clusterId: null,
+        sourceRevision: "revision-1", sourceSha256: input.source.sha256, voiceSha256: input.voice.sha256 });
+      expect(composeDraft(social(channels[index])).socialPackage?.compositionId).toBe(result.socialPackage?.compositionId);
+    }
+    const edited = social(); edited.inputs.socialPackage.source.revision = "revision-2";
+    expect(composeDraft(edited).socialPackage?.compositionId).not.toBe(results[0].socialPackage?.compositionId);
+  });
+
+  it.each(["source hash", "voice hash", "destination", "channel attribution", "unknown private field", "legacy private context"])("rejects social %s before composition", kind => {
+    const request = social();
+    if (kind === "source hash") request.inputs.socialPackage.source.body += " Changed.";
+    if (kind === "voice hash") request.inputs.socialPackage.voice.content += " Changed.";
+    if (kind === "destination") request.inputs.socialPackage.destinationUrl = "https://example.test/private";
+    if (kind === "channel attribution") request.inputs.socialPackage.destinationUrl = request.inputs.socialPackage.destinationUrl.replace("utm_source=facebook", "utm_source=linkedin");
+    if (kind === "unknown private field") Object.assign(request.inputs.socialPackage.source, { privateNotes: "Must stay in CMS" });
+    if (kind === "legacy private context") Object.assign(request.inputs, { notes: "Private operational notes" });
+    expect(() => composeDraft(request)).toThrow();
+  });
+
+  it("rejects a social bundle on the legacy guide path and unsupported channel types", () => {
+    expect(() => composeDraft({ ...social(), artifact: "relocation_guide" })).toThrow("Social input");
+    const invalid = social(); Object.assign(invalid.inputs.socialPackage, { channel: "email_draft" });
+    expect(() => composeDraft(invalid)).toThrow();
+  });
+
   it("composes a pre-license commercial corridor page from the CRE framework", () => {
     const result = composeDraft({
       framework: "cre_tenant_rep",
