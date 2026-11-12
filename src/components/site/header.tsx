@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { LinkButton } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
 import { MobileNav } from "@/components/site/mobile-nav";
-import { isCurrentDestination, publicNavigation, site } from "@/lib/site";
+import { SolutionsMenu } from "@/components/site/solutions-menu";
+import { isCurrentDestination, publicNavigation, site, solutionNavigation } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
@@ -14,6 +15,7 @@ export function Header() {
       <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-6 px-6 lg:px-8">
         <Logo />
         <nav aria-label="Primary navigation" className="hidden items-center gap-5 lg:flex xl:gap-8">
+          <SolutionsMenu items={solutionNavigation} />
           {publicNavigation.map((item) => (
             <Link
               key={item.href}
@@ -30,7 +32,7 @@ export function Header() {
             {site.offerCta}
           </LinkButton>
         </div>
-        <MobileNav items={publicNavigation} />
+        <MobileNav solutions={solutionNavigation} items={publicNavigation} />
       </div>
     </header>
   );
