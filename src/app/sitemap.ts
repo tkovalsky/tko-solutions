@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { caseStudies } from "@/lib/content";
 import { getInsights } from "@/lib/insights";
 import { offerHref, offers } from "@/lib/offers";
+import { solutionRoutes } from "@/lib/solutions";
 import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -29,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const pageEntries = [...new Set([...staticRoutes, ...serviceRoutes, ...caseStudyRoutes])].map((route) => ({
+  const pageEntries = [...new Set([...staticRoutes, ...solutionRoutes, ...serviceRoutes, ...caseStudyRoutes])].map((route) => ({
     url: absoluteUrl(route),
     changeFrequency: "monthly" as const,
     priority: route === "/" ? 1 : 0.7,

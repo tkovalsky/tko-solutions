@@ -203,7 +203,7 @@ Before committing to a prior authorization platform, an automation vendor, a Gol
 
 An organization that can answer all five is genuinely ready to evaluate automation, and will buy better because it knows what it is buying. An organization that cannot has just found its actual first project. It is considerably cheaper than the platform.
 
-For the program-level version of this diagnostic, the [Program Recovery Readiness Check](/program-recovery-readiness-check) covers twelve questions across outcomes, decision rights, workflow ownership, dependencies, operating measures, and AI readiness.
+For the program-level version of this work, the [Readiness Sprint](/services/regulatory-implementation-readiness-sprint) traces one approved obligation through decision rights, workflow ownership, dependencies, controls, and evidence.
 
 ## Practical Next Steps
 

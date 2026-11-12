@@ -147,7 +147,7 @@ Six questions. Each has a documentary answer or it does not, and the pattern of 
 5. **Which assumption in the original business case is no longer true, and when did it stop being true?** *"None" after eighteen months in healthcare usually means nobody has checked.*
 6. **Who is accountable for adoption, as distinct from delivery, and what are they measured on?** *If it is the same person on the same measures, adoption is not being managed.*
 
-The [Program Recovery Readiness Check](/program-recovery-readiness-check) expands these into twelve questions across six themes, with the weak answer to watch for in each. It takes about ninety minutes with your program leadership and requires nothing from me.
+Each question is a test of whether readiness is owned and evidenced, not just reported. [Delivery intelligence](/solutions/delivery-intelligence) describes how to turn the answers into named owners, mapped dependencies, and traceable readiness evidence. For a health plan program, the [Readiness Sprint](/services/regulatory-implementation-readiness-sprint) applies that work to one approved mandate.
 
 ## What Recovery Actually Requires
 

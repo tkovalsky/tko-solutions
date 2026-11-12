@@ -19,10 +19,7 @@ const nextConfig: NextConfig = {
       "cre-intelligence-model",
       "rachelos-delivery-model",
     ];
-    const retiredGuides = [
-      "prior-authorization-operational-quality-problem",
-      "operational-intelligence-vs-reporting",
-    ];
+    const retiredGuides = ["prior-authorization-operational-quality-problem"];
     return [
       { source: "/healthcare", destination: "/healthcare/impact-assessment", permanent: true },
       { source: "/approach", destination: "/services", permanent: true },
@@ -38,6 +35,7 @@ const nextConfig: NextConfig = {
       { source: "/services/transformation-leadership", destination: "/services", permanent: true },
       ...retiredCaseStudies.map((slug) => ({ source: `/selected-work/${slug}`, destination: "/selected-work", permanent: true })),
       ...retiredGuides.map((slug) => ({ source: `/insights/${slug}`, destination: "/insights", permanent: true })),
+      { source: "/insights/operational-intelligence-vs-reporting", destination: "/operational-intelligence", permanent: true },
     ];
   },
 };

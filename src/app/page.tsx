@@ -49,6 +49,8 @@ const useCases = [
     body: "For founders, COOs, and operations leaders whose teams carry work between a CRM, spreadsheets, and email, and whose follow-up depends on memory.",
     href: offerHref(blueprint.slug),
     cta: `Start with the Blueprint · ${blueprint.startingPrice}`,
+    secondaryHref: "/operational-intelligence",
+    secondaryCta: "How the operating layer works →",
     label: "Engagement",
   },
   {
@@ -57,6 +59,8 @@ const useCases = [
     body: "For delivery and transformation leaders with fragmented ownership, dependencies across teams, and status reports that do not establish readiness. The approach applies the same method to ownership discovery, dependency mapping, requirement traceability, and evidence preparation. It is a proposed application, scoped per program, not a packaged platform.",
     href: enterpriseHref,
     cta: "Discuss an Enterprise Engagement",
+    secondaryHref: "/solutions/delivery-intelligence",
+    secondaryCta: "Delivery intelligence →",
     label: "Proposed application",
   },
   {
@@ -75,8 +79,8 @@ const useCases = [
     body: "For brokerages, advisory practices, and boutique firms where CRM records are not actionable, follow-up is inconsistent, and relationship context gets lost. RachelOS is the working example.",
     href: "/private-client-os",
     cta: "Explore Private Client OS",
-    secondaryHref: "/selected-work/from-crm-to-operating-system",
-    secondaryCta: "Inspect RachelOS →",
+    secondaryHref: "/solutions/revenue-operations",
+    secondaryCta: "Revenue operations →",
     label: "Engagement",
   },
 ] as const;
