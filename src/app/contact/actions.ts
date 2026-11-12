@@ -49,6 +49,9 @@ export async function submitDiagnosticIntake(formData: FormData) {
   const selectedOffer = requestedOffer === "managed-follow-up" || isOfferSlug(requestedOffer) ? requestedOffer : undefined;
   const healthcare = selectedOffer === "regulatory-implementation-readiness-sprint";
   const managedFollowUp = selectedOffer === "managed-follow-up";
+  // The Blueprint intake is deliberately short: no revenue band, but the systems and the
+  // consequence are required because the fit decision depends on them.
+  const blueprint = selectedOffer === "execution-gap-blueprint";
   const offer = selectedOffer ? `&offer=${selectedOffer}` : "";
   const contactResult = (status: string) => `/contact?status=${status}${offer}`;
   if (getFormString(formData, "website")) {
@@ -62,9 +65,9 @@ export async function submitDiagnosticIntake(formData: FormData) {
     role: getFormString(formData, "role"),
     transformationContext: formData.get("transformationContext"),
     currentPressure: formData.get("currentPressure"),
-    revenueBand: healthcare ? undefined : getFormString(formData, "revenueBand"),
+    revenueBand: healthcare || blueprint ? undefined : getFormString(formData, "revenueBand"),
     targetDeadline: healthcare ? getFormString(formData, "targetDeadline") : undefined,
-    affectedSystems: healthcare ? getFormString(formData, "affectedSystems") : undefined,
+    affectedSystems: healthcare || blueprint ? getFormString(formData, "affectedSystems") : undefined,
     sponsor: healthcare ? getFormString(formData, "sponsor") : undefined,
     healthcareScope: healthcare ? getFormString(formData, "healthcareScope") : undefined,
     crm: managedFollowUp ? getFormString(formData, "crm") : undefined,
@@ -85,7 +88,9 @@ export async function submitDiagnosticIntake(formData: FormData) {
 
   if (!parsed.success || (healthcare
     ? !parsed.data.targetDeadline || !parsed.data.affectedSystems || !parsed.data.sponsor || !parsed.data.healthcareScope
-    : !parsed.data.revenueBand || (managedFollowUp && (!parsed.data.crm || !parsed.data.contactCount || !parsed.data.caller)))) {
+    : blueprint
+      ? !parsed.data.role || !parsed.data.affectedSystems || (parsed.data.consequence?.length ?? 0) < 2
+      : !parsed.data.revenueBand || (managedFollowUp && (!parsed.data.crm || !parsed.data.contactCount || !parsed.data.caller)))) {
     redirect(contactResult("invalid"));
   }
 

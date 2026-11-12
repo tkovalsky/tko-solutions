@@ -38,6 +38,8 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
     ["busyWeek", "Check-ins in a busy week"],
     ["optOuts", "Where opt-outs live"], ["holdout", "Accepts a 10–20% holdout"], ["riaCompliance", "RIA: CCO, archiving, Reg S-P"],
     ["message", "Message"], ["consequence", "Consequence"],
+    ["utmSource", "UTM source"], ["utmMedium", "UTM medium"], ["utmCampaign", "UTM campaign"],
+    ["ctaLocation", "CTA location"],
     ["firm", "Firm"], ["market", "Market"], ["transactionSize", "Transaction size"],
     ["inquiryType", "Inquiry type"], ["problem", "Problem"], ["systems", "Systems"],
     ["notWorking", "What is not working"], ["aiDeployed", "AI deployed"], ["decision", "Decision needed"],
@@ -53,7 +55,9 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
     ["Submitted at", lead.lastSubmittedAt.toISOString()], ["Lead ID", lead.id],
   ];
   const subjectLabel = [lead.name, lead.company].filter(Boolean).join(" / ") || "New website inquiry";
-  const nextStep = "Review the request and reply within two business days.";
+  const nextStep = payload.offer === "execution-gap-blueprint"
+    ? "Blueprint request: confirm fit within two business days, then send the written order and invoice (docs/commercial-launch-2026-11/BLUEPRINT_OPERATING_PROCEDURE.md)."
+    : "Review the request and reply within two business days.";
   const rows = [...identity, ...details];
   return {
     subject: `You've got leads! — ${subjectLabel.replace(/[\r\n\t]+/g, " ").slice(0, 160)}`,

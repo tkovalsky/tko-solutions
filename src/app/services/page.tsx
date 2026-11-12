@@ -10,7 +10,7 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services and Pricing",
   description:
-    "Principal-led healthcare readiness and owned-demand builds. Clear scopes, working proof, $15,000 readiness sprints, and $7,500–$15,000 governed workflow builds.",
+    `Principal-led operations work with published prices: a ${getOffer("execution-gap-blueprint")!.startingPrice} Execution Gap Blueprint for one workflow, a $7,500 diagnostic, $7,500–$15,000 builds, and $15,000 healthcare readiness sprints.`,
   alternates: { canonical: "/services" },
   openGraph: {
     title: "Services and Pricing | TKO Solutions",
@@ -20,11 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
+const blueprint = getOffer("execution-gap-blueprint")!;
+
 export default function ServicesPage() {
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "ItemList", name: "TKO Solutions services", url: absoluteUrl("/services"), itemListElement: offers.map((offer, index) => ({ "@type": "ListItem", position: index + 1, item: { "@type": "Service", name: offer.name, description: offer.metaDescription, url: absoluteUrl(offerHref(offer.slug)), provider: { "@type": "ProfessionalService", name: site.name, url: site.url } } })) }} />
-      <PageHero eyebrow="Services and pricing" title="Two starting points. A defined scope for each." description="For healthcare leaders: trace an approved obligation through the systems and teams that must deliver it. For high-consideration firms: own buyer education, inquiry capture, and follow-up with human-reviewed AI drafting." primaryHref={CONSTRAINT_CALL.href} primaryLabel={CONSTRAINT_CALL.label} secondaryHref="/services/operating-system-build" secondaryLabel="Explore a Build" />
+      <PageHero eyebrow="Services and pricing" title="A fixed price for the first step. A defined scope for every step after." description={`Start with an Execution Gap Blueprint for one workflow (${blueprint.commercial}). When the problem is already clear, scope a diagnostic, a build, or a healthcare readiness sprint directly.`} primaryHref={offerHref(blueprint.slug)} primaryLabel={blueprint.ctaLabel} secondaryHref={CONSTRAINT_CALL.href} secondaryLabel={CONSTRAINT_CALL.label} />
 
       <Section className="bg-surface !py-14 md:!py-20">
         <div className="mb-10 grid gap-6 lg:grid-cols-2">
@@ -55,7 +57,8 @@ export default function ServicesPage() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHeader eyebrow="How pricing works" title="Clear scope before the work starts." description="Every engagement states the problem, the outcome we are aiming for, what is in and out of scope, and what you own at the end." />
           <div className="space-y-5 text-base leading-7 text-muted">
-            <p>The diagnostic is the smallest useful step when the business feels stuck but the first fix is not obvious.</p>
+            <p>The Execution Gap Blueprint is a fixed-fee look at one workflow. Its fee is credited once toward a qualifying follow-on engagement; the terms are on the Blueprint page.</p>
+            <p>The diagnostic is the deeper first step when the business feels stuck but the first fix is not obvious.</p>
             <p>Builds are fixed-price by phase. We define the workflow, tools, users, review steps, and result before implementation. You own the code, configuration, and documentation.</p>
             <p>Planning for next year? We can discuss the project now and agree on a start date against your priorities and my availability.</p>
             <p>Operate & Improve is optional. It keeps the system matched to the business after launch, without turning the engagement into open-ended consulting.</p>

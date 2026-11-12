@@ -111,6 +111,7 @@ When posting on LinkedIn or Reddit (`r/realtors`, `r/CFP`, `r/LawFirm`, `r/consu
 
 ## Scope and evidence rules
 
+- The entry offer is the Execution Gap Blueprint (`/services/execution-gap-blueprint`): $999 for the first five paid engagements, then $1,499, with the one-time credit in `BLUEPRINT_CREDIT_TERMS`. Quote the price on the written order, never a remaining-slots count.
 - Use the commercial names and terms in `src/lib/offers.ts`. The diagnostic is $7,500 as a standalone engagement, without an automatic build credit. Existing signed terms are honored. Do not introduce a discount or a different retainer in a message.
 - BoundOS Managed Follow-Up is a separate supporting entry point for an existing contact base and supported tools: a $500 Database Health Assessment (credited to setup within 60 days), then BoundOS Core ($1,500 setup + $500/month) or BoundOS Managed ($2,500 setup + $1,200/month), per the `sidecar` ladder in `src/lib/offers.ts`. It is not a price for the complete owned-demand build. Use `/products/ambient-crm` only when that narrower scope fits. Do not mention Rachel Desk.
 - The current healthcare recording is automated. Do not describe it as Todd speaking. Link to the lab or deliverables page rather than promising an unrecorded founder video.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { commercialEngines, getOffer, isOfferSlug, offerHref, offers, sidecar } from "@/lib/offers";
+import { BLUEPRINT_CREDIT_TERMS, blueprintFoundingOpen, blueprintLaunch, commercialEngines, getOffer, isOfferSlug, offerHref, offers, sidecar } from "@/lib/offers";
 
 describe("TKO offer ladder", () => {
   it("contains three unique, priced steps in diagnose → build → operate order", () => {
@@ -52,5 +52,41 @@ describe("BoundOS ladder", () => {
     expect(text).not.toContain("rachel desk");
     expect(text).not.toMatch(/guarantee/);
     expect(sidecar.contactHref).toBe("/contact?offer=managed-follow-up");
+  });
+});
+
+describe("Execution Gap Blueprint", () => {
+  const blueprint = getOffer("execution-gap-blueprint")!;
+
+  it("is the first rung and states the approved founding and standard prices", () => {
+    expect(offers[0].slug).toBe("execution-gap-blueprint");
+    expect(blueprintLaunch).toMatchObject({ foundingPrice: "$999", standardPrice: "$1,499", foundingAllocation: 5, creditMinimum: "$7,500", creditWindowDays: 45 });
+    expect(blueprintLaunch.foundingPaid).toBeGreaterThanOrEqual(0);
+    expect(blueprintLaunch.foundingPaid).toBeLessThanOrEqual(blueprintLaunch.foundingAllocation);
+    if (blueprintFoundingOpen) {
+      expect(blueprint).toMatchObject({ startingPrice: "$999", commercial: "$999 founding price · $1,499 standard" });
+    } else {
+      expect(blueprint).toMatchObject({ startingPrice: "$1,499", commercial: "$1,499 fixed" });
+      expect(JSON.stringify(blueprint)).not.toContain("$999");
+    }
+  });
+
+  it("states the credit once, with every limit, wherever the Blueprint is described", () => {
+    for (const term of ["once", "$7,500", "45 days", "not transferable", "cash", "combined with another credit", "Existing signed agreements"]) {
+      expect(BLUEPRINT_CREDIT_TERMS).toContain(term);
+    }
+    expect(blueprint.feeBoundary).toBe(BLUEPRINT_CREDIT_TERMS);
+    expect(blueprint.expansionPath).toContain("$7,500 or more within 45 days");
+    expect(blueprint.expansionPath).toContain("credited once");
+    expect(getOffer("constraint-diagnostic")!.expansionPath).toContain("Blueprint fee is credited once under its published terms");
+  });
+
+  it("states its scope limits and that a request is not a charge", () => {
+    const text = JSON.stringify(blueprint);
+    for (const limit of ["one business function", "three systems", "30 minutes", "No production credentials", "One round of factual clarification"]) {
+      expect(text).toContain(limit);
+    }
+    expect(blueprint.purchasePath?.map((step) => step.title)).toEqual(["Request", "Confirm fit", "Order and invoice", "Intake and delivery"]);
+    expect(text).toContain("does not charge you");
   });
 });
