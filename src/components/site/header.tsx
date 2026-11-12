@@ -26,8 +26,8 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <LinkButton href={site.ctaHref} ctaLocation="header" className="whitespace-nowrap">
-            {site.ctaShort}
+          <LinkButton href={site.offerCtaHref} ctaLocation="header" className="whitespace-nowrap">
+            {site.offerCta}
           </LinkButton>
         </div>
         <MobileNav items={publicNavigation} />
