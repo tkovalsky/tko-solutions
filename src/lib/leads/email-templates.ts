@@ -38,7 +38,7 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
     ["busyWeek", "Check-ins in a busy week"],
     ["optOuts", "Where opt-outs live"], ["holdout", "Accepts a 10–20% holdout"], ["riaCompliance", "RIA: CCO, archiving, Reg S-P"],
     ["message", "Message"], ["consequence", "Consequence"],
-    ["utmSource", "UTM source"], ["utmMedium", "UTM medium"], ["utmCampaign", "UTM campaign"],
+    ["utmSource", "UTM source"], ["utmMedium", "UTM medium"], ["utmCampaign", "UTM campaign"], ["utmContent", "UTM content"],
     ["ctaLocation", "CTA location"],
     ["firm", "Firm"], ["market", "Market"], ["transactionSize", "Transaction size"],
     ["inquiryType", "Inquiry type"], ["problem", "Problem"], ["systems", "Systems"],

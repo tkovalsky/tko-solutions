@@ -75,7 +75,7 @@ describe("submitDiagnosticIntake", () => {
     await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=notification-error&offer=execution-gap-blueprint");
     const saved = mockedPersistInboundLead.mock.calls[0][0];
     expect(saved).toMatchObject({ role: "COO", source: "commercial_offer_execution-gap-blueprint" });
-    expect(saved.payload).toMatchObject({ offer: "execution-gap-blueprint", affectedSystems: "HubSpot, Sheets, Outlook", consequence: "Two hours a day of re-keying", utmSource: "linkedin", utmCampaign: "blueprint-launch-2026-11" });
+    expect(saved.payload).toMatchObject({ offer: "execution-gap-blueprint", affectedSystems: "HubSpot, Sheets, Outlook", consequence: "Two hours a day of re-keying", utmSource: "linkedin", utmCampaign: "blueprint-launch-2026-11", utmContent: "post-08" });
     expect(saved.payload).not.toHaveProperty("revenueBand");
   });
 
@@ -285,5 +285,6 @@ function blueprintFormData() {
   formData.set("consequence", "Two hours a day of re-keying");
   formData.set("utmSource", "linkedin");
   formData.set("utmCampaign", "blueprint-launch-2026-11");
+  formData.set("utmContent", "post-08");
   return formData;
 }

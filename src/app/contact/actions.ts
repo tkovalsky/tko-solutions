@@ -40,6 +40,7 @@ const intakeSchema = z.object({
   utmSource: z.string().max(200).optional(),
   utmMedium: z.string().max(200).optional(),
   utmCampaign: z.string().max(200).optional(),
+  utmContent: z.string().max(200).optional(),
   device: z.enum(["mobile", "tablet", "desktop", "unknown"]).optional(),
   ctaLocation: z.string().max(200).optional(),
 });
@@ -82,6 +83,7 @@ export async function submitDiagnosticIntake(formData: FormData) {
     utmSource: getFormString(formData, "utmSource"),
     utmMedium: getFormString(formData, "utmMedium"),
     utmCampaign: getFormString(formData, "utmCampaign"),
+    utmContent: getFormString(formData, "utmContent"),
     device: getFormString(formData, "device"),
     ctaLocation: getFormString(formData, "ctaLocation"),
   });
