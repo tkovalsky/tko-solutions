@@ -1,4 +1,5 @@
 export type OfferSlug =
+  | "execution-gap-blueprint"
   | "constraint-diagnostic"
   | "operating-system-build"
   | "operate-and-improve"
@@ -33,7 +34,30 @@ export type Offer = {
   timeline?: OfferTimelineStep[];
   feeBoundary?: string;
   feeFraming?: string;
+  // Closing call-to-action copy when the generic call summary does not fit the offer.
+  ctaSummary?: string;
+  // What the buyer must supply before work starts.
+  prerequisites?: string[];
+  // How the purchase happens; stated so a request is never mistaken for a payment.
+  purchasePath?: OfferTimelineStep[];
 };
+
+// Execution Gap Blueprint commercial terms (owner-approved 2026-11-12). The founding count is
+// set by hand when an invoice is paid, and git history is its audit trail; the ledger lives in
+// docs/commercial-launch-2026-11/BLUEPRINT_OPERATING_PROCEDURE.md. When it reaches the
+// allocation, every surface shows the standard price. Do not display a remaining count.
+export const blueprintLaunch = {
+  foundingPrice: "$999",
+  standardPrice: "$1,499",
+  foundingAllocation: 5,
+  foundingPaid: 0,
+  creditMinimum: "$7,500",
+  creditWindowDays: 45,
+} as const;
+
+export const blueprintFoundingOpen = blueprintLaunch.foundingPaid < blueprintLaunch.foundingAllocation;
+
+export const BLUEPRINT_CREDIT_TERMS = `The Blueprint fee is credited once toward your first follow-on TKO engagement with a fixed fee of ${blueprintLaunch.creditMinimum} or more (a Constraint Diagnostic, a build phase, or a Readiness Sprint), when that engagement agreement is signed within ${blueprintLaunch.creditWindowDays} days of Blueprint delivery. The credit applies once, is not transferable, cannot be redeemed for cash, and cannot be combined with another credit. Existing signed agreements keep their terms.`;
 
 export const CONSTRAINT_CALL = {
   label: "Book a 30-Minute Call",
@@ -52,6 +76,111 @@ export const CONSTRAINT_CALL = {
 } as const;
 
 export const offers: Offer[] = [
+  {
+    slug: "execution-gap-blueprint",
+    name: "Execution Gap Blueprint",
+    shortName: "Blueprint",
+    level: "Diagnose",
+    step: "The first paid step",
+    duration: "5 business days",
+    startingPrice: blueprintFoundingOpen ? blueprintLaunch.foundingPrice : blueprintLaunch.standardPrice,
+    commercial: blueprintFoundingOpen
+      ? `${blueprintLaunch.foundingPrice} founding price · ${blueprintLaunch.standardPrice} standard`
+      : `${blueprintLaunch.standardPrice} fixed`,
+    question: "Show me the workflow that’s wasting your team’s time.",
+    audience:
+      "For a founder, COO, or operations leader who knows which workflow keeps eating the team’s time but not exactly where it breaks, why, or what to do first. Your tools hold the information; your people are still connecting the pieces by hand.",
+    summary:
+      "I examine one workflow in one business function, across up to three of the systems you already use. You receive a map of where the work and the handoffs break down, the three gaps that matter most, a plain recommendation for each, and a bounded proposal for the next step. Delivery is targeted for five business days after the intake call and the materials I need.",
+    metaDescription: blueprintFoundingOpen
+      ? `A fixed-scope assessment of one workflow across up to three systems: where the work breaks down, why, and the most practical next step. ${blueprintLaunch.foundingPrice} for the first five clients, then ${blueprintLaunch.standardPrice}.`
+      : `A fixed-scope assessment of one workflow across up to three systems: where the work breaks down, why, and the most practical next step. ${blueprintLaunch.standardPrice}.`,
+    triggers: [
+      "Requests, leads, or orders move between tools, and somebody has to carry them across by hand.",
+      "One person has become the routing layer: work waits until they notice it.",
+      "Nobody can say with confidence what needs attention today, or who owns it.",
+      "The team re-keys or reconciles the same information in a CRM, spreadsheets, and email.",
+      "You are considering automation or AI for a workflow and want to know what would actually help first.",
+    ],
+    deliverables: [
+      "A visual map of the workflow: the people, systems, handoffs, and decision points",
+      "The three most consequential gaps in ownership, information, process, decisions, or execution, each with its evidence and likely cause",
+      "A recommendation for each gap: automate, integrate, redesign, clarify ownership or controls, or leave the process alone",
+      "An initial impact hypothesis, labeled as an estimate, of where time, risk, or revenue could improve",
+      "A bounded proposal for the next phase, with scope, exclusions, and price, if one is worth doing",
+      "A concise readout, live or recorded, and one round of factual clarification",
+    ],
+    boundaries: [
+      "One workflow in one business function, and no more than three systems.",
+      "One structured intake conversation of up to 30 minutes, plus the documents and screenshots you choose to share.",
+      "No production credentials, no changes to your systems, and no software development.",
+      "One round of factual clarification after the readout, not open-ended revisions.",
+      "Not legal, tax, compliance, or clinical advice. Do not send passwords, patient records, or customer contact lists.",
+    ],
+    expansionPath: `The Blueprint is useful on its own: the map and recommendations are yours to act on with anyone. If you hire TKO for a follow-on engagement of ${blueprintLaunch.creditMinimum} or more within ${blueprintLaunch.creditWindowDays} days of delivery, the Blueprint fee is credited once, under the terms stated with the price.`,
+    ctaSummary: "Describe one workflow and the systems it runs through. I confirm the fit within two business days, and nothing is charged until you accept a written order.",
+    capabilityTags: ["Workflow and handoff mapping", "Ownership and decision rights", "Systems integration", "Automation and AI readiness"],
+    faqs: [
+      {
+        q: "What do I need to have ready?",
+        a: "One workflow you want to fix, 30 minutes for the intake call, and whatever you already have that shows how it works: screenshots, exported reports, process notes, or a short screen recording. No credentials and no sensitive records.",
+      },
+      {
+        q: "Is this a sales call with a price tag?",
+        a: "No. It is paid, fixed-scope work with a written deliverable you keep. If the right answer is to leave the process alone, or to fix it without TKO, the Blueprint says so.",
+      },
+      {
+        q: "How is it different from the Constraint Diagnostic?",
+        a: "The Blueprint looks at one workflow from the information you provide and one conversation. The Diagnostic runs two weeks, includes interviews with the people doing the work and a measured baseline, and ends with a build specification. If your problem spans teams or needs that depth, start with the Diagnostic.",
+      },
+      {
+        q: "We are a large enterprise with a funded initiative. Should we start here?",
+        a: "Usually not. If the program, sponsor, and budget already exist, we should scope the right engagement directly. Use the enterprise conversation instead.",
+      },
+      {
+        q: "When do I pay?",
+        a: "After I confirm the workflow is a fit. You receive a written order and an invoice; the work starts when the invoice is paid and the intake call is scheduled. Submitting the request does not charge you.",
+      },
+      {
+        q: "What does “founding price” mean?",
+        a: `The first ${blueprintLaunch.foundingAllocation} paid Blueprints are ${blueprintLaunch.foundingPrice}. After that the price is ${blueprintLaunch.standardPrice}. The price on your written order is the price you pay.`,
+      },
+    ],
+    ctaLabel: "Get My Execution Blueprint",
+    timeline: [
+      {
+        period: "Day 0",
+        title: "Intake",
+        description: "A 30-minute call on the workflow, the people and systems involved, and what the problem costs. You share what you already have.",
+      },
+      {
+        period: "Days 1–4",
+        title: "Trace and analyze",
+        description: "I map the work across the handoffs, find where it stalls or depends on memory, and test the likely causes against your material.",
+      },
+      {
+        period: "Day 5",
+        title: "Readout",
+        description: "The map, the three gaps, the recommendations, and the next-step proposal, delivered live or as a recorded walkthrough.",
+      },
+    ],
+    feeFraming: blueprintFoundingOpen
+      ? `${blueprintLaunch.foundingPrice} for each of the first ${blueprintLaunch.foundingAllocation} paid Blueprints, then ${blueprintLaunch.standardPrice}. Fixed fee for the stated scope.`
+      : `${blueprintLaunch.standardPrice}, fixed for the stated scope.`,
+    feeBoundary: BLUEPRINT_CREDIT_TERMS,
+    prerequisites: [
+      "One named workflow and one business function in scope.",
+      "A person who knows the workflow and can join the 30-minute intake call.",
+      "Existing material that shows the work: screenshots, exports, process notes, or a recording.",
+      "Required information within five business days of the intake call; the delivery date moves with it.",
+    ],
+    purchasePath: [
+      { period: "1", title: "Request", description: "Tell me about the workflow. Submitting the form does not charge you." },
+      { period: "2", title: "Confirm fit", description: "Within two business days I confirm the scope fits, or tell you what would fit better." },
+      { period: "3", title: "Order and invoice", description: "You receive a written order and an invoice. Work starts once it is paid." },
+      { period: "4", title: "Intake and delivery", description: "We hold the 30-minute intake call. The Blueprint is targeted for five business days after I have what I need." },
+    ],
+  },
   {
     slug: "constraint-diagnostic",
     name: "Constraint Diagnostic",
@@ -90,7 +219,7 @@ export const offers: Offer[] = [
       "There is no obligation to build with TKO. The specification is yours to use with anyone.",
     ],
     expansionPath:
-      "If the first fix is worth building, the diagnostic ends with a separately priced build proposal. The specification is yours. There is no automatic fee credit; any reuse of diagnostic work and its effect on the build price are stated in the proposal. Existing signed terms are honored.",
+      "If the first fix is worth building, the diagnostic ends with a separately priced build proposal. The specification is yours. The diagnostic fee is not automatically credited to the build; any reuse of diagnostic work and its effect on the build price are stated in the proposal. A prior Execution Gap Blueprint fee is credited once under its published terms. Existing signed terms are honored.",
     capabilityTags: ["Process and handoffs", "CRM and data", "Lead and customer follow-up", "Automation readiness"],
     faqs: [
       {
@@ -418,7 +547,7 @@ export function offerContactHref(slug: OfferSlug) {
 export function offerProof(slug: OfferSlug) {
   return slug === "regulatory-implementation-readiness-sprint"
     ? { href: "/healthcare/impact-assessment", label: "Run the Synthetic Decision Lab" }
-    : slug === "constraint-diagnostic"
+    : slug === "constraint-diagnostic" || slug === "execution-gap-blueprint"
       ? { href: "/selected-work", label: "Inspect the Work" }
       : { href: "/selected-work/from-crm-to-operating-system", label: "Inspect RachelOS" };
 }

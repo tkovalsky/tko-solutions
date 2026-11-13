@@ -67,6 +67,25 @@ describe("submitDiagnosticIntake", () => {
     expect(mockedPersistInboundLead).not.toHaveBeenCalled();
   });
 
+  it("accepts a short Blueprint request without a revenue band and keeps its offer and attribution", async () => {
+    const formData = blueprintFormData();
+    mockedPersistInboundLead.mockResolvedValue({ id: "lead-bp" } as Awaited<ReturnType<typeof persistInboundLead>>);
+    mockedNotifyLead.mockResolvedValue({ status: "skipped", reason: "missing_env" } as Awaited<ReturnType<typeof notifyLead>>);
+    // A failed notification must still end on the saved state, never on a silent loss.
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=notification-error&offer=execution-gap-blueprint");
+    const saved = mockedPersistInboundLead.mock.calls[0][0];
+    expect(saved).toMatchObject({ role: "COO", source: "commercial_offer_execution-gap-blueprint" });
+    expect(saved.payload).toMatchObject({ offer: "execution-gap-blueprint", affectedSystems: "HubSpot, Sheets, Outlook", consequence: "Two hours a day of re-keying", utmSource: "linkedin", utmCampaign: "blueprint-launch-2026-11" });
+    expect(saved.payload).not.toHaveProperty("revenueBand");
+  });
+
+  it.each(["role", "affectedSystems", "consequence"])("rejects a Blueprint request without %s before persistence", async (field) => {
+    const formData = blueprintFormData();
+    formData.delete(field);
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=invalid&offer=execution-gap-blueprint");
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+  });
+
   it("does not echo an unknown offer in the redirect or persisted payload", async () => {
     const formData = validFormData();
     formData.set("offer", "https://untrusted.example");
@@ -253,5 +272,18 @@ function managedFormData() {
   formData.set("contactCount", "500-3000");
   formData.set("caller", "Me, with my assistant");
   formData.set("consentEvidence", "Past clients; unsubscribes tracked in FUB");
+  return formData;
+}
+
+function blueprintFormData() {
+  const formData = validFormData();
+  formData.set("offer", "execution-gap-blueprint");
+  formData.set("source", "commercial_offer_execution-gap-blueprint");
+  formData.set("role", "COO");
+  formData.delete("revenueBand");
+  formData.set("affectedSystems", "HubSpot, Sheets, Outlook");
+  formData.set("consequence", "Two hours a day of re-keying");
+  formData.set("utmSource", "linkedin");
+  formData.set("utmCampaign", "blueprint-launch-2026-11");
   return formData;
 }
