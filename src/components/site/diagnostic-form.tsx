@@ -16,6 +16,7 @@ type Attribution = {
   utmSource: string;
   utmMedium: string;
   utmCampaign: string;
+  utmContent: string;
   device: string;
   ctaLocation: string;
 };
@@ -26,6 +27,7 @@ const defaultAttribution: Attribution = {
   utmSource: "",
   utmMedium: "",
   utmCampaign: "",
+  utmContent: "",
   device: "unknown",
   ctaLocation: "contact_page",
 };
@@ -60,6 +62,7 @@ export function DiagnosticForm({
       utmSource: campaign.utmSource,
       utmMedium: campaign.utmMedium,
       utmCampaign: campaign.utmCampaign,
+      utmContent: campaign.utmContent,
       device: window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop",
       ctaLocation: params.get("cta") || "contact_page",
     });

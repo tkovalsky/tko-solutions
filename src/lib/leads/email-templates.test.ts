@@ -38,6 +38,11 @@ describe("prospect receipt", () => {
 });
 
 describe("operator brief", () => {
+  it("shows the campaign labels, including the specific post, so a lead can be traced to its source", () => {
+    const content = buildLeadNotificationEmail({ ...lead, payload: { ...(lead.payload as object), utmSource: "linkedin", utmCampaign: "blueprint-launch-2026-11", utmContent: "post-08" } });
+    for (const line of ["UTM source: linkedin", "UTM campaign: blueprint-launch-2026-11", "UTM content: post-08"]) expect(content.text).toContain(line);
+  });
+
   it("includes the saved contact, submitted intake, provenance, and an authenticated review destination", () => {
     const content = buildLeadNotificationEmail(lead);
     expect(content.subject).toBe("You've got leads! — Alex / Example Co");

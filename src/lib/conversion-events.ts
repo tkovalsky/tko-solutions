@@ -1,4 +1,5 @@
 import { track, type BeforeSendEvent } from "@vercel/analytics";
+import { campaignToken } from "@/lib/campaign-token";
 
 export const conversionEventNames = [
   "service_view",
@@ -33,6 +34,7 @@ export type ConversionEvent = ConversionProperties & {
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
+  utmContent?: string;
   deviceCategory: "mobile" | "tablet" | "desktop";
 };
 
@@ -58,6 +60,7 @@ export function trackConversion(
     utmSource: attribution.utmSource || undefined,
     utmMedium: attribution.utmMedium || undefined,
     utmCampaign: attribution.utmCampaign || undefined,
+    utmContent: attribution.utmContent || undefined,
     deviceCategory:
       window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop",
     ...sanitizeEventProperties(properties),
@@ -114,11 +117,9 @@ export type ConversionAttribution = {
   utmSource: string;
   utmMedium: string;
   utmCampaign: string;
+  // Identifies the specific post, link, or message (for example linkedin post-03).
+  utmContent: string;
 };
-
-function campaignToken(value: unknown): string {
-  return typeof value === "string" && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(value) ? value : "";
-}
 
 function landingPath(value: unknown): string {
   return typeof value === "string" && /^\/[a-zA-Z0-9/_-]{0,199}$/.test(value) && !value.startsWith("/tif") ? value : "/";
@@ -127,11 +128,11 @@ function landingPath(value: unknown): string {
 // First public landing context survives navigation in this tab for 30 minutes.
 // Store only the path, referrer host, and constrained campaign labels, never raw URLs.
 export function getConversionAttribution(): ConversionAttribution {
-  if (typeof window === "undefined") return { landingPage: "/", referrer: "", utmSource: "", utmMedium: "", utmCampaign: "" };
+  if (typeof window === "undefined") return { landingPage: "/", referrer: "", utmSource: "", utmMedium: "", utmCampaign: "", utmContent: "" };
   try {
     const stored = JSON.parse(window.sessionStorage.getItem(attributionKey) ?? "null");
     if (stored && typeof stored.expiresAt === "number" && stored.expiresAt > Date.now() && stored.expiresAt <= Date.now() + attributionLifetime) {
-      return { landingPage: landingPath(stored.landingPage), referrer: safeReferrerHost(`https://${stored.referrer ?? ""}`) ?? "", utmSource: campaignToken(stored.utmSource), utmMedium: campaignToken(stored.utmMedium), utmCampaign: campaignToken(stored.utmCampaign) };
+      return { landingPage: landingPath(stored.landingPage), referrer: safeReferrerHost(`https://${stored.referrer ?? ""}`) ?? "", utmSource: campaignToken(stored.utmSource), utmMedium: campaignToken(stored.utmMedium), utmCampaign: campaignToken(stored.utmCampaign), utmContent: campaignToken(stored.utmContent) };
     }
   } catch { /* Storage may be disabled. The inquiry must still work. */ }
   const params = new URLSearchParams(window.location.search);
@@ -141,6 +142,7 @@ export function getConversionAttribution(): ConversionAttribution {
     utmSource: campaignToken(params.get("utm_source")),
     utmMedium: campaignToken(params.get("utm_medium")),
     utmCampaign: campaignToken(params.get("utm_campaign")),
+    utmContent: campaignToken(params.get("utm_content")),
   };
   try { window.sessionStorage.setItem(attributionKey, JSON.stringify({ ...context, expiresAt: Date.now() + attributionLifetime })); }
   catch { /* No persistent storage is required for submitting an inquiry. */ }
