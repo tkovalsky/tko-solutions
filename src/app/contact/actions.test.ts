@@ -79,6 +79,37 @@ describe("submitDiagnosticIntake", () => {
     expect(saved.payload).not.toHaveProperty("revenueBand");
   });
 
+  it.each([
+    ["an email address", "jane@example.com"],
+    ["free text", "hello private person"],
+    ["an over-long label", "x".repeat(81)],
+  ])("drops %s in utm_content without rejecting a valid Blueprint request", async (_label, value) => {
+    const formData = blueprintFormData();
+    formData.set("utmContent", value);
+    mockedPersistInboundLead.mockResolvedValue({ id: "lead-bp" } as Awaited<ReturnType<typeof persistInboundLead>>);
+    mockedNotifyLead.mockResolvedValue({ status: "skipped", reason: "missing_env" } as Awaited<ReturnType<typeof notifyLead>>);
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=notification-error&offer=execution-gap-blueprint");
+    const saved = mockedPersistInboundLead.mock.calls[0][0];
+    expect(saved.payload).not.toHaveProperty("utmContent");
+    expect(saved.payload).toMatchObject({ offer: "execution-gap-blueprint", utmSource: "linkedin" });
+  });
+
+  it("keeps a missing utm_content optional", async () => {
+    const formData = blueprintFormData();
+    formData.delete("utmContent");
+    mockedPersistInboundLead.mockResolvedValue({ id: "lead-bp" } as Awaited<ReturnType<typeof persistInboundLead>>);
+    mockedNotifyLead.mockResolvedValue({ status: "sent", notifiedAt: new Date() } as Awaited<ReturnType<typeof notifyLead>>);
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=submitted&offer=execution-gap-blueprint");
+    expect(mockedPersistInboundLead.mock.calls[0][0].payload).not.toHaveProperty("utmContent");
+  });
+
+  it("keeps the saved lead and reports the saved state when the notification provider fails", async () => {
+    mockedPersistInboundLead.mockResolvedValue({ id: "lead-bp" } as Awaited<ReturnType<typeof persistInboundLead>>);
+    mockedNotifyLead.mockResolvedValue({ status: "failed", reason: "Resend returned 500" } as Awaited<ReturnType<typeof notifyLead>>);
+    await expect(submitDiagnosticIntake(blueprintFormData())).rejects.toThrow("REDIRECT:/contact?status=notification-error&offer=execution-gap-blueprint");
+    expect(mockedPersistInboundLead).toHaveBeenCalledTimes(1);
+  });
+
   it.each(["role", "affectedSystems", "consequence"])("rejects a Blueprint request without %s before persistence", async (field) => {
     const formData = blueprintFormData();
     formData.delete(field);

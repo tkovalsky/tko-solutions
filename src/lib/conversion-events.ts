@@ -1,4 +1,5 @@
 import { track, type BeforeSendEvent } from "@vercel/analytics";
+import { campaignToken } from "@/lib/campaign-token";
 
 export const conversionEventNames = [
   "service_view",
@@ -119,10 +120,6 @@ export type ConversionAttribution = {
   // Identifies the specific post, link, or message (for example linkedin post-03).
   utmContent: string;
 };
-
-function campaignToken(value: unknown): string {
-  return typeof value === "string" && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(value) ? value : "";
-}
 
 function landingPath(value: unknown): string {
   return typeof value === "string" && /^\/[a-zA-Z0-9/_-]{0,199}$/.test(value) && !value.startsWith("/tif") ? value : "/";

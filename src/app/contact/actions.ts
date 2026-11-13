@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { notifyLead } from "@/lib/leads/notify";
 import { persistInboundLead } from "@/lib/leads/persist";
+import { campaignToken } from "@/lib/campaign-token";
 import { isOfferSlug } from "@/lib/offers";
 
 const intakeSchema = z.object({
@@ -83,7 +84,8 @@ export async function submitDiagnosticIntake(formData: FormData) {
     utmSource: getFormString(formData, "utmSource"),
     utmMedium: getFormString(formData, "utmMedium"),
     utmCampaign: getFormString(formData, "utmCampaign"),
-    utmContent: getFormString(formData, "utmContent"),
+    // Same token rule as the browser; an invalid optional label is dropped, never a rejection.
+    utmContent: campaignToken(getFormString(formData, "utmContent")) || undefined,
     device: getFormString(formData, "device"),
     ctaLocation: getFormString(formData, "ctaLocation"),
   });
