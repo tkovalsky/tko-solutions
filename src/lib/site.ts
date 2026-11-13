@@ -1,4 +1,5 @@
 import { CONSTRAINT_CALL } from "@/lib/offers";
+import { solutions } from "@/lib/solutions";
 
 export const site = {
   name: "TKO Solutions",
@@ -27,11 +28,19 @@ export function absoluteUrl(path = "/") {
   return new URL(path, site.url).toString();
 }
 
-// Canonical public destinations, shared by desktop, mobile, and footer navigation.
-export const publicNavigation = [
+export type NavItem = { href: string; label: string; summary?: string };
+
+// The Solutions menu: the three buyer paths from src/lib/solutions.ts, then the two vertical
+// offers. Shared by the desktop menu, the mobile panel, and the footer.
+export const solutionNavigation: NavItem[] = [
+  ...solutions.map((solution) => ({ href: solution.path, label: solution.eyebrow, summary: solution.navSummary })),
+  { href: "/healthcare/impact-assessment", label: "Healthcare readiness", summary: "Trace a mandate to workflows, owners, and evidence" },
+  { href: "/private-client-os", label: "Private Client OS", summary: "Owned demand and follow-up for advisory firms" },
+];
+
+// Canonical public destinations after the Solutions menu.
+export const publicNavigation: NavItem[] = [
   { href: "/services", label: "Services & Pricing" },
-  { href: "/healthcare/impact-assessment", label: "Healthcare" },
-  { href: "/private-client-os", label: "Private Client OS" },
   { href: "/selected-work", label: "RachelOS Proof" },
   { href: "/insights", label: "Guides" },
   { href: "/founder", label: "About" },

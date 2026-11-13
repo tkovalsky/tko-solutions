@@ -15,6 +15,8 @@ export type Solution = {
   slug: "operational-intelligence" | "delivery-intelligence" | "revenue-operations";
   path: string;
   eyebrow: string;
+  // One line under the page name in the Solutions menu.
+  navSummary: string;
   title: string;
   metaTitle: string;
   metaDescription: string;
@@ -37,6 +39,7 @@ export const solutions: Solution[] = [
     slug: "operational-intelligence",
     path: "/operational-intelligence",
     eyebrow: "Operational intelligence",
+    navSummary: "The layer between your systems and the work",
     title: "Your systems have the data. Why do people still connect everything by hand?",
     metaTitle: "Operational Intelligence: From Information to Execution",
     metaDescription:
@@ -109,6 +112,7 @@ export const solutions: Solution[] = [
     slug: "delivery-intelligence",
     path: "/solutions/delivery-intelligence",
     eyebrow: "Delivery intelligence",
+    navSummary: "Program readiness beyond green status",
     title: "Every workstream reports green. Is the program actually ready?",
     metaTitle: "Delivery Intelligence: Readiness Beyond Green Status",
     metaDescription:
@@ -188,6 +192,7 @@ export const solutions: Solution[] = [
     slug: "revenue-operations",
     path: "/solutions/revenue-operations",
     eyebrow: "Revenue operations",
+    navSummary: "Accountable follow-up beside your CRM",
     title: "Leads and clients fall through the cracks. Your CRM is not the problem.",
     metaTitle: "Revenue Operations: Accountable Follow-Up Beside Your CRM",
     metaDescription:

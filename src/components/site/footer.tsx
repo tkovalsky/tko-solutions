@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Logo } from "@/components/site/logo";
-import { publicNavigation, site } from "@/lib/site";
+import { publicNavigation, site, solutionNavigation } from "@/lib/site";
 
 const footerLinks = [
+  ...solutionNavigation,
   ...publicNavigation,
   { href: "/contact", label: site.cta },
   { href: "/privacy", label: "Privacy" },
@@ -15,12 +16,9 @@ export function Footer() {
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-14 md:grid-cols-[1fr_2fr] lg:px-8">
         <div>
           <Logo inverted />
-          <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">
-            TKO connects healthcare obligations to workflows, controls, owners, and evidence,
-            and builds owned demand and follow-up systems with human-reviewed AI drafting.
-          </p>
+          <p className="mt-6 max-w-sm text-sm leading-6 text-white/70">{site.positioning}</p>
           <p className="mt-4 max-w-sm text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
-            Policy → Obligation → Capability → Workflow → System → Control → Owner → Evidence → Outcome
+            Connect → Understand → Decide → Execute → Verify → Improve
           </p>
           <p className="mt-6 text-sm leading-6 text-white/70">
             <a href={`mailto:${site.email}`} data-conversion-event="email_link_click" data-cta-location="footer" data-cta-label="email" className="font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">

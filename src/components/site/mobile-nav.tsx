@@ -5,11 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
-import { isCurrentDestination, site } from "@/lib/site";
+import { isCurrentDestination, site, type NavItem } from "@/lib/site";
 
-type NavItem = { href: string; label: string };
+const linkClass =
+  "flex min-h-12 items-center rounded-lg px-3 text-base font-medium text-foreground transition-colors hover:bg-surface hover:text-primary aria-[current=page]:bg-surface aria-[current=page]:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
-export function MobileNav({ items }: { items: NavItem[] }) {
+export function MobileNav({ solutions, items }: { solutions: NavItem[]; items: NavItem[] }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -91,14 +92,24 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         >
           <nav
             aria-label="Mobile navigation"
-            className="mx-auto flex w-full max-w-7xl flex-col gap-1 px-6 py-4"
+            className="mx-auto flex max-h-[calc(100dvh-5rem)] w-full max-w-7xl flex-col gap-1 overflow-y-auto px-6 py-4"
           >
+            <p id="mobile-solutions-heading" className="px-3 pt-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">Solutions</p>
+            <ul aria-labelledby="mobile-solutions-heading" className="flex flex-col gap-1 border-b border-border pb-3">
+              {solutions.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} aria-current={isCurrentDestination(pathname, item.href) ? "page" : undefined} className={linkClass}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
             {items.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isCurrentDestination(pathname, item.href) ? "page" : undefined}
-                className="flex min-h-12 items-center rounded-lg px-3 text-base font-medium text-foreground transition-colors hover:bg-surface hover:text-primary aria-[current=page]:bg-surface aria-[current=page]:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className={linkClass}
               >
                 {item.label}
               </Link>
