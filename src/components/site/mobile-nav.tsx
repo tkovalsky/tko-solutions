@@ -103,9 +103,12 @@ export function MobileNav({ items }: { items: NavItem[] }) {
                 {item.label}
               </Link>
             ))}
-            <LinkButton href="/contact" ctaLocation="mobile_navigation" className="mt-3 w-full">
-              {site.cta}
+            <LinkButton href={site.offerCtaHref} ctaLocation="mobile_navigation" className="mt-3 w-full">
+              {site.offerCta}
             </LinkButton>
+            <Link href={site.ctaHref} className="flex min-h-12 items-center justify-center text-sm font-semibold text-primary hover:underline">
+              {site.cta}
+            </Link>
           </nav>
         </div>
       ) : null}
