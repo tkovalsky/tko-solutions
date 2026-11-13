@@ -48,7 +48,7 @@ describe("sitemap", () => {
 
   it("matches a page on disk for every static route", () => {
     for (const url of urls) {
-      if (url.startsWith("/insights/") || url.startsWith("/selected-work/") || url.startsWith("/services/")) continue;
+      if (url.startsWith("/insights/") || url.startsWith("/selected-work/") || url.startsWith("/services/") || url.startsWith("/solutions/")) continue;
       const page = path.join(process.cwd(), "src/app", url, "page.tsx");
       expect(existsSync(page), `${url} is in the sitemap but has no page`).toBe(true);
     }
@@ -65,6 +65,7 @@ describe("llms.txt", () => {
     expect(lines[2]?.startsWith("> ")).toBe(true);
     expect(lines.filter((line) => line.startsWith("## "))).toEqual([
       "## Engagements",
+      "## Solutions",
       "## Proof and demonstrations",
       "## Guides",
       "## About and contact",

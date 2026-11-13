@@ -26,9 +26,8 @@ export const metadata: Metadata = {
     template: "%s | TKO Solutions",
   },
   description: site.description,
-  alternates: {
-    canonical: "/",
-  },
+  // No default canonical: a page that inherits one would point search engines at the homepage.
+  // Every public page sets its own (enforced in src/app/solutions.test.tsx).
   openGraph: {
     type: "website",
     url: absoluteUrl("/"),

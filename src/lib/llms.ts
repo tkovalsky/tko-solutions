@@ -1,6 +1,7 @@
 import { caseStudies } from "@/lib/content";
 import { getInsights } from "@/lib/insights";
 import { healthcareExecutionAssurance, offerHref, offers, sidecar } from "@/lib/offers";
+import { solutions } from "@/lib/solutions";
 import { absoluteUrl, site } from "@/lib/site";
 
 // /llms.txt follows the llmstxt.org convention: one H1, a blockquote summary, then H2 link
@@ -35,6 +36,10 @@ export function buildLlmsText() {
   push(
     `- [${sidecar.name} Managed Follow-Up](${absoluteUrl("/products/ambient-crm")}): done-with-you follow-up beside an existing CRM for real-estate agents, RIAs, and boutique teams. ${sidecar.steps.map((step) => `${step.name}: ${step.commercial}`).join("; ")}. ${sidecar.separateCosts} Product detail: ${sidecar.productUrl}.`,
     `- [${healthcareExecutionAssurance.name}](${absoluteUrl("/services/regulatory-implementation-readiness-sprint")}): ${healthcareExecutionAssurance.summary} ${healthcareExecutionAssurance.commercial}`,
+    "",
+    "## Solutions",
+    "",
+    ...solutions.map((solution) => `- [${solution.metaTitle}](${absoluteUrl(solution.path)}): ${solution.metaDescription}${solution.status ? ` ${solution.status}` : ""}`),
     "",
     "## Proof and demonstrations",
     "",
