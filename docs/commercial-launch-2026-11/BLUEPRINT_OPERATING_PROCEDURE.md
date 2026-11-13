@@ -25,8 +25,8 @@ this document and that file disagree, the file wins; fix this document.
 | 9 | Follow-on proposal sent (if worth doing) | Todd | Ledger; proposal with credit line | With the readout |
 | 10 | Follow-on signed / declined / expired (45 days) | Buyer | Ledger | Day 45 after delivery |
 
-**Whenever lead email is not confirmed working**, step 2 depends on Todd opening `/tif/oi/today`
-every business day. A lead is never lost: the form reports
+**Whenever lead email is not confirmed working**, step 2 depends on Todd opening
+<https://tko.solutions/tif/oi/today> (TIF sign-in) every business day. A lead is never lost: the form reports
 success only after the row is saved, and the row stays amber until it is notified.
 
 ## 2. Fit check (step 3)
@@ -86,11 +86,31 @@ One page, sent with the invoice. It states:
 
 ## 5. Founding allocation (auditable count)
 
-- The first **5 paid** Blueprints are at the founding price. "Paid" means `paid_on` is set.
-- When a Blueprint is paid, add the ledger row and, in the same commit, increment
-  `blueprintLaunch.foundingPaid` in `src/lib/offers.ts`. Git history is the audit trail.
-- When `foundingPaid` reaches 5, every public surface switches to the standard price on the next
-  deploy. Orders already issued at the founding price are honored.
+The first **5 paid** Blueprints are at the founding price. Two counts exist, and they must not be
+confused:
+
+| Count | Where | Meaning | Changes when |
+|---|---|---|---|
+| **Paid founding orders** | `blueprintLaunch.foundingPaid` in `src/lib/offers.ts`, plus ledger `paid_on` | Founding orders whose payment the invoicing tool confirms | Only on confirmed payment |
+| **Founding reservations** | Ledger only (private) | Founding-price orders issued and not yet paid, cancelled, or expired | On issue, payment, cancellation, or expiry |
+
+**Issuing rule.** Before sending a founding-price order, check the ledger:
+`paid founding orders + open founding reservations < 5`. If it is not, issue the order at the
+standard price. This is what keeps outstanding founding invoices plus paid founding orders at five
+or fewer.
+
+- **Reserve on issue.** Record the order with `founding # = R1…R5`, `order_sent`, and
+  `reservation_expires = order_sent + 10 business days`.
+- **Convert on payment.** When the invoicing tool shows paid, set `paid_on` and, in the same commit,
+  increment `foundingPaid`. Git history is the audit trail for the public count; the ledger is the
+  audit trail for reservations.
+- **Release on cancellation or expiry.** An order cancelled before payment, or unpaid at
+  `reservation_expires`, releases its reservation. Void the invoice, mark the ledger row
+  `released_on`, and tell the buyer that a new order would carry the current price.
+- **Honor what was issued.** An order issued at the founding price is honored at that price while
+  its reservation is open, even if the public page has since switched to the standard price.
+- **Public price.** It is driven only by `foundingPaid`. When it reaches 5, every public surface
+  switches to the standard price on the next deploy. Reservations never change the public page.
 - Never display a "spots left" count.
 
 ## 6. Ledger
@@ -99,8 +119,8 @@ Keep this table private (a spreadsheet, or a private copy of this file outside t
 stores company names and money, so it does not belong in a public repository. The repo copy below is
 the column definition only.
 
-| id | lead_id | company | source / utm | requested | fit (Y/N/redirect) | order_sent | price | paid_on | founding # | intake_on | delivered_on | hours | proposal_sent | proposal_value | followon_signed_on | credit_applied | collected_total |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| id | lead_id | company | source / utm | requested | fit (Y/N/redirect) | order_sent | price | founding # | reservation_expires | released_on | paid_on | intake_on | delivered_on | hours | proposal_sent | proposal_value | followon_signed_on | credit_applied | collected_total |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 Rules: `hours` is actual focused time (target 3–4; if two consecutive Blueprints exceed 6, tighten
 the scope before the next sale). `collected_total` is cash received, never invoiced or proposed.
@@ -130,7 +150,23 @@ location (`InboundLead.payload`). Everything after the form is manual and comes 
 
 Do not record bookings or revenue from button clicks. No personal data goes to analytics.
 
-## 9. Rollback
+## 9. Release gates for taking money (2026-11-13)
+
+The public site may invite Blueprint **requests** (labeled as carrying no charge) once live intake
+is verified. Until every gate below is closed, do **not** send orders or invoices, accept paid
+orders, run paid promotion, or start live prospect outreach for the Blueprint.
+
+| Gate | Owner | Next action |
+|---|---|---|
+| Written cancellation and refund terms approved (§3 item 9) | Todd | Approve or edit the proposed terms |
+| Invoicing account chosen or confirmed for TKO Solutions LLC | Todd | Pick the tool; card + ACH, no BNPL |
+| Sales-tax treatment confirmed for Florida professional services | Todd + accountant | Written confirmation |
+
+Not gates for requests or deployment, but owed: production lead email (`RESEND_API_KEY`, verified
+`RESEND_FROM_EMAIL`, `LEAD_NOTIFY_EMAIL` in the Vercel Production project, then redeploy and run a
+two-inbox delivery and Reply-To test). Until then, the Today queue is the review path.
+
+## 10. Rollback
 
 Withdrawing the offer: remove the `execution-gap-blueprint` entry from `offers` in
 `src/lib/offers.ts` and deploy. Leads already stored keep their payload. Honor every order already
