@@ -1,5 +1,6 @@
 export type OfferSlug =
   | "execution-gap-blueprint"
+  | "execution-sprint"
   | "constraint-diagnostic"
   | "operating-system-build"
   | "operate-and-improve"
@@ -57,7 +58,23 @@ export const blueprintLaunch = {
 
 export const blueprintFoundingOpen = blueprintLaunch.foundingPaid < blueprintLaunch.foundingAllocation;
 
-export const BLUEPRINT_CREDIT_TERMS = `The Blueprint fee is credited once toward your first follow-on TKO engagement with a fixed fee of ${blueprintLaunch.creditMinimum} or more (a Constraint Diagnostic, a build phase, or a Readiness Sprint), when that engagement agreement is signed within ${blueprintLaunch.creditWindowDays} days of Blueprint delivery. The credit applies once, is not transferable, cannot be redeemed for cash, and cannot be combined with another credit. Existing signed agreements keep their terms.`;
+// Execution Sprint commercial terms (owner-approved 2026-11-13; offer definition in
+// docs/commercial-launch-2026-11/EXECUTION_SPRINT_DEFINITION.md). Same founding rule as the
+// Blueprint: the count changes only on confirmed payment, and no remaining count is displayed.
+export const sprintLaunch = {
+  foundingPrice: "$9,999",
+  standardPrice: "$14,999",
+  foundingAllocation: 3,
+  foundingPaid: 0,
+} as const;
+
+export const sprintFoundingOpen = sprintLaunch.foundingPaid < sprintLaunch.foundingAllocation;
+const sprintStartingPrice = sprintFoundingOpen ? sprintLaunch.foundingPrice : sprintLaunch.standardPrice;
+const sprintPriceTerms = sprintFoundingOpen
+  ? `${sprintLaunch.foundingPrice} for each of the first ${sprintLaunch.foundingAllocation} paid Sprints at standard scope, then from ${sprintLaunch.standardPrice}`
+  : `From ${sprintLaunch.standardPrice}`;
+
+export const BLUEPRINT_CREDIT_TERMS = `The Blueprint fee is credited once toward your first follow-on TKO engagement with a fixed fee of ${blueprintLaunch.creditMinimum} or more (an Execution Sprint, a Constraint Diagnostic, a build phase, or a Readiness Sprint), when that engagement agreement is signed within ${blueprintLaunch.creditWindowDays} days of Blueprint delivery. The credit applies once, is not transferable, cannot be redeemed for cash, and cannot be combined with another credit. Existing signed agreements keep their terms.`;
 
 export const CONSTRAINT_CALL = {
   label: "Book a 30-Minute Call",
@@ -182,6 +199,112 @@ export const offers: Offer[] = [
     ],
   },
   {
+    slug: "execution-sprint",
+    name: "Execution Sprint",
+    shortName: "Sprint",
+    level: "Build",
+    step: "Fix one workflow",
+    duration: "About 30 days",
+    startingPrice: sprintStartingPrice,
+    commercial: sprintFoundingOpen
+      ? `${sprintLaunch.foundingPrice} founding price · from ${sprintLaunch.standardPrice} standard`
+      : `From ${sprintLaunch.standardPrice} · fixed scope`,
+    question: "One workflow, working in your systems in about 30 days.",
+    audience:
+      "For an owner, COO, or operations leader who can name the workflow that keeps breaking (new inquiries, client onboarding, quotes, renewals) and wants it fixed, not just diagnosed. Not sure which workflow yet? Start with the Blueprint.",
+    summary:
+      "I implement one qualifying workflow inside the tools you already use: where the work comes from, what state it is in, who owns the next step, what that step is, who approves anything customer-facing, and how you know it got better. You sign the acceptance scenarios in the first week, the fee is fixed, and you own what is built. Delivery is targeted for about 30 days from kickoff, subject to timely access and the agreed scope.",
+    metaDescription: sprintFoundingOpen
+      ? `A fixed-fee implementation of one operational workflow in your existing systems in about 30 days, accepted against scenarios you sign in week one. ${sprintLaunch.foundingPrice} for the first ${sprintLaunch.foundingAllocation} clients, then from ${sprintLaunch.standardPrice}.`
+      : `A fixed-fee implementation of one operational workflow in your existing systems in about 30 days, accepted against scenarios you sign in week one. From ${sprintLaunch.standardPrice}.`,
+    triggers: [
+      "You can name the workflow: inquiries wait for an owner, onboarding stalls between tools, or quotes and renewals depend on someone remembering.",
+      "A Blueprint, a diagnostic, or your own analysis already says what should change.",
+      "You want the fix working, not another report.",
+      "The work runs through one team and no more than three systems.",
+    ],
+    deliverables: [
+      "A workflow model: the states work moves through, what moves it, and who owns each step",
+      "Connection to up to two sources: a web form or webhook, a CSV or scheduled export, or one system with a documented API you authorize",
+      "Owner assignment and next-action rules, with overdue work surfaced in a daily view",
+      "A named-person approval before anything customer-facing is sent or any record is changed",
+      "An audit trail of what happened, including failures, visible to the people running it",
+      "A starting measure, a live measure, and a 30-day re-measure using the same definition",
+      "A handoff: runbook, two training sessions, and every account and credential in your name",
+    ],
+    boundaries: [
+      "One workflow in one business function, one team of up to five users, up to two sources, and no more than three systems.",
+      "Acceptance is five to eight written scenarios you sign by Day 5. The Sprint is accepted when they pass in your environment.",
+      "Changes after Day 10 go to a later Sprint, not into this one. If access arrives late, the date moves with it; the price does not.",
+      "Customer-facing actions stay human-approved. No autonomous sending, no CRM replacement or data migration, and no patient records, payment card data, or other regulated records.",
+      "You own the agreed code, configuration, and documentation. Subscriptions, hosting, messaging, and model usage are billed to your own accounts. No revenue, conversion, or response-rate result is promised.",
+      "Residential real-estate agents and teams: see BoundOS. Programs that need procurement, security review, or several teams are scoped as an enterprise engagement.",
+    ],
+    expansionPath:
+      "After the 30-day re-measure, your team can run it, add Operate & Improve, or scope the next workflow as another Sprint. Each is a separate decision.",
+    ctaSummary:
+      "Name the workflow and the systems it runs through. I confirm within two business days whether it qualifies for a Sprint, and nothing is charged until you accept a written order.",
+    capabilityTags: ["Workflow state and ownership", "Source integration", "Approval and audit trail", "Daily action view", "Before-and-after measurement"],
+    faqs: [
+      {
+        q: "What makes a workflow qualify?",
+        a: "One workflow in one business function, with a clear trigger and a next step someone owns, running through no more than three systems and two sources of incoming work. You can grant access within five business days of kickoff, and no regulated records are needed. If it does not qualify, I will say so and suggest the Blueprint, a Diagnostic, or an enterprise engagement.",
+      },
+      {
+        q: "Is this a software product?",
+        a: "No. It is a fixed-scope implementation that follows a repeatable method, first applied in RachelOS, a production system I designed and built for one independent real-estate business. What is built for you is configured to your workflow and owned by you.",
+      },
+      {
+        q: "Do we need a Blueprint first?",
+        a: `Not if you can name the workflow and the systems. If you cannot yet, start with the Blueprint. Its fee is credited once toward a Sprint signed within ${blueprintLaunch.creditWindowDays} days of Blueprint delivery.`,
+      },
+      {
+        q: "What if it takes longer than 30 days?",
+        a: "The date assumes access within five business days and the agreed scope. Late access moves the date by the same amount, and changes after Day 10 become a later Sprint. Neither changes the price.",
+      },
+      {
+        q: "Will you use AI?",
+        a: "Only where it helps and you approve it, for example a drafted message a named person reviews before it is sent. Many workflows need clear rules and ownership, not a model.",
+      },
+      {
+        q: "When do I pay, and what does “founding price” mean?",
+        a: `After I confirm the workflow qualifies, you receive a written order with the payment schedule and an invoice. The first ${sprintLaunch.foundingAllocation} paid Sprints are ${sprintLaunch.foundingPrice} for standard scope; after that, Sprints start at ${sprintLaunch.standardPrice}. The price on your written order is the price you pay.`,
+      },
+    ],
+    ctaLabel: "Evaluate an Execution Sprint",
+    timeline: [
+      {
+        period: "Days 1–5",
+        title: "Model and agree",
+        description: "Kickoff, access, and the starting measure. We agree the workflow model and you sign the acceptance scenarios.",
+      },
+      {
+        period: "Days 6–21",
+        title: "Build and pilot",
+        description: "Sources, state, ownership, next actions, approval, and the audit trail, then a pilot with your team on authorized records.",
+      },
+      {
+        period: "Days 22–30",
+        title: "Accept and hand off",
+        description: "Each scenario run in your environment, then training, the runbook, and ownership confirmed. The re-measure follows 30 days later.",
+      },
+    ],
+    feeFraming: `${sprintPriceTerms}. Fixed fee, stated on the written order.`,
+    feeBoundary: `The standard price rises only for named factors, each priced on the order before you sign: a second source that needs an API integration, more than five users, or a third system the workflow writes to. A prior Execution Gap Blueprint fee is credited once under its published terms.`,
+    prerequisites: [
+      "One named workflow, and an owner on your side with about two hours a week during the Sprint.",
+      "Access to the sources and systems in scope within five business days of kickoff, held in your own accounts.",
+      "A named approver for anything customer-facing.",
+      "Data that shows the starting measure, such as an export of the last 90 days of the work.",
+    ],
+    purchasePath: [
+      { period: "1", title: "Request", description: "Tell me about the workflow. Submitting the form does not charge you." },
+      { period: "2", title: "Qualify", description: "Within two business days I confirm whether it qualifies, or recommend the Blueprint, a Diagnostic, or another path." },
+      { period: "3", title: "Written order", description: "You receive a written order with the scope, acceptance approach, start date, price, and payment schedule." },
+      { period: "4", title: "Kickoff", description: "I run one Sprint at a time, so the order states when yours begins. The 30 days start at kickoff." },
+    ],
+  },
+  {
     slug: "constraint-diagnostic",
     name: "Constraint Diagnostic",
     shortName: "Diagnostic",
@@ -269,16 +392,16 @@ export const offers: Offer[] = [
     shortName: "Build",
     level: "Build",
     step: "Fix the constraint",
-    duration: "4–8 weeks",
-    startingPrice: "$7,500",
-    commercial: "$7,500–$15,000 build · fixed scope",
+    duration: "One or two Execution Sprints",
+    startingPrice: sprintStartingPrice,
+    commercial: `From ${sprintStartingPrice} per Sprint · usually one or two Sprints`,
     question: "Own the path from buyer research to a human-approved next step.",
     audience:
       "For wealth advisory firms, luxury services, and boutique practices that need their own buyer education, inquiry capture, and accountable follow-up workflow.",
     summary:
       "I connect useful buyer content, permission-based inquiry capture, relationship context, and a daily action view around your existing tools. Where model drafting is useful, an operator reviews the exact message before sending. The fixed scope names the sources, integrations, controls, owner, and starting measures.",
     metaDescription:
-      "Owned buyer content, inquiry capture, and follow-up with human-reviewed AI drafting. Builds $7,500–$15,000; optional support $1,500–$3,000/month.",
+      "Owned buyer content, inquiry capture, and follow-up with human-reviewed AI drafting, delivered as one or two fixed-fee Execution Sprints; optional support $1,500–$3,000/month.",
     triggers: [
       "A diagnostic or your own analysis has identified a specific workflow to improve.",
       "You know the problem, but earlier tools, agencies, or hires didn't fix it.",
@@ -294,7 +417,7 @@ export const offers: Offer[] = [
       "A post-launch review against the starting baseline",
     ],
     boundaries: [
-      "Scope and price are fixed per phase: one buyer journey or operating workflow, one accountable operator group, and the named sources and integrations agreed before work starts.",
+      "Scope and price are fixed per Sprint: one buyer journey or operating workflow, one accountable operator group, and the named sources and integrations agreed before work starts.",
       "I build on your existing CRM and tools unless there is a clear reason not to.",
       "Approval and change rules are agreed before customer-facing or record-changing automation is enabled.",
       "You own the agreed code, configuration, content, and documentation; existing third-party licenses retain their terms. No lead volume, conversion, revenue, or time advantage over aggregators is guaranteed.",
@@ -333,7 +456,7 @@ export const offers: Offer[] = [
     ],
     ctaLabel: CONSTRAINT_CALL.label,
     feeFraming:
-      "Builds are $7,500–$15,000 for a bounded first phase, not a full RachelOS replica. The proposal names the content inventory, capture path, supported CRM, connector count, acceptance scenarios, and handoff. Hosting, subscriptions, messaging, and model usage are separate. Larger integrations or additional workflows require a separate phase.",
+      `Delivered as one or two Execution Sprints on the Sprint terms (${sprintPriceTerms.charAt(0).toLowerCase()}${sprintPriceTerms.slice(1)}), not a full RachelOS replica. The proposal names the content inventory, capture path, supported CRM, connector count, acceptance scenarios, and handoff. Hosting, subscriptions, messaging, and model usage are separate. Larger integrations or additional workflows are scoped as further Sprints.`,
     feeBoundary:
       "Every build states the objective, the metric it should move, what is in and out of scope, and what you own at the end.",
   },
