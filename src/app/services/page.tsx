@@ -10,7 +10,7 @@ import { absoluteUrl, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services and Pricing",
   description:
-    `Principal-led operations work with published prices: a ${getOffer("execution-gap-blueprint")!.startingPrice} Execution Gap Blueprint for one workflow, a $7,500 diagnostic, $7,500–$15,000 builds, and $15,000 healthcare readiness sprints.`,
+    `Principal-led operations work with published prices: a ${getOffer("execution-gap-blueprint")!.startingPrice} Execution Gap Blueprint for one workflow, a ${getOffer("execution-sprint")!.startingPrice} Execution Sprint that implements one workflow in about 30 days, a $7,500 diagnostic, and $15,000 healthcare readiness sprints.`,
   alternates: { canonical: "/services" },
   openGraph: {
     title: "Services and Pricing | TKO Solutions",

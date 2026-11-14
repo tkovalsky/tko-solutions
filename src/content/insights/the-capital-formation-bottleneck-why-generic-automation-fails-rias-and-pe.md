@@ -60,4 +60,4 @@ RachelOS demonstrates relationship memory and human-reviewed outreach in an inde
 
 The first scope should name the content and inquiry path, supported systems, reviewer, exception handling, and handoff. Define how failures are surfaced and how contact preferences are honored. Measure completed follow-up, corrections, waiting, and the quality of the recorded context.
 
-The [Owned Demand & Governed AI Engine](/private-client-os) applies this operating discipline to a bounded buyer-content and follow-up workflow. Build pricing is $7,500–$15,000, with optional $1,500–$3,000 monthly support. The proposal specifies the permitted work; it does not promise capital commitments or assets under management.
+The [Owned Demand & Governed AI Engine](/private-client-os) applies this operating discipline to a bounded buyer-content and follow-up workflow. It is delivered as one or two fixed-fee [Execution Sprints](/services/execution-sprint), with optional $1,500–$3,000 monthly support. The proposal specifies the permitted work; it does not promise capital commitments or assets under management.

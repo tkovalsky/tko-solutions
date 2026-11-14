@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BLUEPRINT_CREDIT_TERMS, blueprintFoundingOpen, blueprintLaunch, commercialEngines, getOffer, isOfferSlug, offerHref, offers, sidecar } from "@/lib/offers";
+import { BLUEPRINT_CREDIT_TERMS, blueprintFoundingOpen, blueprintLaunch, commercialEngines, getOffer, isOfferSlug, offerHref, offers, sidecar, sprintFoundingOpen, sprintLaunch } from "@/lib/offers";
 
 describe("TKO offer ladder", () => {
   it("contains three unique, priced steps in diagnose → build → operate order", () => {
@@ -29,7 +29,8 @@ describe("Commercial engine consistency", () => {
   it("keeps existing route identities while sharing the approved commercial terms", () => {
     expect(commercialEngines.map((engine) => engine.slug)).toEqual(["regulatory-implementation-readiness-sprint", "operating-system-build"]);
     expect(getOffer("regulatory-implementation-readiness-sprint")).toMatchObject({ startingPrice: "$15,000", duration: "3–4 weeks" });
-    expect(getOffer("operating-system-build")).toMatchObject({ startingPrice: "$7,500", commercial: "$7,500–$15,000 build · fixed scope" });
+    expect(getOffer("operating-system-build")).toMatchObject({ startingPrice: getOffer("execution-sprint")!.startingPrice, commercial: `From ${getOffer("execution-sprint")!.startingPrice} per Sprint · usually one or two Sprints` });
+    expect(JSON.stringify(getOffer("operating-system-build"))).not.toMatch(/\$7,500/);
     expect(getOffer("operate-and-improve")).toMatchObject({ startingPrice: "$1,500/mo", commercial: "$1,500–$3,000 per month" });
     for (const engine of commercialEngines) expect(getOffer(engine.slug)).toBeDefined();
   });
@@ -88,5 +89,47 @@ describe("Execution Gap Blueprint", () => {
     }
     expect(blueprint.purchasePath?.map((step) => step.title)).toEqual(["Request", "Confirm fit", "Order and invoice", "Intake and delivery"]);
     expect(text).toContain("does not charge you");
+  });
+});
+
+describe("Execution Sprint", () => {
+  const sprint = getOffer("execution-sprint")!;
+
+  it("follows the Blueprint and states the approved founding and standard prices", () => {
+    expect(offers[1].slug).toBe("execution-sprint");
+    expect(sprint.level).toBe("Build");
+    expect(sprintLaunch).toMatchObject({ foundingPrice: "$9,999", standardPrice: "$14,999", foundingAllocation: 3 });
+    expect(sprintLaunch.foundingPaid).toBeGreaterThanOrEqual(0);
+    expect(sprintLaunch.foundingPaid).toBeLessThanOrEqual(sprintLaunch.foundingAllocation);
+    if (sprintFoundingOpen) {
+      expect(sprint).toMatchObject({ startingPrice: "$9,999", commercial: "$9,999 founding price · from $14,999 standard" });
+    } else {
+      expect(sprint).toMatchObject({ startingPrice: "$14,999", commercial: "From $14,999 · fixed scope" });
+      expect(JSON.stringify(sprint)).not.toContain("$9,999");
+    }
+  });
+
+  it("qualifies for the Blueprint credit and names it in the credit terms", () => {
+    expect(Number(sprintLaunch.foundingPrice.replace(/\D/g, ""))).toBeGreaterThanOrEqual(Number(blueprintLaunch.creditMinimum.replace(/\D/g, "")));
+    expect(BLUEPRINT_CREDIT_TERMS).toContain("an Execution Sprint");
+    expect(sprint.feeBoundary).toContain("Blueprint fee is credited once under its published terms");
+  });
+
+  it("states the qualification limits, acceptance, change control, and that a request is not a charge", () => {
+    const text = JSON.stringify(sprint);
+    for (const limit of ["one business function", "up to five users", "up to two sources", "no more than three systems", "sign by Day 5", "after Day 10", "human-approved", "BoundOS", "enterprise engagement"]) {
+      expect(text).toContain(limit);
+    }
+    expect(sprint.purchasePath?.map((step) => step.title)).toEqual(["Request", "Qualify", "Written order", "Kickoff"]);
+    expect(text).toContain("does not charge you");
+    expect(sprint.ctaLabel).toBe("Evaluate an Execution Sprint");
+  });
+
+  it("does not claim a packaged platform, CRM integrations, or guaranteed results", () => {
+    const text = JSON.stringify(sprint).toLowerCase();
+    for (const claim of ["tko os", "platform", "follow up boss", "guarantee", "autonomous agent"]) {
+      expect(text).not.toContain(claim);
+    }
+    expect(sprint.faqs.find((faq) => faq.q === "Is this a software product?")?.a).toMatch(/^No\. /);
   });
 });
