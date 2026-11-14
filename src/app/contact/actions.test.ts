@@ -117,6 +117,32 @@ describe("submitDiagnosticIntake", () => {
     expect(mockedPersistInboundLead).not.toHaveBeenCalled();
   });
 
+  it("accepts a Sprint evaluation request with its sources and no revenue band", async () => {
+    mockedPersistInboundLead.mockResolvedValue({ id: "lead-sp" } as Awaited<ReturnType<typeof persistInboundLead>>);
+    mockedNotifyLead.mockResolvedValue({ status: "skipped", reason: "missing_env" } as Awaited<ReturnType<typeof notifyLead>>);
+    await expect(submitDiagnosticIntake(sprintFormData())).rejects.toThrow("REDIRECT:/contact?status=notification-error&offer=execution-sprint");
+    const saved = mockedPersistInboundLead.mock.calls[0][0];
+    expect(saved).toMatchObject({ role: "Operations lead", source: "commercial_offer_execution-sprint" });
+    expect(saved.payload).toMatchObject({ offer: "execution-sprint", affectedSystems: "HubSpot, QuickBooks", workflowSources: "Website form and a weekly CSV export", consequence: "Quotes sit for days" });
+    expect(saved.payload).not.toHaveProperty("revenueBand");
+  });
+
+  it.each(["role", "affectedSystems", "workflowSources", "consequence"])("rejects a Sprint request without %s before persistence", async (field) => {
+    const formData = sprintFormData();
+    formData.delete(field);
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=invalid&offer=execution-sprint");
+    expect(mockedPersistInboundLead).not.toHaveBeenCalled();
+  });
+
+  it("ignores workflow sources on offers that do not ask for them", async () => {
+    const formData = blueprintFormData();
+    formData.set("workflowSources", "A form");
+    mockedPersistInboundLead.mockResolvedValue({ id: "lead-bp" } as Awaited<ReturnType<typeof persistInboundLead>>);
+    mockedNotifyLead.mockResolvedValue({ status: "sent", notifiedAt: new Date() } as Awaited<ReturnType<typeof notifyLead>>);
+    await expect(submitDiagnosticIntake(formData)).rejects.toThrow("REDIRECT:/contact?status=submitted&offer=execution-gap-blueprint");
+    expect(mockedPersistInboundLead.mock.calls[0][0].payload).not.toHaveProperty("workflowSources");
+  });
+
   it("does not echo an unknown offer in the redirect or persisted payload", async () => {
     const formData = validFormData();
     formData.set("offer", "https://untrusted.example");
@@ -317,5 +343,17 @@ function blueprintFormData() {
   formData.set("utmSource", "linkedin");
   formData.set("utmCampaign", "blueprint-launch-2026-11");
   formData.set("utmContent", "post-08");
+  return formData;
+}
+
+function sprintFormData() {
+  const formData = validFormData();
+  formData.set("offer", "execution-sprint");
+  formData.set("source", "commercial_offer_execution-sprint");
+  formData.set("role", "Operations lead");
+  formData.delete("revenueBand");
+  formData.set("affectedSystems", "HubSpot, QuickBooks");
+  formData.set("workflowSources", "Website form and a weekly CSV export");
+  formData.set("consequence", "Quotes sit for days");
   return formData;
 }

@@ -27,6 +27,7 @@ const intakeSchema = z.object({
   revenueBand: z.enum(["under-2m", "2-5m", "5-20m", "20-100m", "100m-plus"]).optional(),
   targetDeadline: z.string().min(2).max(200).optional(),
   affectedSystems: z.string().min(2).max(1000).optional(),
+  workflowSources: z.string().min(2).max(1000).optional(),
   sponsor: z.string().min(2).max(200).optional(),
   healthcareScope: z.string().min(10).max(1000).optional(),
   crm: z.string().min(2).max(200).optional(),
@@ -54,6 +55,9 @@ export async function submitDiagnosticIntake(formData: FormData) {
   // The Blueprint intake is deliberately short: no revenue band, but the systems and the
   // consequence are required because the fit decision depends on them.
   const blueprint = selectedOffer === "execution-gap-blueprint";
+  // The Sprint uses the same short intake, plus how the work arrives (the source limit).
+  const sprint = selectedOffer === "execution-sprint";
+  const singleWorkflow = blueprint || sprint;
   const offer = selectedOffer ? `&offer=${selectedOffer}` : "";
   const contactResult = (status: string) => `/contact?status=${status}${offer}`;
   if (getFormString(formData, "website")) {
@@ -67,9 +71,10 @@ export async function submitDiagnosticIntake(formData: FormData) {
     role: getFormString(formData, "role"),
     transformationContext: formData.get("transformationContext"),
     currentPressure: formData.get("currentPressure"),
-    revenueBand: healthcare || blueprint ? undefined : getFormString(formData, "revenueBand"),
+    revenueBand: healthcare || singleWorkflow ? undefined : getFormString(formData, "revenueBand"),
     targetDeadline: healthcare ? getFormString(formData, "targetDeadline") : undefined,
-    affectedSystems: healthcare || blueprint ? getFormString(formData, "affectedSystems") : undefined,
+    affectedSystems: healthcare || singleWorkflow ? getFormString(formData, "affectedSystems") : undefined,
+    workflowSources: sprint ? getFormString(formData, "workflowSources") : undefined,
     sponsor: healthcare ? getFormString(formData, "sponsor") : undefined,
     healthcareScope: healthcare ? getFormString(formData, "healthcareScope") : undefined,
     crm: managedFollowUp ? getFormString(formData, "crm") : undefined,
@@ -92,8 +97,8 @@ export async function submitDiagnosticIntake(formData: FormData) {
 
   if (!parsed.success || (healthcare
     ? !parsed.data.targetDeadline || !parsed.data.affectedSystems || !parsed.data.sponsor || !parsed.data.healthcareScope
-    : blueprint
-      ? !parsed.data.role || !parsed.data.affectedSystems || (parsed.data.consequence?.length ?? 0) < 2
+    : singleWorkflow
+      ? !parsed.data.role || !parsed.data.affectedSystems || (parsed.data.consequence?.length ?? 0) < 2 || (sprint && !parsed.data.workflowSources)
       : !parsed.data.revenueBand || (managedFollowUp && (!parsed.data.crm || !parsed.data.contactCount || !parsed.data.caller)))) {
     redirect(contactResult("invalid"));
   }

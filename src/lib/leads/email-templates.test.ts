@@ -69,6 +69,13 @@ describe("operator brief", () => {
     expect(content.html).toContain("Who makes the calls and logs dispositions");
   });
 
+  it("labels Sprint answers and states the Sprint release gate as the next step", () => {
+    const content = buildLeadNotificationEmail({ ...lead, payload: { offer: "execution-sprint", affectedSystems: "HubSpot, QuickBooks", workflowSources: "Website form" } });
+    for (const line of ["How the work arrives: Website form", "Affected systems: HubSpot, QuickBooks", "Requested offer: execution-sprint"]) expect(content.text).toContain(line);
+    expect(content.text).toContain("Next step: Sprint request: check qualification");
+    expect(content.text).toContain("No order or invoice until the Sprint release gates close");
+  });
+
   it("includes BoundOS application answers with labels", () => {
     const content = buildLeadNotificationEmail({ ...lead, source: "BOUNDOS_APPLY", payload: { inquiryType: "BOUNDOS_APPLY", vertical: "ria", crmApiKey: "no", datedRelationships: "About 300 clients", optOuts: "Redtail flag", holdout: "unsure", riaCompliance: "CCO: Pat; Smarsh; procedure drafted" } });
     for (const line of ["Vertical: ria", "Can create a CRM API key: no", "Dated relationships: About 300 clients", "Where opt-outs live: Redtail flag", "Accepts a 10–20% holdout: unsure", "RIA: CCO, archiving, Reg S-P: CCO: Pat; Smarsh; procedure drafted", "Inquiry type: BOUNDOS_APPLY"]) expect(content.text).toContain(line);

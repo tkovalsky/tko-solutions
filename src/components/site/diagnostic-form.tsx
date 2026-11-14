@@ -49,6 +49,10 @@ export function DiagnosticForm({
   const selectedOffer = managedFollowUp || workflowExample ? undefined : getOffer(offerSlug ?? "");
   const healthcare = selectedOffer?.slug === "regulatory-implementation-readiness-sprint";
   const blueprint = selectedOffer?.slug === "execution-gap-blueprint";
+  const sprint = selectedOffer?.slug === "execution-sprint";
+  // Blueprint and Sprint requests share the short single-workflow intake: no revenue band, but
+  // the role, systems, and consequence are required because the fit decision depends on them.
+  const singleWorkflow = blueprint || sprint;
   const [attribution, setAttribution] = useState(defaultAttribution);
   const started = useRef(false);
   const validationErrorTracked = useRef(false);
@@ -90,7 +94,7 @@ export function DiagnosticForm({
     const activeTiming = formData.get("timing") !== "exploring";
     const revenueFit = ["5-20m", "20-100m", "100m-plus"].includes(String(formData.get("revenueBand")));
     trackConversion("contact_form_submit_attempt", { ctaLocation: "contact_form" });
-    trackConversion("qualified_intake_indicator", { qualified: activeTiming && (healthcare || managedFollowUp || blueprint || revenueFit) });
+    trackConversion("qualified_intake_indicator", { qualified: activeTiming && (healthcare || managedFollowUp || singleWorkflow || revenueFit) });
   }
 
   function handleInvalid() {
@@ -135,16 +139,16 @@ export function DiagnosticForm({
         <Field id="company" label={managedFollowUp ? "Team / brokerage" : "Company"} autoComplete="organization" />
         <Field
           id="role"
-          label={blueprint ? "Title / role" : "Title / role (optional)"}
+          label={singleWorkflow ? "Title / role" : "Title / role (optional)"}
           autoComplete="organization-title"
-          required={blueprint}
+          required={singleWorkflow}
         />
       </div>
 
       <Field
         id="transformationContext"
-        label={managedFollowUp ? "Which follow-up keeps slipping?" : blueprint ? "Which workflow is wasting your team’s time?" : healthcare ? "Which mandate or platform transition needs readiness evidence?" : "What would you like to fix or build?"}
-        placeholder={blueprint ? "What starts the work, who touches it, where it stalls or gets re-keyed, and what should happen instead. A few sentences is enough." : healthcare ? "The approved mandate or platform transition, affected teams and systems, and the readiness question you need answered. Do not include patient or confidential client data." : "The buyer inquiry, follow-up gap, or workflow you want to improve. Include the tools, decision owner, and what should happen next."}
+        label={managedFollowUp ? "Which follow-up keeps slipping?" : sprint ? "Which workflow should the Sprint fix?" : blueprint ? "Which workflow is wasting your team’s time?" : healthcare ? "Which mandate or platform transition needs readiness evidence?" : "What would you like to fix or build?"}
+        placeholder={sprint ? "What starts the work, who owns it, where it stalls, and what should happen instead. One workflow in one team." : blueprint ? "What starts the work, who touches it, where it stalls or gets re-keyed, and what should happen instead. A few sentences is enough." : healthcare ? "The approved mandate or platform transition, affected teams and systems, and the readiness question you need answered. Do not include patient or confidential client data." : "The buyer inquiry, follow-up gap, or workflow you want to improve. Include the tools, decision owner, and what should happen next."}
         textarea
         defaultValue={workflowExample?.intake}
       />
@@ -168,7 +172,9 @@ export function DiagnosticForm({
         <Field id="healthcareScope" label="Scope and the decision you need" placeholder="One approved change, the population or workflow in scope, and the decision your sponsor needs. Unknown boundaries can be stated explicitly." textarea />
       </fieldset> : null}
 
-      {blueprint ? <Field id="affectedSystems" label="Which systems are involved? (up to three)" placeholder="For example: HubSpot, a shared spreadsheet, and Outlook. Product names only; no logins." /> : null}
+      {singleWorkflow ? <Field id="affectedSystems" label="Which systems are involved? (up to three)" placeholder="For example: HubSpot, a shared spreadsheet, and Outlook. Product names only; no logins." /> : null}
+
+      {sprint ? <Field id="workflowSources" label="How does the work arrive? (up to two sources)" placeholder="For example: a website form, a weekly CSV export from QuickBooks, or new deals created in HubSpot." /> : null}
 
       {managedFollowUp ? <fieldset className="space-y-6 rounded-lg border border-border bg-surface p-5"><legend className="px-2 font-semibold">Your contact base</legend>
         <div className="grid gap-6 md:grid-cols-2"><Field id="crm" label="Which CRM do you use?" placeholder="For example: Follow Up Boss, Wealthbox, Redtail, or a spreadsheet" />
@@ -185,7 +191,7 @@ export function DiagnosticForm({
       </fieldset> : null}
 
       <div className="grid gap-6 md:grid-cols-2">
-        {!healthcare && !blueprint ? <SelectField id="revenueBand" label={managedFollowUp ? "Annual commission revenue (not property sales volume)" : "Annual revenue"}>
+        {!healthcare && !singleWorkflow ? <SelectField id="revenueBand" label={managedFollowUp ? "Annual commission revenue (not property sales volume)" : "Annual revenue"}>
           <option value="">Select one</option>
           <option value="under-2m">Under $2M</option>
           <option value="2-5m">$2M–$5M</option>
@@ -205,18 +211,18 @@ export function DiagnosticForm({
 
       <Field
         id="message"
-        label={blueprint ? "Anything else I should know? (optional)" : managedFollowUp ? "Team size and anything else I should know (optional)" : "Which tools do you run on? (optional)"}
-        placeholder={blueprint ? "For example: what you have already tried, or a date that makes this urgent." : managedFollowUp ? "For example: 3 agents and one assistant; we tried a drip campaign last year." : "For example: HubSpot, spreadsheets, QuickBooks, Gmail, an industry CRM, a few AI tools."}
+        label={singleWorkflow ? "Anything else I should know? (optional)" : managedFollowUp ? "Team size and anything else I should know (optional)" : "Which tools do you run on? (optional)"}
+        placeholder={sprint ? "For example: who would approve customer-facing messages, what you have already tried, or a date that makes this urgent." : blueprint ? "For example: what you have already tried, or a date that makes this urgent." : managedFollowUp ? "For example: 3 agents and one assistant; we tried a drip campaign last year." : "For example: HubSpot, spreadsheets, QuickBooks, Gmail, an industry CRM, a few AI tools."}
         textarea
         required={false}
       />
 
       <Field
         id="consequence"
-        label={blueprint ? "What does it cost when this breaks down?" : "What happens if nothing changes? (optional)"}
+        label={singleWorkflow ? "What does it cost when this breaks down?" : "What happens if nothing changes? (optional)"}
         placeholder="Lost deals, owner hours, a key person leaving, a growth plan the current setup can't support."
         textarea
-        required={blueprint}
+        required={singleWorkflow}
       />
 
       <div className="rounded-md border border-border bg-surface p-4 text-sm leading-6 text-muted">
@@ -242,7 +248,7 @@ export function DiagnosticForm({
       </div>
 
       <Button type="submit" className="w-full sm:w-auto">
-        {managedFollowUp ? "Discuss Managed Follow-Up" : blueprint ? "Request My Blueprint" : "Request a Conversation"}
+        {managedFollowUp ? "Discuss Managed Follow-Up" : sprint ? "Request a Sprint Evaluation" : blueprint ? "Request My Blueprint" : "Request a Conversation"}
       </Button>
     </form>
   );

@@ -184,6 +184,10 @@ function InboundLeadsBlock({ leads, asOf }: { leads: PersistedInboundLead[]; asO
             ["currentPressure", "Current pressure"],
             ["revenueBand", "Revenue band"],
             ["timing", "Timing"],
+            // Blueprint and Sprint fit answers: the Today view is the review path while lead email is off.
+            ["affectedSystems", "Systems"],
+            ["workflowSources", "How the work arrives"],
+            ["consequence", "Cost of the breakdown"],
           ] as const;
           return (
             <li key={lead.id} className="border-t border-border pt-4 first:border-t-0 first:pt-0">

@@ -95,6 +95,27 @@ describe("follow-up pilot intake", () => {
     const general = render(<DiagnosticForm action={vi.fn()} />);
     for (const name of ["crm", "contactCount", "caller", "consentEvidence"]) expect(general.container.querySelector(`[name="${name}"]`)).toBeNull();
   });
+  it("asks the Sprint qualification questions and marks a timely Sprint request as qualified", () => {
+    const { container } = render(<DiagnosticForm action={vi.fn()} offerSlug="execution-sprint" />);
+    expect(screen.getByLabelText("Which workflow should the Sprint fix?")).toBeRequired();
+    expect(screen.getByLabelText("Title / role")).toBeRequired();
+    expect(screen.getByLabelText("Which systems are involved? (up to three)")).toBeRequired();
+    expect(screen.getByLabelText("How does the work arrive? (up to two sources)")).toBeRequired();
+    expect(screen.getByLabelText("What does it cost when this breaks down?")).toBeRequired();
+    expect(screen.queryByLabelText("Annual revenue")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Request a Sprint Evaluation" })).toBeInTheDocument();
+    const data = new FormData(container.querySelector("form")!);
+    expect(data.get("offer")).toBe("execution-sprint");
+    expect(data.get("source")).toBe("commercial_offer_execution-sprint");
+    fireEvent.change(screen.getByLabelText("When do you want this fixed?"), { target: { value: "31-90" } });
+    fireEvent.submit(container.querySelector("form")!);
+    expect(trackConversion).toHaveBeenCalledWith("qualified_intake_indicator", { qualified: true });
+  });
+  it("asks for work sources only on the Sprint intake", () => {
+    const blueprint = render(<DiagnosticForm action={vi.fn()} offerSlug="execution-gap-blueprint" />);
+    expect(blueprint.container.querySelector('[name="workflowSources"]')).toBeNull();
+    expect(screen.getByRole("button", { name: "Request My Blueprint" })).toBeInTheDocument();
+  });
   it("preserves the general intake qualification rule", () => {
     const { container } = render(<DiagnosticForm action={vi.fn()} />);
     fireEvent.change(screen.getByLabelText("Annual revenue"), { target: { value: "under-2m" } });
