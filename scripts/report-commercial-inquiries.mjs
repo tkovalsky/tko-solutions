@@ -14,6 +14,7 @@ export function reportingWindow(daysText = "30", now = new Date()) {
 // slugs in src/lib/offers.ts plus the BoundOS managed-follow-up intake (tested).
 export const REPORTED_OFFERS = [
   "execution-gap-blueprint",
+  "execution-sprint",
   "constraint-diagnostic",
   "operating-system-build",
   "operate-and-improve",
