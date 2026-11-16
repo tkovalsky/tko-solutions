@@ -27,7 +27,7 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
   const fields = [
     ["transformationContext", "Problem / request"], ["currentPressure", "Current pressure"],
     ["revenueBand", "Revenue band"], ["timing", "Timing"], ["offer", "Requested offer"],
-    ["targetDeadline", "Target deadline"], ["affectedSystems", "Affected systems"],
+    ["targetDeadline", "Target deadline"], ["affectedSystems", "Affected systems"], ["workflowSources", "How the work arrives"],
     ["sponsor", "Sponsor"], ["healthcareScope", "Readiness scope"],
     ["crm", "CRM"], ["contactCount", "Approximate contacts"],
     ["consentEvidence", "Consent evidence and opt-outs"], ["caller", "Who makes the calls and logs dispositions"],
@@ -57,7 +57,9 @@ export function buildLeadNotificationEmail(lead: PersistedInboundLead): LeadEmai
   const subjectLabel = [lead.name, lead.company].filter(Boolean).join(" / ") || "New website inquiry";
   const nextStep = payload.offer === "execution-gap-blueprint"
     ? "Blueprint request: confirm fit within two business days, then send the written order and invoice (docs/commercial-launch-2026-11/BLUEPRINT_OPERATING_PROCEDURE.md)."
-    : "Review the request and reply within two business days.";
+    : payload.offer === "execution-sprint"
+      ? "Sprint request: check qualification Q1–Q10 and reply within two business days. No order or invoice until the Sprint release gates close (docs/commercial-launch-2026-11/EXECUTION_SPRINT_DEFINITION.md §9)."
+      : "Review the request and reply within two business days.";
   const rows = [...identity, ...details];
   return {
     subject: `You've got leads! — ${subjectLabel.replace(/[\r\n\t]+/g, " ").slice(0, 160)}`,
