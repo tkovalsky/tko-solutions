@@ -20,22 +20,18 @@ about 50 named organizations and 20–30 named people. Week 1 fixes (1) and (2).
 
 ## 1. Audit: what is true today
 
-### 1.1 Blocker: neither site has a Vercel project [V]
+### 1.1 Hosting: the projects exist; production env is unconfirmed [V / A]
 
-The Vercel team "Todd Kovalsky's projects" (`team_HsVPkp5OV72DjU2GL0mAhuSj`) now contains only
-two projects, `rachel-site` and `cms`. The `tko-solutions` and `rachel-site-marketing` (BoundOS)
-projects listed on October 18 are gone, and so are `property-manager`, `cre-intelligence` and
-`tko-healthcare`. The likeliest explanation is that the Phase C6 cleanup deleted more projects than
-it meant to.
+The `tko-solutions` Vercel project exists (`prj_3p0qVFDVWAnHVswo6JlfXlJ7z8qO`, in team
+`team_HsVPkp5OV72DjU2GL0mAhuSj`): Vercel's GitHub integration built a preview for this PR. The
+Vercel API connector used in this session can see only `rachel-site` and `cms`, so it could not
+read the `tko-solutions` or BoundOS project settings, env variables or domains. Treat the
+October 18 finding as still open until checked in the dashboard: **no `RESEND_API_KEY`,
+`RESEND_FROM_EMAIL` or `LEAD_NOTIFY_EMAIL` in Production.**
 
-The domains `tko.solutions` and `boundos.com` are still registered to the team and verified, but no
-project serves them. **If no other Vercel account hosts them, both sites return Vercel's
-"deployment not found" page right now.** This container cannot reach either site, so open both in a
-browser before doing anything else.
-
-This takes out more than the TKO site. BoundOS `/apply` and the Ghost Test post to
-`https://tko.solutions/api/contact` (decision D4), so **BoundOS lead capture fails too** whenever
-tko.solutions is down.
+Dependency to remember: BoundOS `/apply` and the Ghost Test post to
+`https://tko.solutions/api/contact` (decision D4), so **BoundOS lead capture works only while
+tko.solutions is up and correctly configured.**
 
 ### 1.2 Email [V for DNS host, A for records]
 
@@ -81,30 +77,24 @@ easily. **Never run bulk or cold sequences through this path.**
 
 ## 3. Week 1: activation runbook (in order; each step has a check)
 
-### Step 1: Confirm the sites are down (5 min)
-Open `https://tko.solutions` and `https://www.boundos.com`. If both load, find which Vercel account
-serves them (Vercel dashboard → account switcher) and skip to Step 3.
+### Step 1: Confirm the sites load (5 min)
+Open `https://tko.solutions/contact` and `https://www.boundos.com/apply`. Both should render a form.
 
-### Step 2: Recreate the two Vercel projects (30–45 min)
-For **tko.solutions**:
-1. Vercel → Add New → Project → import GitHub `tkovalsky/tko-solutions`. Framework: Next.js. Leave
-   the build command as the repo's `npm run build`.
-2. Environment Variables (**Production only** for the Resend ones, so preview builds never send real mail):
-   - `DATABASE_URL`: pooled connection string from the **tko-site** Neon project. Confirm in the
-     Neon console that the project and its `InboundLead` rows still exist.
-   - `TIF_ACCESS_KEY`: new random value (stored in a password manager).
-   - `NEXT_PUBLIC_SITE_URL` = `https://tko.solutions`
-   - `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEAD_NOTIFY_EMAIL`: set in Step 5.
-   - Do **not** re-add the stale `ANTHROPIC_API_KEY` / `AI_*` variables. No code reads them.
-3. Deploy, then Settings → Domains → add `tko.solutions` and `www.tko.solutions`. The domain is
-   already in the team, so it attaches without new DNS records unless Vercel asks.
-4. Run `npm run tif:migrate:status` once against production from a local checkout. If it reports
+### Step 2: Audit the Vercel projects (15 min)
+For **tko-solutions** (Vercel → tko-solutions → Settings):
+1. **Domains:** `tko.solutions` and `www.tko.solutions` are attached and valid.
+2. **Environment Variables, Production:**
+   - `DATABASE_URL` (pooled Neon connection string for the **tko-site** Neon project), `TIF_ACCESS_KEY`
+     and `NEXT_PUBLIC_SITE_URL` = `https://tko.solutions` are present.
+   - `RESEND_API_KEY`, `RESEND_FROM_EMAIL` and `LEAD_NOTIFY_EMAIL` are set in Step 5. Use
+     **Production only**, so preview builds never send real mail.
+   - Remove the stale `ANTHROPIC_API_KEY` / `AI_*` variables. No code reads them.
+3. Run `npm run tif:migrate:status` once against production from a local checkout. If it reports
    pending migrations, run `npm run tif:migrate:deploy`.
 
-For **boundos.com**: the same steps with the `rachel-realestate-marketing` repo and its own env.
-This repo is not attached to this session, so its env list wasn't checked. It needs at least the
-Turnstile keys (`NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`). Then add the
-`boundos.com` and `www.boundos.com` domains.
+For **BoundOS** (the project built from `rachel-realestate-marketing`): confirm the
+`boundos.com` / `www.boundos.com` domains and the Turnstile keys (`NEXT_PUBLIC_TURNSTILE_SITE_KEY`,
+`TURNSTILE_SECRET_KEY`).
 
 **Check:** both URLs load; `https://tko.solutions/contact` renders the form.
 
@@ -276,5 +266,5 @@ Likes and impressions are secondary. One VP reply is worth more than 18,000 impr
 - **Validation:** the Week 1 checks in § 3; the weekly KPI table in § 5.5.
 - **Rollback:** § 3, end of Step 6. No code changes in this plan.
 - **Regression risk:** the MX cutover in Step 4 is the only change that can lose mail. Mitigate
-  with Step 3 (backup) and by doing Step 4 when you can test immediately. Vercel recreation
-  carries no risk to RachelOS: `rachel-site` and `cms` are untouched.
+  with Step 3 (backup) and by doing Step 4 when you can test immediately. The Vercel
+  env changes touch only the tko-solutions and BoundOS projects; `rachel-site` and `cms` are untouched.
