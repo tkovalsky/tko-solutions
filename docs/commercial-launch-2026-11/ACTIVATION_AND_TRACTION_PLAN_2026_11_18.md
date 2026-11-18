@@ -392,7 +392,7 @@ or the targeting, and it is the only evidence that justifies a price change.
 
 | Item | Why open | Next action |
 |---|---|---|
-| BoundOS build-price line | § 1.5 | Two-line fix in `rachel-site-marketing`, then deploy |
+| BoundOS build-price line | § 1.5 | Fixed in racheldelray-team/rachel-site-marketing PR 5 (draft); merge to deploy |
 | BoundOS analytics | Launch plan § 0 item 5: no UTM capture or page analytics on BoundOS, so only sent results are countable | Accept for 30 days; sent results are the KPI that matters |
 | Owned-sidecar pricing (DEC-223) | Decided as an offer shape, with no public price | Leave unpriced and out of the pitch until a managed client exists |
 | Rachel E1 holdout report | Needed for BoundOS outbound credibility | Confirm whether it ran. If not, it is the one RachelOS task worth doing in the 30 days |
