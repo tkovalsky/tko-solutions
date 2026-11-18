@@ -10,11 +10,15 @@ Tags: **[V]** verified today through the Vercel API · **[A]** assumption, confi
 
 ## 0. The one-paragraph version
 
-Stop building for 30 days. The site, offers, intake, lead store, operator notifications and
-Opportunity Intelligence workbench already exist in code. What is missing is (1) the sites being
-live and wired, (2) one inbox that receives everything, and (3) a daily selling habit aimed at
-about 50 named organizations and 20–30 named people. Week 1 fixes (1) and (2). Weeks 2–4 are
-(3). Success is measured in conversations, not impressions.
+The current strategy is already in the code: **the Execution Gap Blueprint ($999 founding) is the
+front door for owner-led and midmarket businesses, the Execution Sprint is the follow-on, and
+BoundOS sells a $500 Database Health Assessment to Follow Up Boss team leads.** Nothing has been
+sold yet (`foundingPaid: 0` for both founding offers). Three admin decisions block taking any money,
+and the email loop isn't wired. So: Week 1 clears the money gates and the email. Weeks 2–4 are
+selling the Blueprint to about 50 named non-healthcare businesses, with BoundOS assessments sold
+through warm introductions only. Healthcare content stays as a credibility layer for the job-search
+motion. **Healthcare is not a sales lane until the employment-conflict check is done.** Pricing is
+frozen for 60 days.
 
 ---
 
@@ -45,16 +49,51 @@ tko.solutions is up and correctly configured.**
 not name.com. Name.com is only the registrar. So both domains can be managed from one Cloudflare
 account, and Cloudflare Email Routing is free.
 
-### 1.3 Commercial [V in repo]
+### 1.3 Commercial: the current ladder [V in repo]
 
-- Offers are defined and priced: Execution Gap Blueprint ($999 founding / $1,499), Execution Sprint
-  ($9,999 founding / $14,999), Enterprise Transformation & Readiness Sprint (from $15,000).
-- There is **no "$25K diagnostic"** on the site. Don't promise a price on LinkedIn that the site
-  doesn't show. Use the $15K Enterprise Readiness Sprint as the healthcare diagnostic offer for now.
-- `/tif/oi` (Opportunity Intelligence: intake, pipeline, Today, people, decision capture) is built
-  and is the right place for the 50-account list. A spreadsheet isn't needed.
-- The repo holds about 93 stories, a 98 KB backlog and more than 30 strategy documents, but no
-  record of an outbound conversation. The bottleneck is selling, not software.
+Source of record: `src/lib/offers.ts` (last changed 2026-11-14) and DEC-223 in the RachelOS repo
+(2026-11-03). The BoundOS marketing repo (`rachel-realestate-marketing`) could not be read in this
+session. Its public prices are assumed to render the same `boundosLadder`, per decision D1. **[A]**
+
+**TKO Solutions** (buyer: founder, owner, COO or ops leader of an owner-led or midmarket business)
+
+| Step | Offer | Price | Status |
+|---|---|---|---|
+| 1. Front door | Execution Gap Blueprint: one workflow, ≤ 3 systems, 5 business days, no credentials | **$999** founding (first 5 paid), then $1,499 | Homepage hero CTA. 0 of 5 founding sold |
+| 2. Fix | Execution Sprint: one workflow live in about 30 days, acceptance scenarios signed in week 1 | **$9,999** founding (first 3), then from $14,999 | Blueprint fee credited if signed within 45 days. 0 of 3 sold |
+| 3. Keep | Operate & Improve | $1,500–$3,000/mo, 3-month minimum | — |
+| Alt. entry | Constraint Diagnostic: multi-function, interviews | $7,500 | Supporting step |
+| Vertical package | Owned Demand & Governed AI Engine (`/private-client-os`): wealth advisory, luxury services, boutique practices | 1–2 Sprints | Priced in Sprints since 11-14 |
+| Enterprise lane | Readiness Sprint for **health plans** + Execution Assurance | $15,000 | **Gated:** see 1.4 |
+
+**BoundOS** (buyer: team leads on Follow Up Boss; RIA path on `/apply`)
+
+| Step | Price |
+|---|---|
+| Database Health Assessment | $500, credited to setup within 60 days |
+| BoundOS Core | $1,500 setup + $500/mo |
+| BoundOS Managed | $2,500 setup + $1,200/mo |
+| Owned sidecar (customer hardware, DEC-223) | Not priced publicly in tko-site **[A]** |
+
+Other facts:
+- There is **no "$25K diagnostic"**. The LinkedIn advice assumed one. Don't introduce it.
+- **Pricing changed eight times between Sept 27 and Nov 14** (`git log -- src/lib/offers.ts`). Each change resets
+  the copy, the tests and your own pitch. The ladder above is coherent. Freeze it (§ 6).
+- `/tif/oi` (intake, pipeline, Today, people, decision capture) is built and is the right place
+  for the account list. A spreadsheet isn't needed.
+
+### 1.4 Gates that block revenue [V in repo]
+
+| Gate | Source | Blocks | Effort |
+|---|---|---|---|
+| Written cancellation and refund terms approved | `BLUEPRINT_OPERATING_PROCEDURE.md` § 9 | **Any** Blueprint order, invoice, paid promotion or live outreach | 30 min: approve or edit the proposed terms |
+| Invoicing tool for TKO Solutions LLC (card + ACH) | same | same | 30 min: Stripe Invoicing is simplest; it also serves the BoundOS $500 (playbook E4) |
+| Florida sales-tax treatment of professional services, in writing | same | same | One email to the accountant |
+| Employment and conflict check (outside work, IP, non-solicit, client conflict) with the Cognizant agreement | Decision pack 2026-09-27, § E and § J.2 item 4; Sprint qualification Q10 | **All healthcare payer/provider selling.** Possibly all outside work | Read the agreement this week. If it is unclear, one hour with an employment lawyer |
+| Service agreement + DPA + E&O/cyber quote | Sidecar playbook D2/D3, § 9 | BoundOS assessments that ingest a client's contact list | Counsel; start now, takes weeks |
+
+The first three are a single afternoon. Until they are closed, the honest status is "TKO cannot
+take money", whatever the website says.
 
 ---
 
@@ -151,8 +190,22 @@ to sending as `todd@tko.solutions`.
 3. Repeat once from `https://www.boundos.com/apply`, which exercises the CORS path into the same store.
 4. Cancel Titan at name.com. Leave Zoho free dormant, or delete the org.
 
+### Step 7: Clear the money gates (one afternoon, plus one email)
+1. Approve or edit the Blueprint cancellation and refund terms (`BLUEPRINT_OPERATING_PROCEDURE.md` § 3, item 9).
+2. Open the invoicing account for TKO Solutions LLC (card + ACH). Create two saved items:
+   "Execution Gap Blueprint (founding)" at $999 and "BoundOS Database Health Assessment" at $500.
+3. Email the accountant: "Is a fixed-fee workflow assessment delivered remotely by a Florida LLC
+   taxable in Florida?" File the written answer.
+4. Read the outside-work, IP, non-solicit and conflict clauses of the Cognizant agreement. Write
+   down one of three answers in this file: *clear*, *clear except healthcare payer/provider*, or
+   *needs approval*. If it needs approval, request it before any outreach.
+5. Ask counsel for a quote on the BoundOS service agreement and DPA (drafts in `docs/legal/`),
+   and ask a broker for E&O and cyber quotes. These take weeks, so start them now; they don't
+   block the Blueprint.
+
 **Week 1 is done when:** both sites load, both addresses land in one Gmail, you can send as
-`todd@tko.solutions`, and both forms produce a receipt, an alert and a Today row.
+`todd@tko.solutions`, both forms produce a receipt, an alert and a Today row, and you can issue a
+Blueprint invoice today.
 
 **Rollback:** in Cloudflare, disable Email Routing and restore the Zoho / Titan MX records (copy
 them into a note before Step 4). In Vercel, remove the Resend variables; the notifier fails closed
@@ -167,42 +220,63 @@ prior-authorization cards. Each card links to a live page, so Step 2 must be don
 
 | # | Question it answers | Card title | Link | One-line description |
 |---|---|---|---|---|
-| 1 | How do I buy Todd? | Healthcare Workflow & Operating Model Diagnostic | `https://tko.solutions/services/regulatory-implementation-readiness-sprint` | Fixed-scope readiness sprint: where a regulated workflow breaks across teams and systems, and what to fix first. From $15K. |
+| 1 | How do I buy Todd? | Execution Gap Blueprint | `https://tko.solutions/services/execution-gap-blueprint` | One workflow, up to three systems, five business days: where the work breaks, why, and what to fix first. $999 for the first five clients. |
 | 2 | Can he design and build modern systems? | RachelOS: a founder-built operating system, in production | `https://tko.solutions/selected-work/from-crm-to-operating-system` | Canonical next actions, evidence provenance, approval-gated AI, built and running daily. |
-| 3 | Does he have an original way of thinking? | From System of Record to System of Action | `https://tko.solutions/insights/from-system-of-record-to-system-of-action` | Swap in "Decisioning: The Missing Layer Between Data and Action" once Post 1 below is written up on the site. |
-| 4 | Does he know my industry? | Prior Authorization Is a Decision-Rights Problem | `https://tko.solutions/insights/prior-authorization-is-a-decision-rights-problem` | Why PA modernization stalls between policy, operations and systems. |
+| 3 | Does he have an original way of thinking? | From System of Record to System of Action | `https://tko.solutions/insights/from-system-of-record-to-system-of-action` | Swap in "Decisioning: The Missing Layer Between Data and Action" once Post 1 below is on the site. |
+| 4 | Does he know a hard domain deeply? | Prior Authorization Is a Decision-Rights Problem | `https://tko.solutions/insights/prior-authorization-is-a-decision-rights-problem` | Healthcare depth for recruiters and enterprise readers (Motion A). Thought leadership, not an offer. |
 
-The card 1 title differs from the page name ("Enterprise Transformation & Readiness Sprint"). That
-is acceptable on LinkedIn, but if card 1 converts, consider renaming the page to match. **[D]**
+Why card 1 changed from the healthcare Readiness Sprint: the site's front door is the Blueprint,
+and selling health-plan work is gated on the employment check (§ 1.4). If that check comes back
+*clear*, add the Readiness Sprint as a fifth card. Don't swap it in for card 1. **[D]**
 
 LinkedIn headline (draft, under 220 characters):
-> Healthcare transformation leader · Operating models, decision systems & governed AI · I diagnose where work breaks between teams and systems, then build the fix · Founder, TKO Solutions
+> Transformation leader · Operating models, decision systems & governed AI · I find where work breaks between teams and systems, then fix it · Founder, TKO Solutions
 
 ---
 
 ## 5. Weeks 2–4: the selling system
 
-### 5.1 Two motions, one body of content
+### 5.1 Three motions, one body of content
 
-| Motion | Target | Ask | Where it's tracked |
-|---|---|---|---|
-| **A: Roles** | Principal / Director / Sr Director Transformation; Healthcare Product Strategy; AI Transformation; Operating Model / OpEx; Principal Program / Product; Transformation or Client Partner; Solutions / Value Consulting; Healthcare Strategy & Ops | Apply, then connect with the hiring VP, the transformation executive, the recruiter and one adjacent leader | `/tif/oi` as FTE opportunities |
-| **B: Diagnostic buyers** | 50 organizations: specialty medical groups, MSOs, PE-backed provider groups. People: RCM, operations, prior-auth, transformation leaders, COO/CAO, and CIO/CTO where admin automation is active | A conversation about a named problem, then the diagnostic | `/tif/oi/intake` → pipeline → Today |
-| **C: RachelOS as proving ground** | Not a buyer. It is the evidence source for both motions | — | Feeds posts and Featured card 2 |
+| Motion | Priority | Target | Offer | Where it's tracked |
+|---|---|---|---|---|
+| **B: Blueprint buyers** | **Primary** | 50 owner-led or midmarket businesses (about $5M–$100M revenue; the general intake treats $5M+ as a fit) in the verticals the insights library already covers: RIAs and wealth advisory, commercial insurance brokers, boutique M&A / capital-formation firms, law firms, B2B SaaS implementation teams, luxury / private-client services. Buyer: owner, COO, head of operations. South Florida first, where introductions are warmest | Blueprint ($999 founding) → Execution Sprint | `/tif/oi/intake` → pipeline → Today; Blueprint ledger |
+| **C: BoundOS** | Secondary; warm introductions only | 10 Follow Up Boss team leads, reached through Rachel's brokerage and agent network. Ghost Test as the opener | $500 Database Health Assessment → Core / Managed | Same `InboundLead` store (`BOUNDOS_APPLY`, `BOUNDOS_GHOST_TEST`) |
+| **A: Roles** | Parallel; LinkedIn only | Principal / Director / Sr Director Transformation; Healthcare Product Strategy; AI Transformation; Operating Model / OpEx; Principal Program / Product; Transformation or Client Partner; Solutions / Value Consulting; Healthcare Strategy & Ops | Apply, then connect with the hiring VP, the transformation executive, the recruiter and one adjacent leader | `/tif/oi` as FTE opportunities |
+
+RachelOS is not a motion. It is the evidence behind all three: Featured card 2, Posts 4, 5 and 7,
+and the BoundOS pitch.
+
+**Healthcare buyers are not a motion yet.** No outreach to health plans, providers, MSOs or
+provider groups, and no Readiness Sprint pitches, until § 1.4's employment check returns *clear*.
+Sprint qualification Q10 already excludes payer and provider work. Healthcare posts are fine: they
+build credibility for Motion A, with the § 5.3 boundary.
+
+**Why the Blueprint is the primary motion, not BoundOS:** the Blueprint touches no credentials or
+contact lists, so it needs no DPA or insurance to start. At $999 it is a small first yes, it feeds
+a $9,999 follow-on, and the site, intake and operating procedure are finished. BoundOS needs the
+service agreement, the DPA and (for credibility) Rachel's first holdout numbers before cold
+outreach. No E1 report was found in the RachelOS repo. **[A]** Until both exist, sell BoundOS only
+to people who already trust you.
 
 **The 50-account rule.** Each account in `/tif/oi` needs three things before outreach: (1) a named
-person with authority; (2) a specific, observable reason they likely have the problem (a job
-posting, a payer mandate, an acquisition, a public statement); (3) the one post of yours that fits
-it. No reason, no outreach.
+person with authority; (2) a specific, observable reason they likely have the problem (hiring an
+ops coordinator, a new CRM, an acquisition, growth past the founder's span, a public complaint
+about follow-up); (3) the one post or insight of yours that fits it. No reason, no outreach.
 
 ### 5.2 Outreach shape
 
-Conversation first, problem second, diagnostic third. Template:
+Conversation first, problem second, Blueprint third. Template:
 
 > I've been writing about [topic from the post] because I keep seeing the same pattern: [one-sentence pattern]. [Organization] came to mind because of [specific, observable reason]. Curious whether that's something you're running into in [area]?
 
-No pitch, no link, no calendar link in the first message. The diagnostic comes up only after they
-describe the problem.
+No pitch, no link, no calendar link in the first message. When they describe the problem, the
+next line is: *"I do a fixed-scope, five-day look at exactly that workflow. The first five are
+$999. Want the one-page scope?"*
+
+BoundOS variant (warm introduction): *"[Introducer] said you run a team on Follow Up Boss. I built
+the follow-up system Rachel runs her business on. There's a two-minute Ghost Test that estimates
+how many past clients have gone quiet. Want the link?"*
 
 ### 5.3 Eight posts (one or two a week)
 
@@ -218,7 +292,7 @@ me to solve after reading this?* Every post closes with an observation or a ques
 | 5 | What Building a Small Operating System Taught Me About Enterprise Transformation | Builder credibility | Build / Sprint | RachelOS |
 | 6 | Green Status Without Evidence Is Just Optimism | Executive / program leadership | Program recovery | "Green" while dates and dependencies stay unstable |
 | 7 | Human Attention Is a Capacity Constraint | Operations economics | Queue / operating design | RachelOS queue overload, operator burden |
-| 8 | Why I Don't Start an Automation Engagement With Automation | Consulting offer | The diagnostic | Links to the diagnostic page |
+| 8 | Why I Don't Start an Automation Engagement With Automation | Consulting offer | The Blueprint | The only post that links an offer: `/services/execution-gap-blueprint` |
 
 Reserve themes for later posts: one-field changes that cross eight teams (dependency topology);
 accountability without decision rights produces escalation theater; transformation breaks at
@@ -234,30 +308,43 @@ pattern, never the incident.
 | 15 | Inspect one real piece of work and extract one operating principle |
 | 15 | Draft or finish one post (publish one or two a week, not daily) |
 | 15 | Substantive comments on 5–8 posts by buyers, executives, recruiters or partners |
-| 15 | Start or advance 2–3 real conversations, logged in `/tif/oi` |
+| 15 | Start or advance 2–3 real conversations, logged in `/tif/oi` (Blueprint accounts first) |
+
+Once a week, 30 minutes: ask Rachel for two Follow Up Boss team-lead introductions, and run the
+Blueprint ledger's funnel reconciliation (`BLUEPRINT_OPERATING_PROCEDURE.md` § 8).
 
 ### 5.5 KPIs (weekly, in this order)
 
 | Metric | 30-day target |
 |---|---|
-| Relevant profile views (Director+ in target orgs or titles) | Trending up week over week |
-| Senior connection requests sent / accepted | 60 / 25 |
-| Substantive DM threads (2+ replies each way) | 15 |
-| Calls held | 6 |
-| Introductions received | 2 |
-| Proposals or written orders sent | 1–2 |
-| Paid work or serious role process | 1 |
+| Accounts in `/tif/oi` meeting the 50-account rule | 50 |
+| Substantive conversations (2+ replies each way) | 15 |
+| Blueprint scopes sent | 6 |
+| **Founding Blueprints paid** | **2** (of the 5) |
+| BoundOS Ghost Tests completed by introduced team leads | 5 |
+| **BoundOS assessments paid** | **1** (only if the DPA is signed off; otherwise 0 and that's fine) |
+| Execution Sprint proposals sent (from a delivered Blueprint) | 1 |
+| Motion A: senior connections accepted / role processes | 25 / 1 |
 
-Likes and impressions are secondary. One VP reply is worth more than 18,000 impressions.
+Likes and impressions are secondary. Revenue rows are the ones that matter. Two paid Blueprints in
+30 days proves the front door works; zero after 15 real conversations is a signal about the offer
+or the targeting, and it is the only evidence that justifies a price change.
 
 ---
 
-## 6. What not to do for 30 days
+## 6. What not to do
 
+**For 60 days, or until 5 founding Blueprints are paid, whichever comes first:**
+- **No price or offer changes** in `src/lib/offers.ts` or on the BoundOS site. The only allowed
+  edit is incrementing `foundingPaid` on confirmed payment. Write any pricing ideas down in this
+  file's § 8 and review them at day 60 against real conversations.
+- No new offers, tiers or bundles. No "$25K diagnostic".
+
+**For 30 days:**
 - No new TIF / OI / RachelOS features unless a live conversation needs them.
 - No new strategy documents. Update this one.
-- No new offers or prices. Sell the ones on the site.
 - No BoundOS feature work beyond making `/apply` reach Todd (Step 6).
+- No healthcare buyer outreach until the employment check is *clear*.
 
 ---
 
@@ -268,3 +355,14 @@ Likes and impressions are secondary. One VP reply is worth more than 18,000 impr
 - **Regression risk:** the MX cutover in Step 4 is the only change that can lose mail. Mitigate
   with Step 3 (backup) and by doing Step 4 when you can test immediately. The Vercel
   env changes touch only the tko-solutions and BoundOS projects; `rachel-site` and `cms` are untouched.
+
+---
+
+## 8. Open items and parked ideas
+
+| Item | Why open | Next action |
+|---|---|---|
+| BoundOS site pricing and copy | `rachel-realestate-marketing` was not readable in this session; the Claude GitHub App on `racheldelray-team` appears to cover only `rachel-realestate` | Add the repository to the app, then check that `/pricing` renders the § 1.3 ladder and says nothing about Territory OS or Enterprise (D5) |
+| Owned-sidecar pricing (DEC-223) | Decided as an offer shape, with no public price | Leave unpriced and out of the pitch until a managed client exists |
+| Rachel E1 holdout report | Needed for BoundOS outbound credibility | Confirm whether it ran. If not, it is the one RachelOS task worth doing in the 30 days |
+| Pricing ideas | Parked under the § 6 freeze | Review at day 60 |
