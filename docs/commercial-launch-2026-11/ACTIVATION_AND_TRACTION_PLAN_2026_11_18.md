@@ -52,8 +52,15 @@ account, and Cloudflare Email Routing is free.
 ### 1.3 Commercial: the current ladder [V in repo]
 
 Source of record: `src/lib/offers.ts` (last changed 2026-11-14) and DEC-223 in the RachelOS repo
-(2026-11-03). The BoundOS marketing repo (`rachel-realestate-marketing`) could not be read in this
-session. Its public prices are assumed to render the same `boundosLadder`, per decision D1. **[A]**
+(2026-11-03), and the BoundOS site repo `racheldelray-team/rachel-site-marketing` (last change
+2026-11-03). That site's `sidecarLadder` matches the ladder below exactly. One line is stale: see 1.5.
+
+**How the two relate:** TKO Solutions is the parent company and sells the method in abstract,
+workflow-agnostic terms: find where any workflow breaks (Blueprint), fix one (Sprint), keep it
+working (Operate & Improve). BoundOS is one solution built on that method, packaged for one
+workflow (relationship follow-up) and one buyer (agents and team leads), with its own
+implementation-specific scope and price. The two ladders are meant to differ. They only need to
+agree where one site quotes the other's offer.
 
 **TKO Solutions** (buyer: founder, owner, COO or ops leader of an owner-led or midmarket business)
 
@@ -73,7 +80,7 @@ session. Its public prices are assumed to render the same `boundosLadder`, per d
 | Database Health Assessment | $500, credited to setup within 60 days |
 | BoundOS Core | $1,500 setup + $500/mo |
 | BoundOS Managed | $2,500 setup + $1,200/mo |
-| Owned sidecar (customer hardware, DEC-223) | Not priced publicly in tko-site **[A]** |
+| Owned sidecar (customer hardware, DEC-223) | Not priced on either site [V] |
 
 Other facts:
 - There is **no "$25K diagnostic"**. The LinkedIn advice assumed one. Don't introduce it.
@@ -94,6 +101,20 @@ Other facts:
 
 The first three are a single afternoon. Until they are closed, the honest status is "TKO cannot
 take money", whatever the website says.
+
+### 1.5 One stale cross-reference [V]
+
+BoundOS and TKO prices are meant to differ (1.3). The issue is the one place BoundOS quotes a
+**TKO** offer. `boundos.com/pricing` says: "The Owned Demand & Governed AI Engine is a separately scoped build
+($7,500–$15,000 build · fixed scope)". This comes from `tkoBuildEngagement` in
+`rachel-site-marketing/src/lib/boundos/content.ts`, pinned by `tests/sidecar.test.ts`.
+`tko.solutions/private-client-os` has said "From $9,999 per Sprint · usually one or two Sprints"
+since Nov 14. A prospect who reads both sees two prices for the same thing.
+
+**Fix (two lines plus one test assertion):** change `tkoBuildEngagement.commercial` to a
+number-free phrase such as `"priced in fixed-fee Execution Sprints"`, so it can't drift again when
+the founding price ends. This is the one pricing edit the § 6 freeze allows, because it aligns
+with the source of truth rather than changing it.
 
 ---
 
@@ -131,7 +152,7 @@ For **tko-solutions** (Vercel → tko-solutions → Settings):
 3. Run `npm run tif:migrate:status` once against production from a local checkout. If it reports
    pending migrations, run `npm run tif:migrate:deploy`.
 
-For **BoundOS** (the project built from `rachel-realestate-marketing`): confirm the
+For **BoundOS** (the project built from `racheldelray-team/rachel-site-marketing`): confirm the
 `boundos.com` / `www.boundos.com` domains and the Turnstile keys (`NEXT_PUBLIC_TURNSTILE_SITE_KEY`,
 `TURNSTILE_SECRET_KEY`).
 
@@ -241,7 +262,7 @@ LinkedIn headline (draft, under 220 characters):
 | Motion | Priority | Target | Offer | Where it's tracked |
 |---|---|---|---|---|
 | **B: Blueprint buyers** | **Primary** | 50 owner-led or midmarket businesses (about $5M–$100M revenue; the general intake treats $5M+ as a fit) in the verticals the insights library already covers: RIAs and wealth advisory, commercial insurance brokers, boutique M&A / capital-formation firms, law firms, B2B SaaS implementation teams, luxury / private-client services. Buyer: owner, COO, head of operations. South Florida first, where introductions are warmest | Blueprint ($999 founding) → Execution Sprint | `/tif/oi/intake` → pipeline → Today; Blueprint ledger |
-| **C: BoundOS** | Secondary; warm introductions only | 10 Follow Up Boss team leads, reached through Rachel's brokerage and agent network. Ghost Test as the opener | $500 Database Health Assessment → Core / Managed | Same `InboundLead` store (`BOUNDOS_APPLY`, `BOUNDOS_GHOST_TEST`) |
+| **C: BoundOS** | Secondary, at reduced cadence | Agents and Follow Up Boss team leads. Two channels: (1) the existing Ghost Test launch plan (`rachel-site-marketing/docs/GHOST_TEST_LAUNCH_PLAN.md`: TikTok/Reels, Reddit, reply template), cut to **3 videos a week from one batch session** instead of daily; (2) warm introductions through Rachel's network | Ghost Test (free) → $500 Database Health Assessment → Core / Managed | Same `InboundLead` store (`BOUNDOS_APPLY`, `BOUNDOS_GHOST_TEST`) |
 | **A: Roles** | Parallel; LinkedIn only | Principal / Director / Sr Director Transformation; Healthcare Product Strategy; AI Transformation; Operating Model / OpEx; Principal Program / Product; Transformation or Client Partner; Solutions / Value Consulting; Healthcare Strategy & Ops | Apply, then connect with the hiring VP, the transformation executive, the recruiter and one adjacent leader | `/tif/oi` as FTE opportunities |
 
 RachelOS is not a motion. It is the evidence behind all three: Featured card 2, Posts 4, 5 and 7,
@@ -254,10 +275,15 @@ build credibility for Motion A, with the § 5.3 boundary.
 
 **Why the Blueprint is the primary motion, not BoundOS:** the Blueprint touches no credentials or
 contact lists, so it needs no DPA or insurance to start. At $999 it is a small first yes, it feeds
-a $9,999 follow-on, and the site, intake and operating procedure are finished. BoundOS needs the
-service agreement, the DPA and (for credibility) Rachel's first holdout numbers before cold
-outreach. No E1 report was found in the RachelOS repo. **[A]** Until both exist, sell BoundOS only
-to people who already trust you.
+a $9,999 follow-on, and the site, intake and operating procedure are finished. BoundOS's paid step
+imports a client's contact list, so it needs the authorization letter and DPA signed off. No E1
+report was found in the RachelOS repo, so outcome claims are off-limits anyway; the launch plan's
+rules already forbid them. The Ghost Test itself needs neither, so run it now. It is the only
+inbound engine either business has.
+
+**Capacity:** the Ghost Test launch plan assumed one video a day. On top of a full-time job, the
+Blueprint motion and LinkedIn, that doesn't fit. Three a week from one recording session does.
+Raise the cadence only if sent Ghost Test results justify it (launch plan § 4 scorecard).
 
 **The 50-account rule.** Each account in `/tif/oi` needs three things before outreach: (1) a named
 person with authority; (2) a specific, observable reason they likely have the problem (hiring an
@@ -313,6 +339,9 @@ pattern, never the incident.
 Once a week, 30 minutes: ask Rachel for two Follow Up Boss team-lead introductions, and run the
 Blueprint ledger's funnel reconciliation (`BLUEPRINT_OPERATING_PROCEDURE.md` § 8).
 
+Once a week, about 90 minutes: one Ghost Test recording session (three videos), per the launch plan.
+Answer every sent result within two business days using launch plan § 5.
+
 ### 5.5 KPIs (weekly, in this order)
 
 | Metric | 30-day target |
@@ -321,7 +350,8 @@ Blueprint ledger's funnel reconciliation (`BLUEPRINT_OPERATING_PROCEDURE.md` § 
 | Substantive conversations (2+ replies each way) | 15 |
 | Blueprint scopes sent | 6 |
 | **Founding Blueprints paid** | **2** (of the 5) |
-| BoundOS Ghost Tests completed by introduced team leads | 5 |
+| BoundOS Ghost Test results sent (video + introductions) | 15 |
+| BoundOS assessment calls held | 3 |
 | **BoundOS assessments paid** | **1** (only if the DPA is signed off; otherwise 0 and that's fine) |
 | Execution Sprint proposals sent (from a delivered Blueprint) | 1 |
 | Motion A: senior connections accepted / role processes | 25 / 1 |
@@ -362,7 +392,8 @@ or the targeting, and it is the only evidence that justifies a price change.
 
 | Item | Why open | Next action |
 |---|---|---|
-| BoundOS site pricing and copy | `rachel-realestate-marketing` was not readable in this session; the Claude GitHub App on `racheldelray-team` appears to cover only `rachel-realestate` | Add the repository to the app, then check that `/pricing` renders the § 1.3 ladder and says nothing about Territory OS or Enterprise (D5) |
+| BoundOS build-price line | § 1.5 | Two-line fix in `rachel-site-marketing`, then deploy |
+| BoundOS analytics | Launch plan § 0 item 5: no UTM capture or page analytics on BoundOS, so only sent results are countable | Accept for 30 days; sent results are the KPI that matters |
 | Owned-sidecar pricing (DEC-223) | Decided as an offer shape, with no public price | Leave unpriced and out of the pitch until a managed client exists |
 | Rachel E1 holdout report | Needed for BoundOS outbound credibility | Confirm whether it ran. If not, it is the one RachelOS task worth doing in the 30 days |
 | Pricing ideas | Parked under the § 6 freeze | Review at day 60 |
