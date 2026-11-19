@@ -15,8 +15,8 @@ afterEach(() => {
 });
 
 describe("Solutions navigation", () => {
-  it("lists every solution page, then the two vertical offers, and keeps them out of the top level", () => {
-    expect(solutionNavigation.map((item) => item.href)).toEqual([...solutions.map((solution) => solution.path), "/healthcare/impact-assessment", "/private-client-os"]);
+  it("lists every solution page, then the three vertical offers, and keeps them out of the top level", () => {
+    expect(solutionNavigation.map((item) => item.href)).toEqual([...solutions.map((solution) => solution.path), "/healthcare/impact-assessment", "/private-client-os", "/products/referral-network"]);
     expect(solutionNavigation.every((item) => item.summary)).toBe(true);
     expect(publicNavigation.map((item) => item.label)).toEqual(["Services & Pricing", "RachelOS Proof", "Guides", "About"]);
   });

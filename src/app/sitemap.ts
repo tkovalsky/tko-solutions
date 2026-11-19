@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/healthcare/readiness-preview",
     "/private-client-os",
     "/products/ambient-crm",
+    "/products/referral-network",
     "/selected-work",
     "/insights",
     "/founder",

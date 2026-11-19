@@ -30,12 +30,13 @@ export function absoluteUrl(path = "/") {
 
 export type NavItem = { href: string; label: string; summary?: string };
 
-// The Solutions menu: the three buyer paths from src/lib/solutions.ts, then the two vertical
+// The Solutions menu: the three buyer paths from src/lib/solutions.ts, then the three vertical
 // offers. Shared by the desktop menu, the mobile panel, and the footer.
 export const solutionNavigation: NavItem[] = [
   ...solutions.map((solution) => ({ href: solution.path, label: solution.eyebrow, summary: solution.navSummary })),
   { href: "/healthcare/impact-assessment", label: "Healthcare readiness", summary: "Trace a mandate to workflows, owners, and evidence" },
   { href: "/private-client-os", label: "Private Client OS", summary: "Owned demand and follow-up for advisory firms" },
+  { href: "/products/referral-network", label: "BoundOS Referral Network", summary: "Relocation referral network for real-estate agents" },
 ];
 
 // Canonical public destinations after the Solutions menu.
